@@ -1,6 +1,6 @@
-package csci5308.nationalHockeyLeague.group2.projectSetup;
+package dhl;
 
-import csci5308.nationalHockeyLeague.database.group2.projectSetup.HelloWorld;
+import dhl.HelloWorld;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

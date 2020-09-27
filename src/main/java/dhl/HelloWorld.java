@@ -1,4 +1,4 @@
-package csci5308.nationalHockeyLeague.database.group2.projectSetup;
+package dhl;
 
 public class HelloWorld {
     public static void main(String[] args) {
