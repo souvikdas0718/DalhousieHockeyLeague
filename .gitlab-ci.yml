@@ -1,0 +1,23 @@
+image: gradle:alpine
+
+variables:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+  GET_STRATEGY: clone
+
+stages:
+  - build
+  - test
+
+build:
+  stage: build
+  script:
+    - ./gradlew --build-cache assemble
+  tags:
+    - ugrad
+
+test:
+  stage: test
+  script:
+    - ./gradlew check
+  tags:
+    - ugrad
