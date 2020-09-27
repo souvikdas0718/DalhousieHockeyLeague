@@ -7,6 +7,6 @@ public class HelloWorldTest {
 
     @Test
     public void projectSetupTest(){
-        Assert.assertEquals("Hello World", HelloWorld.message());
+        Assert.assertEquals("HelloWorld", HelloWorld.message());
     }
 }
