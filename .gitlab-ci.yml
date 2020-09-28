@@ -23,7 +23,7 @@ test:
   tags:
     - ugrad
 
-deployStep:
+deploy_develop:
   stage: deploy
   image: ruby:latest
   tags:
