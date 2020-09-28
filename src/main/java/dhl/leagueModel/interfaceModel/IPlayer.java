@@ -12,14 +12,17 @@ public interface IPlayer {
     public void setPlayerName(String playerName);
     public String getPlayerName();
 
-    public void setPosition(PlayerPosition playerPosition);
+    public void setPosition(String playerPosition);
     public String getPosition();
 
     public void setCaptain(Boolean isCaptain);
-    public Boolean getCaptain();
+    public boolean getCaptain();
 
     public void setTeamName(String teamName);
     public String getTeamName();
 
     public boolean isPlayerNameEmpty();
+    public  boolean isPlayerPositionInvalid();
+    public boolean isCaptainValueBoolean();
+    public boolean checkPlayerValid() throws Exception;
 }

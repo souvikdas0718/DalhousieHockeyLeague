@@ -5,12 +5,13 @@ import dhl.leagueModel.interfaceModel.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class LeagueObjectModel {
+public class LeagueObjectModel implements ILeagueObjectModel {
     public String leagueName;
     public HashMap<String,ArrayList<IPlayer>>teamPlayersMapping;
     public HashMap<String,ArrayList<ITeam>>divisionTeamsMapping;
     public HashMap<String, ArrayList<IDivision>>conferenceDivisionMapping;
     public HashMap<String,ArrayList<IConference>>leagueConferencesMapping;
+    public ArrayList<IPlayer>freeAgents;
 
     public LeagueObjectModel(){
         leagueName="";
@@ -57,5 +58,12 @@ public class LeagueObjectModel {
     }
 
 
+    public ArrayList<IPlayer> getFreeAgents() {
+        return freeAgents;
+    }
+
+    public void setFreeAgents(IParserOutput parsedOutput) {
+        this.freeAgents = parsedOutput.getFreeAgents();
+    }
 
 }

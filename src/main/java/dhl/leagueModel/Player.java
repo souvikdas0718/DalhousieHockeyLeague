@@ -6,7 +6,7 @@ public class Player implements IPlayer {
     private int playerId;
     private String playerName;
     private PlayerPosition position;
-    private boolean captain;
+    private Boolean captain;
     private String teamName;
 
     public Player(){
@@ -15,7 +15,6 @@ public class Player implements IPlayer {
     public void setDefaults() {
         playerName = "";
         position = null;
-        captain = false;
         teamName = "";
     }
 
@@ -34,8 +33,22 @@ public class Player implements IPlayer {
         return playerName;
     }
 
-    public void setPosition(PlayerPosition playerPosition) {
-        this.position=playerPosition;
+    public void setPosition(String playerPosition) {
+        switch (playerPosition){
+            case "goalie": {
+                this.position=PlayerPosition.GOALIE;
+                break;
+            }
+            case "forward": {
+                this.position=PlayerPosition.FORWARD;
+                break;
+            }
+            case "defence":{
+                this.position=PlayerPosition.DEFENCE;
+                break;
+            }
+        }
+
     }
     public String getPosition() {
         if(position==null){
@@ -47,7 +60,7 @@ public class Player implements IPlayer {
     public void setCaptain(Boolean isCaptain) {
         this.captain=isCaptain;
     }
-    public Boolean getCaptain() {
+    public boolean getCaptain() {
         return captain;
     }
 
@@ -59,9 +72,28 @@ public class Player implements IPlayer {
         return teamName;
     }
 
-
     public boolean isPlayerNameEmpty(){
        return playerName.isEmpty();
+    }
+
+    public boolean isPlayerPositionInvalid() {
+        return this.position == null;
+    }
+    public boolean isCaptainValueBoolean(){
+        return this.captain != null;
+    }
+    public boolean checkPlayerValid() throws Exception {
+        if(this.isPlayerNameEmpty()){
+            throw new Exception("Player name cannot be empty");
+        }
+        if(this.isPlayerPositionInvalid()){
+            throw new Exception("Player position must be goalie or forward or defence");
+        }
+        if(!this.isCaptainValueBoolean()){
+            throw new Exception("Captain value must be true or false");
+        }
+
+        return true;
     }
 
 

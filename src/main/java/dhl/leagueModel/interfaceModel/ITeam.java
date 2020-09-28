@@ -1,5 +1,7 @@
 package dhl.leagueModel.interfaceModel;
 
+import java.util.ArrayList;
+
 public interface ITeam {
     public void setDefault();
     public String getTeamName();
@@ -12,6 +14,7 @@ public interface ITeam {
     public void setDivisionName(String divisionName);
     public String getConferenceName();
     public void setConferenceName(String conferenceName);
+    public boolean checkIfOneCaptainPerTeam(IParserOutput parserOutput);
 }
 
 

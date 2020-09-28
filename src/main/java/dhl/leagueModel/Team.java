@@ -1,6 +1,17 @@
 package dhl.leagueModel;
 
+import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
+import dhl.leagueModel.interfaceModel.IParserOutput;
+import dhl.leagueModel.interfaceModel.IPlayer;
 import dhl.leagueModel.interfaceModel.ITeam;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class Team implements ITeam {
     private int teamId;
@@ -58,6 +69,13 @@ public class Team implements ITeam {
     }
     public void setConferenceName(String conferenceName) {
         this.conferenceName=conferenceName;
+    }
+
+    public boolean checkIfOneCaptainPerTeam(IParserOutput parserOutput) {
+        List<IPlayer> playerList=parserOutput.getTeamPlayers().get(teamName);
+        Predicate<IPlayer> playerPredicate = player -> player.getCaptain() == true;
+        List<IPlayer> captainList=playerList.stream().filter(playerPredicate).collect(Collectors.toList());
+        return captainList.size()==1;
     }
 
 
