@@ -34,7 +34,7 @@ deployStep:
 #      - app/build/outputs
       - csci5308/out/artifacts/NationalHockeyLeague_main_jar
   script:
-    - chmod og-rwx ${DEPLOY_SSH_KEY}
+    - chmod og -rwx ${DEPLOY_SSH_KEY}
     # The following commands will zip your build folder, and transfer that
     # zip file to the designated Timberlea account. You will need to change
     # the <BUILDDIRECTORY> string to the actual directory where your build artifacts
