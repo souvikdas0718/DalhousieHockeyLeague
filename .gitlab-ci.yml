@@ -23,28 +23,28 @@ test:
   tags:
     - ugrad
 
-deploy_develop:
-  stage: deploy
-  image: ruby:latest
-  tags:
-    - ugrad
-  artifacts:
-    paths:
-      # Change this directory to the path that contains your built executable
-#      - app/build/outputs
-      - csci5308/out/artifacts/NationalHockeyLeague_main_jar
-  script:
-    - chmod og -rwx ${DEPLOY_SSH_KEY}
-    # The following commands will zip your build folder, and transfer that
-    # zip file to the designated Timberlea account. You will need to change
-    # the <BUILDDIRECTORY> string to the actual directory where your build artifacts
-    # reside when your build commands are complete on the runner.
-    # Notice how these commands are using the variables you defined in your GitLab CI/CD
-    # settings in earlier steps. It will not work without those variables.
-    - zip -r ${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip <BUILDDIRECTORY>
-    - scp -r -o StrictHostKeyChecking=no -i "${DEPLOY_SSH_KEY}" <FILE> "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip"
-  only:
-    - develop
+#deploy_develop:
+#  stage: deploy
+#  image: ruby:latest
+#  tags:
+#    - ugrad
+#  artifacts:
+#    paths:
+#      # Change this directory to the path that contains your built executable
+##      - app/build/outputs
+#      - csci5308/out/artifacts/NationalHockeyLeague_main_jar
+#  script:
+#    - chmod og -rwx ${DEPLOY_SSH_KEY}
+#    # The following commands will zip your build folder, and transfer that
+#    # zip file to the designated Timberlea account. You will need to change
+#    # the <BUILDDIRECTORY> string to the actual directory where your build artifacts
+#    # reside when your build commands are complete on the runner.
+#    # Notice how these commands are using the variables you defined in your GitLab CI/CD
+#    # settings in earlier steps. It will not work without those variables.
+#    - zip -r ${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip <BUILDDIRECTORY>
+#    - scp -r -o StrictHostKeyChecking=no -i "${DEPLOY_SSH_KEY}" <FILE> "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip"
+#  only:
+#    - develop
 
 #deployStep:
 #  stage: deploy
