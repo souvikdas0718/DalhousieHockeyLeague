@@ -7,70 +7,50 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MockParserOutput implements IParserOutput {
+    ArrayList<IPlayer> players = new ArrayList<>();
+    ArrayList<ITeam> teams = new ArrayList<>();
+    ArrayList<IDivision> divisions = new ArrayList<>();
+    ArrayList<IConference> conferences = new ArrayList<>();
+    ArrayList<IPlayer> freeAgents =new ArrayList<>();
 
-    public HashMap<String, ArrayList<IPlayer>> getTeamPlayers() {
-        ArrayList<IPlayer> playerList = new ArrayList<IPlayer>();
-        IPlayer player= new Player();
-        player.setPlayerName("Rob");
-        player.setCaptain(true);
-        player.setTeamName("Boston");
-        player.setPosition("forward");
-        playerList.add(player);
-        IPlayer player2= new Player();
-        player2.setPlayerName("Rob");
-        player2.setCaptain(false);
-        player2.setTeamName("Boston");
-        player2.setPosition("forward");
-        playerList.add(player2);
-        HashMap<String,ArrayList<IPlayer>> teamPlayers=new HashMap<>();
-        teamPlayers.put("Boston",playerList);
-        return teamPlayers;
+    public ArrayList<IPlayer> getPlayers() {
+        return players;
     }
 
-    public HashMap<String, ArrayList<ITeam>> getDivisionTeams() {
-        ArrayList<ITeam> teamList = new ArrayList<ITeam>();
-        ITeam team= new Team();
-        team.setGeneralManager("Harry");
-        team.setHeadCoach("Mike");
-        team.setTeamName("Boston");
-        team.setConferenceName("Western");
-        team.setDivisionName("Atlantic");
-        teamList.add(team);
-        HashMap<String,ArrayList<ITeam>> divisionTeams=new HashMap<>();
-        divisionTeams.put("Atlantic",teamList);
-        return divisionTeams;
+    public void setPlayers(ArrayList<IPlayer> players) {
+        this.players=players;
     }
 
-    public HashMap<String, ArrayList<IDivision>> getConferenceDivisions() {
-        ArrayList<IDivision> divisionList = new ArrayList<IDivision>();
-        IDivision division= new Division();
-        division.setDivisionName("Atlantic");
-        divisionList.add(division);
-        HashMap<String,ArrayList<IDivision>> divisionTeams=new HashMap<>();
-        divisionTeams.put("Eastern",divisionList);
-        return divisionTeams;
+    public ArrayList<ITeam> getTeams() {
+        return teams;
     }
 
-    public HashMap<String, ArrayList<IConference>> getLeagueConferences() {
-        ArrayList<IConference> conferenceList = new ArrayList<IConference>();
-        IConference conference= new Conference();
-        conference.setConferenceName("Eastern");
-        conference.setLeagueName("Dalhousie Hockey League");
-        conferenceList.add(conference);
-        HashMap<String,ArrayList<IConference>> leagueConferences=new HashMap<>();
-        leagueConferences.put("Dalhousie Hockey League",conferenceList);
-        return leagueConferences;
+    public void setTeams(ArrayList<ITeam> teams) {
+        this.teams = teams;
     }
+
+    public ArrayList<IDivision> getDivisions() {
+        return divisions;
+    }
+
+    public void setDivisions(ArrayList<IDivision> divisions) {
+        this.divisions=divisions;
+    }
+
+    public ArrayList<IConference> getConferences() {
+        return conferences;
+    }
+
+    public void setConferences(ArrayList<IConference> conferences) {
+        this.conferences=conferences;
+    }
+
 
     public ArrayList<IPlayer> getFreeAgents() {
-        ArrayList<IPlayer> playerList = new ArrayList<IPlayer>();
-        IPlayer player= new Player();
-        player.setPlayerName("Job");
-        player.setCaptain(false);
-        player.setTeamName("Quebec");
-        player.setPosition("forward");
-        playerList.add(player);
-        return playerList;
+        return this.freeAgents;
     }
 
+    public void setFreeAgents(ArrayList<IPlayer> freeAgents) {
+        this.freeAgents=freeAgents;
+    }
 }

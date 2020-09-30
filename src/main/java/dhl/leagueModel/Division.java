@@ -9,6 +9,9 @@ public class Division implements IDivision {
     public Division(){
         setDefault();
     }
+    public Division(String  divisionName){
+       this.divisionName=divisionName;
+    }
 
     public void setDefault(){
         divisionName="";

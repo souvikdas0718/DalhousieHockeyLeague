@@ -1,6 +1,7 @@
 package dhl;
 
 import dhl.leagueModel.InitializeObjectFactory;
+import dhl.leagueModel.Player;
 import dhl.leagueModel.PlayerPosition;
 import dhl.leagueModel.interfaceModel.IPlayer;
 import org.junit.Assert;
@@ -25,6 +26,15 @@ public class PlayerTest {
         Assert.assertTrue(player.getPlayerName().isEmpty());
         Assert.assertTrue(player.getTeamName().isEmpty());
         Assert.assertEquals("",player.getPosition() );
+    }
+
+    @Test
+    public void PlayerTest(){
+        IPlayer player= new Player("Harry","forward",false,"Ontario");
+        Assert.assertEquals("forward",player.getPosition() );
+        Assert.assertEquals("Harry",player.getPlayerName() );
+        Assert.assertFalse(player.getCaptain() );
+        Assert.assertEquals("Ontario",player.getTeamName() );
     }
     @Test
     public void getPlayerIdTest(){

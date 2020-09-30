@@ -1,8 +1,9 @@
 package dhl;
 
-import dhl.leagueModel.LeagueObjectModel;
+import dhl.leagueModel.*;
 import dhl.leagueModel.interfaceModel.*;
 import org.junit.Assert;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,47 +12,54 @@ import java.util.HashMap;
 
 public class LeagueObjectModelTest {
     LeagueObjectModel leagueModel;
+    IParserOutput parsedOutput;
     @BeforeEach
     public void initialize(){
         leagueModel=new LeagueObjectModel();
+        parsedOutput=new MockParserOutput();
     }
 
     @Test
     public void defaultConstructorTest(){
         Assert.assertTrue(leagueModel.getLeagueName().isEmpty());
-        leagueModel.setLeagueName("Rob");
-        Assert.assertEquals("Rob",leagueModel.getLeagueName() );
+        leagueModel.setLeagueName("Dhl");
+        Assert.assertEquals("Dhl",leagueModel.getLeagueName() );
     }
     @Test
     public void setTeamPlayerMappingTest(){
-        IParserOutput parsedOutput=new MockParserOutput();
-        HashMap<String, ArrayList<IPlayer>> teamPlayersList= parsedOutput.getTeamPlayers();
-        leagueModel.setTeamPlayerMapping(parsedOutput);
-       Assert.assertEquals(leagueModel.getTeamPlayerMapping().size(),teamPlayersList.size());
+        ArrayList<IPlayer> playerList = new ArrayList<IPlayer>();
+        IPlayer player= new Player("Harry","forward",false,"Ontario");
+        playerList.add(player);
+        parsedOutput.setPlayers(playerList);
+        leagueModel.setTeamPlayerMapping(parsedOutput,"Ontario");
+       Assert.assertEquals(leagueModel.getTeamPlayerMapping().get("Ontario").size(),playerList.size());
     }
 
     @Test
     public void setDivisionTeamsMappingTest(){
-        IParserOutput parsedOutput=new MockParserOutput();
-        HashMap<String, ArrayList<ITeam>> divisionTeams= parsedOutput.getDivisionTeams();
-        leagueModel.setDivisionTeamsMapping(parsedOutput);
-        Assert.assertEquals(leagueModel.getDivisionTeamsMapping().size(),divisionTeams.size());
+        ArrayList<ITeam> teamsList=new ArrayList<>();
+        teamsList.add(new Team("Boston","Harry","Mike","Atlantic","Western"));
+        parsedOutput.setTeams(teamsList);
+        leagueModel.setDivisionTeamsMapping(parsedOutput,"Atlantic");
+        Assert.assertEquals(leagueModel.getDivisionTeamsMapping().get("Atlantic").size(),teamsList.size());
     }
 
     @Test
     public void setConferenceDivisionsMappingTest(){
-        IParserOutput parsedOutput=new MockParserOutput();
-        HashMap<String, ArrayList<IDivision>> conferenceDivisions= parsedOutput.getConferenceDivisions();
-        leagueModel.setConferenceDivisionsMapping(parsedOutput);
-        Assert.assertEquals(leagueModel.getConferenceDivisionsMapping().size(),conferenceDivisions.size());
+        ArrayList<IDivision> divisionsList=new ArrayList<>();
+        divisionsList.add(new Division("Atlantic"));
+         parsedOutput.setDivisions(divisionsList);
+        leagueModel.setConferenceDivisionsMapping(parsedOutput,"Western");
+        Assert.assertEquals(leagueModel.getConferenceDivisionsMapping().get("Western").size(),divisionsList.size());
     }
 
     @Test
     public void setLeagueConferencesMappingTest(){
-        IParserOutput parsedOutput=new MockParserOutput();
-        HashMap<String, ArrayList<IConference>> leagueConferences= parsedOutput.getLeagueConferences();
-        leagueModel.setLeagueConferencesMapping(parsedOutput);
-        Assert.assertEquals(leagueModel.getLeagueConferenceMapping().size(),leagueConferences.size());
+        ArrayList<IConference> conferenceList=new ArrayList<>();
+        conferenceList.add(new Conference("Western","Dhl"));
+        parsedOutput.setConferences(conferenceList);
+        leagueModel.setLeagueConferencesMapping(parsedOutput,"Dhl");
+        Assert.assertEquals(leagueModel.getLeagueConferenceMapping().get("Dhl").size(),conferenceList.size());
     }
     @Test
     public void setFreeAgentsTest(){
@@ -59,6 +67,11 @@ public class LeagueObjectModelTest {
         ArrayList<IPlayer> freeAgents= parsedOutput.getFreeAgents();
         leagueModel.setFreeAgents(parsedOutput);
         Assert.assertEquals(leagueModel.getFreeAgents().size(),freeAgents.size());
+    }
+    @AfterEach
+    public void destroyObject(){
+        leagueModel=null;
+        parsedOutput=null;
     }
 }
 

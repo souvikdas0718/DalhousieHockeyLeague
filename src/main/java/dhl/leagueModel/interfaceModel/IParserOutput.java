@@ -1,13 +1,22 @@
 package dhl.leagueModel.interfaceModel;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public interface IParserOutput {
-    public HashMap<String, ArrayList<IPlayer>> getTeamPlayers();
-    public HashMap<String, ArrayList<ITeam>> getDivisionTeams();
-    public HashMap<String, ArrayList<IDivision>> getConferenceDivisions();
-    public HashMap<String,ArrayList<IConference>> getLeagueConferences();
+    public ArrayList<IPlayer> getPlayers();
+    public void setPlayers( ArrayList<IPlayer> players);
+
+    public ArrayList<ITeam> getTeams();
+    public void setTeams(ArrayList<ITeam> teams);
+
+    public ArrayList<IDivision> getDivisions();
+    public void setDivisions(ArrayList<IDivision> divisions);
+
+    public ArrayList<IConference> getConferences();
+    public void setConferences(ArrayList<IConference> conferences);
+
     public ArrayList<IPlayer> getFreeAgents();
+    public void setFreeAgents(ArrayList<IPlayer> freeAgents);
+
 
 }

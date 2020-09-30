@@ -15,6 +15,10 @@ public class LeagueObjectModel implements ILeagueObjectModel {
 
     public LeagueObjectModel(){
         leagueName="";
+        teamPlayersMapping=new HashMap<>();
+        divisionTeamsMapping = new HashMap<>();
+        conferenceDivisionMapping=new HashMap<>();
+        leagueConferencesMapping=new HashMap<>();
     }
 
     public String getLeagueName() {
@@ -25,32 +29,31 @@ public class LeagueObjectModel implements ILeagueObjectModel {
         this.leagueName = leagueName;
     }
 
-    public void setTeamPlayerMapping(IParserOutput parsedOutput){
-        this.teamPlayersMapping = parsedOutput.getTeamPlayers();
-
+    public void setTeamPlayerMapping(IParserOutput parsedOutput,String teamName){
+        this.teamPlayersMapping.put(teamName,parsedOutput.getPlayers());
     }
     public  HashMap<String, ArrayList<IPlayer>> getTeamPlayerMapping(){
         return teamPlayersMapping;
     }
 
-    public void setDivisionTeamsMapping(IParserOutput parsedOutput){
-        this.divisionTeamsMapping = parsedOutput.getDivisionTeams();
+    public void setDivisionTeamsMapping(IParserOutput parsedOutput,String divisionName){
+        this.divisionTeamsMapping.put(divisionName,parsedOutput.getTeams());
 
     }
     public  HashMap<String, ArrayList<ITeam>> getDivisionTeamsMapping(){
         return divisionTeamsMapping;
     }
 
-    public void setConferenceDivisionsMapping(IParserOutput parsedOutput){
-        this.conferenceDivisionMapping = parsedOutput.getConferenceDivisions();
+    public void setConferenceDivisionsMapping(IParserOutput parsedOutput,String conferenceName){
+        this.conferenceDivisionMapping.put(conferenceName,parsedOutput.getDivisions());
 
     }
     public  HashMap<String, ArrayList<IDivision>> getConferenceDivisionsMapping(){
         return conferenceDivisionMapping;
     }
 
-    public void setLeagueConferencesMapping(IParserOutput parsedOutput){
-        this.leagueConferencesMapping = parsedOutput.getLeagueConferences();
+    public void setLeagueConferencesMapping(IParserOutput parsedOutput,String leagueName){
+        this.leagueConferencesMapping.put(leagueName,parsedOutput.getConferences());
 
     }
     public  HashMap<String,ArrayList<IConference>> getLeagueConferenceMapping(){

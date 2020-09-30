@@ -1,16 +1,9 @@
 package dhl.leagueModel;
 
-import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
-import dhl.leagueModel.interfaceModel.IParserOutput;
-import dhl.leagueModel.interfaceModel.IPlayer;
-import dhl.leagueModel.interfaceModel.ITeam;
+import dhl.leagueModel.interfaceModel.*;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class Team implements ITeam {
@@ -33,7 +26,13 @@ public class Team implements ITeam {
         conferenceName="";
     }
 
-
+    public Team(String teamName,String generalManager,String headCoach,String divisionName,String conferenceName){
+        setTeamName(teamName);
+        setGeneralManager(generalManager);
+        setHeadCoach(headCoach);
+        setDivisionName(divisionName);
+        setConferenceName(conferenceName);
+    }
     public String getTeamName() {
         return teamName;
     }
@@ -71,11 +70,34 @@ public class Team implements ITeam {
         this.conferenceName=conferenceName;
     }
 
-    public boolean checkIfOneCaptainPerTeam(IParserOutput parserOutput) {
-        List<IPlayer> playerList=parserOutput.getTeamPlayers().get(teamName);
-        Predicate<IPlayer> playerPredicate = player -> player.getCaptain() == true;
+
+    public void checkIfOneCaptainPerTeam(List<IPlayer> playerList) throws Exception {
+        Predicate<IPlayer> playerPredicate = player -> player.getCaptain() ;
         List<IPlayer> captainList=playerList.stream().filter(playerPredicate).collect(Collectors.toList());
-        return captainList.size()==1;
+        if(captainList.size()==0){
+            throw new Exception("Please select captain for the team");
+        }
+        if(captainList.size()>1){
+            throw new Exception("There can be only one captain per team");
+        }
+    }
+
+    public boolean checkIfSizeOfTeamValid(List<IPlayer> playerList) {
+        return playerList.size() <20 ;
+    }
+
+
+    public boolean checkIfTeamValid(IParserOutput parserOutput,IValidation validation) throws Exception{
+        List<IPlayer> playerList=parserOutput.getPlayers();
+        validation.isStringEmpty(teamName,"Team name");
+        validation.isStringEmpty(headCoach,"Head Coach name");
+        validation.isStringEmpty(generalManager,"General manager name");
+        validation.isListEmpty(playerList,"Players");
+        checkIfOneCaptainPerTeam(playerList);
+        if(this.checkIfSizeOfTeamValid(playerList)==false){
+            throw new Exception("Number of players cannot exceed 20 in each team");
+        }
+        return true;
     }
 
 

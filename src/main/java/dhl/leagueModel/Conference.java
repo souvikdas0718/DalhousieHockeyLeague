@@ -11,6 +11,10 @@ public class Conference implements IConference {
     public Conference(){
       setDefaults();
     }
+    public Conference(String conferenceName,String leagueName){
+        setConferenceName(conferenceName);
+        setLeagueName(leagueName);
+    }
     public void setDefaults(){
         conferenceName="";
         leagueName="";
