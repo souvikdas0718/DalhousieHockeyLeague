@@ -1,9 +1,9 @@
-package dhl;
+package dhl.leagueModelTests;
 
 import dhl.leagueModel.InitializeObjectFactory;
 import dhl.leagueModel.interfaceModel.IDivision;
-import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,18 +18,18 @@ public class DivisionTest {
 
     @Test
     public void DivisionDefaultConstructorTest(){
-        Assert.assertTrue(division.getDivisionName().isEmpty());
+        Assertions.assertTrue(division.getDivisionName().isEmpty());
     }
 
     @Test
     public void getDivisionNameTest(){
         division.setDivisionName("Atlantic");
-        Assert.assertEquals("Atlantic",division.getDivisionName());
+        Assertions.assertEquals("Atlantic",division.getDivisionName());
     }
     @Test
     public void setDivisionNameTest(){
         division.setDivisionName("Pacific");
-        Assert.assertEquals("Pacific",division.getDivisionName());
+        Assertions.assertEquals("Pacific",division.getDivisionName());
     }
 
     @AfterEach()

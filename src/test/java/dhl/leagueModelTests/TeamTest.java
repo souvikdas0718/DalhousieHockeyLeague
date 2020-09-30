@@ -1,18 +1,16 @@
-package dhl;
+package dhl.leagueModelTests;
 
 import dhl.leagueModel.CommonValidation;
 import dhl.leagueModel.InitializeObjectFactory;
 import dhl.leagueModel.Player;
 import dhl.leagueModel.Team;
 import dhl.leagueModel.interfaceModel.*;
-import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class TeamTest {
     InitializeObjectFactory initObj;
@@ -27,73 +25,73 @@ public class TeamTest {
 
     @Test
     public void TeamDefaultConstructorTest(){
-        Assert.assertTrue(team.getDivisionName().isEmpty());
-        Assert.assertTrue(team.getConferenceName().isEmpty());
-        Assert.assertTrue(team.getTeamName().isEmpty());
-        Assert.assertTrue(team.getHeadCoach().isEmpty() );
-        Assert.assertTrue(team.getGeneralManager().isEmpty());
+        Assertions.assertTrue(team.getDivisionName().isEmpty());
+        Assertions.assertTrue(team.getConferenceName().isEmpty());
+        Assertions.assertTrue(team.getTeamName().isEmpty());
+        Assertions.assertTrue(team.getHeadCoach().isEmpty() );
+        Assertions.assertTrue(team.getGeneralManager().isEmpty());
     }
     @Test
     public void TeamTest(){
         team = new Team("Ontario","Mathew","henry","Atlantic","Western");
-        Assert.assertEquals("Ontario",team.getTeamName());
+        Assertions.assertEquals("Ontario",team.getTeamName());
     }
     @Test
     public void getTeamNameTest(){
         team.setTeamName("Edmonton Oilers");
-        Assert.assertEquals("Edmonton Oilers",team.getTeamName());
+        Assertions.assertEquals("Edmonton Oilers",team.getTeamName());
     }
     @Test
     public void setTeamNameTest(){
         team.setTeamName("Boston Bruins");
-        Assert.assertEquals("Boston Bruins",team.getTeamName());
+        Assertions.assertEquals("Boston Bruins",team.getTeamName());
     }
 
     @Test
     public void getGeneralManagerTest(){
         team.setGeneralManager("Bob Murray");
-        Assert.assertEquals("Bob Murray",team.getGeneralManager());
+        Assertions.assertEquals("Bob Murray",team.getGeneralManager());
     }
     @Test
     public void setGeneralManagerTest(){
         team.setGeneralManager("Don Sweeney");
-        Assert.assertEquals("Don Sweeney",team.getGeneralManager());
+        Assertions.assertEquals("Don Sweeney",team.getGeneralManager());
     }
 
     @Test
     public void getHeadCoachTest(){
         team.setHeadCoach("Barry Trotz");
-        Assert.assertEquals("Barry Trotz",team.getHeadCoach());
+        Assertions.assertEquals("Barry Trotz",team.getHeadCoach());
 
     }
     @Test
     public void setHeadCoachTest(){
         team.setHeadCoach("Todd McLellan");
-        Assert.assertEquals("Todd McLellan",team.getHeadCoach());
+        Assertions.assertEquals("Todd McLellan",team.getHeadCoach());
     }
 
     @Test
     public void getDivisionNameTest(){
         team.setDivisionName("Atlantic");
-        Assert.assertEquals("Atlantic",team.getDivisionName());
+        Assertions.assertEquals("Atlantic",team.getDivisionName());
 
     }
     @Test
     public void setDivisionNameTest(){
         team.setDivisionName("Pacific");
-        Assert.assertEquals("Pacific",team.getDivisionName());
+        Assertions.assertEquals("Pacific",team.getDivisionName());
     }
 
     @Test
     public void getConferenceNameTest(){
         team.setConferenceName("Western");
-        Assert.assertEquals("Western",team.getConferenceName());
+        Assertions.assertEquals("Western",team.getConferenceName());
 
     }
     @Test
     public void setConferenceNameTest(){
         team.setConferenceName("Eastern");
-        Assert.assertEquals("Eastern",team.getConferenceName());
+        Assertions.assertEquals("Eastern",team.getConferenceName());
     }
     @Test
     public void checkIfOneCaptainPerTeamErrorTest(){
@@ -104,7 +102,7 @@ public class TeamTest {
         Exception errorMsg= Assertions.assertThrows(Exception.class,() ->{
             team.checkIfOneCaptainPerTeam(playersList);
         });
-        Assert.assertTrue(errorMsg.getMessage().contains("Please select captain for the team"));
+        Assertions.assertTrue(errorMsg.getMessage().contains("Please select captain for the team"));
     }
     @Test
     public void checkIfOneCaptainPerTeamTest(){
@@ -115,7 +113,7 @@ public class TeamTest {
         Exception errorMsg= Assertions.assertThrows(Exception.class,() ->{
             team.checkIfOneCaptainPerTeam(playersList);
         });
-        Assert.assertTrue(errorMsg.getMessage().contains("There can be only one captain per team"));
+        Assertions.assertTrue(errorMsg.getMessage().contains("There can be only one captain per team"));
     }
     @Test
     public void checkNumberOfPlayersInTeamTest(){
@@ -124,7 +122,7 @@ public class TeamTest {
         ArrayList<IPlayer> playersList=new ArrayList<>();
         playersList.add(new Player("Henry","forward",false,"Ontario"));
         iParserOutput.setPlayers(playersList);
-        Assert.assertTrue(team.checkIfSizeOfTeamValid(playersList));
+        Assertions.assertTrue(team.checkIfSizeOfTeamValid(playersList));
     }
 
     @Test
@@ -135,7 +133,7 @@ public class TeamTest {
         playersList.add(new Player("Henry","forward",false,"Ontario"));
         playersList.add(new Player("Max","goalie",true,"Ontario"));
         iParserOutput.setPlayers(playersList);
-        Assert.assertTrue(team.checkIfTeamValid(iParserOutput,validate));
+        Assertions.assertTrue(team.checkIfTeamValid(iParserOutput,validate));
     }
     @Test
     public void checkIfTeamPlayerMoreThan20Test() throws Exception{
@@ -150,7 +148,7 @@ public class TeamTest {
         Exception error= Assertions.assertThrows(Exception.class,() ->{
             team.checkIfTeamValid(iParserOutput,validate);
         });
-        Assert.assertTrue(error.getMessage().contains("Number of players cannot exceed 20 in each team"));
+        Assertions.assertTrue(error.getMessage().contains("Number of players cannot exceed 20 in each team"));
     }
 
     @AfterEach()

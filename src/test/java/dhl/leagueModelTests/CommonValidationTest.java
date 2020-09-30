@@ -1,11 +1,8 @@
-package dhl;
+package dhl.leagueModelTests;
 
 import dhl.leagueModel.CommonValidation;
-import dhl.leagueModel.InitializeObjectFactory;
-import dhl.leagueModel.Player;
 import dhl.leagueModel.interfaceModel.IPlayer;
 import dhl.leagueModel.interfaceModel.IValidation;
-import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +24,7 @@ public class CommonValidationTest {
         Exception error= Assertions.assertThrows(Exception.class,() ->{
             commonValidation.isStringEmpty("","Team");
         });
-        Assert.assertTrue(error.getMessage().contains("Team name cannot be empty"));
+        Assertions.assertTrue(error.getMessage().contains("Team name cannot be empty"));
     }
 
 
@@ -37,7 +34,7 @@ public class CommonValidationTest {
             List<IPlayer> players=new ArrayList<>();
             commonValidation.isListEmpty(players,"players");
         });
-        Assert.assertTrue(error.getMessage().contains("Please add players"));
+        Assertions.assertTrue(error.getMessage().contains("Please add players"));
     }
 
     @AfterEach()

@@ -1,4 +1,4 @@
-package dhl;
+package dhl.leagueModelTests;
 
 import dhl.leagueModel.interfaceModel.*;
 
