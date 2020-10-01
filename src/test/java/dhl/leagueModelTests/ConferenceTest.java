@@ -1,9 +1,9 @@
-package dhl;
+package dhl.leagueModelTests;
 
 import dhl.leagueModel.InitializeObjectFactory;
 import dhl.leagueModel.interfaceModel.IConference;
-import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,28 +18,28 @@ public class ConferenceTest {
 
     @Test
     public void ConferenceDefaultConstructorTest(){
-        Assert.assertTrue(conference.getConferenceName().isEmpty());
+        Assertions.assertTrue(conference.getConferenceName().isEmpty());
     }
 
     @Test
     public void getConferenceNameTest(){
         conference.setConferenceName("Eastern");
-        Assert.assertEquals("Eastern",conference.getConferenceName());
+        Assertions.assertEquals("Eastern",conference.getConferenceName());
     }
     @Test
     public void setConferenceNameTest(){
         conference.setConferenceName("Western");
-        Assert.assertEquals("Western",conference.getConferenceName());
+        Assertions.assertEquals("Western",conference.getConferenceName());
     }
     @Test
     public void getLeagueNameTest(){
         conference.setLeagueName("Dalhousie Hockey League");
-        Assert.assertEquals("Dalhousie Hockey League",conference.getLeagueName());
+        Assertions.assertEquals("Dalhousie Hockey League",conference.getLeagueName());
     }
     @Test
     public void setLeagueNameTest(){
         conference.setLeagueName("Dalhousie Hockey League");
-        Assert.assertEquals("Dalhousie Hockey League",conference.getLeagueName());
+        Assertions.assertEquals("Dalhousie Hockey League",conference.getLeagueName());
     }
     @AfterEach()
     public void destroyObject(){

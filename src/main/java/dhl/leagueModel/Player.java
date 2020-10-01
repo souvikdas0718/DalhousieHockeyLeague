@@ -17,7 +17,12 @@ public class Player implements IPlayer {
         position = null;
         teamName = "";
     }
-
+    public Player(String playerName,String position,Boolean captain,String teamName){
+        this.setPlayerName(playerName);
+        this.setPosition(position);
+        this.setCaptain(captain);
+        this.setTeamName(teamName);
+    }
     public void setPlayerId(int id) {
         this.playerId=id;
     }
@@ -82,6 +87,7 @@ public class Player implements IPlayer {
     public boolean isCaptainValueBoolean(){
         return this.captain != null;
     }
+
     public boolean checkPlayerValid() throws Exception {
         if(this.isPlayerNameEmpty()){
             throw new Exception("Player name cannot be empty");

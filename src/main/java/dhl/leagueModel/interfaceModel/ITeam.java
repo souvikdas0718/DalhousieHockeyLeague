@@ -1,6 +1,7 @@
 package dhl.leagueModel.interfaceModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface ITeam {
     public void setDefault();
@@ -14,7 +15,9 @@ public interface ITeam {
     public void setDivisionName(String divisionName);
     public String getConferenceName();
     public void setConferenceName(String conferenceName);
-    public boolean checkIfOneCaptainPerTeam(IParserOutput parserOutput);
+    public void checkIfOneCaptainPerTeam(List<IPlayer> playerList) throws Exception;
+    public boolean checkIfSizeOfTeamValid(List<IPlayer> playerList);
+    public boolean checkIfTeamValid(IParserOutput parserOutput,IValidation validation) throws Exception;
 }
 
 

@@ -1,4 +1,4 @@
-package dhl;
+package dhl.leagueModelTests;
 
 import dhl.leagueModel.interfaceModel.*;
 
@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MockLeagueObjectModel implements ILeagueObjectModel {
+
     @Override
     public String getLeagueName() {
         return null;
@@ -17,7 +18,7 @@ public class MockLeagueObjectModel implements ILeagueObjectModel {
     }
 
     @Override
-    public void setTeamPlayerMapping(IParserOutput parsedOutput) {
+    public void setTeamPlayerMapping(IParserOutput parsedOutput, String teamName) {
 
     }
 
@@ -27,7 +28,7 @@ public class MockLeagueObjectModel implements ILeagueObjectModel {
     }
 
     @Override
-    public void setDivisionTeamsMapping(IParserOutput parsedOutput) {
+    public void setDivisionTeamsMapping(IParserOutput parsedOutput, String divisionName) {
 
     }
 
@@ -37,7 +38,7 @@ public class MockLeagueObjectModel implements ILeagueObjectModel {
     }
 
     @Override
-    public void setConferenceDivisionsMapping(IParserOutput parsedOutput) {
+    public void setConferenceDivisionsMapping(IParserOutput parsedOutput, String conferenceName) {
 
     }
 
@@ -47,7 +48,7 @@ public class MockLeagueObjectModel implements ILeagueObjectModel {
     }
 
     @Override
-    public void setLeagueConferencesMapping(IParserOutput parsedOutput) {
+    public void setLeagueConferencesMapping(IParserOutput parsedOutput, String leagueName) {
 
     }
 
