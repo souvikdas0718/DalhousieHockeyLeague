@@ -5,13 +5,14 @@ import dhl.leagueModel.interfaceModel.IConference;
 import dhl.leagueModel.interfaceModel.IDivision;
 import dhl.leagueModel.interfaceModel.IPlayer;
 import dhl.leagueModel.interfaceModel.ITeam;
+import dhl.simulationStateMachine.Interface.ICreateLeagueObjectModel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class CreateLeagueObjectModel {
+public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
 
     JSONObject jsonLeagueObject = null;
 
@@ -62,7 +63,7 @@ public class CreateLeagueObjectModel {
         return conferencesListToReturn;
     }
 
-    public ArrayList getDivisionObjectArrayList(JSONArray divisionJsonArray){
+    public ArrayList<IDivision> getDivisionObjectArrayList(JSONArray divisionJsonArray){
         Iterator<?> divisionListIterator = (divisionJsonArray).iterator();
         ArrayList<IDivision> divisonListToReturn = new ArrayList<>();
         while(divisionListIterator.hasNext()){
@@ -78,7 +79,7 @@ public class CreateLeagueObjectModel {
         return divisonListToReturn;
 
     }
-    public ArrayList getTeamObjectArrayList(JSONArray TeamJsonArray){
+    public ArrayList<ITeam> getTeamObjectArrayList(JSONArray TeamJsonArray){
         Iterator<?> teamListIterator = (TeamJsonArray).iterator();
         ArrayList<ITeam> TeamListToReturn = new ArrayList<>();
         while(teamListIterator.hasNext()){
@@ -96,7 +97,7 @@ public class CreateLeagueObjectModel {
         return TeamListToReturn;
     }
 
-    public ArrayList getPlayerArrayList(JSONArray PlayerJsonArray){
+    public ArrayList<IPlayer> getPlayerArrayList(JSONArray PlayerJsonArray){
         Iterator<?> playerListIterator = PlayerJsonArray.iterator();
         ArrayList<IPlayer> playerListToReturn = new ArrayList<>();
 
