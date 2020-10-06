@@ -11,13 +11,15 @@ import java.io.IOException;
 public class ImportJsonFile {
 
     private String filePath = "";
-    private JSONObject JsonLeagueObject = null;
+
 
     public ImportJsonFile(String filePath){
         this.filePath = filePath;
     }
 
     public JSONObject getJsonObject(){
+
+        JSONObject JsonLeagueObject = null;
 
         JSONParser jsonParser = new JSONParser();
 
