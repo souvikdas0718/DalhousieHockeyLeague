@@ -18,9 +18,6 @@ public interface IPlayer {
     public void setCaptain(Boolean isCaptain);
     public boolean getCaptain();
 
-    public void setTeamName(String teamName);
-    public String getTeamName();
-
     public boolean isPlayerNameEmpty();
     public  boolean isPlayerPositionInvalid();
     public boolean isCaptainValueBoolean();

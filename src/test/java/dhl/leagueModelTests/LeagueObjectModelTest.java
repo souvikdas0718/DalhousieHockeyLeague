@@ -20,8 +20,8 @@ public class LeagueObjectModelTest {
         parsedOutput=new MockParserOutput();
         validate=new CommonValidation();
         ArrayList<IPlayer> playersList=new ArrayList<>();
-        playersList.add(new Player("Henry","forward",false,"Ontario"));
-        playersList.add(new Player("Max","goalie",true,"Ontario"));
+        playersList.add(new Player("Henry","forward",false));
+        playersList.add(new Player("Max","goalie",true));
         ITeam team = new Team("Ontario","Mathew","henry",playersList);
         ArrayList<ITeam> teamArrayList=new ArrayList<>();
         teamArrayList.add(team);
@@ -46,8 +46,8 @@ public class LeagueObjectModelTest {
     @Test
     public void setFreeAgentsTest(){
         ArrayList<IPlayer> freeAgentsList=new ArrayList<>();
-        freeAgentsList.add(new Player("Henry","forward",true,"Ontario"));
-        freeAgentsList.add(new Player("Max","goalie",true,"Ontario"));
+        freeAgentsList.add(new Player("Henry","forward",true));
+        freeAgentsList.add(new Player("Max","goalie",true));
         leagueModel.setFreeAgents(freeAgentsList);
         Assertions.assertEquals(leagueModel.getFreeAgents().size(),freeAgentsList.size());
     }

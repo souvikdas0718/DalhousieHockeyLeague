@@ -7,7 +7,7 @@ public class Player implements IPlayer {
     private String playerName;
     private PlayerPosition position;
     private Boolean captain;
-    private String teamName;
+
 
     public Player(){
         setDefaults();
@@ -15,13 +15,11 @@ public class Player implements IPlayer {
     public void setDefaults() {
         playerName = "";
         position = null;
-        teamName = "";
     }
-    public Player(String playerName,String position,Boolean captain,String teamName){
+    public Player(String playerName,String position,Boolean captain){
         this.setPlayerName(playerName);
         this.setPosition(position);
         this.setCaptain(captain);
-        this.setTeamName(teamName);
     }
     public void setPlayerId(int id) {
         this.playerId=id;
@@ -67,14 +65,6 @@ public class Player implements IPlayer {
     }
     public boolean getCaptain() {
         return captain;
-    }
-
-    public void setTeamName(String teamName) {
-        this.teamName=teamName;
-    }
-
-    public String getTeamName() {
-        return teamName;
     }
 
     public boolean isPlayerNameEmpty(){
