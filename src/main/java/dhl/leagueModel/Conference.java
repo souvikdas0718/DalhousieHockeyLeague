@@ -1,24 +1,29 @@
 package dhl.leagueModel;
 
 import dhl.leagueModel.interfaceModel.IConference;
+import dhl.leagueModel.interfaceModel.IDivision;
+import dhl.leagueModel.interfaceModel.IValidation;
+
+import java.util.ArrayList;
 
 public class Conference implements IConference {
-    private int conferenceId;
     private String conferenceName;
-    private String leagueName;
-
+    private ArrayList<IDivision> divisions;
 
     public Conference(){
       setDefaults();
     }
-    public Conference(String conferenceName,String leagueName){
-        setConferenceName(conferenceName);
-        setLeagueName(leagueName);
-    }
+
     public void setDefaults(){
         conferenceName="";
-        leagueName="";
+        divisions=new ArrayList<>();
     }
+
+    public Conference(String conferenceName,ArrayList<IDivision> divisions){
+        setConferenceName(conferenceName);
+        setDivisions(divisions);
+    }
+
     public String getConferenceName() {
         return conferenceName;
     }
@@ -27,15 +32,18 @@ public class Conference implements IConference {
         this.conferenceName = conferenceName;
     }
 
-    public String getLeagueName() {
-        return leagueName;
+    public ArrayList<IDivision> getDivisions() {
+        return divisions;
     }
 
-    public void setLeagueName(String leagueName) {
-        this.leagueName = leagueName;
+    public void setDivisions(ArrayList<IDivision> divisionList) {
+        this.divisions=divisionList;
     }
+    public boolean checkIfConferenceValid(IValidation validation) throws Exception{
+        validation.isStringEmpty(conferenceName,"Conference name");
 
-
+        return true;
+    }
 
 
 }

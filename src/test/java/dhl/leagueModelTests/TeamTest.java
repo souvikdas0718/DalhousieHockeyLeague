@@ -16,24 +16,26 @@ public class TeamTest {
     InitializeObjectFactory initObj;
     IValidation validate;
     ITeam team;
+    ArrayList<IPlayer> playerArrayList;
     @BeforeEach()
     public void initObject(){
         initObj = new InitializeObjectFactory();
         team= initObj.createTeam();
         validate=new CommonValidation();
+        playerArrayList=new ArrayList<>();
+        playerArrayList.add(new Player("Harry","forward",false,"Ontario"));
     }
 
     @Test
     public void TeamDefaultConstructorTest(){
-        Assertions.assertTrue(team.getDivisionName().isEmpty());
-        Assertions.assertTrue(team.getConferenceName().isEmpty());
         Assertions.assertTrue(team.getTeamName().isEmpty());
         Assertions.assertTrue(team.getHeadCoach().isEmpty() );
         Assertions.assertTrue(team.getGeneralManager().isEmpty());
+        Assertions.assertEquals(0,team.getPlayers().size());
     }
     @Test
     public void TeamTest(){
-        team = new Team("Ontario","Mathew","henry","Atlantic","Western");
+        team = new Team("Ontario","Mathew","henry", playerArrayList);
         Assertions.assertEquals("Ontario",team.getTeamName());
     }
     @Test
@@ -69,36 +71,24 @@ public class TeamTest {
         team.setHeadCoach("Todd McLellan");
         Assertions.assertEquals("Todd McLellan",team.getHeadCoach());
     }
-
     @Test
-    public void getDivisionNameTest(){
-        team.setDivisionName("Atlantic");
-        Assertions.assertEquals("Atlantic",team.getDivisionName());
-
-    }
-    @Test
-    public void setDivisionNameTest(){
-        team.setDivisionName("Pacific");
-        Assertions.assertEquals("Pacific",team.getDivisionName());
-    }
-
-    @Test
-    public void getConferenceNameTest(){
-        team.setConferenceName("Western");
-        Assertions.assertEquals("Western",team.getConferenceName());
+    public void getPlayersTest(){
+        team.setPlayers(playerArrayList);
+        Assertions.assertTrue(team.getPlayers().size()>0);
 
     }
     @Test
-    public void setConferenceNameTest(){
-        team.setConferenceName("Eastern");
-        Assertions.assertEquals("Eastern",team.getConferenceName());
+    public void setPlayersTest(){
+        team.setPlayers(playerArrayList);
+        Assertions.assertTrue(team.getPlayers().size()!=0);
     }
+
     @Test
     public void checkIfOneCaptainPerTeamErrorTest(){
-        team = new Team("Ontario","Mathew","henry","Atlantic","Western");
         ArrayList<IPlayer> playersList=new ArrayList<>();
         playersList.add(new Player("Henry","forward",false,"Ontario"));
         playersList.add(new Player("Max","goalie",false,"Ontario"));
+        team = new Team("Ontario","Mathew","henry",playersList);
         Exception errorMsg= Assertions.assertThrows(Exception.class,() ->{
             team.checkIfOneCaptainPerTeam(playersList);
         });
@@ -106,10 +96,10 @@ public class TeamTest {
     }
     @Test
     public void checkIfOneCaptainPerTeamTest(){
-        team = new Team("Ontario","Mathew","henry","Atlantic","Western");
         ArrayList<IPlayer> playersList=new ArrayList<>();
         playersList.add(new Player("Henry","forward",true,"Ontario"));
         playersList.add(new Player("Max","goalie",true,"Ontario"));
+        team = new Team("Ontario","Mathew","henry",playersList);
         Exception errorMsg= Assertions.assertThrows(Exception.class,() ->{
             team.checkIfOneCaptainPerTeam(playersList);
         });
@@ -117,36 +107,30 @@ public class TeamTest {
     }
     @Test
     public void checkNumberOfPlayersInTeamTest(){
-        team = new Team("Ontario","Mathew","henry","Atlantic","Western");
-        IParserOutput iParserOutput=new MockParserOutput();
         ArrayList<IPlayer> playersList=new ArrayList<>();
         playersList.add(new Player("Henry","forward",false,"Ontario"));
-        iParserOutput.setPlayers(playersList);
+        team = new Team("Ontario","Mathew","henry",playersList);
         Assertions.assertTrue(team.checkIfSizeOfTeamValid(playersList));
     }
 
     @Test
     public void checkIfTeamValidTest() throws Exception{
-        team = new Team("Ontario","Mathew","henry","Atlantic","Western");
-        IParserOutput iParserOutput=new MockParserOutput();
         ArrayList<IPlayer> playersList=new ArrayList<>();
         playersList.add(new Player("Henry","forward",false,"Ontario"));
         playersList.add(new Player("Max","goalie",true,"Ontario"));
-        iParserOutput.setPlayers(playersList);
-        Assertions.assertTrue(team.checkIfTeamValid(iParserOutput,validate));
+        team = new Team("Ontario","Mathew","henry",playersList);
+        Assertions.assertTrue(team.checkIfTeamValid(validate));
     }
     @Test
     public void checkIfTeamPlayerMoreThan20Test() throws Exception{
-        team = new Team("Ontario","Mathew","henry","Atlantic","Western");
-        IParserOutput iParserOutput=new MockParserOutput();
         ArrayList<IPlayer> playersList=new ArrayList<>();
         playersList.add(new Player("Max","goalie",true,"Ontario"));
         for(int i=0;i<20;i++){
             playersList.add(new Player("Henry","forward",false,"Ontario"));
         }
-        iParserOutput.setPlayers(playersList);
+        team = new Team("Ontario","Mathew","henry",playersList);
         Exception error= Assertions.assertThrows(Exception.class,() ->{
-            team.checkIfTeamValid(iParserOutput,validate);
+            team.checkIfTeamValid(validate);
         });
         Assertions.assertTrue(error.getMessage().contains("Number of players cannot exceed 20 in each team"));
     }

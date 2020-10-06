@@ -2,6 +2,7 @@ package dhl.leagueModel;
 
 import dhl.leagueModel.interfaceModel.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -11,8 +12,7 @@ public class Team implements ITeam {
     private String teamName;
     private String generalManager;
     private String headCoach;
-    private String divisionName;
-    private String conferenceName;
+    private ArrayList<IPlayer> players;
 
     public Team(){
         setDefault();
@@ -22,16 +22,14 @@ public class Team implements ITeam {
         teamName="";
         generalManager="";
         headCoach="";
-        divisionName="";
-        conferenceName="";
+        players=new ArrayList<>();
     }
 
-    public Team(String teamName,String generalManager,String headCoach,String divisionName,String conferenceName){
+    public Team(String teamName,String generalManager,String headCoach, ArrayList<IPlayer> playersList){
         setTeamName(teamName);
         setGeneralManager(generalManager);
         setHeadCoach(headCoach);
-        setDivisionName(divisionName);
-        setConferenceName(conferenceName);
+        setPlayers(playersList);
     }
     public String getTeamName() {
         return teamName;
@@ -55,21 +53,12 @@ public class Team implements ITeam {
         this.headCoach=headCoach;
     }
 
-
-    public String getDivisionName() {
-        return divisionName;
+    public ArrayList<IPlayer> getPlayers(){
+        return players;
     }
-    public void setDivisionName(String divisionName) {
-        this.divisionName=divisionName;
+    public void setPlayers(ArrayList<IPlayer> playersList){
+        this.players=playersList;
     }
-
-    public String getConferenceName() {
-        return conferenceName;
-    }
-    public void setConferenceName(String conferenceName) {
-        this.conferenceName=conferenceName;
-    }
-
 
     public void checkIfOneCaptainPerTeam(List<IPlayer> playerList) throws Exception {
         Predicate<IPlayer> playerPredicate = player -> player.getCaptain() ;
@@ -87,14 +76,13 @@ public class Team implements ITeam {
     }
 
 
-    public boolean checkIfTeamValid(IParserOutput parserOutput,IValidation validation) throws Exception{
-        List<IPlayer> playerList=parserOutput.getPlayers();
+    public boolean checkIfTeamValid(IValidation validation) throws Exception{
         validation.isStringEmpty(teamName,"Team name");
         validation.isStringEmpty(headCoach,"Head Coach name");
         validation.isStringEmpty(generalManager,"General manager name");
-        validation.isListEmpty(playerList,"Players");
-        checkIfOneCaptainPerTeam(playerList);
-        if(this.checkIfSizeOfTeamValid(playerList)==false){
+        validation.isListEmpty(players,"Players");
+        checkIfOneCaptainPerTeam(players);
+        if(this.checkIfSizeOfTeamValid(players)==false){
             throw new Exception("Number of players cannot exceed 20 in each team");
         }
         return true;
