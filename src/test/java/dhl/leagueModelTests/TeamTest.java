@@ -23,7 +23,7 @@ public class TeamTest {
         team= initObj.createTeam();
         validate=new CommonValidation();
         playerArrayList=new ArrayList<>();
-        playerArrayList.add(new Player("Harry","forward",false,"Ontario"));
+        playerArrayList.add(new Player("Harry","forward",false));
     }
 
     @Test
@@ -86,8 +86,8 @@ public class TeamTest {
     @Test
     public void checkIfOneCaptainPerTeamErrorTest(){
         ArrayList<IPlayer> playersList=new ArrayList<>();
-        playersList.add(new Player("Henry","forward",false,"Ontario"));
-        playersList.add(new Player("Max","goalie",false,"Ontario"));
+        playersList.add(new Player("Henry","forward",false));
+        playersList.add(new Player("Max","goalie",false));
         team = new Team("Ontario","Mathew","henry",playersList);
         Exception errorMsg= Assertions.assertThrows(Exception.class,() ->{
             team.checkIfOneCaptainPerTeam(playersList);
@@ -97,8 +97,8 @@ public class TeamTest {
     @Test
     public void checkIfOneCaptainPerTeamTest(){
         ArrayList<IPlayer> playersList=new ArrayList<>();
-        playersList.add(new Player("Henry","forward",true,"Ontario"));
-        playersList.add(new Player("Max","goalie",true,"Ontario"));
+        playersList.add(new Player("Henry","forward",true));
+        playersList.add(new Player("Max","goalie",true));
         team = new Team("Ontario","Mathew","henry",playersList);
         Exception errorMsg= Assertions.assertThrows(Exception.class,() ->{
             team.checkIfOneCaptainPerTeam(playersList);
@@ -108,7 +108,7 @@ public class TeamTest {
     @Test
     public void checkNumberOfPlayersInTeamTest(){
         ArrayList<IPlayer> playersList=new ArrayList<>();
-        playersList.add(new Player("Henry","forward",false,"Ontario"));
+        playersList.add(new Player("Henry","forward",false));
         team = new Team("Ontario","Mathew","henry",playersList);
         Assertions.assertTrue(team.checkIfSizeOfTeamValid(playersList));
     }
@@ -116,17 +116,17 @@ public class TeamTest {
     @Test
     public void checkIfTeamValidTest() throws Exception{
         ArrayList<IPlayer> playersList=new ArrayList<>();
-        playersList.add(new Player("Henry","forward",false,"Ontario"));
-        playersList.add(new Player("Max","goalie",true,"Ontario"));
+        playersList.add(new Player("Henry","forward",false));
+        playersList.add(new Player("Max","goalie",true));
         team = new Team("Ontario","Mathew","henry",playersList);
         Assertions.assertTrue(team.checkIfTeamValid(validate));
     }
     @Test
     public void checkIfTeamPlayerMoreThan20Test() throws Exception{
         ArrayList<IPlayer> playersList=new ArrayList<>();
-        playersList.add(new Player("Max","goalie",true,"Ontario"));
+        playersList.add(new Player("Max","goalie",true));
         for(int i=0;i<20;i++){
-            playersList.add(new Player("Henry","forward",false,"Ontario"));
+            playersList.add(new Player("Henry","forward",false));
         }
         team = new Team("Ontario","Mathew","henry",playersList);
         Exception error= Assertions.assertThrows(Exception.class,() ->{

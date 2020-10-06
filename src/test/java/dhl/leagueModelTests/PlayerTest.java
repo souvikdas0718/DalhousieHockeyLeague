@@ -23,17 +23,15 @@ public class PlayerTest {
     @Test
     public void PlayerDefaultConstructorTest(){
         Assertions.assertTrue(player.getPlayerName().isEmpty());
-        Assertions.assertTrue(player.getTeamName().isEmpty());
         Assertions.assertEquals("",player.getPosition() );
     }
 
     @Test
     public void PlayerTest(){
-        IPlayer player= new Player("Harry","forward",false,"Ontario");
+        IPlayer player= new Player("Harry","forward",false);
         Assertions.assertEquals("forward",player.getPosition() );
         Assertions.assertEquals("Harry",player.getPlayerName() );
         Assertions.assertFalse(player.getCaptain() );
-        Assertions.assertEquals("Ontario",player.getTeamName() );
     }
     @Test
     public void getPlayerIdTest(){
@@ -75,18 +73,6 @@ public class PlayerTest {
     @Test
     public void getPositionEmptyTest(){
         Assertions.assertEquals("",player.getPosition());
-    }
-
-    @Test
-    public void getTeamNameTest(){
-        player.setTeamName("Dallas Stars");
-        Assertions.assertEquals("Dallas Stars",player.getTeamName());
-
-    }
-    @Test
-    public void setTeamNameTest(){
-        player.setTeamName("Toronto Maple Leaves");
-        Assertions.assertEquals("Toronto Maple Leaves",player.getTeamName());
     }
 
     @Test
