@@ -46,8 +46,8 @@ public class Player implements IPlayer {
                 this.position=PlayerPosition.FORWARD;
                 break;
             }
-            case "defence":{
-                this.position=PlayerPosition.DEFENCE;
+            case "defense":{
+                this.position=PlayerPosition.DEFENSE;
                 break;
             }
         }
@@ -83,7 +83,7 @@ public class Player implements IPlayer {
             throw new Exception("Player name cannot be empty");
         }
         if(this.isPlayerPositionInvalid()){
-            throw new Exception("Player position must be goalie or forward or defence");
+            throw new Exception("Player position must be goalie or forward or defense");
         }
         if(!this.isCaptainValueBoolean()){
             throw new Exception("Captain value must be true or false");
