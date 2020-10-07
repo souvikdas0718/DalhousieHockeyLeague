@@ -9,7 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class LeagueObjectModelData {
+public class LeagueObjectModelData implements ILeagueObjectModelData{
 
     public LeagueObjectModelData(){
         createconnection();

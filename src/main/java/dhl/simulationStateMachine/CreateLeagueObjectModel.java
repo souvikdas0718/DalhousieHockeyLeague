@@ -1,10 +1,7 @@
 package dhl.simulationStateMachine;
 
 import dhl.leagueModel.*;
-import dhl.leagueModel.interfaceModel.IConference;
-import dhl.leagueModel.interfaceModel.IDivision;
-import dhl.leagueModel.interfaceModel.IPlayer;
-import dhl.leagueModel.interfaceModel.ITeam;
+import dhl.leagueModel.interfaceModel.*;
 import dhl.simulationStateMachine.Interface.ICreateLeagueObjectModel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -15,30 +12,35 @@ import java.util.Iterator;
 public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
 
     JSONObject jsonLeagueObject = null;
+    IValidation validationObject;
 
     public CreateLeagueObjectModel(JSONObject jsonLeagueObject){
         this.jsonLeagueObject = jsonLeagueObject;
     }
 
-    public LeagueObjectModel getLeagueObjectModel(){
+    public LeagueObjectModel getLeagueObjectModel() throws Exception {
 
         String leagueName= (String) jsonLeagueObject.get("leagueName");
         ArrayList<IConference> conferenceObjectList = new ArrayList<>();
         ArrayList<IPlayer> freeAgentObjectList = new ArrayList<>();
+        validationObject = new CommonValidation();
 
-        if(jsonLeagueObject.get("conferences") instanceof JSONArray){
-            conferenceObjectList = getConcferenceArrayList((JSONArray) jsonLeagueObject.get("conferences"));
-        }else{
-            System.out.println("Conference Array Not Found");
+        try {
+            if (jsonLeagueObject.get("conferences") instanceof JSONArray) {
+                conferenceObjectList = getConcferenceArrayList((JSONArray) jsonLeagueObject.get("conferences"));
+            } else {
+                System.out.println("Conference Array Not Found");
+            }
+            if (jsonLeagueObject.get("freeAgents") instanceof JSONArray) {
+                freeAgentObjectList = getPlayerArrayList((JSONArray) jsonLeagueObject.get("freeAgents"));
+
+            } else {
+                System.out.println("No free Agents");
+            }
+        }catch (Exception e){
+            System.out.println(e);
+            System.exit(0);
         }
-
-        if(jsonLeagueObject.get("freeAgents") instanceof JSONArray){
-            freeAgentObjectList = getPlayerArrayList((JSONArray) jsonLeagueObject.get("freeAgents"));
-
-        }else{
-            System.out.println("No free Agents");
-        }
-
         LeagueObjectModel leagueObjectModel = new LeagueObjectModel(
                 leagueName,
                 conferenceObjectList,
@@ -47,70 +49,83 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
         return leagueObjectModel;
     }
 
-    public ArrayList<IConference> getConcferenceArrayList(JSONArray conferenceJsonArray){
+    public ArrayList<IConference> getConcferenceArrayList(JSONArray conferenceJsonArray) throws Exception {
         Iterator<?> conferenceListIterator = (conferenceJsonArray).iterator();
-        ArrayList<IConference> conferencesListToReturn = new ArrayList<>();
+        ArrayList<IConference> conferencesListToReturn = new ArrayList<IConference>();
         while(conferenceListIterator.hasNext()){
             JSONObject conferenceJsonObject = (JSONObject) conferenceListIterator.next();
             Conference conferenceObject = new Conference(
                     (String) conferenceJsonObject.get("conferenceName"),
                     getDivisionObjectArrayList( (JSONArray)conferenceJsonObject.get("divisions"))
             );
-            conferencesListToReturn.add(conferenceObject);
-            System.out.println("Added Confrenct Object: "+ (String) conferenceJsonObject.get("conferenceName"));
+            if(conferenceObject.checkIfConferenceValid(validationObject)) {
+                conferencesListToReturn.add(conferenceObject);
+                System.out.println("Added Confrenct Object: " + (String) conferenceJsonObject.get("conferenceName"));
+            }
         }
 
         return conferencesListToReturn;
     }
 
-    public ArrayList<IDivision> getDivisionObjectArrayList(JSONArray divisionJsonArray){
+    public ArrayList<IDivision> getDivisionObjectArrayList(JSONArray divisionJsonArray) throws Exception{
         Iterator<?> divisionListIterator = (divisionJsonArray).iterator();
-        ArrayList<IDivision> divisonListToReturn = new ArrayList<>();
+        ArrayList<IDivision> divisonListToReturn = new ArrayList<IDivision>();
         while(divisionListIterator.hasNext()){
             JSONObject divisionJsonObject = (JSONObject) divisionListIterator.next();
             Division divisionObject = new Division(
                     (String) divisionJsonObject.get("divisionName"),
                     getTeamObjectArrayList( (JSONArray)divisionJsonObject.get("teams"))
             );
-            divisonListToReturn.add(divisionObject);
-            System.out.println("Added Division Object: "+ (String) divisionJsonObject.get("divisionName"));
+
+            if(divisionObject.checkIfDivisionValid(validationObject)){
+                divisonListToReturn.add(divisionObject);
+                System.out.println("Added Division Object: "+ (String) divisionJsonObject.get("divisionName"));
+            }
         }
 
         return divisonListToReturn;
 
     }
-    public ArrayList<ITeam> getTeamObjectArrayList(JSONArray TeamJsonArray){
+    public ArrayList<ITeam> getTeamObjectArrayList(JSONArray TeamJsonArray) throws Exception {
         Iterator<?> teamListIterator = (TeamJsonArray).iterator();
-        ArrayList<ITeam> TeamListToReturn = new ArrayList<>();
+        ArrayList<ITeam> TeamListToReturn = new ArrayList<ITeam>();
         while(teamListIterator.hasNext()){
             JSONObject teamJsonObject = (JSONObject) teamListIterator.next();
-            Team teamObject = new Team(
+            ITeam teamObject = new Team(
                     (String) teamJsonObject.get("teamName"),
                     (String) teamJsonObject.get("generalManager"),
                     (String) teamJsonObject.get("headCoach"),
-                    getPlayerArrayList( (JSONArray) teamJsonObject.get("teams"))
+                    getPlayerArrayList( (JSONArray) teamJsonObject.get("players"))
             );
-            TeamListToReturn.add(teamObject);
-            System.out.println("Added Division Object: "+ (String) teamJsonObject.get("teamName"));
+            if (teamObject.checkIfTeamValid(validationObject)){
+                TeamListToReturn.add(teamObject);
+                System.out.println("Added Team Object: "+ (String) teamJsonObject.get("teamName"));
+            }
         }
 
         return TeamListToReturn;
     }
 
-    public ArrayList<IPlayer> getPlayerArrayList(JSONArray PlayerJsonArray){
-        Iterator<?> playerListIterator = PlayerJsonArray.iterator();
-        ArrayList<IPlayer> playerListToReturn = new ArrayList<>();
+    public ArrayList<IPlayer> getPlayerArrayList(JSONArray playerJsonArray) throws Exception {
+        //System.out.println(playerJsonArray);
+        Iterator<?> playerListIterator = playerJsonArray.iterator();
+        ArrayList<IPlayer> playerListToReturn = new ArrayList<IPlayer>();
 
         while(playerListIterator.hasNext()){
             JSONObject playerJsonObject = (JSONObject) playerListIterator.next();
-            // TODO: 06-10-2020 Update new Player() with
-            //  Player playerOb = new Player(playerJsonObject.get("playerName") ,
-            //                    playerJsonObject.get("position") ,
-            //                    playerJsonObject.get("captain"));
 
-            Player playerOb = new Player();
-
-            playerListToReturn.add(playerOb);
+            IPlayer playerOb = new Player((String) playerJsonObject.get("playerName") ,
+                    (String) playerJsonObject.get("position") ,
+                    (Boolean) playerJsonObject.get("captain"));
+            System.out.println(
+                    (String) playerJsonObject.get("playerName") + " " +
+                    (String) playerJsonObject.get("position") + " " +
+                    (Boolean) playerJsonObject.get("captain")+" "
+            );
+            if(playerOb.checkPlayerValid()){
+                playerListToReturn.add(playerOb);
+                System.out.println("Added Player Object: "+ (String) playerOb.getPlayerName());
+            }
         }
         return playerListToReturn;
     }

@@ -55,61 +55,6 @@
         }
 
       ]
-    },
-    {
-      "conferenceName": "Western Conference",
-      "divisions": [
-        {
-          "divisionName": "Atlantic",
-          "teams": [
-            {
-              "teamName": "Boston",
-              "generalManager": "Mister Fred",
-              "headCoach": "Mary Smith",
-              "players": [
-                {
-                  "playerName": "Player One",
-                  "position": "forward",
-                  "captain": true
-                },
-                {
-                  "playerName": "Player Two",
-                  "position": "defense",
-                  "captain": false
-                },
-                {
-                  "playerName": "Player Three",
-                  "position": "goalie",
-                  "captain": false
-                }
-              ]
-            },
-            {
-              "teamName": "Detroit",
-              "generalManager": "Steve Rogers",
-              "headCoach": "Bucky",
-              "players": [
-                {
-                  "playerName": "Player four",
-                  "position": "forward",
-                  "captain": true
-                },
-                {
-                  "playerName": "Player five",
-                  "position": "defense",
-                  "captain": false
-                },
-                {
-                  "playerName": "Player Six",
-                  "position": "goalie",
-                  "captain": false
-                }
-              ]
-            }
-          ]
-        }
-
-      ]
     }
   ],
   "freeAgents": [
