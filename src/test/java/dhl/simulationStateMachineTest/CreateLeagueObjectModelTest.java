@@ -27,9 +27,6 @@ public class CreateLeagueObjectModelTest {
     @Test
     public void CreatePlayerObjectTest(){
 
-
-        
-
         assertTrue(true);
     }
     public JSONArray getDivisionObjectArrayList(JSONArray divisionsArray){return null;}
