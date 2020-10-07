@@ -49,7 +49,7 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
             });
         });
         obj.getFreeAgents().forEach((e) -> {
-            System.out.println(e.getPlayerName());
+
             insertPlayer(e.getPlayerName(),e.getPosition(),e.isCaptainValueBoolean(), true, 0,leagueId);
         });
     }
