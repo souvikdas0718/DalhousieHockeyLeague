@@ -23,8 +23,8 @@ public class DivisionTest {
         division= initObj.createDivision();
         validate=new CommonValidation();
         ArrayList<IPlayer> playersList=new ArrayList<>();
-        playersList.add(new Player("Henry","forward",false,"Ontario"));
-        playersList.add(new Player("Max","goalie",true,"Ontario"));
+        playersList.add(new Player("Henry","forward",false));
+        playersList.add(new Player("Max","goalie",true));
         ITeam team = new Team("Ontario","Mathew","henry",playersList);
         ArrayList<ITeam> teamArrayList=new ArrayList<>();
         teamArrayList.add(team);
