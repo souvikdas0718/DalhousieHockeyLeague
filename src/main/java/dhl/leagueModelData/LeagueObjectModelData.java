@@ -1,6 +1,6 @@
 package dhl.leagueModelData;
 
-import dhl.leagueModel.Conference;
+import dhl.leagueModel.*;
 import dhl.leagueModel.interfaceModel.*;
 
 import java.sql.*;
@@ -9,7 +9,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class LeagueObjectModelData implements ILeagueObjectModelData {
+public class LeagueObjectModelData {
+
     public LeagueObjectModelData(){
         createconnection();
     }
@@ -30,22 +31,18 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
     public void insertLeagueModel(ILeagueObjectModel obj) {
         int leagueId = insertLeague(obj.getLeagueName());
         obj.getConferences().forEach((a)-> {
-            System.out.println(a.getConferenceName());
             ArrayList<IDivision> arrDiv = a.getDivisions();
             int finalConferenceId = insertConference(a.getConferenceName(), leagueId);
 
             arrDiv.forEach((b)->{
-                System.out.println(b.getDivisionName());
                 ArrayList<ITeam> arrTeam = b.getTeams();
                 int finalDivisionId = insertDivision(b.getDivisionName(), finalConferenceId, leagueId);
 
                 arrTeam.forEach((c)->{
-                    System.out.println(c.getTeamName());
                     ArrayList<IPlayer> arrPlayer = c.getPlayers();
                     int finalTeamId = insertTeam(c.getTeamName(), c.getGeneralManager(), c.getHeadCoach(), finalDivisionId, leagueId);
 
                     arrPlayer.forEach((d)->{
-                        System.out.println(d.getPlayerName());
                         insertPlayer(d.getPlayerName(),d.getPosition(),d.isCaptainValueBoolean(), false, finalTeamId,leagueId);
                     });
                 });
@@ -68,10 +65,7 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
             stmt.registerOutParameter(2, java.sql.Types.INTEGER);
             Boolean hasResult = stmt.execute();
             if(hasResult){
-                System.out.println("Success");
                 leagueId = stmt.getInt(2);
-                System.out.println("id = " + leagueId);
-
             }
             else {
                 throw new Exception("Data not inserted properly");
@@ -94,9 +88,7 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
             stmt.registerOutParameter(3, java.sql.Types.INTEGER);
             Boolean hasResult = stmt.execute();
             if(hasResult){
-                System.out.println("Success");
                 conferenceId = stmt.getInt(3);
-                System.out.println("id = " + conferenceId);
             }
             else {
                 throw new Exception("Data not inserted properly");
@@ -120,9 +112,7 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
             stmt.registerOutParameter(4, java.sql.Types.INTEGER);
             Boolean hasResult = stmt.execute();
             if(hasResult){
-                System.out.println("Success");
                 divisionId = stmt.getInt(4);
-                System.out.println("id = " + divisionId);
             }
             else {
                 throw new Exception("Data not inserted properly");
@@ -148,9 +138,7 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
             stmt.registerOutParameter(6, java.sql.Types.INTEGER);
             Boolean hasResult = stmt.execute();
             if(hasResult) {
-                System.out.println("Success");
                 teamId = stmt.getInt(6);
-                System.out.println("id = " + teamId);
             }
             else {
                 throw new Exception("Data not inserted properly");
@@ -177,9 +165,7 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
             stmt.registerOutParameter(7, java.sql.Types.INTEGER);
             Boolean hasResult = stmt.execute();
             if(hasResult){
-                System.out.println("Success");
                 playerId = stmt.getInt(7);
-                System.out.println("id = " + playerId);
             }
             else {
                 throw new Exception("Data not inserted properly");
@@ -202,9 +188,7 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
             stmt.registerOutParameter(2, Types.BOOLEAN);
             Boolean hasResult = stmt.execute();
             if(hasResult){
-                System.out.println("Success");
                 isexist = stmt.getBoolean(2);
-                System.out.println("id = " + isexist);
             }
             stmt.close();
         } catch (SQLException throwables) {
@@ -225,9 +209,7 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
             stmt.registerOutParameter(3, Types.BOOLEAN);
             Boolean hasResult = stmt.execute();
             if(hasResult){
-                System.out.println("Success");
                 isexist = stmt.getBoolean(3);
-                System.out.println("id = " + isexist);
             }
             stmt.close();
         } catch (SQLException throwables) {
@@ -237,48 +219,52 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
         }
         return isexist;
     }
-    public ILeagueObjectModel loadLeagueModel(String leaguename){
+    public ILeagueObjectModel loadLeagueModel(String leagueName, String conferenceName, String divisionName, String teamName){
         dhl.leagueModel.LeagueObjectModel obj = new dhl.leagueModel.LeagueObjectModel();
         try {
             CallableStatement stmt = null;
-            stmt = con.prepareCall("{call loadLeagueModel(?)}");
-            stmt.setString(1, leaguename);
+            stmt = con.prepareCall("{call loadLeagueModel(?,?,?,?)}");
+            stmt.setString(1, leagueName);
+            stmt.setString(2, conferenceName);
+            stmt.setString(3, divisionName);
+            stmt.setString(4, teamName);
             stmt.execute();
 
             ResultSet rs = stmt.getResultSet();
+
+            ArrayList<IPlayer> playerarr = new ArrayList<>();
             if (rs.next()) {
-                obj.leagueName = rs.getString("leagueName");
-            }
-            if (stmt.getMoreResults()) {
-//                rs = stmt.getResultSet();
-//                while (rs.next()) {
-//                    IConference conference1=new Conference(rs.getString("conferenceName"));
-//                    ArrayList<IConference> conferences= new ArrayList<>();
-//                    obj.conferences
-//                }
-            }
-            if (stmt.getMoreResults()) {
                 rs = stmt.getResultSet();
+
                 while (rs.next()) {
-                    System.out.println(rs.getString("divisionName"));
-                    //System.out.println(rs.getString("pass"));
+                    IPlayer player = new Player(rs.getString("playerName"),rs.getString("position"),rs.getBoolean("isCaptain"));
+                    playerarr.add(player);
                 }
             }
+            ArrayList<ITeam> teamarr = new ArrayList<>();
             if (stmt.getMoreResults()) {
                 rs = stmt.getResultSet();
+
                 while (rs.next()) {
-                    System.out.println(rs.getString("teamName"));
-                    //System.out.println(rs.getString("pass"));
+                    ITeam team = new Team(teamName,
+                                rs.getString("generalManager"),rs.getString("headCoach"),playerarr);
+                    teamarr.add(team);
                 }
             }
-            if (stmt.getMoreResults()) {
-                rs = stmt.getResultSet();
-                while (rs.next()) {
-                    System.out.println(rs.getString("playerName"));
-                    //System.out.println(rs.getString("pass"));
-                }
-            }
+            ArrayList<IDivision> divisionarr = new ArrayList<>();
+
+            IDivision division = new Division(divisionName,teamarr);
+            divisionarr.add(division);
+
+            ArrayList<IConference> conferencearr = new ArrayList<>();
+            IConference conference = new Conference(conferenceName,divisionarr);
+            conferencearr.add(conference);
+
             stmt.close();
+
+            obj.leagueName = leagueName;
+            obj.conferences = conferencearr;
+            obj.freeAgents = new ArrayList<IPlayer>();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } catch (Exception e) {
@@ -286,4 +272,5 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
         }
         return obj;
     }
+
 }
