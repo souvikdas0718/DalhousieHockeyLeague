@@ -63,7 +63,7 @@ public class Team implements ITeam {
     public void checkIfOneCaptainPerTeam(List<IPlayer> playerList) throws Exception {
         Predicate<IPlayer> playerPredicate = player -> player.getCaptain() ;
         List<IPlayer> captainList=playerList.stream().filter(playerPredicate).collect(Collectors.toList());
-        if(captainList.size()==0){
+        if(playerList!=null && playerList.size()>0  && captainList.size()==0){
             throw new Exception("Please select captain for the team");
         }
         if(captainList.size()>1){
@@ -80,7 +80,6 @@ public class Team implements ITeam {
         validation.isStringEmpty(teamName,"Team name");
         validation.isStringEmpty(headCoach,"Head Coach name");
         validation.isStringEmpty(generalManager,"General manager name");
-        validation.isListEmpty(players,"Players");
         checkIfOneCaptainPerTeam(players);
         if(this.checkIfSizeOfTeamValid(players)==false){
             throw new Exception("Number of players cannot exceed 20 in each team");

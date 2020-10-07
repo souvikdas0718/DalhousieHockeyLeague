@@ -1,5 +1,6 @@
 package dhl.leagueModelTests;
 
+import dhl.database.ILeagueObjectModelData;
 import dhl.leagueModel.*;
 import dhl.leagueModel.interfaceModel.*;
 import org.junit.jupiter.api.AfterEach;
@@ -58,8 +59,63 @@ public class LeagueObjectModelTest {
 
     @Test
     public void checkIfLeagueModelValidTest() throws Exception{
-
+        ArrayList<IConference> conferences =leagueModelParameterized.getConferences();
+        conferences.add(new Conference("Eastern",new ArrayList<IDivision>()));
+        leagueModelParameterized.setConferences(conferences);
         Assertions.assertTrue(leagueModelParameterized.checkIfLeagueModelValid(validate));
+    }
+    @Test void checkIfLeagueHasEvenConferencesTest(){
+        Exception error=Assertions.assertThrows(Exception.class,() ->{
+            leagueModelParameterized.checkIfLeagueHasEvenConferences();
+        });
+        Assertions.assertTrue(error.getMessage().contains("A League must contain even number of conferences"));
+    }
+
+    @Test void checkUserInputIncorrectLeagueTest() throws Exception{
+        Exception error=Assertions.assertThrows(Exception.class,() ->{
+            leagueModel.checkUserInputForCreateTeams(leagueModelParameterized,"Nhl","Western","Atlantic","Nova Scotia");
+        });
+        Assertions.assertTrue(error.getMessage().contains("League name is not present in file imported."));
+    }
+    @Test void checkUserInputIncorrectConferenceTest() throws Exception{
+        Exception error=Assertions.assertThrows(Exception.class,() ->{
+            leagueModel.checkUserInputForCreateTeams(leagueModelParameterized,"Dhl","Premier","Atlantic","Nova Scotia");
+        });
+        Assertions.assertTrue(error.getMessage().contains("Conference name is not present in file imported"));
+    }
+    @Test void checkUserInputIncorrectDivisionTest() throws Exception{
+        Exception error=Assertions.assertThrows(Exception.class,() ->{
+            leagueModel.checkUserInputForCreateTeams(leagueModelParameterized,"Dhl","Western","Metropolitan","Nova Scotia");
+        });
+        Assertions.assertTrue(error.getMessage().contains("Division name is not present in file imported"));
+    }
+    @Test void checkUserInputTeamAlreadyPresentTest() throws Exception{
+        Exception error=Assertions.assertThrows(Exception.class,() ->{
+            leagueModel.checkUserInputForCreateTeams(leagueModelParameterized,"Dhl","Western","Atlantic","Ontario");
+        });
+        Assertions.assertTrue(error.getMessage().contains("Team name entered is already present in file imported"));
+    }
+
+    @Test void checkUserInputForCreateTeamsTest() throws Exception{
+        Assertions.assertTrue(leagueModel.checkUserInputForCreateTeams(leagueModelParameterized,"Dhl","Western","Atlantic","Nova Scotia"));
+    }
+    @Test void createTeamTest() throws Exception{
+        ILeagueObjectModelData mockdb=new MockDatabase();
+        Assertions.assertEquals("Dhl",leagueModelParameterized.createTeam(mockdb,"Dhl","Western","Atlantic","Nova Scotia","Mathew","Harry").getLeagueName());
+    }
+    @Test void loadTeamTest() throws Exception{
+        ILeagueObjectModelData mockdb=new MockDatabase();
+        Assertions.assertEquals("Dhl",leagueModelParameterized.loadTeam(mockdb,"Dhl","Western","Atlantic","Nova Scotia").getLeagueName());
+    }
+
+    @Test
+    public void checkIfConferenceNamesUniqueInLeagueTest() throws Exception{
+        ArrayList<IConference> conferences =leagueModelParameterized.getConferences();
+        conferences.add(new Conference("Western",new ArrayList<IDivision>()));
+        Exception error=Assertions.assertThrows(Exception.class,() ->{
+            leagueModelParameterized.checkIfLeagueModelValid(validate);
+        });
+        Assertions.assertTrue(error.getMessage().contains("The names of conferences inside a league must be unique"));
     }
     @AfterEach
     public void destroyObject(){
