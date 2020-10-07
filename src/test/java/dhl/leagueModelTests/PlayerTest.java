@@ -62,8 +62,8 @@ public class PlayerTest {
     }
     @Test
     public void setPositionTest(){
-        player.setPosition("defence");
-        Assertions.assertEquals("defence",player.getPosition());
+        player.setPosition("defense");
+        Assertions.assertEquals("defense",player.getPosition());
     }
     @Test
     public void setPositionForwardTest(){
@@ -120,7 +120,7 @@ public class PlayerTest {
         Exception errorMsg=Assertions.assertThrows(Exception.class,() ->{
             player.checkPlayerValid();
         });
-        Assertions.assertTrue(errorMsg.getMessage().contains("Player position must be goalie or forward or defence"));
+        Assertions.assertTrue(errorMsg.getMessage().contains("Player position must be goalie or forward or defense"));
     }
     @Test
     public void checkPlayerCaptainValueValidTest() {

@@ -12,9 +12,9 @@ public enum PlayerPosition {
             return "forward";
         }
     },
-    DEFENCE {
+    DEFENSE {
         public String toString() {
-            return "defence";
+            return "defense";
         }
     }
 

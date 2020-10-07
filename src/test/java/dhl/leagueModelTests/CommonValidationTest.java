@@ -42,7 +42,7 @@ public class CommonValidationTest {
         List<IPlayer> players=new ArrayList<>();
         IPlayer player1=new Player("Rhea","forward",false);
         players.add(player1);
-        IPlayer player2=new Player("Noah","defence",true);
+        IPlayer player2=new Player("Noah","defense",true);
         players.add(player2);
         commonValidation.isListEmpty(players,"players");
        Assertions.assertTrue(players.size()!=0);
