@@ -17,5 +17,4 @@ public class CommonValidation implements IValidation {
             throw new Exception("Please add " +fieldName);
         }
     }
-
 }
