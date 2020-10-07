@@ -23,6 +23,8 @@ public class SimulateState implements GameState {
         int seasonsNumber = 0;
 
         System.out.println("--------------------LETS SIMULATE------------------------");
+        System.out.println(" Selected League: "+ ourGame.getInMemoryLeague().getLeagueName());
+        System.out.println(" Selected Team:" + ourGame.getSelectedTeam().getTeamName());
         System.out.println("How many seasons you wana simulate? ");
         while(seasonsNumber < minSeasons || seasonsNumber > maxSeasons){
             seasonsNumber = sc.nextInt();

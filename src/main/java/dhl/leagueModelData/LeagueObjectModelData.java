@@ -9,7 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class LeagueObjectModelData implements ILeagueObjectModelData{
+public class LeagueObjectModelData implements ILeagueObjectModelData {
 
     public LeagueObjectModelData(){
         createconnection();
@@ -49,7 +49,7 @@ public class LeagueObjectModelData implements ILeagueObjectModelData{
             });
         });
         obj.getFreeAgents().forEach((e) -> {
-            System.out.println(e.getPlayerName());
+
             insertPlayer(e.getPlayerName(),e.getPosition(),e.isCaptainValueBoolean(), true, 0,leagueId);
         });
     }
@@ -190,6 +190,9 @@ public class LeagueObjectModelData implements ILeagueObjectModelData{
             if(hasResult){
                 isexist = stmt.getBoolean(2);
             }
+            else {
+                throw new Exception("Data not inserted properly");
+            }
             stmt.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -211,6 +214,9 @@ public class LeagueObjectModelData implements ILeagueObjectModelData{
             if(hasResult){
                 isexist = stmt.getBoolean(3);
             }
+            else {
+                throw new Exception("Data not inserted properly");
+            }
             stmt.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -219,8 +225,10 @@ public class LeagueObjectModelData implements ILeagueObjectModelData{
         }
         return isexist;
     }
-    public ILeagueObjectModel loadLeagueModel(String leagueName, String conferenceName, String divisionName, String teamName){
+    public ILeagueObjectModel loadLeagueModel(String leagueName, String conferenceName, String divisionName, String teamName) throws Exception {
         dhl.leagueModel.LeagueObjectModel obj = new dhl.leagueModel.LeagueObjectModel();
+        ArrayList<IPlayer> playerarr = new ArrayList<>();
+        ArrayList<ITeam> teamarr = new ArrayList<>();
         try {
             CallableStatement stmt = null;
             stmt = con.prepareCall("{call loadLeagueModel(?,?,?,?)}");
@@ -231,24 +239,28 @@ public class LeagueObjectModelData implements ILeagueObjectModelData{
             stmt.execute();
 
             ResultSet rs = stmt.getResultSet();
-
-            ArrayList<IPlayer> playerarr = new ArrayList<>();
-            if (rs.next()) {
-                rs = stmt.getResultSet();
-
-                while (rs.next()) {
-                    IPlayer player = new Player(rs.getString("playerName"),rs.getString("position"),rs.getBoolean("isCaptain"));
-                    playerarr.add(player);
-                }
+            if (rs.next() == false){
+                throw new Exception("Error loading data");
             }
-            ArrayList<ITeam> teamarr = new ArrayList<>();
-            if (stmt.getMoreResults()) {
-                rs = stmt.getResultSet();
+            else {
 
-                while (rs.next()) {
-                    ITeam team = new Team(teamName,
-                                rs.getString("generalManager"),rs.getString("headCoach"),playerarr);
-                    teamarr.add(team);
+                if (rs.next()) {
+                    rs = stmt.getResultSet();
+
+                    while (rs.next()) {
+                        IPlayer player = new Player(rs.getString("playerName"), rs.getString("position"), rs.getBoolean("isCaptain"));
+                        playerarr.add(player);
+                    }
+                }
+
+                if (stmt.getMoreResults()) {
+                    rs = stmt.getResultSet();
+
+                    while (rs.next()) {
+                        ITeam team = new Team(teamName,
+                                rs.getString("generalManager"), rs.getString("headCoach"), playerarr);
+                        teamarr.add(team);
+                    }
                 }
             }
             ArrayList<IDivision> divisionarr = new ArrayList<>();
@@ -267,8 +279,6 @@ public class LeagueObjectModelData implements ILeagueObjectModelData{
             obj.freeAgents = new ArrayList<IPlayer>();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         return obj;
     }

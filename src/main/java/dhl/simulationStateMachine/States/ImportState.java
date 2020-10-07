@@ -56,10 +56,8 @@ public class ImportState implements GameState {
                 System.out.println(option);
                 break;
             case 2:
-                System.out.println("case :2");
-
                 System.out.print("Enter LeagueName to load from DB: ");
-                String leagueName = sc.nextLine();
+                String leagueName = sc.next();
                 while(leagueName.equals("")){
                     System.out.println("Looks like you didnt add any input please try again: ");
                     leagueName = sc.nextLine();
@@ -72,14 +70,14 @@ public class ImportState implements GameState {
                     conference = sc.nextLine();
                 }
 
-                System.out.print("Enter Division Name");
+                System.out.print("Enter Division Name:  ");
                 String division = sc.nextLine();
                 while(division.equals("")){
                     System.out.println("Looks like you didnt add any input please try again: ");
                     division = sc.nextLine();
                 }
 
-                System.out.println("Enter Team Name");
+                System.out.print("Enter Team Name:  ");
                 String team = sc.nextLine();
                 while(team.equals("")){
                     System.out.println("Looks like you didnt add any input please try again: ");
@@ -89,6 +87,7 @@ public class ImportState implements GameState {
                 try {
                     newInMemoryLeague = newInMemoryLeague.loadTeam(databaseRefrenceOb, leagueName, conference, division, team);
                 }catch(Exception e) {
+                    System.out.println("-----------------------------------------------------------------");
                     System.out.println(e);
                 };
                 for(int i=0; i< newInMemoryLeague.getConferences().size();i++){
@@ -133,5 +132,9 @@ public class ImportState implements GameState {
         }else if (option==2){
             ourGame.setGameState(ourGame.getSimulateState());
         }
+    }
+
+    public void findTeam(LeagueObjectModel newInMemoryLeague){
+        //newInMemoryLeague
     }
 }
