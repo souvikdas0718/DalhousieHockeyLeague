@@ -13,5 +13,5 @@ public interface ILeagueObjectModelData {
 
     public boolean checkIfTeamAlreadyExists(String teamName, String divisionName);
 
-    public ILeagueObjectModel loadLeagueModel(String leaguename);
+    public ILeagueObjectModel loadLeagueModel(String leagueName, String conferenceName, String divisionName, String teamName);
 }
