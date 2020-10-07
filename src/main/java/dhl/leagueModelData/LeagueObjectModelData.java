@@ -225,7 +225,7 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
         }
         return isexist;
     }
-    public ILeagueObjectModel loadLeagueModel(String leagueName, String conferenceName, String divisionName, String teamName){
+    public ILeagueObjectModel loadLeagueModel(String leagueName, String conferenceName, String divisionName, String teamName) throws Exception {
         dhl.leagueModel.LeagueObjectModel obj = new dhl.leagueModel.LeagueObjectModel();
         ArrayList<IPlayer> playerarr = new ArrayList<>();
         ArrayList<ITeam> teamarr = new ArrayList<>();
@@ -279,8 +279,6 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
             obj.freeAgents = new ArrayList<IPlayer>();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         return obj;
     }
