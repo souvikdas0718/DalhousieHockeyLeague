@@ -22,5 +22,5 @@ public interface ILeagueObjectModel {
     public void checkIfLeagueHasEvenConferences() throws Exception;
     public ILeagueObjectModel createTeam(ILeagueObjectModelData leagueDatabase, String leagueName, String conferenceName, String divisionName, String teamName,
                                          String generalManager, String headCoach) throws Exception;
-    public ILeagueObjectModel loadTeam(ILeagueObjectModelData leagueDatabase,String leagueName,String conferenceName,String divisionName,String teamName);
+    public ILeagueObjectModel loadTeam(ILeagueObjectModelData leagueDatabase,String leagueName,String conferenceName,String divisionName,String teamName) throws Exception;
 }
