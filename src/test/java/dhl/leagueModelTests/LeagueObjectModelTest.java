@@ -1,8 +1,9 @@
 package dhl.leagueModelTests;
 
-import dhl.database.ILeagueObjectModelData;
+
 import dhl.leagueModel.*;
 import dhl.leagueModel.interfaceModel.*;
+import dhl.leagueModelData.ILeagueObjectModelData;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,6 +1,7 @@
 package dhl.leagueModelTests;
 
 import dhl.leagueModel.CommonValidation;
+import dhl.leagueModel.Player;
 import dhl.leagueModel.interfaceModel.IPlayer;
 import dhl.leagueModel.interfaceModel.IValidation;
 import org.junit.jupiter.api.AfterEach;
@@ -29,12 +30,22 @@ public class CommonValidationTest {
 
 
     @Test
-    public void isListEmpty(){
+    public void isListEmptyTest(){
         Exception error= Assertions.assertThrows(Exception.class,() ->{
             List<IPlayer> players=new ArrayList<>();
             commonValidation.isListEmpty(players,"players");
         });
         Assertions.assertTrue(error.getMessage().contains("Please add players"));
+    }
+    @Test
+    public void isListNotEmptyTest() throws Exception{
+        List<IPlayer> players=new ArrayList<>();
+        IPlayer player1=new Player("Rhea","forward",false);
+        players.add(player1);
+        IPlayer player2=new Player("Noah","defence",true);
+        players.add(player2);
+        commonValidation.isListEmpty(players,"players");
+       Assertions.assertTrue(players.size()!=0);
     }
 
     @AfterEach()

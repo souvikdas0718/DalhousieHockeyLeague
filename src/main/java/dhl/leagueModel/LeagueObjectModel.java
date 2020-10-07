@@ -1,7 +1,7 @@
 package dhl.leagueModel;
 
-import dhl.database.ILeagueObjectModelData;
 import dhl.leagueModel.interfaceModel.*;
+import dhl.leagueModelData.ILeagueObjectModelData;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -125,7 +125,7 @@ public class LeagueObjectModel implements ILeagueObjectModel {
     }
 
     public ILeagueObjectModel loadTeam(ILeagueObjectModelData leagueDatabase,String leagueName,String conferenceName,String divisionName,String teamName){
-        return leagueDatabase.loadTeam(leagueName,conferenceName,divisionName,teamName);
+        return leagueDatabase.loadLeagueModel(leagueName,conferenceName,divisionName,teamName);
     }
 
 

@@ -1,8 +1,9 @@
 package dhl.leagueModelTests;
 
-import dhl.database.ILeagueObjectModelData;
+
 import dhl.leagueModel.*;
 import dhl.leagueModel.interfaceModel.*;
+import dhl.leagueModelData.ILeagueObjectModelData;
 
 import java.util.ArrayList;
 
@@ -14,7 +15,7 @@ public class MockDatabase implements ILeagueObjectModelData {
     }
 
     @Override
-    public ILeagueObjectModel loadTeam(String leagueName, String conferenceName, String divisionName, String teamName) {
+    public ILeagueObjectModel loadLeagueModel(String leagueName, String conferenceName, String divisionName, String teamName) {
         ArrayList<IPlayer> playersList=new ArrayList<>();
         playersList.add(new Player("Henry","forward",false));
         playersList.add(new Player("Max","goalie",true));
@@ -30,5 +31,15 @@ public class MockDatabase implements ILeagueObjectModelData {
         ArrayList<IPlayer> freeAgentsList=new ArrayList<>();
         ILeagueObjectModel leagueModel=new LeagueObjectModel("Dhl",conferences,freeAgentsList);
         return leagueModel;
+    }
+
+    @Override
+    public boolean checkIfLeagueAlreadyExists(String leagueName) {
+        return false;
+    }
+
+    @Override
+    public boolean checkIfTeamAlreadyExists(String teamName, String divisionName) {
+        return false;
     }
 }

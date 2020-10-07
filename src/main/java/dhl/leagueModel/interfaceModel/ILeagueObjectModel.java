@@ -1,6 +1,8 @@
 package dhl.leagueModel.interfaceModel;
 
-import dhl.database.ILeagueObjectModelData;
+
+
+import dhl.leagueModelData.ILeagueObjectModelData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
