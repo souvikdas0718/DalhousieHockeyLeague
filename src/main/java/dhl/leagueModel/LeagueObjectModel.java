@@ -52,6 +52,7 @@ public class LeagueObjectModel implements ILeagueObjectModel {
         return true;
     }
     public void checkIfLeagueHasEvenConferences() throws Exception{
+        System.out.println("---------------" + conferences.size());
         if(conferences!=null && conferences.size()%2!=0){
             throw new Exception("A League must contain even number of conferences");
         }

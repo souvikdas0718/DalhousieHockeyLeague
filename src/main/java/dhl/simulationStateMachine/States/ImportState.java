@@ -1,5 +1,6 @@
 package dhl.simulationStateMachine.States;
 
+import dhl.leagueModel.LeagueObjectModel;
 import dhl.leagueModel.interfaceModel.IConference;
 import dhl.leagueModel.interfaceModel.IDivision;
 import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
@@ -18,14 +19,14 @@ import java.util.Scanner;
 public class ImportState implements GameState {
 
     String validFilePath;
-    ILeagueObjectModel NewInMemoryLeague;
+    ILeagueObjectModel newInMemoryLeague;
     int option = -1;
     GameContext ourGame;
 
     public ImportState(GameContext newGame) {
         ourGame = newGame;
         validFilePath = null;
-        NewInMemoryLeague = null;
+        newInMemoryLeague = new LeagueObjectModel();
     }
 
     @Override
@@ -85,10 +86,13 @@ public class ImportState implements GameState {
                     team = sc.nextLine();
                 }
                 ILeagueObjectModelData databaseRefrenceOb = new LeagueObjectModelData();
-                NewInMemoryLeague = NewInMemoryLeague.loadTeam(databaseRefrenceOb , leagueName, conference, division,team);
-
-                for(int i=0; i< NewInMemoryLeague.getConferences().size();i++){
-                    IConference ourConference = NewInMemoryLeague.getConferences().get(i);
+                try {
+                    newInMemoryLeague = newInMemoryLeague.loadTeam(databaseRefrenceOb, leagueName, conference, division, team);
+                }catch(Exception e) {
+                    System.out.println(e);
+                };
+                for(int i=0; i< newInMemoryLeague.getConferences().size();i++){
+                    IConference ourConference = newInMemoryLeague.getConferences().get(i);
                     if (ourConference.getConferenceName().equals(conference)){
                         for(int j=0;j< ourConference.getDivisions().size();j++){
                             IDivision ourDivision = ourConference.getDivisions().get(i);
@@ -114,15 +118,15 @@ public class ImportState implements GameState {
             JSONObject leagueJsonObject = new ImportJsonFile(validFilePath).getJsonObject();
             //System.out.println(leagueJsonObject);
             CreateLeagueObjectModel createLeagueObjectModel = new CreateLeagueObjectModel(leagueJsonObject);
-            NewInMemoryLeague = createLeagueObjectModel.getLeagueObjectModel();
-            System.out.println(NewInMemoryLeague.getLeagueName()+ "  Imported from the Json");
+            newInMemoryLeague = createLeagueObjectModel.getLeagueObjectModel();
+            System.out.println(newInMemoryLeague.getLeagueName()+ "  Imported from the Json");
         }else{}
     }
 
     @Override
     public void stateExitProcess() {
         Scanner sc = new Scanner(System.in);
-        ourGame.setInMemoryLeague(NewInMemoryLeague);
+        ourGame.setInMemoryLeague(newInMemoryLeague);
         //System.out.println("ExitState:  " + ourGame.getInMemoryLeague().getLeagueName());
         if (option==1) {
             ourGame.setGameState(ourGame.getCreateTeamState());

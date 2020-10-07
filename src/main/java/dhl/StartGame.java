@@ -11,7 +11,6 @@ public class StartGame {
             ourGame.stateEntryProcess();
             ourGame.stateProcess();
             ourGame.stateExitProcess();
-
         }
 
         System.out.println("Thanks for Playing");

@@ -52,8 +52,159 @@
               ]
             }
           ]
+        },
+        {
+          "divisionName": "Pacific",
+          "teams": [
+            {
+              "teamName": "BostonA",
+              "generalManager": "AAMister Fred",
+              "headCoach": "Mary SAAmith",
+              "players": [
+                {
+                  "playerName": "AAPlayer One",
+                  "position": "forward",
+                  "captain": true
+                },
+                {
+                  "playerName": "AAPlayer Two",
+                  "position": "defense",
+                  "captain": false
+                },
+                {
+                  "playerName": "AAPlayer Three",
+                  "position": "goalie",
+                  "captain": false
+                }
+              ]
+            },
+            {
+              "teamName": "DetroitAA",
+              "generalManager": "AASteve Rogers",
+              "headCoach": "BuckyAA",
+              "players": [
+                {
+                  "playerName": "APlayer four",
+                  "position": "forward",
+                  "captain": true
+                },
+                {
+                  "playerName": "APlayer five",
+                  "position": "defense",
+                  "captain": false
+                },
+                {
+                  "playerName": "APlayer Six",
+                  "position": "goalie",
+                  "captain": false
+                }
+              ]
+            }
+          ]
         }
-
+      ]
+    },
+    {
+      "conferenceName": "aaEastern Conference",
+      "divisions": [
+        {
+          "divisionName": "AtlanticTest",
+          "teams": [
+            {
+              "teamName": "BostonTest",
+              "generalManager": "Mister Fred",
+              "headCoach": "Mary Smith",
+              "players": [
+                {
+                  "playerName": "Player One",
+                  "position": "forward",
+                  "captain": true
+                },
+                {
+                  "playerName": "Player Two",
+                  "position": "defense",
+                  "captain": false
+                },
+                {
+                  "playerName": "Player Three",
+                  "position": "goalie",
+                  "captain": false
+                }
+              ]
+            },
+            {
+              "teamName": "DetroitTest",
+              "generalManager": "Steve Rogers",
+              "headCoach": "Bucky",
+              "players": [
+                {
+                  "playerName": "Player four",
+                  "position": "forward",
+                  "captain": true
+                },
+                {
+                  "playerName": "Player five",
+                  "position": "defense",
+                  "captain": false
+                },
+                {
+                  "playerName": "Player Six",
+                  "position": "goalie",
+                  "captain": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "divisionName": "PacificTest",
+          "teams": [
+            {
+              "teamName": "BostonA",
+              "generalManager": "AAMister Fred",
+              "headCoach": "Mary SAAmith",
+              "players": [
+                {
+                  "playerName": "AAPlayer One",
+                  "position": "forward",
+                  "captain": true
+                },
+                {
+                  "playerName": "AAPlayer Two",
+                  "position": "defense",
+                  "captain": false
+                },
+                {
+                  "playerName": "AAPlayer Three",
+                  "position": "goalie",
+                  "captain": false
+                }
+              ]
+            },
+            {
+              "teamName": "DetroitAA",
+              "generalManager": "AASteve Rogers",
+              "headCoach": "BuckyAA",
+              "players": [
+                {
+                  "playerName": "APlayer four",
+                  "position": "forward",
+                  "captain": true
+                },
+                {
+                  "playerName": "APlayer five",
+                  "position": "defense",
+                  "captain": false
+                },
+                {
+                  "playerName": "APlayer Six",
+                  "position": "goalie",
+                  "captain": false
+                }
+              ]
+            }
+          ]
+        }
       ]
     }
   ],

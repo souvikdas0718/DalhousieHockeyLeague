@@ -24,6 +24,7 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
         ArrayList<IConference> conferenceObjectList = new ArrayList<>();
         ArrayList<IPlayer> freeAgentObjectList = new ArrayList<>();
         validationObject = new CommonValidation();
+        LeagueObjectModel leagueObjectModel = null;
 
         try {
             if (jsonLeagueObject.get("conferences") instanceof JSONArray) {
@@ -37,15 +38,18 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
             } else {
                 System.out.println("No free Agents");
             }
+            leagueObjectModel = new LeagueObjectModel(
+                    leagueName,
+                    conferenceObjectList,
+                    freeAgentObjectList
+            );
+
+            leagueObjectModel.checkIfLeagueModelValid(validationObject);
         }catch (Exception e){
             System.out.println(e);
             System.exit(0);
         }
-        LeagueObjectModel leagueObjectModel = new LeagueObjectModel(
-                leagueName,
-                conferenceObjectList,
-                freeAgentObjectList
-        );
+
         return leagueObjectModel;
     }
 
@@ -63,7 +67,7 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
                 System.out.println("Added Confrenct Object: " + (String) conferenceJsonObject.get("conferenceName"));
             }
         }
-
+        System.out.println(conferencesListToReturn.size());
         return conferencesListToReturn;
     }
 
@@ -117,11 +121,7 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
             IPlayer playerOb = new Player((String) playerJsonObject.get("playerName") ,
                     (String) playerJsonObject.get("position") ,
                     (Boolean) playerJsonObject.get("captain"));
-            System.out.println(
-                    (String) playerJsonObject.get("playerName") + " " +
-                    (String) playerJsonObject.get("position") + " " +
-                    (Boolean) playerJsonObject.get("captain")+" "
-            );
+
             if(playerOb.checkPlayerValid()){
                 playerListToReturn.add(playerOb);
                 System.out.println("Added Player Object: "+ (String) playerOb.getPlayerName());
