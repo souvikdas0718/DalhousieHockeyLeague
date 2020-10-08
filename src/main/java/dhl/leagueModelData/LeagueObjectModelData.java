@@ -27,39 +27,67 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
         }
     }
 
-    public void insertLeagueModel(ILeagueObjectModel obj) {
+    public void insertLeagueModel(ILeagueObjectModel obj) throws Exception {
         int leagueId = insertLeague(obj.getLeagueName());
 
         obj.getConferences().forEach((a)-> {
 
             ArrayList<IDivision> arrDiv = a.getDivisions();
-            int finalConferenceId = insertConference(a.getConferenceName(), leagueId);
+            int finalConferenceId = 0;
+            try {
+                finalConferenceId = insertConference(a.getConferenceName(), leagueId);
+            }
+            catch(Exception ex){
+                throw new RuntimeException(ex);
+            }
 
+            int finalConferenceId1 = finalConferenceId;
             arrDiv.forEach((b)->{
 
                 ArrayList<ITeam> arrTeam = b.getTeams();
-                int finalDivisionId = insertDivision(b.getDivisionName(), finalConferenceId, leagueId);
+                int finalDivisionId = 0;
+                try {
+                    finalDivisionId = insertDivision(b.getDivisionName(), finalConferenceId1, leagueId);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
 
+                int finalDivisionId1 = finalDivisionId;
                 arrTeam.forEach((c)->{
 
                     ArrayList<IPlayer> arrPlayer = c.getPlayers();
-                    int finalTeamId = insertTeam(c.getTeamName(), c.getGeneralManager(), c.getHeadCoach(), finalDivisionId, leagueId);
+                    int finalTeamId = 0;
+                    try {
+                        finalTeamId = insertTeam(c.getTeamName(), c.getGeneralManager(), c.getHeadCoach(), finalDivisionId1, leagueId);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
 
+                    int finalTeamId1 = finalTeamId;
                     arrPlayer.forEach((d)->{
-                        insertPlayer(d.getPlayerName(),d.getPosition(),d.isCaptainValueBoolean(), false, finalTeamId,leagueId);
+                        try {
+                            insertPlayer(d.getPlayerName(),d.getPosition(),d.isCaptainValueBoolean(),
+                                    false, finalTeamId1,leagueId);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
                     });
                 });
             });
         });
 
         obj.getFreeAgents().forEach((e) -> {
-            insertPlayer(e.getPlayerName(),e.getPosition(),e.isCaptainValueBoolean(), true, 0,leagueId);
+            try {
+                insertPlayer(e.getPlayerName(),e.getPosition(),e.isCaptainValueBoolean(), true, 0,leagueId);
+            } catch (Exception exception) {
+                throw new RuntimeException(exception);
+            }
         });
     }
 
-    public int insertLeague(String leagueName) {
+    public int insertLeague(String leagueName) throws Exception {
         int leagueId=0;
-        try {
+
             CallableStatement stmt = null;
             stmt = con.prepareCall("{call insertLeague(?,?)}");
             stmt.setString(1, leagueName);
@@ -75,16 +103,10 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
 
             stmt.close();
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         return leagueId;
     }
 
-    public int insertConference(String conferenceName, int leagudId){
+    public int insertConference(String conferenceName, int leagudId) throws Exception{
         int conferenceId=0;
 
         try {
@@ -106,14 +128,12 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
         return conferenceId;
     }
 
-    public int insertDivision(String divisionName, int conferenceId,int leagueId) {
+    public int insertDivision(String divisionName, int conferenceId,int leagueId) throws Exception {
         int divisionId=0;
 
         try {
@@ -136,14 +156,12 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
         return divisionId;
     }
 
-    public int insertTeam(String teamName, String generalManager, String headCoach, int divisionId,int leagueId)    {
+    public int insertTeam(String teamName, String generalManager, String headCoach, int divisionId,int leagueId)  throws Exception {
         int teamId = 0;
 
         try {
@@ -168,14 +186,12 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
         return teamId;
     }
 
-    public int insertPlayer(String playerName, String playerPosition, boolean isCaptain, boolean isFreeAgent, int teamId, int leagueId )    {
+    public int insertPlayer(String playerName, String playerPosition, boolean isCaptain, boolean isFreeAgent, int teamId, int leagueId )  throws Exception {
         int playerId =0;
 
         try {
@@ -201,8 +217,6 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
         return playerId;

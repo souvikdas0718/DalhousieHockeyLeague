@@ -7,7 +7,7 @@ import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 
 public interface ILeagueObjectModelData {
 
-    public void insertLeagueModel(ILeagueObjectModel conferences);
+    public void insertLeagueModel(ILeagueObjectModel conferences) throws Exception;
 
     public boolean checkIfLeagueAlreadyExists(String leagueName);
 
