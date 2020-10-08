@@ -50,6 +50,8 @@ deploy_develop:
   tags:
     - ugrad
   before_script:
+    - ssh "${DEPLOY_USER}@${DEPLOY_HOST}" "rm ~/$DEPLOY_DIR/*.zip
+    - ssh "${DEPLOY_USER}@${DEPLOY_HOST}" "rm ~/$DEPLOY_DIR/*.properties
     - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
     - echo "$DEPLOY_SSH_KEY" | tr -d '\r' | ssh-add -
