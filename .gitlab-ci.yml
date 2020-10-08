@@ -16,7 +16,7 @@ stages:
 build:
   stage: build
   tags:
-    - ugrad
+    - dalfcs_gitlab_docker_ci
   script:
     - ./gradlew --build-cache assemble
   artifacts:
@@ -28,7 +28,7 @@ build:
 #build_master:
 #  stage: build
 #  tags:
-#    - ugrad
+#    - dalfcs_gitlab_docker_ci
 #  script:
 #    - ./gradlew --build-cache assemble
 #  artifacts:
@@ -42,13 +42,13 @@ test:
   script:
     - ./gradlew check
   tags:
-    - ugrad
+    - dalfcs_gitlab_docker_ci
 
 deploy_develop:
   stage: deploy
   image: ruby:latest
   tags:
-    - ugrad
+    - dalfcs_gitlab_docker_ci
   before_script:
     - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
@@ -70,7 +70,7 @@ deploy_develop:
 #  stage: deploy
 #  image: ruby:latest
 #  tags:
-#    - ugrad
+#    - dalfcs_gitlab_docker_ci
 #  before_script:
 #    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
 #    - eval $(ssh-agent -s)
