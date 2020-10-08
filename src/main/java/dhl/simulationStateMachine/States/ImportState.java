@@ -1,6 +1,8 @@
 package dhl.simulationStateMachine.States;
 
 import dhl.leagueModel.LeagueObjectModel;
+import dhl.leagueModel.interfaceModel.IConference;
+import dhl.leagueModel.interfaceModel.IDivision;
 import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.leagueModel.interfaceModel.ITeam;
 import dhl.leagueModelData.ILeagueObjectModelData;
@@ -74,25 +76,7 @@ public class ImportState implements GameState {
                 }catch(Exception e) {
                     System.out.println(e);
                 };
-/*
-                for(int i=0; i< newInMemoryLeague.getConferences().size();i++){
-                    IConference ourConference = newInMemoryLeague.getConferences().get(i);
-                    if (ourConference.getConferenceName().equals(conference)){
-                        for(int j=0;j< ourConference.getDivisions().size();j++){
-                            IDivision ourDivision = ourConference.getDivisions().get(i);
-                            if(ourDivision.getDivisionName().equals(division)){
-                                for(int k=0; k< ourDivision.getTeams().size();k++){
-                                    ITeam ourTeam = ourDivision.getTeams().get(i);
-                                    if (ourTeam.getTeamName().equals(team)){
-                                        ourGame.setSelectedTeam(ourTeam);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
- */
+                ourGame.setSelectedTeam(findTeam(newInMemoryLeague , team));
                 break;
         }
     }
@@ -104,7 +88,7 @@ public class ImportState implements GameState {
             CreateLeagueObjectModel createLeagueObjectModel = new CreateLeagueObjectModel(leagueJsonObject);
             newInMemoryLeague = createLeagueObjectModel.getLeagueObjectModel();
             System.out.println(newInMemoryLeague.getLeagueName()+ "  Imported from the Json");
-        }else{}
+        }
     }
 
     @Override
@@ -117,8 +101,20 @@ public class ImportState implements GameState {
             ourGame.setGameState(ourGame.getSimulateState());
         }
     }
-    public ITeam findTeam(ILeagueObjectModel InMemoryLeague, String team){
+    public ITeam findTeam(ILeagueObjectModel inMemoryLeague, String teamName){
 
-        return null;
+        ITeam teamObject = null;
+
+        for(IConference conference: inMemoryLeague.getConferences() ){
+            for(IDivision division: conference.getDivisions()){
+                for (ITeam team: division.getTeams()){
+                    if (team.getTeamName().equals(teamName)){
+                        teamObject = team;
+                    }
+                }
+            }
+        }
+
+        return teamObject;
     }
 }

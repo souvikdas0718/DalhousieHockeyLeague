@@ -20,9 +20,9 @@ public class ImportStateTest {
     @Test
     public void findTeamTest(){
         String team = "Ontario";
-        Assertions.assertTrue( testClassObject.findTeam(mock.getLeagueObjectMock() , team) != null);
 
-        Assertions.assertFalse( testClassObject.findTeam(mock.getLeagueObjectMock() , "Wrong Team") == null);
+        Assertions.assertTrue( testClassObject.findTeam(mock.getLeagueObjectMock() , team) != null);
+        Assertions.assertTrue( testClassObject.findTeam(mock.getLeagueObjectMock() , "Wrong Team") == null);
     }
 }
 
