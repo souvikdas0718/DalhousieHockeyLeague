@@ -57,7 +57,7 @@ deploy_develop:
     - echo '{\"dbUserName\":\"${DATABASE_TEST_USERNAME}\"}' >> config.json
     - echo '{\"dbPassword\":\"${DATABASE_TEST_PASSWORD}\"}' >> config.json
     - echo '{\"dbTimeZone\":\"${SERVER_TIMEZONE}\"}' >> config.json
-    - cat config.properties
+    - cat config.json
   artifacts:
     paths:
       - build/libs/*.jar
