@@ -12,7 +12,7 @@ public class DatabaseInitialize {
     public static String dbPassword;
     public static String dbDriver;
 
-    private void loadDBProperties(){
+    private void loadDBProperties() {
         InputStream propertiesStream = getClass().getClassLoader().getResourceAsStream("config.properties");
         Properties dbProperties = new Properties();
         try {
@@ -26,14 +26,14 @@ public class DatabaseInitialize {
         }
     }
 
-    public Connection getConnection(){
+    public Connection getConnection() {
 
         try {
             loadDBProperties();
             Class.forName(dbDriver);
 
-            Connection con = DriverManager.getConnection( dbURL ,dbUserName,dbPassword);
-            return con;
+            Connection databaseConnection = DriverManager.getConnection(dbURL, dbUserName, dbPassword);
+            return databaseConnection;
         } catch (Exception e) {
             e.printStackTrace();
         }
