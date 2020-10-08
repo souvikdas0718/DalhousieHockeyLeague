@@ -1,7 +1,11 @@
 package dhl.leagueModelTests;
 
 
-import dhl.leagueModel.*;
+import dhl.leagueModel.Player;
+import dhl.leagueModel.Team;
+import dhl.leagueModel.Division;
+import dhl.leagueModel.Conference;
+import dhl.leagueModel.LeagueObjectModel;
 import dhl.leagueModel.interfaceModel.*;
 import dhl.leagueModelData.ILeagueObjectModelData;
 
@@ -15,7 +19,7 @@ public class MockDatabase implements ILeagueObjectModelData {
     }
 
     @Override
-    public ILeagueObjectModel loadLeagueModel(String leagueName, String conferenceName, String divisionName, String teamName) {
+    public ILeagueObjectModel loadLeagueModel(String leagueName, String teamName) {
         ArrayList<IPlayer> playersList=new ArrayList<>();
         playersList.add(new Player("Henry","forward",false));
         playersList.add(new Player("Max","goalie",true));
@@ -42,4 +46,5 @@ public class MockDatabase implements ILeagueObjectModelData {
     public boolean checkIfTeamAlreadyExists(String teamName, String divisionName) {
         return false;
     }
+
 }

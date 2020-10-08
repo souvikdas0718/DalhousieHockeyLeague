@@ -1,6 +1,8 @@
 package dhl.leagueModel;
 
-import dhl.leagueModel.interfaceModel.*;
+import dhl.leagueModel.interfaceModel.IPlayer;
+import dhl.leagueModel.interfaceModel.ITeam;
+import dhl.leagueModel.interfaceModel.IValidation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +19,7 @@ public class Team implements ITeam {
     public Team(){
         setDefault();
     }
+
     public void setDefault(){
         teamId=-1;
         teamName="";
@@ -31,9 +34,11 @@ public class Team implements ITeam {
         setHeadCoach(headCoach);
         setPlayers(playersList);
     }
+
     public String getTeamName() {
         return teamName;
     }
+
     public void setTeamName(String teamName) {
         this.teamName=teamName;
     }
@@ -49,6 +54,7 @@ public class Team implements ITeam {
     public String getHeadCoach() {
         return headCoach;
     }
+
     public void setHeadCoach(String headCoach) {
         this.headCoach=headCoach;
     }
@@ -56,6 +62,7 @@ public class Team implements ITeam {
     public ArrayList<IPlayer> getPlayers(){
         return players;
     }
+
     public void setPlayers(ArrayList<IPlayer> playersList){
         this.players=playersList;
     }
@@ -75,7 +82,6 @@ public class Team implements ITeam {
         return playerList.size() <20 ;
     }
 
-
     public boolean checkIfTeamValid(IValidation validation) throws Exception{
         validation.isStringEmpty(teamName,"Team name");
         validation.isStringEmpty(headCoach,"Head Coach name");
@@ -86,6 +92,5 @@ public class Team implements ITeam {
         }
         return true;
     }
-
 
 }

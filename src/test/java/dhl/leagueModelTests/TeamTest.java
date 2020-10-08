@@ -4,7 +4,10 @@ import dhl.leagueModel.CommonValidation;
 import dhl.leagueModel.InitializeObjectFactory;
 import dhl.leagueModel.Player;
 import dhl.leagueModel.Team;
-import dhl.leagueModel.interfaceModel.*;
+import dhl.leagueModel.interfaceModel.IPlayer;
+import dhl.leagueModel.interfaceModel.ITeam;
+import dhl.leagueModel.interfaceModel.IValidation;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,6 +20,7 @@ public class TeamTest {
     IValidation validate;
     ITeam team;
     ArrayList<IPlayer> playerArrayList;
+
     @BeforeEach()
     public void initObject(){
         initObj = new InitializeObjectFactory();
@@ -33,16 +37,19 @@ public class TeamTest {
         Assertions.assertTrue(team.getGeneralManager().isEmpty());
         Assertions.assertEquals(0,team.getPlayers().size());
     }
+
     @Test
     public void TeamTest(){
         team = new Team("Ontario","Mathew","henry", playerArrayList);
         Assertions.assertEquals("Ontario",team.getTeamName());
     }
+
     @Test
     public void getTeamNameTest(){
         team.setTeamName("Edmonton Oilers");
         Assertions.assertEquals("Edmonton Oilers",team.getTeamName());
     }
+
     @Test
     public void setTeamNameTest(){
         team.setTeamName("Boston Bruins");
@@ -54,6 +61,7 @@ public class TeamTest {
         team.setGeneralManager("Bob Murray");
         Assertions.assertEquals("Bob Murray",team.getGeneralManager());
     }
+
     @Test
     public void setGeneralManagerTest(){
         team.setGeneralManager("Don Sweeney");
@@ -66,17 +74,20 @@ public class TeamTest {
         Assertions.assertEquals("Barry Trotz",team.getHeadCoach());
 
     }
+
     @Test
     public void setHeadCoachTest(){
         team.setHeadCoach("Todd McLellan");
         Assertions.assertEquals("Todd McLellan",team.getHeadCoach());
     }
+
     @Test
     public void getPlayersTest(){
         team.setPlayers(playerArrayList);
         Assertions.assertTrue(team.getPlayers().size()>0);
 
     }
+
     @Test
     public void setPlayersTest(){
         team.setPlayers(playerArrayList);
@@ -94,6 +105,7 @@ public class TeamTest {
         });
         Assertions.assertTrue(errorMsg.getMessage().contains("Please select captain for the team"));
     }
+
     @Test
     public void checkIfOneCaptainPerTeamTest(){
         ArrayList<IPlayer> playersList=new ArrayList<>();
@@ -105,6 +117,7 @@ public class TeamTest {
         });
         Assertions.assertTrue(errorMsg.getMessage().contains("There can be only one captain per team"));
     }
+
     @Test
     public void checkNumberOfPlayersInTeamTest(){
         ArrayList<IPlayer> playersList=new ArrayList<>();
@@ -121,6 +134,7 @@ public class TeamTest {
         team = new Team("Ontario","Mathew","henry",playersList);
         Assertions.assertTrue(team.checkIfTeamValid(validate));
     }
+
     @Test
     public void checkIfTeamPlayerMoreThan20Test() throws Exception{
         ArrayList<IPlayer> playersList=new ArrayList<>();

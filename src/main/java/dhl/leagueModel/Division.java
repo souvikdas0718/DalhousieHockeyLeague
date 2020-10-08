@@ -1,12 +1,9 @@
 package dhl.leagueModel;
 
 import dhl.leagueModel.interfaceModel.IDivision;
-import dhl.leagueModel.interfaceModel.IPlayer;
 import dhl.leagueModel.interfaceModel.ITeam;
 import dhl.leagueModel.interfaceModel.IValidation;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class Division implements IDivision {
     private int divisionId;
@@ -16,6 +13,7 @@ public class Division implements IDivision {
     public Division(){
         setDefault();
     }
+
     public void setDefault(){
         divisionName="";
         teams= new ArrayList<>();
@@ -37,13 +35,13 @@ public class Division implements IDivision {
     public void setTeams(ArrayList<ITeam> teamsList) {
         this.teams=teamsList;
     }
+
     public ArrayList<ITeam> getTeams() {
         return teams;
     }
 
     public boolean checkIfDivisionValid(IValidation validation) throws Exception{
         validation.isStringEmpty(divisionName,"Division name");
-
         return true;
     }
 

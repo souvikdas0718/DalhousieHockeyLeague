@@ -8,22 +8,25 @@ public class Player implements IPlayer {
     private PlayerPosition position;
     private Boolean captain;
 
-
     public Player(){
         setDefaults();
     }
+
     public void setDefaults() {
         playerName = "";
         position = null;
     }
+
     public Player(String playerName,String position,Boolean captain){
         this.setPlayerName(playerName);
         this.setPosition(position);
         this.setCaptain(captain);
     }
+
     public void setPlayerId(int id) {
         this.playerId=id;
     }
+
     public int getPlayerId() {
         return playerId;
     }
@@ -53,6 +56,7 @@ public class Player implements IPlayer {
         }
 
     }
+
     public String getPosition() {
         if(position==null){
             return "";
@@ -63,6 +67,7 @@ public class Player implements IPlayer {
     public void setCaptain(Boolean isCaptain) {
         this.captain=isCaptain;
     }
+
     public boolean getCaptain() {
         return captain;
     }
@@ -74,6 +79,7 @@ public class Player implements IPlayer {
     public boolean isPlayerPositionInvalid() {
         return this.position == null;
     }
+
     public boolean isCaptainValueBoolean(){
         return this.captain != null;
     }
@@ -88,10 +94,8 @@ public class Player implements IPlayer {
         if(!this.isCaptainValueBoolean()){
             throw new Exception("Captain value must be true or false");
         }
-
         return true;
     }
-
 
 }
 

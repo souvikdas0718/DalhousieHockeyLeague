@@ -1,6 +1,10 @@
 package dhl.leagueModelTests;
 
-import dhl.leagueModel.*;
+import dhl.leagueModel.CommonValidation;
+import dhl.leagueModel.Division;
+import dhl.leagueModel.InitializeObjectFactory;
+import dhl.leagueModel.Player;
+import dhl.leagueModel.Team;
 import dhl.leagueModel.interfaceModel.IDivision;
 import dhl.leagueModel.interfaceModel.IPlayer;
 import dhl.leagueModel.interfaceModel.ITeam;
@@ -17,6 +21,7 @@ public class DivisionTest {
     IDivision division;
     IDivision divisionParameterized;
     IValidation validate;
+
     @BeforeEach()
     public void initObject(){
         initObj = new InitializeObjectFactory();
@@ -48,6 +53,7 @@ public class DivisionTest {
         division.setDivisionName("Atlantic");
         Assertions.assertEquals("Atlantic",division.getDivisionName());
     }
+
     @Test
     public void setDivisionNameTest(){
         division.setDivisionName("Pacific");
@@ -60,20 +66,24 @@ public class DivisionTest {
         division.getTeams();
         Assertions.assertEquals(0,division.getTeams().size());
     }
+
     @Test
     public void setTeamsTest(){
         ArrayList<ITeam> teamsArrayList=new ArrayList<>();
         division.setTeams(teamsArrayList);
         Assertions.assertEquals(0,division.getTeams().size());
     }
+
     @Test
     public void checkIfDivisionValidTest() throws Exception{
 
         Assertions.assertTrue(divisionParameterized.checkIfDivisionValid(validate));
     }
+
     @AfterEach()
     public void destroyObject(){
         initObj = null;
         division= null;
     }
+
 }

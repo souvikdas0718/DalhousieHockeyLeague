@@ -1,7 +1,16 @@
 package dhl.leagueModelTests;
 
-import dhl.leagueModel.*;
-import dhl.leagueModel.interfaceModel.*;
+import dhl.leagueModel.CommonValidation;
+import dhl.leagueModel.InitializeObjectFactory;
+import dhl.leagueModel.Player;
+import dhl.leagueModel.Team;
+import dhl.leagueModel.Division;
+import dhl.leagueModel.Conference;
+import dhl.leagueModel.interfaceModel.IConference;
+import dhl.leagueModel.interfaceModel.IPlayer;
+import dhl.leagueModel.interfaceModel.ITeam;
+import dhl.leagueModel.interfaceModel.IValidation;
+import dhl.leagueModel.interfaceModel.IDivision;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,12 +23,13 @@ public class ConferenceTest {
     IConference conference;
     IConference conferenceParameterized;
     IValidation validate;
+
     @BeforeEach()
     public void initObject(){
         initObj = new InitializeObjectFactory();
         conference= initObj.createConference();
         validate=new CommonValidation();
-        ArrayList<IPlayer> playersList=new ArrayList<>();
+        ArrayList<IPlayer> playersList = new ArrayList<>();
         playersList.add(new Player("Henry","forward",false));
         playersList.add(new Player("Max","goalie",true));
         ITeam team = new Team("Ontario","Mathew","henry",playersList);
@@ -48,6 +58,7 @@ public class ConferenceTest {
         conference.setConferenceName("Eastern");
         Assertions.assertEquals("Eastern",conference.getConferenceName());
     }
+
     @Test
     public void setConferenceNameTest(){
         conference.setConferenceName("Western");
@@ -59,11 +70,13 @@ public class ConferenceTest {
         conference.setDivisions(new ArrayList<IDivision>());
         Assertions.assertTrue(conference.getDivisions().size()==0);
     }
+
     @Test
     public void setDivisionsTest(){
         conference.setDivisions(new ArrayList<IDivision>());
         Assertions.assertTrue(conference.getDivisions().size()==0);
     }
+
     @Test
     public void checkIfConferenceValidTest() throws Exception{
         ArrayList<IDivision> divisions =conferenceParameterized.getDivisions();
@@ -71,12 +84,14 @@ public class ConferenceTest {
         conferenceParameterized.setDivisions(divisions);
         Assertions.assertTrue(conferenceParameterized.checkIfConferenceValid(validate));
     }
+
     @Test void checkIfConferenceHasEvenDivisionsTest(){
         Exception error=Assertions.assertThrows(Exception.class,() ->{
             conferenceParameterized.checkIfConferenceHasEvenDivisions();
         });
         Assertions.assertTrue(error.getMessage().contains("A conference must contain even number of divisions"));
     }
+
     @Test
     public void checkIfDivisionNamesUniqueInConferenceTest() throws Exception{
         ArrayList<IDivision> divisions =conferenceParameterized.getDivisions();
@@ -86,9 +101,11 @@ public class ConferenceTest {
         });
         Assertions.assertTrue(error.getMessage().contains("The names of divisions inside a conference must be unique"));
     }
+
     @AfterEach()
     public void destroyObject(){
         initObj = null;
         conference= null;
     }
+
 }
