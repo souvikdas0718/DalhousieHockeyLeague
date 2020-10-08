@@ -1,8 +1,6 @@
 package dhl.simulationStateMachine.States;
 
 import dhl.leagueModel.LeagueObjectModel;
-import dhl.leagueModel.interfaceModel.IConference;
-import dhl.leagueModel.interfaceModel.IDivision;
 import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.leagueModel.interfaceModel.ITeam;
 import dhl.leagueModelData.ILeagueObjectModelData;
@@ -35,13 +33,13 @@ public class ImportState implements GameState {
         Scanner sc = new Scanner(System.in);
 
         while(option == -1 || option>3) {
-
             System.out.println("Please Enter one option");
             System.out.println("1 for Loading JSON");
             System.out.println("2 for Loading Existing Team from DB");
             System.out.println("0 To Exit");
 
             option = sc.nextInt();
+            sc.nextLine();
         }
         switch (option){
             case 0:
@@ -63,33 +61,20 @@ public class ImportState implements GameState {
                     leagueName = sc.nextLine();
                 }
 
-                System.out.print("Enter conference Name: ");
-                String conference = sc.nextLine();
-                while(conference.equals("")){
-                    System.out.println("Looks like you didnt add any input please try again: ");
-                    conference = sc.nextLine();
-                }
-
-                System.out.print("Enter Division Name:  ");
-                String division = sc.nextLine();
-                while(division.equals("")){
-                    System.out.println("Looks like you didnt add any input please try again: ");
-                    division = sc.nextLine();
-                }
-
                 System.out.print("Enter Team Name:  ");
                 String team = sc.nextLine();
                 while(team.equals("")){
                     System.out.println("Looks like you didnt add any input please try again: ");
                     team = sc.nextLine();
                 }
+
                 ILeagueObjectModelData databaseRefrenceOb = new LeagueObjectModelData();
                 try {
-                    newInMemoryLeague = newInMemoryLeague.loadTeam(databaseRefrenceOb, leagueName, conference, division, team);
+                    newInMemoryLeague = newInMemoryLeague.loadTeam(databaseRefrenceOb, leagueName, team);
                 }catch(Exception e) {
-                    System.out.println("-----------------------------------------------------------------");
                     System.out.println(e);
                 };
+/*
                 for(int i=0; i< newInMemoryLeague.getConferences().size();i++){
                     IConference ourConference = newInMemoryLeague.getConferences().get(i);
                     if (ourConference.getConferenceName().equals(conference)){
@@ -106,6 +91,8 @@ public class ImportState implements GameState {
                         }
                     }
                 }
+
+ */
                 break;
         }
     }
@@ -129,5 +116,9 @@ public class ImportState implements GameState {
         }else if (option==2){
             ourGame.setGameState(ourGame.getSimulateState());
         }
+    }
+    public ITeam findTeam(ILeagueObjectModel InMemoryLeague, String team){
+
+        return null;
     }
 }

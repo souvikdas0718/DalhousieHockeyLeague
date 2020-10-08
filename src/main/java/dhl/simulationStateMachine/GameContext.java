@@ -14,9 +14,7 @@ public class GameContext {
     GameState loadTeamState;
     GameState simulateState;
     GameState createTeamState;
-
     GameState currentState;
-
     boolean gameinProgress;
     ILeagueObjectModel inMemoryLeague;
     ITeam selectedTeam;

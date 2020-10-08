@@ -1,13 +1,7 @@
 package dhl.simulationStateMachineTest;
 
-import dhl.leagueModel.Conference;
-import dhl.leagueModel.Division;
-import dhl.leagueModel.Player;
-import dhl.leagueModel.Team;
-import dhl.leagueModel.interfaceModel.IConference;
-import dhl.leagueModel.interfaceModel.IDivision;
-import dhl.leagueModel.interfaceModel.IPlayer;
-import dhl.leagueModel.interfaceModel.ITeam;
+import dhl.leagueModel.*;
+import dhl.leagueModel.interfaceModel.*;
 
 import java.util.ArrayList;
 
@@ -75,5 +69,30 @@ public class LeagueObjectModelMocks {
         conferenceArrayListMock.add(new Conference("Mock Conference2" , getDivisionArrayMock()));
 
         return conferenceArrayListMock;
+    }
+
+    public ILeagueObjectModel getLeagueObjectMock(){
+        ILeagueObjectModel leagueObjectMock=null;
+
+        ArrayList<IPlayer> playersList=new ArrayList<>();
+        playersList.add(new Player("Henry","forward",false));
+        playersList.add(new Player("Max","goalie",true));
+
+        ITeam team = new Team("Ontario","Mathew","henry",playersList);
+        ArrayList<ITeam> teamArrayList=new ArrayList<>();
+        teamArrayList.add(team);
+
+        IDivision division = new Division("Atlantic",teamArrayList);
+        ArrayList<IDivision> divisionsList=new ArrayList<>();
+        divisionsList.add(division);
+
+        IConference conference=new Conference("Western",divisionsList);
+        ArrayList<IConference> conferences= new ArrayList<>();
+        conferences.add(conference);
+
+        ArrayList<IPlayer> freeAgentsList=new ArrayList<>();
+
+        leagueObjectMock = new LeagueObjectModel("Dhl",conferences,freeAgentsList);
+        return leagueObjectMock;
     }
 }
