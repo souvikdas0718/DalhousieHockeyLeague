@@ -63,27 +63,27 @@ deploy_develop:
     - zip -r ${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip . -i /build/libs/*.jar
     - scp -r -o StrictHostKeyChecking=no ${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip"
     - scp -r -o StrictHostKeyChecking=no config.properties "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/config.properties"
-  only:
-    - develop
+#  only:
+#    - develop
 
-deploy_master:
-  stage: deploy
-  image: ruby:latest
-  tags:
-    - ugrad
-  before_script:
-    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
-    - eval $(ssh-agent -s)
-    - echo "$DEPLOY_SSH_KEY_PRODUCTION" | tr -d '\r' | ssh-add -
-  script:
-    - ssh "${DEPLOY_PRODUCTION_USER}@${DEPLOY_HOST}" "rm ~/$DEPLOY_DIR/*.zip"
-    - ssh "${DEPLOY_PRODUCTION_USER}@${DEPLOY_HOST}" "rm ~/$DEPLOY_DIR/*.properties"
-    - echo "dbURL=$DATABASE_PROD_URL" > config.properties
-    - echo "dbUserName=$DATABASE_PROD_USERNAME" >> config.properties
-    - echo "dbPassword=$DATABASE_PROD_PASSWORD" >> config.properties
-    - echo "dbDriver=$DATABASE_DRIVER" >> config.properties
-    - zip -r ${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip . -i /build/libs/*.jar
-    - scp -r -o StrictHostKeyChecking=no ${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip "${DEPLOY_PRODUCTION_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip"
-    - scp -r -o StrictHostKeyChecking=no config.properties "${DEPLOY_PRODUCTION_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/config.properties"
-  only:
-    - master
+#deploy_master:
+#  stage: deploy
+#  image: ruby:latest
+#  tags:
+#    - ugrad
+#  before_script:
+#    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
+#    - eval $(ssh-agent -s)
+#    - echo "$DEPLOY_SSH_KEY_PRODUCTION" | tr -d '\r' | ssh-add -
+#  script:
+#    - ssh "${DEPLOY_PRODUCTION_USER}@${DEPLOY_HOST}" "rm ~/$DEPLOY_DIR/*.zip"
+#    - ssh "${DEPLOY_PRODUCTION_USER}@${DEPLOY_HOST}" "rm ~/$DEPLOY_DIR/*.properties"
+#    - echo "dbURL=$DATABASE_PROD_URL" > config.properties
+#    - echo "dbUserName=$DATABASE_PROD_USERNAME" >> config.properties
+#    - echo "dbPassword=$DATABASE_PROD_PASSWORD" >> config.properties
+#    - echo "dbDriver=$DATABASE_DRIVER" >> config.properties
+#    - zip -r ${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip . -i /build/libs/*.jar
+#    - scp -r -o StrictHostKeyChecking=no ${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip "${DEPLOY_PRODUCTION_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip"
+#    - scp -r -o StrictHostKeyChecking=no config.properties "${DEPLOY_PRODUCTION_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/config.properties"
+#  only:
+#    - master
