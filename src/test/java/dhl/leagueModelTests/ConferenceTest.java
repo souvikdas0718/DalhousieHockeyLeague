@@ -14,6 +14,7 @@ public class ConferenceTest {
     IConference conference;
     IConference conferenceParameterized;
     IValidation validate;
+
     @BeforeEach()
     public void initObject(){
         initObj = new InitializeObjectFactory();
@@ -48,6 +49,7 @@ public class ConferenceTest {
         conference.setConferenceName("Eastern");
         Assertions.assertEquals("Eastern",conference.getConferenceName());
     }
+
     @Test
     public void setConferenceNameTest(){
         conference.setConferenceName("Western");
@@ -59,11 +61,13 @@ public class ConferenceTest {
         conference.setDivisions(new ArrayList<IDivision>());
         Assertions.assertTrue(conference.getDivisions().size()==0);
     }
+
     @Test
     public void setDivisionsTest(){
         conference.setDivisions(new ArrayList<IDivision>());
         Assertions.assertTrue(conference.getDivisions().size()==0);
     }
+
     @Test
     public void checkIfConferenceValidTest() throws Exception{
         ArrayList<IDivision> divisions =conferenceParameterized.getDivisions();
@@ -71,12 +75,14 @@ public class ConferenceTest {
         conferenceParameterized.setDivisions(divisions);
         Assertions.assertTrue(conferenceParameterized.checkIfConferenceValid(validate));
     }
+
     @Test void checkIfConferenceHasEvenDivisionsTest(){
         Exception error=Assertions.assertThrows(Exception.class,() ->{
             conferenceParameterized.checkIfConferenceHasEvenDivisions();
         });
         Assertions.assertTrue(error.getMessage().contains("A conference must contain even number of divisions"));
     }
+
     @Test
     public void checkIfDivisionNamesUniqueInConferenceTest() throws Exception{
         ArrayList<IDivision> divisions =conferenceParameterized.getDivisions();
@@ -86,9 +92,11 @@ public class ConferenceTest {
         });
         Assertions.assertTrue(error.getMessage().contains("The names of divisions inside a conference must be unique"));
     }
+
     @AfterEach()
     public void destroyObject(){
         initObj = null;
         conference= null;
     }
+
 }

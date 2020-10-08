@@ -16,6 +16,7 @@ public class LeagueObjectModel implements ILeagueObjectModel {
         conferences=new ArrayList<>();
         freeAgents = new ArrayList<>();
     }
+
     public LeagueObjectModel(String leagueName,ArrayList<IConference> conferences, ArrayList<IPlayer>freeAgents){
         this.leagueName=leagueName;
         this.conferences=conferences;
@@ -51,10 +52,12 @@ public class LeagueObjectModel implements ILeagueObjectModel {
         checkIfLeagueHasEvenConferences();
         return true;
     }
+
     public void checkIfLeagueHasEvenConferences() throws Exception{
         if(conferences!=null && conferences.size()%2!=0){
             throw new Exception("A League must contain even number of conferences");
         }
+
         List<String> conferenceNames=new ArrayList<>();
         conferences.stream().map(conference-> conference.getConferenceName()).forEach(confName->conferenceNames.add(confName));
         Set<String> conferenceSet = new HashSet<>(conferenceNames);
@@ -124,9 +127,8 @@ public class LeagueObjectModel implements ILeagueObjectModel {
         return  true;
     }
 
-    public ILeagueObjectModel loadTeam(ILeagueObjectModelData leagueDatabase,String leagueName,String conferenceName,String divisionName,String teamName) throws Exception{
-        return leagueDatabase.loadLeagueModel(leagueName,conferenceName,divisionName,teamName);
+    public ILeagueObjectModel loadTeam(ILeagueObjectModelData leagueDatabase,String leagueName,String teamName) throws Exception{
+        return leagueDatabase.loadLeagueModel(leagueName,teamName);
     }
-
 
 }

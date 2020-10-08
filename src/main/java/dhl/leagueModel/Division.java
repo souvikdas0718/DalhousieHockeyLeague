@@ -16,6 +16,7 @@ public class Division implements IDivision {
     public Division(){
         setDefault();
     }
+
     public void setDefault(){
         divisionName="";
         teams= new ArrayList<>();
@@ -37,13 +38,13 @@ public class Division implements IDivision {
     public void setTeams(ArrayList<ITeam> teamsList) {
         this.teams=teamsList;
     }
+
     public ArrayList<ITeam> getTeams() {
         return teams;
     }
 
     public boolean checkIfDivisionValid(IValidation validation) throws Exception{
         validation.isStringEmpty(divisionName,"Division name");
-
         return true;
     }
 

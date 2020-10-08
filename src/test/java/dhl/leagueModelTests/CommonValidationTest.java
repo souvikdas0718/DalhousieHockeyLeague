@@ -15,6 +15,7 @@ import java.util.List;
 public class CommonValidationTest {
 
    IValidation commonValidation;
+
     @BeforeEach()
     public void initObject(){
         commonValidation = new CommonValidation();
@@ -28,7 +29,6 @@ public class CommonValidationTest {
         Assertions.assertTrue(error.getMessage().contains("Team name cannot be empty"));
     }
 
-
     @Test
     public void isListEmptyTest(){
         Exception error= Assertions.assertThrows(Exception.class,() ->{
@@ -37,6 +37,7 @@ public class CommonValidationTest {
         });
         Assertions.assertTrue(error.getMessage().contains("Please add players"));
     }
+
     @Test
     public void isListNotEmptyTest() throws Exception{
         List<IPlayer> players=new ArrayList<>();
@@ -52,4 +53,5 @@ public class CommonValidationTest {
     public void destroyObject(){
         commonValidation = null;
     }
+
 }
