@@ -31,7 +31,6 @@ public class GameContext {
         gameinProgress = true;
     }
 
-
     public void setGameState(GameState newState){
         this.currentState = newState;
     }
@@ -39,9 +38,11 @@ public class GameContext {
     public void stateEntryProcess(){
         currentState.stateEntryProcess();
     }
+
     public void stateProcess() throws Exception {
         currentState.stateProcess();
     }
+
     public void stateExitProcess(){
         currentState.stateExitProcess();
     }
@@ -65,20 +66,23 @@ public class GameContext {
     public GameState getSimulateState() {
         return simulateState;
     }
+
     public GameState getImportState() {
         return importState;
     }
+
     public GameState getLoadTeamState() {
         return loadTeamState;
     }
+
     public GameState getCreateTeamState() {
         return createTeamState;
     }
 
-
     public boolean isGameinProgress() {
         return gameinProgress;
     }
+
     public void setGameinProgress(boolean gameStatus){
         gameinProgress = gameStatus;
     }

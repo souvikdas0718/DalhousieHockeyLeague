@@ -12,8 +12,12 @@ import java.util.ArrayList;
 public interface ICreateLeagueObjectModel {
 
     public LeagueObjectModel getLeagueObjectModel() throws Exception;
+
     public ArrayList<IConference> getConcferenceArrayList(JSONArray conferenceJsonArray) throws Exception;
+
     public ArrayList<IDivision> getDivisionObjectArrayList(JSONArray divisionJsonArray) throws Exception;
+
     public ArrayList<ITeam> getTeamObjectArrayList(JSONArray TeamJsonArray) throws Exception;
+
     public ArrayList<IPlayer> getPlayerArrayList(JSONArray PlayerJsonArray) throws Exception;
 }

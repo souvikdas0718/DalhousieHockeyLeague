@@ -21,7 +21,6 @@ public class CreateTeamState implements GameState {
     String generalManager;
     String headCoach;
 
-
     public CreateTeamState(GameContext newGame){
         ourGame = newGame;
         selectedConference = null;
@@ -114,13 +113,16 @@ public class CreateTeamState implements GameState {
     public void stateProcess() throws Exception {
         System.out.println("Adding Team "+ teamName+ " to the DB");
         ILeagueObjectModelData leagueObjectModelData = new LeagueObjectModelData();
-        inMemoryLeague.createTeam(
-                leagueObjectModelData,
-                inMemoryLeague.getLeagueName(),
-                selectedConference.getConferenceName(),
-                selectedDivision.getDivisionName(),
-                teamName,generalManager,headCoach);
-
+        try {
+            inMemoryLeague.createTeam(
+                    leagueObjectModelData,
+                    inMemoryLeague.getLeagueName(),
+                    selectedConference.getConferenceName(),
+                    selectedDivision.getDivisionName(),
+                    teamName, generalManager, headCoach);
+        }catch (Exception e){
+            System.out.println(e);
+        }
     }
 
     @Override
@@ -137,6 +139,7 @@ public class CreateTeamState implements GameState {
         }
         return null;
     }
+
     public IDivision findDivision(ArrayList<IDivision> divisionArrayList , String divisionName){
         for(int i= 0; i< divisionArrayList.size(); i++){
             IDivision ourDivision = divisionArrayList.get(i);
@@ -146,4 +149,5 @@ public class CreateTeamState implements GameState {
         }
         return null;
     }
+
 }

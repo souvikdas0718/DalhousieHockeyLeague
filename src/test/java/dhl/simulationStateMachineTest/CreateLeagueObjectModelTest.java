@@ -1,34 +1,44 @@
 package dhl.simulationStateMachineTest;
 
 
-import dhl.leagueModel.interfaceModel.IPlayer;
+import dhl.simulationStateMachine.CreateLeagueObjectModel;
 import dhl.simulationStateMachine.ImportJsonFile;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 public class CreateLeagueObjectModelTest {
 
-    JSONObject leagueObject=null;
-    public HashMap<String, ArrayList<IPlayer>> teamPlayersMapping;
+    JSONObject leagueObject;
+    CreateLeagueObjectModel testClassObject;
+    JsonFilePathMock filePathMock;
 
     @BeforeEach
     public void initObject(){
-        JsonFilePathMock filePathMock = new JsonFilePathMock();
+        this.filePathMock = new JsonFilePathMock();
         ImportJsonFile importJsonFile = new ImportJsonFile(filePathMock.getFilePath());
         this.leagueObject = importJsonFile.getJsonObject();
+        this.testClassObject = new CreateLeagueObjectModel();
     }
 
     @Test
-    public void CreatePlayerObjectTest(){
+    public void checkJsonArrayTest(){
+        String conferenceArrayKey = filePathMock.getConferenceArrayKey();
+        assertTrue(testClassObject.checkJsonArray(leagueObject, conferenceArrayKey));
 
-        assertTrue(true);
+        String freeAgentArrayKey = filePathMock.getFreeAgentArrayKey();
+        assertTrue(testClassObject.checkJsonArray(leagueObject, freeAgentArrayKey));
+
+        assertFalse(testClassObject.checkJsonArray(leagueObject , "invalidArrayKey"));
     }
-    public JSONArray getDivisionObjectArrayList(JSONArray divisionsArray){return null;}
+
+    @Test
+    public void getLeagueObjectModel() throws Exception {
+        CreateLeagueObjectModel testObject = new CreateLeagueObjectModel(leagueObject);
+        assertTrue(testObject.getLeagueObjectModel() != null );
+    }
 
 }

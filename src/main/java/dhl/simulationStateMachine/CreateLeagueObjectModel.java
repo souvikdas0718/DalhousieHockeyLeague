@@ -13,30 +13,38 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
 
     JSONObject jsonLeagueObject = null;
     IValidation validationObject;
+    LeagueObjectModel leagueObjectModel;
+
+    public CreateLeagueObjectModel(){
+        this.jsonLeagueObject = null;
+        this.validationObject = new CommonValidation();
+        this.leagueObjectModel = null;
+    }
 
     public CreateLeagueObjectModel(JSONObject jsonLeagueObject){
         this.jsonLeagueObject = jsonLeagueObject;
+        this.validationObject = new CommonValidation();
+        this.leagueObjectModel = null;
     }
 
-    public LeagueObjectModel getLeagueObjectModel() throws Exception {
+    public LeagueObjectModel getLeagueObjectModel() {
 
-        String leagueName= (String) jsonLeagueObject.get("leagueName");
+        String leagueName = (String) jsonLeagueObject.get("leagueName");
         ArrayList<IConference> conferenceObjectList = new ArrayList<>();
         ArrayList<IPlayer> freeAgentObjectList = new ArrayList<>();
-        validationObject = new CommonValidation();
-        LeagueObjectModel leagueObjectModel = null;
 
         try {
-            if (jsonLeagueObject.get("conferences") instanceof JSONArray) {
+            if (checkJsonArray(jsonLeagueObject , "conferences")) {
                 conferenceObjectList = getConcferenceArrayList((JSONArray) jsonLeagueObject.get("conferences"));
             } else {
-                System.out.println("Conference Array Not Found");
+                throw new Exception("Conference Array not Found in JSON");
             }
-            if (jsonLeagueObject.get("freeAgents") instanceof JSONArray) {
+
+            if (checkJsonArray(jsonLeagueObject , "freeAgents")){
                 freeAgentObjectList = getPlayerArrayList((JSONArray) jsonLeagueObject.get("freeAgents"));
 
             } else {
-                System.out.println("No free Agents");
+                throw new Exception("Free Agent Array not Found in JSON");
             }
             leagueObjectModel = new LeagueObjectModel(
                     leagueName,
@@ -53,21 +61,36 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
         return leagueObjectModel;
     }
 
+    public boolean checkJsonArray(JSONObject jsonLeagueObject, String arrayKey){
+        Object arrayToCheck = jsonLeagueObject.get(arrayKey);
+
+        if (arrayToCheck instanceof JSONArray && ((JSONArray) arrayToCheck).size() > 0 ){
+            return true;
+        }
+        return false;
+    }
+
     public ArrayList<IConference> getConcferenceArrayList(JSONArray conferenceJsonArray) throws Exception {
         Iterator<?> conferenceListIterator = (conferenceJsonArray).iterator();
         ArrayList<IConference> conferencesListToReturn = new ArrayList<IConference>();
+
         while(conferenceListIterator.hasNext()){
             JSONObject conferenceJsonObject = (JSONObject) conferenceListIterator.next();
-            Conference conferenceObject = new Conference(
-                    (String) conferenceJsonObject.get("conferenceName"),
-                    getDivisionObjectArrayList( (JSONArray)conferenceJsonObject.get("divisions"))
-            );
-            if(conferenceObject.checkIfConferenceValid(validationObject)) {
-                conferencesListToReturn.add(conferenceObject);
-                System.out.println("Added Confrenct Object: " + (String) conferenceJsonObject.get("conferenceName"));
+            if(checkJsonArray(conferenceJsonObject , "divisions")){
+                Conference conferenceObject = new Conference(
+                        (String) conferenceJsonObject.get("conferenceName"),
+                        getDivisionObjectArrayList( (JSONArray)conferenceJsonObject.get("divisions"))
+                );
+                if(conferenceObject.checkIfConferenceValid(validationObject)) {
+                    conferencesListToReturn.add(conferenceObject);
+                    System.out.println("Added Confrence Object: " + (String) conferenceJsonObject.get("conferenceName"));
+                }
+            }else{
+                throw new Exception("Division Array not Found for Conference: " + conferenceJsonObject.get("conferenceName"));
             }
+
+
         }
-        System.out.println(conferencesListToReturn.size());
         return conferencesListToReturn;
     }
 
@@ -90,6 +113,7 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
         return divisonListToReturn;
 
     }
+
     public ArrayList<ITeam> getTeamObjectArrayList(JSONArray TeamJsonArray) throws Exception {
         Iterator<?> teamListIterator = (TeamJsonArray).iterator();
         ArrayList<ITeam> TeamListToReturn = new ArrayList<ITeam>();
@@ -106,7 +130,6 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
                 System.out.println("Added Team Object: "+ (String) teamJsonObject.get("teamName"));
             }
         }
-
         return TeamListToReturn;
     }
 

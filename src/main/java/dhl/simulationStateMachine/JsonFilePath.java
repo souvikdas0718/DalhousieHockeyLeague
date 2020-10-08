@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class JsonFilePath implements IJsonFilePath {
+
     @Override
     public String getFilePath() {
         String path = null;
@@ -32,9 +33,12 @@ public class JsonFilePath implements IJsonFilePath {
         Path path= null;
         if (inputPath.length() > 0){
             path = Paths.get(inputPath);
-            if(Files.exists(path)) return true;
+            if(Files.exists(path)) {
+                return true;
+            }
         }
         return false;
     }
+
 }
 

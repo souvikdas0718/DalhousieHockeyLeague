@@ -35,7 +35,7 @@ public class ImportState implements GameState {
         Scanner sc = new Scanner(System.in);
 
         while(option == -1 || option>3) {
-            //System.out.println(option);
+
             System.out.println("Please Enter one option");
             System.out.println("1 for Loading JSON");
             System.out.println("2 for Loading Existing Team from DB");
@@ -113,9 +113,7 @@ public class ImportState implements GameState {
     @Override
     public void stateProcess() throws Exception {
         if (validFilePath!= null){
-            //System.out.println("Loading Json File into Memory from "+ validFilePath);
             JSONObject leagueJsonObject = new ImportJsonFile(validFilePath).getJsonObject();
-            //System.out.println(leagueJsonObject);
             CreateLeagueObjectModel createLeagueObjectModel = new CreateLeagueObjectModel(leagueJsonObject);
             newInMemoryLeague = createLeagueObjectModel.getLeagueObjectModel();
             System.out.println(newInMemoryLeague.getLeagueName()+ "  Imported from the Json");
@@ -126,15 +124,10 @@ public class ImportState implements GameState {
     public void stateExitProcess() {
         Scanner sc = new Scanner(System.in);
         ourGame.setInMemoryLeague(newInMemoryLeague);
-        //System.out.println("ExitState:  " + ourGame.getInMemoryLeague().getLeagueName());
         if (option==1) {
             ourGame.setGameState(ourGame.getCreateTeamState());
         }else if (option==2){
             ourGame.setGameState(ourGame.getSimulateState());
         }
-    }
-
-    public void findTeam(LeagueObjectModel newInMemoryLeague){
-        //newInMemoryLeague
     }
 }

@@ -12,7 +12,6 @@ public class ImportJsonFile {
 
     private String filePath = "";
 
-
     public ImportJsonFile(String filePath){
         this.filePath = filePath;
     }
@@ -39,4 +38,5 @@ public class ImportJsonFile {
         }
         return JsonLeagueObject;
     }
+
 }

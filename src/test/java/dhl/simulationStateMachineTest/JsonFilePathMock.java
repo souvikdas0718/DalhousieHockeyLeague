@@ -9,4 +9,17 @@ public class JsonFilePathMock implements IJsonFilePath {
     public String getFilePath() {
         return filePath;
     }
+
+    public String getLeagueArrayKey(){
+        return "leagueName";
+    }
+
+    public String getConferenceArrayKey(){
+        return "conferences";
+    }
+
+    public String getFreeAgentArrayKey(){
+        return "freeAgents";
+    }
+
 }
