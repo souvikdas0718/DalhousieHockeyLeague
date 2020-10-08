@@ -78,6 +78,8 @@ deploy_master:
     - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
     - echo "$DEPLOY_SSH_KEY_PRODUCTION" | tr -d '\r' | ssh-add -
+    - ssh "${DEPLOY_PRODUCTION_USER}@${DEPLOY_HOST}" "rm ~/$DEPLOY_DIR/*.zip"
+    - ssh "${DEPLOY_PRODUCTION_USER}@${DEPLOY_HOST}" "rm ~/$DEPLOY_DIR/*.properties"
     - echo "dbURL=$DATABASE_PROD_URL" > config.properties
     - echo "dbUserName=$DATABASE_PROD_USERNAME" >> config.properties
     - echo "dbPassword=$DATABASE_PROD_PASSWORD" >> config.properties
