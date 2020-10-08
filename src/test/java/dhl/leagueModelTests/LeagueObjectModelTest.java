@@ -1,8 +1,17 @@
 package dhl.leagueModelTests;
 
 
-import dhl.leagueModel.*;
-import dhl.leagueModel.interfaceModel.*;
+import dhl.leagueModel.CommonValidation;
+import dhl.leagueModel.Conference;
+import dhl.leagueModel.Division;
+import dhl.leagueModel.LeagueObjectModel;
+import dhl.leagueModel.Player;
+import dhl.leagueModel.Team;
+import dhl.leagueModel.interfaceModel.IValidation;
+import dhl.leagueModel.interfaceModel.IDivision;
+import dhl.leagueModel.interfaceModel.IPlayer;
+import dhl.leagueModel.interfaceModel.ITeam;
+import dhl.leagueModel.interfaceModel.IConference;
 import dhl.leagueModelData.ILeagueObjectModelData;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;

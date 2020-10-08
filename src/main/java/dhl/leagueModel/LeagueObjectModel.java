@@ -1,9 +1,17 @@
 package dhl.leagueModel;
 
-import dhl.leagueModel.interfaceModel.*;
+import dhl.leagueModel.interfaceModel.IPlayer;
+import dhl.leagueModel.interfaceModel.ITeam;
+import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
+import dhl.leagueModel.interfaceModel.IConference;
+import dhl.leagueModel.interfaceModel.IDivision;
+import dhl.leagueModel.interfaceModel.IValidation;
 import dhl.leagueModelData.ILeagueObjectModelData;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class LeagueObjectModel implements ILeagueObjectModel {

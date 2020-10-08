@@ -1,12 +1,9 @@
 package dhl.leagueModel;
 
 import dhl.leagueModel.interfaceModel.IDivision;
-import dhl.leagueModel.interfaceModel.IPlayer;
 import dhl.leagueModel.interfaceModel.ITeam;
 import dhl.leagueModel.interfaceModel.IValidation;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class Division implements IDivision {
     private int divisionId;

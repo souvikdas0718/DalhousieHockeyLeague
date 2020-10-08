@@ -1,6 +1,10 @@
 package dhl.leagueModelTests;
 
-import dhl.leagueModel.*;
+import dhl.leagueModel.CommonValidation;
+import dhl.leagueModel.Division;
+import dhl.leagueModel.InitializeObjectFactory;
+import dhl.leagueModel.Player;
+import dhl.leagueModel.Team;
 import dhl.leagueModel.interfaceModel.IDivision;
 import dhl.leagueModel.interfaceModel.IPlayer;
 import dhl.leagueModel.interfaceModel.ITeam;

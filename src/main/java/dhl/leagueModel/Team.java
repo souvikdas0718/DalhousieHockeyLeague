@@ -1,6 +1,8 @@
 package dhl.leagueModel;
 
-import dhl.leagueModel.interfaceModel.*;
+import dhl.leagueModel.interfaceModel.IPlayer;
+import dhl.leagueModel.interfaceModel.ITeam;
+import dhl.leagueModel.interfaceModel.IValidation;
 
 import java.util.ArrayList;
 import java.util.List;

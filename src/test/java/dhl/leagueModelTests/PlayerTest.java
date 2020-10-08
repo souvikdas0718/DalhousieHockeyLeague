@@ -2,7 +2,6 @@ package dhl.leagueModelTests;
 
 import dhl.leagueModel.InitializeObjectFactory;
 import dhl.leagueModel.Player;
-import dhl.leagueModel.PlayerPosition;
 import dhl.leagueModel.interfaceModel.IPlayer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
