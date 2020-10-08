@@ -48,6 +48,7 @@ public class Conference implements IConference {
         checkIfConferenceHasEvenDivisions();
         return true;
     }
+
     public void checkIfConferenceHasEvenDivisions() throws Exception{
         if(divisions!=null && (divisions.size()%2!=0)){
             throw new Exception("A conference must contain even number of divisions");

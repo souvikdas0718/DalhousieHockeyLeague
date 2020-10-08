@@ -6,6 +6,7 @@ import dhl.leagueModel.interfaceModel.IPlayer;
 import dhl.leagueModel.interfaceModel.ITeam;
 
 public class InitializeObjectFactory extends InitializeObjectsAbstractFactory{
+
     @Override
     public ITeam createTeam() {
         return new Team();
@@ -25,4 +26,5 @@ public class InitializeObjectFactory extends InitializeObjectsAbstractFactory{
     public IConference createConference() {
         return new Conference();
     }
+
 }

@@ -15,7 +15,7 @@ public class MockDatabase implements ILeagueObjectModelData {
     }
 
     @Override
-    public ILeagueObjectModel loadLeagueModel(String leagueName, String conferenceName, String divisionName, String teamName) {
+    public ILeagueObjectModel loadLeagueModel(String leagueName, String teamName) {
         ArrayList<IPlayer> playersList=new ArrayList<>();
         playersList.add(new Player("Henry","forward",false));
         playersList.add(new Player("Max","goalie",true));
@@ -42,4 +42,5 @@ public class MockDatabase implements ILeagueObjectModelData {
     public boolean checkIfTeamAlreadyExists(String teamName, String divisionName) {
         return false;
     }
+
 }

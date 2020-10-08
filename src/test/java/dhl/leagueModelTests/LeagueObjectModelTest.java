@@ -13,13 +13,12 @@ import java.util.ArrayList;
 
 public class LeagueObjectModelTest {
     LeagueObjectModel leagueModel;
-    IParserOutput parsedOutput;
     IValidation validate;
     LeagueObjectModel leagueModelParameterized;
+
     @BeforeEach
     public void initialize(){
         leagueModel=new LeagueObjectModel();
-        parsedOutput=new MockParserOutput();
         validate=new CommonValidation();
         ArrayList<IPlayer> playersList=new ArrayList<>();
         playersList.add(new Player("Henry","forward",false));
@@ -53,6 +52,7 @@ public class LeagueObjectModelTest {
         leagueModel.setFreeAgents(freeAgentsList);
         Assertions.assertEquals(leagueModel.getFreeAgents().size(),freeAgentsList.size());
     }
+
     @Test void setConferencesTest(){
         leagueModel.setConferences(new ArrayList<IConference>());
         Assertions.assertTrue(leagueModel.getConferences().size()==0);
@@ -65,6 +65,7 @@ public class LeagueObjectModelTest {
         leagueModelParameterized.setConferences(conferences);
         Assertions.assertTrue(leagueModelParameterized.checkIfLeagueModelValid(validate));
     }
+
     @Test void checkIfLeagueHasEvenConferencesTest(){
         Exception error=Assertions.assertThrows(Exception.class,() ->{
             leagueModelParameterized.checkIfLeagueHasEvenConferences();
@@ -78,18 +79,21 @@ public class LeagueObjectModelTest {
         });
         Assertions.assertTrue(error.getMessage().contains("League name is not present in file imported."));
     }
+
     @Test void checkUserInputIncorrectConferenceTest() throws Exception{
         Exception error=Assertions.assertThrows(Exception.class,() ->{
             leagueModel.checkUserInputForCreateTeams(leagueModelParameterized,"Dhl","Premier","Atlantic","Nova Scotia");
         });
         Assertions.assertTrue(error.getMessage().contains("Conference name is not present in file imported"));
     }
+
     @Test void checkUserInputIncorrectDivisionTest() throws Exception{
         Exception error=Assertions.assertThrows(Exception.class,() ->{
             leagueModel.checkUserInputForCreateTeams(leagueModelParameterized,"Dhl","Western","Metropolitan","Nova Scotia");
         });
         Assertions.assertTrue(error.getMessage().contains("Division name is not present in file imported"));
     }
+
     @Test void checkUserInputTeamAlreadyPresentTest() throws Exception{
         Exception error=Assertions.assertThrows(Exception.class,() ->{
             leagueModel.checkUserInputForCreateTeams(leagueModelParameterized,"Dhl","Western","Atlantic","Ontario");
@@ -100,13 +104,15 @@ public class LeagueObjectModelTest {
     @Test void checkUserInputForCreateTeamsTest() throws Exception{
         Assertions.assertTrue(leagueModel.checkUserInputForCreateTeams(leagueModelParameterized,"Dhl","Western","Atlantic","Nova Scotia"));
     }
+
     @Test void createTeamTest() throws Exception{
-        ILeagueObjectModelData mockdb=new MockDatabase();
-        Assertions.assertEquals("Dhl",leagueModelParameterized.createTeam(mockdb,"Dhl","Western","Atlantic","Nova Scotia","Mathew","Harry").getLeagueName());
+        ILeagueObjectModelData mockDb=new MockDatabase();
+        Assertions.assertEquals("Dhl",leagueModelParameterized.createTeam(mockDb,"Dhl","Western","Atlantic","Nova Scotia","Mathew","Harry").getLeagueName());
     }
+
     @Test void loadTeamTest() throws Exception{
-        ILeagueObjectModelData mockdb=new MockDatabase();
-        Assertions.assertEquals("Dhl",leagueModelParameterized.loadTeam(mockdb,"Dhl","Western","Atlantic","Nova Scotia").getLeagueName());
+        ILeagueObjectModelData mockDb=new MockDatabase();
+        Assertions.assertEquals("Dhl",leagueModelParameterized.loadTeam(mockDb,"Dhl","Nova Scotia").getLeagueName());
     }
 
     @Test
@@ -118,11 +124,12 @@ public class LeagueObjectModelTest {
         });
         Assertions.assertTrue(error.getMessage().contains("The names of conferences inside a league must be unique"));
     }
+
     @AfterEach
     public void destroyObject(){
         leagueModel=null;
-        parsedOutput=null;
     }
+
 }
 
 
