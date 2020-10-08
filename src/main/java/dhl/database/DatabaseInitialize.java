@@ -10,9 +10,9 @@ public class DatabaseInitialize {
     public static String dbURL;
     public static String dbUserName;
     public static String dbPassword;
-    public static String dbTimeZone;
+    public static String dbDriver;
 
-    private void loadDBProperties(){
+    private void loadDBProperties() {
         InputStream propertiesStream = getClass().getClassLoader().getResourceAsStream("config.properties");
         Properties dbProperties = new Properties();
         try {
@@ -20,20 +20,20 @@ public class DatabaseInitialize {
             dbURL = dbProperties.getProperty("dbURLTest");
             dbUserName = dbProperties.getProperty("dbUsernameTest");
             dbPassword = dbProperties.getProperty("dbPasswordTest");
-            dbTimeZone = dbProperties.getProperty("serverTimeZone");
+            dbDriver = dbProperties.getProperty("dbDriver");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public Connection getConnection(){
+    public Connection getConnection() {
 
         try {
             loadDBProperties();
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName(dbDriver);
 
-            Connection con = DriverManager.getConnection( dbURL + "?serverTimezone=" + dbTimeZone ,dbUserName,dbPassword);
-            return con;
+            Connection databaseConnection = DriverManager.getConnection(dbURL, dbUserName, dbPassword);
+            return databaseConnection;
         } catch (Exception e) {
             e.printStackTrace();
         }
