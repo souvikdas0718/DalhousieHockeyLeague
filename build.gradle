@@ -26,6 +26,6 @@ test {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'dhl.HelloWorld'
+        attributes 'Main-Class': 'dhl.StartGame'
     }
 }
