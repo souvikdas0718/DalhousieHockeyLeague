@@ -88,7 +88,7 @@ public class Team implements ITeam {
         validation.isStringEmpty(generalManager,"General manager name");
         checkIfOneCaptainPerTeam(players);
         if(this.checkIfSizeOfTeamValid(players)==false){
-            throw new Exception("Number of players cannot exceed 20 in each team");
+            throw new Exception("Each team must have 20 players");
         }
         return true;
     }

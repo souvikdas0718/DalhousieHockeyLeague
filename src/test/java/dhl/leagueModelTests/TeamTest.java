@@ -151,7 +151,7 @@ public class TeamTest {
         Exception error= Assertions.assertThrows(Exception.class,() ->{
             team.checkIfTeamValid(validate);
         });
-        Assertions.assertTrue(error.getMessage().contains("Number of players cannot exceed 20 in each team"));
+        Assertions.assertTrue(error.getMessage().contains("Each team must have 20 players"));
     }
 
     @AfterEach()
