@@ -3,6 +3,7 @@ package dhl.simulationStateMachine.States;
 import dhl.leagueModel.interfaceModel.IConference;
 import dhl.leagueModel.interfaceModel.IDivision;
 import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
+import dhl.leagueModel.interfaceModel.ITeam;
 import dhl.leagueModelData.ILeagueObjectModelData;
 import dhl.leagueModelData.LeagueObjectModelData;
 import dhl.simulationStateMachine.GameContext;
@@ -34,7 +35,6 @@ public class CreateTeamState implements GameState {
         inMemoryLeague = ourGame.getInMemoryLeague();
 
         System.out.println("------------------------LETS CREATE NEW TEAM---------------------");
-        System.out.println("Mention Confernce Name");
 
         ArrayList<IConference> conferencesArray = inMemoryLeague.getConferences();
         System.out.println("Select the Conference");
@@ -80,8 +80,9 @@ public class CreateTeamState implements GameState {
             System.exit(0);
         }
 
+        System.out.println("------------------------LETS ADD NEW TEAM NOW---------------------");
         String userInput;
-        System.out.print("Enter Team Name: ");
+        System.out.print("Enter New Team Name: ");
         userInput = sc.nextLine();
 
         while (teamName == null){
@@ -94,13 +95,13 @@ public class CreateTeamState implements GameState {
                 teamName = userInput;
             }
         }
-        System.out.print("Enter General Manager Name: ");
+        System.out.print("Enter Team's General Manager Name: ");
         generalManager  = sc.nextLine();
         while(generalManager.equals("")){
             System.out.println("Looks like you didnt add any input please try again: ");
             generalManager = sc.nextLine();
         }
-        System.out.print("Enter Head Coach Name: ");
+        System.out.print("Enter Team's Head Coach Name: ");
         headCoach  = sc.nextLine();
         while(headCoach.equals("")){
             System.out.println("Looks like you didnt add any input please try again: ");
@@ -120,8 +121,10 @@ public class CreateTeamState implements GameState {
                     selectedConference.getConferenceName(),
                     selectedDivision.getDivisionName(),
                     teamName, generalManager, headCoach);
+
+            ourGame.setSelectedTeam(findTeam(inMemoryLeague , teamName));
         }catch (Exception e){
-            System.out.println(e);
+            System.out.println(e.getMessage());
             ourGame.setGameinProgress(false);
         }
     }
@@ -153,4 +156,20 @@ public class CreateTeamState implements GameState {
         return null;
     }
 
+    public ITeam findTeam(ILeagueObjectModel inMemoryLeague, String teamName){
+        ITeam teamObject = null;
+
+        for(IConference conference: inMemoryLeague.getConferences() ){
+            for(IDivision division: conference.getDivisions()){
+                for (ITeam team: division.getTeams()){
+                    if (team.getTeamName().equals(teamName)){
+                        teamObject = team;
+                        System.out.println("Team Found");
+                    }
+                }
+            }
+        }
+
+        return teamObject;
+    }
 }
