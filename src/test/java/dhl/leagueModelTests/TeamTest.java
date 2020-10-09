@@ -121,7 +121,10 @@ public class TeamTest {
     @Test
     public void checkNumberOfPlayersInTeamTest(){
         ArrayList<IPlayer> playersList=new ArrayList<>();
-        playersList.add(new Player("Henry","forward",false));
+        playersList.add(new Player("Henry","forward",true));
+        for(int i=1;i<20;i++){
+            playersList.add(new Player("Player"+i,"forward",false));
+        }
         team = new Team("Ontario","Mathew","henry",playersList);
         Assertions.assertTrue(team.checkIfSizeOfTeamValid(playersList));
     }
@@ -129,8 +132,10 @@ public class TeamTest {
     @Test
     public void checkIfTeamValidTest() throws Exception{
         ArrayList<IPlayer> playersList=new ArrayList<>();
-        playersList.add(new Player("Henry","forward",false));
         playersList.add(new Player("Max","goalie",true));
+        for(int i=1;i<20;i++){
+            playersList.add(new Player("Player"+i,"forward",false));
+        }
         team = new Team("Ontario","Mathew","henry",playersList);
         Assertions.assertTrue(team.checkIfTeamValid(validate));
     }
@@ -140,13 +145,13 @@ public class TeamTest {
         ArrayList<IPlayer> playersList=new ArrayList<>();
         playersList.add(new Player("Max","goalie",true));
         for(int i=0;i<20;i++){
-            playersList.add(new Player("Henry","forward",false));
+            playersList.add(new Player("Player"+i,"forward",false));
         }
         team = new Team("Ontario","Mathew","henry",playersList);
         Exception error= Assertions.assertThrows(Exception.class,() ->{
             team.checkIfTeamValid(validate);
         });
-        Assertions.assertTrue(error.getMessage().contains("Number of players cannot exceed 20 in each team"));
+        Assertions.assertTrue(error.getMessage().contains("Each team must have 20 players"));
     }
 
     @AfterEach()
