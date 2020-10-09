@@ -122,12 +122,15 @@ public class CreateTeamState implements GameState {
                     teamName, generalManager, headCoach);
         }catch (Exception e){
             System.out.println(e);
+            ourGame.setGameinProgress(false);
         }
     }
 
     @Override
     public void stateExitProcess() {
-        ourGame.setGameState(ourGame.getSimulateState());
+        if(ourGame.isGameinProgress()) {
+            ourGame.setGameState(ourGame.getSimulateState());
+        }
     }
 
     public IConference findConference(ArrayList<IConference> confrenceArray, String conferenceName ){

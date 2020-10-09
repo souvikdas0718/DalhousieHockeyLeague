@@ -14,6 +14,7 @@ import dhl.simulationStateMachine.Interface.GameState;
 import dhl.simulationStateMachine.JsonFilePath;
 import org.json.simple.JSONObject;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ImportState implements GameState {
@@ -40,7 +41,12 @@ public class ImportState implements GameState {
             System.out.println("2 for Loading Existing Team from DB");
             System.out.println("0 To Exit");
 
-            option = sc.nextInt();
+
+            try{
+                option = Integer.parseInt(sc.next());
+            } catch(NumberFormatException exception){
+                System.out.println("This is not a Correct Option");
+            }
             sc.nextLine();
         }
         switch (option){
