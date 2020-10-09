@@ -164,7 +164,6 @@ public class CreateTeamState implements GameState {
                 for (ITeam team: division.getTeams()){
                     if (team.getTeamName().equals(teamName)){
                         teamObject = team;
-                        System.out.println("Team Found");
                     }
                 }
             }

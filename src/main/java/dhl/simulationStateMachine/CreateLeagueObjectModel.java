@@ -76,20 +76,21 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
 
         while(conferenceListIterator.hasNext()){
             JSONObject conferenceJsonObject = (JSONObject) conferenceListIterator.next();
+
             if(checkJsonArray(conferenceJsonObject , "divisions")){
+                if (conferenceJsonObject.get("conferenceName")==null || conferenceJsonObject.get("divisions")== null){
+                    throw new Exception("ERROR: Hey! Division cant have Null values....");
+                }
                 Conference conferenceObject = new Conference(
                         (String) conferenceJsonObject.get("conferenceName"),
                         getDivisionObjectArrayList( (JSONArray)conferenceJsonObject.get("divisions"))
                 );
                 if(conferenceObject.checkIfConferenceValid(validationObject)) {
                     conferencesListToReturn.add(conferenceObject);
-                    System.out.println("Added Confrence Object: " + (String) conferenceJsonObject.get("conferenceName"));
                 }
             }else{
                 throw new Exception("Division Array not Found for Conference: " + conferenceJsonObject.get("conferenceName"));
             }
-
-
         }
         return conferencesListToReturn;
     }
@@ -99,6 +100,9 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
         ArrayList<IDivision> divisonListToReturn = new ArrayList<IDivision>();
         while(divisionListIterator.hasNext()){
             JSONObject divisionJsonObject = (JSONObject) divisionListIterator.next();
+            if (divisionJsonObject.get("divisionName")==null || divisionJsonObject.get("teams")== null){
+                throw new Exception("ERROR: Hey! Division cant have Null values....");
+            }
             Division divisionObject = new Division(
                     (String) divisionJsonObject.get("divisionName"),
                     getTeamObjectArrayList( (JSONArray)divisionJsonObject.get("teams"))
@@ -106,7 +110,6 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
 
             if(divisionObject.checkIfDivisionValid(validationObject)){
                 divisonListToReturn.add(divisionObject);
-                System.out.println("Added Division Object: "+ (String) divisionJsonObject.get("divisionName"));
             }
         }
 
@@ -119,6 +122,10 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
         ArrayList<ITeam> TeamListToReturn = new ArrayList<ITeam>();
         while(teamListIterator.hasNext()){
             JSONObject teamJsonObject = (JSONObject) teamListIterator.next();
+            if (teamJsonObject.get("teamName")==null || teamJsonObject.get("generalManager")== null ||
+                    teamJsonObject.get("headCoach")==null || teamJsonObject.get("players")==null){
+                throw new Exception("ERROR: Hey! Team cant have Null values....");
+            }
             ITeam teamObject = new Team(
                     (String) teamJsonObject.get("teamName"),
                     (String) teamJsonObject.get("generalManager"),
@@ -127,27 +134,27 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
             );
             if (teamObject.checkIfTeamValid(validationObject)){
                 TeamListToReturn.add(teamObject);
-                System.out.println("Added Team Object: "+ (String) teamJsonObject.get("teamName"));
             }
         }
         return TeamListToReturn;
     }
 
     public ArrayList<IPlayer> getPlayerArrayList(JSONArray playerJsonArray) throws Exception {
-        //System.out.println(playerJsonArray);
         Iterator<?> playerListIterator = playerJsonArray.iterator();
         ArrayList<IPlayer> playerListToReturn = new ArrayList<IPlayer>();
 
         while(playerListIterator.hasNext()){
             JSONObject playerJsonObject = (JSONObject) playerListIterator.next();
 
+            if (playerJsonObject.get("playerName")==null || playerJsonObject.get("position")== null || playerJsonObject.get("captain")==null){
+                throw new Exception("ERROR: Hey! Player cant have Null values....");
+            }
             IPlayer playerOb = new Player((String) playerJsonObject.get("playerName") ,
                     (String) playerJsonObject.get("position") ,
                     (Boolean) playerJsonObject.get("captain"));
 
             if(playerOb.checkPlayerValid()){
                 playerListToReturn.add(playerOb);
-                System.out.println("Added Player Object: "+ (String) playerOb.getPlayerName());
             }
         }
         return playerListToReturn;

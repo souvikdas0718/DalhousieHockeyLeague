@@ -40,16 +40,17 @@ public class LoadTeamState implements GameState {
             System.out.println("Looks like you didnt add any input please try again: ");
             team = sc.nextLine();
         }
-        ILeagueObjectModelData databaseRefrenceOb = new LeagueObjectModelData();
+
         try {
             System.out.println("Finding: "+ team+ " of League:"+ leagueName+ " In DataBase");
+            ILeagueObjectModelData databaseRefrenceOb = new LeagueObjectModelData();
             newInMemoryLeague = newInMemoryLeague.loadTeam(databaseRefrenceOb, leagueName, team);
+            ourGame.setSelectedTeam(findTeam(newInMemoryLeague , team));
         }catch(Exception e) {
-            System.out.println("ERROR");
             System.out.println(e.getMessage());
             ourGame.setGameinProgress(false);
         };
-        ourGame.setSelectedTeam(findTeam(newInMemoryLeague , team));
+
     }
 
     @Override
