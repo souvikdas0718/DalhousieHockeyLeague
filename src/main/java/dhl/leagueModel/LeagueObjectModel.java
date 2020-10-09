@@ -85,7 +85,7 @@ public class LeagueObjectModel implements ILeagueObjectModel {
             if(conference.getConferenceName()==conferenceName){
                 ArrayList<IDivision> divisionArrayList=conference.getDivisions();
                 for(int j=0;j<divisionArrayList.size();j++){
-                    IDivision division=divisionArrayList.get(i);
+                    IDivision division=divisionArrayList.get(j);
                     if(division.getDivisionName()==divisionName){
                         ArrayList<ITeam> teamArrayList =division.getTeams();
                         teamArrayList.add(newlyCreatedTeam);
