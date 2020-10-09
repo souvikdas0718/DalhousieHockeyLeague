@@ -1,0 +1,3369 @@
+{
+  "leagueName":"Dalhousie Hockey League",
+  "conferences":[
+    {
+      "conferenceName":"Eastern Conference",
+      "divisions":[
+        {
+          "divisionName":null,
+          "teams":[
+            {
+              "teamName":"Boston Bruins",
+              "generalManager":"Don Sweeney",
+              "headCoach":"Bruce Cassidy",
+              "players":[
+                {
+                  "playerName":"Fred One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike One",
+                  "position":"forward",
+                  "captain":true
+                },
+                {
+                  "playerName":"Joe One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam One",
+                  "position":"goalie",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam Two",
+                  "position":"goalie",
+                  "captain":false
+                }
+              ]
+            },
+            {
+              "teamName":"Buffalo Sabres",
+              "generalManager":"Kevyn Adams",
+              "headCoach":"Ralph Krueger",
+              "players":[
+                {
+                  "playerName":"Fred One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike One",
+                  "position":"forward",
+                  "captain":true
+                },
+                {
+                  "playerName":"Joe One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam One",
+                  "position":"goalie",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam Two",
+                  "position":"goalie",
+                  "captain":false
+                }
+              ]
+            },
+            {
+              "teamName":"Detroit Red Wings",
+              "generalManager":"Steve Yzerman",
+              "headCoach":"Jeff Blashill",
+              "players":[
+                {
+                  "playerName":"Fred One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike One",
+                  "position":"forward",
+                  "captain":true
+                },
+                {
+                  "playerName":"Joe One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam One",
+                  "position":"goalie",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam Two",
+                  "position":"goalie",
+                  "captain":false
+                }
+              ]
+            },
+            {
+              "teamName":"Florida Panthers",
+              "generalManager":"Bill Zito",
+              "headCoach":"Joel Quenneville",
+              "players":[
+                {
+                  "playerName":"Fred One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike One",
+                  "position":"forward",
+                  "captain":true
+                },
+                {
+                  "playerName":"Joe One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam One",
+                  "position":"goalie",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam Two",
+                  "position":"goalie",
+                  "captain":false
+                }
+              ]
+            },
+            {
+              "teamName":"Montreal Canadiens",
+              "generalManager":"Marc Bergevin",
+              "headCoach":"Claude Julien",
+              "players":[
+                {
+                  "playerName":"Fred One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike One",
+                  "position":"forward",
+                  "captain":true
+                },
+                {
+                  "playerName":"Joe One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam One",
+                  "position":"goalie",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam Two",
+                  "position":"goalie",
+                  "captain":false
+                }
+              ]
+            },
+            {
+              "teamName":"Ottawa Senators",
+              "generalManager":"Pierre Dorion",
+              "headCoach":"D.J. Smith",
+              "players":[
+                {
+                  "playerName":"Fred One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike One",
+                  "position":"forward",
+                  "captain":true
+                },
+                {
+                  "playerName":"Joe One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam One",
+                  "position":"goalie",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam Two",
+                  "position":"goalie",
+                  "captain":false
+                }
+              ]
+            },
+            {
+              "teamName":"Tampa Bay Lightning",
+              "generalManager":"Julien BriseBois",
+              "headCoach":"Jon Cooper",
+              "players":[
+                {
+                  "playerName":"Fred One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike One",
+                  "position":"forward",
+                  "captain":true
+                },
+                {
+                  "playerName":"Joe One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam One",
+                  "position":"goalie",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam Two",
+                  "position":"goalie",
+                  "captain":false
+                }
+              ]
+            },
+            {
+              "teamName":"Toronto Maple Leafs",
+              "generalManager":"Kyle Dubas",
+              "headCoach":"Sheldon Keefe",
+              "players":[
+                {
+                  "playerName":"Fred One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike One",
+                  "position":"forward",
+                  "captain":true
+                },
+                {
+                  "playerName":"Joe One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam One",
+                  "position":"goalie",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam Two",
+                  "position":"goalie",
+                  "captain":false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "divisionName":"Metropolitan",
+          "teams":[
+            {
+              "teamName":"Carolina Hurricanes",
+              "generalManager":"Don Waddel",
+              "headCoach":"Rod BrindAmour",
+              "players":[
+                {
+                  "playerName":"Fred One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike One",
+                  "position":"forward",
+                  "captain":true
+                },
+                {
+                  "playerName":"Joe One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam One",
+                  "position":"goalie",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam Two",
+                  "position":"goalie",
+                  "captain":false
+                }
+              ]
+            },
+            {
+              "teamName":"Columbus Blue Jackets",
+              "generalManager":"Jarmo Kekalainen",
+              "headCoach":"John Tortorella",
+              "players":[
+                {
+                  "playerName":"Fred One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike One",
+                  "position":"forward",
+                  "captain":true
+                },
+                {
+                  "playerName":"Joe One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam One",
+                  "position":"goalie",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam Two",
+                  "position":"goalie",
+                  "captain":false
+                }
+              ]
+            },
+            {
+              "teamName":"New Jersey Devils",
+              "generalManager":"Tom Fitzgerald",
+              "headCoach":"Lindy Ruff",
+              "players":[
+                {
+                  "playerName":"Fred One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike One",
+                  "position":"forward",
+                  "captain":true
+                },
+                {
+                  "playerName":"Joe One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam One",
+                  "position":"goalie",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam Two",
+                  "position":"goalie",
+                  "captain":false
+                }
+              ]
+            },
+            {
+              "teamName":"New York Islanders",
+              "generalManager":"Lou Lamoriello",
+              "headCoach":"Barry Trotz",
+              "players":[
+                {
+                  "playerName":"Fred One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike One",
+                  "position":"forward",
+                  "captain":true
+                },
+                {
+                  "playerName":"Joe One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam One",
+                  "position":"goalie",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam Two",
+                  "position":"goalie",
+                  "captain":false
+                }
+              ]
+            },
+            {
+              "teamName":"New York Rangers",
+              "generalManager":"Jeff Gorton",
+              "headCoach":"David Quinn",
+              "players":[
+                {
+                  "playerName":"Fred One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike One",
+                  "position":"forward",
+                  "captain":true
+                },
+                {
+                  "playerName":"Joe One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam One",
+                  "position":"goalie",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam Two",
+                  "position":"goalie",
+                  "captain":false
+                }
+              ]
+            },
+            {
+              "teamName":"Philidelphia Flyers",
+              "generalManager":"Check Fletcher",
+              "headCoach":"Alain Vigneault",
+              "players":[
+                {
+                  "playerName":"Fred One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike One",
+                  "position":"forward",
+                  "captain":true
+                },
+                {
+                  "playerName":"Joe One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam One",
+                  "position":"goalie",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam Two",
+                  "position":"goalie",
+                  "captain":false
+                }
+              ]
+            },
+            {
+              "teamName":"Pittsburgh Penguins",
+              "generalManager":"Jim Rutherford",
+              "headCoach":"Mike Sullivan",
+              "players":[
+                {
+                  "playerName":"Fred One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike One",
+                  "position":"forward",
+                  "captain":true
+                },
+                {
+                  "playerName":"Joe One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam One",
+                  "position":"goalie",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam Two",
+                  "position":"goalie",
+                  "captain":false
+                }
+              ]
+            },
+            {
+              "teamName":"Washington Capitals",
+              "generalManager":"Brian MacLellan",
+              "headCoach":"Peter Laviolette",
+              "players":[
+                {
+                  "playerName":"Fred One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike One",
+                  "position":"forward",
+                  "captain":true
+                },
+                {
+                  "playerName":"Joe One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam One",
+                  "position":"goalie",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam Two",
+                  "position":"goalie",
+                  "captain":false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "conferenceName":"Western Conference",
+      "divisions":[
+        {
+          "divisionName":"Central",
+          "teams":[
+            {
+              "teamName":"Chicago Blackhawks",
+              "generalManager":"Stan Bowman",
+              "headCoach":"Jeremy Colliton",
+              "players":[
+                {
+                  "playerName":"Fred One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike One",
+                  "position":"forward",
+                  "captain":true
+                },
+                {
+                  "playerName":"Joe One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam One",
+                  "position":"goalie",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam Two",
+                  "position":"goalie",
+                  "captain":false
+                }
+              ]
+            },
+            {
+              "teamName":"Colorado Avalanche",
+              "generalManager":"Joe Sakic",
+              "headCoach":"Jared Bednar",
+              "players":[
+                {
+                  "playerName":"Fred One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike One",
+                  "position":"forward",
+                  "captain":true
+                },
+                {
+                  "playerName":"Joe One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam One",
+                  "position":"goalie",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam Two",
+                  "position":"goalie",
+                  "captain":false
+                }
+              ]
+            },
+            {
+              "teamName":"Dallas Stars",
+              "generalManager":"Jim Nill",
+              "headCoach":"Rick Bowness",
+              "players":[
+                {
+                  "playerName":"Fred One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike One",
+                  "position":"forward",
+                  "captain":true
+                },
+                {
+                  "playerName":"Joe One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam One",
+                  "position":"goalie",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam Two",
+                  "position":"goalie",
+                  "captain":false
+                }
+              ]
+            },
+            {
+              "teamName":"Minnesota Wild",
+              "generalManager":"Bill Guerrin",
+              "headCoach":"Dean Evason",
+              "players":[
+                {
+                  "playerName":"Fred One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike One",
+                  "position":"forward",
+                  "captain":true
+                },
+                {
+                  "playerName":"Joe One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam One",
+                  "position":"goalie",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam Two",
+                  "position":"goalie",
+                  "captain":false
+                }
+              ]
+            },
+            {
+              "teamName":"Nashville Predators",
+              "generalManager":"David Poile",
+              "headCoach":"John Hynes",
+              "players":[
+                {
+                  "playerName":"Fred One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike One",
+                  "position":"forward",
+                  "captain":true
+                },
+                {
+                  "playerName":"Joe One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam One",
+                  "position":"goalie",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam Two",
+                  "position":"goalie",
+                  "captain":false
+                }
+              ]
+            },
+            {
+              "teamName":"St. Louis Blues",
+              "generalManager":"Doug Armstrong",
+              "headCoach":"Craig Berube",
+              "players":[
+                {
+                  "playerName":"Fred One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike One",
+                  "position":"forward",
+                  "captain":true
+                },
+                {
+                  "playerName":"Joe One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam One",
+                  "position":"goalie",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam Two",
+                  "position":"goalie",
+                  "captain":false
+                }
+              ]
+            },
+            {
+              "teamName":"Winnipeg Jets",
+              "generalManager":"Kevin Cheveldayoff",
+              "headCoach":"Paul Maurice",
+              "players":[
+                {
+                  "playerName":"Fred One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike One",
+                  "position":"forward",
+                  "captain":true
+                },
+                {
+                  "playerName":"Joe One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam One",
+                  "position":"goalie",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam Two",
+                  "position":"goalie",
+                  "captain":false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "divisionName":"Pacific",
+          "teams":[
+            {
+              "teamName":"Anaheim Ducks",
+              "generalManager":"Bob Murray",
+              "headCoach":"Dallas Eakins",
+              "players":[
+                {
+                  "playerName":"Fred One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike One",
+                  "position":"forward",
+                  "captain":true
+                },
+                {
+                  "playerName":"Joe One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam One",
+                  "position":"goalie",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam Two",
+                  "position":"goalie",
+                  "captain":false
+                }
+              ]
+            },
+            {
+              "teamName":"Arizona Coyotes",
+              "generalManager":"Bill Armstrong",
+              "headCoach":"Rick Tocchet",
+              "players":[
+                {
+                  "playerName":"Fred One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike One",
+                  "position":"forward",
+                  "captain":true
+                },
+                {
+                  "playerName":"Joe One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam One",
+                  "position":"goalie",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam Two",
+                  "position":"goalie",
+                  "captain":false
+                }
+              ]
+            },
+            {
+              "teamName":"Calgary Flames",
+              "generalManager":"Brad Treliving",
+              "headCoach":"Geoff Ward",
+              "players":[
+                {
+                  "playerName":"Fred One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike One",
+                  "position":"forward",
+                  "captain":true
+                },
+                {
+                  "playerName":"Joe One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam One",
+                  "position":"goalie",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam Two",
+                  "position":"goalie",
+                  "captain":false
+                }
+              ]
+            },
+            {
+              "teamName":"Edmonton Oilers",
+              "generalManager":"Ken Holland",
+              "headCoach":"Dave Tippett",
+              "players":[
+                {
+                  "playerName":"Fred One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike One",
+                  "position":"forward",
+                  "captain":true
+                },
+                {
+                  "playerName":"Joe One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam One",
+                  "position":"goalie",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam Two",
+                  "position":"goalie",
+                  "captain":false
+                }
+              ]
+            },
+            {
+              "teamName":"Los Angeles Kings",
+              "generalManager":"Rob Blake",
+              "headCoach":"Todd McLellan",
+              "players":[
+                {
+                  "playerName":"Fred One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike One",
+                  "position":"forward",
+                  "captain":true
+                },
+                {
+                  "playerName":"Joe One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam One",
+                  "position":"goalie",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam Two",
+                  "position":"goalie",
+                  "captain":false
+                }
+              ]
+            },
+            {
+              "teamName":"San Jose Sharks",
+              "generalManager":"Doug Wilson",
+              "headCoach":"Bob Boughner",
+              "players":[
+                {
+                  "playerName":"Fred One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike One",
+                  "position":"forward",
+                  "captain":true
+                },
+                {
+                  "playerName":"Joe One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam One",
+                  "position":"goalie",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam Two",
+                  "position":"goalie",
+                  "captain":false
+                }
+              ]
+            },
+            {
+              "teamName":"Vancouver Canucks",
+              "generalManager":"Jim Benning",
+              "headCoach":"Travis Green",
+              "players":[
+                {
+                  "playerName":"Fred One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike One",
+                  "position":"forward",
+                  "captain":true
+                },
+                {
+                  "playerName":"Joe One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam One",
+                  "position":"goalie",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam Two",
+                  "position":"goalie",
+                  "captain":false
+                }
+              ]
+            },
+            {
+              "teamName":"Vegas Golden Knights",
+              "generalManager":"Kelly McCrimmon",
+              "headCoach":"Peter DeBoer",
+              "players":[
+                {
+                  "playerName":"Fred One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike One",
+                  "position":"forward",
+                  "captain":true
+                },
+                {
+                  "playerName":"Joe One",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane One",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Two",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Two",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Fred Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Steve Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Mike Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Joe Three",
+                  "position":"forward",
+                  "captain":false
+                },
+                {
+                  "playerName":"Nancy Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Jane Three",
+                  "position":"defense",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam One",
+                  "position":"goalie",
+                  "captain":false
+                },
+                {
+                  "playerName":"Pam Two",
+                  "position":"goalie",
+                  "captain":false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "freeAgents":[
+    {
+      "playerName":"Agent One",
+      "position":"forward",
+      "captain":false
+    },
+    {
+      "playerName":"Agent Two",
+      "position":"defense",
+      "captain":false
+    },
+    {
+      "playerName":"Agent Three",
+      "position":"goalie",
+      "captain":false
+    }
+  ]
+}
