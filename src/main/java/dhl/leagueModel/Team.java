@@ -79,7 +79,7 @@ public class Team implements ITeam {
     }
 
     public boolean checkIfSizeOfTeamValid(List<IPlayer> playerList) {
-        return playerList.size() <20 ;
+        return playerList.size() ==20 ;
     }
 
     public boolean checkIfTeamValid(IValidation validation) throws Exception{
