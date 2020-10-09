@@ -80,6 +80,19 @@ public class DivisionTest {
         Assertions.assertTrue(divisionParameterized.checkIfDivisionValid(validate));
     }
 
+    @Test
+    public void checkIfTeamNamesUniqueInDivisionTest() throws Exception{
+        ArrayList<ITeam> teams =divisionParameterized.getTeams();
+        ArrayList<IPlayer> playersListTeamTwo=new ArrayList<>();
+        playersListTeamTwo.add(new Player("Henry","forward",false));
+        teams.add(new Team("Ontario","Mathew","henry",playersListTeamTwo));
+        divisionParameterized.setTeams(teams);
+        Exception error=Assertions.assertThrows(Exception.class,() ->{
+            divisionParameterized.checkIfDivisionValid(validate);
+        });
+        Assertions.assertTrue(error.getMessage().contains("The names of teams inside a division must be unique"));
+    }
+
     @AfterEach()
     public void destroyObject(){
         initObj = null;
