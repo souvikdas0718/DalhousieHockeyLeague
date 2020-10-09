@@ -49,11 +49,7 @@ public class ImportState implements GameState {
                 System.exit(0);
             case 1:
                 System.out.println("case :1");
-
                 validFilePath = new JsonFilePath().getFilePath();
-
-                System.out.println(validFilePath);
-                System.out.println(option);
                 break;
             case 2:
                 System.out.print("Enter LeagueName to load from DB: ");
@@ -84,10 +80,15 @@ public class ImportState implements GameState {
     @Override
     public void stateProcess() throws Exception {
         if (validFilePath!= null){
-            JSONObject leagueJsonObject = new ImportJsonFile(validFilePath).getJsonObject();
-            CreateLeagueObjectModel createLeagueObjectModel = new CreateLeagueObjectModel(leagueJsonObject);
-            newInMemoryLeague = createLeagueObjectModel.getLeagueObjectModel();
-            System.out.println(newInMemoryLeague.getLeagueName()+ "  Imported from the Json");
+            try {
+                JSONObject leagueJsonObject = new ImportJsonFile(validFilePath).getJsonObject();
+                CreateLeagueObjectModel createLeagueObjectModel = new CreateLeagueObjectModel(leagueJsonObject);
+                newInMemoryLeague = createLeagueObjectModel.getLeagueObjectModel();
+                System.out.println(newInMemoryLeague.getLeagueName() + "  Imported from the Json");
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+                System.exit(0);
+            }
         }
     }
 

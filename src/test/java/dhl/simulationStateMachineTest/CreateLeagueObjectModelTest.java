@@ -17,7 +17,7 @@ public class CreateLeagueObjectModelTest {
     JsonFilePathMock filePathMock;
 
     @BeforeEach
-    public void initObject(){
+    public void initObject() throws Exception {
         this.filePathMock = new JsonFilePathMock();
         ImportJsonFile importJsonFile = new ImportJsonFile(filePathMock.getFilePath());
         this.leagueObject = importJsonFile.getJsonObject();

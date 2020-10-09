@@ -2,7 +2,7 @@
   "leagueName": "Dalhousie Hockey League",
   "conferences": [
     {
-      "conferenceName": "Eastern Conference",
+      "conferenceName" : "Eastern Conference",
       "divisions": [
         {
           "divisionName": "Atlantic",
