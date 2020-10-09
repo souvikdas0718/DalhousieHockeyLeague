@@ -13,6 +13,6 @@ public class SeasonSimulationState implements ISimulationSeasonState {
 
     @Override
     public void startSeasonSimulation(int seasonNumber) {
-        System.out.println("Season -"+ seasonNumber+ " is simulated");
+        System.out.println("Season Number:"+ seasonNumber+ " is simulated");
     }
 }

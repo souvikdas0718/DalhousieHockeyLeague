@@ -19,7 +19,4 @@ public class SimulationContext {
         currentSimulation.startSeasonSimulation(seasonNumber);
     }
 
-
-
-
 }

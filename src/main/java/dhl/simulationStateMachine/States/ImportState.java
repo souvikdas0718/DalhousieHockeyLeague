@@ -35,13 +35,13 @@ public class ImportState implements GameState {
         Scanner sc = new Scanner(System.in);
 
         while(option == -1 || option>3) {
-            //System.out.println(option);
             System.out.println("Please Enter one option");
             System.out.println("1 for Loading JSON");
             System.out.println("2 for Loading Existing Team from DB");
             System.out.println("0 To Exit");
 
             option = sc.nextInt();
+            sc.nextLine();
         }
         switch (option){
             case 0:
@@ -63,49 +63,20 @@ public class ImportState implements GameState {
                     leagueName = sc.nextLine();
                 }
 
-                System.out.print("Enter conference Name: ");
-                String conference = sc.nextLine();
-                while(conference.equals("")){
-                    System.out.println("Looks like you didnt add any input please try again: ");
-                    conference = sc.nextLine();
-                }
-
-                System.out.print("Enter Division Name:  ");
-                String division = sc.nextLine();
-                while(division.equals("")){
-                    System.out.println("Looks like you didnt add any input please try again: ");
-                    division = sc.nextLine();
-                }
-
                 System.out.print("Enter Team Name:  ");
                 String team = sc.nextLine();
                 while(team.equals("")){
                     System.out.println("Looks like you didnt add any input please try again: ");
                     team = sc.nextLine();
                 }
+
                 ILeagueObjectModelData databaseRefrenceOb = new LeagueObjectModelData();
                 try {
-                    newInMemoryLeague = newInMemoryLeague.loadTeam(databaseRefrenceOb, leagueName, conference, division, team);
+                    newInMemoryLeague = newInMemoryLeague.loadTeam(databaseRefrenceOb, leagueName, team);
                 }catch(Exception e) {
-                    System.out.println("-----------------------------------------------------------------");
                     System.out.println(e);
                 };
-                for(int i=0; i< newInMemoryLeague.getConferences().size();i++){
-                    IConference ourConference = newInMemoryLeague.getConferences().get(i);
-                    if (ourConference.getConferenceName().equals(conference)){
-                        for(int j=0;j< ourConference.getDivisions().size();j++){
-                            IDivision ourDivision = ourConference.getDivisions().get(i);
-                            if(ourDivision.getDivisionName().equals(division)){
-                                for(int k=0; k< ourDivision.getTeams().size();k++){
-                                    ITeam ourTeam = ourDivision.getTeams().get(i);
-                                    if (ourTeam.getTeamName().equals(team)){
-                                        ourGame.setSelectedTeam(ourTeam);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                ourGame.setSelectedTeam(findTeam(newInMemoryLeague , team));
                 break;
         }
     }
@@ -113,28 +84,37 @@ public class ImportState implements GameState {
     @Override
     public void stateProcess() throws Exception {
         if (validFilePath!= null){
-            //System.out.println("Loading Json File into Memory from "+ validFilePath);
             JSONObject leagueJsonObject = new ImportJsonFile(validFilePath).getJsonObject();
-            //System.out.println(leagueJsonObject);
             CreateLeagueObjectModel createLeagueObjectModel = new CreateLeagueObjectModel(leagueJsonObject);
             newInMemoryLeague = createLeagueObjectModel.getLeagueObjectModel();
             System.out.println(newInMemoryLeague.getLeagueName()+ "  Imported from the Json");
-        }else{}
+        }
     }
 
     @Override
     public void stateExitProcess() {
         Scanner sc = new Scanner(System.in);
         ourGame.setInMemoryLeague(newInMemoryLeague);
-        //System.out.println("ExitState:  " + ourGame.getInMemoryLeague().getLeagueName());
         if (option==1) {
             ourGame.setGameState(ourGame.getCreateTeamState());
         }else if (option==2){
             ourGame.setGameState(ourGame.getSimulateState());
         }
     }
+    public ITeam findTeam(ILeagueObjectModel inMemoryLeague, String teamName){
 
-    public void findTeam(LeagueObjectModel newInMemoryLeague){
-        //newInMemoryLeague
+        ITeam teamObject = null;
+
+        for(IConference conference: inMemoryLeague.getConferences() ){
+            for(IDivision division: conference.getDivisions()){
+                for (ITeam team: division.getTeams()){
+                    if (team.getTeamName().equals(teamName)){
+                        teamObject = team;
+                    }
+                }
+            }
+        }
+
+        return teamObject;
     }
 }

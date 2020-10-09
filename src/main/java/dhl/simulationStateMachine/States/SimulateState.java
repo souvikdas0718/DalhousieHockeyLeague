@@ -12,6 +12,7 @@ public class SimulateState implements GameState {
     final int maxSeasons = 10;
     final int minSeasons = 1;
     int simulationSeasonsCount;
+
     public SimulateState(GameContext newGame) {
         ourGame =  newGame;
         simulationSeasonsCount = 0;
@@ -48,4 +49,5 @@ public class SimulateState implements GameState {
     public void stateExitProcess() {
         ourGame.setGameinProgress(false);
     }
+
 }

@@ -15,6 +15,7 @@ public class LoadTeamState implements GameState {
     GameContext ourGame;
     ILeagueObjectModel ourLeague;
     ITeam selectedTeam;
+
     public LoadTeamState(GameContext newGame) {
         ourGame = newGame;
     }
@@ -105,9 +106,6 @@ public class LoadTeamState implements GameState {
         ourGame.setGameState(ourGame.getSimulateState());
     }
 
-
-
-
     public IConference findConference(ArrayList<IConference> confrenceArray, String conferenceName ){
         for(int i= 0; i< confrenceArray.size(); i++){
             IConference ourConference = confrenceArray.get(i);
@@ -117,6 +115,7 @@ public class LoadTeamState implements GameState {
         }
         return null;
     }
+
     public IDivision findDivision(ArrayList<IDivision> divisionArrayList , String divisionName){
         for(int i= 0; i< divisionArrayList.size(); i++){
             IDivision ourDivision = divisionArrayList.get(i);
@@ -126,6 +125,7 @@ public class LoadTeamState implements GameState {
         }
         return null;
     }
+
     public ITeam findTeam(ArrayList<ITeam> teamArrayList , String teamName){
         for(int i= 0; i< teamArrayList.size(); i++){
             ITeam ourTeam = teamArrayList.get(i);
