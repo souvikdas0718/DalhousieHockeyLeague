@@ -1,6 +1,5 @@
 package dhl.leagueModelTests;
 
-
 import dhl.leagueModel.CommonValidation;
 import dhl.leagueModel.Conference;
 import dhl.leagueModel.Division;
@@ -17,7 +16,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 
 public class LeagueObjectModelTest {

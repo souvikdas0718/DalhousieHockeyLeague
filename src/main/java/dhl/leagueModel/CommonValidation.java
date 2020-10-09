@@ -1,11 +1,9 @@
 package dhl.leagueModel;
 
 import dhl.leagueModel.interfaceModel.IValidation;
-
 import java.util.List;
 
 public class CommonValidation implements IValidation {
-
     public void isStringEmpty(String value, String fieldName) throws Exception {
         if(value.length()==0){
             throw new Exception(fieldName+" name cannot be empty");
