@@ -1,4 +1,4 @@
-package dhl.leagueModelTests;
+package dhl;
 
 import dhl.HelloWorld;
 import org.junit.jupiter.api.Test;
