@@ -2,3 +2,9 @@
 ### idea ###
 .idea
 .gradle
+build/*
+caches/
+daemon/
+native/
+out/
+wrapper/

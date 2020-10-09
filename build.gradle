@@ -26,4 +26,9 @@ jar {
     manifest {
         attributes 'Main-Class': 'dhl.HelloWorld'
     }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
+
+
