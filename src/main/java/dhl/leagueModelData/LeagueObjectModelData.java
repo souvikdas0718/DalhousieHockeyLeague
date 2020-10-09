@@ -1,12 +1,24 @@
 package dhl.leagueModelData;
 
-import dhl.leagueModel.*;
-import dhl.leagueModel.interfaceModel.*;
-
-import java.sql.*;
-import java.util.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.CallableStatement;
+import java.sql.Types;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.sql.Connection;
+import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
+import dhl.leagueModel.interfaceModel.IPlayer;
+import dhl.leagueModel.interfaceModel.IConference;
+import dhl.leagueModel.interfaceModel.IDivision;
+import dhl.leagueModel.interfaceModel.ITeam;
+import dhl.leagueModel.Player;
+import java.util.ArrayList;
+import dhl.leagueModel.Team;
+import dhl.leagueModel.Division;
+import dhl.leagueModel.Conference;
+import java.sql.DriverManager;
+
 
 public class LeagueObjectModelData implements ILeagueObjectModelData {
 
@@ -16,7 +28,7 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
         createconnection();
     }
 
-    void createconnection(){
+    private void createconnection(){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://db-5308.cs.dal.ca:3306/CSCI5308_2_DEVINT?serverTimezone=UTC","CSCI5308_2_DEVINT_USER","F2qzG5VBxf");
@@ -27,182 +39,196 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
         }
     }
 
-    public void insertLeagueModel(ILeagueObjectModel obj) {
-        int leagueId = insertLeague(obj.getLeagueName());
+    public void insertLeagueModel(ILeagueObjectModel leagueModelObj) throws Exception {
+        int leagueId = insertLeague(leagueModelObj.getLeagueName());
 
-        obj.getConferences().forEach((a)-> {
+        leagueModelObj.getConferences().forEach((conference)-> {
 
-            ArrayList<IDivision> arrDiv = a.getDivisions();
-            int finalConferenceId = insertConference(a.getConferenceName(), leagueId);
+            ArrayList<IDivision> arrDiv = conference.getDivisions();
+            int finalConferenceId = 0;
+            try {
+                finalConferenceId = insertConference(conference.getConferenceName(), leagueId);
+            }
+            catch(Exception eConference){
+                throw new RuntimeException(eConference);
+            }
 
-            arrDiv.forEach((b)->{
+            int finalConferenceId1 = finalConferenceId;
+            arrDiv.forEach((division)->{
 
-                ArrayList<ITeam> arrTeam = b.getTeams();
-                int finalDivisionId = insertDivision(b.getDivisionName(), finalConferenceId, leagueId);
+                ArrayList<ITeam> arrTeam = division.getTeams();
+                int finalDivisionId = 0;
+                try {
+                    finalDivisionId = insertDivision(division.getDivisionName(), finalConferenceId1, leagueId);
+                } catch (Exception eDivision) {
+                    throw new RuntimeException(eDivision);
+                }
 
-                arrTeam.forEach((c)->{
+                int finalDivisionId1 = finalDivisionId;
+                arrTeam.forEach((team)->{
 
-                    ArrayList<IPlayer> arrPlayer = c.getPlayers();
-                    int finalTeamId = insertTeam(c.getTeamName(), c.getGeneralManager(), c.getHeadCoach(), finalDivisionId, leagueId);
+                    ArrayList<IPlayer> arrPlayer = team.getPlayers();
+                    int finalTeamId = 0;
+                    try {
+                        finalTeamId = insertTeam(team.getTeamName(), team.getGeneralManager(), team.getHeadCoach(), finalDivisionId1, leagueId);
+                    } catch (Exception eTeam) {
+                        throw new RuntimeException(eTeam);
+                    }
 
-                    arrPlayer.forEach((d)->{
-                        insertPlayer(d.getPlayerName(),d.getPosition(),d.isCaptainValueBoolean(), false, finalTeamId,leagueId);
+                    int finalTeamId1 = finalTeamId;
+                    arrPlayer.forEach((player)->{
+                        try {
+                            insertPlayer(player.getPlayerName(),player.getPosition(),player.isCaptainValueBoolean(),
+                                    false, finalTeamId1,leagueId);
+                        } catch (Exception ePlayer) {
+                            throw new RuntimeException(ePlayer);
+                        }
                     });
                 });
             });
         });
 
-        obj.getFreeAgents().forEach((e) -> {
-            insertPlayer(e.getPlayerName(),e.getPosition(),e.isCaptainValueBoolean(), true, 0,leagueId);
+        leagueModelObj.getFreeAgents().forEach((freeAgent) -> {
+            try {
+                insertPlayer(freeAgent.getPlayerName(),freeAgent.getPosition(),freeAgent.isCaptainValueBoolean(), true, 0,leagueId);
+            } catch (Exception eFreeAgent) {
+                throw new RuntimeException(eFreeAgent);
+            }
         });
     }
 
-    public int insertLeague(String leagueName) {
+    private int insertLeague(String leagueName) throws Exception {
         int leagueId=0;
-        try {
-            CallableStatement stmt = null;
-            stmt = con.prepareCall("{call insertLeague(?,?)}");
-            stmt.setString(1, leagueName);
-            stmt.registerOutParameter(2, java.sql.Types.INTEGER);
-            Boolean hasResult = stmt.execute();
+
+            CallableStatement callproc = null;
+            callproc = con.prepareCall("{call insertLeague(?,?)}");
+            callproc.setString(1, leagueName);
+            callproc.registerOutParameter(2, java.sql.Types.INTEGER);
+            Boolean hasResult = callproc.execute();
 
             if(hasResult){
-                leagueId = stmt.getInt(2);
+                leagueId = callproc.getInt(2);
             }
             else {
-                throw new Exception("Data not inserted properly");
+                throw new Exception("League already exists.");
             }
 
-            stmt.close();
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            callproc.close();
 
         return leagueId;
     }
 
-    public int insertConference(String conferenceName, int leagudId){
+    private int insertConference(String conferenceName, int leagudId) throws Exception{
         int conferenceId=0;
 
         try {
-            CallableStatement stmt = null;
-            stmt = con.prepareCall("{call insertConference(?,?,?)}");
-            stmt.setInt(1, leagudId);
-            stmt.setString(2, conferenceName);
-            stmt.registerOutParameter(3, java.sql.Types.INTEGER);
+            CallableStatement callproc = null;
+            callproc = con.prepareCall("{call insertConference(?,?,?)}");
+            callproc.setInt(1, leagudId);
+            callproc.setString(2, conferenceName);
+            callproc.registerOutParameter(3, java.sql.Types.INTEGER);
 
-            Boolean hasResult = stmt.execute();
+            Boolean hasResult = callproc.execute();
             if(hasResult){
-                conferenceId = stmt.getInt(3);
+                conferenceId = callproc.getInt(3);
             }
             else {
-                throw new Exception("Data not inserted properly");
+                throw new Exception("Conference not inserted properly");
             }
 
-            stmt.close();
+            callproc.close();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
         return conferenceId;
     }
 
-    public int insertDivision(String divisionName, int conferenceId,int leagueId) {
+    private int insertDivision(String divisionName, int conferenceId,int leagueId) throws Exception {
         int divisionId=0;
 
         try {
-            CallableStatement stmt = null;
-            stmt = con.prepareCall("{call insertDivision(?,?,?,?)}");
-            stmt.setInt(1, conferenceId);
-            stmt.setString(2, divisionName);
-            stmt.setInt(3, leagueId);
-            stmt.registerOutParameter(4, java.sql.Types.INTEGER);
+            CallableStatement callproc = null;
+            callproc = con.prepareCall("{call insertDivision(?,?,?,?)}");
+            callproc.setInt(1, conferenceId);
+            callproc.setString(2, divisionName);
+            callproc.setInt(3, leagueId);
+            callproc.registerOutParameter(4, java.sql.Types.INTEGER);
 
-            Boolean hasResult = stmt.execute();
+            Boolean hasResult = callproc.execute();
             if(hasResult){
-                divisionId = stmt.getInt(4);
+                divisionId = callproc.getInt(4);
             }
             else {
-                throw new Exception("Data not inserted properly");
+                throw new Exception("Division not inserted properly");
             }
 
-            stmt.close();
+            callproc.close();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
         return divisionId;
     }
 
-    public int insertTeam(String teamName, String generalManager, String headCoach, int divisionId,int leagueId)    {
+    private int insertTeam(String teamName, String generalManager, String headCoach, int divisionId,int leagueId)  throws Exception {
         int teamId = 0;
 
         try {
-            CallableStatement stmt = null;
-            stmt = con.prepareCall("{call insertTeam(?,?,?,?,?,?)}");
-            stmt.setInt(1, divisionId);
-            stmt.setString(2, teamName);
-            stmt.setString(3, generalManager);
-            stmt.setString(4, headCoach);
-            stmt.setInt(5, leagueId);
-            stmt.registerOutParameter(6, java.sql.Types.INTEGER);
+            CallableStatement callproc = null;
+            callproc = con.prepareCall("{call insertTeam(?,?,?,?,?,?)}");
+            callproc.setInt(1, divisionId);
+            callproc.setString(2, teamName);
+            callproc.setString(3, generalManager);
+            callproc.setString(4, headCoach);
+            callproc.setInt(5, leagueId);
+            callproc.registerOutParameter(6, java.sql.Types.INTEGER);
 
-            Boolean hasResult = stmt.execute();
+            Boolean hasResult = callproc.execute();
             if(hasResult) {
-                teamId = stmt.getInt(6);
+                teamId = callproc.getInt(6);
             }
             else {
-                throw new Exception("Data not inserted properly");
+                throw new Exception("Team not inserted properly");
             }
 
-            stmt.close();
+            callproc.close();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
         return teamId;
     }
 
-    public int insertPlayer(String playerName, String playerPosition, boolean isCaptain, boolean isFreeAgent, int teamId, int leagueId )    {
+    private int insertPlayer(String playerName, String playerPosition, boolean isCaptain, boolean isFreeAgent, int teamId, int leagueId )  throws Exception {
         int playerId =0;
 
         try {
-            CallableStatement stmt = null;
-            stmt = con.prepareCall("{call insertPlayer(?,?,?,?,?,?,?)}");
-            stmt.setString(1, playerName);
-            stmt.setString(2, playerPosition);
-            stmt.setBoolean(3, isCaptain);
-            stmt.setBoolean(4, isFreeAgent);
-            stmt.setInt(5, teamId);
-            stmt.setInt(6, leagueId);
-            stmt.registerOutParameter(7, java.sql.Types.INTEGER);
+            CallableStatement callproc = null;
+            callproc = con.prepareCall("{call insertPlayer(?,?,?,?,?,?,?)}");
+            callproc.setString(1, playerName);
+            callproc.setString(2, playerPosition);
+            callproc.setBoolean(3, isCaptain);
+            callproc.setBoolean(4, isFreeAgent);
+            callproc.setInt(5, teamId);
+            callproc.setInt(6, leagueId);
+            callproc.registerOutParameter(7, java.sql.Types.INTEGER);
 
-            Boolean hasResult = stmt.execute();
+            Boolean hasResult = callproc.execute();
             if(hasResult){
-                playerId = stmt.getInt(7);
+                playerId = callproc.getInt(7);
             }
             else {
-                throw new Exception("Data not inserted properly");
+                throw new Exception("Player not inserted properly");
             }
 
-            stmt.close();
+            callproc.close();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
         return playerId;
@@ -211,20 +237,20 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
     public boolean checkIfLeagueAlreadyExists(String leagueName) {
         boolean isexist=false;
         try {
-            CallableStatement stmt = null;
-            stmt = con.prepareCall("{call checkIfLeagueAlreadyExists(?,?)}");
-            stmt.setString(1, leagueName);
-            stmt.registerOutParameter(2, Types.BOOLEAN);
-            Boolean hasResult = stmt.execute();
+            CallableStatement callproc = null;
+            callproc = con.prepareCall("{call checkIfLeagueAlreadyExists(?,?)}");
+            callproc.setString(1, leagueName);
+            callproc.registerOutParameter(2, Types.BOOLEAN);
+            Boolean hasResult = callproc.execute();
 
             if(hasResult){
-                isexist = stmt.getBoolean(2);
+                isexist = callproc.getBoolean(2);
             }
             else {
-                throw new Exception("Data not inserted properly");
+                throw new Exception("Error executing check on league");
             }
 
-            stmt.close();
+            callproc.close();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -239,21 +265,21 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
         boolean isexist=false;
 
         try {
-            CallableStatement stmt = null;
-            stmt = con.prepareCall("{call checkIfTeamAlreadyExists(?,?,?)}");
-            stmt.setString(1, teamName);
-            stmt.setString(2, divisionName);
-            stmt.registerOutParameter(3, Types.BOOLEAN);
+            CallableStatement callproc = null;
+            callproc = con.prepareCall("{call checkIfTeamAlreadyExists(?,?,?)}");
+            callproc.setString(1, teamName);
+            callproc.setString(2, divisionName);
+            callproc.registerOutParameter(3, Types.BOOLEAN);
 
-            Boolean hasResult = stmt.execute();
+            Boolean hasResult = callproc.execute();
             if(hasResult){
-                isexist = stmt.getBoolean(3);
+                isexist = callproc.getBoolean(3);
             }
             else {
-                throw new Exception("Data not inserted properly");
+                throw new Exception("Error executing check on team");
             }
 
-            stmt.close();
+            callproc.close();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -269,13 +295,13 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
         dhl.leagueModel.LeagueObjectModel obj = new dhl.leagueModel.LeagueObjectModel();
 
         try {
-            CallableStatement stmt = null;
-            stmt = con.prepareCall("{call loadLeagueModel(?,?)}");
-            stmt.setString(1, leagueName);
-            stmt.setString(2, teamName);
-            stmt.execute();
+            CallableStatement callproc = null;
+            callproc = con.prepareCall("{call loadLeagueModel(?,?)}");
+            callproc.setString(1, leagueName);
+            callproc.setString(2, teamName);
+            callproc.execute();
 
-            ResultSet rs = stmt.getResultSet();
+            ResultSet rs = callproc.getResultSet();
 
             if (rs==null){
                 throw new Exception("Error loading data");
@@ -291,8 +317,8 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
 
 
                 ArrayList<ITeam> teamarr = new ArrayList<>();
-                if (stmt.getMoreResults()) {
-                    rs = stmt.getResultSet();
+                if (callproc.getMoreResults()) {
+                    rs = callproc.getResultSet();
                     while (rs.next()) {
                         ITeam team = new Team(teamName,
                                 rs.getString("generalManager"),rs.getString("headCoach"),playerarr);
@@ -301,8 +327,8 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
                 }
 
                 ArrayList<IDivision> divisionarr = new ArrayList<>();
-                if (stmt.getMoreResults()) {
-                    rs = stmt.getResultSet();
+                if (callproc.getMoreResults()) {
+                    rs = callproc.getResultSet();
                     while (rs.next()) {
                         IDivision division = new Division(rs.getString("divisionName"),teamarr);
                         divisionarr.add(division);
@@ -310,8 +336,8 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
                 }
 
                 ArrayList<IConference> conferencearr = new ArrayList<>();
-                if (stmt.getMoreResults()) {
-                    rs = stmt.getResultSet();
+                if (callproc.getMoreResults()) {
+                    rs = callproc.getResultSet();
                     while (rs.next()) {
                         IConference conference = new Conference(rs.getString("conferenceName"),divisionarr);
                         conferencearr.add(conference);
@@ -323,7 +349,7 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
                 obj.freeAgents = new ArrayList<IPlayer>();
             }
 
-            stmt.close();
+            callproc.close();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
