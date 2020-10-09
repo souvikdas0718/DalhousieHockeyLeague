@@ -9,16 +9,15 @@ import dhl.leagueModelData.ILeagueObjectModelData;
 import dhl.leagueModelData.LeagueObjectModelData;
 import dhl.simulationStateMachine.GameContext;
 import dhl.simulationStateMachine.Interface.GameState;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class LoadTeamState implements GameState {
-
     GameContext ourGame;
     ILeagueObjectModel ourLeague;
     ITeam selectedTeam;
     ILeagueObjectModel newInMemoryLeague;
+
     public LoadTeamState(GameContext newGame) {
         newInMemoryLeague = new LeagueObjectModel();
         ourGame = newGame;

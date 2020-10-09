@@ -7,18 +7,18 @@ import dhl.simulationStateMachine.States.CreateTeamState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-public class CreateTeamStateTest {
 
+public class CreateTeamStateTest {
     GameContext ourGame;
     CreateTeamState testClassObject;
     LeagueObjectModelMocks mocks;
+
     @BeforeEach
     public void initObject(){
         ourGame = new GameContext();
         testClassObject = new CreateTeamState(ourGame);
         mocks = new LeagueObjectModelMocks();
     }
-
 
     @Test
     public void findConferenceTest(){
@@ -38,5 +38,4 @@ public class CreateTeamStateTest {
         assertTrue(divisionTest == null);
 
     }
-
 }

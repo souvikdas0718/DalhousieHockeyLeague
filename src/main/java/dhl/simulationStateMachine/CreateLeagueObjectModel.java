@@ -5,12 +5,10 @@ import dhl.leagueModel.interfaceModel.*;
 import dhl.simulationStateMachine.Interface.ICreateLeagueObjectModel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
-
     JSONObject jsonLeagueObject = null;
     IValidation validationObject;
     LeagueObjectModel leagueObjectModel;
@@ -28,7 +26,6 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
     }
 
     public LeagueObjectModel getLeagueObjectModel() {
-
         String leagueName = (String) jsonLeagueObject.get("leagueName");
         ArrayList<IConference> conferenceObjectList = new ArrayList<>();
         ArrayList<IPlayer> freeAgentObjectList = new ArrayList<>();
@@ -57,7 +54,6 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
             System.out.println(e);
             System.exit(0);
         }
-
         return leagueObjectModel;
     }
 

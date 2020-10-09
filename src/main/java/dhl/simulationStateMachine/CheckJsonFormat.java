@@ -3,7 +3,6 @@ package dhl.simulationStateMachine;
 import org.json.JSONObject;
 
 public class CheckJsonFormat {
-
     String jsonFileIntoSting;
 
     public CheckJsonFormat(String jsonFileIntoSting){
@@ -11,7 +10,6 @@ public class CheckJsonFormat {
     }
 
     public void isJsonFormated() throws Exception {
-
         try{
             JSONObject jsonFormat = new JSONObject(jsonFileIntoSting);
         }catch (Exception e){

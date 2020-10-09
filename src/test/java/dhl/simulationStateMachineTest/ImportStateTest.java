@@ -10,6 +10,7 @@ public class ImportStateTest {
     ImportState testClassObject;
     GameContext ourGame;
     LeagueObjectModelMocks mock;
+
     @BeforeEach
     public void initObject(){
         ourGame = new GameContext();
@@ -20,7 +21,6 @@ public class ImportStateTest {
     @Test
     public void findTeamTest(){
         String team = "Ontario";
-
         Assertions.assertTrue( testClassObject.findTeam(mock.getLeagueObjectMock() , team) != null);
         Assertions.assertTrue( testClassObject.findTeam(mock.getLeagueObjectMock() , "Wrong Team") == null);
     }
