@@ -5,8 +5,6 @@ import dhl.leagueModel.interfaceModel.IConference;
 import dhl.leagueModel.interfaceModel.IDivision;
 import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.leagueModel.interfaceModel.ITeam;
-import dhl.leagueModelData.ILeagueObjectModelData;
-import dhl.leagueModelData.LeagueObjectModelData;
 import dhl.simulationStateMachine.CreateLeagueObjectModel;
 import dhl.simulationStateMachine.GameContext;
 import dhl.simulationStateMachine.ImportJsonFile;
@@ -14,7 +12,6 @@ import dhl.simulationStateMachine.Interface.GameState;
 import dhl.simulationStateMachine.JsonFilePath;
 import org.json.simple.JSONObject;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ImportState implements GameState {
@@ -58,27 +55,7 @@ public class ImportState implements GameState {
                 validFilePath = new JsonFilePath().getFilePath();
                 break;
             case 2:
-                System.out.print("Enter LeagueName to load from DB: ");
-                String leagueName = sc.next();
-                while(leagueName.equals("")){
-                    System.out.println("Looks like you didnt add any input please try again: ");
-                    leagueName = sc.nextLine();
-                }
-
-                System.out.print("Enter Team Name:  ");
-                String team = sc.nextLine();
-                while(team.equals("")){
-                    System.out.println("Looks like you didnt add any input please try again: ");
-                    team = sc.nextLine();
-                }
-
-                ILeagueObjectModelData databaseRefrenceOb = new LeagueObjectModelData();
-                try {
-                    newInMemoryLeague = newInMemoryLeague.loadTeam(databaseRefrenceOb, leagueName, team);
-                }catch(Exception e) {
-                    System.out.println(e);
-                };
-                ourGame.setSelectedTeam(findTeam(newInMemoryLeague , team));
+                System.out.println("===========LETS LOAD TEAM FROM DB THEN===========");
                 break;
         }
     }
@@ -100,12 +77,13 @@ public class ImportState implements GameState {
 
     @Override
     public void stateExitProcess() {
-        Scanner sc = new Scanner(System.in);
-        ourGame.setInMemoryLeague(newInMemoryLeague);
-        if (option==1) {
-            ourGame.setGameState(ourGame.getCreateTeamState());
-        }else if (option==2){
-            ourGame.setGameState(ourGame.getSimulateState());
+        if(ourGame.isGameinProgress()) {
+            ourGame.setInMemoryLeague(newInMemoryLeague);
+            if (option == 1) {
+                ourGame.setGameState(ourGame.getCreateTeamState());
+            } else if (option == 2) {
+                ourGame.setGameState(ourGame.getLoadTeamState());
+            }
         }
     }
     public ITeam findTeam(ILeagueObjectModel inMemoryLeague, String teamName){
