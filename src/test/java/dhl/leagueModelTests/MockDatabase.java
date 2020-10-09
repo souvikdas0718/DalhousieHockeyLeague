@@ -1,6 +1,5 @@
 package dhl.leagueModelTests;
 
-
 import dhl.leagueModel.Player;
 import dhl.leagueModel.Team;
 import dhl.leagueModel.Division;
@@ -8,11 +7,9 @@ import dhl.leagueModel.Conference;
 import dhl.leagueModel.LeagueObjectModel;
 import dhl.leagueModel.interfaceModel.*;
 import dhl.leagueModelData.ILeagueObjectModelData;
-
 import java.util.ArrayList;
 
 public class MockDatabase implements ILeagueObjectModelData {
-
     @Override
     public void insertLeagueModel(ILeagueObjectModel leagueObjectModel) {
 

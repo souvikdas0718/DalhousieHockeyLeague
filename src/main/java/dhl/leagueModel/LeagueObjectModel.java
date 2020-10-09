@@ -7,7 +7,6 @@ import dhl.leagueModel.interfaceModel.IConference;
 import dhl.leagueModel.interfaceModel.IDivision;
 import dhl.leagueModel.interfaceModel.IValidation;
 import dhl.leagueModelData.ILeagueObjectModelData;
-
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;

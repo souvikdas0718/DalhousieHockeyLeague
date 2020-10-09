@@ -1,7 +1,6 @@
 package dhl.leagueModel;
 
 public enum PlayerPosition {
-
     GOALIE {
         public String toString() {
             return "goalie";

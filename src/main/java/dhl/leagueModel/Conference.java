@@ -3,7 +3,6 @@ package dhl.leagueModel;
 import dhl.leagueModel.interfaceModel.IConference;
 import dhl.leagueModel.interfaceModel.IDivision;
 import dhl.leagueModel.interfaceModel.IValidation;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
