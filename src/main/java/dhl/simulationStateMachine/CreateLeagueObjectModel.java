@@ -83,7 +83,6 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
                 );
                 if(conferenceObject.checkIfConferenceValid(validationObject)) {
                     conferencesListToReturn.add(conferenceObject);
-                    System.out.println("Added Confrence Object: " + (String) conferenceJsonObject.get("conferenceName"));
                 }
             }else{
                 throw new Exception("Division Array not Found for Conference: " + conferenceJsonObject.get("conferenceName"));
@@ -106,12 +105,9 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
 
             if(divisionObject.checkIfDivisionValid(validationObject)){
                 divisonListToReturn.add(divisionObject);
-                System.out.println("Added Division Object: "+ (String) divisionJsonObject.get("divisionName"));
             }
         }
-
         return divisonListToReturn;
-
     }
 
     public ArrayList<ITeam> getTeamObjectArrayList(JSONArray TeamJsonArray) throws Exception {
@@ -127,14 +123,12 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
             );
             if (teamObject.checkIfTeamValid(validationObject)){
                 TeamListToReturn.add(teamObject);
-                System.out.println("Added Team Object: "+ (String) teamJsonObject.get("teamName"));
             }
         }
         return TeamListToReturn;
     }
 
     public ArrayList<IPlayer> getPlayerArrayList(JSONArray playerJsonArray) throws Exception {
-        //System.out.println(playerJsonArray);
         Iterator<?> playerListIterator = playerJsonArray.iterator();
         ArrayList<IPlayer> playerListToReturn = new ArrayList<IPlayer>();
 
@@ -147,7 +141,6 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
 
             if(playerOb.checkPlayerValid()){
                 playerListToReturn.add(playerOb);
-                System.out.println("Added Player Object: "+ (String) playerOb.getPlayerName());
             }
         }
         return playerListToReturn;
