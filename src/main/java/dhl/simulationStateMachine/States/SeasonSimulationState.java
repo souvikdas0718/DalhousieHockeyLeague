@@ -4,7 +4,6 @@ import dhl.simulationStateMachine.Interface.ISimulationSeasonState;
 import dhl.simulationStateMachine.SimulationContext;
 
 public class SeasonSimulationState implements ISimulationSeasonState {
-
     SimulationContext ongoingSimulation;
 
     public SeasonSimulationState(SimulationContext simulationContext){

@@ -18,5 +18,4 @@ public class SimulationContext {
     public void startSeasonSimulation(int seasonNumber){
         currentSimulation.startSeasonSimulation(seasonNumber);
     }
-
 }

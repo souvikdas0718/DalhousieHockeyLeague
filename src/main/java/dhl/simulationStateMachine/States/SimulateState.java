@@ -7,7 +7,6 @@ import dhl.simulationStateMachine.SimulationContext;
 import java.util.Scanner;
 
 public class SimulateState implements GameState {
-
     GameContext ourGame;
     final int maxSeasons = 10;
     final int minSeasons = 1;

@@ -9,7 +9,6 @@ import dhl.simulationStateMachine.States.LoadTeamState;
 import dhl.simulationStateMachine.States.SimulateState;
 
 public class GameContext {
-
     GameState importState;
     GameState loadTeamState;
     GameState simulateState;
@@ -24,7 +23,6 @@ public class GameContext {
         loadTeamState = new LoadTeamState(this);
         simulateState = new SimulateState(this);
         createTeamState = new CreateTeamState(this);
-
         currentState = importState;
         gameinProgress = true;
     }

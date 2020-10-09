@@ -11,11 +11,9 @@ import dhl.simulationStateMachine.ImportJsonFile;
 import dhl.simulationStateMachine.Interface.GameState;
 import dhl.simulationStateMachine.JsonFilePath;
 import org.json.simple.JSONObject;
-
 import java.util.Scanner;
 
 public class ImportState implements GameState {
-
     String validFilePath;
     ILeagueObjectModel newInMemoryLeague;
     int option = -1;
@@ -86,6 +84,7 @@ public class ImportState implements GameState {
             }
         }
     }
+
     public ITeam findTeam(ILeagueObjectModel inMemoryLeague, String teamName){
 
         ITeam teamObject = null;
