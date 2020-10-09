@@ -4,39 +4,26 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.CallableStatement;
 import java.sql.Types;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.sql.Connection;
+import java.util.ArrayList;
 import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.leagueModel.interfaceModel.IPlayer;
 import dhl.leagueModel.interfaceModel.IConference;
 import dhl.leagueModel.interfaceModel.IDivision;
 import dhl.leagueModel.interfaceModel.ITeam;
 import dhl.leagueModel.Player;
-import java.util.ArrayList;
 import dhl.leagueModel.Team;
 import dhl.leagueModel.Division;
 import dhl.leagueModel.Conference;
-import java.sql.DriverManager;
-
+import dhl.database.DatabaseInitialize;
 
 public class LeagueObjectModelData implements ILeagueObjectModelData {
 
-    Connection con;
+    Connection connection;
 
     public LeagueObjectModelData(){
-        createconnection();
-    }
-
-    private void createconnection(){
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://db-5308.cs.dal.ca:3306/CSCI5308_2_DEVINT?serverTimezone=UTC","CSCI5308_2_DEVINT_USER","F2qzG5VBxf");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(LeagueObjectModelData.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(LeagueObjectModelData.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        DatabaseInitialize databaseInitialize = new DatabaseInitialize();
+        connection = databaseInitialize.getConnection();
     }
 
     public void insertLeagueModel(ILeagueObjectModel leagueModelObj) throws Exception {
@@ -101,7 +88,7 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
         int leagueId=0;
 
             CallableStatement callproc = null;
-            callproc = con.prepareCall("{call insertLeague(?,?)}");
+            callproc = connection.prepareCall("{call insertLeague(?,?)}");
             callproc.setString(1, leagueName);
             callproc.registerOutParameter(2, java.sql.Types.INTEGER);
             Boolean hasResult = callproc.execute();
@@ -123,7 +110,7 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
 
         try {
             CallableStatement callproc = null;
-            callproc = con.prepareCall("{call insertConference(?,?,?)}");
+            callproc = connection.prepareCall("{call insertConference(?,?,?)}");
             callproc.setInt(1, leagudId);
             callproc.setString(2, conferenceName);
             callproc.registerOutParameter(3, java.sql.Types.INTEGER);
@@ -150,7 +137,7 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
 
         try {
             CallableStatement callproc = null;
-            callproc = con.prepareCall("{call insertDivision(?,?,?,?)}");
+            callproc = connection.prepareCall("{call insertDivision(?,?,?,?)}");
             callproc.setInt(1, conferenceId);
             callproc.setString(2, divisionName);
             callproc.setInt(3, leagueId);
@@ -178,7 +165,7 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
 
         try {
             CallableStatement callproc = null;
-            callproc = con.prepareCall("{call insertTeam(?,?,?,?,?,?)}");
+            callproc = connection.prepareCall("{call insertTeam(?,?,?,?,?,?)}");
             callproc.setInt(1, divisionId);
             callproc.setString(2, teamName);
             callproc.setString(3, generalManager);
@@ -208,7 +195,7 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
 
         try {
             CallableStatement callproc = null;
-            callproc = con.prepareCall("{call insertPlayer(?,?,?,?,?,?,?)}");
+            callproc = connection.prepareCall("{call insertPlayer(?,?,?,?,?,?,?)}");
             callproc.setString(1, playerName);
             callproc.setString(2, playerPosition);
             callproc.setBoolean(3, isCaptain);
@@ -238,7 +225,7 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
         boolean isexist=false;
         try {
             CallableStatement callproc = null;
-            callproc = con.prepareCall("{call checkIfLeagueAlreadyExists(?,?)}");
+            callproc = connection.prepareCall("{call checkIfLeagueAlreadyExists(?,?)}");
             callproc.setString(1, leagueName);
             callproc.registerOutParameter(2, Types.BOOLEAN);
             Boolean hasResult = callproc.execute();
@@ -266,7 +253,7 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
 
         try {
             CallableStatement callproc = null;
-            callproc = con.prepareCall("{call checkIfTeamAlreadyExists(?,?,?)}");
+            callproc = connection.prepareCall("{call checkIfTeamAlreadyExists(?,?,?)}");
             callproc.setString(1, teamName);
             callproc.setString(2, divisionName);
             callproc.registerOutParameter(3, Types.BOOLEAN);
@@ -296,7 +283,7 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
 
         try {
             CallableStatement callproc = null;
-            callproc = con.prepareCall("{call loadLeagueModel(?,?)}");
+            callproc = connection.prepareCall("{call loadLeagueModel(?,?)}");
             callproc.setString(1, leagueName);
             callproc.setString(2, teamName);
             callproc.execute();
