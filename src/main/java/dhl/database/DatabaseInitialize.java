@@ -1,20 +1,18 @@
 package dhl.database;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
 
 public class DatabaseInitialize {
-
     public static String dbURL;
     public static String dbUserName;
     public static String dbPassword;
     public static String dbDriver;
 
-    private void loadDBProperties() throws IOException {
+    private void loadDbProperties() throws IOException {
             FileInputStream fileInputStream = new FileInputStream("../../config.properties");
             if (fileInputStream != null) {
                 Properties dbProperties = new Properties();
@@ -31,7 +29,7 @@ public class DatabaseInitialize {
 
     public Connection getConnection() {
         try {
-            loadDBProperties();
+            loadDbProperties();
             Class.forName(dbDriver);
 
             Connection databaseConnection = DriverManager.getConnection(dbURL, dbUserName, dbPassword);
