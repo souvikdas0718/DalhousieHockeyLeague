@@ -1,6 +1,7 @@
 package dhl.database;
 
-import java.io.InputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
@@ -12,15 +13,25 @@ public class DatabaseInitialize {
     public static String dbPassword;
     public static String dbDriver;
 
-    private void loadDBProperties() {
-        InputStream propertiesStream = getClass().getClassLoader().getResourceAsStream("config.properties");
+    private void loadDBProperties() throws FileNotFoundException {
+        FileInputStream fileInputStream = new FileInputStream("../../config.properties");
+
+        if (fileInputStream != null) {
+            System.out.println("Reading Success");
+        } else {
+            System.out.println("Reading failed");
+        }
         Properties dbProperties = new Properties();
         try {
-            dbProperties.load(propertiesStream);
-            dbURL = dbProperties.getProperty("dbURLTest");
-            dbUserName = dbProperties.getProperty("dbUsernameTest");
-            dbPassword = dbProperties.getProperty("dbPasswordTest");
+            dbProperties.load(fileInputStream);
+            dbURL = dbProperties.getProperty("dbURL");
+            dbUserName = dbProperties.getProperty("dbUserName");
+            dbPassword = dbProperties.getProperty("dbPassword");
             dbDriver = dbProperties.getProperty("dbDriver");
+            System.out.println("dbURL: " + dbURL);
+            System.out.println("dbUserName: " + dbUserName);
+            System.out.println("dbPassword: " + dbPassword);
+            System.out.println("dbDriver: " + dbDriver);
         } catch (Exception e) {
             e.printStackTrace();
         }
