@@ -1,7 +1,7 @@
 package dhl.leagueModelTests;
 
 import dhl.leagueModel.CommonValidation;
-import dhl.leagueModel.InitializeObjectFactory;
+import dhl.factory.InitializeObjectFactory;
 import dhl.leagueModel.Player;
 import dhl.leagueModel.Team;
 import dhl.leagueModel.interfaceModel.IPlayer;

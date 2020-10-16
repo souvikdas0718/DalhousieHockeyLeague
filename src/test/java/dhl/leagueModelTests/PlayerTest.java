@@ -1,6 +1,6 @@
 package dhl.leagueModelTests;
 
-import dhl.leagueModel.InitializeObjectFactory;
+import dhl.factory.InitializeObjectFactory;
 import dhl.leagueModel.Player;
 import dhl.leagueModel.interfaceModel.IPlayer;
 import org.junit.jupiter.api.AfterEach;
