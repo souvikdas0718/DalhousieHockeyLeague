@@ -20,11 +20,12 @@ public class ImportJsonFile {
         String jsonFileIntoString = getJsonIntoString(filePath);
 
         try{
-            new CheckJsonFormat(jsonFileIntoString).isJsonFormated();
-            System.out.println("Valid JSON file Received");
-            FileReader JsonReader = new FileReader(filePath);
-            Object genricObject = jsonParser.parse(JsonReader);
-            JsonLeagueObject = (JSONObject) genricObject;
+            if(new CheckInputFileFormat(jsonFileIntoString).isCorrectFormated()) {
+                System.out.println("Valid JSON file Received");
+                FileReader JsonReader = new FileReader(filePath);
+                Object genricObject = jsonParser.parse(JsonReader);
+                JsonLeagueObject = (JSONObject) genricObject;
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
