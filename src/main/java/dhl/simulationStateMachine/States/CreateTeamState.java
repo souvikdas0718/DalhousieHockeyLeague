@@ -1,9 +1,7 @@
 package dhl.simulationStateMachine.States;
 
-import dhl.leagueModel.interfaceModel.IConference;
-import dhl.leagueModel.interfaceModel.IDivision;
-import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
-import dhl.leagueModel.interfaceModel.ITeam;
+import dhl.leagueModel.Team;
+import dhl.leagueModel.interfaceModel.*;
 import dhl.leagueModelData.ILeagueObjectModelData;
 import dhl.leagueModelData.LeagueObjectModelData;
 import dhl.simulationStateMachine.GameContext;
@@ -112,13 +110,15 @@ public class CreateTeamState implements GameState {
     public void stateProcess() throws Exception {
         System.out.println("Adding Team "+ teamName+ " to the DB");
         ILeagueObjectModelData leagueObjectModelData = new LeagueObjectModelData();
+        ArrayList<IPlayer> players= new ArrayList<>();
+        ITeam newlyCreatedTeam=new Team(teamName,generalManager,headCoach,players);
         try {
-            inMemoryLeague.createTeam(
+            inMemoryLeague.saveLeagueObjectModel(
                     leagueObjectModelData,
                     inMemoryLeague.getLeagueName(),
                     selectedConference.getConferenceName(),
                     selectedDivision.getDivisionName(),
-                    teamName, generalManager, headCoach);
+                    newlyCreatedTeam);
 
             ourGame.setSelectedTeam(findTeam(inMemoryLeague , teamName));
         }catch (Exception e){
