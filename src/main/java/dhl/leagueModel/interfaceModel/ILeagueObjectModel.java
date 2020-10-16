@@ -20,11 +20,8 @@ public interface ILeagueObjectModel {
 
     public boolean checkIfLeagueModelValid(IValidation validation) throws Exception;
 
-    public void checkIfLeagueHasEvenConferences() throws Exception;
+    public ILeagueObjectModel saveLeagueObjectModel(ILeagueObjectModelData leagueDatabase, String leagueName, String conferenceName, String divisionName,  ITeam newlyCreatedTeam) throws Exception;
 
-    public ILeagueObjectModel createTeam(ILeagueObjectModelData leagueDatabase, String leagueName, String conferenceName, String divisionName, String teamName,
-                                         String generalManager, String headCoach) throws Exception;
-
-    public ILeagueObjectModel loadTeam(ILeagueObjectModelData leagueDatabase,String leagueName,String teamName) throws Exception;
+    public ILeagueObjectModel loadLeagueObjectModel(ILeagueObjectModelData leagueDatabase,String leagueName,String teamName) throws Exception;
 
 }

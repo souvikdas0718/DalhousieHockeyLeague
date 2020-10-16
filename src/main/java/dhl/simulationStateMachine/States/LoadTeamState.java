@@ -43,7 +43,7 @@ public class LoadTeamState implements GameState {
         try {
             System.out.println("Finding: "+ team+ " of League:"+ leagueName+ " In DataBase");
             ILeagueObjectModelData databaseRefrenceOb = new LeagueObjectModelData();
-            newInMemoryLeague = newInMemoryLeague.loadTeam(databaseRefrenceOb, leagueName, team);
+            newInMemoryLeague = newInMemoryLeague.loadLeagueObjectModel(databaseRefrenceOb, leagueName, team);
             ourGame.setSelectedTeam(findTeam(newInMemoryLeague , team));
         }catch(Exception e) {
             System.out.println(e.getMessage());
