@@ -1,4 +1,4 @@
-package dhl.leagueModel;
+package dhl.factory;
 
 import dhl.leagueModel.interfaceModel.IConference;
 import dhl.leagueModel.interfaceModel.IDivision;
