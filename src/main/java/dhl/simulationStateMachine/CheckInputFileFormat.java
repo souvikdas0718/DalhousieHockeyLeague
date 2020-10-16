@@ -10,7 +10,7 @@ public class CheckInputFileFormat implements ICheckInputFileFormat {
         this.inputFileIntoSting = inputFileIntoSting;
     }
 
-    public boolean isJsonFormated() throws Exception {
+    public boolean isCorrectFormated() throws Exception {
         try{
             JSONObject jsonFormat = new JSONObject(inputFileIntoSting);
             return true;

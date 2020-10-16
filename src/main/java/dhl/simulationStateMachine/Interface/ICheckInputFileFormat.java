@@ -1,5 +1,5 @@
 package dhl.simulationStateMachine.Interface;
 
 public interface ICheckInputFileFormat {
-    public boolean isJsonFormated() throws Exception;
+    public boolean isCorrectFormated() throws Exception;
 }

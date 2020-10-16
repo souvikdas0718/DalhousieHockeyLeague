@@ -20,7 +20,7 @@ public class ImportJsonFile {
         String jsonFileIntoString = getJsonIntoString(filePath);
 
         try{
-            if(new CheckInputFileFormat(jsonFileIntoString).isJsonFormated()) {
+            if(new CheckInputFileFormat(jsonFileIntoString).isCorrectFormated()) {
                 System.out.println("Valid JSON file Received");
                 FileReader JsonReader = new FileReader(filePath);
                 Object genricObject = jsonParser.parse(JsonReader);
