@@ -29,7 +29,7 @@ public class MockDatabase implements ILeagueObjectModelData {
         IConference conference=new Conference("Western",divisionsList);
         ArrayList<IConference> conferences= new ArrayList<>();
         conferences.add(conference);
-        ArrayList<IPlayer> freeAgentsList=new ArrayList<>();
+        ArrayList<IFreeAgent> freeAgentsList=new ArrayList<>();
         ILeagueObjectModel leagueModel=new LeagueObjectModel("Dhl",conferences,freeAgentsList);
         return leagueModel;
     }

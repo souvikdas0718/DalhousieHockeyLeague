@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class LeagueObjectModel implements ILeagueObjectModel {
     public String leagueName;
     public ArrayList<IConference> conferences;
-    public ArrayList<IPlayer>freeAgents;
+    public ArrayList<IFreeAgent>freeAgents;
     public ILeagueObjectModelValidation leagueValidation;
     public LeagueObjectModel(){
         leagueName="";
@@ -16,7 +16,7 @@ public class LeagueObjectModel implements ILeagueObjectModel {
         leagueValidation=new LeagueObjectModelValidation();
     }
 
-    public LeagueObjectModel(String leagueName,ArrayList<IConference> conferences, ArrayList<IPlayer>freeAgents){
+    public LeagueObjectModel(String leagueName,ArrayList<IConference> conferences, ArrayList<IFreeAgent>freeAgents){
         this.leagueName=leagueName;
         this.conferences=conferences;
         this.freeAgents = freeAgents;
@@ -39,11 +39,11 @@ public class LeagueObjectModel implements ILeagueObjectModel {
         this.conferences = conferences;
     }
 
-    public ArrayList<IPlayer> getFreeAgents() {
+    public ArrayList<IFreeAgent> getFreeAgents() {
         return freeAgents;
     }
 
-    public void setFreeAgents(ArrayList<IPlayer> freeAgents) {
+    public void setFreeAgents(ArrayList<IFreeAgent> freeAgents) {
         this.freeAgents = freeAgents;
     }
 

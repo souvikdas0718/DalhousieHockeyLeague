@@ -13,6 +13,7 @@ import dhl.leagueModel.Team;
 import dhl.leagueModel.Division;
 import dhl.leagueModel.Conference;
 import dhl.database.DatabaseConfigSetup.DatabaseInitialize;
+import dhl.database.*;
 
 public class LeagueObjectModelData implements ILeagueObjectModelData {
 
@@ -24,11 +25,12 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
     }
 
     public void insertLeagueModel(ILeagueObjectModel leagueModelObj) throws Exception {
-        dhl.database.ILeagueDB ileagueDB = new dhl.database.LeagueDB();
-        dhl.database.IConferenceDB iConferenceDB = new dhl.database.ConferenceDB();
-        dhl.database.IDivisionDB iDivisionDB = new dhl.database.DivisionDB();
-        dhl.database.ITeamDB iTeamDB = new dhl.database.TeamDB();
-        dhl.database.IPlayerDB iPlayerDB = new dhl.database.PlayerDB();
+        ILeagueDB ileagueDB = new LeagueDB();
+        IConferenceDB iConferenceDB = new ConferenceDB();
+        IDivisionDB iDivisionDB = new DivisionDB();
+        ITeamDB iTeamDB = new TeamDB();
+        IPlayerDB iPlayerDB = new PlayerDB();
+        IFreeAgentDB iFreeAgentDB = new FreeAgentDB();
 
         int leagueId = ileagueDB.insertLeague(leagueModelObj.getLeagueName());
 
@@ -80,7 +82,7 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
 
         leagueModelObj.getFreeAgents().forEach((freeAgent) -> {
             try {
-               // insertPlayer(freeAgent.getPlayerName(),freeAgent.getPosition(), true, 0,leagueId);
+                iFreeAgentDB.insertFreeAgent(freeAgent.getPlayerName(),freeAgent.getPosition(),leagueId);
             } catch (Exception eFreeAgent) {
                 throw new RuntimeException(eFreeAgent);
             }
@@ -143,7 +145,7 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
 
                 obj.leagueName = leagueName;
                 obj.conferences = conferencearr;
-                obj.freeAgents = new ArrayList<IPlayer>();
+                obj.freeAgents = new ArrayList<IFreeAgent>();
             }
 
             callproc.close();

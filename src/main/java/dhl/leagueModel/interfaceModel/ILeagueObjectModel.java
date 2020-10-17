@@ -14,9 +14,9 @@ public interface ILeagueObjectModel {
 
     public void setConferences(ArrayList<IConference> conferences);
 
-    public ArrayList<IPlayer> getFreeAgents();
+    public ArrayList<IFreeAgent> getFreeAgents();
 
-    public void setFreeAgents(ArrayList<IPlayer> freeAgents);
+    public void setFreeAgents(ArrayList<IFreeAgent> freeAgents);
 
     public boolean checkIfLeagueModelValid(IValidation validation) throws Exception;
 

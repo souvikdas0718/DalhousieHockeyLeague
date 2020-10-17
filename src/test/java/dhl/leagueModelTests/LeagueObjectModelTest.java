@@ -1,11 +1,7 @@
 package dhl.leagueModelTests;
 
 import dhl.leagueModel.*;
-import dhl.leagueModel.interfaceModel.IValidation;
-import dhl.leagueModel.interfaceModel.IDivision;
-import dhl.leagueModel.interfaceModel.IPlayer;
-import dhl.leagueModel.interfaceModel.ITeam;
-import dhl.leagueModel.interfaceModel.IConference;
+import dhl.leagueModel.interfaceModel.*;
 import dhl.database.ILeagueObjectModelData;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -34,7 +30,7 @@ public class LeagueObjectModelTest {
         IConference conference=new Conference("Western",divisionsList);
         ArrayList<IConference> conferences= new ArrayList<>();
         conferences.add(conference);
-        ArrayList<IPlayer> freeAgentsList=new ArrayList<>();
+        ArrayList<IFreeAgent> freeAgentsList=new ArrayList<>();
         leagueModelParameterized=new LeagueObjectModel("Dhl",conferences,freeAgentsList);
     }
 
@@ -48,9 +44,9 @@ public class LeagueObjectModelTest {
 
     @Test
     public void setFreeAgentsTest(){
-        ArrayList<IPlayer> freeAgentsList=new ArrayList<>();
-        freeAgentsList.add(new Player("Henry","forward",true));
-        freeAgentsList.add(new Player("Max","goalie",true));
+        ArrayList<IFreeAgent> freeAgentsList=new ArrayList<>();
+        freeAgentsList.add(new FreeAgent("Henry","forward"));
+        freeAgentsList.add(new FreeAgent("Max","goalie"));
         leagueModel.setFreeAgents(freeAgentsList);
         Assertions.assertEquals(leagueModel.getFreeAgents().size(),freeAgentsList.size());
     }

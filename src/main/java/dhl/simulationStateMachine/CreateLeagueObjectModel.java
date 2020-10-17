@@ -28,7 +28,7 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
     public LeagueObjectModel getLeagueObjectModel() {
         String leagueName = (String) jsonLeagueObject.get("leagueName");
         ArrayList<IConference> conferenceObjectList = new ArrayList<>();
-        ArrayList<IPlayer> freeAgentObjectList = new ArrayList<>();
+        ArrayList<IFreeAgent> freeAgentObjectList = new ArrayList<>();
 
         try {
             if (checkJsonArray(jsonLeagueObject , "conferences")) {
@@ -38,7 +38,7 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
             }
 
             if (checkJsonArray(jsonLeagueObject , "freeAgents")){
-                freeAgentObjectList = getPlayerArrayList((JSONArray) jsonLeagueObject.get("freeAgents"));
+                freeAgentObjectList = getFreeAgentArrayList((JSONArray) jsonLeagueObject.get("freeAgents"));
 
             } else {
                 throw new Exception("Free Agent Array not Found in JSON");
@@ -152,6 +152,26 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
             if(playerOb.checkPlayerValid()){
                 playerListToReturn.add(playerOb);
             }
+        }
+        return playerListToReturn;
+    }
+
+    public ArrayList<IFreeAgent> getFreeAgentArrayList(JSONArray freeAgentJsonArray) throws Exception {
+        Iterator<?> playerListIterator = freeAgentJsonArray.iterator();
+        ArrayList<IFreeAgent> playerListToReturn = new ArrayList<IFreeAgent>();
+
+        while(playerListIterator.hasNext()){
+            JSONObject freeAgentJsonObject = (JSONObject) playerListIterator.next();
+
+            if (freeAgentJsonObject.get("playerName")==null || freeAgentJsonObject.get("position")== null || freeAgentJsonObject.get("captain")==null){
+                throw new Exception("ERROR: Hey! Player cant have Null values....");
+            }
+            IFreeAgent freeAgentOb = new FreeAgent((String) freeAgentJsonObject.get("playerName") ,
+                    (String) freeAgentJsonObject.get("position"));
+
+
+                playerListToReturn.add(freeAgentOb);
+
         }
         return playerListToReturn;
     }
