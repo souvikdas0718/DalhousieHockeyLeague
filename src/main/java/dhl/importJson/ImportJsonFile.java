@@ -1,4 +1,4 @@
-package dhl.inputOutput;
+package dhl.importJson;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -21,7 +21,7 @@ public class ImportJsonFile {
         String jsonFileIntoString = getJsonIntoString(filePath);
 
         try{
-            if(new CheckInputFileFormat(jsonFileIntoString).isCorrectFormated()) {
+            if(new CheckInputFileFormat().isCorrectFormated(jsonFileIntoString)) {
                 System.out.println("Valid JSON file Received");
                 FileReader JsonReader = new FileReader(filePath);
                 Object genricObject = jsonParser.parse(JsonReader);

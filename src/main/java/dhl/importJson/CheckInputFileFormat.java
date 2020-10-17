@@ -1,16 +1,11 @@
-package dhl.inputOutput;
+package dhl.importJson;
 
-import dhl.inputOutput.Interface.ICheckInputFileFormat;
+import dhl.importJson.Interface.ICheckInputFileFormat;
 import org.json.JSONObject;
 
 public class CheckInputFileFormat implements ICheckInputFileFormat {
-    String inputFileIntoSting;
 
-    public CheckInputFileFormat(String inputFileIntoSting){
-        this.inputFileIntoSting = inputFileIntoSting;
-    }
-
-    public boolean isCorrectFormated() throws Exception {
+    public boolean isCorrectFormated(String inputFileIntoSting) throws Exception {
         try{
             JSONObject jsonFormat = new JSONObject(inputFileIntoSting);
             return true;

@@ -5,7 +5,7 @@
       "conferenceName":"Eastern Conference",
       "divisions":[
         {
-          "divisionName":null,
+          "divisionName":"abcd",
           "teams":[
             {
               "teamName":"Boston Bruins",

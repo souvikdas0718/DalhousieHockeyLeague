@@ -1,6 +1,6 @@
-package dhl.inputOutput;
+package dhl.importJson;
 
-import dhl.inputOutput.Interface.IJsonFilePath;
+import dhl.importJson.Interface.IJsonFilePath;
 
 import java.nio.file.Files;
 import java.nio.file.Path;

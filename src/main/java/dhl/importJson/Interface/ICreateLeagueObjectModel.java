@@ -1,4 +1,4 @@
-package dhl.inputOutput.Interface;
+package dhl.importJson.Interface;
 
 import dhl.leagueModel.interfaceModel.*;
 

@@ -1,8 +1,8 @@
-package dhl.inputOutput;
+package dhl.importJson;
 
 import dhl.leagueModel.*;
 import dhl.leagueModel.interfaceModel.*;
-import dhl.inputOutput.Interface.ICreateLeagueObjectModel;
+import dhl.importJson.Interface.ICreateLeagueObjectModel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import java.util.ArrayList;

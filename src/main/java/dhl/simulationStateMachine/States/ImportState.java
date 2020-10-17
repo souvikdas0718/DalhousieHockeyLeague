@@ -5,11 +5,11 @@ import dhl.leagueModel.interfaceModel.IConference;
 import dhl.leagueModel.interfaceModel.IDivision;
 import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.leagueModel.interfaceModel.ITeam;
-import dhl.inputOutput.CreateLeagueObjectModel;
+import dhl.importJson.CreateLeagueObjectModel;
 import dhl.simulationStateMachine.GameContext;
-import dhl.inputOutput.ImportJsonFile;
+import dhl.importJson.ImportJsonFile;
 import dhl.simulationStateMachine.Interface.IGameState;
-import dhl.inputOutput.JsonFilePath;
+import dhl.importJson.JsonFilePath;
 import org.json.simple.JSONObject;
 import java.util.Scanner;
 
