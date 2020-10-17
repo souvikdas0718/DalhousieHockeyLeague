@@ -2,8 +2,8 @@ package dhl.simulationStateMachine.States;
 
 import dhl.leagueModel.Team;
 import dhl.leagueModel.interfaceModel.*;
-import dhl.leagueModelData.ILeagueObjectModelData;
-import dhl.leagueModelData.LeagueObjectModelData;
+import dhl.database.ILeagueObjectModelData;
+import dhl.database.LeagueObjectModelData;
 import dhl.simulationStateMachine.GameContext;
 import dhl.simulationStateMachine.Interface.GameState;
 import java.util.ArrayList;
