@@ -6,7 +6,6 @@ public class FreeAgent implements IFreeAgent {
     private int playerId;
     private String playerName;
     private PlayerPosition position;
-    private Boolean captain;
 
     public FreeAgent(){
         setDefaults();
