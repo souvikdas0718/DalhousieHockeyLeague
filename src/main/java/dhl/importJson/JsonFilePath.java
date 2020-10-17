@@ -1,6 +1,6 @@
-package dhl.simulationStateMachine;
+package dhl.importJson;
 
-import dhl.simulationStateMachine.Interface.IJsonFilePath;
+import dhl.importJson.Interface.IJsonFilePath;
 
 import java.nio.file.Files;
 import java.nio.file.Path;

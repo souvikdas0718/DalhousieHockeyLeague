@@ -1,6 +1,6 @@
-package dhl.simulationStateMachineTest;
+package dhl.Mocks;
 
-import dhl.simulationStateMachine.Interface.IJsonFilePath;
+import dhl.importJson.Interface.IJsonFilePath;
 
 public class JsonFilePathMock implements IJsonFilePath {
 

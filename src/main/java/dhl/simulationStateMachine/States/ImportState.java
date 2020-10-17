@@ -5,15 +5,15 @@ import dhl.leagueModel.interfaceModel.IConference;
 import dhl.leagueModel.interfaceModel.IDivision;
 import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.leagueModel.interfaceModel.ITeam;
-import dhl.simulationStateMachine.CreateLeagueObjectModel;
+import dhl.importJson.CreateLeagueObjectModel;
 import dhl.simulationStateMachine.GameContext;
-import dhl.simulationStateMachine.ImportJsonFile;
-import dhl.simulationStateMachine.Interface.GameState;
-import dhl.simulationStateMachine.JsonFilePath;
+import dhl.importJson.ImportJsonFile;
+import dhl.simulationStateMachine.Interface.IGameState;
+import dhl.importJson.JsonFilePath;
 import org.json.simple.JSONObject;
 import java.util.Scanner;
 
-public class ImportState implements GameState {
+public class ImportState implements IGameState {
     String validFilePath;
     ILeagueObjectModel newInMemoryLeague;
     int option = -1;
