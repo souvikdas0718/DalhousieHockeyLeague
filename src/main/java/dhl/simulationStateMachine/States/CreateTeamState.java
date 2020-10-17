@@ -2,7 +2,7 @@ package dhl.simulationStateMachine.States;
 
 import dhl.leagueModel.Team;
 import dhl.leagueModel.interfaceModel.*;
-import dhl.database.ILeagueObjectModelData;
+import dhl.database.interfaceDB.ILeagueObjectModelData;
 import dhl.database.LeagueObjectModelData;
 import dhl.simulationStateMachine.GameContext;
 import dhl.simulationStateMachine.Interface.IGameState;

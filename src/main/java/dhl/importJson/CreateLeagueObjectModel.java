@@ -147,9 +147,11 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
             if (playerJsonObject.get("playerName")==null || playerJsonObject.get("position")== null || playerJsonObject.get("captain")==null){
                 throw new Exception("ERROR: Hey! Player cant have Null values....");
             }
+            IPlayerStatistics playerStatistics = new PlayerStatistics( (int) (long) playerJsonObject.get("age"),(int) (long) playerJsonObject.get("skating"),(int) (long) playerJsonObject.get("shooting"),(int) (long)playerJsonObject.get("checking"),(int)(long)playerJsonObject.get("saving"));
             IPlayer playerOb = new Player((String) playerJsonObject.get("playerName") ,
                     (String) playerJsonObject.get("position") ,
-                    (Boolean) playerJsonObject.get("captain"));
+                    (Boolean) playerJsonObject.get("captain"),
+                    playerStatistics);
 
             if(playerOb.checkPlayerValid()){
                 playerListToReturn.add(playerOb);
@@ -165,14 +167,14 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
         while(playerListIterator.hasNext()){
             JSONObject freeAgentJsonObject = (JSONObject) playerListIterator.next();
 
-            if (freeAgentJsonObject.get("playerName")==null || freeAgentJsonObject.get("position")== null || freeAgentJsonObject.get("captain")==null){
+            if (freeAgentJsonObject.get("playerName")==null || freeAgentJsonObject.get("position")== null){
                 throw new Exception("ERROR: Hey! Player cant have Null values....");
             }
+            IPlayerStatistics freeAgentStatistics = new PlayerStatistics( (int) (long) freeAgentJsonObject.get("age"),(int) (long) freeAgentJsonObject.get("skating"),(int) (long) freeAgentJsonObject.get("shooting"),(int) (long)freeAgentJsonObject.get("checking"),(int)(long)freeAgentJsonObject.get("saving"));
             IFreeAgent freeAgentOb = new FreeAgent((String) freeAgentJsonObject.get("playerName") ,
-                    (String) freeAgentJsonObject.get("position"));
+                    (String) freeAgentJsonObject.get("position"),freeAgentStatistics);
 
-
-                playerListToReturn.add(freeAgentOb);
+            playerListToReturn.add(freeAgentOb);
 
         }
         return playerListToReturn;
