@@ -6,7 +6,7 @@ import dhl.leagueModel.interfaceModel.IDivision;
 import dhl.leagueModel.interfaceModel.IPlayer;
 import dhl.leagueModel.interfaceModel.ITeam;
 import dhl.leagueModel.interfaceModel.IConference;
-import dhl.leagueModelData.ILeagueObjectModelData;
+import dhl.database.ILeagueObjectModelData;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

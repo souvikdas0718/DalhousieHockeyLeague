@@ -6,7 +6,7 @@ import dhl.leagueModel.Division;
 import dhl.leagueModel.Conference;
 import dhl.leagueModel.LeagueObjectModel;
 import dhl.leagueModel.interfaceModel.*;
-import dhl.leagueModelData.ILeagueObjectModelData;
+import dhl.database.ILeagueObjectModelData;
 import java.util.ArrayList;
 
 public class MockDatabase implements ILeagueObjectModelData {
@@ -32,16 +32,6 @@ public class MockDatabase implements ILeagueObjectModelData {
         ArrayList<IPlayer> freeAgentsList=new ArrayList<>();
         ILeagueObjectModel leagueModel=new LeagueObjectModel("Dhl",conferences,freeAgentsList);
         return leagueModel;
-    }
-
-    @Override
-    public boolean checkIfLeagueAlreadyExists(String leagueName) {
-        return false;
-    }
-
-    @Override
-    public boolean checkIfTeamAlreadyExists(String teamName, String divisionName) {
-        return false;
     }
 
 }
