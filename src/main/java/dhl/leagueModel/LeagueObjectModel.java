@@ -1,7 +1,7 @@
 package dhl.leagueModel;
 
 import dhl.leagueModel.interfaceModel.*;
-import dhl.database.ILeagueObjectModelData;
+import dhl.database.interfaceDB.ILeagueObjectModelData;
 import java.util.ArrayList;
 
 public class LeagueObjectModel implements ILeagueObjectModel {

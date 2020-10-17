@@ -19,8 +19,9 @@ public class LeagueObjectModelValidationTest {
         validate=new CommonValidation();
         leagueValidation=new LeagueObjectModelValidation();
         ArrayList<IPlayer> playersList=new ArrayList<>();
-        playersList.add(new Player("Henry","forward",false));
-        playersList.add(new Player("Max","goalie",true));
+        IPlayerStatistics playerStatistics =new PlayerStatistics(20,10,10,10,0);
+        playersList.add(new Player("Henry","forward",false,playerStatistics));
+        playersList.add(new Player("Max","goalie",true,playerStatistics));
         ITeam team = new Team("Ontario","Mathew","henry",playersList);
         ArrayList<ITeam> teamArrayList=new ArrayList<>();
         teamArrayList.add(team);

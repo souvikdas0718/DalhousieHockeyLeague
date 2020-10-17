@@ -22,6 +22,11 @@ public interface IPlayer {
 
     public boolean getCaptain();
 
+    public IPlayerStatistics getPlayerStats();
+
+    public void setPlayerStats(IPlayerStatistics playerStats);
+
+
     public boolean isPlayerNameEmpty();
 
     public  boolean isPlayerPositionInvalid();

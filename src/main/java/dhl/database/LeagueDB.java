@@ -1,15 +1,9 @@
 package dhl.database;
 
 import dhl.database.DatabaseConfigSetup.CallStoredProcedure;
-import dhl.leagueModel.Conference;
-import dhl.leagueModel.Division;
-import dhl.leagueModel.Player;
-import dhl.leagueModel.Team;
-import dhl.leagueModel.interfaceModel.*;
+import dhl.database.interfaceDB.*;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class LeagueDB implements ILeagueDB {
     IConferenceDB iConferenceDB = new ConferenceDB();

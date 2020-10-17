@@ -3,8 +3,10 @@ package dhl.leagueModelTests;
 import dhl.leagueModel.CommonValidation;
 import dhl.factory.InitializeObjectFactory;
 import dhl.leagueModel.Player;
+import dhl.leagueModel.PlayerStatistics;
 import dhl.leagueModel.Team;
 import dhl.leagueModel.interfaceModel.IPlayer;
+import dhl.leagueModel.interfaceModel.IPlayerStatistics;
 import dhl.leagueModel.interfaceModel.ITeam;
 import dhl.leagueModel.interfaceModel.IValidation;
 import org.junit.jupiter.api.AfterEach;
@@ -19,6 +21,7 @@ public class TeamTest {
     IValidation validate;
     ITeam team;
     ArrayList<IPlayer> playerArrayList;
+    IPlayerStatistics playerStatistics;
 
     @BeforeEach()
     public void initObject(){
@@ -26,7 +29,8 @@ public class TeamTest {
         team= initObj.createTeam();
         validate=new CommonValidation();
         playerArrayList=new ArrayList<>();
-        playerArrayList.add(new Player("Harry","forward",false));
+        playerStatistics =new PlayerStatistics(20,10,10,10,0);
+        playerArrayList.add(new Player("Harry","forward",false,playerStatistics));
     }
 
     @Test
@@ -96,8 +100,8 @@ public class TeamTest {
     @Test
     public void checkIfOneCaptainPerTeamErrorTest(){
         ArrayList<IPlayer> playersList=new ArrayList<>();
-        playersList.add(new Player("Henry","forward",false));
-        playersList.add(new Player("Max","goalie",false));
+        playersList.add(new Player("Henry","forward",false,playerStatistics));
+        playersList.add(new Player("Max","goalie",false,playerStatistics));
         team = new Team("Ontario","Mathew","henry",playersList);
         Exception errorMsg= Assertions.assertThrows(Exception.class,() ->{
             team.checkIfOneCaptainPerTeam(playersList);
@@ -108,8 +112,8 @@ public class TeamTest {
     @Test
     public void checkIfOneCaptainPerTeamTest(){
         ArrayList<IPlayer> playersList=new ArrayList<>();
-        playersList.add(new Player("Henry","forward",true));
-        playersList.add(new Player("Max","goalie",true));
+        playersList.add(new Player("Henry","forward",true,playerStatistics));
+        playersList.add(new Player("Max","goalie",true,playerStatistics));
         team = new Team("Ontario","Mathew","henry",playersList);
         Exception errorMsg= Assertions.assertThrows(Exception.class,() ->{
             team.checkIfOneCaptainPerTeam(playersList);
@@ -120,9 +124,9 @@ public class TeamTest {
     @Test
     public void checkNumberOfPlayersInTeamTest(){
         ArrayList<IPlayer> playersList=new ArrayList<>();
-        playersList.add(new Player("Henry","forward",true));
+        playersList.add(new Player("Henry","forward",true,playerStatistics));
         for(int i=1;i<20;i++){
-            playersList.add(new Player("Player"+i,"forward",false));
+            playersList.add(new Player("Player"+i,"forward",false,playerStatistics));
         }
         team = new Team("Ontario","Mathew","henry",playersList);
         Assertions.assertTrue(team.checkIfSizeOfTeamValid(playersList));
@@ -131,9 +135,9 @@ public class TeamTest {
     @Test
     public void checkIfTeamValidTest() throws Exception{
         ArrayList<IPlayer> playersList=new ArrayList<>();
-        playersList.add(new Player("Max","goalie",true));
+        playersList.add(new Player("Max","goalie",true,playerStatistics));
         for(int i=1;i<20;i++){
-            playersList.add(new Player("Player"+i,"forward",false));
+            playersList.add(new Player("Player"+i,"forward",false,playerStatistics));
         }
         team = new Team("Ontario","Mathew","henry",playersList);
         Assertions.assertTrue(team.checkIfTeamValid(validate));
@@ -142,9 +146,9 @@ public class TeamTest {
     @Test
     public void checkIfTeamPlayerMoreThan20Test() throws Exception{
         ArrayList<IPlayer> playersList=new ArrayList<>();
-        playersList.add(new Player("Max","goalie",true));
+        playersList.add(new Player("Max","goalie",true,playerStatistics));
         for(int i=0;i<20;i++){
-            playersList.add(new Player("Player"+i,"forward",false));
+            playersList.add(new Player("Player"+i,"forward",false,playerStatistics));
         }
         team = new Team("Ontario","Mathew","henry",playersList);
         Exception error= Assertions.assertThrows(Exception.class,() ->{

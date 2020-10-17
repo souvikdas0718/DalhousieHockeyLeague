@@ -3,17 +3,13 @@ package dhl.database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.CallableStatement;
-import java.sql.Types;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import dhl.database.interfaceDB.*;
+import dhl.leagueModel.*;
 import dhl.leagueModel.interfaceModel.*;
-import dhl.leagueModel.Player;
-import dhl.leagueModel.Team;
-import dhl.leagueModel.Division;
-import dhl.leagueModel.Conference;
 import dhl.database.DatabaseConfigSetup.DatabaseInitialize;
-import dhl.database.*;
 
 public class LeagueObjectModelData implements ILeagueObjectModelData {
 
@@ -62,7 +58,7 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
                     ArrayList<IPlayer> arrPlayer = team.getPlayers();
                     int finalTeamId = 0;
                     try {
-                        finalTeamId = iTeamDB.insertTeam(team.getTeamName(), team.getGeneralManager(), team.getHeadCoach(), finalDivisionId1, leagueId);
+                        finalTeamId = iTeamDB.insertTeam(team, finalDivisionId1, leagueId);
                     } catch (Exception eTeam) {
                         throw new RuntimeException(eTeam);
                     }
@@ -70,8 +66,7 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
                     int finalTeamId1 = finalTeamId;
                     arrPlayer.forEach((player)->{
                         try {
-                            iPlayerDB.insertPlayer(player.getPlayerName(),player.getPosition(),player.isCaptainValueBoolean(),
-                                    false, finalTeamId1,leagueId);
+                            iPlayerDB.insertPlayer(player, finalTeamId1,leagueId);
                         } catch (Exception ePlayer) {
                             throw new RuntimeException(ePlayer);
                         }
@@ -82,7 +77,7 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
 
         leagueModelObj.getFreeAgents().forEach((freeAgent) -> {
             try {
-                iFreeAgentDB.insertFreeAgent(freeAgent.getPlayerName(),freeAgent.getPosition(),leagueId);
+                iFreeAgentDB.insertFreeAgent(freeAgent,leagueId);
             } catch (Exception eFreeAgent) {
                 throw new RuntimeException(eFreeAgent);
             }
@@ -110,7 +105,8 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
                 ArrayList<IPlayer> playerarr = new ArrayList<>();
 
                     while (rs.next()) {
-                        IPlayer player = new Player(rs.getString("playerName"),rs.getString("position"),rs.getBoolean("isCaptain"));
+                        IPlayerStatistics playerStatistics=new PlayerStatistics(rs.getInt("age"),rs.getInt("skating"),rs.getInt("shooting"),rs.getInt("checking"),rs.getInt("saving"));
+                        IPlayer player = new Player(rs.getString("playerName"),rs.getString("position"),rs.getBoolean("isCaptain"),playerStatistics);
                         playerarr.add(player);
                     }
 

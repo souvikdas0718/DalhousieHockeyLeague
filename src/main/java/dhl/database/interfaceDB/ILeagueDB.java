@@ -1,4 +1,4 @@
-package dhl.database;
+package dhl.database.interfaceDB;
 
 import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 

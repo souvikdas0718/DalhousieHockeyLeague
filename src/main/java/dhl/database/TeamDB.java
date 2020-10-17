@@ -1,20 +1,22 @@
 package dhl.database;
 
 import dhl.database.DatabaseConfigSetup.CallStoredProcedure;
+import dhl.database.interfaceDB.ITeamDB;
+import dhl.leagueModel.interfaceModel.ITeam;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class TeamDB implements ITeamDB {
-    public int insertTeam(String teamName, String generalManager, String headCoach, int divisionId,int leagueId)  throws Exception {
+    public int insertTeam(ITeam team, int divisionId, int leagueId)  throws Exception {
         int teamId = 0;
 
         try {
             CallStoredProcedure callproc = new CallStoredProcedure("insertTeam(?,?,?,?,?)");
             callproc.setParameter(1, divisionId);
-            callproc.setParameter(2, teamName);
-            callproc.setParameter(3, generalManager);
-            callproc.setParameter(4, headCoach);
+            callproc.setParameter(2, team.getTeamName());
+            callproc.setParameter(3, team.getGeneralManager());
+            callproc.setParameter(4, team.getHeadCoach());
             callproc.setParameter(5, leagueId);
             ResultSet results = callproc.executeWithResults();
 

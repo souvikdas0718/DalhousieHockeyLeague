@@ -1,14 +1,8 @@
 package dhl.leagueModelTests;
 
-import dhl.leagueModel.CommonValidation;
-import dhl.leagueModel.Division;
+import dhl.leagueModel.*;
 import dhl.factory.InitializeObjectFactory;
-import dhl.leagueModel.Player;
-import dhl.leagueModel.Team;
-import dhl.leagueModel.interfaceModel.IDivision;
-import dhl.leagueModel.interfaceModel.IPlayer;
-import dhl.leagueModel.interfaceModel.ITeam;
-import dhl.leagueModel.interfaceModel.IValidation;
+import dhl.leagueModel.interfaceModel.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,6 +14,7 @@ public class DivisionTest {
     IDivision division;
     IDivision divisionParameterized;
     IValidation validate;
+    IPlayerStatistics playerStatistics;
 
     @BeforeEach()
     public void initObject(){
@@ -27,8 +22,9 @@ public class DivisionTest {
         division= initObj.createDivision();
         validate=new CommonValidation();
         ArrayList<IPlayer> playersList=new ArrayList<>();
-        playersList.add(new Player("Henry","forward",false));
-        playersList.add(new Player("Max","goalie",true));
+        playerStatistics =new PlayerStatistics(20,10,10,10,0);
+        playersList.add(new Player("Henry","forward",false,playerStatistics));
+        playersList.add(new Player("Max","goalie",true,playerStatistics));
         ITeam team = new Team("Ontario","Mathew","henry",playersList);
         ArrayList<ITeam> teamArrayList=new ArrayList<>();
         teamArrayList.add(team);
@@ -83,7 +79,7 @@ public class DivisionTest {
     public void checkIfTeamNamesUniqueInDivisionTest() throws Exception{
         ArrayList<ITeam> teams =divisionParameterized.getTeams();
         ArrayList<IPlayer> playersListTeamTwo=new ArrayList<>();
-        playersListTeamTwo.add(new Player("Henry","forward",false));
+        playersListTeamTwo.add(new Player("Henry","forward",false,playerStatistics));
         teams.add(new Team("Ontario","Mathew","henry",playersListTeamTwo));
         divisionParameterized.setTeams(teams);
         Exception error=Assertions.assertThrows(Exception.class,() ->{

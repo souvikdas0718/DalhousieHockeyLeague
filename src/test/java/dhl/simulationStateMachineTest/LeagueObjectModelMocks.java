@@ -7,11 +7,17 @@ import java.util.ArrayList;
 
 public class LeagueObjectModelMocks {
 
+    public IPlayerStatistics getPlayerStatistics(){
+        IPlayerStatistics playerStatistics= new PlayerStatistics( 25,10,10,10,0);
+        return playerStatistics;
+    }
+
     public IPlayer getPlayerObjectMock(){
         IPlayer playerMock = new Player(
                 "Mock Player",
                 "defense",
-                false
+                false,
+                getPlayerStatistics()
         );
         return playerMock;
     }
@@ -22,12 +28,14 @@ public class LeagueObjectModelMocks {
         playerArrayListMock.add(new Player(
                 "Mock Player",
                 "defense",
-                false
+                false,
+                getPlayerStatistics()
         ));
         playerArrayListMock.add(new Player(
                 "Mock Player2",
                 "forward",
-                true
+                true,
+                getPlayerStatistics()
         ));
         return playerArrayListMock;
     }
@@ -75,8 +83,8 @@ public class LeagueObjectModelMocks {
         ILeagueObjectModel leagueObjectMock=null;
 
         ArrayList<IPlayer> playersList=new ArrayList<>();
-        playersList.add(new Player("Henry","forward",false));
-        playersList.add(new Player("Max","goalie",true));
+        playersList.add(new Player("Henry","forward",false,getPlayerStatistics()));
+        playersList.add(new Player("Max","goalie",true,getPlayerStatistics()));
 
         ITeam team = new Team("Ontario","Mathew","henry",playersList);
         ArrayList<ITeam> teamArrayList=new ArrayList<>();

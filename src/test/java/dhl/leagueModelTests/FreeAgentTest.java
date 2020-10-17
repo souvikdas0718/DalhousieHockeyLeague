@@ -1,17 +1,21 @@
 package dhl.leagueModelTests;
 
 import dhl.leagueModel.FreeAgent;
+import dhl.leagueModel.PlayerStatistics;
 import dhl.leagueModel.interfaceModel.IFreeAgent;
+import dhl.leagueModel.interfaceModel.IPlayerStatistics;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class FreeAgentTest {
     IFreeAgent freeAgent;
+    IPlayerStatistics playerStatistics;
 
     @BeforeEach()
     public void initObject(){
         freeAgent= new FreeAgent();
+        playerStatistics =new PlayerStatistics(20,10,10,10,0);
     }
 
     @Test
@@ -22,7 +26,7 @@ public class FreeAgentTest {
 
     @Test
     public void FreeAgentTest(){
-        IFreeAgent freeAgent= new FreeAgent("Harry","forward");
+        IFreeAgent freeAgent= new FreeAgent("Harry","forward",playerStatistics);
         Assertions.assertEquals("forward",freeAgent.getPosition() );
         Assertions.assertEquals("Harry",freeAgent.getPlayerName() );
     }
@@ -72,5 +76,11 @@ public class FreeAgentTest {
     @Test
     public void getPositionEmptyTest(){
         Assertions.assertEquals("",freeAgent.getPosition());
+    }
+
+    @Test
+    void setPlayerStatsTest() {
+        freeAgent.setPlayerStats(playerStatistics);
+        Assertions.assertEquals(20,freeAgent.getPlayerStats().getAge());
     }
 }

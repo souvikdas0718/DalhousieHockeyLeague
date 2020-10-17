@@ -2,7 +2,9 @@ package dhl.leagueModelTests;
 
 import dhl.factory.InitializeObjectFactory;
 import dhl.leagueModel.Player;
+import dhl.leagueModel.PlayerStatistics;
 import dhl.leagueModel.interfaceModel.IPlayer;
+import dhl.leagueModel.interfaceModel.IPlayerStatistics;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,11 +13,13 @@ import org.junit.jupiter.api.Test;
 public class PlayerTest {
     InitializeObjectFactory initObj;
     IPlayer player;
+    IPlayerStatistics playerStatistics;
 
     @BeforeEach()
     public void initObject(){
         initObj = new InitializeObjectFactory();
         player= initObj.createPlayer();
+        playerStatistics =new PlayerStatistics(20,10,10,10,0);
     }
 
     @Test
@@ -26,7 +30,7 @@ public class PlayerTest {
 
     @Test
     public void PlayerTest(){
-        IPlayer player= new Player("Harry","forward",false);
+        IPlayer player= new Player("Harry","forward",false,playerStatistics);
         Assertions.assertEquals("forward",player.getPosition() );
         Assertions.assertEquals("Harry",player.getPlayerName() );
         Assertions.assertFalse(player.getCaptain() );
@@ -89,6 +93,11 @@ public class PlayerTest {
     public void setCaptainTest(){
         player.setCaptain(false);
         Assertions.assertFalse(player.getCaptain());
+    }
+    @Test
+    void setPlayerStatsTest() {
+        player.setPlayerStats(playerStatistics);
+        Assertions.assertEquals(20,player.getPlayerStats().getAge());
     }
 
     @Test

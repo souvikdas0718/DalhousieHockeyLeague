@@ -1,16 +1,8 @@
 package dhl.leagueModelTests;
 
-import dhl.leagueModel.CommonValidation;
+import dhl.leagueModel.*;
 import dhl.factory.InitializeObjectFactory;
-import dhl.leagueModel.Player;
-import dhl.leagueModel.Team;
-import dhl.leagueModel.Division;
-import dhl.leagueModel.Conference;
-import dhl.leagueModel.interfaceModel.IConference;
-import dhl.leagueModel.interfaceModel.IPlayer;
-import dhl.leagueModel.interfaceModel.ITeam;
-import dhl.leagueModel.interfaceModel.IValidation;
-import dhl.leagueModel.interfaceModel.IDivision;
+import dhl.leagueModel.interfaceModel.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,8 +21,9 @@ public class ConferenceTest {
         conference= initObj.createConference();
         validate=new CommonValidation();
         ArrayList<IPlayer> playersList = new ArrayList<>();
-        playersList.add(new Player("Henry","forward",false));
-        playersList.add(new Player("Max","goalie",true));
+        IPlayerStatistics playerStatistics =new PlayerStatistics(20,10,10,10,0);
+        playersList.add(new Player("Henry","forward",false,playerStatistics));
+        playersList.add(new Player("Max","goalie",true,playerStatistics));
         ITeam team = new Team("Ontario","Mathew","henry",playersList);
         ArrayList<ITeam> teamArrayList=new ArrayList<>();
         teamArrayList.add(team);

@@ -15,4 +15,8 @@ public interface IFreeAgent {
     public void setPosition(String playerPosition);
 
     public String getPosition();
+
+    public IPlayerStatistics getPlayerStats();
+
+    public void setPlayerStats(IPlayerStatistics playerStats);
 }
