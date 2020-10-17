@@ -1,6 +1,6 @@
-package dhl.simulationStateMachine;
+package dhl.inputOutput;
 
-import dhl.simulationStateMachine.Interface.ICheckInputFileFormat;
+import dhl.inputOutput.Interface.ICheckInputFileFormat;
 import org.json.JSONObject;
 
 public class CheckInputFileFormat implements ICheckInputFileFormat {

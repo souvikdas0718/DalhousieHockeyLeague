@@ -1,6 +1,6 @@
 package dhl.simulationStateMachineTest;
 
-import dhl.simulationStateMachine.ImportJsonFile;
+import dhl.inputOutput.ImportJsonFile;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 

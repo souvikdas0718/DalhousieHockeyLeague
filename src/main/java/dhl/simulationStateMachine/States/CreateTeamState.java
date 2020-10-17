@@ -5,11 +5,11 @@ import dhl.leagueModel.interfaceModel.*;
 import dhl.database.ILeagueObjectModelData;
 import dhl.database.LeagueObjectModelData;
 import dhl.simulationStateMachine.GameContext;
-import dhl.simulationStateMachine.Interface.GameState;
+import dhl.simulationStateMachine.Interface.IGameState;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class CreateTeamState implements GameState {
+public class CreateTeamState implements IGameState {
     GameContext ourGame;
     ILeagueObjectModel inMemoryLeague;
     IConference selectedConference;

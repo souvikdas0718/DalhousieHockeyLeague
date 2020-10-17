@@ -1,7 +1,8 @@
-package dhl.simulationStateMachine;
+package dhl.inputOutput;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
