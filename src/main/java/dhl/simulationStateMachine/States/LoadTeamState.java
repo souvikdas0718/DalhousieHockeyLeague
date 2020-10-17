@@ -8,11 +8,11 @@ import dhl.leagueModel.interfaceModel.ITeam;
 import dhl.database.ILeagueObjectModelData;
 import dhl.database.LeagueObjectModelData;
 import dhl.simulationStateMachine.GameContext;
-import dhl.simulationStateMachine.Interface.GameState;
+import dhl.simulationStateMachine.Interface.IGameState;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class LoadTeamState implements GameState {
+public class LoadTeamState implements IGameState {
     GameContext ourGame;
     ILeagueObjectModel ourLeague;
     ITeam selectedTeam;

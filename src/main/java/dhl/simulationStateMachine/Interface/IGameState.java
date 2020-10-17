@@ -1,6 +1,6 @@
 package dhl.simulationStateMachine.Interface;
 
-public interface GameState {
+public interface IGameState {
 
     void stateEntryProcess();
 

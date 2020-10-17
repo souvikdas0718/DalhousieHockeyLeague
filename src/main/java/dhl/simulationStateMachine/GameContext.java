@@ -2,18 +2,18 @@ package dhl.simulationStateMachine;
 
 import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.leagueModel.interfaceModel.ITeam;
-import dhl.simulationStateMachine.Interface.GameState;
+import dhl.simulationStateMachine.Interface.IGameState;
 import dhl.simulationStateMachine.States.CreateTeamState;
 import dhl.simulationStateMachine.States.ImportState;
 import dhl.simulationStateMachine.States.LoadTeamState;
 import dhl.simulationStateMachine.States.SimulateState;
 
 public class GameContext {
-    GameState importState;
-    GameState loadTeamState;
-    GameState simulateState;
-    GameState createTeamState;
-    GameState currentState;
+    IGameState importState;
+    IGameState loadTeamState;
+    IGameState simulateState;
+    IGameState createTeamState;
+    IGameState currentState;
     boolean gameinProgress;
     ILeagueObjectModel inMemoryLeague;
     ITeam selectedTeam;
@@ -27,7 +27,7 @@ public class GameContext {
         gameinProgress = true;
     }
 
-    public void setGameState(GameState newState){
+    public void setGameState(IGameState newState){
         this.currentState = newState;
     }
 
@@ -59,19 +59,19 @@ public class GameContext {
         this.selectedTeam = selectedTeam;
     }
 
-    public GameState getSimulateState() {
+    public IGameState getSimulateState() {
         return simulateState;
     }
 
-    public GameState getImportState() {
+    public IGameState getImportState() {
         return importState;
     }
 
-    public GameState getLoadTeamState() {
+    public IGameState getLoadTeamState() {
         return loadTeamState;
     }
 
-    public GameState getCreateTeamState() {
+    public IGameState getCreateTeamState() {
         return createTeamState;
     }
 
