@@ -58,6 +58,19 @@ public class LeagueObjectModelMocks {
         return divisionArrayListMock;
     }
 
+    public IFreeAgent getFreeAgentObjectMock(){
+        return new FreeAgent("Mock Free Agent", "defense");
+    }
+
+    public ArrayList<IFreeAgent> getFreeAgentArrayMock(){
+        ArrayList<IFreeAgent> freeAgentArrayListMock = new ArrayList<>();
+
+        freeAgentArrayListMock.add(new FreeAgent("Mock Free Agent 2" , "defense"));
+        freeAgentArrayListMock.add(new FreeAgent("Mock Free Agent 1" , "forward"));
+
+        return freeAgentArrayListMock;
+    }
+
     public IConference getConferenceObjectMock(){
         return new Conference( "Mock Conference" , getDivisionArrayMock());
     }
@@ -91,8 +104,10 @@ public class LeagueObjectModelMocks {
         conferences.add(conference);
 
         ArrayList<IFreeAgent> freeAgentsList=new ArrayList<>();
+        ArrayList<ICoach> coachList=new ArrayList<>();
+        ArrayList<IGeneralManager> generalManagerList=new ArrayList<>();
 
-        leagueObjectMock = new LeagueObjectModel("Dhl",conferences,freeAgentsList);
+        leagueObjectMock = new LeagueObjectModel("Dhl",conferences,freeAgentsList, coachList, generalManagerList);
         return leagueObjectMock;
     }
 }

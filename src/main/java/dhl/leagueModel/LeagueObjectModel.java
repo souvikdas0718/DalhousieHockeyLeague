@@ -8,18 +8,24 @@ public class LeagueObjectModel implements ILeagueObjectModel {
     public String leagueName;
     public ArrayList<IConference> conferences;
     public ArrayList<IFreeAgent>freeAgents;
+    public ArrayList<ICoach>coaches;
+    public ArrayList<IGeneralManager>generalManagers;
     public ILeagueObjectModelValidation leagueValidation;
     public LeagueObjectModel(){
         leagueName="";
         conferences=new ArrayList<>();
         freeAgents = new ArrayList<>();
+        coaches = new ArrayList<>();
+        generalManagers = new ArrayList<>();
         leagueValidation=new LeagueObjectModelValidation();
     }
 
-    public LeagueObjectModel(String leagueName,ArrayList<IConference> conferences, ArrayList<IFreeAgent>freeAgents){
+    public LeagueObjectModel(String leagueName,ArrayList<IConference> conferences, ArrayList<IFreeAgent>freeAgents, ArrayList<ICoach>coaches, ArrayList<IGeneralManager>generalManagers){
         this.leagueName=leagueName;
         this.conferences=conferences;
         this.freeAgents = freeAgents;
+        this.coaches = coaches;
+        this.generalManagers = generalManagers;
         leagueValidation=new LeagueObjectModelValidation();
     }
 
@@ -45,6 +51,22 @@ public class LeagueObjectModel implements ILeagueObjectModel {
 
     public void setFreeAgents(ArrayList<IFreeAgent> freeAgents) {
         this.freeAgents = freeAgents;
+    }
+
+    public ArrayList<ICoach> getCoaches() {
+        return coaches;
+    }
+
+    public void setCoaches(ArrayList<ICoach> coaches) {
+        this.coaches = coaches;
+    }
+
+    public ArrayList<IGeneralManager> getGeneralManagers() {
+        return generalManagers;
+    }
+
+    public void setGeneralManagers(ArrayList<IGeneralManager> generalManagers) {
+        this.generalManagers = generalManagers;
     }
 
     public boolean checkIfLeagueModelValid(IValidation validation) throws Exception{
