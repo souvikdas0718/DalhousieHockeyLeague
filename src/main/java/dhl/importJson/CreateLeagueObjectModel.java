@@ -12,7 +12,7 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
     JSONObject jsonLeagueObject = null;
     IValidation validationObject;
     LeagueObjectModel leagueObjectModel;
-    private JSONArray conferenceJsonArray,divisionJsonArray,teamJsonArray,playerJsonArray,freeAgentJsonArray;
+    private JSONArray conferenceJsonArray,divisionJsonArray,teamJsonArray,playerJsonArray,freeAgentJsonArray,coachesJsonArrayList;
 
     public CreateLeagueObjectModel(){
         this.jsonLeagueObject = null;
@@ -30,6 +30,7 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
         String leagueName = (String) jsonLeagueObject.get("leagueName");
         ArrayList<IConference> conferenceObjectList = new ArrayList<>();
         ArrayList<IFreeAgent> freeAgentObjectList = new ArrayList<>();
+        ArrayList<ICoach> coaches = new ArrayList<>();
 
         try {
             if (checkJsonArray(jsonLeagueObject , "conferences")) {
@@ -46,12 +47,21 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
             } else {
                 throw new Exception("Free Agent Array not Found in JSON");
             }
+            if (checkJsonArray(jsonLeagueObject , "coaches")){
+                coachesJsonArrayList = (JSONArray) jsonLeagueObject.get("coaches");
+                 coaches= getCoachesArrayList();
+
+            } else {
+                throw new Exception("Coaches Array not Found in JSON");
+            }
             leagueObjectModel = new LeagueObjectModel(
                     leagueName,
                     conferenceObjectList,
                     freeAgentObjectList
             );
-
+            leagueObjectModel.setCoaches(getCoachesArrayList());
+//-----NOTE for Team creation epic : REPLACE COMMENT WITH METHOD CALL for manager array SIMILAR TO ABOVE LINE.
+// ----ADD MANAGERS to league model USING SETTER METHOD. NO NEED TO ADD TO CONSTRUCTOR
             leagueObjectModel.checkIfLeagueModelValid(validationObject);
         }catch (Exception e){
             System.out.println(e);
@@ -179,5 +189,24 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
 
         }
         return playerListToReturn;
+    }
+
+    public ArrayList<ICoach> getCoachesArrayList() throws Exception {
+        Iterator<?> coachListIterator = coachesJsonArrayList.iterator();
+        ArrayList<ICoach> coachListToReturn = new ArrayList<>();
+
+        while(coachListIterator.hasNext()){
+            JSONObject coachJsonObject = (JSONObject) coachListIterator.next();
+
+            if (coachJsonObject.get("name")==null || coachJsonObject.get("skating")== null ||  coachJsonObject.get("shooting")== null || coachJsonObject.get("checking")== null || coachJsonObject.get("saving")== null){
+                throw new Exception("ERROR: Hey! Player cant have Null values....");
+            }
+            ICoach coachOb = new Coach((String) coachJsonObject.get("name") ,
+                    (double)coachJsonObject.get("skating"),(double)coachJsonObject.get("shooting"),(double)coachJsonObject.get("checking"), (double)coachJsonObject.get("saving"));
+
+            coachListToReturn.add(coachOb);
+
+        }
+        return coachListToReturn;
     }
 }

@@ -24,4 +24,11 @@ public interface ILeagueObjectModel {
 
     public ILeagueObjectModel loadLeagueObjectModel(ILeagueObjectModelData leagueDatabase,String leagueName,String teamName) throws Exception;
 
+    public ArrayList<ICoach> getCoaches() ;
+
+    public void setCoaches(ArrayList<ICoach> coaches);
+
+    public ArrayList getManagers();
+
+    public void setManagers(ArrayList managers);
 }
