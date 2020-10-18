@@ -15,6 +15,7 @@ public class SimulationContext {
         currentSimulation = seasonSimulationState;
     }
 
+    // delete parts
     public void startSeasonSimulation(int seasonNumber){
         currentSimulation.startSeasonSimulation(seasonNumber);
     }

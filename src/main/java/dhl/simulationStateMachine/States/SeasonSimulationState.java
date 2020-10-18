@@ -20,3 +20,5 @@ public class SeasonSimulationState implements ISimulationSeasonState {
         seasonSchedule.stateEntryProcess();
     }
 }
+
+// delete this class
