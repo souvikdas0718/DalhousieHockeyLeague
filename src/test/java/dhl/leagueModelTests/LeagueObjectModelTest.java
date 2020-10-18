@@ -1,5 +1,6 @@
 package dhl.leagueModelTests;
 
+import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.leagueModel.*;
 import dhl.leagueModel.interfaceModel.*;
 import dhl.database.interfaceDB.ILeagueObjectModelData;
@@ -12,27 +13,14 @@ import java.util.ArrayList;
 public class LeagueObjectModelTest {
     LeagueObjectModel leagueModel;
     IValidation validate;
-    LeagueObjectModel leagueModelParameterized;
+    ILeagueObjectModel leagueModelParameterized;
 
     @BeforeEach
     public void initialize(){
         leagueModel=new LeagueObjectModel();
         validate=new CommonValidation();
-        ArrayList<IPlayer> playersList=new ArrayList<>();
-        IPlayerStatistics playerStatistics =new PlayerStatistics(20,10,10,10,0);
-        playersList.add(new Player("Henry","forward",false,playerStatistics));
-        playersList.add(new Player("Max","goalie",true,playerStatistics));
-        ITeam team = new Team("Ontario","Mathew","henry",playersList);
-        ArrayList<ITeam> teamArrayList=new ArrayList<>();
-        teamArrayList.add(team);
-        IDivision division = new Division("Atlantic",teamArrayList);
-        ArrayList<IDivision> divisionsList=new ArrayList<>();
-        divisionsList.add(division);
-        IConference conference=new Conference("Western",divisionsList);
-        ArrayList<IConference> conferences= new ArrayList<>();
-        conferences.add(conference);
-        ArrayList<IFreeAgent> freeAgentsList=new ArrayList<>();
-        leagueModelParameterized=new LeagueObjectModel("Dhl",conferences,freeAgentsList);
+        LeagueObjectModelMocks leagueMock= new LeagueObjectModelMocks();
+        leagueModelParameterized=leagueMock.getLeagueObjectMock();
     }
 
     @Test
@@ -69,7 +57,8 @@ public class LeagueObjectModelTest {
     @Test void saveLeagueObjectModelTest() throws Exception{
         ILeagueObjectModelData mockDb=new MockDatabase();
         ArrayList<IPlayer> players= new ArrayList<>();
-        ITeam newlyCreatedTeam=new Team("Nova Scotia","Mathew","Harry",players);
+        ICoach headCoach = new Coach("Todd McLellan",0.1,0.5,1.0,0.2);
+        ITeam newlyCreatedTeam=new Team("Nova Scotia","Mathew",headCoach,players);
         Assertions.assertEquals("Dhl",leagueModelParameterized.saveLeagueObjectModel(mockDb,"Dhl","Western","Atlantic",newlyCreatedTeam).getLeagueName());
     }
 

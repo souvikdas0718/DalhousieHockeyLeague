@@ -124,10 +124,11 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
                 throw new Exception("ERROR: Hey! Team cant have Null values....");
             }
             playerJsonArray = (JSONArray) teamJsonObject.get("players");
+            JSONObject headCoachJsonObject=(JSONObject) teamJsonObject.get("headCoach");
             ITeam teamObject = new Team(
                     (String) teamJsonObject.get("teamName"),
                     (String) teamJsonObject.get("generalManager"),
-                    (String) teamJsonObject.get("headCoach"),
+                    new Coach( (String) headCoachJsonObject.get("name"),(double)headCoachJsonObject.get("skating"),(double)headCoachJsonObject.get("shooting"),(double)headCoachJsonObject.get("checking"),(double)headCoachJsonObject.get("saving")),
                     getPlayerArrayList()
             );
             if (teamObject.checkIfTeamValid(validationObject)){

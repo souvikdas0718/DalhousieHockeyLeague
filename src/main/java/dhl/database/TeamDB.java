@@ -12,12 +12,11 @@ public class TeamDB implements ITeamDB {
         int teamId = 0;
 
         try {
-            CallStoredProcedure callproc = new CallStoredProcedure("insertTeam(?,?,?,?,?)");
+            CallStoredProcedure callproc = new CallStoredProcedure("insertTeam(?,?,?,?)");
             callproc.setParameter(1, divisionId);
             callproc.setParameter(2, team.getTeamName());
             callproc.setParameter(3, team.getGeneralManager());
-            callproc.setParameter(4, team.getHeadCoach());
-            callproc.setParameter(5, leagueId);
+            callproc.setParameter(4, leagueId);
             ResultSet results = callproc.executeWithResults();
 
             if (null != results) {

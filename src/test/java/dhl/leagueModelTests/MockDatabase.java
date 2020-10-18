@@ -17,7 +17,8 @@ public class MockDatabase implements ILeagueObjectModelData {
         IPlayerStatistics playerStatistics =new PlayerStatistics(20,10,10,10,0);
         playersList.add(new Player("Henry","forward",false,playerStatistics));
         playersList.add(new Player("Max","goalie",true,playerStatistics));
-        ITeam team = new Team("Ontario","Mathew","henry",playersList);
+        ICoach headCoach = new Coach("Todd McLellan",0.1,0.5,1.0,0.2);
+        ITeam team = new Team("Ontario","Mathew",headCoach,playersList);
         ArrayList<ITeam> teamArrayList=new ArrayList<>();
         teamArrayList.add(team);
         IDivision division = new Division("Atlantic",teamArrayList);

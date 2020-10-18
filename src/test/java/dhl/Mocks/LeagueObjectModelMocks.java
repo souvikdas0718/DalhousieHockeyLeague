@@ -41,14 +41,16 @@ public class LeagueObjectModelMocks {
     }
 
     public ITeam getTeamObjectMock(){
-        return new Team("Mock Team", "Mock Manager", "Mock Coach", getPlayerArrayMock() );
+        ICoach headCoach = new Coach("Todd McLellan",0.1,0.5,1.0,0.2);
+        return new Team("Mock Team", "Mock Manager", headCoach, getPlayerArrayMock() );
     }
 
     public ArrayList<ITeam> getTeamArrayMock(){
         ArrayList<ITeam> teamArrayListMock = new ArrayList<>();
-
-        teamArrayListMock.add(new Team("Mock Team2" , "mock Manager2", "Mock Coach2", getPlayerArrayMock()));
-        teamArrayListMock.add(new Team("Mock Team1" , "mock Manager1", "Mock Coach1", getPlayerArrayMock()));
+        ICoach headCoachOne = new Coach("Todd McLellan",0.1,0.5,1.0,0.2);
+        ICoach headCoachTwo = new Coach("Todd McLellan",0.1,0.5,1.0,0.2);
+        teamArrayListMock.add(new Team("Mock Team2" , "mock Manager2", headCoachTwo, getPlayerArrayMock()));
+        teamArrayListMock.add(new Team("Mock Team1" , "mock Manager1", headCoachOne, getPlayerArrayMock()));
 
         return teamArrayListMock;
     }
@@ -79,14 +81,29 @@ public class LeagueObjectModelMocks {
         return conferenceArrayListMock;
     }
 
+    public IConference getConferenceTestMock(){
+        ArrayList<IPlayer> playersList = new ArrayList<>();
+        IPlayerStatistics playerStatistics =new PlayerStatistics(20,10,10,10,0);
+        playersList.add(new Player("Henry","forward",false,playerStatistics));
+        playersList.add(new Player("Max","goalie",true,playerStatistics));
+        ICoach headCoach = new Coach("Todd McLellan",0.1,0.5,1.0,0.2);
+        ITeam team = new Team("Ontario","Mathew",headCoach,playersList);
+        ArrayList<ITeam> teamArrayList=new ArrayList<>();
+        teamArrayList.add(team);
+        IDivision division = new Division("Atlantic",teamArrayList);
+        ArrayList<IDivision> divisionsList=new ArrayList<>();
+        divisionsList.add(division);
+        return new Conference("Western",divisionsList);
+    }
+
     public ILeagueObjectModel getLeagueObjectMock(){
         ILeagueObjectModel leagueObjectMock=null;
 
         ArrayList<IPlayer> playersList=new ArrayList<>();
         playersList.add(new Player("Henry","forward",false,getPlayerStatistics()));
         playersList.add(new Player("Max","goalie",true,getPlayerStatistics()));
-
-        ITeam team = new Team("Ontario","Mathew","henry",playersList);
+        ICoach headCoach = new Coach("Todd McLellan",0.1,0.5,1.0,0.2);
+        ITeam team = new Team("Ontario","Mathew",headCoach,playersList);
         ArrayList<ITeam> teamArrayList=new ArrayList<>();
         teamArrayList.add(team);
 
