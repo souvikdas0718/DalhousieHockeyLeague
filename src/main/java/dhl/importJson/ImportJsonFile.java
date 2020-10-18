@@ -1,5 +1,6 @@
 package dhl.importJson;
 
+import dhl.importJson.Interface.IGameConfig;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -19,7 +20,6 @@ public class ImportJsonFile {
         JSONObject JsonLeagueObject = null;
         JSONParser jsonParser = new JSONParser();
         String jsonFileIntoString = getJsonIntoString(filePath);
-
         try{
             if(new CheckInputFileFormat().isCorrectFormated(jsonFileIntoString)) {
                 System.out.println("Valid JSON file Received");
