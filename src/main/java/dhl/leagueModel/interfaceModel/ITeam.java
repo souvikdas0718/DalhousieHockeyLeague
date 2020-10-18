@@ -15,9 +15,9 @@ public interface ITeam {
 
     public void setGeneralManager(String generalManager);
 
-    public String getHeadCoach();
+    public ICoach getHeadCoach();
 
-    public void setHeadCoach(String headCoach);
+    public void setHeadCoach(ICoach headCoach);
 
     public ArrayList<IPlayer> getPlayers();
 
@@ -28,6 +28,8 @@ public interface ITeam {
     public boolean checkIfSizeOfTeamValid(List<IPlayer> playerList);
 
     public boolean checkIfTeamValid(IValidation validation) throws Exception;
+
+    public double calculateTeamStrength();
 
 }
 

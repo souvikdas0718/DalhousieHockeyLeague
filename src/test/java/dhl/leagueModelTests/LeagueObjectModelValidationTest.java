@@ -1,5 +1,6 @@
 package dhl.leagueModelTests;
 
+import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.leagueModel.*;
 import dhl.leagueModel.interfaceModel.*;
 import org.junit.jupiter.api.AfterEach;
@@ -12,27 +13,14 @@ import java.util.ArrayList;
 public class LeagueObjectModelValidationTest {
     IValidation validate;
     ILeagueObjectModelValidation leagueValidation;
-    LeagueObjectModel leagueModelParameterized;
+    ILeagueObjectModel leagueModelParameterized;
 
     @BeforeEach
     public void initialize(){
         validate=new CommonValidation();
         leagueValidation=new LeagueObjectModelValidation();
-        ArrayList<IPlayer> playersList=new ArrayList<>();
-        IPlayerStatistics playerStatistics =new PlayerStatistics(20,10,10,10,0);
-        playersList.add(new Player("Henry","forward",false,playerStatistics));
-        playersList.add(new Player("Max","goalie",true,playerStatistics));
-        ITeam team = new Team("Ontario","Mathew","henry",playersList);
-        ArrayList<ITeam> teamArrayList=new ArrayList<>();
-        teamArrayList.add(team);
-        IDivision division = new Division("Atlantic",teamArrayList);
-        ArrayList<IDivision> divisionsList=new ArrayList<>();
-        divisionsList.add(division);
-        IConference conference=new Conference("Western",divisionsList);
-        ArrayList<IConference> conferences= new ArrayList<>();
-        conferences.add(conference);
-        ArrayList<IFreeAgent> freeAgentsList=new ArrayList<>();
-        leagueModelParameterized=new LeagueObjectModel("Dhl",conferences,freeAgentsList);
+        LeagueObjectModelMocks leagueMock= new LeagueObjectModelMocks();
+        leagueModelParameterized=leagueMock.getLeagueObjectMock();
     }
 
     @Test

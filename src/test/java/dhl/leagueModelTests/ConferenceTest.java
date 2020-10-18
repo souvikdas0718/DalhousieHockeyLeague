@@ -1,5 +1,6 @@
 package dhl.leagueModelTests;
 
+import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.leagueModel.*;
 import dhl.factory.InitializeObjectFactory;
 import dhl.leagueModel.interfaceModel.*;
@@ -20,17 +21,8 @@ public class ConferenceTest {
         initObj = new InitializeObjectFactory();
         conference= initObj.createConference();
         validate=new CommonValidation();
-        ArrayList<IPlayer> playersList = new ArrayList<>();
-        IPlayerStatistics playerStatistics =new PlayerStatistics(20,10,10,10,0);
-        playersList.add(new Player("Henry","forward",false,playerStatistics));
-        playersList.add(new Player("Max","goalie",true,playerStatistics));
-        ITeam team = new Team("Ontario","Mathew","henry",playersList);
-        ArrayList<ITeam> teamArrayList=new ArrayList<>();
-        teamArrayList.add(team);
-        IDivision division = new Division("Atlantic",teamArrayList);
-        ArrayList<IDivision> divisionsList=new ArrayList<>();
-        divisionsList.add(division);
-        conferenceParameterized=new Conference("Western",divisionsList);
+        LeagueObjectModelMocks leagueMock= new LeagueObjectModelMocks();
+        conferenceParameterized=leagueMock.getConferenceTestMock();
     }
 
     @Test
