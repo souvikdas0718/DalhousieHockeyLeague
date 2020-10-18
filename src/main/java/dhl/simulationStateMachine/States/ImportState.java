@@ -30,7 +30,7 @@ public class ImportState implements IGameState {
 
         Scanner sc = new Scanner(System.in);
 
-        while(option == -1 || option>3) {
+        while(option == -1 || option > 3) {
             System.out.println("Please Enter one option");
             System.out.println("1 for Loading JSON");
             System.out.println("2 for Loading Existing Team from DB");
@@ -75,7 +75,7 @@ public class ImportState implements IGameState {
 
     @Override
     public void stateExitProcess() {
-        if(ourGame.isGameinProgress()) {
+        if(ourGame.isGameInProgress()) {
             ourGame.setInMemoryLeague(newInMemoryLeague);
             if (option == 1) {
                 ourGame.setGameState(ourGame.getCreateTeamState());

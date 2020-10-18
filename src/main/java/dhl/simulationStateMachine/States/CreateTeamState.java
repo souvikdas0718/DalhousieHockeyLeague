@@ -123,13 +123,13 @@ public class CreateTeamState implements IGameState {
             ourGame.setSelectedTeam(findTeam(inMemoryLeague , teamName));
         }catch (Exception e){
             System.out.println(e.getMessage());
-            ourGame.setGameinProgress(false);
+            ourGame.setGameInProgress(false);
         }
     }
 
     @Override
     public void stateExitProcess() {
-        if(ourGame.isGameinProgress()) {
+        if(ourGame.isGameInProgress()) {
             ourGame.setGameState(ourGame.getSimulateState());
         }
     }

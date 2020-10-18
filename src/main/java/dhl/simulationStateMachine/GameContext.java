@@ -14,24 +14,24 @@ public class GameContext {
     IGameState simulateState;
     IGameState createTeamState;
     IGameState currentState;
-    boolean gameinProgress;
+    boolean gameInProgress;
     ILeagueObjectModel inMemoryLeague;
     ITeam selectedTeam;
 
-    public GameContext(){
+    public GameContext() {
         importState = new ImportState(this);
         loadTeamState = new LoadTeamState(this);
         simulateState = new SimulateState(this);
         createTeamState = new CreateTeamState(this);
         currentState = importState;
-        gameinProgress = true;
+        gameInProgress = true;
     }
 
-    public void setGameState(IGameState newState){
+    public void setGameState(IGameState newState) {
         this.currentState = newState;
     }
 
-    public void stateEntryProcess(){
+    public void stateEntryProcess() {
         currentState.stateEntryProcess();
     }
 
@@ -39,7 +39,7 @@ public class GameContext {
         currentState.stateProcess();
     }
 
-    public void stateExitProcess(){
+    public void stateExitProcess() {
         currentState.stateExitProcess();
     }
 
@@ -75,12 +75,12 @@ public class GameContext {
         return createTeamState;
     }
 
-    public boolean isGameinProgress() {
-        return gameinProgress;
+    public boolean isGameInProgress() {
+        return gameInProgress;
     }
 
-    public void setGameinProgress(boolean gameStatus){
-        gameinProgress = gameStatus;
+    public void setGameInProgress(boolean gameStatus) {
+        gameInProgress = gameStatus;
     }
 
 }

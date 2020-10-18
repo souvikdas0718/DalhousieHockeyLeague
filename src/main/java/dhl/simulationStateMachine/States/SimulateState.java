@@ -46,7 +46,7 @@ public class SimulateState implements IGameState {
 
     @Override
     public void stateExitProcess() {
-        ourGame.setGameinProgress(false);
+        ourGame.setGameInProgress(false);
     }
 
 }
