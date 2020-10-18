@@ -1,5 +1,6 @@
 package dhl.simulationStateMachine.States;
 
+import dhl.leagueModel.Coach;
 import dhl.leagueModel.Team;
 import dhl.leagueModel.interfaceModel.*;
 import dhl.database.interfaceDB.ILeagueObjectModelData;
@@ -111,7 +112,8 @@ public class CreateTeamState implements IGameState {
         System.out.println("Adding Team "+ teamName+ " to the DB");
         ILeagueObjectModelData leagueObjectModelData = new LeagueObjectModelData();
         ArrayList<IPlayer> players= new ArrayList<>();
-        ITeam newlyCreatedTeam=new Team(teamName,generalManager,headCoach,players);
+        ICoach coach = new Coach();
+        ITeam newlyCreatedTeam=new Team(teamName,generalManager,coach,players);
         try {
             inMemoryLeague.saveLeagueObjectModel(
                     leagueObjectModelData,

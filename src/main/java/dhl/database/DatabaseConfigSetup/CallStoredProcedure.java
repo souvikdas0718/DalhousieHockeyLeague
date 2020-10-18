@@ -54,6 +54,9 @@ public class CallStoredProcedure {
     public void setParameter(int paramIndex, long value) throws SQLException {
         statement.setLong(paramIndex, value);
     }
+    public void setParameter(int paramIndex, double value) throws SQLException {
+        statement.setDouble(paramIndex, value);
+    }
 
     public void setDate(int paramIndex, Date value) throws SQLException {
         statement.setDate(paramIndex, value);
