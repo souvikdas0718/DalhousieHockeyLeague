@@ -24,7 +24,7 @@ public class TeamTest {
         team= initObj.createTeam();
         validate=new CommonValidation();
         playerArrayList=new ArrayList<>();
-        playerStatistics =new PlayerStatistics(20,10,10,10,0);
+        playerStatistics =new PlayerStatistics(20,10,10,10,10);
         playerArrayList.add(new Player("Harry","forward",false,playerStatistics));
         headCoach = new Coach("Todd McLellan",0.1,0.5,1.0,0.2);
     }

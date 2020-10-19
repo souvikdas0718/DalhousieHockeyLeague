@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class LeagueObjectModelMocks {
 
     public IPlayerStatistics getPlayerStatistics(){
-        IPlayerStatistics playerStatistics= new PlayerStatistics( 25,10,10,10,0);
+        IPlayerStatistics playerStatistics= new PlayerStatistics( 25,10,10,10,10);
         return playerStatistics;
     }
 
@@ -71,7 +71,7 @@ public class LeagueObjectModelMocks {
 
 
     public IPlayerStatistics getPlayerStatisticsMock(){
-        IPlayerStatistics playerStatistics =new PlayerStatistics(20,10,10,10,0);
+        IPlayerStatistics playerStatistics =new PlayerStatistics(20,10,10,10,10);
         return playerStatistics;
     }
 
@@ -103,7 +103,7 @@ public class LeagueObjectModelMocks {
 
     public IConference getConferenceTestMock(){
         ArrayList<IPlayer> playersList = new ArrayList<>();
-        IPlayerStatistics playerStatistics =new PlayerStatistics(20,10,10,10,0);
+        IPlayerStatistics playerStatistics =new PlayerStatistics(20,10,10,10,10);
         playersList.add(new Player("Henry","forward",false,playerStatistics));
         playersList.add(new Player("Max","goalie",true,playerStatistics));
         ICoach headCoach = new Coach("Todd McLellan",0.1,0.5,1.0,0.2);

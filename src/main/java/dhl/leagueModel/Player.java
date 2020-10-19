@@ -92,7 +92,7 @@ public class Player implements IPlayer {
     }
 
     public boolean isCaptainValueBoolean(){
-        return this.captain != null;
+        return this.captain == null;
     }
 
     public boolean checkPlayerValid() throws Exception {
@@ -102,9 +102,10 @@ public class Player implements IPlayer {
         if(this.isPlayerPositionInvalid()){
             throw new Exception("Player position must be goalie or forward or defense");
         }
-        if(!this.isCaptainValueBoolean()){
+        if(this.isCaptainValueBoolean()){
             throw new Exception("Captain value must be true or false");
         }
+        playerStats.checkPlayerStatistics();
         return true;
     }
     public double getPlayerStrength(){
