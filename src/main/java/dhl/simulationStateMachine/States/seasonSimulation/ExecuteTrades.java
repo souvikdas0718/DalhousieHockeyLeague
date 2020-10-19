@@ -1,20 +1,24 @@
 package dhl.simulationStateMachine.States.seasonSimulation;
 
-import dhl.simulationStateMachine.Interface.IGameState;
+import dhl.simulationStateMachine.Interface.ISimulationSeasonState;
+import dhl.simulationStateMachine.SimulationContext;
 
-public class ExecuteTrades implements IGameState {
+public class ExecuteTrades implements ISimulationSeasonState {
+    public ExecuteTrades(SimulationContext simulationContext) {
+    }
+
     @Override
-    public void stateEntryProcess() {
+    public void seasonStateEntryProcess() {
 
     }
 
     @Override
-    public void stateProcess() throws Exception {
+    public void seasonStateProcess() throws Exception {
         // calculate trade loss point
     }
 
     @Override
-    public void stateExitProcess() {
+    public void seasonStateExitProcess() {
 
     }
 }

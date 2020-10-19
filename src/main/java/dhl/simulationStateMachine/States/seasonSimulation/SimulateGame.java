@@ -1,20 +1,24 @@
 package dhl.simulationStateMachine.States.seasonSimulation;
 
-import dhl.simulationStateMachine.Interface.IGameState;
+import dhl.simulationStateMachine.Interface.ISimulationSeasonState;
+import dhl.simulationStateMachine.SimulationContext;
 
-public class SimulateGame implements IGameState {
+public class SimulateGame implements ISimulationSeasonState {
+    public SimulateGame(SimulationContext simulationContext) {
+    }
+
     @Override
-    public void stateEntryProcess() {
+    public void seasonStateEntryProcess() {
 
     }
 
     @Override
-    public void stateProcess() throws Exception {
+    public void seasonStateProcess() throws Exception {
             // simulate one game win/loss
     }
 
     @Override
-    public void stateExitProcess() {
+    public void seasonStateExitProcess() {
         // check injury
     }
 }

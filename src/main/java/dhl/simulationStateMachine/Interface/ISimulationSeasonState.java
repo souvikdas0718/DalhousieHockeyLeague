@@ -2,6 +2,13 @@ package dhl.simulationStateMachine.Interface;
 
 public interface ISimulationSeasonState {
 
-    void startSeasonSimulation(int seasonNumber);
+    //comment out this method
+    //void startSeasonSimulation(int seasonNumber);
+
+    void seasonStateEntryProcess();
+
+    void seasonStateProcess() throws Exception;
+
+    void seasonStateExitProcess();
 
 }

@@ -1,20 +1,24 @@
 package dhl.simulationStateMachine.States.seasonSimulation;
 
-import dhl.simulationStateMachine.Interface.IGameState;
+import dhl.simulationStateMachine.Interface.ISimulationSeasonState;
+import dhl.simulationStateMachine.SimulationContext;
 
-public class PersistSeason implements IGameState {
+public class PersistSeason implements ISimulationSeasonState {
+    public PersistSeason(SimulationContext simulationContext) {
+    }
+
     @Override
-    public void stateEntryProcess() {
+    public void seasonStateEntryProcess() {
 
     }
 
     @Override
-    public void stateProcess() throws Exception {
+    public void seasonStateProcess() throws Exception {
         // save the data in the db
     }
 
     @Override
-    public void stateExitProcess() {
+    public void seasonStateExitProcess() {
         //end
     }
 }

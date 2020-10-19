@@ -11,13 +11,28 @@ public class SeasonSimulationState implements ISimulationSeasonState {
         ongoingSimulation = simulationContext;
     }
 
-    @Override
-    public void startSeasonSimulation(int seasonNumber) {
+//    @Override
+//    public void startSeasonSimulation(int seasonNumber) {
+//
+//        System.out.println("Season Number:"+ seasonNumber+ " is simulated");
+//        InitializeSeason seasonSchedule = new InitializeSeason();
+//        //
+//        seasonSchedule.stateEntryProcess();
+//    }
 
-        System.out.println("Season Number:"+ seasonNumber+ " is simulated");
-        InitializeSeason seasonSchedule = new InitializeSeason();
-        //
-        seasonSchedule.stateEntryProcess();
+    @Override
+    public void seasonStateEntryProcess() {
+
+    }
+
+    @Override
+    public void seasonStateProcess() throws Exception {
+
+    }
+
+    @Override
+    public void seasonStateExitProcess() {
+
     }
 }
 

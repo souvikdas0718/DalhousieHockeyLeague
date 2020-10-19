@@ -1,21 +1,25 @@
 package dhl.simulationStateMachine.States.seasonSimulation;
 
 
-import dhl.simulationStateMachine.Interface.IGameState;
+import dhl.simulationStateMachine.Interface.ISimulationSeasonState;
+import dhl.simulationStateMachine.SimulationContext;
 
-public class InitializeSeason implements IGameState {
+public class InitializeSeason implements ISimulationSeasonState {
+    public InitializeSeason(SimulationContext simulationContext) {
+    }
+
     @Override
-    public void stateEntryProcess() {
+    public void seasonStateEntryProcess() {
 
     }
 
     @Override
-    public void stateProcess() throws Exception {
+    public void seasonStateProcess() throws Exception {
 
     }
 
     @Override
-    public void stateExitProcess() {
+    public void seasonStateExitProcess() {
     //Advance Time by one day
     }
 }

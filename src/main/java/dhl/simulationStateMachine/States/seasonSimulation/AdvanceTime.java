@@ -1,23 +1,29 @@
 package dhl.simulationStateMachine.States.seasonSimulation;
 
 import dhl.simulationStateMachine.Interface.IGameState;
+import dhl.simulationStateMachine.Interface.ISimulationSeasonState;
+import dhl.simulationStateMachine.SimulationContext;
 
-public class AdvanceTime implements IGameState {
+public class AdvanceTime implements ISimulationSeasonState {
+
+    public AdvanceTime(SimulationContext simulationContext) {
+    }
+
     @Override
-    public void stateEntryProcess() {
+    public void seasonStateEntryProcess() {
 
     }
 
     @Override
-    public void stateProcess() throws Exception {
-            // increment day by one
+    public void seasonStateProcess() throws Exception {
+        // increment day by one
     }
 
     @Override
-    public void stateExitProcess() {
-            // if end of the regular season
-                //genearate playoff scehdule
-            //else
-                 // training
+    public void seasonStateExitProcess() {
+        // if end of the regular season
+        //genearate playoff scehdule
+        //else
+        // training
     }
 }

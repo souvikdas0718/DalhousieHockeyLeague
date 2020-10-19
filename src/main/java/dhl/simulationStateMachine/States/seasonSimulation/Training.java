@@ -1,21 +1,25 @@
 package dhl.simulationStateMachine.States.seasonSimulation;
 
-import dhl.simulationStateMachine.Interface.IGameState;
+import dhl.simulationStateMachine.Interface.ISimulationSeasonState;
+import dhl.simulationStateMachine.SimulationContext;
 
-public class Training implements IGameState {
+public class Training implements ISimulationSeasonState {
+
+    public Training(SimulationContext simulationContext) {
+    }
 
     @Override
-    public void stateEntryProcess() {
+    public void seasonStateEntryProcess() {
 
     }
 
     @Override
-    public void stateProcess() throws Exception {
+    public void seasonStateProcess() throws Exception {
             // increment by one day
     }
 
     @Override
-    public void stateExitProcess() {
+    public void seasonStateExitProcess() {
             // any unplayed game scheduled
                     // yes then simulate game
                 // no then check trade deadline

@@ -1,21 +1,25 @@
 package dhl.simulationStateMachine.States.seasonSimulation;
 
-import dhl.simulationStateMachine.Interface.IGameState;
+import dhl.simulationStateMachine.Interface.ISimulationSeasonState;
+import dhl.simulationStateMachine.SimulationContext;
 
-public class GeneratePlayOffSchedule implements IGameState {
+public class GeneratePlayOffSchedule implements ISimulationSeasonState {
+
+    public GeneratePlayOffSchedule(SimulationContext simulationContext) {
+    }
 
     @Override
-    public void stateEntryProcess() {
+    public void seasonStateEntryProcess() {
 
     }
 
     @Override
-    public void stateProcess() throws Exception {
+    public void seasonStateProcess() throws Exception {
         // use NHL Stanley Cup rules to generate playoff rules
     }
 
     @Override
-    public void stateExitProcess() {
+    public void seasonStateExitProcess() {
         // training
     }
 }
