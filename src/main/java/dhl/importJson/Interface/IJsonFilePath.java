@@ -1,7 +1,5 @@
-package dhl.simulationStateMachine.Interface;
+package dhl.importJson.Interface;
 
 public interface IJsonFilePath {
-
     public String getFilePath();
-
 }

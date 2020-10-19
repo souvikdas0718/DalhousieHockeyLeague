@@ -1,12 +1,12 @@
 package dhl.simulationStateMachine.States;
 
 import dhl.simulationStateMachine.GameContext;
-import dhl.simulationStateMachine.Interface.GameState;
+import dhl.simulationStateMachine.Interface.IGameState;
 import dhl.simulationStateMachine.SimulationContext;
 
 import java.util.Scanner;
 
-public class SimulateState implements GameState {
+public class SimulateState implements IGameState {
     GameContext ourGame;
     final int maxSeasons = 10;
     final int minSeasons = 1;

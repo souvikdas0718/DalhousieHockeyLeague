@@ -2,7 +2,9 @@ package dhl.leagueModelTests;
 
 import dhl.leagueModel.CommonValidation;
 import dhl.leagueModel.Player;
+import dhl.leagueModel.PlayerStatistics;
 import dhl.leagueModel.interfaceModel.IPlayer;
+import dhl.leagueModel.interfaceModel.IPlayerStatistics;
 import dhl.leagueModel.interfaceModel.IValidation;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -39,9 +41,10 @@ public class CommonValidationTest {
     @Test
     public void isListNotEmptyTest() throws Exception{
         List<IPlayer> players=new ArrayList<>();
-        IPlayer player1=new Player("Rhea","forward",false);
+        IPlayerStatistics playerStatistics =new PlayerStatistics(20,10,10,10,0);
+        IPlayer player1=new Player("Rhea","forward",false,playerStatistics);
         players.add(player1);
-        IPlayer player2=new Player("Noah","defense",true);
+        IPlayer player2=new Player("Noah","defense",true,playerStatistics);
         players.add(player2);
         commonValidation.isListEmpty(players,"players");
        Assertions.assertTrue(players.size()!=0);

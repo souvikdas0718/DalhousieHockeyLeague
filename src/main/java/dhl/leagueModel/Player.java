@@ -1,12 +1,14 @@
 package dhl.leagueModel;
 
 import dhl.leagueModel.interfaceModel.IPlayer;
+import dhl.leagueModel.interfaceModel.IPlayerStatistics;
 
 public class Player implements IPlayer {
     private int playerId;
     private String playerName;
     private PlayerPosition position;
     private Boolean captain;
+    private IPlayerStatistics playerStats;
 
     public Player(){
         setDefaults();
@@ -17,10 +19,11 @@ public class Player implements IPlayer {
         position = null;
     }
 
-    public Player(String playerName,String position,Boolean captain){
+    public Player(String playerName,String position,Boolean captain,IPlayerStatistics playerStats){
         this.setPlayerName(playerName);
         this.setPosition(position);
         this.setCaptain(captain);
+        this.setPlayerStats(playerStats);
     }
 
     public void setPlayerId(int id) {
@@ -70,6 +73,14 @@ public class Player implements IPlayer {
 
     public boolean getCaptain() {
         return captain;
+    }
+
+    public IPlayerStatistics getPlayerStats() {
+        return playerStats;
+    }
+
+    public void setPlayerStats(IPlayerStatistics playerStats) {
+        this.playerStats = playerStats;
     }
 
     public boolean isPlayerNameEmpty(){

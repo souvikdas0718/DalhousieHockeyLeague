@@ -1,10 +1,11 @@
 package dhl.database;
 
 import dhl.database.DatabaseConfigSetup.CallStoredProcedure;
+import dhl.database.interfaceDB.IDivisionDB;
 
 import java.sql.ResultSet;
 
-public class DivisionDB implements IDivisionDB{
+public class DivisionDB implements IDivisionDB {
     public int insertDivision(String divisionName, int conferenceId, int leagueId) throws Exception {
         int divisionId=0;
 

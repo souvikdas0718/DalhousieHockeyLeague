@@ -1,14 +1,8 @@
 package dhl.leagueModelTests;
 
-import dhl.leagueModel.CommonValidation;
-import dhl.leagueModel.Division;
+import dhl.leagueModel.*;
 import dhl.factory.InitializeObjectFactory;
-import dhl.leagueModel.Player;
-import dhl.leagueModel.Team;
-import dhl.leagueModel.interfaceModel.IDivision;
-import dhl.leagueModel.interfaceModel.IPlayer;
-import dhl.leagueModel.interfaceModel.ITeam;
-import dhl.leagueModel.interfaceModel.IValidation;
+import dhl.leagueModel.interfaceModel.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,6 +14,7 @@ public class DivisionTest {
     IDivision division;
     IDivision divisionParameterized;
     IValidation validate;
+    IPlayerStatistics playerStatistics;
 
     @BeforeEach()
     public void initObject(){
@@ -27,9 +22,11 @@ public class DivisionTest {
         division= initObj.createDivision();
         validate=new CommonValidation();
         ArrayList<IPlayer> playersList=new ArrayList<>();
-        playersList.add(new Player("Henry","forward",false));
-        playersList.add(new Player("Max","goalie",true));
-        ITeam team = new Team("Ontario","Mathew","henry",playersList);
+        playerStatistics =new PlayerStatistics(20,10,10,10,0);
+        playersList.add(new Player("Henry","forward",false,playerStatistics));
+        playersList.add(new Player("Max","goalie",true,playerStatistics));
+        ICoach headCoach = new Coach("Todd McLellan",0.1,0.5,1.0,0.2);
+        ITeam team = new Team("Ontario","Mathew",headCoach,playersList);
         ArrayList<ITeam> teamArrayList=new ArrayList<>();
         teamArrayList.add(team);
         divisionParameterized = new Division("Atlantic",teamArrayList);
@@ -83,8 +80,9 @@ public class DivisionTest {
     public void checkIfTeamNamesUniqueInDivisionTest() throws Exception{
         ArrayList<ITeam> teams =divisionParameterized.getTeams();
         ArrayList<IPlayer> playersListTeamTwo=new ArrayList<>();
-        playersListTeamTwo.add(new Player("Henry","forward",false));
-        teams.add(new Team("Ontario","Mathew","henry",playersListTeamTwo));
+        playersListTeamTwo.add(new Player("Henry","forward",false,playerStatistics));
+        ICoach headCoach = new Coach("Todd McLellan",0.1,0.5,1.0,0.2);
+        teams.add(new Team("Ontario","Mathew",headCoach,playersListTeamTwo));
         divisionParameterized.setTeams(teams);
         Exception error=Assertions.assertThrows(Exception.class,() ->{
             divisionParameterized.checkIfDivisionValid(validate);

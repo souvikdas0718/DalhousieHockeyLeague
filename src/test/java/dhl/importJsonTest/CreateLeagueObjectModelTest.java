@@ -1,10 +1,12 @@
-package dhl.simulationStateMachineTest;
+package dhl.importJsonTest;
 
-import dhl.simulationStateMachine.CreateLeagueObjectModel;
-import dhl.simulationStateMachine.ImportJsonFile;
+import dhl.Mocks.JsonFilePathMock;
+import dhl.importJson.CreateLeagueObjectModel;
+import dhl.importJson.ImportJsonFile;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

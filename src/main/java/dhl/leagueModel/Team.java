@@ -1,5 +1,6 @@
 package dhl.leagueModel;
 
+import dhl.leagueModel.interfaceModel.ICoach;
 import dhl.leagueModel.interfaceModel.IPlayer;
 import dhl.leagueModel.interfaceModel.ITeam;
 import dhl.leagueModel.interfaceModel.IValidation;
@@ -12,7 +13,7 @@ public class Team implements ITeam {
     private int teamId;
     private String teamName;
     private String generalManager;
-    private String headCoach;
+    private ICoach headCoach;
     private ArrayList<IPlayer> players;
 
     public Team(){
@@ -23,11 +24,11 @@ public class Team implements ITeam {
         teamId=-1;
         teamName="";
         generalManager="";
-        headCoach="";
+        headCoach=new Coach();
         players=new ArrayList<>();
     }
 
-    public Team(String teamName,String generalManager,String headCoach, ArrayList<IPlayer> playersList){
+    public Team(String teamName,String generalManager,ICoach headCoach, ArrayList<IPlayer> playersList){
         setTeamName(teamName);
         setGeneralManager(generalManager);
         setHeadCoach(headCoach);
@@ -50,11 +51,11 @@ public class Team implements ITeam {
         this.generalManager=generalManager;
     }
 
-    public String getHeadCoach() {
+    public ICoach getHeadCoach() {
         return headCoach;
     }
 
-    public void setHeadCoach(String headCoach) {
+    public void setHeadCoach(ICoach headCoach) {
         this.headCoach=headCoach;
     }
 
@@ -83,13 +84,17 @@ public class Team implements ITeam {
 
     public boolean checkIfTeamValid(IValidation validation) throws Exception{
         validation.isStringEmpty(teamName,"Team name");
-        validation.isStringEmpty(headCoach,"Head Coach name");
+        this.headCoach.checkIfCoachValid(validation);
         validation.isStringEmpty(generalManager,"General manager name");
         checkIfOneCaptainPerTeam(players);
-        if(this.checkIfSizeOfTeamValid(players)==false){
-            throw new Exception("Each team must have 20 players");
-        }
+//        if(this.checkIfSizeOfTeamValid(players)==false){
+//            throw new Exception("Each team must have 20 players");
+//        }
         return true;
+    }
+
+    public double calculateTeamStrength(){
+        return 0;
     }
 
 }

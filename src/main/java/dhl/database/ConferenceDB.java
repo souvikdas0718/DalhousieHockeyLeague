@@ -1,6 +1,7 @@
 package dhl.database;
 
 import dhl.database.DatabaseConfigSetup.CallStoredProcedure;
+import dhl.database.interfaceDB.IConferenceDB;
 
 import java.sql.ResultSet;
 

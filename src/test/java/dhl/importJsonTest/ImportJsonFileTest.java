@@ -1,6 +1,7 @@
-package dhl.simulationStateMachineTest;
+package dhl.importJsonTest;
 
-import dhl.simulationStateMachine.ImportJsonFile;
+import dhl.Mocks.JsonFilePathMock;
+import dhl.importJson.ImportJsonFile;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 

@@ -1,8 +1,8 @@
-package dhl.simulationStateMachine;
+package dhl.importJson;
 
 import dhl.leagueModel.*;
 import dhl.leagueModel.interfaceModel.*;
-import dhl.simulationStateMachine.Interface.ICreateLeagueObjectModel;
+import dhl.importJson.Interface.ICreateLeagueObjectModel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import java.util.ArrayList;
@@ -12,6 +12,7 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
     JSONObject jsonLeagueObject = null;
     IValidation validationObject;
     LeagueObjectModel leagueObjectModel;
+    private JSONArray conferenceJsonArray,divisionJsonArray,teamJsonArray,playerJsonArray,freeAgentJsonArray,coachesJsonArrayList,generalManagerJsonArrayList;
 
     public CreateLeagueObjectModel(){
         this.jsonLeagueObject = null;
@@ -25,36 +26,36 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
         this.leagueObjectModel = null;
     }
 
-    public LeagueObjectModel getLeagueObjectModel() {
+    public ILeagueObjectModel getLeagueObjectModel() {
         String leagueName = (String) jsonLeagueObject.get("leagueName");
         ArrayList<IConference> conferenceObjectList = new ArrayList<>();
         ArrayList<IFreeAgent> freeAgentObjectList = new ArrayList<>();
-        ArrayList<ICoach> coachObjectList = new ArrayList<>();
-        ArrayList<IGeneralManager> generalManagerObjectList = new ArrayList<>();
+        ArrayList<ICoach> coaches = new ArrayList<>();
 
         try {
             if (checkJsonArray(jsonLeagueObject , "conferences")) {
-                conferenceObjectList = getConcferenceArrayList((JSONArray) jsonLeagueObject.get("conferences"));
+                conferenceJsonArray = (JSONArray) jsonLeagueObject.get("conferences");
+                conferenceObjectList = getConcferenceArrayList();
             } else {
                 throw new Exception("Conference Array not Found in JSON");
             }
 
             if (checkJsonArray(jsonLeagueObject , "freeAgents")){
-                freeAgentObjectList = getFreeAgentArrayList((JSONArray) jsonLeagueObject.get("freeAgents"));
+                freeAgentJsonArray = (JSONArray) jsonLeagueObject.get("freeAgents");
+                freeAgentObjectList = getFreeAgentArrayList();
 
             } else {
                 throw new Exception("Free Agent Array not Found in JSON");
             }
-
             if (checkJsonArray(jsonLeagueObject , "coaches")){
-                coachObjectList = getCoachArrayList((JSONArray) jsonLeagueObject.get("coaches"));
+                coachesJsonArrayList = (JSONArray) jsonLeagueObject.get("coaches");
+                 coaches= getCoachesArrayList();
 
             } else {
                 throw new Exception("Coaches Array not Found in JSON");
             }
-
             if (checkJsonArray(jsonLeagueObject , "generalManagers")){
-                generalManagerObjectList = getGeneralManagerArrayList((JSONArray) jsonLeagueObject.get("generalManagers"));
+                generalManagerJsonArrayList = (JSONArray) jsonLeagueObject.get("generalManagers");
 
             } else {
                 throw new Exception("General manager Array not Found in JSON");
@@ -62,11 +63,13 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
             leagueObjectModel = new LeagueObjectModel(
                     leagueName,
                     conferenceObjectList,
-                    freeAgentObjectList,
-                    coachObjectList,
-                    generalManagerObjectList
+                    freeAgentObjectList
             );
+            leagueObjectModel.setCoaches(getCoachesArrayList());
+            leagueObjectModel.setManagers(getGeneralManagerArrayList());
 
+//-----NOTE for Team creation epic : REPLACE COMMENT WITH METHOD CALL for manager array SIMILAR TO ABOVE LINE.
+// ----ADD MANAGERS to league model USING SETTER METHOD. NO NEED TO ADD TO CONSTRUCTOR
             leagueObjectModel.checkIfLeagueModelValid(validationObject);
         }catch (Exception e){
             System.out.println(e);
@@ -84,21 +87,18 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
         return false;
     }
 
-    public ArrayList<IConference> getConcferenceArrayList(JSONArray conferenceJsonArray) throws Exception {
+    public ArrayList<IConference> getConcferenceArrayList() throws Exception {
         Iterator<?> conferenceListIterator = (conferenceJsonArray).iterator();
         ArrayList<IConference> conferencesListToReturn = new ArrayList<IConference>();
 
         while(conferenceListIterator.hasNext()){
             JSONObject conferenceJsonObject = (JSONObject) conferenceListIterator.next();
-
             if(checkJsonArray(conferenceJsonObject , "divisions")){
                 if (conferenceJsonObject.get("conferenceName")==null || conferenceJsonObject.get("divisions")== null){
                     throw new Exception("ERROR: Hey! Division cant have Null values....");
                 }
-                Conference conferenceObject = new Conference(
-                        (String) conferenceJsonObject.get("conferenceName"),
-                        getDivisionObjectArrayList( (JSONArray)conferenceJsonObject.get("divisions"))
-                );
+                divisionJsonArray = (JSONArray)conferenceJsonObject.get("divisions");
+                Conference conferenceObject = new Conference((String) conferenceJsonObject.get("conferenceName"),getDivisionObjectArrayList());
                 if(conferenceObject.checkIfConferenceValid(validationObject)) {
                     conferencesListToReturn.add(conferenceObject);
                 }
@@ -109,7 +109,7 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
         return conferencesListToReturn;
     }
 
-    public ArrayList<IDivision> getDivisionObjectArrayList(JSONArray divisionJsonArray) throws Exception{
+    public ArrayList<IDivision> getDivisionObjectArrayList() throws Exception{
         Iterator<?> divisionListIterator = (divisionJsonArray).iterator();
         ArrayList<IDivision> divisonListToReturn = new ArrayList<IDivision>();
         while(divisionListIterator.hasNext()){
@@ -117,9 +117,10 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
             if (divisionJsonObject.get("divisionName")==null || divisionJsonObject.get("teams")== null){
                 throw new Exception("ERROR: Hey! Division cant have Null values....");
             }
+            teamJsonArray = (JSONArray)divisionJsonObject.get("teams");
             Division divisionObject = new Division(
                     (String) divisionJsonObject.get("divisionName"),
-                    getTeamObjectArrayList( (JSONArray)divisionJsonObject.get("teams"))
+                    getTeamObjectArrayList()
             );
 
             if(divisionObject.checkIfDivisionValid(validationObject)){
@@ -131,8 +132,8 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
 
     }
 
-    public ArrayList<ITeam> getTeamObjectArrayList(JSONArray TeamJsonArray) throws Exception {
-        Iterator<?> teamListIterator = (TeamJsonArray).iterator();
+    public ArrayList<ITeam> getTeamObjectArrayList() throws Exception {
+        Iterator<?> teamListIterator = (teamJsonArray).iterator();
         ArrayList<ITeam> TeamListToReturn = new ArrayList<ITeam>();
         while(teamListIterator.hasNext()){
             JSONObject teamJsonObject = (JSONObject) teamListIterator.next();
@@ -140,11 +141,13 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
                     teamJsonObject.get("headCoach")==null || teamJsonObject.get("players")==null){
                 throw new Exception("ERROR: Hey! Team cant have Null values....");
             }
+            playerJsonArray = (JSONArray) teamJsonObject.get("players");
+            JSONObject headCoachJsonObject=(JSONObject) teamJsonObject.get("headCoach");
             ITeam teamObject = new Team(
                     (String) teamJsonObject.get("teamName"),
                     (String) teamJsonObject.get("generalManager"),
-                    (String) teamJsonObject.get("headCoach"),
-                    getPlayerArrayList( (JSONArray) teamJsonObject.get("players"))
+                    new Coach( (String) headCoachJsonObject.get("name"),(double)headCoachJsonObject.get("skating"),(double)headCoachJsonObject.get("shooting"),(double)headCoachJsonObject.get("checking"),(double)headCoachJsonObject.get("saving")),
+                    getPlayerArrayList()
             );
             if (teamObject.checkIfTeamValid(validationObject)){
                 TeamListToReturn.add(teamObject);
@@ -153,7 +156,7 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
         return TeamListToReturn;
     }
 
-    public ArrayList<IPlayer> getPlayerArrayList(JSONArray playerJsonArray) throws Exception {
+    public ArrayList<IPlayer> getPlayerArrayList() throws Exception {
         Iterator<?> playerListIterator = playerJsonArray.iterator();
         ArrayList<IPlayer> playerListToReturn = new ArrayList<IPlayer>();
 
@@ -163,9 +166,11 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
             if (playerJsonObject.get("playerName")==null || playerJsonObject.get("position")== null || playerJsonObject.get("captain")==null){
                 throw new Exception("ERROR: Hey! Player cant have Null values....");
             }
+            IPlayerStatistics playerStatistics = new PlayerStatistics( (int) (long) playerJsonObject.get("age"),(int) (long) playerJsonObject.get("skating"),(int) (long) playerJsonObject.get("shooting"),(int) (long)playerJsonObject.get("checking"),(int)(long)playerJsonObject.get("saving"));
             IPlayer playerOb = new Player((String) playerJsonObject.get("playerName") ,
                     (String) playerJsonObject.get("position") ,
-                    (Boolean) playerJsonObject.get("captain"));
+                    (Boolean) playerJsonObject.get("captain"),
+                    playerStatistics);
 
             if(playerOb.checkPlayerValid()){
                 playerListToReturn.add(playerOb);
@@ -174,7 +179,7 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
         return playerListToReturn;
     }
 
-    public ArrayList<IFreeAgent> getFreeAgentArrayList(JSONArray freeAgentJsonArray) throws Exception {
+    public ArrayList<IFreeAgent> getFreeAgentArrayList() throws Exception {
         Iterator<?> playerListIterator = freeAgentJsonArray.iterator();
         ArrayList<IFreeAgent> playerListToReturn = new ArrayList<IFreeAgent>();
 
@@ -182,36 +187,30 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
             JSONObject freeAgentJsonObject = (JSONObject) playerListIterator.next();
 
             if (freeAgentJsonObject.get("playerName")==null || freeAgentJsonObject.get("position")== null){
-                throw new Exception("ERROR: Hey! Free Agent cant have Null values....");
+                throw new Exception("ERROR: Hey! Free Agents cant have Null values....");
             }
+            IPlayerStatistics freeAgentStatistics = new PlayerStatistics( (int) (long) freeAgentJsonObject.get("age"),(int) (long) freeAgentJsonObject.get("skating"),(int) (long) freeAgentJsonObject.get("shooting"),(int) (long)freeAgentJsonObject.get("checking"),(int)(long)freeAgentJsonObject.get("saving"));
             IFreeAgent freeAgentOb = new FreeAgent((String) freeAgentJsonObject.get("playerName") ,
-                    (String) freeAgentJsonObject.get("position"));
+                    (String) freeAgentJsonObject.get("position"),freeAgentStatistics);
 
-
-                playerListToReturn.add(freeAgentOb);
+            playerListToReturn.add(freeAgentOb);
 
         }
         return playerListToReturn;
     }
 
-    public ArrayList<ICoach> getCoachArrayList(JSONArray coachJsonArray) throws Exception {
-        Iterator<?> coachListIterator = coachJsonArray.iterator();
-        ArrayList<ICoach> coachListToReturn = new ArrayList<ICoach>();
+    public ArrayList<ICoach> getCoachesArrayList() throws Exception {
+        Iterator<?> coachListIterator = coachesJsonArrayList.iterator();
+        ArrayList<ICoach> coachListToReturn = new ArrayList<>();
 
         while(coachListIterator.hasNext()){
             JSONObject coachJsonObject = (JSONObject) coachListIterator.next();
 
-            if (coachJsonObject.get("name")==null || coachJsonObject.get("skating")== null ||
-                    coachJsonObject.get("shooting")==null || coachJsonObject.get("checking")==null ||
-                    coachJsonObject.get("saving")==null){
-                throw new Exception("ERROR: Hey! Coach cant have Null values....");
+            if (coachJsonObject.get("name")==null || coachJsonObject.get("skating")== null ||  coachJsonObject.get("shooting")== null || coachJsonObject.get("checking")== null || coachJsonObject.get("saving")== null){
+                throw new Exception("ERROR: Hey! Player cant have Null values....");
             }
             ICoach coachOb = new Coach((String) coachJsonObject.get("name") ,
-                    (double) coachJsonObject.get("skating"),
-                    (double) coachJsonObject.get("shooting"),
-                    (double) coachJsonObject.get("checking"),
-                    (double) coachJsonObject.get("saving")
-                    );
+                    (double)coachJsonObject.get("skating"),(double)coachJsonObject.get("shooting"),(double)coachJsonObject.get("checking"), (double)coachJsonObject.get("saving"));
 
             coachListToReturn.add(coachOb);
 
@@ -219,12 +218,12 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
         return coachListToReturn;
     }
 
-    public ArrayList<IGeneralManager> getGeneralManagerArrayList(JSONArray generalManagerJsonArray) throws Exception {
-        Iterator<?> generalManagerListIterator = generalManagerJsonArray.iterator();
+    public ArrayList<IGeneralManager> getGeneralManagerArrayList() throws Exception {
+        Iterator<?> generalManagerListIterator = generalManagerJsonArrayList.iterator();
         ArrayList<IGeneralManager> generalManagerListToReturn = new ArrayList<IGeneralManager>();
 
         while(generalManagerListIterator.hasNext()){
-           // JSONObject generalManagerJsonObject = (JSONObject) generalManagerListIterator.next();
+            // JSONObject generalManagerJsonObject = (JSONObject) generalManagerListIterator.next();
             String genManager = generalManagerListIterator.next().toString();
             IGeneralManager generalManagerOb = new GeneralManager(genManager);
 
@@ -233,4 +232,5 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
         }
         return generalManagerListToReturn;
     }
+
 }

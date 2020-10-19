@@ -1,12 +1,8 @@
 package dhl.leagueModelTests;
 
-import dhl.leagueModel.Player;
-import dhl.leagueModel.Team;
-import dhl.leagueModel.Division;
-import dhl.leagueModel.Conference;
-import dhl.leagueModel.LeagueObjectModel;
+import dhl.leagueModel.*;
 import dhl.leagueModel.interfaceModel.*;
-import dhl.database.ILeagueObjectModelData;
+import dhl.database.interfaceDB.ILeagueObjectModelData;
 import java.util.ArrayList;
 
 public class MockDatabase implements ILeagueObjectModelData {
@@ -18,9 +14,11 @@ public class MockDatabase implements ILeagueObjectModelData {
     @Override
     public ILeagueObjectModel loadLeagueModel(String leagueName, String teamName) {
         ArrayList<IPlayer> playersList=new ArrayList<>();
-        playersList.add(new Player("Henry","forward",false));
-        playersList.add(new Player("Max","goalie",true));
-        ITeam team = new Team("Ontario","Mathew","henry",playersList);
+        IPlayerStatistics playerStatistics =new PlayerStatistics(20,10,10,10,0);
+        playersList.add(new Player("Henry","forward",false,playerStatistics));
+        playersList.add(new Player("Max","goalie",true,playerStatistics));
+        ICoach headCoach = new Coach("Todd McLellan",0.1,0.5,1.0,0.2);
+        ITeam team = new Team("Ontario","Mathew",headCoach,playersList);
         ArrayList<ITeam> teamArrayList=new ArrayList<>();
         teamArrayList.add(team);
         IDivision division = new Division("Atlantic",teamArrayList);

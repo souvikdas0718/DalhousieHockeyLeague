@@ -2,16 +2,17 @@ package dhl.simulationStateMachine.States;
 
 import dhl.leagueModel.FreeAgent;
 import dhl.leagueModel.Player;
+import dhl.leagueModel.Coach;
 import dhl.leagueModel.Team;
 import dhl.leagueModel.interfaceModel.*;
-import dhl.database.ILeagueObjectModelData;
+import dhl.database.interfaceDB.ILeagueObjectModelData;
 import dhl.database.LeagueObjectModelData;
 import dhl.simulationStateMachine.GameContext;
-import dhl.simulationStateMachine.Interface.GameState;
+import dhl.simulationStateMachine.Interface.IGameState;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class CreateTeamState implements GameState {
+public class CreateTeamState implements IGameState {
     GameContext ourGame;
     ILeagueObjectModel inMemoryLeague;
     IConference selectedConference;
@@ -19,6 +20,7 @@ public class CreateTeamState implements GameState {
     String teamName;
     String generalManager;
     String headCoach;
+    ICoach coach;
     ArrayList<IFreeAgent> freeAgents;
 
     public CreateTeamState(GameContext newGame){
@@ -27,6 +29,7 @@ public class CreateTeamState implements GameState {
         selectedDivision = null;
         teamName =generalManager=headCoach = null;
         freeAgents = new ArrayList<>();
+        coach = new Coach();
     }
 
     @Override
@@ -96,7 +99,7 @@ public class CreateTeamState implements GameState {
             }
         }
         System.out.println("Select Team's General Manager Name: ");
-        ArrayList<IGeneralManager> generalManagerArray = inMemoryLeague.getGeneralManagers();
+        ArrayList<IGeneralManager> generalManagerArray = inMemoryLeague.getManagers();
         generalManagerArray.forEach((generalManager)->{
             System.out.println(generalManager.getGeneralManagerName());
         });
@@ -108,12 +111,17 @@ public class CreateTeamState implements GameState {
         System.out.println("Select Team's Head Coach Name: ");
         ArrayList<ICoach> coachArray = inMemoryLeague.getCoaches();
         coachArray.forEach((coach)->{
-            System.out.println(coach.getCoachName());
+            System.out.println(coach.getCoachName() + " " + coach.getChecking() + " " + coach.getSaving() + " " + coach.getSkating() + " " + coach.getShooting());
         });
         headCoach  = sc.nextLine();
         while(headCoach.equals("")){
             System.out.println("Looks like you didnt add any input please try again: ");
             headCoach = sc.nextLine();
+        }
+        for(int i=0; i< coachArray.size();i++){
+            if (coachArray.get(i).getCoachName().equals(headCoach)){
+                coach = coachArray.get(i);
+            }
         }
 
         ArrayList<IFreeAgent> freeAgentsArray = inMemoryLeague.getFreeAgents();
@@ -153,8 +161,8 @@ public class CreateTeamState implements GameState {
             player.setCaptain(false);
             players.add(player);
         });
+        ITeam newlyCreatedTeam=new Team(teamName,generalManager,coach,players);
 
-        ITeam newlyCreatedTeam=new Team(teamName,generalManager,headCoach,players);
         try {
             inMemoryLeague.saveLeagueObjectModel(
                     leagueObjectModelData,
