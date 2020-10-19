@@ -1,8 +1,10 @@
 package dhl.trading;
 
+import dhl.leagueModel.Team;
 import dhl.leagueModel.interfaceModel.IPlayer;
 import dhl.leagueModel.interfaceModel.ITeam;
 import dhl.trading.Interface.ITradeOffer;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 import java.util.ArrayList;
 
@@ -12,8 +14,7 @@ public class SwapingTradeOffer implements ITradeOffer {
     ITeam receivingTeam;
     public ArrayList<IPlayer> playersOffered,playersWantedInExchange;
 
-    public SwapingTradeOffer(ITeam offeringTeam,ITeam receivingTeam,ArrayList<IPlayer> playersOffered,
-                             ArrayList<IPlayer> playersWantedInExchange){
+    public SwapingTradeOffer(ITeam offeringTeam,ITeam receivingTeam,ArrayList<IPlayer> playersOffered, ArrayList<IPlayer> playersWantedInExchange){
 
         this.offeringTeam = offeringTeam;
         this.receivingTeam = receivingTeam;
@@ -24,35 +25,20 @@ public class SwapingTradeOffer implements ITradeOffer {
     @Override
     public boolean isTradeGoodForReceivingTeam(){
 
-        ITeam tempObjectofRecevingTeam = this.receivingTeam;
-        ITeam tempObjectofOfferingTeam = this.offeringTeam;
-
-        // TODO: 18-10-2020 uncomment when method implemented
-        //Double currentStrength = tempObjectofOfferingTeam.calculateTeamStrength();
-
-        ArrayList<IPlayer> offeringTeamPlayers = tempObjectofOfferingTeam.getPlayers();
-        ArrayList<IPlayer> recevingTeamPlayers = tempObjectofRecevingTeam.getPlayers();
-
-        switchPlayers(recevingTeamPlayers,offeringTeamPlayers,playersWantedInExchange);
-        switchPlayers(offeringTeamPlayers,recevingTeamPlayers,playersOffered);
-
-        tempObjectofOfferingTeam.setPlayers(offeringTeamPlayers);
-        tempObjectofRecevingTeam.setPlayers(recevingTeamPlayers);
-        // TODO: 18-10-2020  uncomment when method implemented
-        /*
-        if(tempObjectofRecevingTeam.calculateTeamStrength() > currentStrength ){
+        if(getPlayerCombinedStrength(playersOffered) > getPlayerCombinedStrength(playersWantedInExchange)){
             return true;
-        }*/
+        }
+
         return false;
     }
 
-    private void switchPlayers(ArrayList<IPlayer> removeFromList, ArrayList<IPlayer> addToList, ArrayList<IPlayer> players) {
-        for(int i=0;i< players.size();i++){
-            removeFromList.remove(players.get(i));
-            addToList.add(players.get(i));
+    public double getPlayerCombinedStrength(ArrayList<IPlayer> players){
+        double totalstrength = 0;
+        for(int i=0;i<players.size();i++){
+            totalstrength+= players.get(i).getPlayerStrength();
         }
+        return totalstrength;
     }
-
     public ITeam getOfferingTeam() {
         return offeringTeam;
     }
