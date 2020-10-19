@@ -35,16 +35,12 @@ public class LeagueDB implements ILeagueDB {
 
     @Override
     public void insertDate(int league_Id, int team_Id, Date season_startDate, Date current_date) throws Exception {
-//        int leagueId=0;
         CallStoredProcedure callprocDate = new CallStoredProcedure("insertDate(?,?,?,?)");
         callprocDate.setParameter(1, league_Id);
         callprocDate.setParameter(2, team_Id);
         callprocDate.setParameter(3, season_startDate);
         callprocDate.setParameter(4, current_date);
-//        ResultSet results = callproc.executeWithResults();
-//        callproc.cleanup();
-//
-//        return leagueId;
+        callprocDate.cleanup();
     }
 
     public boolean checkIfLeagueAlreadyExists(String leagueName) throws Exception {
