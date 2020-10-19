@@ -206,9 +206,9 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
             }
             ICoach coachOb = new Coach((String) coachJsonObject.get("name") ,
                     (double)coachJsonObject.get("skating"),(double)coachJsonObject.get("shooting"),(double)coachJsonObject.get("checking"), (double)coachJsonObject.get("saving"));
-
-            coachListToReturn.add(coachOb);
-
+            if(coachOb.checkIfCoachValid(validationObject)){
+                coachListToReturn.add(coachOb);
+            }
         }
         return coachListToReturn;
     }
