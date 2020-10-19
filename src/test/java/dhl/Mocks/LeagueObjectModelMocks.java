@@ -120,4 +120,21 @@ public class LeagueObjectModelMocks {
         leagueObjectMock = new LeagueObjectModel("Dhl",conferences,freeAgentsList);
         return leagueObjectMock;
     }
+
+    public ArrayList<ICoach> getCoaches(){
+        ArrayList<ICoach> coachList= new ArrayList<>();
+        ICoach headCoach1 = new Coach("Todd McLellan",0.1,0.5,1.0,0.2);
+        ICoach headCoach2 = new Coach("Mary Smith",0.1,0.5,1.0,0.2);
+        coachList.add(headCoach1);
+        coachList.add(headCoach2);
+        return coachList;
+    }
+
+    public ArrayList getManagers(){
+        ArrayList managers=new ArrayList();
+        managers.add("Karen Potam");
+        managers.add("Joseph Squidly");
+        managers.add("Tom Spaghetti");
+        return managers;
+    }
 }

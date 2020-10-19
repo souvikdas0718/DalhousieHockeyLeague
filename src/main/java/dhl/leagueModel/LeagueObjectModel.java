@@ -9,6 +9,9 @@ public class LeagueObjectModel implements ILeagueObjectModel {
     public ArrayList<IConference> conferences;
     public ArrayList<IFreeAgent>freeAgents;
     public ILeagueObjectModelValidation leagueValidation;
+    public ArrayList<ICoach> coaches;
+    public ArrayList managers;
+
     public LeagueObjectModel(){
         leagueName="";
         conferences=new ArrayList<>();
@@ -45,6 +48,22 @@ public class LeagueObjectModel implements ILeagueObjectModel {
 
     public void setFreeAgents(ArrayList<IFreeAgent> freeAgents) {
         this.freeAgents = freeAgents;
+    }
+
+    public ArrayList<ICoach> getCoaches() {
+        return coaches;
+    }
+
+    public void setCoaches(ArrayList<ICoach> coaches) {
+        this.coaches = coaches;
+    }
+
+    public ArrayList getManagers() {
+        return managers;
+    }
+
+    public void setManagers(ArrayList managers) {
+        this.managers = managers;
     }
 
     public boolean checkIfLeagueModelValid(IValidation validation) throws Exception{
