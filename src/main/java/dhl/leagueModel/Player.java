@@ -107,6 +107,9 @@ public class Player implements IPlayer {
         }
         return true;
     }
+    public double getPlayerStrength(){
+        return 0;
+    }
 
 }
 

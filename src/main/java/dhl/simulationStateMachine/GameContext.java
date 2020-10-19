@@ -1,5 +1,6 @@
 package dhl.simulationStateMachine;
 
+import dhl.importJson.Interface.IGameConfig;
 import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.leagueModel.interfaceModel.ITeam;
 import dhl.simulationStateMachine.Interface.IGameState;
@@ -17,6 +18,7 @@ public class GameContext {
     boolean gameinProgress;
     ILeagueObjectModel inMemoryLeague;
     ITeam selectedTeam;
+    IGameConfig gameConfig;
 
     public GameContext(){
         importState = new ImportState(this);
@@ -83,4 +85,11 @@ public class GameContext {
         gameinProgress = gameStatus;
     }
 
+    public IGameConfig getGameConfig() {
+        return gameConfig;
+    }
+
+    public void setGameConfig(IGameConfig gameConfig) {
+        this.gameConfig = gameConfig;
+    }
 }

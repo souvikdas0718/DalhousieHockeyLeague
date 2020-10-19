@@ -34,4 +34,6 @@ public interface IPlayer {
     public boolean isCaptainValueBoolean();
 
     public boolean checkPlayerValid() throws Exception;
+
+    public double getPlayerStrength();
 }
