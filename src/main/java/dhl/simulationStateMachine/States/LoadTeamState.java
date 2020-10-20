@@ -47,21 +47,21 @@ public class LoadTeamState implements IGameState {
             ourGame.setSelectedTeam(findTeam(newInMemoryLeague , team));
         }catch(Exception e) {
             System.out.println(e.getMessage());
-            ourGame.setGameinProgress(false);
+            ourGame.setGameInProgress(false);
         };
 
     }
 
     @Override
     public void stateProcess() {
-        if(ourGame.isGameinProgress()) {
+        if(ourGame.isGameInProgress()) {
             System.out.println(ourGame.getSelectedTeam().getTeamName() + "  Team Selected");
         }
     }
 
     @Override
     public void stateExitProcess() {
-        if(ourGame.isGameinProgress()) {
+        if(ourGame.isGameInProgress()) {
             ourGame.setGameState(ourGame.getSimulateState());
         }
     }

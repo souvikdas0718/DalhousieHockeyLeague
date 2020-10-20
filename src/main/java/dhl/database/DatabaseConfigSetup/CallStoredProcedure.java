@@ -91,4 +91,12 @@ public class CallStoredProcedure {
     public void execute() throws SQLException {
         statement.execute();
     }
+
+    public void setParameter(int paramIndex, Date season_startDate) {
+        try {
+            statement.setDate(paramIndex, season_startDate);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
