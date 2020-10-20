@@ -1,6 +1,5 @@
 package dhl.simulationStateMachine;
 
-import dhl.importJson.Interface.IGameConfig;
 import dhl.simulationStateMachine.Interface.ISimulationSeasonState;
 import dhl.simulationStateMachine.States.seasonSimulation.*;
 
@@ -18,7 +17,6 @@ public class SimulationContext implements ISimulationSeasonState{
     ISimulationSeasonState simulateGame;
     ISimulationSeasonState training;
     boolean gameInProgress;
-    IGameConfig gameConfig;
 //    ILeagueObjectModel inMemoryLeague;
 //    ITeam selectedTeam;
 //    public GameContext() {
@@ -46,15 +44,6 @@ public class SimulationContext implements ISimulationSeasonState{
 //    public void startSeasonSimulation(int seasonNumber){
 //        currentSimulation.startSeasonSimulation(seasonNumber);
 //    }
-
-    public IGameConfig getGameConfig() {
-        return gameConfig;
-    }
-
-    public void setGameConfig(IGameConfig gameConfig) {
-        this.gameConfig = gameConfig;
-    }
-
 
     public void setSeasonGameState(ISimulationSeasonState newSeasonState) {
         this.currentSimulation = newSeasonState;
