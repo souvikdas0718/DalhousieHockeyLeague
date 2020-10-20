@@ -1,5 +1,7 @@
 package dhl.simulationStateMachine.States;
 
+import dhl.importJson.GameConfig;
+import dhl.importJson.Interface.IGameConfig;
 import dhl.leagueModel.LeagueObjectModel;
 import dhl.leagueModel.interfaceModel.IConference;
 import dhl.leagueModel.interfaceModel.IDivision;
@@ -18,7 +20,7 @@ public class ImportState implements IGameState {
     ILeagueObjectModel newInMemoryLeague;
     int option = -1;
     GameContext ourGame;
-
+    IGameConfig gameConfig;
     public ImportState(GameContext newGame) {
         ourGame = newGame;
         validFilePath = null;
@@ -63,6 +65,7 @@ public class ImportState implements IGameState {
         if (validFilePath!= null){
             try {
                 JSONObject leagueJsonObject = new ImportJsonFile(validFilePath).getJsonObject();
+                gameConfig = new GameConfig(leagueJsonObject);
                 CreateLeagueObjectModel createLeagueObjectModel = new CreateLeagueObjectModel(leagueJsonObject);
                 newInMemoryLeague = createLeagueObjectModel.getLeagueObjectModel();
                 System.out.println(newInMemoryLeague.getLeagueName() + "  Imported from the Json");
@@ -77,6 +80,7 @@ public class ImportState implements IGameState {
     public void stateExitProcess() {
         if(ourGame.isGameInProgress()) {
             ourGame.setInMemoryLeague(newInMemoryLeague);
+            ourGame.setGameConfig(gameConfig);
             if (option == 1) {
                 ourGame.setGameState(ourGame.getCreateTeamState());
             } else if (option == 2) {

@@ -39,6 +39,8 @@ public class SimulateState implements IGameState {
     @Override
     public void stateProcess() {
         SimulationContext simulationContextObject = new SimulationContext();
+        simulationContextObject.setGameConfig(ourGame.getGameConfig());
+
         for(int i=0; i< simulationSeasonsCount; i++){
             simulationContextObject.seasonStateEntryProcess();
             simulationContextObject.seasonStateProcess();

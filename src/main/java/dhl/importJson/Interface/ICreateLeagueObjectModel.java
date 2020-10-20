@@ -8,7 +8,7 @@ public interface ICreateLeagueObjectModel {
 
     public ILeagueObjectModel getLeagueObjectModel() throws Exception;
 
-    public ArrayList<IConference> getConcferenceArrayList() throws Exception;
+    public ArrayList<IConference> getConferenceArrayList() throws Exception;
 
     public ArrayList<IDivision> getDivisionObjectArrayList() throws Exception;
 

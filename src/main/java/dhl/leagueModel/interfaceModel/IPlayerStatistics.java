@@ -20,4 +20,6 @@ public interface IPlayerStatistics {
     public int getSaving();
 
     public void setSaving(int saving);
+
+    public void checkPlayerStatistics() throws Exception;
 }

@@ -64,6 +64,20 @@ public class CoachTest {
        Assertions.assertTrue(coach.checkIfCoachValid(validate));
     }
 
+    @Test
+    void checkCoachStatisticsTest() throws Exception{
+        ICoach coach = new Coach("Mary Smith",0.1,0,3,1);
+        Exception errorMsg=Assertions.assertThrows(Exception.class,() ->{
+            coach.checkIfCoachValid(validate);
+        });
+        Assertions.assertTrue(errorMsg.getMessage().contains("Coach statistics must be between 0 and 1"));
+    }
+
+    @Test
+    void checkCoachStatisticsValidTest() throws Exception{
+        Assertions.assertDoesNotThrow(()->coach.checkIfCoachValid(validate));
+    }
+
     @AfterEach()
     public void destroyObject(){
         coach=null;

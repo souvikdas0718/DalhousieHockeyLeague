@@ -35,7 +35,7 @@ public class LeagueObjectModelTest {
     @Test
     public void setFreeAgentsTest(){
         ArrayList<IFreeAgent> freeAgentsList=new ArrayList<>();
-        IPlayerStatistics playerStatistics =new PlayerStatistics(20,10,10,10,0);
+        IPlayerStatistics playerStatistics =new PlayerStatistics(20,10,10,10,10);
         freeAgentsList.add(new FreeAgent("Henry","forward",playerStatistics));
         freeAgentsList.add(new FreeAgent("Max","goalie",playerStatistics));
         leagueModel.setFreeAgents(freeAgentsList);

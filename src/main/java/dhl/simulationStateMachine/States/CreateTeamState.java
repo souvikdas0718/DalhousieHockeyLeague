@@ -1,5 +1,7 @@
 package dhl.simulationStateMachine.States;
 
+import dhl.leagueModel.FreeAgent;
+import dhl.leagueModel.Player;
 import dhl.leagueModel.Coach;
 import dhl.leagueModel.Team;
 import dhl.leagueModel.interfaceModel.*;
@@ -18,12 +20,16 @@ public class CreateTeamState implements IGameState {
     String teamName;
     String generalManager;
     String headCoach;
+    ICoach coach;
+    ArrayList<IFreeAgent> freeAgents;
 
     public CreateTeamState(GameContext newGame){
         ourGame = newGame;
         selectedConference = null;
         selectedDivision = null;
         teamName =generalManager=headCoach = null;
+        freeAgents = new ArrayList<>();
+        coach = new Coach();
     }
 
     @Override
@@ -92,19 +98,54 @@ public class CreateTeamState implements IGameState {
                 teamName = userInput;
             }
         }
-        System.out.print("Enter Team's General Manager Name: ");
+        System.out.println("Select Team's General Manager Name: ");
+        ArrayList<IGeneralManager> generalManagerArray = inMemoryLeague.getManagers();
+        generalManagerArray.forEach((generalManager)->{
+            System.out.println(generalManager.getGeneralManagerName());
+        });
         generalManager  = sc.nextLine();
         while(generalManager.equals("")){
             System.out.println("Looks like you didnt add any input please try again: ");
             generalManager = sc.nextLine();
         }
-        System.out.print("Enter Team's Head Coach Name: ");
+        System.out.println("Select Team's Head Coach Name: ");
+        ArrayList<ICoach> coachArray = inMemoryLeague.getCoaches();
+        coachArray.forEach((coach)->{
+            System.out.println(coach.getCoachName() + " " + coach.getChecking() + " " + coach.getSaving() + " " + coach.getSkating() + " " + coach.getShooting());
+        });
         headCoach  = sc.nextLine();
         while(headCoach.equals("")){
             System.out.println("Looks like you didnt add any input please try again: ");
             headCoach = sc.nextLine();
         }
+        for(int i=0; i< coachArray.size();i++){
+            if (coachArray.get(i).getCoachName().equals(headCoach)){
+                coach = coachArray.get(i);
+            }
+        }
 
+        ArrayList<IFreeAgent> freeAgentsArray = inMemoryLeague.getFreeAgents();
+        System.out.println("Select the Players from free Agents list (Input multiple names separated by a comma):");
+        for(int i=0; i< freeAgentsArray.size();i++){
+            System.out.println((i+1) +".  "+ freeAgentsArray.get(i).getPlayerName() );
+        }
+
+        String selectedfreeAgents = sc.nextLine();
+        String[] arr = selectedfreeAgents.split(",");
+        for (int i=0; i<arr.length; i++){
+            IFreeAgent currentFreeAgent = findFreeAgent(freeAgentsArray, arr[i].trim().toString());
+            if (currentFreeAgent != null) {
+                freeAgents.add(currentFreeAgent);
+            }
+            else{
+                System.out.println("Free agent Doesn't Exist");
+                System.out.println("Enter the Free Agent Name Again or enter Exit to Quit game");
+                selectedfreeAgents = sc.nextLine();
+            }
+        }
+        if (selectedfreeAgents.equals("Exit")){
+            System.exit(0);
+        }
     }
 
     @Override
@@ -112,8 +153,16 @@ public class CreateTeamState implements IGameState {
         System.out.println("Adding Team "+ teamName+ " to the DB");
         ILeagueObjectModelData leagueObjectModelData = new LeagueObjectModelData();
         ArrayList<IPlayer> players= new ArrayList<>();
-        ICoach coach = new Coach();
+
+        freeAgents.forEach((freeAgent)->{
+            IPlayer player = new Player();
+            player.setPlayerName(freeAgent.getPlayerName());
+            player.setPosition(freeAgent.getPosition());
+            player.setCaptain(false);
+            players.add(player);
+        });
         ITeam newlyCreatedTeam=new Team(teamName,generalManager,coach,players);
+
         try {
             inMemoryLeague.saveLeagueObjectModel(
                     leagueObjectModelData,
@@ -170,5 +219,15 @@ public class CreateTeamState implements IGameState {
         }
 
         return teamObject;
+    }
+
+    public IFreeAgent findFreeAgent(ArrayList<IFreeAgent> freeAgentArrayList, String freeAgentName){
+        for(int i= 0; i< freeAgentArrayList.size(); i++){
+            IFreeAgent ourFreeAgent = freeAgentArrayList.get(i);
+            if(ourFreeAgent.getPlayerName().equals(freeAgentName)){
+                return ourFreeAgent;
+            }
+        }
+        return null;
     }
 }

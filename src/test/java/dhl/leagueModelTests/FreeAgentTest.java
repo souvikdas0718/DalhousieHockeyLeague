@@ -15,7 +15,7 @@ public class FreeAgentTest {
     @BeforeEach()
     public void initObject(){
         freeAgent= new FreeAgent();
-        playerStatistics =new PlayerStatistics(20,10,10,10,0);
+        playerStatistics =new PlayerStatistics(20,10,10,10,10);
     }
 
     @Test

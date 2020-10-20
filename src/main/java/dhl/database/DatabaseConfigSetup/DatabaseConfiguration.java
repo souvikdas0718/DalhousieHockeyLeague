@@ -14,7 +14,7 @@ public class DatabaseConfiguration {
     private static String dbDriver;
 
     private void loadDbProperties() throws IOException {
-        FileInputStream fileInputStream = new FileInputStream("src/main/config.properties");
+        FileInputStream fileInputStream = new FileInputStream("./config.properties");
         if (fileInputStream != null) {
             Properties dbProperties = new Properties();
 

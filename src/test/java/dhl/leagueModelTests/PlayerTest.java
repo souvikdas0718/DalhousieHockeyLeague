@@ -19,7 +19,7 @@ public class PlayerTest {
     public void initObject(){
         initObj = new InitializeObjectFactory();
         player= initObj.createPlayer();
-        playerStatistics =new PlayerStatistics(20,10,10,10,0);
+        playerStatistics =new PlayerStatistics(20,10,10,10,10);
     }
 
     @Test
@@ -119,7 +119,7 @@ public class PlayerTest {
 
     @Test
     public void isCaptainValueBooleanTest(){
-        Assertions.assertFalse(player.isCaptainValueBoolean());
+        Assertions.assertTrue(player.isCaptainValueBoolean());
     }
 
     @Test
@@ -152,10 +152,13 @@ public class PlayerTest {
 
     @Test
     public void checkPlayerValidTest() throws Exception{
-        player.setPlayerName("Noah");
-        player.setPosition("forward");
-        player.setCaptain(true);
+        IPlayer player= new Player("Noah","forward",true,playerStatistics);
         Assertions.assertTrue(player.checkPlayerValid());
+    }
+
+    @Test
+    public void getPlayerStrengthTest(){
+        Assertions.assertEquals(0,player.getPlayerStrength());
     }
 
     @AfterEach()

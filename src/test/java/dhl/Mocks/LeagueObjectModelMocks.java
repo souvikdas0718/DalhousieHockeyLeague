@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class LeagueObjectModelMocks {
 
     public IPlayerStatistics getPlayerStatistics(){
-        IPlayerStatistics playerStatistics= new PlayerStatistics( 25,10,10,10,0);
+        IPlayerStatistics playerStatistics= new PlayerStatistics( 25,10,10,10,10);
         return playerStatistics;
     }
 
@@ -68,6 +68,26 @@ public class LeagueObjectModelMocks {
         return divisionArrayListMock;
     }
 
+
+
+    public IPlayerStatistics getPlayerStatisticsMock(){
+        IPlayerStatistics playerStatistics =new PlayerStatistics(20,10,10,10,10);
+        return playerStatistics;
+    }
+
+    public IFreeAgent getFreeAgentObjectMock(){
+        return new FreeAgent("Mock Free Agent", "defense",getPlayerStatisticsMock());
+    }
+
+    public ArrayList<IFreeAgent> getFreeAgentArrayMock(){
+        ArrayList<IFreeAgent> freeAgentArrayListMock = new ArrayList<>();
+
+        freeAgentArrayListMock.add(new FreeAgent("Mock Free Agent 2" , "defense", getPlayerStatisticsMock()));
+        freeAgentArrayListMock.add(new FreeAgent("Mock Free Agent 1" , "forward", getPlayerStatisticsMock()));
+
+        return freeAgentArrayListMock;
+    }
+
     public IConference getConferenceObjectMock(){
         return new Conference( "Mock Conference" , getDivisionArrayMock());
     }
@@ -83,7 +103,7 @@ public class LeagueObjectModelMocks {
 
     public IConference getConferenceTestMock(){
         ArrayList<IPlayer> playersList = new ArrayList<>();
-        IPlayerStatistics playerStatistics =new PlayerStatistics(20,10,10,10,0);
+        IPlayerStatistics playerStatistics =new PlayerStatistics(20,10,10,10,10);
         playersList.add(new Player("Henry","forward",false,playerStatistics));
         playersList.add(new Player("Max","goalie",true,playerStatistics));
         ICoach headCoach = new Coach("Todd McLellan",0.1,0.5,1.0,0.2);
@@ -116,6 +136,8 @@ public class LeagueObjectModelMocks {
         conferences.add(conference);
 
         ArrayList<IFreeAgent> freeAgentsList=new ArrayList<>();
+        ArrayList<ICoach> coachList=new ArrayList<>();
+        ArrayList<IGeneralManager> generalManagerList=new ArrayList<>();
 
         leagueObjectMock = new LeagueObjectModel("Dhl",conferences,freeAgentsList);
         return leagueObjectMock;

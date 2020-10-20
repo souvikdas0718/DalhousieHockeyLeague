@@ -64,6 +64,20 @@ public class Coach implements ICoach {
 
     public boolean checkIfCoachValid(IValidation validation) throws Exception{
         validation.isStringEmpty(coachName,"Coach name");
+        checkCoachStatistics();
         return true;
+    }
+
+    public void checkCoachStatistics() throws Exception{
+        if(isCoachStatInvalid(saving) || isCoachStatInvalid(checking) || isCoachStatInvalid(shooting) || isCoachStatInvalid(skating)){
+            throw new Exception("Coach statistics must be between 0 and 1");
+        }
+    }
+
+    public boolean isCoachStatInvalid(double statValue){
+        if(statValue<0 || statValue >1){
+            return true;
+        }
+        return false;
     }
 }

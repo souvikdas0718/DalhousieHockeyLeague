@@ -3,6 +3,7 @@ package dhl.simulationStateMachineTest;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.leagueModel.interfaceModel.IConference;
 import dhl.leagueModel.interfaceModel.IDivision;
+import dhl.leagueModel.interfaceModel.IFreeAgent;
 import dhl.simulationStateMachine.GameContext;
 import dhl.simulationStateMachine.States.CreateTeamState;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,6 +39,16 @@ public class CreateTeamStateTest {
 
         divisionTest = testClassObject.findDivision(mocks.getDivisionArrayMock() , "Wrong DivisionName");
         assertTrue(divisionTest == null);
+
+    }
+
+    @Test
+    public void findFreeAgent(){
+        IFreeAgent freeAgentTest = testClassObject.findFreeAgent(mocks.getFreeAgentArrayMock() , "Mock Free Agent 1");
+        assertTrue(freeAgentTest.getPlayerName().equals("Mock Free Agent 1"));
+
+        freeAgentTest = testClassObject.findFreeAgent(mocks.getFreeAgentArrayMock() , "Wrong Free Agent");
+        assertTrue(freeAgentTest == null);
 
     }
 }
