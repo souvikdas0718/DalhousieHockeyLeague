@@ -115,7 +115,6 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
 
                 }
                 catch(Exception exception){
-                    exception.printStackTrace();
                     throw new Exception("Error occurred while loading league");
 
                 }
