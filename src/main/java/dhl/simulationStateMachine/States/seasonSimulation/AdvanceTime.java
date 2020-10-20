@@ -15,7 +15,7 @@ public class AdvanceTime implements ISimulationSeasonState {
     }
 
     @Override
-    public void seasonStateProcess() throws Exception {
+    public void seasonStateProcess() {
         // increment day by one
     }
 

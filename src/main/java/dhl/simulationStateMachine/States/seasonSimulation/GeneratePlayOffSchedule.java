@@ -14,7 +14,7 @@ public class GeneratePlayOffSchedule implements ISimulationSeasonState {
     }
 
     @Override
-    public void seasonStateProcess() throws Exception {
+    public void seasonStateProcess() {
         // use NHL Stanley Cup rules to generate playoff rules
     }
 

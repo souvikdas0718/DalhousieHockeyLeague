@@ -7,7 +7,7 @@ public interface ISimulationSeasonState {
 
     void seasonStateEntryProcess();
 
-    void seasonStateProcess() throws Exception;
+    void seasonStateProcess();
 
     void seasonStateExitProcess();
 

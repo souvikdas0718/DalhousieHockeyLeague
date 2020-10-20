@@ -13,7 +13,7 @@ public class ExecuteTrades implements ISimulationSeasonState {
     }
 
     @Override
-    public void seasonStateProcess() throws Exception {
+    public void seasonStateProcess() {
         // calculate trade loss point
     }
 

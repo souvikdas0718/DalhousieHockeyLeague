@@ -4,7 +4,7 @@ import dhl.simulationStateMachine.Interface.ISimulationSeasonState;
 import dhl.simulationStateMachine.States.SeasonSimulationState;
 import dhl.simulationStateMachine.States.seasonSimulation.*;
 
-public class SimulationContext {
+public class SimulationContext implements ISimulationSeasonState{
 
     ISimulationSeasonState seasonSimulationState;
     ISimulationSeasonState currentSimulation;
@@ -26,7 +26,7 @@ public class SimulationContext {
 //    }
 
     public SimulationContext(){
-        seasonSimulationState = new SeasonSimulationState(this);
+//        seasonSimulationState = new SeasonSimulationState(this);
         advanceTime = new AdvanceTime(this);
         aging = new Aging(this);
         executeTrades = new ExecuteTrades(this);
@@ -37,7 +37,7 @@ public class SimulationContext {
         persistsSeason = new PersistSeason(this);
         simulateGame = new SimulateGame(this);
         training = new Training(this);
-        currentSimulation = seasonSimulationState;
+        currentSimulation = initializeSeason;
         gameInProgress = true;
     }
 
@@ -46,15 +46,15 @@ public class SimulationContext {
 //        currentSimulation.startSeasonSimulation(seasonNumber);
 //    }
 
-    public void setGameState(ISimulationSeasonState newSeasonState) {
+    public void setSeasonGameState(ISimulationSeasonState newSeasonState) {
         this.currentSimulation = newSeasonState;
     }
 
-    public void stateEntryProcess() {
+    public void seasonStateEntryProcess() {
         currentSimulation.seasonStateEntryProcess();
     }
 
-    public void seasonStateProcess() throws Exception {
+    public void seasonStateProcess() {
         currentSimulation.seasonStateProcess();
     }
 

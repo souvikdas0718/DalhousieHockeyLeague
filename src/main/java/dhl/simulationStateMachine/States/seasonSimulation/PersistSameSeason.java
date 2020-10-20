@@ -13,7 +13,7 @@ public class PersistSameSeason implements ISimulationSeasonState {
     }
 
     @Override
-    public void seasonStateProcess() throws Exception {
+    public void seasonStateProcess() {
         // save the data in the db
     }
 

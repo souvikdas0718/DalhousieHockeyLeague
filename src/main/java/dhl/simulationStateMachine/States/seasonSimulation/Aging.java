@@ -14,7 +14,7 @@ public class Aging implements ISimulationSeasonState {
     }
 
     @Override
-    public void seasonStateProcess() throws Exception {
+    public void seasonStateProcess() {
         // increase agg by one day and append the days at the end of the season
     }
 
