@@ -25,5 +25,6 @@ public class InitializeSeason implements ISimulationSeasonState {
     @Override
     public void seasonStateExitProcess() {
     //Advance Time by one day
+        ourSeasonGame.setCurrentSimulation(ourSeasonGame.getAdvanceTime());
     }
 }

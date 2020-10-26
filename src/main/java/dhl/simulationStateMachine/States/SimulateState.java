@@ -42,10 +42,16 @@ public class SimulateState implements IGameState {
         simulationContextObject.setGameConfig(ourGame.getGameConfig());
 
         for(int i=0; i< simulationSeasonsCount; i++){
+            //startSeason
             simulationContextObject.seasonStateEntryProcess();
             simulationContextObject.seasonStateProcess();
             simulationContextObject.seasonStateExitProcess();
         }
+        /*Startseason Object;
+        forloop{count}{
+        object(ourgame);
+        }
+        * */
     }
 
     @Override

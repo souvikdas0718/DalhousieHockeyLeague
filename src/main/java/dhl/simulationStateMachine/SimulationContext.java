@@ -19,6 +19,7 @@ public class SimulationContext implements ISimulationSeasonState{
     ISimulationSeasonState training;
     boolean gameInProgress;
     IGameConfig gameConfig;
+    //current state, game in progress
 
 //    ILeagueObjectModel inMemoryLeague;
 //    ITeam selectedTeam;
