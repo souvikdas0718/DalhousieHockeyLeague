@@ -44,6 +44,8 @@ public interface ITeam {
 
     public double calculateTeamStrength();
 
+    public boolean checkIfSkatersGoaliesValid(ArrayList<IPlayer> players) throws Exception;
+
 }
 
 

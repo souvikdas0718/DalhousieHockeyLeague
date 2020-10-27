@@ -1,6 +1,8 @@
 package dhl.database;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.util.ArrayList;
 
@@ -20,6 +22,7 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
     IPlayerDB iPlayerDB;
     IFreeAgentDB iFreeAgentDB;
     ICoachDB iCoachDB;
+    IGeneralManagerDB iGeneralManagerDB;
 
     public LeagueObjectModelData() throws Exception {
         DatabaseInitialize databaseInitialize = new DatabaseInitialize();
@@ -31,9 +34,19 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
         iPlayerDB = new PlayerDB();
         iFreeAgentDB = new FreeAgentDB();
         iCoachDB=new CoachDB();
+        iGeneralManagerDB = new GeneralManagerDB();
     }
 
     public void insertLeagueModel(ILeagueObjectModel leagueModelObj) throws Exception {
+        ILeagueDB ileagueDB = new LeagueDB();
+        IConferenceDB iConferenceDB = new ConferenceDB();
+        IDivisionDB iDivisionDB = new DivisionDB();
+        ITeamDB iTeamDB = new TeamDB();
+        IPlayerDB iPlayerDB = new PlayerDB();
+        IFreeAgentDB iFreeAgentDB = new FreeAgentDB();
+        ICoachDB iCoachDB=new CoachDB();
+        IGeneralManagerDB iGeneralManagerDB = new GeneralManagerDB();
+
         int leagueId = ileagueDB.insertLeague(leagueModelObj.getLeagueName());
 
         leagueModelObj.getConferences().forEach((conference)-> {
@@ -90,6 +103,7 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
 
         insertFreeAgents(leagueModelObj,leagueId);
         insertUnassignedCoaches(leagueModelObj,leagueId);
+        insertGeneralManagers(leagueModelObj, leagueId);
     }
     public void insertFreeAgents(ILeagueObjectModel leagueModelObj,int leagueId){
         leagueModelObj.getFreeAgents().forEach((freeAgent) -> {
@@ -105,9 +119,10 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
             try {
                 iCoachDB.insertUnassignedCoach(coach,leagueId);
             } catch (Exception eCoach) {
-                throw new RuntimeException("Error inserting coach from coach List"+coach.getCoachName());
+                throw new RuntimeException("Error inserting coach from coach List "+coach.getCoachName());
             }
         });
+
     }
 
     public void insertInjuredPlayer(IPlayer injuredPlayer, int teamId, int leagueId){
@@ -118,7 +133,15 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
         }
 
     }
-
+    public void insertGeneralManagers(ILeagueObjectModel leagueModelObj, int leagueId){
+        leagueModelObj.getGeneralManagers().forEach((objgeneralManager) -> {
+            try {
+                iGeneralManagerDB.insertGeneralManagers(objgeneralManager.getGeneralManagerName(),leagueId);
+            } catch (Exception eCoach) {
+                throw new RuntimeException("Error inserting General managers from List "+objgeneralManager.getGeneralManagerName());
+            }
+        });
+    }
     public ILeagueObjectModel loadLeagueModel(String leagueName, String teamName) throws Exception {
 
         ILeagueObjectModel leagueObjectModel=null;
@@ -136,6 +159,7 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
 
                 }
                 catch(Exception exception){
+                    exception.printStackTrace();
                     throw new Exception("Error occurred while loading league");
 
                 }
@@ -243,31 +267,11 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
             IPlayerStatistics playerStatistics=new PlayerStatistics(playerResultSet.getInt("age"), playerResultSet.getInt("skating"),
                     playerResultSet.getInt("shooting"),playerResultSet.getInt("checking"),playerResultSet.getInt("saving"));
             IPlayer player = new Player(playerResultSet.getString("playerName"),playerResultSet.getString("position"),playerResultSet.getBoolean("isCaptain"),playerStatistics);
-            player.setInjurySystem(getInjuredPlayerList(playerResultSet.getString("playerName"),teamId,leagueId));
             playerList.add(player);
 
         }
         callPlayerProc.cleanup();
         return playerList;
-    }
-
-    public IInjurySystem getInjuredPlayerList(String playerName,int teamId, int leagueId) throws Exception {
-        CallStoredProcedure callPlayerProc = new CallStoredProcedure("loadInjuredPlayer(?,?,?)");
-        callPlayerProc.setParameter(1, playerName);
-        callPlayerProc.setParameter(2, teamId);
-        callPlayerProc.setParameter(3, leagueId);
-        ResultSet playerResultSet = callPlayerProc.executeWithResults();
-        IInjurySystem injuredPlayer=new InjurySystem();
-
-        if (playerResultSet==null){
-            throw new Exception("Error loading injured players");
-        }
-
-        while(playerResultSet.next()){
-            injuredPlayer=new InjurySystem(playerResultSet.getDate("injuredDate"),playerResultSet.getInt("numberOfDaysInjured"));
-        }
-        callPlayerProc.cleanup();
-        return injuredPlayer;
     }
 
     public ArrayList<IFreeAgent> getFreeAgentList(int leagueId) throws Exception {

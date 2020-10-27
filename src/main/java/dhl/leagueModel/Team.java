@@ -121,11 +121,31 @@ public class Team implements ITeam {
         return this;
     }
 
-    public double calculateTeamStrength(){
-        double teamStrength=0;
-        for(IPlayer player:players){
-            teamStrength=teamStrength+player.getPlayerStrength();
+    public boolean checkIfSkatersGoaliesValid(ArrayList<IPlayer> players) throws Exception{
+        Integer totalSkaters = 0;
+        Integer totalGoalies = 0;
+
+        for(int i=0; i<players.size(); i++){
+            if (players.get(i).getPosition().equals("forward") || players.get(i).getPosition().equals("defense")){
+                totalSkaters = totalSkaters + 1;
+            }
+            if (players.get(i).getPosition().equals("goalie")){
+                totalGoalies = totalGoalies + 1;
+            }
         }
-        return teamStrength;
+        if (totalGoalies<2)
+        {
+            throw new Exception("A team must have 18 skaters");
+        }
+        else if (totalSkaters<18){
+            throw new Exception("A team must have 2 goalies");
+        }
+
+        return true;
     }
+
+    public double calculateTeamStrength(){
+        return 0;
+    }
+
 }

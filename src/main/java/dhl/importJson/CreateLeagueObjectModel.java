@@ -64,7 +64,7 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
                     freeAgentObjectList
             );
             leagueObjectModel.setCoaches(getCoachesArrayList());
-            leagueObjectModel.setManagers(getGeneralManagerArrayList());
+            leagueObjectModel.setGeneralManagers(getGeneralManagerArrayList());
             leagueObjectModel.checkIfLeagueModelValid(validationObject);
         }catch (Exception e){
             System.out.println(e);
