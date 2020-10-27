@@ -2,8 +2,10 @@ package dhl.database;
 
 import dhl.database.DatabaseConfigSetup.CallStoredProcedure;
 import dhl.database.interfaceDB.IPlayerDB;
+import dhl.leagueModel.interfaceModel.IInjurySystem;
 import dhl.leagueModel.interfaceModel.IPlayer;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 
 public class PlayerDB implements IPlayerDB {
@@ -35,6 +37,21 @@ public class PlayerDB implements IPlayerDB {
         callproc.cleanup();
 
         return playerId;
+    }
+
+    public void insertInjuredPlayer(IPlayer player, int teamId, int leagueId )  throws Exception {
+        CallStoredProcedure callproc = new CallStoredProcedure("insertInjuredPlayer(?,?,?,?,?)");
+        callproc.setParameter(1, player.getPlayerName());
+        IInjurySystem injurySystem = player.getInjurySystem();
+        java.util.Date dateInjured=injurySystem.getInjuryDate();
+        callproc.setDate(2, new Date(dateInjured.getTime()));
+        callproc.setParameter(3, injurySystem.getNumberOfDaysInjured());
+        callproc.setParameter(4, teamId);
+        callproc.setParameter(5, leagueId);
+        callproc.execute();
+
+        callproc.cleanup();
+
     }
 
 }

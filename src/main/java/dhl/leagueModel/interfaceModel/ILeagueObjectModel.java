@@ -28,7 +28,7 @@ public interface ILeagueObjectModel {
 
     public void setCoaches(ArrayList<ICoach> coaches);
 
-    public ArrayList getManagers();
+    public ArrayList<IGeneralManager> getGeneralManagers();
 
-    public void setManagers(ArrayList managers);
+    public void setGeneralManagers(ArrayList<IGeneralManager> managers);
 }
