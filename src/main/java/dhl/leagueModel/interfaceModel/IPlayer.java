@@ -1,6 +1,8 @@
 package dhl.leagueModel.interfaceModel;
 
-import dhl.leagueModel.PlayerPosition;
+import dhl.importJson.Interface.IGameConfig;
+
+import java.util.Date;
 
 public interface IPlayer {
 
@@ -26,6 +28,9 @@ public interface IPlayer {
 
     public void setPlayerStats(IPlayerStatistics playerStats);
 
+    public IInjurySystem getInjurySystem();
+
+    public void setInjurySystem(IInjurySystem injurySystem);
 
     public boolean isPlayerNameEmpty();
 
@@ -35,5 +40,8 @@ public interface IPlayer {
 
     public boolean checkPlayerValid() throws Exception;
 
+    public IPlayer checkPlayerInjury(IGameConfig gameConfig, Date currentDate);
+
     public double getPlayerStrength();
+
 }
