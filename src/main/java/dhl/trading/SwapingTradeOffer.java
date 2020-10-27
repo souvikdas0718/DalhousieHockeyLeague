@@ -38,6 +38,7 @@ public class SwapingTradeOffer implements ITradeOffer {
         }
         return totalstrength;
     }
+
     public ITeam getOfferingTeam() {
         return offeringTeam;
     }
