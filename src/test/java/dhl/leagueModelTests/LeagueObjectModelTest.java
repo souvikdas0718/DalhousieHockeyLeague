@@ -14,12 +14,13 @@ public class LeagueObjectModelTest {
     LeagueObjectModel leagueModel;
     IValidation validate;
     ILeagueObjectModel leagueModelParameterized;
+    LeagueObjectModelMocks leagueMock;
 
     @BeforeEach
     public void initialize(){
         leagueModel=new LeagueObjectModel();
         validate=new CommonValidation();
-        LeagueObjectModelMocks leagueMock= new LeagueObjectModelMocks();
+        leagueMock= new LeagueObjectModelMocks();
         leagueModelParameterized=leagueMock.getLeagueObjectMock();
     }
 
@@ -34,16 +35,23 @@ public class LeagueObjectModelTest {
     @Test
     public void setFreeAgentsTest(){
         ArrayList<IFreeAgent> freeAgentsList=new ArrayList<>();
-        IPlayerStatistics playerStatistics =new PlayerStatistics(20,10,10,10,0);
+        IPlayerStatistics playerStatistics =new PlayerStatistics(20,10,10,10,10);
         freeAgentsList.add(new FreeAgent("Henry","forward",playerStatistics));
         freeAgentsList.add(new FreeAgent("Max","goalie",playerStatistics));
         leagueModel.setFreeAgents(freeAgentsList);
         Assertions.assertEquals(leagueModel.getFreeAgents().size(),freeAgentsList.size());
     }
 
-    @Test void setConferencesTest(){
-        leagueModel.setConferences(new ArrayList<IConference>());
-        Assertions.assertTrue(leagueModel.getConferences().size()==0);
+    @Test
+    public void setCoachesTest(){
+        leagueModel.setCoaches(leagueMock.getCoaches());
+        Assertions.assertEquals(2,leagueModel.getCoaches().size());
+    }
+
+    @Test
+    public void setManagersTest(){
+        leagueModel.setManagers(leagueMock.getManagers());
+        Assertions.assertEquals(3,leagueModel.getManagers().size());
     }
 
     @Test

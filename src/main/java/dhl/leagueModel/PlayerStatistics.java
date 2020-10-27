@@ -56,4 +56,17 @@ public class PlayerStatistics implements IPlayerStatistics {
     public void setSaving(int saving) {
         this.saving = saving;
     }
+
+    public void checkPlayerStatistics() throws Exception{
+        if(isStatValueInvalid(saving) || isStatValueInvalid(checking) || isStatValueInvalid(shooting) || isStatValueInvalid(skating)){
+            throw new Exception("Player statistics must be between 1 and 20");
+        }
+    }
+
+    public boolean isStatValueInvalid(double statValue){
+        if(statValue<1 || statValue >20){
+            return true;
+        }
+        return false;
+    }
 }

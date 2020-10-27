@@ -22,7 +22,7 @@ public class DivisionTest {
         division= initObj.createDivision();
         validate=new CommonValidation();
         ArrayList<IPlayer> playersList=new ArrayList<>();
-        playerStatistics =new PlayerStatistics(20,10,10,10,0);
+        playerStatistics =new PlayerStatistics(20,10,10,10,10);
         playersList.add(new Player("Henry","forward",false,playerStatistics));
         playersList.add(new Player("Max","goalie",true,playerStatistics));
         ICoach headCoach = new Coach("Todd McLellan",0.1,0.5,1.0,0.2);

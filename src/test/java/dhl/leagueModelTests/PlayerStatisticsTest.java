@@ -12,7 +12,7 @@ public class PlayerStatisticsTest {
     
     @BeforeEach()
     public void initObject(){
-        playerStatistics =new PlayerStatistics(20,10,10,10,0);
+        playerStatistics =new PlayerStatistics(20,10,10,10,10);
     }
 
     @Test
@@ -43,6 +43,20 @@ public class PlayerStatisticsTest {
     void setSavingTest() {
         playerStatistics.setSaving(0);
         Assertions.assertEquals(0,playerStatistics.getSaving());
+    }
+
+    @Test
+    void checkPlayerStatisticsTest() throws Exception{
+        IPlayerStatistics playerStat = new PlayerStatistics(20,10,19,0,10);
+        Exception errorMsg=Assertions.assertThrows(Exception.class,() ->{
+            playerStat.checkPlayerStatistics();
+        });
+        Assertions.assertTrue(errorMsg.getMessage().contains("Player statistics must be between 1 and 20"));
+    }
+
+    @Test
+    void isStatValueValidTest() throws Exception{
+        Assertions.assertDoesNotThrow(()->playerStatistics.checkPlayerStatistics());
     }
 
     @AfterEach()

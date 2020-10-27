@@ -8,7 +8,7 @@ public class StartGame {
         System.out.println(" Welcome to Dynasty Mode ");
         GameContext ourGame= new GameContext();
 
-        while(ourGame.isGameinProgress()){
+        while(ourGame.isGameInProgress()){
             ourGame.stateEntryProcess();
             ourGame.stateProcess();
             ourGame.stateExitProcess();

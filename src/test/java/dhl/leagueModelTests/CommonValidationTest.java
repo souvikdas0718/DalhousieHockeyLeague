@@ -41,7 +41,7 @@ public class CommonValidationTest {
     @Test
     public void isListNotEmptyTest() throws Exception{
         List<IPlayer> players=new ArrayList<>();
-        IPlayerStatistics playerStatistics =new PlayerStatistics(20,10,10,10,0);
+        IPlayerStatistics playerStatistics =new PlayerStatistics(20,10,10,10,10);
         IPlayer player1=new Player("Rhea","forward",false,playerStatistics);
         players.add(player1);
         IPlayer player2=new Player("Noah","defense",true,playerStatistics);

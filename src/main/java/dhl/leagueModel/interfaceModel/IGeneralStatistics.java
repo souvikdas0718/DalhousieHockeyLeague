@@ -1,6 +1,11 @@
 package dhl.leagueModel.interfaceModel;
 
-public interface IPlayerStatistics {
+public interface IGeneralStatistics {
+
+    public void setCoachName(String coachName);
+
+    public String getCoachName();
+
     public int getAge();
 
     public void setAge(int age);
@@ -20,6 +25,4 @@ public interface IPlayerStatistics {
     public int getSaving();
 
     public void setSaving(int saving);
-
-    public void checkPlayerStatistics() throws Exception;
 }

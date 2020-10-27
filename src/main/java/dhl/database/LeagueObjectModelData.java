@@ -33,7 +33,6 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
         int leagueId = ileagueDB.insertLeague(leagueModelObj.getLeagueName());
 
         leagueModelObj.getConferences().forEach((conference)-> {
-
             ArrayList<IDivision> arrDiv = conference.getDivisions();
             int finalConferenceId = 0;
             try {
@@ -71,8 +70,6 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
                     } catch (Exception eCoach) {
                         throw new RuntimeException("Error inserting Coach:"+team.getHeadCoach().getCoachName());
                     }
-
-
                     int finalTeamId1 = finalTeamId;
                     arrPlayer.forEach((player)->{
                         try {
@@ -89,7 +86,14 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
             try {
                 iFreeAgentDB.insertFreeAgent(freeAgent,leagueId);
             } catch (Exception eFreeAgent) {
-                throw new RuntimeException(eFreeAgent);
+                throw new RuntimeException("Error inserting Free agent:"+ freeAgent.getPlayerName());
+            }
+        });
+        leagueModelObj.getCoaches().forEach((coach) -> {
+            try {
+                iCoachDB.insertUnassignedCoach(coach,leagueId);
+            } catch (Exception eCoach) {
+                throw new RuntimeException("Error inserting coach from coach List"+coach.getCoachName());
             }
         });
     }
@@ -115,7 +119,6 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
                     throw new Exception("Error occurred while loading league");
 
                 }
-
             }
         }
         else {
@@ -246,6 +249,5 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
         callAgentProc.cleanup();
        return freeAgentList;
     }
-
 
 }
