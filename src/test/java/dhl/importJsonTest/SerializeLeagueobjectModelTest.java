@@ -1,6 +1,7 @@
 package dhl.importJsonTest;
 
 import dhl.database.interfaceDB.ILeagueObjectModelData;
+import dhl.importJson.Interface.ISerializeLeagueobjectModel;
 import dhl.leagueModel.Coach;
 import dhl.importJson.SerializeLeagueobjectModel;
 import dhl.leagueModel.Team;
@@ -14,7 +15,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 public class SerializeLeagueobjectModelTest {
-    SerializeLeagueobjectModel objSerialize = new SerializeLeagueobjectModel();
+    ISerializeLeagueobjectModel objSerialize = new SerializeLeagueobjectModel();
 
     @Test
     void serializeLeagueObjectModelTest() throws Exception{
