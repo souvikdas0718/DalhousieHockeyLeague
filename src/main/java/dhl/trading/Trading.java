@@ -16,8 +16,9 @@ public class Trading {
     ILeagueObjectModel leagueObjectModel;
 
     public Trading(SimulationContext simulationObject){
-        // TODO: 27-10-2020 leagueObjectMOdel should be part of simulation context
         ourGameConfig = simulationObject.getGameConfig();
+        leagueObjectModel = simulationObject.getInMemoryLeague();
+        // TODO: 27-10-2020 Check new Tradeconfig part 
         tradeConfig = new TradeConfig(ourGameConfig);
     }
 
