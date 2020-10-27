@@ -123,7 +123,7 @@ public class Player implements IPlayer {
         return true;
     }
 
-    public boolean isPlayerNotAlreadyInjured(){
+    public boolean isPlayerNotInjured(){
         if(injurySystem.isInjured()){
             return false;
         }
@@ -131,7 +131,7 @@ public class Player implements IPlayer {
     }
 
     public IPlayer checkPlayerInjury(IGameConfig gameConfig, Date currentDate){
-        if(isPlayerNotAlreadyInjured()){
+        if(isPlayerNotInjured()){
             this.setInjurySystem(injurySystem.checkIfPlayerInjured(gameConfig,currentDate));
         }
         return this;
@@ -140,16 +140,16 @@ public class Player implements IPlayer {
     public double getPlayerStrength(){
         double playerStrength=0;
         if(position == PlayerPosition.FORWARD){
-            playerStrength=playerStats.getSkating() + playerStats.getShooting() + (playerStats.getChecking() / 2);
+            playerStrength=playerStats.getSkating() + playerStats.getShooting() + (playerStats.getChecking() / 2.0);
         }
         else if(position == PlayerPosition.DEFENSE){
-            playerStrength=playerStats.getSkating() + playerStats.getChecking() + (playerStats.getShooting() / 2);
+            playerStrength=playerStats.getSkating() + playerStats.getChecking() + (playerStats.getShooting() / 2.0);
         }
         else if(position == PlayerPosition.GOALIE){
             playerStrength=playerStats.getSkating() + playerStats.getSaving() ;
         }
         if(injurySystem.isInjured()){
-            playerStrength=playerStrength/2;
+            playerStrength=playerStrength/2.0;
         }
         return playerStrength;
     }

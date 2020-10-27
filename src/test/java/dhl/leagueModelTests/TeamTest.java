@@ -1,5 +1,7 @@
 package dhl.leagueModelTests;
 
+import dhl.Mocks.LeagueObjectModelMocks;
+import dhl.importJson.Interface.IGameConfig;
 import dhl.leagueModel.*;
 import dhl.factory.InitializeObjectFactory;
 import dhl.leagueModel.interfaceModel.*;
@@ -9,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class TeamTest {
     InitializeObjectFactory initObj;
@@ -96,6 +99,18 @@ public class TeamTest {
     }
 
     @Test
+    public void setLossPointTest() {
+        team.setLossPoint(5);
+        Assertions.assertEquals(5,team.getLossPoint());
+    }
+
+    @Test
+    public void setTeamPointTest() {
+        team.setTeamPoint(15);
+        Assertions.assertEquals(15,team.getTeamPoint());
+    }
+
+    @Test
     public void checkIfOneCaptainPerTeamErrorTest(){
         ArrayList<IPlayer> playersList=new ArrayList<>();
         playersList.add(new Player("Henry","forward",false,playerStatistics));
@@ -158,6 +173,22 @@ public class TeamTest {
     @Test
     public void calculateTeamStrengthTest(){
         Assertions.assertEquals(0,team.calculateTeamStrength());
+    }
+
+    @Test
+    public void checkTeamInjuryTest() throws Exception{
+        LeagueObjectModelMocks leagueMock= new LeagueObjectModelMocks();
+        IGameConfig gameConfig=leagueMock.getGameConfig();
+        team = new Team("Ontario","Mathew",headCoach, playerArrayList);
+        ITeam updatedTeam=team.checkTeamInjury( gameConfig, new Date());
+        Assertions.assertEquals(team.getTeamName(),updatedTeam.getTeamName());
+    }
+
+    @Test
+    public void calculateTeamStrength() {
+        playerArrayList.add(new Player("Jared", "defense", false, playerStatistics));
+        team.setPlayers(playerArrayList);
+        Assertions.assertEquals(50, team.calculateTeamStrength());
     }
 
     @AfterEach()
