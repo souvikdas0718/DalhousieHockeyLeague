@@ -13,10 +13,8 @@ public class TradeConfig implements ITradeConfig {
     double randomAcceptanceChance,randomTradeOfferChance;
 
     public TradeConfig(IGameConfig gameConfig){
-
         tradingConfig = gameConfig.getHashMap("trading");
         updateConfig();
-
     }
 
     public void updateConfig(){
@@ -33,7 +31,6 @@ public class TradeConfig implements ITradeConfig {
 
     @Override
     public void setTradingConfig(HashMap tradingConfig) {
-
         this.tradingConfig = tradingConfig;
         updateConfig();
     }

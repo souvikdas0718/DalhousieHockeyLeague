@@ -13,8 +13,7 @@ public class SwapingTradeOffer implements ITradeOffer {
     ITeam receivingTeam;
     public ArrayList<IPlayer> playersOffered,playersWantedInExchange;
 
-    public SwapingTradeOffer(ITeam offeringTeam,ITeam receivingTeam,ArrayList<IPlayer> playersOffered, ArrayList<IPlayer> playersWantedInExchange){
-
+    public SwapingTradeOffer(ITeam offeringTeam , ITeam receivingTeam , ArrayList<IPlayer> playersOffered , ArrayList<IPlayer> playersWantedInExchange){
         this.offeringTeam = offeringTeam;
         this.receivingTeam = receivingTeam;
         this.playersOffered = playersOffered;
@@ -23,14 +22,14 @@ public class SwapingTradeOffer implements ITradeOffer {
 
     @Override
     public boolean isTradeGoodForReceivingTeam(){
-
         if(getPlayerCombinedStrength(playersOffered) > getPlayerCombinedStrength(playersWantedInExchange)){
             return true;
         }
-
         return false;
     }
 
+
+    @Override
     public double getPlayerCombinedStrength(ArrayList<IPlayer> players){
         double totalstrength = 0;
         for(int i=0;i<players.size();i++){
@@ -38,6 +37,7 @@ public class SwapingTradeOffer implements ITradeOffer {
         }
         return totalstrength;
     }
+
 
     public ITeam getOfferingTeam() {
         return offeringTeam;

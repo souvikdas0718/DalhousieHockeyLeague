@@ -20,9 +20,11 @@ public class SwapingTradeOfferTest {
     
     ArrayList<IPlayer> strongPlayers,weakPlayers ;
     ICoach headCoach;
-    SwapingTradeOffer goodTrade,badTrade;
+    ITradeOffer goodTrade,trade;
+    LeagueObjectModelMocks leagueMockObject;
     @BeforeEach
     public void initObject(){
+        leagueMockObject = new LeagueObjectModelMocks();
         strongPlayers = new ArrayList<>();
         strongPlayers.add(new Player("Strong player", "defense", false,
                 new PlayerStatistics(25,10,10,10,0)
@@ -46,13 +48,84 @@ public class SwapingTradeOfferTest {
         ITeam teamB = new Team("Mock Team B", "Mock Manager B", headCoach, weakPlayers );
 
         goodTrade = new SwapingTradeOffer( teamA,teamB,strongPlayertoSwap,weakPlayertoSwap);
-        badTrade = new SwapingTradeOffer( teamB,teamA,weakPlayertoSwap,strongPlayertoSwap);
+        trade = new SwapingTradeOffer( teamB,teamA,weakPlayertoSwap,strongPlayertoSwap);
     }
+
     @Test
     public void isTradeGoodForReceivingTeamTest(){
-        Assertions.assertFalse(badTrade.isTradeGoodForReceivingTeam());
-        // TODO: 19-10-2020 uncomment when playerStrength method is implemented
-        //Assertions.assertTrue(goodTrade.isTradeGoodForReceivingTeam());
+        Assertions.assertFalse(trade.isTradeGoodForReceivingTeam());
+        Assertions.assertTrue(goodTrade.isTradeGoodForReceivingTeam());
+    }
 
+    @Test
+    public void getPlayerCombinedStrengthTest(){
+        double goodTeamStrength,weekTeamStrength;
+        goodTeamStrength = trade.getPlayerCombinedStrength(strongPlayers);
+        weekTeamStrength = trade.getPlayerCombinedStrength(weakPlayers);
+        Assertions.assertTrue(goodTeamStrength > weekTeamStrength);
+
+    }
+
+    @Test
+    public void getOfferingTeamTest() {
+        ICoach goodCoach = new Coach();
+        ArrayList<IPlayer> playerList2 = leagueMockObject.getPlayerArrayMock();
+        ITeam team = new Team("TestTeam", "goodManager",goodCoach,playerList2);
+        trade.setOfferingTeam(team);
+        Assertions.assertTrue(trade.getOfferingTeam().getTeamName() == "TestTeam");
+    }
+
+    @Test
+    public void setOfferingTeamTest() {
+        ICoach goodCoach = new Coach();
+        ArrayList<IPlayer> playerList2 = leagueMockObject.getPlayerArrayMock();
+        ITeam team = new Team("TestTeam", "goodManager",goodCoach,playerList2);
+        trade.setOfferingTeam(team);
+        Assertions.assertTrue(trade.getOfferingTeam().getTeamName() == "TestTeam");
+    }
+
+    @Test
+    public void getReceivingTeamTest() {
+        ICoach goodCoach = new Coach();
+        ArrayList<IPlayer> playerList2 = leagueMockObject.getPlayerArrayMock();
+        ITeam team = new Team("TestTeam", "goodManager",goodCoach,playerList2);
+        trade.setReceivingTeam(team);
+        Assertions.assertTrue(trade.getReceivingTeam().getTeamName() == "TestTeam");
+    }
+
+    @Test
+    public void setReceivingTeamTest() {
+        ICoach goodCoach = new Coach();
+        ArrayList<IPlayer> playerList2 = leagueMockObject.getPlayerArrayMock();
+        ITeam team = new Team("TestTeam", "goodManager",goodCoach,playerList2);
+        trade.setReceivingTeam(team);
+        Assertions.assertTrue(trade.getReceivingTeam().getTeamName() == "TestTeam");
+    }
+
+    @Test
+    public void getPlayersOfferedTest() {
+        ArrayList<IPlayer> offeredPlayers = trade.getPlayersOffered();
+        Assertions.assertTrue(offeredPlayers.get(0).getPlayerName()=="WeakPlayer");
+    }
+
+    @Test
+    public void setPlayersOfferedTest() {
+        trade.setPlayersOffered(leagueMockObject.getPlayerArrayMock());
+        ArrayList<IPlayer> players = trade.getPlayersOffered();
+        Assertions.assertTrue(players.get(0).getPlayerName()=="Mock Player");
+    }
+
+    @Test
+    public void getPlayersWantedInExchangeTest() {
+        ArrayList<IPlayer> players = trade.getPlayersWantedInExchange();
+        Assertions.assertTrue(players.get(0).getPlayerName()=="Strong player");
+
+    }
+
+    @Test
+    public void setPlayersWantedInExchangeTest() {
+        trade.setPlayersWantedInExchange(leagueMockObject.getPlayerArrayMock());
+        ArrayList<IPlayer> players = trade.getPlayersWantedInExchange();
+        Assertions.assertTrue(players.get(0).getPlayerName()=="Mock Player");
     }
 }
