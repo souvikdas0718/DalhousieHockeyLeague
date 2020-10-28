@@ -3,12 +3,9 @@ package dhl.leagueModel;
 import dhl.importJson.Interface.IGameConfig;
 import dhl.leagueModel.interfaceModel.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
+import java.util.*;
 
-public class AgingSystem {
+public class AgingSystem implements IAgingSystem {
     private int averageRetirementAge;
     private int maximumAge;
     private double likelihoodForGreaterThanAvg;
@@ -135,8 +132,14 @@ public class AgingSystem {
         return false;
     }
 
-
-
-
+    public void healInjuredPlayers(Date currentDate,IPlayer player){
+        IInjurySystem injurySystem = player.getInjurySystem();
+        Date injuredDate=injurySystem.getInjuryDate();
+        int diffInDays = (int)( (currentDate.getTime() - injuredDate.getTime())
+                / (1000 * 60 * 60 * 24) );
+        if(diffInDays==injurySystem.getNumberOfDaysInjured()){
+            player.setInjurySystem(new InjurySystem());
+        }
+    }
 
 }

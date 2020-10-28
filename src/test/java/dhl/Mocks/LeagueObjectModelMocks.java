@@ -141,6 +141,9 @@ public class LeagueObjectModelMocks {
         ArrayList<IFreeAgent> freeAgentsList=new ArrayList<>();
         IFreeAgent freeAgent = new FreeAgent("Matt","forward",getPlayerStatistics());
         freeAgentsList.add(freeAgent);
+        IPlayerStatistics playerStatistics2= new PlayerStatistics(20,11,20,15,16);
+        IFreeAgent freeAgent2 = new FreeAgent("Jack","forward",playerStatistics2);
+        freeAgentsList.add(freeAgent2);
         ArrayList<ICoach> coachList=new ArrayList<>();
         ArrayList<IGeneralManager> generalManagerList=new ArrayList<>();
 

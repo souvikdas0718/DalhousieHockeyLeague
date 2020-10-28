@@ -3,19 +3,16 @@ package dhl.leagueModelTests;
 
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.importJson.Interface.IGameConfig;
-import dhl.leagueModel.AgingSystem;
-import dhl.leagueModel.FreeAgent;
-import dhl.leagueModel.Player;
-import dhl.leagueModel.PlayerStatistics;
+import dhl.leagueModel.*;
 import dhl.leagueModel.interfaceModel.*;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 
 public class AgingSystemTest {
@@ -90,6 +87,7 @@ public class AgingSystemTest {
         players.add(new Player("PlayerTwo","forward",true,playerStatistics2));
         IPlayerStatistics playerStatistics3=new PlayerStatistics(34,20,20,20,20);
         players.add(new Player("PlayerThree","forward",true,playerStatistics3));
+
         ITeam team =leagueMock.getTeamObjectMock();
         team.setPlayers(players);
         ArrayList<ITeam> teams = new ArrayList<>();
@@ -97,6 +95,7 @@ public class AgingSystemTest {
         agingSystem.setLikelihoodForGreaterThanAvg(100);
         agingSystem.setLikelihoodForLesserThanAvg(100);
         playersSelectedToRetire=agingSystem.selectPlayersToRetire(teams);
+
         Assertions.assertTrue(playersSelectedToRetire.containsKey("Mock Team"));
         Assertions.assertEquals(3,playersSelectedToRetire.get("Mock Team").size());
     }
@@ -111,13 +110,37 @@ public class AgingSystemTest {
         freeAgents.add(new FreeAgent("PlayerTwo","forward",playerStatistics2));
         IPlayerStatistics playerStatistics3=new PlayerStatistics(34,20,20,20,20);
         freeAgents.add(new FreeAgent("PlayerThree","forward",playerStatistics3));
+
         agingSystem.setLikelihoodForGreaterThanAvg(100);
         agingSystem.setLikelihoodForLesserThanAvg(100);
         ILeagueObjectModel leagueObjectModel= leagueMock.getLeagueObjectMock();
         leagueObjectModel.setFreeAgents(freeAgents);
         agentsSelectedToRetire=agingSystem.selectFreeAgentsToRetire(leagueObjectModel);
+
         Assertions.assertTrue(agentsSelectedToRetire.containsKey("Dhl"));
         Assertions.assertEquals(3,agentsSelectedToRetire.get("Dhl").size());
+    }
+
+    @Test
+    public void healInjuredPlayersTest() throws ParseException {
+        SimpleDateFormat todaysDate=new SimpleDateFormat("dd/MM/yyyy");
+        Date currentDate = todaysDate.parse("18/07/2020");
+        IPlayer player = new Player();
+        SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy");
+        Date injuryDate = dateformat.parse("17/07/2020");
+        player.setInjurySystem(new InjurySystem(injuryDate,1));
+        agingSystem.healInjuredPlayers(currentDate, player);
+        IInjurySystem system= player.getInjurySystem();
+        Assertions.assertEquals(false,system.isInjured());
+
+    }
+
+    @AfterEach()
+    public void destroyObject(){
+        leagueMock= null;
+        gameConfig=null;
+        agingSystem = null;
+
     }
 
 }

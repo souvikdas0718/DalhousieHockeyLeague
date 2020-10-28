@@ -19,4 +19,6 @@ public interface IFreeAgent {
     public IPlayerStatistics getPlayerStats();
 
     public void setPlayerStats(IPlayerStatistics playerStats);
+
+    public double getPlayerStrength();
 }

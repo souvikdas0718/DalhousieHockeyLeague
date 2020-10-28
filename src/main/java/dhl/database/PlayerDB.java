@@ -2,11 +2,12 @@ package dhl.database;
 
 import dhl.database.DatabaseConfigSetup.CallStoredProcedure;
 import dhl.database.interfaceDB.IPlayerDB;
-import dhl.leagueModel.interfaceModel.IInjurySystem;
-import dhl.leagueModel.interfaceModel.IPlayer;
+import dhl.leagueModel.interfaceModel.*;
 
 import java.sql.Date;
 import java.sql.ResultSet;
+import java.util.List;
+import java.util.Map;
 
 public class PlayerDB implements IPlayerDB {
     public int insertPlayer(IPlayer player, int teamId, int leagueId )  throws Exception {
@@ -52,6 +53,35 @@ public class PlayerDB implements IPlayerDB {
 
         callproc.cleanup();
 
+    }
+
+    public void insertRetiredPlayers(ILeagueObjectModel leagueObjectModel, Map<String, List<IPlayer>> playersToRetire, Map<String,List<IFreeAgent>> freeAgentsToRetire) throws Exception {
+        CallStoredProcedure callproc = new CallStoredProcedure("insertVeteran(?,?,?,?)");
+        for(String teamName : playersToRetire.keySet()){
+            for(IPlayer player: playersToRetire.get(teamName)){
+                callproc.setParameter(1, player.getPlayerName());
+                IPlayerStatistics playerStats=player.getPlayerStats();
+                callproc.setParameter(2, playerStats.getAge());
+                callproc.setParameter(3, teamName);
+                callproc.setParameter(4, leagueObjectModel.getLeagueName());
+
+                callproc.execute();
+            }
+
+        }
+        for(String leagueName : freeAgentsToRetire.keySet()){
+            for(IFreeAgent freeAgent: freeAgentsToRetire.get(leagueName)){
+                callproc.setParameter(1, freeAgent.getPlayerName());
+                IPlayerStatistics playerStats=freeAgent.getPlayerStats();
+                callproc.setParameter(2, playerStats.getAge());
+                callproc.setParameter(4, leagueName);
+                callproc.execute();
+            }
+
+        }
+
+
+        callproc.cleanup();
     }
 
 }
