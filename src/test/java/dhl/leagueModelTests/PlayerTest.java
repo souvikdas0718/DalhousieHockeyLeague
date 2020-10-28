@@ -180,14 +180,15 @@ public class PlayerTest {
     @Test
     public void isPlayerAlreadyInjuredTest(){
         player.setInjurySystem(injuredPlayer);
-        IPlayer updatedPlayerObj=player.checkPlayerInjury(gameConfig,new Date());
-        Assertions.assertEquals(player.getPlayerName(),updatedPlayerObj.getPlayerName());
+        player.checkPlayerInjury(gameConfig,new Date());
+        IInjurySystem injurySystem = player.getInjurySystem();
+        Assertions.assertTrue(injurySystem.isInjured());
     }
 
     @Test
     public void checkPlayerInjuryTest(){
-        IPlayer updatedPlayerObj=player.checkPlayerInjury(gameConfig,new Date());
-        IInjurySystem injury= updatedPlayerObj.getInjurySystem();
+        player.checkPlayerInjury(gameConfig,new Date());
+        IInjurySystem injury= player.getInjurySystem();
         Assertions.assertTrue(injury.isInjured());
     }
 

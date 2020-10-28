@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class TeamTest {
     InitializeObjectFactory initObj;
@@ -180,8 +181,11 @@ public class TeamTest {
         LeagueObjectModelMocks leagueMock= new LeagueObjectModelMocks();
         IGameConfig gameConfig=leagueMock.getGameConfig();
         team = new Team("Ontario","Mathew",headCoach, playerArrayList);
-        ITeam updatedTeam=team.checkTeamInjury( gameConfig, new Date());
-        Assertions.assertEquals(team.getTeamName(),updatedTeam.getTeamName());
+        team.checkTeamInjury( gameConfig, new Date());
+        List<IPlayer> playerList = team.getPlayers();
+        IPlayer player=team.getPlayers().get(0);
+        IInjurySystem injurySystem = player.getInjurySystem();
+        Assertions.assertEquals(injurySystem.getNumberOfDaysInjured(),1);
     }
 
     @Test

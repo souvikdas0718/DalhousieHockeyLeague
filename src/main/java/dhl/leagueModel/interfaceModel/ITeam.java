@@ -40,7 +40,7 @@ public interface ITeam {
 
     public boolean checkIfTeamValid(IValidation validation) throws Exception;
 
-    public ITeam checkTeamInjury(IGameConfig  gameConfig, Date currentDate);
+    public void checkTeamInjury(IGameConfig  gameConfig, Date currentDate);
 
     public double calculateTeamStrength();
 

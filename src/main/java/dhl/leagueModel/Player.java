@@ -130,11 +130,10 @@ public class Player implements IPlayer {
         return true;
     }
 
-    public IPlayer checkPlayerInjury(IGameConfig gameConfig, Date currentDate){
+    public void checkPlayerInjury(IGameConfig gameConfig, Date currentDate){
         if(isPlayerNotInjured()){
             this.setInjurySystem(injurySystem.checkIfPlayerInjured(gameConfig,currentDate));
         }
-        return this;
     }
 
     public double getPlayerStrength(){
