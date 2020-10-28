@@ -117,6 +117,14 @@ public class Team implements ITeam {
         }
     }
 
+    public double calculateTeamStrength(){
+        double teamStrength=0;
+        for(IPlayer player:players){
+            teamStrength=teamStrength+player.getPlayerStrength();
+        }
+        return teamStrength;
+    }
+
     public boolean checkIfSkatersGoaliesValid(ArrayList<IPlayer> players) throws Exception{
         Integer totalSkaters = 0;
         Integer totalGoalies = 0;
@@ -140,8 +148,5 @@ public class Team implements ITeam {
         return true;
     }
 
-    public double calculateTeamStrength(){
-        return 0;
-    }
 
 }
