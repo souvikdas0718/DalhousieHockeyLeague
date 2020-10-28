@@ -2,10 +2,7 @@ package dhl.leagueModel;
 
 import dhl.importJson.Interface.IGameConfig;
 import dhl.leagueModel.interfaceModel.IInjurySystem;
-import dhl.leagueModel.interfaceModel.IPlayer;
-import dhl.leagueModel.interfaceModel.ITeam;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -16,7 +13,6 @@ public class InjurySystem implements IInjurySystem {
 
     public InjurySystem(){
         this.isInjured=false;
-        this.numberOfDaysInjured=numberOfDaysInjured;
     }
 
     public InjurySystem(Date injuryDate, int numberOfDaysInjured){
@@ -58,9 +54,8 @@ public class InjurySystem implements IInjurySystem {
 
         double ramdomNumber =  Math.random();
         ramdomNumber = ramdomNumber * 100;
-
         if(ramdomNumber <= randomInjuryChance){
-            int numberOfDaysInjured = (int )(Math.random() * injuryDaysHigh + injuryDaysLow);
+            int numberOfDaysInjured = (int )(Math.random() * (injuryDaysHigh - injuryDaysLow + 1) + injuryDaysLow);
             injurySystem=new InjurySystem(currentDate,numberOfDaysInjured);
         }
         return injurySystem;
