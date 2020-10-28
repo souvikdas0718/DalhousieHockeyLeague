@@ -117,6 +117,7 @@ public class Team implements ITeam {
         }
     }
 
+
     public double calculateTeamStrength(){
         double teamStrength=0;
         for(IPlayer player:players){
