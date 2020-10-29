@@ -121,24 +121,21 @@ public class Team implements ITeam {
         return this;
     }
 
-    public boolean checkIfSkatersGoaliesValid(ArrayList<IPlayer> players) throws Exception{
+    public boolean checkIfSkatersGoaliesValid(ArrayList<IFreeAgent> freeAgents) throws Exception{
         Integer totalSkaters = 0;
         Integer totalGoalies = 0;
 
-        for(int i=0; i<players.size(); i++){
-            if (players.get(i).getPosition().equals("forward") || players.get(i).getPosition().equals("defense")){
+        for(int i=0; i<freeAgents.size(); i++){
+            if (freeAgents.get(i).getPosition().equals("forward") || freeAgents.get(i).getPosition().equals("defense")){
                 totalSkaters = totalSkaters + 1;
             }
-            if (players.get(i).getPosition().equals("goalie")){
+            if (freeAgents.get(i).getPosition().equals("goalie")){
                 totalGoalies = totalGoalies + 1;
             }
         }
-        if (totalGoalies<2)
+        if (totalGoalies<2 || totalSkaters<18)
         {
-            throw new Exception("A team must have 18 skaters");
-        }
-        else if (totalSkaters<18){
-            throw new Exception("A team must have 2 goalies");
+            return false;
         }
 
         return true;

@@ -1,26 +1,38 @@
 package dhl.simulationStateMachineTest;
 
 import dhl.Mocks.LeagueObjectModelMocks;
-import dhl.leagueModel.interfaceModel.IConference;
-import dhl.leagueModel.interfaceModel.IDivision;
-import dhl.leagueModel.interfaceModel.IFreeAgent;
+import dhl.database.interfaceDB.ILeagueObjectModelData;
+import dhl.leagueModel.*;
+import dhl.leagueModel.interfaceModel.*;
+import dhl.leagueModelTests.MockDatabase;
 import dhl.simulationStateMachine.GameContext;
-import dhl.simulationStateMachine.States.CreateTeamState;
+import dhl.simulationStateMachine.States.CreateTeamStateLogic;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class CreateTeamStateTest {
+public class CreateTeamStateLogicTest {
     GameContext ourGame;
-    CreateTeamState testClassObject;
+    CreateTeamStateLogic testClassObject;
     LeagueObjectModelMocks mocks;
+    private ILeagueObjectModel inMemoryLeague;
 
     @BeforeEach
     public void initObject(){
         ourGame = new GameContext();
-        testClassObject = new CreateTeamState(ourGame);
+        testClassObject = new CreateTeamStateLogic();
         mocks = new LeagueObjectModelMocks();
+        inMemoryLeague = mocks.getLeagueObjectMock();
+    }
+    @Test
+    public void saveleagueObjectTest() throws Exception {
+        ILeagueObjectModel objLeagueObjectModel = new LeagueObjectModel();
+        ILeagueObjectModelData mockDb=new MockDatabase();
+
+        objLeagueObjectModel = testClassObject.saveleagueObject(inMemoryLeague.getLeagueName(), "Western","Atlantic","Ontario1","Mathew1",mocks.get20FreeAgentArrayMock(),mocks.getSingleCoach(), ourGame, inMemoryLeague,mockDb);
+        Assertions.assertEquals("Dhl",objLeagueObjectModel.getLeagueName());
     }
 
     @Test
@@ -50,5 +62,13 @@ public class CreateTeamStateTest {
         freeAgentTest = testClassObject.findFreeAgent(mocks.getFreeAgentArrayMock() , "Wrong Free Agent");
         assertTrue(freeAgentTest == null);
 
+    }
+
+    @Test
+    public void createNewTeamObjectTest() throws Exception {
+        ITeam newlyCreatedTeam= new Team();
+
+        newlyCreatedTeam = testClassObject.createNewTeamObject(mocks.get20FreeAgentArrayMock(), "testTeam", "testGenManager", mocks.getSingleCoach());
+        Assertions.assertEquals(20,newlyCreatedTeam.getPlayers().size());
     }
 }

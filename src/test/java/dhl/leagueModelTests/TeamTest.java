@@ -1,5 +1,6 @@
 package dhl.leagueModelTests;
 
+import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.leagueModel.*;
 import dhl.factory.InitializeObjectFactory;
 import dhl.leagueModel.interfaceModel.*;
@@ -158,6 +159,13 @@ public class TeamTest {
     @Test
     public void calculateTeamStrengthTest(){
         Assertions.assertEquals(0,team.calculateTeamStrength());
+    }
+
+    @Test
+    public void checkIfSkatersGoaliesValid() throws Exception{
+        LeagueObjectModelMocks objMocks = new LeagueObjectModelMocks();
+        Boolean isTrue = team.checkIfSkatersGoaliesValid(objMocks.get20FreeAgentArrayMock());
+        Assertions.assertEquals(true,isTrue);
     }
 
     @AfterEach()

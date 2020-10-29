@@ -9,16 +9,18 @@ import dhl.database.interfaceDB.ILeagueObjectModelData;
 import dhl.database.LeagueObjectModelData;
 import dhl.simulationStateMachine.GameContext;
 import dhl.simulationStateMachine.Interface.IGameState;
+import dhl.simulationStateMachine.States.Interface.ILoadTeamStateLogic;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class LoadTeamState implements IGameState {
+public class LoadTeamStateUI implements IGameState {
     GameContext ourGame;
     ILeagueObjectModel ourLeague;
     ITeam selectedTeam;
     ILeagueObjectModel newInMemoryLeague;
 
-    public LoadTeamState(GameContext newGame) {
+    public LoadTeamStateUI(GameContext newGame) {
         newInMemoryLeague = new LeagueObjectModel();
         ourGame = newGame;
     }
@@ -41,10 +43,9 @@ public class LoadTeamState implements IGameState {
         }
 
         try {
-            System.out.println("Finding: "+ team+ " of League:"+ leagueName+ " In DataBase");
+            ILoadTeamStateLogic objLoadTeamStateLogic = new LoadTeamStateLogic();
             ILeagueObjectModelData databaseRefrenceOb = new LeagueObjectModelData();
-            newInMemoryLeague = newInMemoryLeague.loadLeagueObjectModel(databaseRefrenceOb, leagueName, team);
-            ourGame.setSelectedTeam(findTeam(newInMemoryLeague , team));
+            objLoadTeamStateLogic.findTeamOfLeagueInDatabase( leagueName,  team,  newInMemoryLeague,  ourGame, databaseRefrenceOb);
         }catch(Exception e) {
             System.out.println(e.getMessage());
             ourGame.setGameInProgress(false);
@@ -66,41 +67,4 @@ public class LoadTeamState implements IGameState {
         }
     }
 
-    public IConference findConference(ArrayList<IConference> confrenceArray, String conferenceName ){
-        for(int i= 0; i< confrenceArray.size(); i++){
-            IConference ourConference = confrenceArray.get(i);
-            if(ourConference.getConferenceName().equals(conferenceName)){
-                return ourConference;
-            }
-        }
-        return null;
-    }
-
-    public IDivision findDivision(ArrayList<IDivision> divisionArrayList , String divisionName){
-        for(int i= 0; i< divisionArrayList.size(); i++){
-            IDivision ourDivision = divisionArrayList.get(i);
-            if(ourDivision.getDivisionName().equals(divisionName)){
-                return ourDivision;
-            }
-        }
-        return null;
-    }
-
-    public ITeam findTeam(ILeagueObjectModel inMemoryLeague, String teamName){
-
-        ITeam teamObject = null;
-
-        for(IConference conference: inMemoryLeague.getConferences() ){
-            for(IDivision division: conference.getDivisions()){
-                for (ITeam team: division.getTeams()){
-                    if (team.getTeamName().equals(teamName)){
-                        teamObject = team;
-                        System.out.println("Team Found");
-                    }
-                }
-            }
-        }
-
-        return teamObject;
-    }
 }

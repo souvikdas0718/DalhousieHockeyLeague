@@ -44,7 +44,7 @@ public interface ITeam {
 
     public double calculateTeamStrength();
 
-    public boolean checkIfSkatersGoaliesValid(ArrayList<IPlayer> players) throws Exception;
+    public boolean checkIfSkatersGoaliesValid(ArrayList<IFreeAgent> freeAgents) throws Exception;
 
 }
 
