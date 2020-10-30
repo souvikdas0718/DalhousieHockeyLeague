@@ -2,8 +2,7 @@ package dhl.Mocks;
 
 import dhl.importJson.GameConfig;
 import dhl.importJson.Interface.IGameConfig;
-import dhl.trading.Interface.ITradeConfig;
-import dhl.trading.TradeConfig;
+
 import org.json.simple.JSONObject;
 
 import java.util.HashMap;
