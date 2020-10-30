@@ -1,35 +1,45 @@
-package dhl.trading;
+package dhl.trade;
 
-import dhl.leagueModel.Team;
 import dhl.leagueModel.interfaceModel.IPlayer;
 import dhl.leagueModel.interfaceModel.ITeam;
-import dhl.trading.Interface.ITradeOffer;
+import dhl.trade.Interface.ITradeOffer;
 
 import java.util.ArrayList;
 
-public class SwapingTradeOffer implements ITradeOffer {
+public class ExchangingPlayerTradeOffer implements ITradeOffer {
 
     ITeam offeringTeam;
     ITeam receivingTeam;
     public ArrayList<IPlayer> playersOffered,playersWantedInExchange;
 
-    public SwapingTradeOffer(ITeam offeringTeam,ITeam receivingTeam,ArrayList<IPlayer> playersOffered, ArrayList<IPlayer> playersWantedInExchange){
-
+    public ExchangingPlayerTradeOffer(ITeam offeringTeam , ITeam receivingTeam , ArrayList<IPlayer> playersOffered , ArrayList<IPlayer> playersWantedInExchange){
         this.offeringTeam = offeringTeam;
         this.receivingTeam = receivingTeam;
         this.playersOffered = playersOffered;
         this.playersWantedInExchange = playersWantedInExchange;
     }
 
+
+    @Override
+    public void performTrade() {
+        for(IPlayer player: playersOffered){
+            receivingTeam.getPlayers().add(player);
+            offeringTeam.getPlayers().remove(player);
+        }
+        for(IPlayer player: playersWantedInExchange){
+            receivingTeam.getPlayers().remove(player);
+            offeringTeam.getPlayers().add(player);
+        }
+    }
+
     @Override
     public boolean isTradeGoodForReceivingTeam(){
-
         if(getPlayerCombinedStrength(playersOffered) > getPlayerCombinedStrength(playersWantedInExchange)){
             return true;
         }
-
         return false;
     }
+
 
     public double getPlayerCombinedStrength(ArrayList<IPlayer> players){
         double totalstrength = 0;
@@ -38,36 +48,14 @@ public class SwapingTradeOffer implements ITradeOffer {
         }
         return totalstrength;
     }
+
+    @Override
     public ITeam getOfferingTeam() {
         return offeringTeam;
     }
 
-    public void setOfferingTeam(ITeam offeringTeam) {
-        this.offeringTeam = offeringTeam;
-    }
-
+    @Override
     public ITeam getReceivingTeam() {
         return receivingTeam;
     }
-
-    public void setReceivingTeam(ITeam receivingTeam) {
-        this.receivingTeam = receivingTeam;
-    }
-
-    public ArrayList<IPlayer> getPlayersOffered() {
-        return playersOffered;
-    }
-
-    public void setPlayersOffered(ArrayList<IPlayer> playersOffered) {
-        this.playersOffered = playersOffered;
-    }
-
-    public ArrayList<IPlayer> getPlayersWantedInExchange() {
-        return playersWantedInExchange;
-    }
-
-    public void setPlayersWantedInExchange(ArrayList<IPlayer> playersWantedInExchange) {
-        this.playersWantedInExchange = playersWantedInExchange;
-    }
-
 }
