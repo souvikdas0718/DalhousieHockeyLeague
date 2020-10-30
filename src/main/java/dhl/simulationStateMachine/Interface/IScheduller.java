@@ -1,5 +1,7 @@
 package dhl.simulationStateMachine.Interface;
 
+import dhl.leagueModel.interfaceModel.IConference;
+import dhl.leagueModel.interfaceModel.IDivision;
 import dhl.leagueModel.interfaceModel.ITeam;
 
 import java.time.LocalDate;
@@ -33,4 +35,12 @@ public interface IScheduller {
     public List<ITeam> getTeamList();
 
     public void setTeamList(List<ITeam> teamList);
+
+    public List<IConference> getConferences();
+
+    public void setConferences(List<IConference> conferences);
+
+    public List<IDivision> getDivisions();
+
+    public void setDivisions(List<IDivision> divisions);
 }
