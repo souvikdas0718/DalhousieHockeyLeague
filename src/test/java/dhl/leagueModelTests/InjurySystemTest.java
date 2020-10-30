@@ -1,7 +1,7 @@
 package dhl.leagueModelTests;
 
 import dhl.Mocks.LeagueObjectModelMocks;
-import dhl.importJson.Interface.IGameConfig;
+import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.leagueModel.InjurySystem;
 import dhl.leagueModel.Player;
 import dhl.leagueModel.interfaceModel.IInjurySystem;

@@ -1,6 +1,6 @@
-package dhl.importJson;
+package dhl.InputOutput.importJson;
 
-import dhl.importJson.Interface.IGameConfig;
+import dhl.InputOutput.importJson.Interface.IGameConfig;
 import org.json.simple.JSONObject;
 import java.util.HashMap;
 

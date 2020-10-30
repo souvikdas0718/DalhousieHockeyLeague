@@ -1,6 +1,6 @@
 package dhl.leagueModel;
 
-import dhl.importJson.Interface.IGameConfig;
+import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.leagueModel.interfaceModel.*;
 
 import java.util.Date;

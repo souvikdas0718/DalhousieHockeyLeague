@@ -1,7 +1,6 @@
 package dhl.trading;
 
-import dhl.importJson.Interface.IGameConfig;
-import dhl.simulationStateMachine.Interface.ISimulationSeasonState;
+import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.trading.Interface.ITradeConfig;
 
 public class ExecuteTrade {

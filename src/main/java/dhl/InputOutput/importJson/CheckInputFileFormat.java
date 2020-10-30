@@ -1,6 +1,6 @@
-package dhl.importJson;
+package dhl.InputOutput.importJson;
 
-import dhl.importJson.Interface.ICheckInputFileFormat;
+import dhl.InputOutput.importJson.Interface.ICheckInputFileFormat;
 import org.json.JSONObject;
 
 public class CheckInputFileFormat implements ICheckInputFileFormat {

@@ -1,8 +1,8 @@
-package dhl.importJson;
+package dhl.InputOutput.importJson;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dhl.importJson.Interface.ISerializeLeagueobjectModel;
+import dhl.InputOutput.importJson.Interface.ISerializeLeagueobjectModel;
 import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 import java.io.FileWriter;
 

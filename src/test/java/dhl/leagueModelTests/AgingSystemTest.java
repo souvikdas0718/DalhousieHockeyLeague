@@ -2,7 +2,7 @@ package dhl.leagueModelTests;
 
 
 import dhl.Mocks.LeagueObjectModelMocks;
-import dhl.importJson.Interface.IGameConfig;
+import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.leagueModel.AgingSystem;
 import dhl.leagueModel.FreeAgent;
 import dhl.leagueModel.Player;

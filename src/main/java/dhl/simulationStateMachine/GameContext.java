@@ -1,6 +1,6 @@
 package dhl.simulationStateMachine;
 
-import dhl.importJson.Interface.IGameConfig;
+import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.leagueModel.interfaceModel.ITeam;
 import dhl.simulationStateMachine.Interface.IGameState;

@@ -1,11 +1,11 @@
 package dhl.simulationStateMachine.States;
 
-import dhl.importJson.Interface.IGameConfig;
+import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.leagueModel.LeagueObjectModel;
 import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.simulationStateMachine.GameContext;
 import dhl.simulationStateMachine.Interface.IGameState;
-import dhl.importJson.JsonFilePath;
+import dhl.InputOutput.importJson.JsonFilePath;
 import dhl.simulationStateMachine.States.Interface.IImportStateLogic;
 
 import java.util.Scanner;

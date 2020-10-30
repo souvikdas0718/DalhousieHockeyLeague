@@ -1,6 +1,6 @@
 package dhl.simulationStateMachine;
 
-import dhl.importJson.Interface.IGameConfig;
+import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.simulationStateMachine.Interface.ISimulationSeasonState;
 import dhl.simulationStateMachine.States.seasonSimulation.*;
 

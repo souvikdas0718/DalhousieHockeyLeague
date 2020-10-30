@@ -1,8 +1,8 @@
 package dhl.tradingTest;
 
 import dhl.Mocks.JsonFilePathMock;
-import dhl.importJson.GameConfig;
-import dhl.importJson.ImportJsonFile;
+import dhl.InputOutput.importJson.GameConfig;
+import dhl.InputOutput.importJson.ImportJsonFile;
 import dhl.trading.TradeConfig;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

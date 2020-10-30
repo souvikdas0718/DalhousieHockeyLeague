@@ -2,8 +2,8 @@ package dhl.simulationStateMachineTest;
 
 import dhl.Mocks.JsonFilePathMock;
 import dhl.Mocks.LeagueObjectModelMocks;
-import dhl.importJson.Interface.IGameConfig;
-import dhl.importJson.Interface.IJsonFilePath;
+import dhl.InputOutput.importJson.Interface.IGameConfig;
+import dhl.InputOutput.importJson.Interface.IJsonFilePath;
 import dhl.leagueModel.LeagueObjectModel;
 import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.simulationStateMachine.GameContext;

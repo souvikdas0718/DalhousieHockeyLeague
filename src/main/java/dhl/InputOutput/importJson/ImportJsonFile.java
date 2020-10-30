@@ -1,6 +1,5 @@
-package dhl.importJson;
+package dhl.InputOutput.importJson;
 
-import dhl.importJson.Interface.IGameConfig;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 

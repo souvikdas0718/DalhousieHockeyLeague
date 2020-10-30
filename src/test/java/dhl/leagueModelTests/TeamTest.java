@@ -1,8 +1,7 @@
 package dhl.leagueModelTests;
 
 import dhl.Mocks.LeagueObjectModelMocks;
-import dhl.importJson.Interface.IGameConfig;
-import dhl.Mocks.LeagueObjectModelMocks;
+import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.leagueModel.*;
 import dhl.factory.InitializeObjectFactory;
 import dhl.leagueModel.interfaceModel.*;

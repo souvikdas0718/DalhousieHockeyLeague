@@ -1,9 +1,9 @@
 package dhl.simulationStateMachine.States;
 
-import dhl.importJson.CreateLeagueObjectModel;
-import dhl.importJson.GameConfig;
-import dhl.importJson.ImportJsonFile;
-import dhl.importJson.Interface.IGameConfig;
+import dhl.InputOutput.importJson.CreateLeagueObjectModel;
+import dhl.InputOutput.importJson.GameConfig;
+import dhl.InputOutput.importJson.ImportJsonFile;
+import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.leagueModel.LeagueObjectModel;
 import dhl.leagueModel.interfaceModel.IConference;
 import dhl.leagueModel.interfaceModel.IDivision;
