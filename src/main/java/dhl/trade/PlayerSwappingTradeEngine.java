@@ -58,7 +58,7 @@ public class PlayerSwappingTradeEngine implements ITradingEngine {
     @Override
     public void sendTradeToRecevingTeam(ITeam userTeam) {
         ITradeType tradeType;
-        // TODO: 29-10-2020 check how to handle this
+        // TODO: 29-10-2020 check how to handle this  LSC
         if(currentTrade.getReceivingTeam() == userTeam){
             tradeType = new AiUserTrade();
         }else{
@@ -79,6 +79,16 @@ public class PlayerSwappingTradeEngine implements ITradingEngine {
     @Override
     public void checkPlayersAfterTrade() {
         // TODO: 29-10-2020 useless method
+        if(isObjectInitiated(currentTrade)){
+            ITeam offeringTeam = currentTrade.getOfferingTeam();
+            ITeam recevingTeam = currentTrade.getReceivingTeam();
+            ArrayList<IPlayer> offeringTeamPlayers = offeringTeam.getPlayers();
+            ArrayList<IPlayer> recevingTeamPlayers = recevingTeam.getPlayers();
+            if(offeringTeamPlayers.size() > 20){
+                
+            }
+        }
+
     }
 
     public ITradeOffer ifTradePossibleMakeOffer(ITeam teamOffering, ITeam  teamGettingOffer) throws Exception {
