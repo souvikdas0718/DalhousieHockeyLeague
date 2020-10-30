@@ -40,7 +40,7 @@ public interface IPlayer {
 
     public boolean checkPlayerValid() throws Exception;
 
-    public IPlayer checkPlayerInjury(IGameConfig gameConfig, Date currentDate);
+    public void checkPlayerInjury(IGameConfig gameConfig, Date currentDate);
 
     public double getPlayerStrength();
 

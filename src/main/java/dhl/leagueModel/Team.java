@@ -111,14 +111,18 @@ public class Team implements ITeam {
         return true;
     }
 
-    public ITeam checkTeamInjury(IGameConfig  gameConfig, Date currentDate){
-        ArrayList<IPlayer> playerList=new ArrayList<>();
+    public void checkTeamInjury(IGameConfig  gameConfig, Date currentDate){
         for(IPlayer player: players){
-            IPlayer updatedPlayer=player.checkPlayerInjury(gameConfig,currentDate);
-            playerList.add(updatedPlayer);
+            player.checkPlayerInjury(gameConfig,currentDate);
         }
-        this.setPlayers(playerList);
-        return this;
+    }
+
+    public double calculateTeamStrength(){
+        double teamStrength=0;
+        for(IPlayer player:players){
+            teamStrength=teamStrength+player.getPlayerStrength();
+        }
+        return teamStrength;
     }
 
     public boolean checkIfSkatersGoaliesValid(ArrayList<IFreeAgent> freeAgents) throws Exception{
@@ -141,8 +145,5 @@ public class Team implements ITeam {
         return true;
     }
 
-    public double calculateTeamStrength(){
-        return 0;
-    }
 
 }

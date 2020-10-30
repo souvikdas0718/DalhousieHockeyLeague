@@ -1,5 +1,8 @@
 package dhl.Mocks;
 
+import dhl.importJson.GameConfig;
+import dhl.importJson.ImportJsonFile;
+import dhl.importJson.Interface.IGameConfig;
 import dhl.leagueModel.*;
 import dhl.leagueModel.interfaceModel.*;
 
@@ -149,6 +152,8 @@ public class LeagueObjectModelMocks {
         conferences.add(conference);
 
         ArrayList<IFreeAgent> freeAgentsList=new ArrayList<>();
+        IFreeAgent freeAgent = new FreeAgent("Matt","forward",getPlayerStatistics());
+        freeAgentsList.add(freeAgent);
         ArrayList<ICoach> coachList=new ArrayList<>();
         ArrayList<IGeneralManager> generalManagerList=new ArrayList<>();
 
@@ -219,5 +224,18 @@ public class LeagueObjectModelMocks {
         managers.add(gm2);
         leagueModel.setGeneralManagers(managers);
         return leagueModel;
+    }
+
+    public IGameConfig getGameConfig() {
+        JsonFilePathMock filePathMock = new JsonFilePathMock();
+        ImportJsonFile importJsonFile = new ImportJsonFile("src/test/java/dhl/importJsonTest/GameConfigMockFile.json");
+        IGameConfig gameConfig=null;
+        try{
+             gameConfig = new GameConfig(importJsonFile.getJsonObject());
+        }
+        catch (Exception e){
+
+        }
+        return gameConfig;
     }
 }
