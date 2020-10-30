@@ -25,10 +25,19 @@ public class GameConfigTest {
     public void getHashMapTest(){
         HashMap tradingObject = testClassObject.getHashMap("trading");
         HashMap agingObject = testClassObject.getHashMap("aging");
-
         Assertions.assertFalse(tradingObject.isEmpty());
         Assertions.assertTrue(tradingObject.size() == 4);
         Assertions.assertTrue(agingObject.size() ==2);
         Assertions.assertTrue(testClassObject.getHashMap("WrongKey").isEmpty());
+    }
+
+    @Test
+    public void getValueFromOurObjectTest(){
+        testClassObject.setRequiredObjectFromConfig("trading");
+        String lossPointValue = testClassObject.getValueFromOurObject("lossPoint");
+        int losspoint = Integer.parseInt(lossPointValue);
+        Assertions.assertTrue(losspoint == 8);
+        Double randomTradeOfferChance = Double.parseDouble(testClassObject.getValueFromOurObject("randomTradeOfferChance"));
+        Assertions.assertTrue(randomTradeOfferChance == 0.05);
     }
 }
