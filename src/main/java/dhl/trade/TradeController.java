@@ -1,5 +1,7 @@
 package dhl.trade;
 
+import dhl.InputOutput.UI.IUserInputOutput;
+import dhl.InputOutput.UI.UserInputOutput;
 import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.leagueModel.interfaceModel.IConference;
 import dhl.leagueModel.interfaceModel.IDivision;
@@ -47,9 +49,9 @@ public class TradeController implements ITradeController {
                 }
             }
         }catch(Exception e){
-            // TODO: 28-10-2020 check rajni class and sysout e.getmessgae();
-            System.out.println("error");
-            System.out.println(e.getMessage());
+            IUserInputOutput ioObject = new UserInputOutput();
+            ioObject.printMessage("ERROR");
+            ioObject.printMessage(e.getMessage());
         }
     }
 

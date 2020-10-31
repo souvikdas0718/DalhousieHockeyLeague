@@ -1,9 +1,12 @@
 package dhl.trade;
 
 import dhl.InputOutput.importJson.Interface.IGameConfig;
+import dhl.leagueModel.interfaceModel.IPlayer;
 import dhl.leagueModel.interfaceModel.ITeam;
 import dhl.trade.Interface.ITradeOffer;
 import dhl.trade.Interface.ITradeType;
+
+import java.util.ArrayList;
 
 public class AiAiTrade implements ITradeType {
 
@@ -21,13 +24,27 @@ public class AiAiTrade implements ITradeType {
         // TODO: 30-10-2020 random value fix
         double configRandomAcceptanceChance = Double.parseDouble(gameConfig.getValueFromOurObject(tradeConfigVariableNames.getRandomAcceptanceChance()));
         double randomValue = Math.random();
-        if(tradeOffer.isTradeGoodForReceivingTeam()){
-
+        if(isTradeGoodForReceivingTeam(tradeOffer)){
             return true;
         }else if(randomValue > configRandomAcceptanceChance){
             return true;
         }
         return false;
+    }
+
+    public boolean isTradeGoodForReceivingTeam(ITradeOffer tradeOffer){
+        if(getPlayerCombinedStrength(tradeOffer.getOfferingPlayers()) > getPlayerCombinedStrength(tradeOffer.getPlayersWantedInReturn())){
+            return true;
+        }
+        return false;
+    }
+
+    public double getPlayerCombinedStrength(ArrayList<IPlayer> players){
+        double totalstrength = 0;
+        for(int i=0;i<players.size();i++){
+            totalstrength+= players.get(i).getPlayerStrength();
+        }
+        return totalstrength;
     }
 
 }

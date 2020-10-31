@@ -60,7 +60,7 @@ public class PlayerSwappingTradeEngine implements ITradingEngine {
         ITradeType tradeType;
         // TODO: 29-10-2020 check how to handle this  LSC
         if(currentTrade.getReceivingTeam() == userTeam){
-            tradeType = new AiUserTrade();
+            tradeType = new AiUserTrade(currentTrade);
         }else{
             tradeType = new AiAiTrade(currentTrade,gameConfig);
         }
@@ -82,11 +82,8 @@ public class PlayerSwappingTradeEngine implements ITradingEngine {
         if(isObjectInitiated(currentTrade)){
             ITeam offeringTeam = currentTrade.getOfferingTeam();
             ITeam recevingTeam = currentTrade.getReceivingTeam();
-            ArrayList<IPlayer> offeringTeamPlayers = offeringTeam.getPlayers();
-            ArrayList<IPlayer> recevingTeamPlayers = recevingTeam.getPlayers();
-            if(offeringTeamPlayers.size() > 20){
-                
-            }
+
+            // TODO: 31-10-2020   checkIfSkatersGoaliesValid y is it taking free agents
         }
 
     }
