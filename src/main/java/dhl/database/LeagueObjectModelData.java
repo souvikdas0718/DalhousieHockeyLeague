@@ -15,10 +15,26 @@ import dhl.database.DatabaseConfigSetup.DatabaseInitialize;
 public class LeagueObjectModelData implements ILeagueObjectModelData {
 
     Connection connection;
+    ILeagueDB ileagueDB;
+    IConferenceDB iConferenceDB;
+    IDivisionDB iDivisionDB;
+    ITeamDB iTeamDB;
+    IPlayerDB iPlayerDB;
+    IFreeAgentDB iFreeAgentDB;
+    ICoachDB iCoachDB;
+    IGeneralManagerDB iGeneralManagerDB;
 
     public LeagueObjectModelData() throws Exception {
         DatabaseInitialize databaseInitialize = new DatabaseInitialize();
         connection = databaseInitialize.getConnection();
+        ileagueDB = new LeagueDB();
+        iConferenceDB = new ConferenceDB();
+        iDivisionDB = new DivisionDB();
+        iTeamDB = new TeamDB();
+        iPlayerDB = new PlayerDB();
+        iFreeAgentDB = new FreeAgentDB();
+        iCoachDB=new CoachDB();
+        iGeneralManagerDB = new GeneralManagerDB();
     }
 
     public void insertLeagueModel(ILeagueObjectModel leagueModelObj) throws Exception {
@@ -29,6 +45,7 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
         IPlayerDB iPlayerDB = new PlayerDB();
         IFreeAgentDB iFreeAgentDB = new FreeAgentDB();
         ICoachDB iCoachDB=new CoachDB();
+        IGeneralManagerDB iGeneralManagerDB = new GeneralManagerDB();
 
         int leagueId = ileagueDB.insertLeague(leagueModelObj.getLeagueName());
 
@@ -74,14 +91,21 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
                     arrPlayer.forEach((player)->{
                         try {
                             iPlayerDB.insertPlayer(player, finalTeamId1,leagueId);
+                            insertInjuredPlayer(player,finalTeamId1,leagueId);
                         } catch (Exception ePlayer) {
                             throw new RuntimeException("Error inserting Player:"+player.getPlayerName());
                         }
                     });
+
                 });
             });
         });
 
+        insertFreeAgents(leagueModelObj,leagueId);
+        insertUnassignedCoaches(leagueModelObj,leagueId);
+        insertGeneralManagers(leagueModelObj, leagueId);
+    }
+    public void insertFreeAgents(ILeagueObjectModel leagueModelObj,int leagueId){
         leagueModelObj.getFreeAgents().forEach((freeAgent) -> {
             try {
                 iFreeAgentDB.insertFreeAgent(freeAgent,leagueId);
@@ -89,15 +113,35 @@ public class LeagueObjectModelData implements ILeagueObjectModelData {
                 throw new RuntimeException("Error inserting Free agent:"+ freeAgent.getPlayerName());
             }
         });
+    }
+    public void insertUnassignedCoaches(ILeagueObjectModel leagueModelObj,int leagueId){
         leagueModelObj.getCoaches().forEach((coach) -> {
             try {
                 iCoachDB.insertUnassignedCoach(coach,leagueId);
             } catch (Exception eCoach) {
-                throw new RuntimeException("Error inserting coach from coach List"+coach.getCoachName());
+                throw new RuntimeException("Error inserting coach from coach List "+coach.getCoachName());
+            }
+        });
+
+    }
+
+    public void insertInjuredPlayer(IPlayer injuredPlayer, int teamId, int leagueId){
+        try {
+            iPlayerDB.insertInjuredPlayer(injuredPlayer, teamId,leagueId);
+        } catch (Exception ePlayer) {
+            throw new RuntimeException("Error inserting Injured Player:"+injuredPlayer.getPlayerName());
+        }
+
+    }
+    public void insertGeneralManagers(ILeagueObjectModel leagueModelObj, int leagueId){
+        leagueModelObj.getGeneralManagers().forEach((objgeneralManager) -> {
+            try {
+                iGeneralManagerDB.insertGeneralManagers(objgeneralManager.getGeneralManagerName(),leagueId);
+            } catch (Exception eCoach) {
+                throw new RuntimeException("Error inserting General managers from List "+objgeneralManager.getGeneralManagerName());
             }
         });
     }
-
     public ILeagueObjectModel loadLeagueModel(String leagueName, String teamName) throws Exception {
 
         ILeagueObjectModel leagueObjectModel=null;

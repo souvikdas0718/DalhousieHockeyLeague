@@ -1,12 +1,12 @@
 package dhl.simulationStateMachine;
 
-import dhl.importJson.Interface.IGameConfig;
+import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.leagueModel.interfaceModel.ITeam;
 import dhl.simulationStateMachine.Interface.IGameState;
-import dhl.simulationStateMachine.States.CreateTeamState;
-import dhl.simulationStateMachine.States.ImportState;
-import dhl.simulationStateMachine.States.LoadTeamState;
+import dhl.simulationStateMachine.States.CreateTeamStateUI;
+import dhl.simulationStateMachine.States.ImportStateUI;
+import dhl.simulationStateMachine.States.LoadTeamStateUI;
 import dhl.simulationStateMachine.States.SimulateState;
 
 public class GameContext {
@@ -21,10 +21,10 @@ public class GameContext {
     IGameConfig gameConfig;
 
     public GameContext() {
-        importState = new ImportState(this);
-        loadTeamState = new LoadTeamState(this);
+        importState = new ImportStateUI(this);
+        loadTeamState = new LoadTeamStateUI(this);
         simulateState = new SimulateState(this);
-        createTeamState = new CreateTeamState(this);
+        createTeamState = new CreateTeamStateUI(this);
         currentState = importState;
         gameInProgress = true;
     }

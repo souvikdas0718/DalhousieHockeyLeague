@@ -1,7 +1,10 @@
 package dhl.leagueModel;
 
+import dhl.InputOutput.importJson.Interface.IGameConfig;
+import dhl.leagueModel.interfaceModel.IInjurySystem;
 import dhl.leagueModel.interfaceModel.IPlayer;
 import dhl.leagueModel.interfaceModel.IPlayerStatistics;
+import java.util.Date;
 
 public class Player implements IPlayer {
     private int playerId;
@@ -9,6 +12,7 @@ public class Player implements IPlayer {
     private PlayerPosition position;
     private Boolean captain;
     private IPlayerStatistics playerStats;
+    private IInjurySystem injurySystem;
 
     public Player(){
         setDefaults();
@@ -17,6 +21,7 @@ public class Player implements IPlayer {
     public void setDefaults() {
         playerName = "";
         position = null;
+        this.injurySystem=new InjurySystem();
     }
 
     public Player(String playerName,String position,Boolean captain,IPlayerStatistics playerStats){
@@ -24,6 +29,7 @@ public class Player implements IPlayer {
         this.setPosition(position);
         this.setCaptain(captain);
         this.setPlayerStats(playerStats);
+        this.injurySystem=new InjurySystem();
     }
 
     public void setPlayerId(int id) {
@@ -83,6 +89,14 @@ public class Player implements IPlayer {
         this.playerStats = playerStats;
     }
 
+    public IInjurySystem getInjurySystem() {
+        return injurySystem;
+    }
+
+    public void setInjurySystem(IInjurySystem injurySystem) {
+        this.injurySystem = injurySystem;
+    }
+
     public boolean isPlayerNameEmpty(){
        return playerName.isEmpty();
     }
@@ -108,8 +122,35 @@ public class Player implements IPlayer {
         playerStats.checkPlayerStatistics();
         return true;
     }
+
+    public boolean isPlayerNotInjured(){
+        if(injurySystem.isInjured()){
+            return false;
+        }
+        return true;
+    }
+
+    public void checkPlayerInjury(IGameConfig gameConfig, Date currentDate){
+        if(isPlayerNotInjured()){
+            this.setInjurySystem(injurySystem.checkIfPlayerInjured(gameConfig,currentDate));
+        }
+    }
+
     public double getPlayerStrength(){
-        return 0;
+        double playerStrength=0;
+        if(position == PlayerPosition.FORWARD){
+            playerStrength=playerStats.getSkating() + playerStats.getShooting() + (playerStats.getChecking() / 2.0);
+        }
+        else if(position == PlayerPosition.DEFENSE){
+            playerStrength=playerStats.getSkating() + playerStats.getChecking() + (playerStats.getShooting() / 2.0);
+        }
+        else if(position == PlayerPosition.GOALIE){
+            playerStrength=playerStats.getSkating() + playerStats.getSaving() ;
+        }
+        if(injurySystem.isInjured()){
+            playerStrength=playerStrength/2.0;
+        }
+        return playerStrength;
     }
 
 }

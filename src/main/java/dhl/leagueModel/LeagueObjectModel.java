@@ -10,7 +10,7 @@ public class LeagueObjectModel implements ILeagueObjectModel {
     public ArrayList<IFreeAgent>freeAgents;
     public ILeagueObjectModelValidation leagueValidation;
     public ArrayList<ICoach> coaches;
-    public ArrayList managers;
+    public ArrayList<IGeneralManager> managers;
 
     public LeagueObjectModel(){
         leagueName="";
@@ -58,11 +58,11 @@ public class LeagueObjectModel implements ILeagueObjectModel {
         this.coaches = coaches;
     }
 
-    public ArrayList getManagers() {
+    public ArrayList<IGeneralManager> getGeneralManagers() {
         return managers;
     }
 
-    public void setManagers(ArrayList managers) {
+    public void setGeneralManagers(ArrayList<IGeneralManager> managers) {
         this.managers = managers;
     }
 

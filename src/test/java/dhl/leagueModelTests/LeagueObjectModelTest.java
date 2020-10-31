@@ -50,8 +50,8 @@ public class LeagueObjectModelTest {
 
     @Test
     public void setManagersTest(){
-        leagueModel.setManagers(leagueMock.getManagers());
-        Assertions.assertEquals(3,leagueModel.getManagers().size());
+        leagueModel.setGeneralManagers(leagueMock.getManagers());
+        Assertions.assertEquals(3,leagueModel.getGeneralManagers().size());
     }
 
     @Test

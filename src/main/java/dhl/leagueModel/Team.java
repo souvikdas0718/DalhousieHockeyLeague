@@ -1,9 +1,9 @@
 package dhl.leagueModel;
 
-import dhl.leagueModel.interfaceModel.ICoach;
-import dhl.leagueModel.interfaceModel.IPlayer;
-import dhl.leagueModel.interfaceModel.ITeam;
-import dhl.leagueModel.interfaceModel.IValidation;
+import dhl.InputOutput.importJson.Interface.IGameConfig;
+import dhl.leagueModel.interfaceModel.*;
+
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -14,6 +14,8 @@ public class Team implements ITeam {
     private String teamName;
     private String generalManager;
     private ICoach headCoach;
+    private int lossPoint;
+    private int teamPoint;
     private ArrayList<IPlayer> players;
 
     public Team(){
@@ -67,6 +69,22 @@ public class Team implements ITeam {
         this.players=playersList;
     }
 
+    public int getLossPoint() {
+        return lossPoint;
+    }
+
+    public void setLossPoint(int lossPoint) {
+        this.lossPoint = lossPoint;
+    }
+
+    public int getTeamPoint() {
+        return teamPoint;
+    }
+
+    public void setTeamPoint(int teamPoint) {
+        this.teamPoint = teamPoint;
+    }
+
     public void checkIfOneCaptainPerTeam(List<IPlayer> playerList) throws Exception {
         Predicate<IPlayer> playerPredicate = player -> player.getCaptain() ;
         List<IPlayer> captainList=playerList.stream().filter(playerPredicate).collect(Collectors.toList());
@@ -93,8 +111,39 @@ public class Team implements ITeam {
         return true;
     }
 
-    public double calculateTeamStrength(){
-        return 0;
+    public void checkTeamInjury(IGameConfig  gameConfig, Date currentDate){
+        for(IPlayer player: players){
+            player.checkPlayerInjury(gameConfig,currentDate);
+        }
     }
+
+    public double calculateTeamStrength(){
+        double teamStrength=0;
+        for(IPlayer player:players){
+            teamStrength=teamStrength+player.getPlayerStrength();
+        }
+        return teamStrength;
+    }
+
+    public boolean checkIfSkatersGoaliesValid(ArrayList<IFreeAgent> freeAgents) throws Exception{
+        Integer totalSkaters = 0;
+        Integer totalGoalies = 0;
+
+        for(int i=0; i<freeAgents.size(); i++){
+            if (freeAgents.get(i).getPosition().equals("forward") || freeAgents.get(i).getPosition().equals("defense")){
+                totalSkaters = totalSkaters + 1;
+            }
+            if (freeAgents.get(i).getPosition().equals("goalie")){
+                totalGoalies = totalGoalies + 1;
+            }
+        }
+        if (totalGoalies<2 || totalSkaters<18)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
 
 }

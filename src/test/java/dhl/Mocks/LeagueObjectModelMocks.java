@@ -1,5 +1,8 @@
 package dhl.Mocks;
 
+import dhl.InputOutput.importJson.GameConfig;
+import dhl.InputOutput.importJson.ImportJsonFile;
+import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.leagueModel.*;
 import dhl.leagueModel.interfaceModel.*;
 
@@ -88,6 +91,19 @@ public class LeagueObjectModelMocks {
         return freeAgentArrayListMock;
     }
 
+    public ArrayList<IFreeAgent> get20FreeAgentArrayMock(){
+        ArrayList<IFreeAgent> freeAgents = new ArrayList<>();
+
+        for (int i=0; i<18; i++) {
+            freeAgents.add(new FreeAgent("Henry", "forward", getPlayerStatistics()));
+            if (i<2)
+            {
+                freeAgents.add(new FreeAgent("Henry", "goalie", getPlayerStatistics()));
+            }
+        }
+        return freeAgents;
+    }
+
     public IConference getConferenceObjectMock(){
         return new Conference( "Mock Conference" , getDivisionArrayMock());
     }
@@ -136,6 +152,8 @@ public class LeagueObjectModelMocks {
         conferences.add(conference);
 
         ArrayList<IFreeAgent> freeAgentsList=new ArrayList<>();
+        IFreeAgent freeAgent = new FreeAgent("Matt","forward",getPlayerStatistics());
+        freeAgentsList.add(freeAgent);
         ArrayList<ICoach> coachList=new ArrayList<>();
         ArrayList<IGeneralManager> generalManagerList=new ArrayList<>();
 
@@ -152,11 +170,72 @@ public class LeagueObjectModelMocks {
         return coachList;
     }
 
+    public ICoach getSingleCoach(){
+        ICoach headCoach = new Coach("Todd McLellan",0.1,0.5,1.0,0.2);
+        return headCoach;
+    }
+
     public ArrayList getManagers(){
         ArrayList managers=new ArrayList();
         managers.add("Karen Potam");
         managers.add("Joseph Squidly");
         managers.add("Tom Spaghetti");
         return managers;
+    }
+
+    public ILeagueObjectModel leagueModelMock() {
+        ArrayList<IPlayer> playersList=new ArrayList<>();
+        IPlayerStatistics playerStatistics =new PlayerStatistics(20,10,10,10,0);
+        playersList.add(new Player("Henry","forward",false,playerStatistics));
+        playersList.add(new Player("Max","goalie",true,playerStatistics));
+
+        ICoach headCoach = new Coach("Todd McLellan",0.1,0.5,1.0,0.2);
+
+        ITeam team = new Team("Ontario","Mathew",headCoach,playersList);
+        ArrayList<ITeam> teamArrayList=new ArrayList<>();
+        teamArrayList.add(team);
+
+        IDivision division = new Division("Atlantic",teamArrayList);
+        ArrayList<IDivision> divisionsList=new ArrayList<>();
+        divisionsList.add(division);
+
+        IConference conference=new Conference("Western",divisionsList);
+        ArrayList<IConference> conferences= new ArrayList<>();
+        conferences.add(conference);
+
+        ArrayList<IFreeAgent> freeAgentsList=new ArrayList<>();
+        IPlayerStatistics freeAgentStatistics =new PlayerStatistics(20,10,10,10,0);
+        freeAgentsList.add(new FreeAgent("Henry","forward",playerStatistics));
+        freeAgentsList.add(new FreeAgent("Max","goalie",playerStatistics));
+
+        ILeagueObjectModel leagueModel=new LeagueObjectModel("Dhl",conferences,freeAgentsList);
+
+        ArrayList<ICoach> coaches = new ArrayList<>();
+        ICoach coach1 = new Coach("Todd McLellan",0.1,0.5,1.0,0.2);
+        ICoach coach2 = new Coach("Todd McLellan",0.1,0.5,1.0,0.2);
+        coaches.add(coach1);
+        coaches.add(coach2);
+        leagueModel.setCoaches(coaches);
+
+        ArrayList<IGeneralManager> managers = new ArrayList<>();
+        IGeneralManager gm1 = new GeneralManager("Todd McLellan");
+        IGeneralManager gm2 = new GeneralManager("Todd McLellan1");
+        managers.add(gm1);
+        managers.add(gm2);
+        leagueModel.setGeneralManagers(managers);
+        return leagueModel;
+    }
+
+    public IGameConfig getGameConfig() {
+        JsonFilePathMock filePathMock = new JsonFilePathMock();
+        ImportJsonFile importJsonFile = new ImportJsonFile("src/test/java/dhl/importJsonTest/GameConfigMockFile.json");
+        IGameConfig gameConfig=null;
+        try{
+             gameConfig = new GameConfig(importJsonFile.getJsonObject());
+        }
+        catch (Exception e){
+
+        }
+        return gameConfig;
     }
 }

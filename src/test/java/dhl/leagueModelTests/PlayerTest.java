@@ -1,8 +1,12 @@
 package dhl.leagueModelTests;
 
+import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.factory.InitializeObjectFactory;
+import dhl.InputOutput.importJson.Interface.IGameConfig;
+import dhl.leagueModel.InjurySystem;
 import dhl.leagueModel.Player;
 import dhl.leagueModel.PlayerStatistics;
+import dhl.leagueModel.interfaceModel.IInjurySystem;
 import dhl.leagueModel.interfaceModel.IPlayer;
 import dhl.leagueModel.interfaceModel.IPlayerStatistics;
 import org.junit.jupiter.api.AfterEach;
@@ -10,16 +14,23 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Date;
+
 public class PlayerTest {
     InitializeObjectFactory initObj;
     IPlayer player;
     IPlayerStatistics playerStatistics;
+    InjurySystem injuredPlayer;
+    IGameConfig gameConfig;
 
     @BeforeEach()
     public void initObject(){
         initObj = new InitializeObjectFactory();
         player= initObj.createPlayer();
         playerStatistics =new PlayerStatistics(20,10,10,10,10);
+        injuredPlayer=new InjurySystem(new Date(),20);
+        LeagueObjectModelMocks leagueMock= new LeagueObjectModelMocks();
+        gameConfig=leagueMock.getGameConfig();
     }
 
     @Test
@@ -94,10 +105,19 @@ public class PlayerTest {
         player.setCaptain(false);
         Assertions.assertFalse(player.getCaptain());
     }
+
     @Test
     void setPlayerStatsTest() {
         player.setPlayerStats(playerStatistics);
-        Assertions.assertEquals(20,player.getPlayerStats().getAge());
+        IPlayerStatistics playerStatistics=player.getPlayerStats();
+        Assertions.assertEquals(20,playerStatistics.getAge());
+    }
+
+    @Test
+    void setInjurySystemTest() {
+        player.setInjurySystem(injuredPlayer);
+        IInjurySystem injury=player.getInjurySystem();
+        Assertions.assertTrue(injury.isInjured());
     }
 
     @Test
@@ -157,8 +177,32 @@ public class PlayerTest {
     }
 
     @Test
+    public void isPlayerAlreadyInjuredTest(){
+        player.setInjurySystem(injuredPlayer);
+        player.checkPlayerInjury(gameConfig,new Date());
+        IInjurySystem injurySystem = player.getInjurySystem();
+        Assertions.assertTrue(injurySystem.isInjured());
+    }
+
+    @Test
+    public void checkPlayerInjuryTest(){
+        player.checkPlayerInjury(gameConfig,new Date());
+        IInjurySystem injury= player.getInjurySystem();
+        Assertions.assertTrue(injury.isInjured());
+    }
+
+    @Test
     public void getPlayerStrengthTest(){
-        Assertions.assertEquals(0,player.getPlayerStrength());
+        player.setPlayerStats(playerStatistics);
+        player.setPosition("forward");
+        Assertions.assertEquals(25,player.getPlayerStrength());
+        player.setPosition("goalie");
+        Assertions.assertEquals(20,player.getPlayerStrength());
+        player.setPosition("defense");
+        Assertions.assertEquals(25,player.getPlayerStrength());
+        player.setInjurySystem(injuredPlayer);
+        player.setPosition("defense");
+        Assertions.assertEquals(12.5,player.getPlayerStrength());
     }
 
     @AfterEach()
