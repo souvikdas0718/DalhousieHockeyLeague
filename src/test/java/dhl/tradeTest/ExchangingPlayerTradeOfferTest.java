@@ -39,30 +39,6 @@ public class ExchangingPlayerTradeOfferTest {
     }
 
     @Test
-    public void isTradeGoodForReceivingTeamTest(){
-        Assertions.assertFalse(testClassObject.isTradeGoodForReceivingTeam());
-
-        ITeam goodTeam = mockObject.getTeamWithGoodPlayer();
-        ITeam badTeam = mockObject.getTeamWithBadPlayer();
-        ArrayList<IPlayer> offeringPlayers = new ArrayList<>();
-        offeringPlayers.add(goodTeam.getPlayers().get(0));
-        ArrayList<IPlayer> receivingPlayers = new ArrayList<>();
-        receivingPlayers.add(badTeam.getPlayers().get(0));
-
-        ExchangingPlayerTradeOffer goodTradeForReceiver = new ExchangingPlayerTradeOffer(goodTeam,badTeam,offeringPlayers,receivingPlayers );
-        Assertions.assertTrue(goodTradeForReceiver.isTradeGoodForReceivingTeam());
-    }
-
-    @Test
-    public void getPlayerCombinedStrengthTest(){
-        ArrayList<IPlayer> players = new ArrayList<>();
-        players.add(mockObject.getStrongPlayer("player1"));
-        players.add(mockObject.getStrongPlayer("player2"));
-
-        Assertions.assertTrue(testClassObject.getPlayerCombinedStrength(players) == 50.0);
-    }
-
-    @Test
     public void getOfferingTeamTest(){
         Assertions.assertTrue(testClassObject.getOfferingTeam().getTeamName() == "TeamWithBadPlayer");
     }

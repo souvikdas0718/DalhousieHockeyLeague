@@ -1,6 +1,9 @@
 package dhl.trade.Interface;
 
+import dhl.leagueModel.interfaceModel.IPlayer;
 import dhl.leagueModel.interfaceModel.ITeam;
+
+import java.util.ArrayList;
 
 public interface ITradeOffer {
 
@@ -10,5 +13,7 @@ public interface ITradeOffer {
 
     public ITeam getReceivingTeam();
 
-    public boolean isTradeGoodForReceivingTeam();
+    public ArrayList<IPlayer> getOfferingPlayers();
+
+    public ArrayList<IPlayer> getPlayersWantedInReturn();
 }
