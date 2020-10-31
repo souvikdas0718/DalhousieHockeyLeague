@@ -12,9 +12,9 @@ public class AiUserTrade implements ITradeType {
     IUserInputOutput ioObject;
     ITradeOffer tradeOffer;
 
-    public AiUserTrade(ITradeOffer tradeOffer){
+    public AiUserTrade(ITradeOffer tradeOffer, IUserInputOutput ioObject){
         this.tradeOffer = tradeOffer;
-        ioObject = new UserInputOutput();
+        this.ioObject = ioObject;
     }
 
     @Override
@@ -22,6 +22,7 @@ public class AiUserTrade implements ITradeType {
         try{
             DisplayTradeOfferToUser();
             int inputfromUser = Integer.parseInt(ioObject.getUserInput());
+
             if (inputfromUser == 1){
                 return true;
             }else if( inputfromUser == 2){
@@ -32,7 +33,6 @@ public class AiUserTrade implements ITradeType {
         }catch(Exception e){
             ioObject.printMessage("----------ERROR----------");
             ioObject.printMessage(e.getMessage());
-            isTradeAccepted();
         }
 
         return false;

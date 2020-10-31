@@ -7,7 +7,6 @@ import java.util.HashMap;
 public class GameConfig implements IGameConfig {
 
     JSONObject ourJsonObject;
-    HashMap gameConfigChildObject;
 
     public GameConfig(JSONObject jsonObject){
         ourJsonObject = jsonObject;
@@ -29,17 +28,9 @@ public class GameConfig implements IGameConfig {
         }
         return mapToReturn;
     }
-
     @Override
-    public void setRequiredObjectFromConfig(String configChildKey) {
-
-        gameConfigChildObject = getHashMap(configChildKey);
-
-    }
-
-    @Override
-    public String getValueFromOurObject(String ourObjectKey) {
-
+    public String getValueFromOurObject(String configChildKey , String ourObjectKey) {
+        HashMap gameConfigChildObject = getHashMap(configChildKey);
         String valueToReturn = String.valueOf(gameConfigChildObject.get(ourObjectKey));
         return valueToReturn;
 

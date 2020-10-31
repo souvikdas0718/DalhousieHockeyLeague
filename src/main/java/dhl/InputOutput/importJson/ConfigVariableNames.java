@@ -1,7 +1,8 @@
-package dhl.trade;
+package dhl.InputOutput.importJson;
 
-public class TradeConfigVariableNames {
+public class ConfigVariableNames {
 
+    private String trading = "trading";
     private String lossPoint = "lossPoint";
     private String randomTradeOfferChance = "randomTradeOfferChance";
     private String maxPlayersPerTrade = "maxPlayersPerTrade";
@@ -23,5 +24,9 @@ public class TradeConfigVariableNames {
 
     public String getRandomAcceptanceChance() {
         return randomAcceptanceChance;
+    }
+
+    public String getTrading() {
+        return trading;
     }
 }

@@ -35,7 +35,6 @@ public class PlayerSwappingTradeEngineTest {
         leagueMock.getConferences().get(0).getDivisions().get(0).getTeams().add(goodTeamMock);
         leagueMock.getConferences().get(0).getDivisions().get(0).getTeams().add(badTeamMock);
         IGameConfig ourGameConfig = gameConfigMock.getGameConfigMock();
-        ourGameConfig.setRequiredObjectFromConfig("trading");
         testClassObject = new PlayerSwappingTradeEngine(ourGameConfig ,leagueMock);
     }
 
@@ -89,4 +88,5 @@ public class PlayerSwappingTradeEngineTest {
         });
         Assertions.assertTrue(error.getMessage().contains("EmptyPlayers Team have no players"));
     }
+
 }

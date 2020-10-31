@@ -1,5 +1,7 @@
 package dhl.trade;
 
+import dhl.InputOutput.UI.UserInputOutput;
+import dhl.InputOutput.importJson.ConfigVariableNames;
 import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.leagueModel.interfaceModel.*;
 import dhl.trade.Interface.ITradeOffer;
@@ -13,12 +15,12 @@ public class PlayerSwappingTradeEngine implements ITradingEngine {
 
     private ITradeOffer currentTrade;
     private IGameConfig gameConfig;
-    private TradeConfigVariableNames tradingConfigNames;
+    private ConfigVariableNames configNames;
     private ILeagueObjectModel leagueObjectModel;
 
     public PlayerSwappingTradeEngine(IGameConfig gameConfig, ILeagueObjectModel leagueObjectModel){
         this.gameConfig = gameConfig;
-        tradingConfigNames = new TradeConfigVariableNames();
+        this.configNames = new ConfigVariableNames();
         this.leagueObjectModel = leagueObjectModel;
     }
 
@@ -61,11 +63,10 @@ public class PlayerSwappingTradeEngine implements ITradingEngine {
         ITradeType tradeType;
         // TODO: 29-10-2020 check how to handle this  LSC
         if(currentTrade.getReceivingTeam() == userTeam){
-            tradeType = new AiUserTrade(currentTrade);
+            tradeType = new AiUserTrade(currentTrade , new UserInputOutput());
         }else{
             tradeType = new AiAiTrade(currentTrade,gameConfig);
         }
-
         if(tradeType.isTradeAccepted()){
             currentTrade.performTrade();
         }
@@ -99,7 +100,7 @@ public class PlayerSwappingTradeEngine implements ITradingEngine {
         ArrayList<IPlayer> secondTeamPlayers = sortPlayerList(teamGettingOffer);
         ArrayList<IPlayer> playersOffered = new ArrayList<>();
         ArrayList<IPlayer> playersWanted = new ArrayList<>();
-        int congifMaxPlayerPerTrade = Integer.parseInt(gameConfig.getValueFromOurObject(tradingConfigNames.getMaxPlayersPerTrade()));
+        int congifMaxPlayerPerTrade = Integer.parseInt(gameConfig.getValueFromOurObject( configNames.getTrading(), configNames.getMaxPlayersPerTrade()));
         int maxPlayersInTrade = 0;
         for (IPlayer playerToBeOffered: offeringTeamPayers){
             for (IPlayer playerToGetInExchange: secondTeamPlayers){

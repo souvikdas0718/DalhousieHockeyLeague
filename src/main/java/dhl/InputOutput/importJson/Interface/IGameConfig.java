@@ -6,7 +6,5 @@ public interface IGameConfig {
 
     HashMap getHashMap(String key);
 
-    public void setRequiredObjectFromConfig(String configChildKey);
-
-    public String getValueFromOurObject(String ourObjectKey);
+    public String getValueFromOurObject(String configChildKey , String ourObjectKey);
 }

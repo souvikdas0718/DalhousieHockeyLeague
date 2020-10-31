@@ -1,6 +1,8 @@
 package dhl.trade;
 
+import dhl.InputOutput.importJson.ConfigVariableNames;
 import dhl.InputOutput.importJson.Interface.IGameConfig;
+
 import dhl.leagueModel.interfaceModel.IPlayer;
 import dhl.trade.Interface.ITradeOffer;
 import dhl.trade.Interface.ITradeType;
@@ -11,17 +13,19 @@ public class AiAiTrade implements ITradeType {
 
     ITradeOffer tradeOffer;
     IGameConfig gameConfig;
-    TradeConfigVariableNames tradeConfigVariableNames;
+    ConfigVariableNames configVariableNames;
+
     public AiAiTrade(ITradeOffer tradeOffer, IGameConfig gameConfig){
         this.tradeOffer = tradeOffer;
         this.gameConfig = gameConfig;
-        tradeConfigVariableNames = new TradeConfigVariableNames();
+
+        configVariableNames = new ConfigVariableNames();
     }
 
     @Override
     public boolean isTradeAccepted() {
         // TODO: 30-10-2020 random value fix
-        double configRandomAcceptanceChance = Double.parseDouble(gameConfig.getValueFromOurObject(tradeConfigVariableNames.getRandomAcceptanceChance()));
+        double configRandomAcceptanceChance = Double.parseDouble(gameConfig.getValueFromOurObject( configVariableNames.getTrading(), configVariableNames.getRandomAcceptanceChance()));
         double randomValue = Math.random();
         if(isTradeGoodForReceivingTeam(tradeOffer)){
             return true;

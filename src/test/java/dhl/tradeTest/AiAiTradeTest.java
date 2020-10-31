@@ -21,14 +21,12 @@ public class AiAiTradeTest {
     IGameConfig ourGameConfig;
     ArrayList<IPlayer> playersOffered,playersWanted;
     ITeam strongTeam,weakTeam;
-
     @BeforeEach
     public void initObject(){
         tradeMock = new TradeMock();
 
         gameConfigMock = new GameConfigMock();
         ourGameConfig = gameConfigMock.getGameConfigMock();
-        ourGameConfig.setRequiredObjectFromConfig("trading");
 
         strongTeam = tradeMock.getTeamWithGoodPlayer();
         weakTeam = tradeMock.getTeamWithBadPlayer();

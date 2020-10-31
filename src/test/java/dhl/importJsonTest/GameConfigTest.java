@@ -33,11 +33,10 @@ public class GameConfigTest {
 
     @Test
     public void getValueFromOurObjectTest(){
-        testClassObject.setRequiredObjectFromConfig("trading");
-        String lossPointValue = testClassObject.getValueFromOurObject("lossPoint");
+        String lossPointValue = testClassObject.getValueFromOurObject("trading","lossPoint");
         int losspoint = Integer.parseInt(lossPointValue);
         Assertions.assertTrue(losspoint == 8);
-        Double randomTradeOfferChance = Double.parseDouble(testClassObject.getValueFromOurObject("randomTradeOfferChance"));
+        Double randomTradeOfferChance = Double.parseDouble(testClassObject.getValueFromOurObject("trading","randomTradeOfferChance"));
         Assertions.assertTrue(randomTradeOfferChance == 0.05);
     }
 }

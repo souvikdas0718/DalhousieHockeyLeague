@@ -2,6 +2,7 @@ package dhl.trade;
 
 import dhl.InputOutput.UI.IUserInputOutput;
 import dhl.InputOutput.UI.UserInputOutput;
+import dhl.InputOutput.importJson.ConfigVariableNames;
 import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.leagueModel.interfaceModel.IConference;
 import dhl.leagueModel.interfaceModel.IDivision;
@@ -19,16 +20,15 @@ public class TradeController implements ITradeController {
     IGameConfig gameConfig;
     public TradeController(ITeam userTeam, ILeagueObjectModel leagueObjectModel, IGameConfig gameConfig){
         this.gameConfig = gameConfig;
-        gameConfig.setRequiredObjectFromConfig("trading");
         this.leagueObjectModel = leagueObjectModel;
         this.userTeam = userTeam;
     }
 
     @Override
     public void startTrading() {
-        TradeConfigVariableNames tradeConfigVariableNames = new TradeConfigVariableNames();
-        long configLossPoint = Long.parseLong(gameConfig.getValueFromOurObject(tradeConfigVariableNames.getLossPoint()));
-        double configRandomTradeChance = Double.parseDouble(gameConfig.getValueFromOurObject(tradeConfigVariableNames.getRandomTradeOfferChance()));
+        ConfigVariableNames configVariableNames = new ConfigVariableNames();
+        long configLossPoint = Long.parseLong(gameConfig.getValueFromOurObject(configVariableNames.getTrading(),configVariableNames.getLossPoint()));
+        double configRandomTradeChance = Double.parseDouble(gameConfig.getValueFromOurObject(configVariableNames.getTrading(),configVariableNames.getRandomTradeOfferChance()));
         try{
             for(IConference conference: leagueObjectModel.getConferences()){
                 for(IDivision division : conference.getDivisions()){
