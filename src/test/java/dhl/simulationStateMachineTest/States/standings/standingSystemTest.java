@@ -18,11 +18,6 @@ public class standingSystemTest {
 //    }
 
 //    @Test
-//    public void Test(){
-//        Assert.assertTrue(true);
-//    }
-
-//    @Test
 //    public void setStandingsList(List<IStandings> standingsList) {
 //
 //    }
