@@ -80,6 +80,25 @@ public class Team implements ITeam {
         return playerList.size() ==20 ;
     }
 
+    public boolean checkIfSkatersGoaliesValid(){
+        int totalSkaters = 0;
+        int totalGoalies = 0;
+        for(IPlayer player: players){
+            String position=player.getPosition();
+            if (position.equals("forward") || position.equals("defense")){
+                totalSkaters = totalSkaters + 1;
+            }
+            if (position.equals("goalie")){
+                totalGoalies = totalGoalies + 1;
+            }
+        }
+        if (totalGoalies<2 || totalSkaters<18)
+        {
+            return false;
+        }
+        return true;
+    }
+
     public boolean checkIfTeamValid(IValidation validation) throws Exception{
         validation.isStringEmpty(teamName,"Team name");
         this.headCoach.checkIfCoachValid(validation);

@@ -1,8 +1,8 @@
 package dhl.leagueModelTests;
 
 
+import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.Mocks.LeagueObjectModelMocks;
-import dhl.importJson.Interface.IGameConfig;
 import dhl.leagueModel.*;
 import dhl.leagueModel.interfaceModel.*;
 import org.junit.jupiter.api.AfterEach;
@@ -112,7 +112,7 @@ public class AgingSystemTest {
         agingSystem.setLikelihoodForGreaterThanAvg(100);
         agingSystem.setLikelihoodForLesserThanAvg(100);
         ILeagueObjectModel leagueObjectModel= leagueMock.getLeagueObjectMock();
-        leagueObjectModel=new LeagueObjectModel(leagueObjectModel.getLeagueName(),leagueObjectModel.getConferences(),freeAgents);
+        leagueObjectModel=new LeagueObjectModel(leagueObjectModel.getLeagueName(),leagueObjectModel.getConferences(),freeAgents,new ArrayList<>(),new ArrayList<>(),gameConfig);
         agentsSelectedToRetire=agingSystem.selectFreeAgentsToRetire(leagueObjectModel.getFreeAgents());
 
         Assertions.assertEquals(3,agentsSelectedToRetire.size());

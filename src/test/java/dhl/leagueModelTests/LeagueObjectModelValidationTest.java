@@ -1,8 +1,10 @@
 package dhl.leagueModelTests;
 
+import dhl.InputOutput.importJson.GameConfig;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.leagueModel.*;
 import dhl.leagueModel.interfaceModel.*;
+import org.json.simple.JSONObject;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +32,7 @@ public class LeagueObjectModelValidationTest {
     public void checkIfLeagueObjectModelValidTest() throws Exception{
         List<IConference> conferences =leagueModelParameterized.getConferences();
         conferences.add(new Conference("Eastern",new ArrayList<>()));
-        leagueModelParameterized=new LeagueObjectModel("Dhl",conferences,leagueMock.getFreeAgentArrayMock());
+        leagueModelParameterized=new LeagueObjectModel("Dhl",conferences,leagueMock.getFreeAgentArrayMock(),new ArrayList<>(),new ArrayList<>(),new GameConfig(new JSONObject()));
         Assertions.assertTrue(leagueValidation.checkIfLeagueObjectModelValid(validate,leagueModelParameterized));
     }
 

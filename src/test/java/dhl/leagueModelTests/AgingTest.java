@@ -1,9 +1,9 @@
 package dhl.leagueModelTests;
 
 
+import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.database.interfaceDB.IPlayerDB;
-import dhl.importJson.Interface.IGameConfig;
 import dhl.leagueModel.*;
 import dhl.leagueModel.interfaceModel.*;
 import org.junit.jupiter.api.AfterEach;
@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 

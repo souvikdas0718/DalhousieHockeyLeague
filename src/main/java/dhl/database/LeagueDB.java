@@ -3,6 +3,7 @@ package dhl.database;
 import dhl.database.DatabaseConfigSetup.CallStoredProcedure;
 import dhl.database.interfaceDB.*;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 
 public class LeagueDB implements ILeagueDB {
@@ -25,6 +26,16 @@ public class LeagueDB implements ILeagueDB {
         callproc.cleanup();
 
         return leagueId;
+    }
+
+    @Override
+    public void insertDate(int league_Id, int team_Id, Date season_startDate, Date current_date) throws Exception {
+        CallStoredProcedure callprocDate = new CallStoredProcedure("insertDate(?,?,?,?)");
+        callprocDate.setParameter(1, league_Id);
+        callprocDate.setParameter(2, team_Id);
+        callprocDate.setParameter(3, season_startDate);
+        callprocDate.setParameter(4, current_date);
+        callprocDate.cleanup();
     }
 
     public boolean checkIfLeagueAlreadyExists(String leagueName) throws Exception {

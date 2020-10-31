@@ -1,8 +1,8 @@
 package dhl.leagueModel;
 
-import dhl.importJson.Interface.IGameConfig;
+import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.leagueModel.interfaceModel.*;
-import dhl.database.interfaceDB.ILeagueObjectModelData;
+import dhl.database.interfaceDB.ILeagueObjectModelDB;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,8 @@ public class LeagueObjectModel implements ILeagueObjectModel {
     public List<IConference> conferences;
     public List<IPlayer>freeAgents;
     public List<ICoach> coaches;
-    public List managers;
+    public List <IGeneralManager> managers;
+    public IGameConfig gameConfig;
 
     public LeagueObjectModel(){
         leagueName="";
@@ -20,10 +21,13 @@ public class LeagueObjectModel implements ILeagueObjectModel {
         freeAgents = new ArrayList<>();
     }
 
-    public LeagueObjectModel(String leagueName,List<IConference> conferences, List<IPlayer>freeAgents){
+    public LeagueObjectModel(String leagueName, List<IConference> conferences, List<IPlayer>freeAgents, List<ICoach> coaches, List<IGeneralManager> managers, IGameConfig gameConfig){
         this.leagueName=leagueName;
         this.conferences=conferences;
-        this.freeAgents = freeAgents;
+        this.freeAgents=freeAgents;
+        this.coaches=coaches;
+        this.managers=managers;
+        this.gameConfig=gameConfig;
     }
 
     public String getLeagueName() {
@@ -46,19 +50,15 @@ public class LeagueObjectModel implements ILeagueObjectModel {
         this.coaches = coaches;
     }
 
-    public List getManagers() {
+    public List<IGeneralManager> getGeneralManagers() {
         return managers;
-    }
-
-    public void setManagers(List managers) {
-        this.managers = managers;
     }
 
     public boolean checkIfLeagueModelValid(IValidation validation,ILeagueObjectModelValidation leagueObjectModelValidation) throws Exception{
         return leagueObjectModelValidation.checkIfLeagueObjectModelValid(validation,this);
     }
 
-    public ILeagueObjectModel saveLeagueObjectModel(ILeagueObjectModelData leagueDatabase, ILeagueObjectModelInput saveLeagueInput) throws Exception{
+    public ILeagueObjectModel saveLeagueObjectModel(ILeagueObjectModelDB leagueDatabase, ILeagueObjectModelInput saveLeagueInput) throws Exception{
         ILeagueObjectModelValidation leagueObjectModelValidation=saveLeagueInput.getLeagueObjectModelValidation();
         leagueObjectModelValidation.checkUserInputForLeague(this,saveLeagueInput);
         List<IConference> conferenceArrayList=this.getConferences();
@@ -86,7 +86,7 @@ public class LeagueObjectModel implements ILeagueObjectModel {
         return this;
     }
 
-    public ILeagueObjectModel loadLeagueObjectModel(ILeagueObjectModelData leagueDatabase,String leagueName,String teamName) throws Exception{
+    public ILeagueObjectModel loadLeagueObjectModel(ILeagueObjectModelDB leagueDatabase, String leagueName, String teamName) throws Exception{
         return leagueDatabase.loadLeagueModel(leagueName,teamName);
     }
 

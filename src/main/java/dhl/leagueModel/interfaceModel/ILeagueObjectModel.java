@@ -1,6 +1,6 @@
 package dhl.leagueModel.interfaceModel;
 
-import dhl.database.interfaceDB.ILeagueObjectModelData;
+import dhl.database.interfaceDB.ILeagueObjectModelDB;
 
 import java.util.List;
 
@@ -14,16 +14,12 @@ public interface ILeagueObjectModel {
 
     boolean checkIfLeagueModelValid(IValidation validation,ILeagueObjectModelValidation leagueObjectModelValidation) throws Exception;
 
-    ILeagueObjectModel saveLeagueObjectModel(ILeagueObjectModelData leagueDatabase, ILeagueObjectModelInput saveLeagueInput) throws Exception;
+    ILeagueObjectModel saveLeagueObjectModel(ILeagueObjectModelDB leagueDatabase, ILeagueObjectModelInput saveLeagueInput) throws Exception;
 
-    ILeagueObjectModel loadLeagueObjectModel(ILeagueObjectModelData leagueDatabase,String leagueName,String teamName) throws Exception;
+    ILeagueObjectModel loadLeagueObjectModel(ILeagueObjectModelDB leagueDatabase, String leagueName, String teamName) throws Exception;
 
     List<ICoach> getCoaches() ;
 
-    void setCoaches(List<ICoach> coaches);
-
-    List getManagers();
-
-    void setManagers(List managers);
+    List<IGeneralManager> getGeneralManagers();
 
 }

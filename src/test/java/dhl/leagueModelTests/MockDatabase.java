@@ -1,13 +1,15 @@
 package dhl.leagueModelTests;
 
+import dhl.InputOutput.importJson.GameConfig;
 import dhl.leagueModel.*;
 import dhl.leagueModel.interfaceModel.*;
-import dhl.database.interfaceDB.ILeagueObjectModelData;
+import dhl.database.interfaceDB.ILeagueObjectModelDB;
+import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MockDatabase implements ILeagueObjectModelData {
+public class MockDatabase implements ILeagueObjectModelDB {
     @Override
     public void insertLeagueModel(ILeagueObjectModel leagueObjectModel) {
 
@@ -30,7 +32,7 @@ public class MockDatabase implements ILeagueObjectModelData {
         List<IConference> conferences= new ArrayList<>();
         conferences.add(conference);
         List<IPlayer> freeAgentsList=new ArrayList<>();
-        ILeagueObjectModel leagueModel=new LeagueObjectModel("Dhl",conferences,freeAgentsList);
+        ILeagueObjectModel leagueModel=new LeagueObjectModel("Dhl",conferences,freeAgentsList,new ArrayList<>(),new ArrayList<>(),new GameConfig(new JSONObject()));
         return leagueModel;
     }
 

@@ -1,12 +1,12 @@
 package dhl.simulationStateMachine;
 
-import dhl.importJson.Interface.IGameConfig;
+import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.leagueModel.interfaceModel.ITeam;
 import dhl.simulationStateMachine.Interface.IGameState;
-import dhl.simulationStateMachine.States.CreateTeamState;
-import dhl.simulationStateMachine.States.ImportState;
-import dhl.simulationStateMachine.States.LoadTeamState;
+import dhl.simulationStateMachine.States.CreateTeamStateUI;
+import dhl.simulationStateMachine.States.ImportStateUI;
+import dhl.simulationStateMachine.States.LoadTeamStateUI;
 import dhl.simulationStateMachine.States.SimulateState;
 
 public class GameContext {
@@ -15,25 +15,25 @@ public class GameContext {
     IGameState simulateState;
     IGameState createTeamState;
     IGameState currentState;
-    boolean gameinProgress;
+    boolean gameInProgress;
     ILeagueObjectModel inMemoryLeague;
     ITeam selectedTeam;
     IGameConfig gameConfig;
 
-    public GameContext(){
-        importState = new ImportState(this);
-        loadTeamState = new LoadTeamState(this);
+    public GameContext() {
+        importState = new ImportStateUI(this);
+        loadTeamState = new LoadTeamStateUI(this);
         simulateState = new SimulateState(this);
-        createTeamState = new CreateTeamState(this);
+        createTeamState = new CreateTeamStateUI(this);
         currentState = importState;
-        gameinProgress = true;
+        gameInProgress = true;
     }
 
-    public void setGameState(IGameState newState){
+    public void setGameState(IGameState newState) {
         this.currentState = newState;
     }
 
-    public void stateEntryProcess(){
+    public void stateEntryProcess() {
         currentState.stateEntryProcess();
     }
 
@@ -41,7 +41,7 @@ public class GameContext {
         currentState.stateProcess();
     }
 
-    public void stateExitProcess(){
+    public void stateExitProcess() {
         currentState.stateExitProcess();
     }
 
@@ -77,12 +77,12 @@ public class GameContext {
         return createTeamState;
     }
 
-    public boolean isGameinProgress() {
-        return gameinProgress;
+    public boolean isGameInProgress() {
+        return gameInProgress;
     }
 
-    public void setGameinProgress(boolean gameStatus){
-        gameinProgress = gameStatus;
+    public void setGameInProgress(boolean gameStatus) {
+        gameInProgress = gameStatus;
     }
 
     public IGameConfig getGameConfig() {

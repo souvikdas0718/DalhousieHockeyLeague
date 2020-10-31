@@ -1,6 +1,6 @@
 package dhl.leagueModel.interfaceModel;
 
-import dhl.importJson.Interface.IGameConfig;
+import dhl.InputOutput.importJson.Interface.IGameConfig;
 
 public interface IInjurySystem {
     void checkTeamInjury(IGameConfig  gameConfig, ITeam team);

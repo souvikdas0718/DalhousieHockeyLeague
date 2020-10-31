@@ -1,14 +1,17 @@
 package dhl.leagueModelTests;
 
+import com.google.gson.JsonObject;
+import dhl.InputOutput.importJson.GameConfig;
+import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.leagueModel.*;
 import dhl.leagueModel.interfaceModel.*;
-import dhl.database.interfaceDB.ILeagueObjectModelData;
+import dhl.database.interfaceDB.ILeagueObjectModelDB;
+import org.json.simple.JSONObject;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +44,7 @@ public class LeagueObjectModelTest {
         IPlayerStatistics playerStatistics =new PlayerStatistics(20,10,10,10,10);
         freeAgentsList.add(new FreeAgent("Henry","forward",playerStatistics));
         freeAgentsList.add(new FreeAgent("Max","goalie",playerStatistics));
-        leagueModel= new LeagueObjectModel("Dhl",leagueMock.getConferenceArrayMock(),freeAgentsList);
+        leagueModel= new LeagueObjectModel("Dhl",leagueMock.getConferenceArrayMock(),freeAgentsList,new ArrayList<>(),new ArrayList<>(),new GameConfig(new JSONObject()));
         Assertions.assertEquals(leagueModel.getFreeAgents().size(),freeAgentsList.size());
     }
 
@@ -52,21 +55,20 @@ public class LeagueObjectModelTest {
     }
 
     @Test
-    public void getManagersTest(){
-        leagueModel.setManagers(leagueMock.getManagers());
-        Assertions.assertEquals(3,leagueModel.getManagers().size());
+    public void setManagersTest(){
+        Assertions.assertEquals(3,leagueMock.getManagers().size());
     }
 
     @Test
     public void checkIfLeagueModelValidTest() throws Exception{
         List<IConference> conferences =leagueModelParameterized.getConferences();
         conferences.add(new Conference("Eastern",new ArrayList<>()));
-        leagueModelParameterized = new LeagueObjectModel("Dhl",conferences,leagueMock.getFreeAgentArrayMock());
+        leagueModelParameterized = new LeagueObjectModel("Dhl",conferences,leagueMock.getFreeAgentArrayMock(),new ArrayList<>(),new ArrayList<>(),new GameConfig(new JSONObject()));
         Assertions.assertTrue(leagueModelParameterized.checkIfLeagueModelValid(validate,leagueValidation));
     }
 
     @Test void saveLeagueObjectModelTest() throws Exception{
-        ILeagueObjectModelData mockDb=new MockDatabase();
+        ILeagueObjectModelDB mockDb=new MockDatabase();
         List<IPlayer> players= new ArrayList<>();
         ICoach headCoach = new Coach("Todd McLellan",0.1,0.5,1.0,0.2);
         ITeam newlyCreatedTeam=new Team("Nova Scotia","Mathew",headCoach,players);
@@ -76,7 +78,7 @@ public class LeagueObjectModelTest {
     }
 
     @Test void loadLeagueObjectModelTest() throws Exception{
-        ILeagueObjectModelData mockDb=new MockDatabase();
+        ILeagueObjectModelDB mockDb=new MockDatabase();
         Assertions.assertEquals("Dhl",leagueModelParameterized.loadLeagueObjectModel(mockDb,"Dhl","Nova Scotia").getLeagueName());
     }
 

@@ -1,8 +1,10 @@
 package dhl.importJsonTest;
 
+import dhl.InputOutput.importJson.GameConfig;
+import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.Mocks.JsonFilePathMock;
-import dhl.importJson.CreateLeagueObjectModel;
-import dhl.importJson.ImportJsonFile;
+import dhl.InputOutput.importJson.CreateLeagueObjectModel;
+import dhl.InputOutput.importJson.ImportJsonFile;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,7 +38,8 @@ public class CreateLeagueObjectModelTest {
 
     @Test
     public void getLeagueObjectModel() throws Exception {
-        CreateLeagueObjectModel testObject = new CreateLeagueObjectModel(leagueObject);
+        IGameConfig gameConfig = new GameConfig(new JSONObject());
+        CreateLeagueObjectModel testObject = new CreateLeagueObjectModel(leagueObject,gameConfig);
         assertTrue(testObject.getLeagueObjectModel() != null );
     }
 

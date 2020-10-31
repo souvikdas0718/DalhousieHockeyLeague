@@ -1,6 +1,6 @@
 package dhl.importJsonTest;
 
-import dhl.importJson.CheckInputFileFormat;
+import dhl.InputOutput.importJson.CheckInputFileFormat;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

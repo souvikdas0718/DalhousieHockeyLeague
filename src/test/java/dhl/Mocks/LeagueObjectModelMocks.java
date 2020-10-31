@@ -1,8 +1,8 @@
 package dhl.Mocks;
 
-import dhl.importJson.GameConfig;
-import dhl.importJson.ImportJsonFile;
-import dhl.importJson.Interface.IGameConfig;
+import dhl.InputOutput.importJson.GameConfig;
+import dhl.InputOutput.importJson.ImportJsonFile;
+import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.leagueModel.*;
 import dhl.leagueModel.interfaceModel.*;
 
@@ -92,6 +92,19 @@ public class LeagueObjectModelMocks {
         return freeAgentArrayListMock;
     }
 
+        public ArrayList<IPlayer> get20FreeAgentArrayMock(){
+        ArrayList<IPlayer> freeAgents = new ArrayList<>();
+
+        for (int i=0; i<18; i++) {
+            freeAgents.add(new FreeAgent("Henry", "forward", getPlayerStatistics()));
+            if (i<2)
+            {
+                freeAgents.add(new FreeAgent("Henry", "goalie", getPlayerStatistics()));
+            }
+        }
+        return freeAgents;
+    }
+
     public IConference getConferenceObjectMock(){
         return new Conference( "Mock Conference" , getDivisionArrayMock());
     }
@@ -148,7 +161,7 @@ public class LeagueObjectModelMocks {
         List<ICoach> coachList=new ArrayList<>();
         List<IGeneralManager> generalManagerList=new ArrayList<>();
 
-        leagueObjectMock = new LeagueObjectModel("Dhl",conferences,freeAgentsList);
+        leagueObjectMock = new LeagueObjectModel("Dhl",conferences,freeAgentsList,coachList,generalManagerList,getGameConfig());
         return leagueObjectMock;
     }
 
@@ -161,12 +174,58 @@ public class LeagueObjectModelMocks {
         return coachList;
     }
 
+    public ICoach getSingleCoach(){
+        ICoach headCoach = new Coach("Todd McLellan",0.1,0.5,1.0,0.2);
+        return headCoach;
+    }
+
     public List getManagers(){
-        List managers=new ArrayList();
-        managers.add("Karen Potam");
-        managers.add("Joseph Squidly");
-        managers.add("Tom Spaghetti");
+        List<IGeneralManager> managers=new ArrayList();
+        managers.add(new GeneralManager("Karen Potam"));
+        managers.add(new GeneralManager("Joseph Squidly"));
+        managers.add(new GeneralManager("Tom Spaghetti"));
         return managers;
+    }
+
+    public ILeagueObjectModel leagueModelMock() {
+        List<IPlayer> playersList=new ArrayList<>();
+        IPlayerStatistics playerStatistics =new PlayerStatistics(20,10,10,10,0);
+        playersList.add(new Player("Henry","forward",false,playerStatistics));
+        playersList.add(new Player("Max","goalie",true,playerStatistics));
+
+        ICoach headCoach = new Coach("Todd McLellan",0.1,0.5,1.0,0.2);
+
+        ITeam team = new Team("Ontario","Mathew",headCoach,playersList);
+        List<ITeam> teamArrayList=new ArrayList<>();
+        teamArrayList.add(team);
+
+        IDivision division = new Division("Atlantic",teamArrayList);
+        List<IDivision> divisionsList=new ArrayList<>();
+        divisionsList.add(division);
+
+        IConference conference=new Conference("Western",divisionsList);
+        List<IConference> conferences= new ArrayList<>();
+        conferences.add(conference);
+
+        ArrayList<IPlayer> freeAgentsList=new ArrayList<>();
+        IPlayerStatistics freeAgentStatistics =new PlayerStatistics(20,10,10,10,0);
+        freeAgentsList.add(new FreeAgent("Henry","forward",freeAgentStatistics));
+        freeAgentsList.add(new FreeAgent("Max","goalie",freeAgentStatistics));
+
+
+        ArrayList<ICoach> coaches = new ArrayList<>();
+        ICoach coach1 = new Coach("Todd McLellan",0.1,0.5,1.0,0.2);
+        ICoach coach2 = new Coach("Todd McLellan",0.1,0.5,1.0,0.2);
+        coaches.add(coach1);
+        coaches.add(coach2);
+        ArrayList<IGeneralManager> managers = new ArrayList<>();
+        IGeneralManager gm1 = new GeneralManager("Todd McLellan");
+        IGeneralManager gm2 = new GeneralManager("Todd McLellan1");
+        managers.add(gm1);
+        managers.add(gm2);
+        ILeagueObjectModel leagueModel=new LeagueObjectModel("Dhl",conferences,freeAgentsList,coaches,managers,getGameConfig());
+
+        return leagueModel;
     }
 
     public IGameConfig getGameConfig() {

@@ -1,7 +1,11 @@
 package dhl.database.DatabaseConfigSetup;
-import dhl.database.DatabaseConfigSetup.DatabaseInitialize;
 
-import java.sql.*;
+import java.sql.SQLException;
+import java.sql.Connection;
+import java.sql.CallableStatement;
+import java.sql.ResultSet;
+import java.sql.Types;
+import java.sql.Date;
 
 public class CallStoredProcedure {
     private String storedProcedureName;
@@ -90,5 +94,13 @@ public class CallStoredProcedure {
 
     public void execute() throws SQLException {
         statement.execute();
+    }
+
+    public void setParameter(int paramIndex, Date season_startDate) {
+        try {
+            statement.setDate(paramIndex, season_startDate);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
