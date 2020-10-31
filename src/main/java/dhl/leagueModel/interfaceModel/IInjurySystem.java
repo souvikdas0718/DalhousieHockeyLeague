@@ -2,21 +2,10 @@ package dhl.leagueModel.interfaceModel;
 
 import dhl.importJson.Interface.IGameConfig;
 
-import java.util.Date;
-
 public interface IInjurySystem {
-    public boolean isInjured();
+    void checkTeamInjury(IGameConfig  gameConfig, ITeam team);
 
-    public void setInjured(boolean injured);
+    boolean checkIfPlayerInjured(IGameConfig gameConfig, IPlayer player);
 
-    public Date getInjuryDate();
-
-    public void setInjuryDate(Date injuryDate);
-
-    public int getNumberOfDaysInjured();
-
-    public void setNumberOfDaysInjured(int numberOfDaysInjured);
-
-    public IInjurySystem checkIfPlayerInjured(IGameConfig gameConfig, Date currentDate);
-
+    void healInjuredPlayers(IPlayer player);
 }

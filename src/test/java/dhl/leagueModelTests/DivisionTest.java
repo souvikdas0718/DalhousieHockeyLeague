@@ -7,6 +7,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.util.List;
 import java.util.ArrayList;
 
 public class DivisionTest {
@@ -21,13 +22,13 @@ public class DivisionTest {
         initObj = new InitializeObjectFactory();
         division= initObj.createDivision();
         validate=new CommonValidation();
-        ArrayList<IPlayer> playersList=new ArrayList<>();
+        List<IPlayer> playersList=new ArrayList<>();
         playerStatistics =new PlayerStatistics(20,10,10,10,10);
         playersList.add(new Player("Henry","forward",false,playerStatistics));
         playersList.add(new Player("Max","goalie",true,playerStatistics));
         ICoach headCoach = new Coach("Todd McLellan",0.1,0.5,1.0,0.2);
         ITeam team = new Team("Ontario","Mathew",headCoach,playersList);
-        ArrayList<ITeam> teamArrayList=new ArrayList<>();
+        List<ITeam> teamArrayList=new ArrayList<>();
         teamArrayList.add(team);
         divisionParameterized = new Division("Atlantic",teamArrayList);
     }
@@ -46,28 +47,13 @@ public class DivisionTest {
 
     @Test
     public void getDivisionNameTest(){
-        division.setDivisionName("Atlantic");
-        Assertions.assertEquals("Atlantic",division.getDivisionName());
-    }
-
-    @Test
-    public void setDivisionNameTest(){
-        division.setDivisionName("Pacific");
-        Assertions.assertEquals("Pacific",division.getDivisionName());
+        Assertions.assertEquals("Atlantic",divisionParameterized.getDivisionName());
     }
 
     @Test
     public void getTeamsTest(){
-        ArrayList<ITeam> teamsArrayList=new ArrayList<>();
-        division.getTeams();
-        Assertions.assertEquals(0,division.getTeams().size());
-    }
-
-    @Test
-    public void setTeamsTest(){
-        ArrayList<ITeam> teamsArrayList=new ArrayList<>();
-        division.setTeams(teamsArrayList);
-        Assertions.assertEquals(0,division.getTeams().size());
+        List<ITeam> teams=division.getTeams();
+        Assertions.assertEquals(0,teams.size());
     }
 
     @Test
@@ -78,12 +64,12 @@ public class DivisionTest {
 
     @Test
     public void checkIfTeamNamesUniqueInDivisionTest() throws Exception{
-        ArrayList<ITeam> teams =divisionParameterized.getTeams();
-        ArrayList<IPlayer> playersListTeamTwo=new ArrayList<>();
+        List<ITeam> teams =divisionParameterized.getTeams();
+        List<IPlayer> playersListTeamTwo=new ArrayList<>();
         playersListTeamTwo.add(new Player("Henry","forward",false,playerStatistics));
         ICoach headCoach = new Coach("Todd McLellan",0.1,0.5,1.0,0.2);
         teams.add(new Team("Ontario","Mathew",headCoach,playersListTeamTwo));
-        divisionParameterized.setTeams(teams);
+        divisionParameterized=new Division("Atlantic",teams);
         Exception error=Assertions.assertThrows(Exception.class,() ->{
             divisionParameterized.checkIfDivisionValid(validate);
         });

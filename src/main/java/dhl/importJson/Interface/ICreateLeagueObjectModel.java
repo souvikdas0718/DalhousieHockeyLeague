@@ -2,17 +2,17 @@ package dhl.importJson.Interface;
 
 import dhl.leagueModel.interfaceModel.*;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface ICreateLeagueObjectModel {
 
     public ILeagueObjectModel getLeagueObjectModel() throws Exception;
 
-    public ArrayList<IConference> getConferenceArrayList() throws Exception;
+    public List<IConference> getConferenceArrayList() throws Exception;
 
-    public ArrayList<IDivision> getDivisionObjectArrayList() throws Exception;
+    public List<IDivision> getDivisionObjectArrayList() throws Exception;
 
-    public ArrayList<ITeam> getTeamObjectArrayList() throws Exception;
+    public List<ITeam> getTeamObjectArrayList() throws Exception;
 
-    public ArrayList<IPlayer> getPlayerArrayList() throws Exception;
+    public List<IPlayer> getPlayerArrayList() throws Exception;
 }

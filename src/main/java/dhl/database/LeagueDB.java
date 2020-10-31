@@ -6,11 +6,6 @@ import dhl.database.interfaceDB.*;
 import java.sql.ResultSet;
 
 public class LeagueDB implements ILeagueDB {
-    IConferenceDB iConferenceDB = new ConferenceDB();
-    IDivisionDB iDivisionDB = new DivisionDB();
-    ITeamDB iTeamDB = new TeamDB();
-    IPlayerDB iPlayerDB = new PlayerDB();
-    IFreeAgentDB iFreeAgentDB = new FreeAgentDB();
 
     public int insertLeague(String leagueName) throws Exception {
         int leagueId=0;

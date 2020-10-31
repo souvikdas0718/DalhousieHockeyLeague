@@ -1,102 +1,87 @@
 package dhl.leagueModel;
 
+import dhl.importJson.Interface.IGameConfig;
 import dhl.leagueModel.interfaceModel.*;
 import dhl.database.interfaceDB.ILeagueObjectModelData;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class LeagueObjectModel implements ILeagueObjectModel {
     public String leagueName;
-    public ArrayList<IConference> conferences;
-    public ArrayList<IFreeAgent>freeAgents;
-    public ILeagueObjectModelValidation leagueValidation;
-    public ArrayList<ICoach> coaches;
-    public ArrayList managers;
+    public List<IConference> conferences;
+    public List<IPlayer>freeAgents;
+    public List<ICoach> coaches;
+    public List managers;
 
     public LeagueObjectModel(){
         leagueName="";
         conferences=new ArrayList<>();
         freeAgents = new ArrayList<>();
-        leagueValidation=new LeagueObjectModelValidation();
     }
 
-    public LeagueObjectModel(String leagueName,ArrayList<IConference> conferences, ArrayList<IFreeAgent>freeAgents){
+    public LeagueObjectModel(String leagueName,List<IConference> conferences, List<IPlayer>freeAgents){
         this.leagueName=leagueName;
         this.conferences=conferences;
         this.freeAgents = freeAgents;
-        leagueValidation=new LeagueObjectModelValidation();
     }
 
     public String getLeagueName() {
         return leagueName;
     }
 
-    public void setLeagueName(String leagueName) {
-        this.leagueName = leagueName;
-    }
-
-    public ArrayList<IConference> getConferences() {
+    public List<IConference> getConferences() {
         return conferences;
     }
 
-    public void setConferences(ArrayList<IConference> conferences) {
-        this.conferences = conferences;
-    }
-
-    public ArrayList<IFreeAgent> getFreeAgents() {
+    public List<IPlayer> getFreeAgents() {
         return freeAgents;
     }
 
-    public void setFreeAgents(ArrayList<IFreeAgent> freeAgents) {
-        this.freeAgents = freeAgents;
-    }
-
-    public ArrayList<ICoach> getCoaches() {
+    public List<ICoach> getCoaches() {
         return coaches;
     }
 
-    public void setCoaches(ArrayList<ICoach> coaches) {
+    public void setCoaches(List<ICoach> coaches) {
         this.coaches = coaches;
     }
 
-    public ArrayList getManagers() {
+    public List getManagers() {
         return managers;
     }
 
-    public void setManagers(ArrayList managers) {
+    public void setManagers(List managers) {
         this.managers = managers;
     }
 
-    public boolean checkIfLeagueModelValid(IValidation validation) throws Exception{
-        return leagueValidation.checkIfLeagueObjectModelValid(validation,this);
+    public boolean checkIfLeagueModelValid(IValidation validation,ILeagueObjectModelValidation leagueObjectModelValidation) throws Exception{
+        return leagueObjectModelValidation.checkIfLeagueObjectModelValid(validation,this);
     }
 
-    public ILeagueObjectModel saveLeagueObjectModel(ILeagueObjectModelData leagueDatabase, String leagueName, String conferenceName, String divisionName,  ITeam newlyCreatedTeam) throws Exception{
-        leagueValidation.checkUserInputForLeague(this,leagueName,conferenceName,divisionName, newlyCreatedTeam.getTeamName());
-        ArrayList<IConference> conferenceArrayList=this.getConferences();
+    public ILeagueObjectModel saveLeagueObjectModel(ILeagueObjectModelData leagueDatabase, ILeagueObjectModelInput saveLeagueInput) throws Exception{
+        ILeagueObjectModelValidation leagueObjectModelValidation=saveLeagueInput.getLeagueObjectModelValidation();
+        leagueObjectModelValidation.checkUserInputForLeague(this,saveLeagueInput);
+        List<IConference> conferenceArrayList=this.getConferences();
         boolean newTeamAddedToLeague=false;
         for(int i=0; i< conferenceArrayList.size();i++){
             IConference conference=  conferenceArrayList.get(i);
-            if(conference.getConferenceName()==conferenceName){
-                ArrayList<IDivision> divisionArrayList=conference.getDivisions();
+            if(conference.getConferenceName()==saveLeagueInput.getConferenceName()){
+                List<IDivision> divisionArrayList=conference.getDivisions();
                 for(int j=0;j<divisionArrayList.size();j++){
                     IDivision division=divisionArrayList.get(j);
-                    if(division.getDivisionName()==divisionName){
-                        ArrayList<ITeam> teamArrayList =division.getTeams();
-                        teamArrayList.add(newlyCreatedTeam);
-                        division.setTeams(teamArrayList);
-                        divisionArrayList.set(j,division);
+                    if(division.getDivisionName()==saveLeagueInput.getDivisionName()){
+                        List<ITeam> teamArrayList =division.getTeams();
+                        teamArrayList.add(saveLeagueInput.getNewlyCreatedTeam());
                         newTeamAddedToLeague=true;
                         break;
                     }
                 }
                 if(newTeamAddedToLeague){
-                    conference.setDivisions(divisionArrayList);
-                    conferenceArrayList.set(i,conference);
                     break;
                 }
             }
         }
-        this.setConferences(conferenceArrayList);
+        this.conferences=conferenceArrayList;
         leagueDatabase.insertLeagueModel(this);
         return this;
     }

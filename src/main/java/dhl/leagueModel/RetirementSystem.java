@@ -6,7 +6,7 @@ import dhl.leagueModel.interfaceModel.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class RetirementSystem implements IRetirementSystem {
+public class RetirementSystem implements IRetirementSystem{
     private ILeagueObjectModel leagueObjectModel;
     private IPlayerDB playerDB;
 
@@ -23,8 +23,8 @@ public class RetirementSystem implements IRetirementSystem {
         this.leagueObjectModel = leagueObjectModel;
     }
 
-    public void initiateRetirement(Map<String,List<IPlayer>> playersToRetire, Map<String,List<IFreeAgent>> freeAgentsToRetire) throws Exception {
-        retireFreeAgents(freeAgentsToRetire.get(leagueObjectModel.getLeagueName()),leagueObjectModel.getFreeAgents());
+    public void initiateRetirement(Map<String,List<IPlayer>> playersToRetire, List<IPlayer> freeAgentsToRetire) throws Exception {
+        retireFreeAgents(freeAgentsToRetire,leagueObjectModel.getFreeAgents());
         for(IConference conference:leagueObjectModel.getConferences()){
             for(IDivision division: conference.getDivisions()){
                 for(ITeam team:division.getTeams()){
@@ -34,52 +34,51 @@ public class RetirementSystem implements IRetirementSystem {
                 }
             }
         }
-        if(playersToRetire.keySet().size()>0 || freeAgentsToRetire.keySet().size()>0){
+        if(playersToRetire.keySet().size()>0 || freeAgentsToRetire.size()>0){
             insertVeterans(playersToRetire,freeAgentsToRetire);
         }
     }
 
-    public void retireFreeAgents(List<IFreeAgent> agentsSelectedToRetire,List<IFreeAgent> freeAgents){
+    public void retireFreeAgents(List<IPlayer> agentsSelectedToRetire,List<IPlayer> freeAgents){
         if(agentsSelectedToRetire.size()>0){
             List <String> retiringPlayerNames = new ArrayList<>();
-            for(IFreeAgent retiringAgent: agentsSelectedToRetire){
+            for(IPlayer retiringAgent: agentsSelectedToRetire){
                 retiringPlayerNames.add(retiringAgent.getPlayerName());
             }
-            ArrayList<IFreeAgent> updatedFreeAgents= new ArrayList<>();
+            List<IPlayer> updatedFreeAgents= new ArrayList<>();
             updatedFreeAgents.addAll(freeAgents);
-            for(IFreeAgent freeAgent:freeAgents){
+            for(IPlayer freeAgent:updatedFreeAgents){
                 if(retiringPlayerNames.contains(freeAgent.getPlayerName())){
-                    removeSelectedAgentFromFreeAgents(updatedFreeAgents,freeAgent);
+                    removeSelectedAgentFromFreeAgents(freeAgents,freeAgent);
                 }
             }
-            leagueObjectModel.setFreeAgents(updatedFreeAgents);
+
         }
     }
 
-    public void retirePLayers(List<IPlayer> playersSelectedToRetire, ITeam team,List<IFreeAgent> freeAgents){
+    public void retirePLayers(List<IPlayer> playersSelectedToRetire, ITeam team,List<IPlayer> freeAgents){
         List <String> retiringPlayerNames = new ArrayList<>();
         List<IPlayer> newlyAddedPlayers= new ArrayList<>();
         for(IPlayer retiringPlayer : playersSelectedToRetire){
             retiringPlayerNames.add(retiringPlayer.getPlayerName());
         }
         for(IPlayer player:team.getPlayers()){
-            if(retiringPlayerNames.indexOf(player.getPlayerName())!=-1){
+            if(retiringPlayerNames.indexOf(player.getPlayerName())>=0){
                 newlyAddedPlayers.add(selectPlayerFromFreeAgent(player,freeAgents));
             }
         }
 
         removeRetiredPlayersFromTeam(retiringPlayerNames,team);
         for(IPlayer newPlayer:newlyAddedPlayers){
-            ArrayList<IPlayer> players=team.getPlayers();
+            List<IPlayer> players=team.getPlayers();
             players.add(newPlayer);
         }
     }
 
-    public IPlayer selectPlayerFromFreeAgent(IPlayer player, List<IFreeAgent> freeAgents){
-        IFreeAgent selectedAgent;
-        double maxStat=player.getPlayerStrength();
+    public IPlayer selectPlayerFromFreeAgent(IPlayer player, List<IPlayer> freeAgents){
+        IPlayer selectedAgent;
         String playerPosition=player.getPosition();
-        List<IFreeAgent> freeAgentsOfSamePosition=freeAgents.stream().filter((IFreeAgent agent)->{
+        List<IPlayer> freeAgentsOfSamePosition=freeAgents.stream().filter((IPlayer agent)->{
             return agent.getPosition()==playerPosition;
         }).collect(Collectors.toList());
         sortFreeAgentsByStrength(freeAgentsOfSamePosition);
@@ -91,13 +90,13 @@ public class RetirementSystem implements IRetirementSystem {
         return player;
     }
 
-    public void sortFreeAgentsByStrength(List<IFreeAgent> freeAgents){
+    public void sortFreeAgentsByStrength(List<IPlayer> freeAgents){
         Collections.sort(freeAgents,
                 (player1, player2) -> (int) Math.round(player2.getPlayerStrength())
                         - (int) Math.round(player1.getPlayerStrength()));
     }
 
-    public void removeSelectedAgentFromFreeAgents(List<IFreeAgent> freeAgents,IFreeAgent selectedAgent){
+    public void removeSelectedAgentFromFreeAgents(List<IPlayer> freeAgents,IPlayer selectedAgent){
         freeAgents.removeIf(agent -> (agent.getPlayerName()==selectedAgent.getPlayerName()));
 
     }
@@ -108,7 +107,7 @@ public class RetirementSystem implements IRetirementSystem {
 
     }
 
-    public void insertVeterans(Map<String,List<IPlayer>> playersToRetire, Map<String,List<IFreeAgent>> freeAgentsToRetire) throws Exception{
+    public void insertVeterans(Map<String,List<IPlayer>> playersToRetire, List<IPlayer> freeAgentsToRetire) throws Exception{
         playerDB.insertRetiredPlayers(leagueObjectModel,playersToRetire,freeAgentsToRetire);
     }
 }

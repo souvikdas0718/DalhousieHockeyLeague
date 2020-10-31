@@ -1,18 +1,14 @@
 package dhl.leagueModel;
 
-import dhl.importJson.Interface.IGameConfig;
-import dhl.leagueModel.interfaceModel.IInjurySystem;
 import dhl.leagueModel.interfaceModel.IPlayer;
 import dhl.leagueModel.interfaceModel.IPlayerStatistics;
-import java.util.Date;
 
 public class Player implements IPlayer {
-    private int playerId;
     private String playerName;
     private PlayerPosition position;
     private Boolean captain;
     private IPlayerStatistics playerStats;
-    private IInjurySystem injurySystem;
+    private int playerInjuredDays;
 
     public Player(){
         setDefaults();
@@ -21,27 +17,18 @@ public class Player implements IPlayer {
     public void setDefaults() {
         playerName = "";
         position = null;
-        this.injurySystem=new InjurySystem();
+        this.playerInjuredDays=-1;
     }
 
-    public Player(String playerName,String position,Boolean captain,IPlayerStatistics playerStats){
-        this.setPlayerName(playerName);
-        this.setPosition(position);
-        this.setCaptain(captain);
-        this.setPlayerStats(playerStats);
-        this.injurySystem=new InjurySystem();
-    }
-
-    public void setPlayerId(int id) {
-        this.playerId=id;
-    }
-
-    public int getPlayerId() {
-        return playerId;
-    }
-
-    public void setPlayerName(String playerName) {
+    public Player(String playerName,String position,IPlayerStatistics playerStats){
         this.playerName=playerName;
+        this.setPosition(position);
+        this.playerStats=playerStats;
+        this.playerInjuredDays=-1;
+    }
+    public Player(String playerName,String position,Boolean captain,IPlayerStatistics playerStats){
+        this(playerName,position,playerStats);
+        this.setCaptain(captain);
     }
 
     public String getPlayerName() {
@@ -85,16 +72,12 @@ public class Player implements IPlayer {
         return playerStats;
     }
 
-    public void setPlayerStats(IPlayerStatistics playerStats) {
-        this.playerStats = playerStats;
+    public int getPlayerInjuredDays() {
+        return playerInjuredDays;
     }
 
-    public IInjurySystem getInjurySystem() {
-        return injurySystem;
-    }
-
-    public void setInjurySystem(IInjurySystem injurySystem) {
-        this.injurySystem = injurySystem;
+    public void setPlayerInjuredDays(int playerInjuredDays) {
+        this.playerInjuredDays = playerInjuredDays;
     }
 
     public boolean isPlayerNameEmpty(){
@@ -123,19 +106,6 @@ public class Player implements IPlayer {
         return true;
     }
 
-    public boolean isPlayerNotInjured(){
-        if(injurySystem.isInjured()){
-            return false;
-        }
-        return true;
-    }
-
-    public void checkPlayerInjury(IGameConfig gameConfig, Date currentDate){
-        if(isPlayerNotInjured()){
-            this.setInjurySystem(injurySystem.checkIfPlayerInjured(gameConfig,currentDate));
-        }
-    }
-
     public double getPlayerStrength(){
         double playerStrength=0;
         if(position == PlayerPosition.FORWARD){
@@ -147,7 +117,7 @@ public class Player implements IPlayer {
         else if(position == PlayerPosition.GOALIE){
             playerStrength=playerStats.getSkating() + playerStats.getSaving() ;
         }
-        if(injurySystem.isInjured()){
+        if(playerInjuredDays>0){
             playerStrength=playerStrength/2.0;
         }
         return playerStrength;

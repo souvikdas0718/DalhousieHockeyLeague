@@ -10,10 +10,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 
 public class AgingSystemTest {
 
@@ -43,29 +43,26 @@ public class AgingSystemTest {
 
     @Test
     public void setAverageRetirementAgeTest() {
-        agingSystem.setAverageRetirementAge(30);
-        Assertions.assertEquals(30, agingSystem.getAverageRetirementAge());
+        Assertions.assertEquals(35, agingSystem.getAverageRetirementAge());
     }
 
 
     @Test
     public void setMaximumAgeTest() {
-        agingSystem.setMaximumAge(50);
         Assertions.assertEquals(50, agingSystem.getMaximumAge());
     }
 
     @Test
     public void ageAllPlayerTest(){
         ILeagueObjectModel leagueObjectModel=leagueMock.getLeagueObjectMock();
-        agingSystem.ageAllPlayers(leagueObjectModel,365);
         for(IConference conference : leagueObjectModel.getConferences()){
             for (IDivision division : conference.getDivisions()){
                 for(ITeam team :division.getTeams()){
-                    for(IPlayer player:team.getPlayers()){
-                        IPlayerStatistics playerStatistics=player.getPlayerStats();
-                        Assertions.assertEquals(26,playerStatistics.getAge());
-                    }
-
+                    agingSystem.ageAllPlayers(team.getPlayers());
+                    List<IPlayer> players = team.getPlayers();
+                    IPlayer player=players.get(0);
+                    IPlayerStatistics playerStatistics=player.getPlayerStats();
+                    Assertions.assertEquals(26,playerStatistics.getAge());
                 }
             }
         }
@@ -80,7 +77,7 @@ public class AgingSystemTest {
     @Test
     public void selectPlayersToRetireTest(){
         Map<String,List<IPlayer>> playersSelectedToRetire=new HashMap<>();
-        ArrayList<IPlayer> players = new ArrayList<>();
+        List<IPlayer> players = new ArrayList<>();
         IPlayerStatistics playerStatistics1=new PlayerStatistics(50,20,20,20,20);
         players.add(new Player("PlayerOne","forward",true,playerStatistics1));
         IPlayerStatistics playerStatistics2=new PlayerStatistics(36,20,20,20,20);
@@ -88,13 +85,14 @@ public class AgingSystemTest {
         IPlayerStatistics playerStatistics3=new PlayerStatistics(34,20,20,20,20);
         players.add(new Player("PlayerThree","forward",true,playerStatistics3));
 
-        ITeam team =leagueMock.getTeamObjectMock();
-        team.setPlayers(players);
-        ArrayList<ITeam> teams = new ArrayList<>();
+        ICoach headCoach = new Coach("Todd McLellan",0.1,0.5,1.0,0.2);
+        ITeam team = new Team("Mock Team", "Mock Manager", headCoach, players );
+        List<ITeam> teams = new ArrayList<>();
         teams.add(team);
+
         agingSystem.setLikelihoodForGreaterThanAvg(100);
         agingSystem.setLikelihoodForLesserThanAvg(100);
-        playersSelectedToRetire=agingSystem.selectPlayersToRetire(teams);
+        playersSelectedToRetire=agingSystem.selectPlayersToRetire(team);
 
         Assertions.assertTrue(playersSelectedToRetire.containsKey("Mock Team"));
         Assertions.assertEquals(3,playersSelectedToRetire.get("Mock Team").size());
@@ -102,8 +100,8 @@ public class AgingSystemTest {
 
     @Test
     public void selectFreeAgentsToRetireTest(){
-        Map<String,List<IFreeAgent>> agentsSelectedToRetire=new HashMap<>();
-        ArrayList<IFreeAgent> freeAgents = new ArrayList<>();
+        List<IPlayer> agentsSelectedToRetire=new ArrayList<>();
+        List<IPlayer> freeAgents = new ArrayList<>();
         IPlayerStatistics playerStatistics1=new PlayerStatistics(50,20,20,20,20);
         freeAgents.add(new FreeAgent("PlayerOne","forward",playerStatistics1));
         IPlayerStatistics playerStatistics2=new PlayerStatistics(36,20,20,20,20);
@@ -114,25 +112,10 @@ public class AgingSystemTest {
         agingSystem.setLikelihoodForGreaterThanAvg(100);
         agingSystem.setLikelihoodForLesserThanAvg(100);
         ILeagueObjectModel leagueObjectModel= leagueMock.getLeagueObjectMock();
-        leagueObjectModel.setFreeAgents(freeAgents);
-        agentsSelectedToRetire=agingSystem.selectFreeAgentsToRetire(leagueObjectModel);
+        leagueObjectModel=new LeagueObjectModel(leagueObjectModel.getLeagueName(),leagueObjectModel.getConferences(),freeAgents);
+        agentsSelectedToRetire=agingSystem.selectFreeAgentsToRetire(leagueObjectModel.getFreeAgents());
 
-        Assertions.assertTrue(agentsSelectedToRetire.containsKey("Dhl"));
-        Assertions.assertEquals(3,agentsSelectedToRetire.get("Dhl").size());
-    }
-
-    @Test
-    public void healInjuredPlayersTest() throws ParseException {
-        SimpleDateFormat todaysDate=new SimpleDateFormat("dd/MM/yyyy");
-        Date currentDate = todaysDate.parse("18/07/2020");
-        IPlayer player = new Player();
-        SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy");
-        Date injuryDate = dateformat.parse("17/07/2020");
-        player.setInjurySystem(new InjurySystem(injuryDate,1));
-        agingSystem.healInjuredPlayers(currentDate, player);
-        IInjurySystem system= player.getInjurySystem();
-        Assertions.assertEquals(false,system.isInjured());
-
+        Assertions.assertEquals(3,agentsSelectedToRetire.size());
     }
 
     @AfterEach()

@@ -1,18 +1,13 @@
 package dhl.leagueModel.interfaceModel;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface IConference {
 
-    public String getConferenceName();
+    String getConferenceName();
 
-    public void setConferenceName(String conferenceName);
+    List<IDivision> getDivisions();
 
-    public ArrayList<IDivision> getDivisions();
+    boolean checkIfConferenceValid(IValidation validation) throws Exception;
 
-    public void setDivisions(ArrayList<IDivision> divisionList);
-
-    public boolean checkIfConferenceValid(IValidation validation) throws Exception;
-
-    public void checkIfConferenceHasEvenDivisions() throws Exception;
 }

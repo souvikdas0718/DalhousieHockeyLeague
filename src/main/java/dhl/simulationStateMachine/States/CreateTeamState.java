@@ -1,15 +1,14 @@
 package dhl.simulationStateMachine.States;
 
-import dhl.leagueModel.FreeAgent;
-import dhl.leagueModel.Player;
-import dhl.leagueModel.Coach;
-import dhl.leagueModel.Team;
+import dhl.leagueModel.*;
 import dhl.leagueModel.interfaceModel.*;
 import dhl.database.interfaceDB.ILeagueObjectModelData;
 import dhl.database.LeagueObjectModelData;
 import dhl.simulationStateMachine.GameContext;
 import dhl.simulationStateMachine.Interface.IGameState;
+
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class CreateTeamState implements IGameState {
@@ -21,7 +20,7 @@ public class CreateTeamState implements IGameState {
     String generalManager;
     String headCoach;
     ICoach coach;
-    ArrayList<IFreeAgent> freeAgents;
+    List<IPlayer> freeAgents;
 
     public CreateTeamState(GameContext newGame){
         ourGame = newGame;
@@ -39,7 +38,7 @@ public class CreateTeamState implements IGameState {
 
         System.out.println("------------------------LETS CREATE NEW TEAM---------------------");
 
-        ArrayList<IConference> conferencesArray = inMemoryLeague.getConferences();
+        List<IConference> conferencesArray = inMemoryLeague.getConferences();
         System.out.println("Select the Conference");
         for(int i=0; i< conferencesArray.size();i++){
             System.out.println((i+1) +".  "+ conferencesArray.get(i).getConferenceName() );
@@ -61,7 +60,7 @@ public class CreateTeamState implements IGameState {
         if (conference.equals("Exit")){
             System.exit(0);
         }
-        ArrayList<IDivision> divisionArrayList = selectedConference.getDivisions();
+        List<IDivision> divisionArrayList = selectedConference.getDivisions();
         System.out.println("Select the Division");
         for(int i=0; i< divisionArrayList.size();i++){
             System.out.println((i+1) +".  "+ divisionArrayList.get(i).getDivisionName() );
@@ -99,7 +98,7 @@ public class CreateTeamState implements IGameState {
             }
         }
         System.out.println("Select Team's General Manager Name: ");
-        ArrayList<IGeneralManager> generalManagerArray = inMemoryLeague.getManagers();
+        List<IGeneralManager> generalManagerArray = inMemoryLeague.getManagers();
         generalManagerArray.forEach((generalManager)->{
             System.out.println(generalManager.getGeneralManagerName());
         });
@@ -109,7 +108,7 @@ public class CreateTeamState implements IGameState {
             generalManager = sc.nextLine();
         }
         System.out.println("Select Team's Head Coach Name: ");
-        ArrayList<ICoach> coachArray = inMemoryLeague.getCoaches();
+        List<ICoach> coachArray = inMemoryLeague.getCoaches();
         coachArray.forEach((coach)->{
             System.out.println(coach.getCoachName() + " " + coach.getChecking() + " " + coach.getSaving() + " " + coach.getSkating() + " " + coach.getShooting());
         });
@@ -124,7 +123,7 @@ public class CreateTeamState implements IGameState {
             }
         }
 
-        ArrayList<IFreeAgent> freeAgentsArray = inMemoryLeague.getFreeAgents();
+        List<IPlayer> freeAgentsArray = inMemoryLeague.getFreeAgents();
         System.out.println("Select the Players from free Agents list (Input multiple names separated by a comma):");
         for(int i=0; i< freeAgentsArray.size();i++){
             System.out.println((i+1) +".  "+ freeAgentsArray.get(i).getPlayerName() );
@@ -133,7 +132,7 @@ public class CreateTeamState implements IGameState {
         String selectedfreeAgents = sc.nextLine();
         String[] arr = selectedfreeAgents.split(",");
         for (int i=0; i<arr.length; i++){
-            IFreeAgent currentFreeAgent = findFreeAgent(freeAgentsArray, arr[i].trim().toString());
+            IPlayer currentFreeAgent = findFreeAgent(freeAgentsArray, arr[i].trim().toString());
             if (currentFreeAgent != null) {
                 freeAgents.add(currentFreeAgent);
             }
@@ -152,24 +151,19 @@ public class CreateTeamState implements IGameState {
     public void stateProcess() throws Exception {
         System.out.println("Adding Team "+ teamName+ " to the DB");
         ILeagueObjectModelData leagueObjectModelData = new LeagueObjectModelData();
-        ArrayList<IPlayer> players= new ArrayList<>();
+        List<IPlayer> players= new ArrayList<>();
 
         freeAgents.forEach((freeAgent)->{
-            IPlayer player = new Player();
-            player.setPlayerName(freeAgent.getPlayerName());
-            player.setPosition(freeAgent.getPosition());
-            player.setCaptain(false);
+            IPlayer player = new Player(freeAgent.getPlayerName(),freeAgent.getPosition(),false,freeAgent.getPlayerStats());
             players.add(player);
         });
         ITeam newlyCreatedTeam=new Team(teamName,generalManager,coach,players);
-
+        ILeagueObjectModelValidation leagueObjectModelValidation = new LeagueObjectModelValidation();
+        ILeagueObjectModelInput leagueObjectModelInput = new LeagueObjectModelInput(inMemoryLeague.getLeagueName(), selectedConference.getConferenceName(), selectedDivision.getDivisionName(), newlyCreatedTeam,leagueObjectModelValidation);
+        IValidation validation = new CommonValidation();
+        newlyCreatedTeam.checkIfTeamValid(validation);
         try {
-            inMemoryLeague.saveLeagueObjectModel(
-                    leagueObjectModelData,
-                    inMemoryLeague.getLeagueName(),
-                    selectedConference.getConferenceName(),
-                    selectedDivision.getDivisionName(),
-                    newlyCreatedTeam);
+            inMemoryLeague.saveLeagueObjectModel(leagueObjectModelData, leagueObjectModelInput);
 
             ourGame.setSelectedTeam(findTeam(inMemoryLeague , teamName));
         }catch (Exception e){
@@ -185,7 +179,7 @@ public class CreateTeamState implements IGameState {
         }
     }
 
-    public IConference findConference(ArrayList<IConference> confrenceArray, String conferenceName ){
+    public IConference findConference(List<IConference> confrenceArray, String conferenceName ){
         for(int i= 0; i< confrenceArray.size(); i++){
             IConference ourConference = confrenceArray.get(i);
             if(ourConference.getConferenceName().equals(conferenceName)){
@@ -195,7 +189,7 @@ public class CreateTeamState implements IGameState {
         return null;
     }
 
-    public IDivision findDivision(ArrayList<IDivision> divisionArrayList , String divisionName){
+    public IDivision findDivision(List<IDivision> divisionArrayList , String divisionName){
         for(int i= 0; i< divisionArrayList.size(); i++){
             IDivision ourDivision = divisionArrayList.get(i);
             if(ourDivision.getDivisionName().equals(divisionName)){
@@ -221,9 +215,9 @@ public class CreateTeamState implements IGameState {
         return teamObject;
     }
 
-    public IFreeAgent findFreeAgent(ArrayList<IFreeAgent> freeAgentArrayList, String freeAgentName){
+    public IPlayer findFreeAgent(List<IPlayer> freeAgentArrayList, String freeAgentName){
         for(int i= 0; i< freeAgentArrayList.size(); i++){
-            IFreeAgent ourFreeAgent = freeAgentArrayList.get(i);
+            IPlayer ourFreeAgent = freeAgentArrayList.get(i);
             if(ourFreeAgent.getPlayerName().equals(freeAgentName)){
                 return ourFreeAgent;
             }

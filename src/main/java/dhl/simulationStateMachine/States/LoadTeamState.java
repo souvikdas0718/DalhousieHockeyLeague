@@ -9,7 +9,7 @@ import dhl.database.interfaceDB.ILeagueObjectModelData;
 import dhl.database.LeagueObjectModelData;
 import dhl.simulationStateMachine.GameContext;
 import dhl.simulationStateMachine.Interface.IGameState;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class LoadTeamState implements IGameState {
@@ -66,7 +66,7 @@ public class LoadTeamState implements IGameState {
         }
     }
 
-    public IConference findConference(ArrayList<IConference> confrenceArray, String conferenceName ){
+    public IConference findConference(List<IConference> confrenceArray, String conferenceName ){
         for(int i= 0; i< confrenceArray.size(); i++){
             IConference ourConference = confrenceArray.get(i);
             if(ourConference.getConferenceName().equals(conferenceName)){
@@ -76,7 +76,7 @@ public class LoadTeamState implements IGameState {
         return null;
     }
 
-    public IDivision findDivision(ArrayList<IDivision> divisionArrayList , String divisionName){
+    public IDivision findDivision(List<IDivision> divisionArrayList , String divisionName){
         for(int i= 0; i< divisionArrayList.size(); i++){
             IDivision ourDivision = divisionArrayList.get(i);
             if(ourDivision.getDivisionName().equals(divisionName)){

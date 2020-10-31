@@ -1,15 +1,13 @@
 package dhl.leagueModel.interfaceModel;
 
-
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 public interface IAgingSystem {
+    void ageAllPlayers(List<IPlayer> players);
 
-    public void ageAllPlayers(ILeagueObjectModel leagueObjectModel, int noOfDays);
+    Map<String,List<IPlayer>> selectPlayersToRetire(ITeam team);
 
-    public Map<String, List<IPlayer>> selectPlayersToRetire(List<ITeam> teams);
+    List<IPlayer> selectFreeAgentsToRetire(List<IPlayer> freeAgents);
 
-    public Map<String,List<IFreeAgent>> selectFreeAgentsToRetire(ILeagueObjectModel leagueObjectModel);
-
-    public void healInjuredPlayers(Date currentDate, IPlayer player);
 }

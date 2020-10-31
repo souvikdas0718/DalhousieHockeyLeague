@@ -1,47 +1,21 @@
 package dhl.leagueModel.interfaceModel;
 
-import dhl.importJson.Interface.IGameConfig;
-
-import java.util.Date;
-
 public interface IPlayer {
 
-    public void setDefaults();
+    String getPlayerName();
 
-    public void setPlayerId(int id);
+    String getPosition();
 
-    public int getPlayerId();
+    boolean getCaptain();
 
-    public void setPlayerName(String playerName);
+    IPlayerStatistics getPlayerStats();
 
-    public String getPlayerName();
+    public int getPlayerInjuredDays();
 
-    public void setPosition(String playerPosition);
+    public void setPlayerInjuredDays(int playerInjuredDays);
 
-    public String getPosition();
+    boolean checkPlayerValid() throws Exception;
 
-    public void setCaptain(Boolean isCaptain);
-
-    public boolean getCaptain();
-
-    public IPlayerStatistics getPlayerStats();
-
-    public void setPlayerStats(IPlayerStatistics playerStats);
-
-    public IInjurySystem getInjurySystem();
-
-    public void setInjurySystem(IInjurySystem injurySystem);
-
-    public boolean isPlayerNameEmpty();
-
-    public  boolean isPlayerPositionInvalid();
-
-    public boolean isCaptainValueBoolean();
-
-    public boolean checkPlayerValid() throws Exception;
-
-    public void checkPlayerInjury(IGameConfig gameConfig, Date currentDate);
-
-    public double getPlayerStrength();
+    double getPlayerStrength();
 
 }

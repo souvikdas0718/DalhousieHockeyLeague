@@ -15,13 +15,13 @@ import java.util.List;
 import java.util.Map;
 
 public class RetirementSystemTest {
-    IRetirementSystem retirementSystem;
+    RetirementSystem retirementSystem;
     LeagueObjectModelMocks leagueMock;
     IPlayerDB playerDBMock;
     @BeforeEach()
     public void initObject(){
         leagueMock= new LeagueObjectModelMocks();
-        playerDBMock= new IPlayerDBMock();
+        playerDBMock= new PlayerDBMock();
         retirementSystem = new RetirementSystem(playerDBMock,leagueMock.getLeagueObjectMock());
     }
 
@@ -35,42 +35,38 @@ public class RetirementSystemTest {
     @Test
     public void initiateRetirementTest() throws Exception{
         Map<String, List<IPlayer>> playersSelectedToRetire=new HashMap<>();
-        ArrayList<IPlayer> players = new ArrayList<>();
+        List<IPlayer> players = new ArrayList<>();
         IPlayerStatistics playerStatistics1=new PlayerStatistics(50,5,5,5,5);
         players.add(new Player("Henry","forward",false,playerStatistics1));
         playersSelectedToRetire.put("Ontario",players);
-
-        Map<String,List<IFreeAgent>> freeAgentsToRetire=new HashMap<>();
-        freeAgentsToRetire.put("Dhl",new ArrayList<>());
+        List<IPlayer> freeAgentsToRetire=new ArrayList<>();
 
         retirementSystem.initiateRetirement(playersSelectedToRetire,freeAgentsToRetire);
         ILeagueObjectModel leagueObjectModel = retirementSystem.getLeagueObjectModel();
-        List<IFreeAgent> freeAgents= leagueObjectModel.getFreeAgents();
+        List<IPlayer> freeAgents= leagueObjectModel.getFreeAgents();
         Assertions.assertTrue(freeAgents.size()==1);
     }
 
     @Test
     public void initiateFreeAgentRetirementTest() throws Exception{
         Map<String, List<IPlayer>> playersSelectedToRetire=new HashMap<>();
-        ArrayList<IPlayer> players = new ArrayList<>();
+        List<IPlayer> players = new ArrayList<>();
         playersSelectedToRetire.put("Ontario",players);
 
-        Map<String,List<IFreeAgent>> freeAgentsToRetire=new HashMap<>();
-        ArrayList<IFreeAgent> freeAgents = new ArrayList<>();
+        List<IPlayer> freeAgents = new ArrayList<>();
         IPlayerStatistics playerStatistics1=new PlayerStatistics(50,5,5,5,5);
         freeAgents.add(new FreeAgent("Jack","forward",playerStatistics1));
-        freeAgentsToRetire.put("Dhl",freeAgents);
 
-        retirementSystem.initiateRetirement(playersSelectedToRetire,freeAgentsToRetire);
+        retirementSystem.initiateRetirement(playersSelectedToRetire,freeAgents);
         ILeagueObjectModel leagueObjectModel = retirementSystem.getLeagueObjectModel();
-        List<IFreeAgent> freeAgentsList= leagueObjectModel.getFreeAgents();
+        List<IPlayer> freeAgentsList= leagueObjectModel.getFreeAgents();
         Assertions.assertTrue(freeAgentsList.size()==1);
     }
 
     @Test
     public void insertVeteransTest() throws Exception {
         Map<String, List<IPlayer>> playersSelectedToRetire=new HashMap<>();
-        Map<String,List<IFreeAgent>> freeAgentsToRetire=new HashMap<>();
+        List<IPlayer> freeAgentsToRetire=new ArrayList<>();
         retirementSystem.insertVeterans( playersSelectedToRetire, freeAgentsToRetire);
         ILeagueObjectModel leagueObjectModel=leagueMock.getLeagueObjectMock();
         Assertions.assertEquals("Dhl",leagueObjectModel.getLeagueName());
