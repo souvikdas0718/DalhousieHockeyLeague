@@ -22,6 +22,7 @@ public class CreateTeamStateUI implements IGameState {
     private String selectedHeadCoach;
     private ICoach coach;
     private ArrayList<IFreeAgent> selectedFreeAgents;
+    ICreateTeamStateLogic objCreateTeamStateLogic;
 
     Scanner sc = new Scanner(System.in);
 
@@ -32,7 +33,7 @@ public class CreateTeamStateUI implements IGameState {
         teamName =selectedGeneralManager=selectedHeadCoach = null;
         selectedFreeAgents = new ArrayList<>();
         coach = new Coach();
-
+        objCreateTeamStateLogic = new CreateTeamStateLogic();
     }
 
     @Override
@@ -60,7 +61,7 @@ public class CreateTeamStateUI implements IGameState {
         String conference = sc.nextLine();
 
         while ( selectedConference == null){
-            ICreateTeamStateLogic objCreateTeamStateLogic = new CreateTeamStateLogic();
+
             selectedConference =  objCreateTeamStateLogic.findConference(conferencesArray, conference);
             if(selectedConference!= null){
                 System.out.println("Confrence Found: " + selectedConference.getConferenceName());
@@ -85,7 +86,7 @@ public class CreateTeamStateUI implements IGameState {
         String division = sc.nextLine();
 
         while ( selectedDivision == null){
-            ICreateTeamStateLogic objCreateTeamStateLogic = new CreateTeamStateLogic();
+
             selectedDivision =  objCreateTeamStateLogic.findDivision(divisionArrayList, division);
             if(selectedDivision!= null){
                 System.out.println("Division Found: " + selectedDivision.getDivisionName());
@@ -138,29 +139,23 @@ public class CreateTeamStateUI implements IGameState {
         if (generalManager.equals("Exit")){
             System.exit(0);
         }
-
     }
 
     private void selectTeamHeadCoach(){
         System.out.println("Select Team's Head Coach Name: ");
         ArrayList<ICoach> coachArray = inMemoryLeague.getCoaches();
         System.out.println("-----------------------------------------------------------------------------");
-        System.out.format("%20s %10s %10s %10s %10s","Name","Checking","Saving","Shooting","Skating");
+        String.format("%20s %10s %10s %10s %10s","Name","Checking","Saving","Shooting","Skating");
         System.out.println();
         System.out.println("-----------------------------------------------------------------------------");
 
         coachArray.forEach((coach)->{
-            System.out.format("%20s %10s %10s %10s %10s", coach.getCoachName(),
-                    Double.toString(coach.getChecking()),
-                    Double.toString(coach.getSaving()),
-                    Double.toString(coach.getShooting()),
-                    Double.toString(coach.getSkating()));
+            System.out.format("%20s %10s %10s %10s %10s", coach.getCoachName(), Double.toString(coach.getChecking()), Double.toString(coach.getSaving()), Double.toString(coach.getSkating()));
             System.out.println();
         });
         System.out.println("-----------------------------------------------------------------------------");
         String headCoach = sc.nextLine();
         while ( selectedHeadCoach == null){
-            ICreateTeamStateLogic objCreateTeamStateLogic = new CreateTeamStateLogic();
             selectedHeadCoach =  objCreateTeamStateLogic.findCoach(coachArray, headCoach);
             if(selectedHeadCoach == null){
                 System.out.println("Coach Doesn't Exist");
@@ -186,60 +181,21 @@ public class CreateTeamStateUI implements IGameState {
         System.out.println();
         System.out.println("-----------------------------------------------------------------------------------------------------------------");
         for(int i=0; i< freeAgentsArray.size();i++){
-
-        System.out.format("%20s %20s %10d %10d %10d %10d %10d",
-                    freeAgentsArray.get(i).getPlayerName(),
-                freeAgentsArray.get(i).getPosition(),
-                            freeAgentsArray.get(i).getPlayerStats().getAge(),
-                            freeAgentsArray.get(i).getPlayerStats().getChecking(),
-                            freeAgentsArray.get(i).getPlayerStats().getSaving(),
-                            freeAgentsArray.get(i).getPlayerStats().getShooting(),
-                            freeAgentsArray.get(i).getPlayerStats().getSkating());
-            System.out.println();
-
+            System.out.format("%20s %20s %10d %10d %10d %10d %10d", freeAgentsArray.get(i).getPlayerName(), freeAgentsArray.get(i).getPosition(), freeAgentsArray.get(i).getPlayerStats().getAge(), freeAgentsArray.get(i).getPlayerStats().getChecking(), freeAgentsArray.get(i).getPlayerStats().getSaving(), freeAgentsArray.get(i).getPlayerStats().getShooting(), freeAgentsArray.get(i).getPlayerStats().getSkating()); System.out.println();
         }
         System.out.println("-----------------------------------------------------------------------------------------------------------------");
         String inputfreeAgents = sc.nextLine();
-
-        ArrayList<IFreeAgent> freeAgents = new ArrayList<>();
         while ( selectedFreeAgents.size()==0) {
-            String[] arrFreeAgents = inputfreeAgents.split(",");
-
-            ICreateTeamStateLogic objCreateTeamStateLogic = new CreateTeamStateLogic();
-
-            ArrayList<String> notFoundFreeAgents = new ArrayList<>();
-            for (int i = 0; i < arrFreeAgents.length; i++) {
-                String freeAgentName = arrFreeAgents[i].trim();
-                IFreeAgent foundFreeAgent = objCreateTeamStateLogic.findFreeAgent(freeAgentsArray, freeAgentName);
-                if (foundFreeAgent == null) {
-                    System.out.println("Free agent " + freeAgentName + " Doesn't Exist");
-
-                    notFoundFreeAgents.add(freeAgentName);
-                } else {
-                    freeAgents.add(foundFreeAgent);
-                    System.out.println("Free agent " + freeAgentName + " added successfully");
-                }
+            try{
+                selectedFreeAgents = objCreateTeamStateLogic.validateInputFreeAgents(inputfreeAgents, freeAgentsArray);
             }
-            if (notFoundFreeAgents.size() == 0 || freeAgents.size() == 20) {
-                ITeam objTeam = new Team();
-                try {
-                    if (objTeam.checkIfSkatersGoaliesValid(freeAgents)){
-                        selectedFreeAgents = freeAgents;
-                    }
-                    else {
-                        System.out.println("A team must have 18 Skaters and 2 Goalies");
-                        inputfreeAgents = sc.nextLine();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else {
-                System.out.println("Enter the Free Agent Name Again or enter Exit to Quit game");
+            catch (Exception ex){
+                System.out.println(ex.getMessage());
                 inputfreeAgents = sc.nextLine();
             }
-        }
-        if (inputfreeAgents.equals("Exit")){
-            System.exit(0);
+            if (inputfreeAgents.equals("Exit")){
+                System.exit(0);
+            }
         }
     }
 

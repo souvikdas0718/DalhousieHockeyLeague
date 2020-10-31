@@ -7,30 +7,24 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Training implements ITraining {
-    public ILeagueObjectModel statIncrease(ILeagueObjectModel objLeagueObjectModel) throws Exception{
+    public ILeagueObjectModel statIncrease(ILeagueObjectModel objLeagueObjectModel) throws Exception {
         ArrayList<IConference> arrConference = new ArrayList<>();
         ArrayList<IDivision> arrDivision = new ArrayList<>();
         ArrayList<ITeam> arrTeam = new ArrayList<>();
         ArrayList<IPlayer> arrPlayer = new ArrayList<>();
 
         arrConference = objLeagueObjectModel.getConferences();
-        for(int i=0; i<arrConference.size(); i++)
-        {
-            arrDivision = arrConference.get(i).getDivisions();
-            for (int j = 0; j<arrDivision.size(); j++)
-            {
-                arrTeam = arrDivision.get(j).getTeams();
-                for(int k=0; k<arrTeam.size(); k++)
-                {
+        for (IConference conference : objLeagueObjectModel.getConferences()) {
+            for (IDivision division : conference.getDivisions()) {
+                for (ITeam team : division.getTeams()) {
                     String[] randomValues = {getRandomValue(), getRandomValue(), getRandomValue(), getRandomValue()};
-                    arrPlayer = updatePlayerStats(arrTeam.get(k).getPlayers(),arrTeam.get(k).getHeadCoach(), randomValues);
-                    arrTeam.get(k).setPlayers(arrPlayer);
+                    arrPlayer = updatePlayerStats(team.getPlayers(), team.getHeadCoach(), randomValues);
+                    team.setPlayers(arrPlayer);
                 }
-                arrDivision.get(j).setTeams(arrTeam);
+                division.setTeams(arrTeam);
             }
-            arrConference.get(i).setDivisions(arrDivision);
+            conference.setDivisions(arrDivision);
         }
-
         return objLeagueObjectModel;
     }
 
@@ -48,13 +42,13 @@ public class Training implements ITraining {
                 skatingValue = (arrPlayer.get(l).getPlayerStats().getSkating() + 1);
             }
             if (Double.parseDouble(randomValues[1]) < objCoach.getShooting()) {
-                shootingValue = (arrPlayer.get(l).getPlayerStats().getSkating() + 1);
+                shootingValue = (arrPlayer.get(l).getPlayerStats().getShooting() + 1);
             }
             if (Double.parseDouble(randomValues[2]) < objCoach.getChecking()) {
-                checkingValue = (arrPlayer.get(l).getPlayerStats().getSkating() + 1);
+                checkingValue = (arrPlayer.get(l).getPlayerStats().getChecking() + 1);
             }
             if (Double.parseDouble(randomValues[3]) < objCoach.getSaving()) {
-                savingValue = (arrPlayer.get(l).getPlayerStats().getSkating() + 1);
+                savingValue = (arrPlayer.get(l).getPlayerStats().getSaving() + 1);
             }
             IPlayerStatistics objPlayerStats = new PlayerStatistics(age,skatingValue,shootingValue,checkingValue,savingValue);
             arrPlayer.get(l).setPlayerStats(objPlayerStats);

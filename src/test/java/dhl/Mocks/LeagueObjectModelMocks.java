@@ -94,11 +94,12 @@ public class LeagueObjectModelMocks {
     public ArrayList<IFreeAgent> get20FreeAgentArrayMock(){
         ArrayList<IFreeAgent> freeAgents = new ArrayList<>();
 
-        for (int i=0; i<18; i++) {
-            freeAgents.add(new FreeAgent("Henry", "forward", getPlayerStatistics()));
+        for (int i=0; i<20; i++) {
             if (i<2)
             {
-                freeAgents.add(new FreeAgent("Henry", "goalie", getPlayerStatistics()));
+                freeAgents.add(new FreeAgent("Henry"+i, "goalie", getPlayerStatistics()));
+            }else {
+                freeAgents.add(new FreeAgent("Henry" + i, "forward", getPlayerStatistics()));
             }
         }
         return freeAgents;

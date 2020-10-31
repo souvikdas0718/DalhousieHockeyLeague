@@ -118,4 +118,31 @@ public class CreateTeamStateLogic implements ICreateTeamStateLogic {
         }
         return null;
     }
+    public ArrayList<IFreeAgent> validateInputFreeAgents(String inputfreeAgents,
+                                                         ArrayList<IFreeAgent> freeAgentsArray) throws Exception {
+        String[] arrFreeAgents = inputfreeAgents.split(",");
+        ArrayList<IFreeAgent> selectedFreeAgents = new ArrayList<>();
+
+        if (arrFreeAgents.length == 20) {
+            for (int i = 0; i < arrFreeAgents.length; i++) {
+                String freeAgentName = arrFreeAgents[i].trim();
+                IFreeAgent foundFreeAgent = findFreeAgent(freeAgentsArray, freeAgentName);
+                if (foundFreeAgent == null) {
+                    selectedFreeAgents = null;
+                    throw new Exception("Free agent " + freeAgentName + " Doesn't Exist");
+                } else {
+                    selectedFreeAgents.add(foundFreeAgent);
+                }
+            }
+            ITeam objTeam = new Team();
+            if (objTeam.checkIfSkatersGoaliesValid(selectedFreeAgents) == false) {
+                selectedFreeAgents = null;
+                throw new Exception("A team must have 18 Skaters and 2 Goalies");
+            }
+        }
+        else {
+            throw new Exception("Enter 20 Free Agents or enter Exit to Quit game");
+        }
+        return selectedFreeAgents;
+    }
 }

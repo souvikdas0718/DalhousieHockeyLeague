@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CreateTeamStateLogicTest {
@@ -70,5 +72,15 @@ public class CreateTeamStateLogicTest {
 
         newlyCreatedTeam = testClassObject.createNewTeamObject(mocks.get20FreeAgentArrayMock(), "testTeam", "testGenManager", mocks.getSingleCoach());
         Assertions.assertEquals(20,newlyCreatedTeam.getPlayers().size());
+    }
+
+    @Test
+    public void validateInputFreeAgents() throws Exception{
+        String inputFreeAgents = "Henry0,Henry1,Henry2,Henry3,Henry4,Henry5,Henry6,Henry7,Henry8,Henry9,Henry10,Henry11,Henry12,Henry13,Henry14,Henry15,Henry16,Henry17,Henry18,Henry19";
+        LeagueObjectModelMocks objMock = new LeagueObjectModelMocks();
+        ArrayList<IFreeAgent> objFreeAgent = new ArrayList<>();
+        objFreeAgent = testClassObject.validateInputFreeAgents(inputFreeAgents, objMock.get20FreeAgentArrayMock());
+        Assertions.assertNotNull(objFreeAgent);
+        Assertions.assertEquals(20,objFreeAgent.size());
     }
 }

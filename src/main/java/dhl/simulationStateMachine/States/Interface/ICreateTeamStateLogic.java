@@ -18,4 +18,6 @@ public interface ICreateTeamStateLogic {
     public IFreeAgent findFreeAgent(ArrayList<IFreeAgent> freeAgentArrayList, String freeAgentName);
     public String findGeneralManager(ArrayList<IGeneralManager> generalManagerArray, String generalManager );
     public String findCoach(ArrayList<ICoach> coachArray, String coachName );
+    public ArrayList<IFreeAgent> validateInputFreeAgents(String inputfreeAgents,
+                                                         ArrayList<IFreeAgent> freeAgentsArray) throws Exception;
 }
