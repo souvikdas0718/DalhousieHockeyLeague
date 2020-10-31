@@ -30,7 +30,6 @@ public class Training implements ITraining {
 
     public ArrayList<IPlayer> updatePlayerStats(ArrayList<IPlayer> arrPlayer, ICoach objCoach, String[] randomValues) throws Exception
     {
-        //TODO: refactor
         for (int l=0; l<arrPlayer.size(); l++) {
             int skatingValue = 0;
             int shootingValue = 0;
