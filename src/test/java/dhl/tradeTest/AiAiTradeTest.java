@@ -51,4 +51,33 @@ public class AiAiTradeTest {
 
         Assertions.assertTrue(testClassObject.isTradeAccepted());
     }
+
+    @Test
+    public void isTradeGoodForReceivingTeamTest(){
+        ITradeOffer testOffer = new ExchangingPlayerTradeOffer(weakTeam,strongTeam,playersOffered,playersWanted);
+        testClassObject = new AiAiTrade(testOffer , ourGameConfig);
+        Assertions.assertFalse(testClassObject.isTradeGoodForReceivingTeam(testOffer));
+
+        ITeam goodTeam = tradeMock.getTeamWithGoodPlayer();
+        ITeam badTeam = tradeMock.getTeamWithBadPlayer();
+        ArrayList<IPlayer> offeringPlayers = new ArrayList<>();
+        offeringPlayers.add(goodTeam.getPlayers().get(0));
+        ArrayList<IPlayer> receivingPlayers = new ArrayList<>();
+        receivingPlayers.add(badTeam.getPlayers().get(0));
+        ExchangingPlayerTradeOffer goodTradeForReceiver = new ExchangingPlayerTradeOffer(goodTeam,badTeam,offeringPlayers,receivingPlayers );
+        testClassObject = new AiAiTrade(goodTradeForReceiver , ourGameConfig);
+        Assertions.assertTrue(testClassObject.isTradeGoodForReceivingTeam(goodTradeForReceiver));
+    }
+
+    @Test
+    public void getPlayerCombinedStrengthTest(){
+        ArrayList<IPlayer> players = new ArrayList<>();
+        players.add(tradeMock.getStrongPlayer("player1"));
+        players.add(tradeMock.getStrongPlayer("player2"));
+
+        ITradeOffer testOffer = new ExchangingPlayerTradeOffer(weakTeam,strongTeam,playersOffered,playersWanted);
+        testClassObject = new AiAiTrade(testOffer , ourGameConfig);
+        Assertions.assertTrue(testClassObject.getPlayerCombinedStrength(players) == 50.0);
+    }
+
 }
