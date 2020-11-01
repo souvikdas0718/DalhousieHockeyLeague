@@ -6,7 +6,10 @@ import dhl.simulationStateMachine.SimulationContext;
 
 public class AdvanceTime implements ISimulationSeasonState {
 
-    public AdvanceTime(SimulationContext simulationContext) {
+    SimulationContext simulationContext;
+
+    public AdvanceTimeState(SimulationContext simulationContext) {
+        this.simulationContext=simulationContext;
     }
 
     @Override
@@ -16,14 +19,24 @@ public class AdvanceTime implements ISimulationSeasonState {
 
     @Override
     public void seasonStateProcess() {
-        // increment day by one
+        simulationContext.setNumberOfDays(simulationContext.getNumberOfDays()+1);
     }
 
     @Override
     public void seasonStateExitProcess() {
-        // if end of the regular season
-        //genearate playoff scehdule
-        //else
-        // training
+        LocalDate startOfSimulation=simulationContext.getStartOfSimulation();
+        LocalDate currentDate= startOfSimulation.plusDays(simulationContext.getNumberOfDays());
+        if(currentDate.getMonth()== Month.APRIL){
+            LocalDate endOfRegularSeasonDate= currentDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.SATURDAY));
+            if(currentDate.equals(endOfRegularSeasonDate) ){
+                simulationContext.setCurrentSimulation(simulationContext.getPlayoffSchedule());
+            }
+            else {
+                simulationContext.setCurrentSimulation(simulationContext.getTraining());
+            }
+        }
+        else {
+            simulationContext.setCurrentSimulation(simulationContext.getTraining());
+        }
     }
 }
