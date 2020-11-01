@@ -1,8 +1,8 @@
-package dhl.trade;
+package dhl.tradeTest;
 
 import dhl.InputOutput.UI.IUserInputOutput;
 
-public class UserInputOutputForTrade implements IUserInputOutput {
+public class MockUserInputOutputForTrade implements IUserInputOutput {
 
     String mockOutput;
 
