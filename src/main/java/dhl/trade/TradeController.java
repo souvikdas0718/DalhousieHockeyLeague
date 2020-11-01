@@ -18,10 +18,13 @@ public class TradeController implements ITradeController {
     private ITeam userTeam;
     ILeagueObjectModel leagueObjectModel;
     IGameConfig gameConfig;
+    IUserInputOutput ioObject;
+
     public TradeController(ITeam userTeam, ILeagueObjectModel leagueObjectModel, IGameConfig gameConfig){
         this.gameConfig = gameConfig;
         this.leagueObjectModel = leagueObjectModel;
         this.userTeam = userTeam;
+        ioObject = new UserInputOutput();
     }
 
     @Override
@@ -29,6 +32,8 @@ public class TradeController implements ITradeController {
         ConfigVariableNames configVariableNames = new ConfigVariableNames();
         long configLossPoint = Long.parseLong(gameConfig.getValueFromOurObject(configVariableNames.getTrading(),configVariableNames.getLossPoint()));
         double configRandomTradeChance = Double.parseDouble(gameConfig.getValueFromOurObject(configVariableNames.getTrading(),configVariableNames.getRandomTradeOfferChance()));
+        ITradingEngine tradeEngine = new TradingEngine(gameConfig,leagueObjectModel,ioObject);
+
         try{
             for(IConference conference: leagueObjectModel.getConferences()){
                 for(IDivision division : conference.getDivisions()){
@@ -37,7 +42,6 @@ public class TradeController implements ITradeController {
                             double randomNumber = Math.random();
                             if(randomNumber >configRandomTradeChance){
                                 // TODO: 27-10-2020 Check how can i decouple this
-                                ITradingEngine tradeEngine = new PlayerSwappingTradeEngine(gameConfig,leagueObjectModel);
                                 tradeEngine.makeOffer(team);
                                 if(isTradeGenerated(tradeEngine)){
                                     tradeEngine.sendTradeToRecevingTeam(userTeam);
@@ -49,7 +53,7 @@ public class TradeController implements ITradeController {
                 }
             }
         }catch(Exception e){
-            IUserInputOutput ioObject = new UserInputOutput();
+            ioObject = new UserInputOutput();
             ioObject.printMessage("ERROR");
             ioObject.printMessage(e.getMessage());
         }
@@ -64,6 +68,7 @@ public class TradeController implements ITradeController {
         int teamLossPoint = team.getLossPoint();
         return  teamLossPoint;
     }
+
     public boolean isTradeGenerated(ITradingEngine tradeEngine){
         if(tradeEngine.getCurrentTrade() == null){
             return false;
