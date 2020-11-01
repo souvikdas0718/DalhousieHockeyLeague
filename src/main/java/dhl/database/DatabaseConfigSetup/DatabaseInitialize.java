@@ -24,7 +24,6 @@ public class DatabaseInitialize {
 
             defaultConfig = new DatabaseConfiguration();
 
-
         dbURL = defaultConfig.getDatabaseURL();
         dbUserName = defaultConfig.getDatabaseUserName();
         dbPassword = defaultConfig.getDatabasePassword();
@@ -32,13 +31,9 @@ public class DatabaseInitialize {
     }
 
     public Connection getConnection() throws Exception {
-
-            Class.forName(dbDriver);
-
-            Connection databaseConnection = DriverManager.getConnection(dbURL, dbUserName, dbPassword);
-            return databaseConnection;
-
-
+        Class.forName(dbDriver);
+        Connection databaseConnection = DriverManager.getConnection(dbURL, dbUserName, dbPassword);
+        return databaseConnection;
     }
 
 }

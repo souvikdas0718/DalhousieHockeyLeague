@@ -26,7 +26,8 @@ public class Aging implements IAging {
     }
 
     public ILeagueObjectModel initiateAging() throws Exception{
-        if(noOfDays % 365==0){
+        int noOfDaysInAYear=365;
+        if((noOfDays % noOfDaysInAYear)==0){
             for(IConference conference : leagueObjectModel.getConferences()){
                 for (IDivision division : conference.getDivisions()){
                     for(ITeam team : division.getTeams()){
