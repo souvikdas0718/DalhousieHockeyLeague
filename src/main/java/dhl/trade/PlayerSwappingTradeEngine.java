@@ -86,10 +86,9 @@ public class PlayerSwappingTradeEngine implements ITradingEngine {
             ITeam recevingTeam = currentTrade.getReceivingTeam();
             List<IPlayer> offeringTeamPlayers = offeringTeam.getPlayers();
             List<IPlayer> recevingTeamPlayers = recevingTeam.getPlayers();
-            if(offeringTeamPlayers.size() > 20){
+            if (offeringTeam.checkIfSkatersGoaliesValid()){
                 
             }
-
             // TODO: 31-10-2020   checkIfSkatersGoaliesValid y is it taking free agents
         }
 

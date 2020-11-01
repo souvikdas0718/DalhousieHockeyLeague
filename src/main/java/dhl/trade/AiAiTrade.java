@@ -24,7 +24,6 @@ public class AiAiTrade implements ITradeType {
 
     @Override
     public boolean isTradeAccepted() {
-        // TODO: 30-10-2020 random value fix
         double configRandomAcceptanceChance = Double.parseDouble(gameConfig.getValueFromOurObject( configVariableNames.getTrading(), configVariableNames.getRandomAcceptanceChance()));
         double randomValue = Math.random();
         if(isTradeGoodForReceivingTeam(tradeOffer)){
