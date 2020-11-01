@@ -2,27 +2,29 @@ package dhl.database;
 
 import dhl.database.DatabaseConfigSetup.CallStoredProcedure;
 import dhl.database.interfaceDB.IPlayerDB;
-import dhl.leagueModel.interfaceModel.IInjurySystem;
-import dhl.leagueModel.interfaceModel.IPlayer;
+import dhl.leagueModel.interfaceModel.*;
 
-import java.sql.Date;
 import java.sql.ResultSet;
+import java.util.List;
+import java.util.Map;
 
 public class PlayerDB implements IPlayerDB {
     public int insertPlayer(IPlayer player, int teamId, int leagueId )  throws Exception {
         int playerId =0;
 
-        CallStoredProcedure callproc = new CallStoredProcedure("insertPlayer(?,?,?,?,?,?,?,?,?,?)");
+        CallStoredProcedure callproc = new CallStoredProcedure("insertPlayer(?,?,?,?,?,?,?,?,?,?,?)");
         callproc.setParameter(1, player.getPlayerName());
         callproc.setParameter(2, player.getPosition());
         callproc.setParameter(3, player.getCaptain());
-        callproc.setParameter(4, player.getPlayerStats().getAge());
-        callproc.setParameter(5, player.getPlayerStats().getSkating());
-        callproc.setParameter(6, player.getPlayerStats().getShooting());
-        callproc.setParameter(7, player.getPlayerStats().getChecking());
-        callproc.setParameter(8, player.getPlayerStats().getSaving());
-        callproc.setParameter(9, teamId);
-        callproc.setParameter(10, leagueId);
+        IPlayerStatistics playerStatistics=player.getPlayerStats();
+        callproc.setParameter(4, playerStatistics.getAge());
+        callproc.setParameter(5, playerStatistics.getSkating());
+        callproc.setParameter(6, playerStatistics.getShooting());
+        callproc.setParameter(7, playerStatistics.getChecking());
+        callproc.setParameter(8, playerStatistics.getSaving());
+        callproc.setParameter(9, player.getPlayerInjuredDays());
+        callproc.setParameter(10, teamId);
+        callproc.setParameter(11, leagueId);
         ResultSet results = callproc.executeWithResults();
 
         if (null != results) {
@@ -39,19 +41,33 @@ public class PlayerDB implements IPlayerDB {
         return playerId;
     }
 
-    public void insertInjuredPlayer(IPlayer player, int teamId, int leagueId )  throws Exception {
-        CallStoredProcedure callproc = new CallStoredProcedure("insertInjuredPlayer(?,?,?,?,?)");
-        callproc.setParameter(1, player.getPlayerName());
-        IInjurySystem injurySystem = player.getInjurySystem();
-        java.util.Date dateInjured=injurySystem.getInjuryDate();
-        callproc.setDate(2, new Date(dateInjured.getTime()));
-        callproc.setParameter(3, injurySystem.getNumberOfDaysInjured());
-        callproc.setParameter(4, teamId);
-        callproc.setParameter(5, leagueId);
-        callproc.execute();
-
-        callproc.cleanup();
-
+    public void insertRetiredPlayers(ILeagueObjectModel leagueObjectModel, Map<String, List<IPlayer>> playersToRetire, List<IPlayer> freeAgentsToRetire) throws Exception {
+        try {
+            CallStoredProcedure callproc = new CallStoredProcedure("insertVeteran(?,?,?,?)");
+            for (String teamName : playersToRetire.keySet()) {
+                for (IPlayer player : playersToRetire.get(teamName)) {
+                    callproc.setParameter(1, player.getPlayerName());
+                    IPlayerStatistics playerStats = player.getPlayerStats();
+                    callproc.setParameter(2, playerStats.getAge());
+                    callproc.setParameter(3, teamName);
+                    callproc.setParameter(4, leagueObjectModel.getLeagueName());
+                    callproc.execute();
+                }
+            }
+            for (IPlayer freeAgent : freeAgentsToRetire) {
+                callproc.setParameter(1, freeAgent.getPlayerName());
+                IPlayerStatistics playerStats = freeAgent.getPlayerStats();
+                callproc.setParameter(2, playerStats.getAge());
+                callproc.setParameter(3, "");
+                callproc.setParameter(4, leagueObjectModel.getLeagueName());
+                callproc.execute();
+            }
+            callproc.cleanup();
+        }
+        catch (Exception e){
+            throw new Exception("Retired player not inserted properly");
+        }
     }
+
 
 }

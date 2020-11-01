@@ -7,6 +7,7 @@ import org.json.simple.JSONObject;
 import dhl.InputOutput.importJson.Interface.IDeserializeLeagueObjectModel;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class DeserializeLeagueObjectModel implements IDeserializeLeagueObjectModel {
     public ILeagueObjectModel deserializeLeagueObjectJson(JSONObject jsonLeagueObject) {
@@ -15,20 +16,23 @@ public class DeserializeLeagueObjectModel implements IDeserializeLeagueObjectMod
         JSONArray coachesJsonArrayList = (JSONArray) jsonLeagueObject.get("coaches");
         JSONArray generalManagerJsonArrayList = (JSONArray) jsonLeagueObject.get("managers");
 
-        leagueObjectModel = new LeagueObjectModel(
-                leagueName,
-                deserializeConference(jsonLeagueObject),
-                deserializeFreeAgent(jsonLeagueObject)
-        );
-
-        leagueObjectModel.setCoaches(deserializeCoach(coachesJsonArrayList));
-        leagueObjectModel.setGeneralManagers(deserializeGeneralManager(generalManagerJsonArrayList));
+        leagueObjectModel = new LeagueObjectModel();
+//                leagueName,
+//                conferenceObjectList,
+//                freeAgentObjectList,
+//                        deserializeCoach(coachesJsonArrayList),
+//                        deserializeGeneralManager(generalManagerJsonArrayList),
+//                gameConfig
+//        );
+//
+//        leagueObjectModel.setCoaches(deserializeCoach(coachesJsonArrayList));
+//        leagueObjectModel.setGeneralManagers(deserializeGeneralManager(generalManagerJsonArrayList));
 
         return leagueObjectModel;
     }
-    public ArrayList<ICoach> deserializeCoach (JSONArray coachesJsonArrayList){
+    public List<ICoach> deserializeCoach (JSONArray coachesJsonArrayList){
         Iterator<?> coachListIterator = coachesJsonArrayList.iterator();
-        ArrayList<ICoach> coachListToReturn = new ArrayList<>();
+        List<ICoach> coachListToReturn = null;
 
         while (coachListIterator.hasNext()) {
             JSONObject coachJsonObject = (JSONObject) coachListIterator.next();
@@ -38,9 +42,9 @@ public class DeserializeLeagueObjectModel implements IDeserializeLeagueObjectMod
         }
         return  coachListToReturn;
     }
-    public ArrayList<IGeneralManager> deserializeGeneralManager (JSONArray generalManagerJsonArrayList){
+    public List<IGeneralManager> deserializeGeneralManager (JSONArray generalManagerJsonArrayList){
         Iterator<?> generalManagerListIterator = generalManagerJsonArrayList.iterator();
-        ArrayList<IGeneralManager> generalManagerListToReturn = new ArrayList<IGeneralManager>();
+        List<IGeneralManager> generalManagerListToReturn = null;
 
         while (generalManagerListIterator.hasNext()) {
             String genManager = generalManagerListIterator.next().toString();
@@ -50,10 +54,10 @@ public class DeserializeLeagueObjectModel implements IDeserializeLeagueObjectMod
         }
         return  generalManagerListToReturn;
     }
-    public ArrayList<IFreeAgent> deserializeFreeAgent (JSONObject jsonLeagueObject){
+    public List<IPlayer> deserializeFreeAgent (JSONObject jsonLeagueObject){
         JSONArray freeAgentJsonArray = (JSONArray) jsonLeagueObject.get("freeAgents");
         Iterator<?> freeAgentListIterator = freeAgentJsonArray.iterator();
-        ArrayList<IFreeAgent> freeAgentListToReturn = new ArrayList<IFreeAgent>();
+        List<IPlayer> freeAgentListToReturn = null;
 
         while (freeAgentListIterator.hasNext()) {
             JSONObject freeAgentJsonObject = (JSONObject) freeAgentListIterator.next();
@@ -65,7 +69,7 @@ public class DeserializeLeagueObjectModel implements IDeserializeLeagueObjectMod
                     (int) (long) StatsObj.get("shooting"),
                     (int) (long) StatsObj.get("checking"),
                     (int) (long) StatsObj.get("saving"));
-            IFreeAgent freeAgentOb = new FreeAgent((String) freeAgentJsonObject.get("playerName"),
+            IPlayer freeAgentOb = new FreeAgent((String) freeAgentJsonObject.get("playerName"),
                     (String) freeAgentJsonObject.get("position"), freeAgentStatistics);
 
             freeAgentListToReturn.add(freeAgentOb);
@@ -73,17 +77,17 @@ public class DeserializeLeagueObjectModel implements IDeserializeLeagueObjectMod
         }
         return freeAgentListToReturn;
     }
-    public ArrayList<IConference> deserializeConference(JSONObject jsonLeagueObject){
+    public List<IConference> deserializeConference(JSONObject jsonLeagueObject){
         JSONArray conferenceJsonArray = (JSONArray) jsonLeagueObject.get("conferences");
         Iterator<?> conferenceListIterator = (conferenceJsonArray).iterator();
-        ArrayList<IConference> conferencesListToReturn = new ArrayList<IConference>();
+        List<IConference> conferencesListToReturn = null;
 
         while (conferenceListIterator.hasNext()) {
             JSONObject conferenceJsonObject = (JSONObject) conferenceListIterator.next();
             JSONArray divisionJsonArray = (JSONArray) conferenceJsonObject.get("divisions");
 
             Iterator<?> divisionListIterator = (divisionJsonArray).iterator();
-            ArrayList<IDivision> divisonListToReturn = new ArrayList<IDivision>();
+            List<IDivision> divisonListToReturn = null;
             while (divisionListIterator.hasNext()) {
                 JSONObject divisionJsonObject = (JSONObject) divisionListIterator.next();
 
@@ -98,10 +102,10 @@ public class DeserializeLeagueObjectModel implements IDeserializeLeagueObjectMod
         }
         return conferencesListToReturn;
     }
-    public ArrayList<ITeam> deserializeTeam(JSONObject divisionJsonObject){
+    public List<ITeam> deserializeTeam(JSONObject divisionJsonObject){
         JSONArray teamJsonArray = (JSONArray) divisionJsonObject.get("teams");
         Iterator<?> teamListIterator = (teamJsonArray).iterator();
-        ArrayList<ITeam> TeamListToReturn = new ArrayList<ITeam>();
+        List<ITeam> TeamListToReturn = null;
         while (teamListIterator.hasNext()) {
             JSONObject teamJsonObject = (JSONObject) teamListIterator.next();
 
@@ -109,7 +113,7 @@ public class DeserializeLeagueObjectModel implements IDeserializeLeagueObjectMod
             JSONObject headCoachJsonObject = (JSONObject) teamJsonObject.get("headCoach");
 
             Iterator<?> playerListIterator = playerJsonArray.iterator();
-            ArrayList<IPlayer> playerListToReturn = new ArrayList<IPlayer>();
+            List<IPlayer> playerListToReturn = null;
 
             while (playerListIterator.hasNext()) {
                 JSONObject playerJsonObject = (JSONObject) playerListIterator.next();

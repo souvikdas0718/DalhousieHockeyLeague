@@ -1,18 +1,20 @@
 package dhl.database;
 
+import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.database.DatabaseConfigSetup.CallStoredProcedure;
 import dhl.database.interfaceDB.IGameConfigDB;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 public class gameConfigDB implements IGameConfigDB {
-    public void insertGamePlayConfig(String category, String subCategory,String configValue, String leagueName)  throws Exception {
+    public void insertGamePlayConfig(IGameConfig gameConfig,String leagueName)  throws Exception {
         try {
             CallStoredProcedure callproc = new CallStoredProcedure("insertGamePlayConfig(?,?,?,?)");
-            callproc.setParameter(1, category);
-            callproc.setParameter(2, subCategory);
-            callproc.setParameter(3, configValue);
-            callproc.setParameter(4, leagueName);
+//            callproc.setParameter(1, category);
+//            callproc.setParameter(2, subCategory);
+//            callproc.setParameter(3, configValue);
+//            callproc.setParameter(4, leagueName);
             callproc.execute();
             callproc.cleanup();
         } catch (SQLException throwables) {

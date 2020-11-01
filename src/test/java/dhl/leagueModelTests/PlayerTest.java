@@ -1,12 +1,10 @@
 package dhl.leagueModelTests;
 
+import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.factory.InitializeObjectFactory;
-import dhl.InputOutput.importJson.Interface.IGameConfig;
-import dhl.leagueModel.InjurySystem;
 import dhl.leagueModel.Player;
 import dhl.leagueModel.PlayerStatistics;
-import dhl.leagueModel.interfaceModel.IInjurySystem;
 import dhl.leagueModel.interfaceModel.IPlayer;
 import dhl.leagueModel.interfaceModel.IPlayerStatistics;
 import org.junit.jupiter.api.AfterEach;
@@ -14,27 +12,24 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Date;
-
 public class PlayerTest {
     InitializeObjectFactory initObj;
-    IPlayer player;
+    Player player;
     IPlayerStatistics playerStatistics;
-    InjurySystem injuredPlayer;
     IGameConfig gameConfig;
 
     @BeforeEach()
     public void initObject(){
         initObj = new InitializeObjectFactory();
-        player= initObj.createPlayer();
         playerStatistics =new PlayerStatistics(20,10,10,10,10);
-        injuredPlayer=new InjurySystem(new Date(),20);
+        player= new Player("Harry","forward",false,playerStatistics);
         LeagueObjectModelMocks leagueMock= new LeagueObjectModelMocks();
         gameConfig=leagueMock.getGameConfig();
     }
 
     @Test
     public void PlayerDefaultConstructorTest(){
+        player= new Player();
         Assertions.assertTrue(player.getPlayerName().isEmpty());
         Assertions.assertEquals("",player.getPosition() );
     }
@@ -48,28 +43,10 @@ public class PlayerTest {
     }
 
     @Test
-    public void getPlayerIdTest(){
-        player.setPlayerId(5);
-        Assertions.assertEquals(5,player.getPlayerId());
-    }
-
-    @Test
-    public void setPlayerIdTest(){
-        player.setPlayerId(10);
-        Assertions.assertEquals(10,player.getPlayerId());
-    }
-
-    @Test
     public void getPlayerNameTest(){
-        player.setPlayerName("Rick Nash");
-        Assertions.assertEquals("Rick Nash",player.getPlayerName());
+        Assertions.assertEquals("Harry",player.getPlayerName());
     }
 
-    @Test
-    public void setPlayerNameTest(){
-        player.setPlayerName("Nikita Kucherov");
-        Assertions.assertEquals("Nikita Kucherov",player.getPlayerName());
-    }
 
     @Test
     public void getPositionTest(){
@@ -91,43 +68,37 @@ public class PlayerTest {
 
     @Test
     public void getPositionEmptyTest(){
+        player= new Player();
         Assertions.assertEquals("",player.getPosition());
     }
 
     @Test
     public void getCaptainTest(){
-        player.setCaptain(true);
+        player= new Player("Harry","forward",true,playerStatistics);
         Assertions.assertTrue(player.getCaptain());
     }
 
     @Test
-    public void setCaptainTest(){
-        player.setCaptain(false);
-        Assertions.assertFalse(player.getCaptain());
-    }
-
-    @Test
-    void setPlayerStatsTest() {
-        player.setPlayerStats(playerStatistics);
+    public void getPlayerStatsTest(){
         IPlayerStatistics playerStatistics=player.getPlayerStats();
         Assertions.assertEquals(20,playerStatistics.getAge());
     }
 
     @Test
-    void setInjurySystemTest() {
-        player.setInjurySystem(injuredPlayer);
-        IInjurySystem injury=player.getInjurySystem();
-        Assertions.assertTrue(injury.isInjured());
+    void setPlayerInjuredDaysTest() {
+        player.setPlayerInjuredDays(10);
+        Assertions.assertEquals(10,player.getPlayerInjuredDays());
     }
 
     @Test
     public void isPlayerNameEmpty(){
+        player=new Player();
         Assertions.assertTrue(player.isPlayerNameEmpty());
     }
 
     @Test
     public void isPlayerPositionInvalidTest(){
-        player.setPosition("leftCenter");
+        player=new Player("Harry","leg side",false,playerStatistics);
         Assertions.assertTrue(player.isPlayerPositionInvalid());
     }
 
@@ -139,11 +110,13 @@ public class PlayerTest {
 
     @Test
     public void isCaptainValueBooleanTest(){
+        player= new Player();
         Assertions.assertTrue(player.isCaptainValueBoolean());
     }
 
     @Test
     public void checkPlayerNameValidTest() {
+        player=new Player();
         Exception error=Assertions.assertThrows(Exception.class,() ->{
             player.checkPlayerValid();
         });
@@ -152,8 +125,7 @@ public class PlayerTest {
 
     @Test
     public void checkPlayerPositionValidTest() {
-        player.setPlayerName("Noah");
-        player.setPosition("leg side");
+        player=new Player("Harry","leg side",false,playerStatistics);
         Exception errorMsg=Assertions.assertThrows(Exception.class,() ->{
             player.checkPlayerValid();
         });
@@ -162,7 +134,7 @@ public class PlayerTest {
 
     @Test
     public void checkPlayerCaptainValueValidTest() {
-        player.setPlayerName("Noah");
+        player= new Player("Noah","forward",null,playerStatistics);
         player.setPosition("forward");
         Exception error=Assertions.assertThrows(Exception.class,() ->{
             player.checkPlayerValid();
@@ -177,30 +149,14 @@ public class PlayerTest {
     }
 
     @Test
-    public void isPlayerAlreadyInjuredTest(){
-        player.setInjurySystem(injuredPlayer);
-        player.checkPlayerInjury(gameConfig,new Date());
-        IInjurySystem injurySystem = player.getInjurySystem();
-        Assertions.assertTrue(injurySystem.isInjured());
-    }
-
-    @Test
-    public void checkPlayerInjuryTest(){
-        player.checkPlayerInjury(gameConfig,new Date());
-        IInjurySystem injury= player.getInjurySystem();
-        Assertions.assertTrue(injury.isInjured());
-    }
-
-    @Test
     public void getPlayerStrengthTest(){
-        player.setPlayerStats(playerStatistics);
         player.setPosition("forward");
         Assertions.assertEquals(25,player.getPlayerStrength());
         player.setPosition("goalie");
         Assertions.assertEquals(20,player.getPlayerStrength());
         player.setPosition("defense");
         Assertions.assertEquals(25,player.getPlayerStrength());
-        player.setInjurySystem(injuredPlayer);
+        player.setPlayerInjuredDays(2);
         player.setPosition("defense");
         Assertions.assertEquals(12.5,player.getPlayerStrength());
     }

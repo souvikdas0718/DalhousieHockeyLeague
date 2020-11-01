@@ -1,18 +1,15 @@
 package dhl.simulationStateMachineTest;
 
 import dhl.Mocks.LeagueObjectModelMocks;
-import dhl.database.LeagueObjectModelData;
-import dhl.database.interfaceDB.ILeagueObjectModelData;
+import dhl.database.interfaceDB.ILeagueObjectModelDB;
 import dhl.leagueModel.LeagueObjectModel;
 import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.leagueModel.interfaceModel.ITeam;
 import dhl.leagueModelTests.MockDatabase;
 import dhl.simulationStateMachine.GameContext;
-import dhl.simulationStateMachine.States.CreateTeamStateLogic;
 import dhl.simulationStateMachine.States.Interface.ILoadTeamStateLogic;
 import dhl.simulationStateMachine.States.LoadTeamStateLogic;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -29,7 +26,7 @@ public class LoadTeamStateLogicTest {
 
         ILeagueObjectModel newInMemoryLeague = new LeagueObjectModel();
         GameContext ourGame=new GameContext();
-        ILeagueObjectModelData databaseRefrenceOb = new MockDatabase();
+        ILeagueObjectModelDB databaseRefrenceOb = new MockDatabase();
         Boolean iTeamFound = objLoadTeamStateLogic.findTeamOfLeagueInDatabase("Dhl","Ontario",newInMemoryLeague,ourGame,databaseRefrenceOb);
         Assertions.assertEquals(true, iTeamFound);
     }

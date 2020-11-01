@@ -32,7 +32,7 @@ public class TradeControllerTest {
         goodTeamMock = tradeMock.getTeamWithGoodPlayer();
         badTeamMock = tradeMock.getTeamWithBadPlayer();
         Team userTeam = (Team) tradeMock.getTeamWithBadPlayer();
-        userTeam.setTeamName("UserTeam");
+        userTeam=new Team("UserTeam",userTeam.getGeneralManager(),userTeam.getHeadCoach(),userTeam.getPlayers());
         ourLeague = leagueObjectModelMocks.getLeagueObjectMock();
         ourLeague.getConferences().get(0).getDivisions().get(0).getTeams().add(goodTeamMock);
         ourLeague.getConferences().get(0).getDivisions().get(0).getTeams().add(badTeamMock);

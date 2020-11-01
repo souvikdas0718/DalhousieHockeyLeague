@@ -1,11 +1,11 @@
 package dhl.database.interfaceDB;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+
+import dhl.InputOutput.importJson.Interface.IGameConfig;
 
 public interface IGameConfigDB {
 
-    public void insertGamePlayConfig(String category, String subCategory,String configValue, String leagueName)  throws Exception;
+    public void insertGamePlayConfig(IGameConfig gameConfig, String leagueName)  throws Exception;
 
     public String loadGamePlayConfig(String category, String subCategory, String leagueName) throws Exception;
 

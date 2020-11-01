@@ -7,6 +7,7 @@ import dhl.trade.Interface.ITradeType;
 import dhl.trade.Interface.ITradingEngine;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PlayerSwappingTradeEngine implements ITradingEngine {
 
@@ -60,7 +61,7 @@ public class PlayerSwappingTradeEngine implements ITradingEngine {
         ITradeType tradeType;
         // TODO: 29-10-2020 check how to handle this  LSC
         if(currentTrade.getReceivingTeam() == userTeam){
-            tradeType = new AiUserTrade();
+            tradeType = new AiUserTrade(currentTrade);
         }else{
             tradeType = new AiAiTrade(currentTrade,gameConfig);
         }
@@ -82,11 +83,13 @@ public class PlayerSwappingTradeEngine implements ITradingEngine {
         if(isObjectInitiated(currentTrade)){
             ITeam offeringTeam = currentTrade.getOfferingTeam();
             ITeam recevingTeam = currentTrade.getReceivingTeam();
-            ArrayList<IPlayer> offeringTeamPlayers = offeringTeam.getPlayers();
-            ArrayList<IPlayer> recevingTeamPlayers = recevingTeam.getPlayers();
+            List<IPlayer> offeringTeamPlayers = offeringTeam.getPlayers();
+            List<IPlayer> recevingTeamPlayers = recevingTeam.getPlayers();
             if(offeringTeamPlayers.size() > 20){
                 
             }
+
+            // TODO: 31-10-2020   checkIfSkatersGoaliesValid y is it taking free agents
         }
 
     }
@@ -122,7 +125,7 @@ public class PlayerSwappingTradeEngine implements ITradingEngine {
 
     public ArrayList<IPlayer> sortPlayerList(ITeam tradingTeam) throws Exception {
         ArrayList<IPlayer> sortedPlayerList = new ArrayList<IPlayer>();
-        ArrayList<IPlayer> playerList = tradingTeam.getPlayers();
+        List<IPlayer> playerList = tradingTeam.getPlayers();
         if(playerList.size() > 0) {
             sortedPlayerList.add(playerList.get(0));
             for (int j = 1 ; j < playerList.size() ; j++) {

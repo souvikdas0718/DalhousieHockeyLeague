@@ -1,7 +1,11 @@
 package dhl.database.DatabaseConfigSetup;
-import dhl.database.DatabaseConfigSetup.DatabaseInitialize;
 
-import java.sql.*;
+import java.sql.SQLException;
+import java.sql.Connection;
+import java.sql.CallableStatement;
+import java.sql.ResultSet;
+import java.sql.Types;
+import java.sql.Date;
 
 public class CallStoredProcedure {
     private String storedProcedureName;

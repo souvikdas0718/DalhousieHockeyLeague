@@ -1,25 +1,15 @@
 package dhl.leagueModel.interfaceModel;
 
 public interface ICoach {
-    public String getCoachName();
+    String getCoachName();
 
-    public void setCoachName(String coachName);
+    double getSkating();
 
-    public double getSkating();
+    double getShooting();
 
-    public void setSkating(double skating);
+    double getChecking();
 
-    public double getShooting();
+    double getSaving();
 
-    public void setShooting(double shooting);
-
-    public double getChecking();
-
-    public void setChecking(double checking);
-
-    public double getSaving();
-
-    public void setSaving(double saving);
-
-    public boolean checkIfCoachValid(IValidation validation) throws Exception;
+    boolean checkIfCoachValid(IValidation validation) throws Exception;
 }

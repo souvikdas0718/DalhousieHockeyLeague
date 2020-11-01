@@ -3,9 +3,8 @@ package dhl.tradeTest;
 import dhl.Mocks.GameConfigMock;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.InputOutput.importJson.Interface.IGameConfig;
-import dhl.leagueModel.Player;
-import dhl.leagueModel.PlayerStatistics;
-import dhl.leagueModel.Team;
+import dhl.leagueModel.*;
+import dhl.leagueModel.interfaceModel.ICoach;
 import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.leagueModel.interfaceModel.IPlayer;
 import dhl.leagueModel.interfaceModel.ITeam;
@@ -13,6 +12,8 @@ import dhl.trade.PlayerSwappingTradeEngine;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 public class PlayerSwappingTradeEngineTest {
 
@@ -56,11 +57,9 @@ public class PlayerSwappingTradeEngineTest {
 
     @Test
     public void isTeamDifferentTest(){
-        Team newTeam = new Team();
-        newTeam.setTeamName("team1");
+        Team newTeam = new Team("team1","Larry",new Coach(),new ArrayList<>());
         Assertions.assertFalse(testClassObject.isTeamDifferent(newTeam , newTeam));
-        Team otherTeam = new Team();
-        otherTeam.setTeamName("secondTeam");
+        Team otherTeam = new Team("secondTeam","Larry",new Coach(),new ArrayList<>());
         Assertions.assertTrue(testClassObject.isTeamDifferent(newTeam,otherTeam));
     }
 
@@ -83,8 +82,7 @@ public class PlayerSwappingTradeEngineTest {
         Assertions.assertTrue(unsortedTeam.getPlayers().get(0).getPlayerStrength() <= unsortedTeam.getPlayers().get(1).getPlayerStrength());
 
 
-        Team empytyPlayerTeam = new Team();
-        empytyPlayerTeam.setTeamName("EmptyPlayers");
+        Team empytyPlayerTeam = new Team("EmptyPlayers","Larry",new Coach(),new ArrayList<>());
 
         Exception error = Assertions.assertThrows(Exception.class,() ->{
             testClassObject.sortPlayerList(empytyPlayerTeam);

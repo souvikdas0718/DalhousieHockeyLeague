@@ -3,15 +3,13 @@ package dhl.leagueModel;
 import dhl.leagueModel.interfaceModel.IDivision;
 import dhl.leagueModel.interfaceModel.ITeam;
 import dhl.leagueModel.interfaceModel.IValidation;
-import java.util.ArrayList;
-import java.util.HashSet;
+
+import java.util.*;
 import java.util.List;
-import java.util.Set;
 
 public class Division implements IDivision {
-    private int divisionId;
     private String divisionName;
-    private ArrayList<ITeam> teams;
+    private List<ITeam> teams;
 
     public Division(){
         setDefault();
@@ -22,24 +20,16 @@ public class Division implements IDivision {
         teams= new ArrayList<>();
     }
 
-    public Division(String  divisionName,ArrayList<ITeam> teamsList){
+    public Division(String  divisionName,List<ITeam> teamsList){
        this.divisionName=divisionName;
        this.teams=teamsList;
-    }
-
-    public void setDivisionName(String divisionName) {
-        this.divisionName=divisionName;
     }
 
     public String getDivisionName() {
         return divisionName;
     }
 
-    public void setTeams(ArrayList<ITeam> teamsList) {
-        this.teams=teamsList;
-    }
-
-    public ArrayList<ITeam> getTeams() {
+    public List<ITeam> getTeams() {
         return teams;
     }
 

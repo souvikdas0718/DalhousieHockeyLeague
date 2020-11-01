@@ -3,12 +3,12 @@ package dhl.leagueModel;
 import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.leagueModel.interfaceModel.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
+import java.util.ArrayList;
 
-public class AgingSystem {
+public class AgingSystem implements IAgingSystem {
     private int averageRetirementAge;
     private int maximumAge;
     private double likelihoodForGreaterThanAvg;
@@ -42,32 +42,13 @@ public class AgingSystem {
         return averageRetirementAge;
     }
 
-    public void setAverageRetirementAge(int averageRetirementAge) {
-        this.averageRetirementAge = averageRetirementAge;
-    }
-
     public int getMaximumAge() {
         return maximumAge;
     }
 
-    public void setMaximumAge(int maximumAge) {
-        this.maximumAge = maximumAge;
-    }
-
-    public void ageAllPlayers(ILeagueObjectModel leagueObjectModel, int noOfDays){
-        if(noOfDays==365){
-            for(IConference conference : leagueObjectModel.getConferences()){
-                for (IDivision division : conference.getDivisions()){
-                    for(ITeam team :division.getTeams()){
-                        for(IPlayer player:team.getPlayers()){
-                            agePlayer(player.getPlayerStats());
-                        }
-                    }
-                }
-            }
-            for(IFreeAgent freeAgent:leagueObjectModel.getFreeAgents()){
-                agePlayer(freeAgent.getPlayerStats());
-            }
+    public void ageAllPlayers(List<IPlayer> players){
+        for(IPlayer player:players){
+            agePlayer(player.getPlayerStats());
         }
     }
 
@@ -76,54 +57,36 @@ public class AgingSystem {
 
     }
 
-    public Map<String,List<IPlayer>> selectPlayersToRetire(List<ITeam> teams){
+    public Map<String,List<IPlayer>> selectPlayersToRetire(ITeam team){
         Map<String,List<IPlayer>> playersSelectedToRetire=new HashMap<>();
-        int rangeOfAge=(maximumAge-averageRetirementAge)/3;
-        for(ITeam team:teams){
-            List retiringPlayers = new ArrayList();
-            for(IPlayer player:team.getPlayers()){
-                IPlayerStatistics playerStatistics=player.getPlayerStats();
-                if(playerStatistics.getAge()==maximumAge){
-                    retiringPlayers.add(player.getPlayerName());
-                }
-                else if(playerStatistics.getAge()>=averageRetirementAge){
-                    if(checkLikelihoodOfRetirement(getLikelihoodForGreaterThanAvg())) {
-                        retiringPlayers.add(player.getPlayerName());
-                    }
-                }
-                else if(playerStatistics.getAge()<averageRetirementAge && playerStatistics.getAge()>averageRetirementAge-rangeOfAge){
-                    if(checkLikelihoodOfRetirement(getLikelihoodForLesserThanAvg())) {
-                        retiringPlayers.add(player.getPlayerName());
-                    }
-                }
-            }
-            playersSelectedToRetire.put(team.getTeamName(),retiringPlayers);
-        }
+        playersSelectedToRetire.put(team.getTeamName(),retirementAlgorithmBasedOnAge(team.getPlayers()));
         return playersSelectedToRetire;
     }
 
-    public Map<String,List<IFreeAgent>> selectFreeAgentsToRetire(ILeagueObjectModel leagueObjectModel){
-        Map<String,List<IFreeAgent>> agentsSelectedToRetire=new HashMap<>();
-        List<IFreeAgent> retiringFreeAgents= new ArrayList<>();
+    public List<IPlayer> selectFreeAgentsToRetire(List<IPlayer> freeAgents){
+        return retirementAlgorithmBasedOnAge(freeAgents);
+    }
+
+    public List<IPlayer> retirementAlgorithmBasedOnAge(List<IPlayer> players){
         int rangeOfAge=(maximumAge-averageRetirementAge)/3;
-        for(IFreeAgent freeAgent:leagueObjectModel.getFreeAgents()){
-            IPlayerStatistics playerStatistics=freeAgent.getPlayerStats();
+        List<IPlayer> retiringPlayers=new ArrayList<>();
+        for(IPlayer player:players){
+            IPlayerStatistics playerStatistics=player.getPlayerStats();
             if(playerStatistics.getAge()==maximumAge){
-                retiringFreeAgents.add(freeAgent);
+                retiringPlayers.add(player);
             }
             else if(playerStatistics.getAge()>=averageRetirementAge){
                 if(checkLikelihoodOfRetirement(getLikelihoodForGreaterThanAvg())) {
-                    retiringFreeAgents.add(freeAgent);
+                    retiringPlayers.add(player);
                 }
             }
             else if(playerStatistics.getAge()<averageRetirementAge && playerStatistics.getAge()>averageRetirementAge-rangeOfAge){
                 if(checkLikelihoodOfRetirement(getLikelihoodForLesserThanAvg())) {
-                    retiringFreeAgents.add(freeAgent);
+                    retiringPlayers.add(player);
                 }
             }
         }
-        agentsSelectedToRetire.put(leagueObjectModel.getLeagueName(),retiringFreeAgents);
-        return agentsSelectedToRetire;
+        return retiringPlayers;
     }
 
     public boolean checkLikelihoodOfRetirement(double likelihood){
@@ -134,9 +97,5 @@ public class AgingSystem {
         }
         return false;
     }
-
-
-
-
 
 }

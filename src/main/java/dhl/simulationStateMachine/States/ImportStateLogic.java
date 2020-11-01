@@ -16,7 +16,7 @@ public class ImportStateLogic implements IImportStateLogic {
     public ILeagueObjectModel importAndGetLeagueObject(String validFilePath, IGameConfig gameConfig, ILeagueObjectModel newInMemoryLeague) throws Exception {
         JSONObject leagueJsonObject = new ImportJsonFile(validFilePath).getJsonObject();
         gameConfig = new GameConfig(leagueJsonObject);
-        CreateLeagueObjectModel createLeagueObjectModel = new CreateLeagueObjectModel(leagueJsonObject);
+        CreateLeagueObjectModel createLeagueObjectModel = new CreateLeagueObjectModel(leagueJsonObject,gameConfig);
         ILeagueObjectModel objLeagueObjectModel = new LeagueObjectModel();
         objLeagueObjectModel = createLeagueObjectModel.getLeagueObjectModel();
         return objLeagueObjectModel;

@@ -32,22 +32,6 @@ public class ExchangingPlayerTradeOffer implements ITradeOffer {
         }
     }
 
-    @Override
-    public boolean isTradeGoodForReceivingTeam(){
-        if(getPlayerCombinedStrength(playersOffered) > getPlayerCombinedStrength(playersWantedInExchange)){
-            return true;
-        }
-        return false;
-    }
-
-
-    public double getPlayerCombinedStrength(ArrayList<IPlayer> players){
-        double totalstrength = 0;
-        for(int i=0;i<players.size();i++){
-            totalstrength+= players.get(i).getPlayerStrength();
-        }
-        return totalstrength;
-    }
 
     @Override
     public ITeam getOfferingTeam() {
@@ -57,5 +41,13 @@ public class ExchangingPlayerTradeOffer implements ITradeOffer {
     @Override
     public ITeam getReceivingTeam() {
         return receivingTeam;
+    }
+
+    public ArrayList<IPlayer> getOfferingPlayers(){
+        return playersOffered;
+    }
+
+    public ArrayList<IPlayer> getPlayersWantedInReturn(){
+        return playersWantedInExchange;
     }
 }

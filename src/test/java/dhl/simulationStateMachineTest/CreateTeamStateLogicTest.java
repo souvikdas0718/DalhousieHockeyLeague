@@ -1,7 +1,10 @@
 package dhl.simulationStateMachineTest;
 
 import dhl.Mocks.LeagueObjectModelMocks;
-import dhl.database.interfaceDB.ILeagueObjectModelData;
+import dhl.leagueModel.interfaceModel.IConference;
+import dhl.leagueModel.interfaceModel.IDivision;
+import dhl.leagueModel.interfaceModel.IPlayer;
+import dhl.database.interfaceDB.ILeagueObjectModelDB;
 import dhl.leagueModel.*;
 import dhl.leagueModel.interfaceModel.*;
 import dhl.leagueModelTests.MockDatabase;
@@ -31,9 +34,11 @@ public class CreateTeamStateLogicTest {
     @Test
     public void saveleagueObjectTest() throws Exception {
         ILeagueObjectModel objLeagueObjectModel = new LeagueObjectModel();
-        ILeagueObjectModelData mockDb=new MockDatabase();
-
-        objLeagueObjectModel = testClassObject.saveleagueObject(inMemoryLeague.getLeagueName(), "Western","Atlantic","Ontario1","Mathew1",mocks.get20FreeAgentArrayMock(),mocks.getSingleCoach(), ourGame, inMemoryLeague,mockDb);
+        ILeagueObjectModelDB mockDb=new MockDatabase();
+        ILeagueObjectModelValidation validation = new LeagueObjectModelValidation();
+        ITeam team= new Team("Ontario1","Mathew1",mocks.getSingleCoach(),new ArrayList<>());
+        LeagueObjectModelInput leagueObjectModelInput = new LeagueObjectModelInput(inMemoryLeague.getLeagueName(), "Western", "Atlantic", team,validation);
+        objLeagueObjectModel = testClassObject.saveleagueObject( ourGame,inMemoryLeague,leagueObjectModelInput);
         Assertions.assertEquals("Dhl",objLeagueObjectModel.getLeagueName());
     }
 
@@ -58,7 +63,7 @@ public class CreateTeamStateLogicTest {
 
     @Test
     public void findFreeAgent(){
-        IFreeAgent freeAgentTest = testClassObject.findFreeAgent(mocks.getFreeAgentArrayMock() , "Mock Free Agent 1");
+        IPlayer freeAgentTest = testClassObject.findFreeAgent(mocks.getFreeAgentArrayMock() , "Mock Free Agent 1");
         assertTrue(freeAgentTest.getPlayerName().equals("Mock Free Agent 1"));
 
         freeAgentTest = testClassObject.findFreeAgent(mocks.getFreeAgentArrayMock() , "Wrong Free Agent");
@@ -69,8 +74,8 @@ public class CreateTeamStateLogicTest {
     @Test
     public void createNewTeamObjectTest() throws Exception {
         ITeam newlyCreatedTeam= new Team();
-
-        newlyCreatedTeam = testClassObject.createNewTeamObject(mocks.get20FreeAgentArrayMock(), "testTeam", "testGenManager", mocks.getSingleCoach());
+        ITeam teamWithoutPlayers= new Team("testTeam", "testGenManager", mocks.getSingleCoach(),new ArrayList<>());
+        newlyCreatedTeam = testClassObject.createNewTeamObject(mocks.get20FreeAgentArrayMock(),teamWithoutPlayers, "Henry1");
         Assertions.assertEquals(20,newlyCreatedTeam.getPlayers().size());
     }
 
@@ -78,7 +83,7 @@ public class CreateTeamStateLogicTest {
     public void validateInputFreeAgents() throws Exception{
         String inputFreeAgents = "Henry0,Henry1,Henry2,Henry3,Henry4,Henry5,Henry6,Henry7,Henry8,Henry9,Henry10,Henry11,Henry12,Henry13,Henry14,Henry15,Henry16,Henry17,Henry18,Henry19";
         LeagueObjectModelMocks objMock = new LeagueObjectModelMocks();
-        ArrayList<IFreeAgent> objFreeAgent = new ArrayList<>();
+        ArrayList<IPlayer> objFreeAgent = new ArrayList<>();
         objFreeAgent = testClassObject.validateInputFreeAgents(inputFreeAgents, objMock.get20FreeAgentArrayMock());
         Assertions.assertNotNull(objFreeAgent);
         Assertions.assertEquals(20,objFreeAgent.size());

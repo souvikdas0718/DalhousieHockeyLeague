@@ -29,33 +29,28 @@ public class CoachTest {
     }
 
     @Test
-    void setCoachNameTest() {
-        coach.setCoachName("Harry Mathew");
-        Assertions.assertEquals("Harry Mathew",coach.getCoachName());
+    void getCoachNameTest() {
+        Assertions.assertEquals("Mary Smith",coach.getCoachName());
     }
 
     @Test
-    void setSkatingTest() {
-        coach.setSkating(0.1);
+    void getSkatingTest() {
         Assertions.assertEquals(0.1,coach.getSkating());
     }
 
     @Test
-    void setShootingTest() {
-        coach.setShooting(1.0);
-        Assertions.assertEquals(1.0,coach.getShooting());
+    void getShootingTest() {
+        Assertions.assertEquals(0.2,coach.getShooting());
     }
 
     @Test
-    void setCheckingTest() {
-        coach.setChecking(0.5);
+    void getCheckingTest() {
         Assertions.assertEquals(0.5,coach.getChecking());
     }
 
     @Test
-    void setSavingTest() {
-        coach.setSaving(0.2);
-        Assertions.assertEquals(0.2,coach.getSaving());
+    void getSavingTest() {
+        Assertions.assertEquals(1.0,coach.getSaving());
     }
 
     @Test

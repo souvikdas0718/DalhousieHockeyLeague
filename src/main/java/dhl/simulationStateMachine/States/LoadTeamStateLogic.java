@@ -1,7 +1,6 @@
 package dhl.simulationStateMachine.States;
 
-import dhl.database.LeagueObjectModelData;
-import dhl.database.interfaceDB.ILeagueObjectModelData;
+import dhl.database.interfaceDB.ILeagueObjectModelDB;
 import dhl.leagueModel.Team;
 import dhl.leagueModel.interfaceModel.IConference;
 import dhl.leagueModel.interfaceModel.IDivision;
@@ -14,7 +13,7 @@ import java.util.ArrayList;
 
 public class LoadTeamStateLogic implements ILoadTeamStateLogic {
     public Boolean findTeamOfLeagueInDatabase(String leagueName, String team, ILeagueObjectModel newInMemoryLeague,
-                                           GameContext ourGame, ILeagueObjectModelData databaseRefrenceOb) throws Exception {
+                                           GameContext ourGame, ILeagueObjectModelDB databaseRefrenceOb) throws Exception {
 
         newInMemoryLeague = newInMemoryLeague.loadLeagueObjectModel(databaseRefrenceOb, leagueName, team);
         ITeam objteam = new Team();

@@ -3,14 +3,13 @@ package dhl.leagueModel;
 import dhl.leagueModel.interfaceModel.IConference;
 import dhl.leagueModel.interfaceModel.IDivision;
 import dhl.leagueModel.interfaceModel.IValidation;
-import java.util.ArrayList;
-import java.util.HashSet;
+
+import java.util.*;
 import java.util.List;
-import java.util.Set;
 
 public class Conference implements IConference {
     private String conferenceName;
-    private ArrayList<IDivision> divisions;
+    private List<IDivision> divisions;
 
     public Conference(){
       setDefaults();
@@ -21,25 +20,17 @@ public class Conference implements IConference {
         divisions=new ArrayList<>();
     }
 
-    public Conference(String conferenceName,ArrayList<IDivision> divisions){
-        setConferenceName(conferenceName);
-        setDivisions(divisions);
+    public Conference(String conferenceName,List<IDivision> divisions){
+        this.conferenceName=conferenceName;
+        this.divisions=divisions;
     }
 
     public String getConferenceName() {
         return conferenceName;
     }
 
-    public void setConferenceName(String conferenceName) {
-        this.conferenceName = conferenceName;
-    }
-
-    public ArrayList<IDivision> getDivisions() {
+    public List<IDivision> getDivisions() {
         return divisions;
-    }
-
-    public void setDivisions(ArrayList<IDivision> divisionList) {
-        this.divisions=divisionList;
     }
 
     public boolean checkIfConferenceValid(IValidation validation) throws Exception{

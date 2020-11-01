@@ -1,16 +1,17 @@
-package dhl.TrainingTest;
+package dhl.leagueModelTests;
 
 import dhl.Mocks.LeagueObjectModelMocks;
-import dhl.Training.ITraining;
-import dhl.Training.Training;
+import dhl.leagueModel.interfaceModel.ITraining;
+import dhl.leagueModel.Training;
 import dhl.leagueModel.*;
 import dhl.leagueModel.interfaceModel.*;
-import dhl.database.interfaceDB.ILeagueObjectModelData;
+import dhl.database.interfaceDB.ILeagueObjectModelDB;
 import dhl.leagueModelTests.MockDatabase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TrainingTest {
     ITraining trainingParameterized;
@@ -18,21 +19,22 @@ public class TrainingTest {
 
     @BeforeEach
     public void initObject(){
-        trainingParameterized = new Training();
+        IInjurySystem injurySystem = new InjurySystem();
+        trainingParameterized = new Training(injurySystem);
         mocks = new LeagueObjectModelMocks();
     }
 
     @Test
     public void statIncreaseTest() throws Exception{
 
-        ILeagueObjectModelData mockLeagueObject=new MockDatabase();
+        ILeagueObjectModelDB mockLeagueObject=new MockDatabase();
         ILeagueObjectModel newLeagueObject=new LeagueObjectModel();
-        newLeagueObject = trainingParameterized.statIncrease(mockLeagueObject.loadLeagueModel("Dhl","Ontario"));
+        newLeagueObject = trainingParameterized.findPlayersForStatIncrease(mockLeagueObject.loadLeagueModel("Dhl","Ontario"));
 
         Assertions.assertNotNull("Dhl", newLeagueObject.getLeagueName());
     }
     public void updatePlayerStatsTest() throws Exception{
-        ArrayList<IPlayer> updatedPlayersList=new ArrayList<>();
+        List<IPlayer> updatedPlayersList=new ArrayList<>();
         String [] randomValues = {"0.1","0.2","0.3","0.4"};
         updatedPlayersList = trainingParameterized.updatePlayerStats(updatedPlayersList, mocks.getSingleCoach(), randomValues);
 
