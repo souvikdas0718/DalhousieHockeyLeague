@@ -1,24 +1,23 @@
 package dhl.simulationStateMachine.States;
 
+import dhl.InputOutput.UI.IUserInputOutput;
+import dhl.InputOutput.UI.UserInputOutput;
 import dhl.leagueModel.LeagueObjectModel;
-import dhl.leagueModel.interfaceModel.IConference;
-import dhl.leagueModel.interfaceModel.IDivision;
 import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.leagueModel.interfaceModel.ITeam;
-import dhl.database.interfaceDB.ILeagueObjectModelData;
-import dhl.database.LeagueObjectModelData;
+import dhl.database.interfaceDB.ILeagueObjectModelDB;
+import dhl.database.LeagueObjectModelDB;
 import dhl.simulationStateMachine.GameContext;
 import dhl.simulationStateMachine.Interface.IGameState;
 import dhl.simulationStateMachine.States.Interface.ILoadTeamStateLogic;
 
-import java.util.ArrayList;
-import java.util.Scanner;
-
 public class LoadTeamStateUI implements IGameState {
+
     GameContext ourGame;
     ILeagueObjectModel ourLeague;
     ITeam selectedTeam;
     ILeagueObjectModel newInMemoryLeague;
+    IUserInputOutput userInputPutput = new UserInputOutput();
 
     public LoadTeamStateUI(GameContext newGame) {
         newInMemoryLeague = new LeagueObjectModel();
@@ -27,36 +26,36 @@ public class LoadTeamStateUI implements IGameState {
 
     @Override
     public void stateEntryProcess() {
-        Scanner sc = new Scanner(System.in);
         System.out.print("Enter LeagueName to load from DB: ");
-        String leagueName = sc.nextLine();
+        String leagueName = userInputPutput.getUserInput();
+
         while(leagueName.equals("")){
-            System.out.println("Looks like you didnt add any input please try again: ");
-            leagueName = sc.nextLine();
+            userInputPutput.printMessage("Looks like you didnt add any input please try again: ");
+            leagueName = userInputPutput.getUserInput();
         }
 
         System.out.print("Enter Team Name:  ");
-        String team = sc.nextLine();
+        String team = userInputPutput.getUserInput();
+
         while(team.equals("")){
-            System.out.println("Looks like you didnt add any input please try again: ");
-            team = sc.nextLine();
+            userInputPutput.printMessage("Looks like you didnt add any input please try again: ");
+            team = userInputPutput.getUserInput();
         }
 
         try {
             ILoadTeamStateLogic objLoadTeamStateLogic = new LoadTeamStateLogic();
-            ILeagueObjectModelData databaseRefrenceOb = new LeagueObjectModelData();
+            ILeagueObjectModelDB databaseRefrenceOb = new LeagueObjectModelDB();
             objLoadTeamStateLogic.findTeamOfLeagueInDatabase( leagueName,  team,  newInMemoryLeague,  ourGame, databaseRefrenceOb);
         }catch(Exception e) {
-            System.out.println(e.getMessage());
+            userInputPutput.printMessage(e.getMessage());
             ourGame.setGameInProgress(false);
         };
-
     }
 
     @Override
     public void stateProcess() {
         if(ourGame.isGameInProgress()) {
-            System.out.println(ourGame.getSelectedTeam().getTeamName() + "  Team Selected");
+            userInputPutput.printMessage(ourGame.getSelectedTeam().getTeamName() + "  Team Selected");
         }
     }
 
@@ -66,5 +65,4 @@ public class LoadTeamStateUI implements IGameState {
             ourGame.setGameState(ourGame.getSimulateState());
         }
     }
-
 }

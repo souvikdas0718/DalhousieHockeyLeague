@@ -1,15 +1,16 @@
 package dhl.leagueModelTests;
 
 import dhl.leagueModel.FreeAgent;
+import dhl.leagueModel.Player;
 import dhl.leagueModel.PlayerStatistics;
-import dhl.leagueModel.interfaceModel.IFreeAgent;
+import dhl.leagueModel.interfaceModel.IPlayer;
 import dhl.leagueModel.interfaceModel.IPlayerStatistics;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class FreeAgentTest {
-    IFreeAgent freeAgent;
+    IPlayer freeAgent;
     IPlayerStatistics playerStatistics;
 
     @BeforeEach()
@@ -20,67 +21,45 @@ public class FreeAgentTest {
 
     @Test
     public void FreeAgentDefaultConstructorTest(){
-        Assertions.assertTrue(freeAgent.getPlayerName().isEmpty());
+        String name=freeAgent.getPlayerName();
+        Assertions.assertTrue(name.length()==0);
         Assertions.assertEquals("",freeAgent.getPosition() );
     }
 
+
     @Test
     public void FreeAgentTest(){
-        IFreeAgent freeAgent= new FreeAgent("Harry","forward",playerStatistics);
+        IPlayer freeAgent= new FreeAgent("Harry","forward",playerStatistics);
         Assertions.assertEquals("forward",freeAgent.getPosition() );
         Assertions.assertEquals("Harry",freeAgent.getPlayerName() );
     }
 
     @Test
-    public void getPlayerIdTest(){
-        freeAgent.setPlayerId(5);
-        Assertions.assertEquals(5,freeAgent.getPlayerId());
+    public void checkPlayerNameValidTest() {
+        Exception error=Assertions.assertThrows(Exception.class,() ->{
+            freeAgent.checkPlayerValid();
+        });
+        Assertions.assertTrue(error.getMessage().contains("Player name cannot be empty"));
     }
 
     @Test
-    public void setPlayerIdTest(){
-        freeAgent.setPlayerId(10);
-        Assertions.assertEquals(10,freeAgent.getPlayerId());
+    public void checkPlayerPositionValidTest() {
+        IPlayer freeAgent= new FreeAgent("Noah","leg side",playerStatistics);
+        Exception errorMsg=Assertions.assertThrows(Exception.class,() ->{
+            freeAgent.checkPlayerValid();
+        });
+        Assertions.assertTrue(errorMsg.getMessage().contains("Player position must be goalie or forward or defense"));
     }
+
 
     @Test
-    public void getPlayerNameTest(){
-        freeAgent.setPlayerName("Rick Nash");
-        Assertions.assertEquals("Rick Nash",freeAgent.getPlayerName());
+    public void checkPlayerValidTest() throws Exception{
+        IPlayer freeAgent= new FreeAgent("Noah","forward",playerStatistics);
+        Assertions.assertTrue(freeAgent.checkPlayerValid());
     }
-
-    @Test
-    public void setPlayerNameTest(){
-        freeAgent.setPlayerName("Nikita Kucherov");
-        Assertions.assertEquals("Nikita Kucherov",freeAgent.getPlayerName());
-    }
-
-    @Test
-    public void getPositionTest(){
-        freeAgent.setPosition("goalie");
-        Assertions.assertEquals("goalie",freeAgent.getPosition());
-    }
-
-    @Test
-    public void setPositionTest(){
-        freeAgent.setPosition("defense");
-        Assertions.assertEquals("defense",freeAgent.getPosition());
-    }
-
-    @Test
-    public void setPositionForwardTest(){
-        freeAgent.setPosition("forward");
-        Assertions.assertEquals("forward",freeAgent.getPosition());
-    }
-
     @Test
     public void getPositionEmptyTest(){
         Assertions.assertEquals("",freeAgent.getPosition());
     }
 
-    @Test
-    void setPlayerStatsTest() {
-        freeAgent.setPlayerStats(playerStatistics);
-        Assertions.assertEquals(20,freeAgent.getPlayerStats().getAge());
-    }
 }

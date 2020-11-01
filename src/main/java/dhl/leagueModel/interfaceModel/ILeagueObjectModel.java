@@ -1,34 +1,28 @@
 package dhl.leagueModel.interfaceModel;
 
-import dhl.database.interfaceDB.ILeagueObjectModelData;
+import dhl.InputOutput.importJson.Interface.IGameConfig;
+import dhl.database.interfaceDB.ILeagueObjectModelDB;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface ILeagueObjectModel {
 
-    public String getLeagueName();
+    String getLeagueName();
 
-    public void setLeagueName(String leagueName);
+    List<IConference> getConferences();
 
-    public ArrayList<IConference> getConferences();
+    List<IPlayer> getFreeAgents();
 
-    public void setConferences(ArrayList<IConference> conferences);
+    boolean checkIfLeagueModelValid(IValidation validation,ILeagueObjectModelValidation leagueObjectModelValidation) throws Exception;
 
-    public ArrayList<IFreeAgent> getFreeAgents();
+    ILeagueObjectModel saveLeagueObjectModel(ILeagueObjectModelDB leagueDatabase, ILeagueObjectModelInput saveLeagueInput) throws Exception;
 
-    public void setFreeAgents(ArrayList<IFreeAgent> freeAgents);
+    ILeagueObjectModel loadLeagueObjectModel(ILeagueObjectModelDB leagueDatabase, String leagueName, String teamName) throws Exception;
 
-    public boolean checkIfLeagueModelValid(IValidation validation) throws Exception;
+    List<ICoach> getCoaches() ;
 
-    public ILeagueObjectModel saveLeagueObjectModel(ILeagueObjectModelData leagueDatabase, String leagueName, String conferenceName, String divisionName,  ITeam newlyCreatedTeam) throws Exception;
+    List<IGeneralManager> getGeneralManagers();
 
-    public ILeagueObjectModel loadLeagueObjectModel(ILeagueObjectModelData leagueDatabase,String leagueName,String teamName) throws Exception;
+    IGameConfig getGameConfig();
 
-    public ArrayList<ICoach> getCoaches() ;
-
-    public void setCoaches(ArrayList<ICoach> coaches);
-
-    public ArrayList<IGeneralManager> getGeneralManagers();
-
-    public void setGeneralManagers(ArrayList<IGeneralManager> managers);
 }

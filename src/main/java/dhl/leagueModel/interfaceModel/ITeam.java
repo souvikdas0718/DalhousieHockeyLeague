@@ -8,43 +8,29 @@ import java.util.List;
 
 public interface ITeam {
 
-    public void setDefault();
+    String getTeamName();
 
-    public String getTeamName();
+    String getGeneralManager();
 
-    public void setTeamName(String teamName);
+    ICoach getHeadCoach();
 
-    public String getGeneralManager();
+    List<IPlayer> getPlayers();
 
-    public void setGeneralManager(String generalManager);
+    int getLossPoint();
 
-    public ICoach getHeadCoach();
+    void setLossPoint(int lossPoint);
 
-    public void setHeadCoach(ICoach headCoach);
+    int getTeamPoint();
 
-    public ArrayList<IPlayer> getPlayers();
+    void setTeamPoint(int teamPoint);
 
-    public void setPlayers(ArrayList<IPlayer> playersList);
+    boolean checkIfTeamValid(IValidation validation) throws Exception;
 
-    public int getLossPoint();
+    boolean checkIfSkatersGoaliesValid() ;
 
-    public void setLossPoint(int lossPoint);
+    double calculateTeamStrength();
 
-    public int getTeamPoint();
 
-    public void setTeamPoint(int teamPoint);
-
-    public void checkIfOneCaptainPerTeam(List<IPlayer> playerList) throws Exception;
-
-    public boolean checkIfSizeOfTeamValid(List<IPlayer> playerList);
-
-    public boolean checkIfTeamValid(IValidation validation) throws Exception;
-
-    public void checkTeamInjury(IGameConfig  gameConfig, Date currentDate);
-
-    public double calculateTeamStrength();
-
-    public boolean checkIfSkatersGoaliesValid(ArrayList<IFreeAgent> freeAgents) throws Exception;
 
 }
 

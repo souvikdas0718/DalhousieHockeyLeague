@@ -1,17 +1,13 @@
 package dhl.leagueModel.interfaceModel;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface IDivision {
 
-    public void setDivisionName(String divisionName);
+    String getDivisionName();
 
-    public String getDivisionName();
+    List<ITeam> getTeams();
 
-    public void setTeams(ArrayList<ITeam> teamsList);
-
-    public ArrayList<ITeam> getTeams();
-
-    public boolean checkIfDivisionValid(IValidation validation) throws Exception;
+    boolean checkIfDivisionValid(IValidation validation) throws Exception;
 
 }

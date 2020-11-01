@@ -1,7 +1,5 @@
 package dhl.database.interfaceDB;
 
-import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
-
 import java.sql.Date;
 
 public interface ILeagueDB {

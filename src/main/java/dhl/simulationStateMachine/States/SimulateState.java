@@ -7,6 +7,7 @@ import dhl.simulationStateMachine.SimulationContext;
 import java.util.Scanner;
 
 public class SimulateState implements IGameState {
+
     GameContext ourGame;
     final int maxSeasons = 10;
     final int minSeasons = 1;
@@ -26,8 +27,10 @@ public class SimulateState implements IGameState {
         System.out.println(" Selected League: "+ ourGame.getInMemoryLeague().getLeagueName());
         System.out.println(" Selected Team:" + ourGame.getSelectedTeam().getTeamName());
         System.out.println("How many seasons you wana simulate? ");
+
         while(seasonsNumber < minSeasons || seasonsNumber > maxSeasons){
             seasonsNumber = sc.nextInt();
+
             if(seasonsNumber <= minSeasons || seasonsNumber >= maxSeasons){
                 System.out.println("You can't simulate less than 1 season or more than 10 seasons");
                 System.out.println("How many seasons you wana simulate or Enter Exit to quit ");
@@ -38,7 +41,7 @@ public class SimulateState implements IGameState {
 
     @Override
     public void stateProcess() {
-        SimulationContext simulationContextObject = new SimulationContext();
+        SimulationContext simulationContextObject = new SimulationContext(ourGame);
         simulationContextObject.setGameConfig(ourGame.getGameConfig());
         simulationContextObject.setInMemoryLeague(ourGame.getInMemoryLeague());
 

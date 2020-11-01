@@ -1,62 +1,51 @@
 package dhl.simulationStateMachine.States;
 
-import dhl.database.LeagueObjectModelData;
-import dhl.database.interfaceDB.ILeagueObjectModelData;
-import dhl.leagueModel.LeagueObjectModel;
-import dhl.leagueModel.Player;
-import dhl.leagueModel.PlayerStatistics;
-import dhl.leagueModel.Team;
+import dhl.database.LeagueObjectModelDB;
+import dhl.database.interfaceDB.ILeagueObjectModelDB;
+import dhl.leagueModel.*;
 import dhl.leagueModel.interfaceModel.*;
 import dhl.simulationStateMachine.GameContext;
 import dhl.simulationStateMachine.States.Interface.ICreateTeamStateLogic;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CreateTeamStateLogic implements ICreateTeamStateLogic {
-    public ILeagueObjectModel saveleagueObject(String leagueName, String conferenceName, String divisionName, String teamName,
-                                 String generalManager, ArrayList<IFreeAgent> freeAgents, ICoach coach,
-                                 GameContext ourGame, ILeagueObjectModel inMemoryLeague, ILeagueObjectModelData leagueObjectModelData) throws Exception {
-        ILeagueObjectModel leagueObjectModel = new LeagueObjectModel();
-        try {
-            leagueObjectModel = inMemoryLeague.saveLeagueObjectModel(
-                    leagueObjectModelData,
-                    leagueName,
-                    conferenceName,
-                    divisionName,
-                    createNewTeamObject(freeAgents, teamName, generalManager, coach));
 
-            ourGame.setSelectedTeam(findTeam(inMemoryLeague , teamName));
+    public ILeagueObjectModel saveleagueObject( GameContext ourGame, ILeagueObjectModel inMemoryLeague,ILeagueObjectModelInput leagueObjectModelInput) throws Exception {
+
+        ILeagueObjectModel leagueObjectModel = new LeagueObjectModel();
+
+        try {
+            leagueObjectModel = inMemoryLeague.saveLeagueObjectModel(leagueObjectModelInput.getLeagueObjectModelDB(),leagueObjectModelInput);
+            ITeam team = leagueObjectModelInput.getNewlyCreatedTeam();
+            ourGame.setSelectedTeam(findTeam(inMemoryLeague , team.getTeamName()));
         } catch (Exception e){
             System.out.println(e.getMessage());
             ourGame.setGameInProgress(false);
         }
+
         return leagueObjectModel;
     }
 
-    public ITeam createNewTeamObject(ArrayList<IFreeAgent> freeAgents, String teamName,
-                                     String generalManager, ICoach coach) throws Exception {
-        ArrayList<IPlayer> players= new ArrayList<>();
+    public ITeam createNewTeamObject(List<IPlayer> freeAgents, ITeam team, String captain) throws Exception {
+        List<IPlayer> players= new ArrayList<>();
 
         freeAgents.forEach((freeAgent)->{
-            IPlayer player = new Player();
-            IPlayerStatistics playerstats = new PlayerStatistics(freeAgent.getPlayerStats().getAge(),
-                    freeAgent.getPlayerStats().getSkating(),freeAgent.getPlayerStats().getShooting(),
-                    freeAgent.getPlayerStats().getChecking(), freeAgent.getPlayerStats().getSaving());
-            player.setPlayerName(freeAgent.getPlayerName());
-            player.setPosition(freeAgent.getPosition());
-            player.setCaptain(false);
-            player.setPlayerStats(playerstats);
+            Boolean isCaptain = false;
+            if (freeAgent.getPlayerName().equals(captain)){
+                isCaptain = true;
+            }
+            IPlayer player= new Player(freeAgent.getPlayerName(),freeAgent.getPosition(),isCaptain,freeAgent.getPlayerStats());
             players.add(player);
         });
 
-
-
-        ITeam newlyCreatedTeam=new Team(teamName,generalManager,coach,players);
+        ITeam newlyCreatedTeam=new Team(team.getTeamName(),team.getGeneralManager(),team.getHeadCoach(),players);
 
         return newlyCreatedTeam;
     }
 
-    public IConference findConference(ArrayList<IConference> confrenceArray, String conferenceName ){
+    public IConference findConference(List<IConference> confrenceArray, String conferenceName ){
         for(int i= 0; i< confrenceArray.size(); i++){
             IConference ourConference = confrenceArray.get(i);
             if(ourConference.getConferenceName().equals(conferenceName)){
@@ -66,7 +55,7 @@ public class CreateTeamStateLogic implements ICreateTeamStateLogic {
         return null;
     }
 
-    public IDivision findDivision(ArrayList<IDivision> divisionArrayList , String divisionName){
+    public IDivision findDivision(List<IDivision> divisionArrayList , String divisionName){
         for(int i= 0; i< divisionArrayList.size(); i++){
             IDivision ourDivision = divisionArrayList.get(i);
             if(ourDivision.getDivisionName().equals(divisionName)){
@@ -91,31 +80,54 @@ public class CreateTeamStateLogic implements ICreateTeamStateLogic {
         return teamObject;
     }
 
-    public IFreeAgent findFreeAgent(ArrayList<IFreeAgent> freeAgentArrayList, String freeAgentName){
-        for(int i= 0; i< freeAgentArrayList.size(); i++){
-            IFreeAgent ourFreeAgent = freeAgentArrayList.get(i);
-            if(ourFreeAgent.getPlayerName().equals(freeAgentName)){
+    public IPlayer findFreeAgent(List<IPlayer> freeAgentArrayList, String freeAgentName){
+        for(IPlayer ourFreeAgent:freeAgentArrayList){
+            String name=ourFreeAgent.getPlayerName();
+            if(name.equals(freeAgentName)){
                 return ourFreeAgent;
             }
         }
         return null;
     }
-    public String findGeneralManager(ArrayList<IGeneralManager> generalManagerArray, String generalManager ){
-        for(int i= 0; i< generalManagerArray.size(); i++){
-            IGeneralManager ourGeneralManager = generalManagerArray.get(i);
-            if(ourGeneralManager.getGeneralManagerName().equals(generalManager)){
+    public String findGeneralManager(List<IGeneralManager> generalManagerArray, String generalManager ){
+        for(IGeneralManager ourGeneralManager : generalManagerArray){
+            String ourGeneralManagerName= ourGeneralManager.getGeneralManagerName();
+            if(ourGeneralManagerName.equals(generalManager)){
                 return generalManager;
             }
         }
         return null;
     }
-    public String findCoach(ArrayList<ICoach> coachArray, String coachName ){
-        for(int i= 0; i< coachArray.size(); i++){
-            ICoach ourCoach = coachArray.get(i);
-            if(ourCoach.getCoachName().equals(coachName)){
+    public String findCoach(List<ICoach> coachArray, String coachName ){
+        for(ICoach ourCoach : coachArray){
+            String coachesName= ourCoach.getCoachName();
+            if(coachesName.equals(coachName)){
                 return coachName;
             }
         }
         return null;
+    }
+    public ArrayList<IPlayer> validateInputFreeAgents(String inputfreeAgents,List<IPlayer> freeAgentsArray) throws Exception {
+        String[] arrFreeAgents = inputfreeAgents.split(",");
+        ArrayList<IPlayer> selectedFreeAgents = new ArrayList<>();
+
+        if (arrFreeAgents.length == 20) {
+            for (int i = 0; i < arrFreeAgents.length; i++) {
+
+                String freeAgentName = arrFreeAgents[i].trim();
+                IPlayer foundFreeAgent = findFreeAgent(freeAgentsArray, freeAgentName);
+
+                if (foundFreeAgent == null) {
+                    selectedFreeAgents = null;
+                    throw new Exception("Free agent " + freeAgentName + " Doesn't Exist");
+                } else {
+                    selectedFreeAgents.add(foundFreeAgent);
+                }
+            }
+        }
+        else {
+            throw new Exception("Enter 20 Free Agents or enter Exit to Quit game");
+        }
+        return selectedFreeAgents;
     }
 }

@@ -1,72 +1,52 @@
 package dhl.leagueModel;
 
-import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.leagueModel.interfaceModel.*;
 
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class Team implements ITeam {
-    private int teamId;
     private String teamName;
     private String generalManager;
     private ICoach headCoach;
     private int lossPoint;
     private int teamPoint;
-    private ArrayList<IPlayer> players;
+    private List<IPlayer> players;
 
     public Team(){
         setDefault();
     }
 
     public void setDefault(){
-        teamId=-1;
         teamName="";
         generalManager="";
         headCoach=new Coach();
         players=new ArrayList<>();
     }
 
-    public Team(String teamName,String generalManager,ICoach headCoach, ArrayList<IPlayer> playersList){
-        setTeamName(teamName);
-        setGeneralManager(generalManager);
-        setHeadCoach(headCoach);
-        setPlayers(playersList);
+    public Team(String teamName,String generalManager,ICoach headCoach, List<IPlayer> playersList){
+        this.teamName=teamName;
+        this.generalManager=generalManager;
+        this.headCoach=headCoach;
+        this.players=playersList;
     }
 
     public String getTeamName() {
         return teamName;
     }
 
-    public void setTeamName(String teamName) {
-        this.teamName=teamName;
-    }
-
     public String getGeneralManager() {
         return generalManager;
-    }
-
-    public void setGeneralManager(String generalManager) {
-        this.generalManager=generalManager;
     }
 
     public ICoach getHeadCoach() {
         return headCoach;
     }
 
-    public void setHeadCoach(ICoach headCoach) {
-        this.headCoach=headCoach;
-    }
-
-    public ArrayList<IPlayer> getPlayers(){
+    public List<IPlayer> getPlayers(){
         return players;
-    }
-
-    public void setPlayers(ArrayList<IPlayer> playersList){
-        this.players=playersList;
     }
 
     public int getLossPoint() {
@@ -100,6 +80,25 @@ public class Team implements ITeam {
         return playerList.size() ==20 ;
     }
 
+    public boolean checkIfSkatersGoaliesValid(){
+        int totalSkaters = 0;
+        int totalGoalies = 0;
+        for(IPlayer player: players){
+            String position=player.getPosition();
+            if (position.equals("forward") || position.equals("defense")){
+                totalSkaters = totalSkaters + 1;
+            }
+            if (position.equals("goalie")){
+                totalGoalies = totalGoalies + 1;
+            }
+        }
+        if (totalGoalies<2 || totalSkaters<18)
+        {
+            return false;
+        }
+        return true;
+    }
+
     public boolean checkIfTeamValid(IValidation validation) throws Exception{
         validation.isStringEmpty(teamName,"Team name");
         this.headCoach.checkIfCoachValid(validation);
@@ -111,12 +110,6 @@ public class Team implements ITeam {
         return true;
     }
 
-    public void checkTeamInjury(IGameConfig  gameConfig, Date currentDate){
-        for(IPlayer player: players){
-            player.checkPlayerInjury(gameConfig,currentDate);
-        }
-    }
-
     public double calculateTeamStrength(){
         double teamStrength=0;
         for(IPlayer player:players){
@@ -124,26 +117,4 @@ public class Team implements ITeam {
         }
         return teamStrength;
     }
-
-    public boolean checkIfSkatersGoaliesValid(ArrayList<IFreeAgent> freeAgents) throws Exception{
-        Integer totalSkaters = 0;
-        Integer totalGoalies = 0;
-
-        for(int i=0; i<freeAgents.size(); i++){
-            if (freeAgents.get(i).getPosition().equals("forward") || freeAgents.get(i).getPosition().equals("defense")){
-                totalSkaters = totalSkaters + 1;
-            }
-            if (freeAgents.get(i).getPosition().equals("goalie")){
-                totalGoalies = totalGoalies + 1;
-            }
-        }
-        if (totalGoalies<2 || totalSkaters<18)
-        {
-            return false;
-        }
-
-        return true;
-    }
-
-
 }

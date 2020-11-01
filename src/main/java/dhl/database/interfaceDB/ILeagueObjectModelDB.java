@@ -2,7 +2,7 @@ package dhl.database.interfaceDB;
 
 import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 
-public interface ILeagueObjectModelData {
+public interface ILeagueObjectModelDB {
 
     public void insertLeagueModel(ILeagueObjectModel conferences) throws Exception;
 

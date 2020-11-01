@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ConferenceTest {
     InitializeObjectFactory initObj;
@@ -39,47 +40,33 @@ public class ConferenceTest {
 
     @Test
     public void getConferenceNameTest(){
-        conference.setConferenceName("Eastern");
-        Assertions.assertEquals("Eastern",conference.getConferenceName());
-    }
-
-    @Test
-    public void setConferenceNameTest(){
-        conference.setConferenceName("Western");
-        Assertions.assertEquals("Western",conference.getConferenceName());
+        Assertions.assertEquals("Western",conferenceParameterized.getConferenceName());
     }
 
     @Test
     public void getDivisionsTest(){
-        conference.setDivisions(new ArrayList<IDivision>());
-        Assertions.assertTrue(conference.getDivisions().size()==0);
-    }
-
-    @Test
-    public void setDivisionsTest(){
-        conference.setDivisions(new ArrayList<IDivision>());
         Assertions.assertTrue(conference.getDivisions().size()==0);
     }
 
     @Test
     public void checkIfConferenceValidTest() throws Exception{
-        ArrayList<IDivision> divisions =conferenceParameterized.getDivisions();
+        List<IDivision> divisions =conferenceParameterized.getDivisions();
         divisions.add(new Division("Pacific",new ArrayList<ITeam>()));
-        conferenceParameterized.setDivisions(divisions);
+        conferenceParameterized=new Conference("Western",divisions);
         Assertions.assertTrue(conferenceParameterized.checkIfConferenceValid(validate));
     }
 
     @Test void checkIfConferenceHasEvenDivisionsTest(){
         Exception error=Assertions.assertThrows(Exception.class,() ->{
-            conferenceParameterized.checkIfConferenceHasEvenDivisions();
+            conferenceParameterized.checkIfConferenceValid(validate);
         });
         Assertions.assertTrue(error.getMessage().contains("A conference must contain even number of divisions"));
     }
 
     @Test
     public void checkIfDivisionNamesUniqueInConferenceTest() throws Exception{
-        ArrayList<IDivision> divisions =conferenceParameterized.getDivisions();
-        divisions.add(new Division("Atlantic",new ArrayList<ITeam>()));
+        List<IDivision> divisions =conferenceParameterized.getDivisions();
+        divisions.add(new Division("Atlantic",new ArrayList<>()));
         Exception error=Assertions.assertThrows(Exception.class,() ->{
             conferenceParameterized.checkIfConferenceValid(validate);
         });

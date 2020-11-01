@@ -1,11 +1,15 @@
 package dhl.leagueModelTests;
 
+import dhl.InputOutput.importJson.GameConfig;
 import dhl.leagueModel.*;
 import dhl.leagueModel.interfaceModel.*;
-import dhl.database.interfaceDB.ILeagueObjectModelData;
-import java.util.ArrayList;
+import dhl.database.interfaceDB.ILeagueObjectModelDB;
+import org.json.simple.JSONObject;
 
-public class MockDatabase implements ILeagueObjectModelData {
+import java.util.ArrayList;
+import java.util.List;
+
+public class MockDatabase implements ILeagueObjectModelDB {
     @Override
     public void insertLeagueModel(ILeagueObjectModel leagueObjectModel) {
 
@@ -13,22 +17,22 @@ public class MockDatabase implements ILeagueObjectModelData {
 
     @Override
     public ILeagueObjectModel loadLeagueModel(String leagueName, String teamName) {
-        ArrayList<IPlayer> playersList=new ArrayList<>();
+        List<IPlayer> playersList=new ArrayList<>();
         IPlayerStatistics playerStatistics =new PlayerStatistics(20,10,10,10,0);
         playersList.add(new Player("Henry","forward",false,playerStatistics));
         playersList.add(new Player("Max","goalie",true,playerStatistics));
         ICoach headCoach = new Coach("Todd McLellan",0.1,0.5,1.0,0.2);
         ITeam team = new Team("Ontario","Mathew",headCoach,playersList);
-        ArrayList<ITeam> teamArrayList=new ArrayList<>();
+        List<ITeam> teamArrayList=new ArrayList<>();
         teamArrayList.add(team);
         IDivision division = new Division("Atlantic",teamArrayList);
-        ArrayList<IDivision> divisionsList=new ArrayList<>();
+        List<IDivision> divisionsList=new ArrayList<>();
         divisionsList.add(division);
         IConference conference=new Conference("Western",divisionsList);
-        ArrayList<IConference> conferences= new ArrayList<>();
+        List<IConference> conferences= new ArrayList<>();
         conferences.add(conference);
-        ArrayList<IFreeAgent> freeAgentsList=new ArrayList<>();
-        ILeagueObjectModel leagueModel=new LeagueObjectModel("Dhl",conferences,freeAgentsList);
+        List<IPlayer> freeAgentsList=new ArrayList<>();
+        ILeagueObjectModel leagueModel=new LeagueObjectModel("Dhl",conferences,freeAgentsList,new ArrayList<>(),new ArrayList<>(),new GameConfig(new JSONObject()));
         return leagueModel;
     }
 
