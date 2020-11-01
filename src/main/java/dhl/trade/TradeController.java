@@ -2,7 +2,6 @@ package dhl.trade;
 
 import dhl.InputOutput.UI.IUserInputOutput;
 import dhl.InputOutput.UI.UserInputOutput;
-import dhl.InputOutput.importJson.ConfigVariableNames;
 import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.leagueModel.interfaceModel.IConference;
 import dhl.leagueModel.interfaceModel.IDivision;
@@ -26,9 +25,8 @@ public class TradeController implements ITradeController {
 
     @Override
     public void startTrading() {
-        ConfigVariableNames configVariableNames = new ConfigVariableNames();
-        long configLossPoint = Long.parseLong(gameConfig.getValueFromOurObject(configVariableNames.getTrading(),configVariableNames.getLossPoint()));
-        double configRandomTradeChance = Double.parseDouble(gameConfig.getValueFromOurObject(configVariableNames.getTrading(),configVariableNames.getRandomTradeOfferChance()));
+        long configLossPoint = Long.parseLong(gameConfig.getValueFromOurObject(gameConfig.getTrading(),gameConfig.getLossPoint()));
+        double configRandomTradeChance = Double.parseDouble(gameConfig.getValueFromOurObject(gameConfig.getTrading(),gameConfig.getRandomTradeOfferChance()));
         try{
             for(IConference conference: leagueObjectModel.getConferences()){
                 for(IDivision division : conference.getDivisions()){

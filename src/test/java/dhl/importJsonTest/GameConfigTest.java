@@ -22,6 +22,76 @@ public class GameConfigTest {
     }
 
     @Test
+    public void getLossPoint() {
+        Assertions.assertEquals("lossPoint",testClassObject.getLossPoint());
+    }
+
+    @Test
+    public void getRandomTradeOfferChance() {
+        Assertions.assertEquals("randomTradeOfferChance",testClassObject.getRandomTradeOfferChance());
+    }
+
+    @Test
+    public void getMaxPlayersPerTrade() {
+        Assertions.assertEquals("maxPlayersPerTrade",testClassObject.getMaxPlayersPerTrade());
+    }
+
+    @Test
+    public void getRandomAcceptanceChance() {
+        Assertions.assertEquals("randomAcceptanceChance",testClassObject.getRandomAcceptanceChance());
+    }
+
+    @Test
+    public void getTrading() {
+        Assertions.assertEquals("trading",testClassObject.getTrading());
+    }
+
+    @Test
+    public void getAging() {
+        Assertions.assertEquals("aging",testClassObject.getAging());
+    }
+
+    @Test
+    public void getAverageRetirementAge() {
+        Assertions.assertEquals("averageRetirementAge",testClassObject.getAverageRetirementAge());
+    }
+
+    @Test
+    public void getMaximumAge() {
+        Assertions.assertEquals("maximumAge",testClassObject.getMaximumAge());
+    }
+
+    @Test
+    public void getInjuries() {
+        Assertions.assertEquals("injuries",testClassObject.getInjuries());
+    }
+
+    @Test
+    public void getRandomInjuryChance() {
+        Assertions.assertEquals("randomInjuryChance",testClassObject.getRandomInjuryChance());
+    }
+
+    @Test
+    public void getInjuryDaysLow() {
+        Assertions.assertEquals("injuryDaysLow",testClassObject.getInjuryDaysLow());
+    }
+
+    @Test
+    public void getInjuryDaysHigh() {
+        Assertions.assertEquals("injuryDaysHigh",testClassObject.getInjuryDaysHigh());
+    }
+
+    @Test
+    public void getTraining() {
+        Assertions.assertEquals("training",testClassObject.getTraining());
+    }
+
+    @Test
+    public void getDaysUntilStatIncreaseCheckTest(){
+        Assertions.assertEquals("daysUntilStatIncreaseCheck",testClassObject.getDaysUntilStatIncreaseCheck());
+    }
+
+    @Test
     public void getHashMapTest(){
         HashMap tradingObject = testClassObject.getHashMap("trading");
         HashMap agingObject = testClassObject.getHashMap("aging");

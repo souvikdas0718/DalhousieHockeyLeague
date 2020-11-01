@@ -1,7 +1,6 @@
 package dhl.trade;
 
 import dhl.InputOutput.UI.UserInputOutput;
-import dhl.InputOutput.importJson.ConfigVariableNames;
 import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.leagueModel.interfaceModel.*;
 import dhl.trade.Interface.ITradeOffer;
@@ -15,12 +14,10 @@ public class PlayerSwappingTradeEngine implements ITradingEngine {
 
     private ITradeOffer currentTrade;
     private IGameConfig gameConfig;
-    private ConfigVariableNames configNames;
     private ILeagueObjectModel leagueObjectModel;
 
     public PlayerSwappingTradeEngine(IGameConfig gameConfig, ILeagueObjectModel leagueObjectModel){
         this.gameConfig = gameConfig;
-        this.configNames = new ConfigVariableNames();
         this.leagueObjectModel = leagueObjectModel;
     }
 
@@ -99,7 +96,7 @@ public class PlayerSwappingTradeEngine implements ITradingEngine {
         ArrayList<IPlayer> secondTeamPlayers = sortPlayerList(teamGettingOffer);
         ArrayList<IPlayer> playersOffered = new ArrayList<>();
         ArrayList<IPlayer> playersWanted = new ArrayList<>();
-        int congifMaxPlayerPerTrade = Integer.parseInt(gameConfig.getValueFromOurObject( configNames.getTrading(), configNames.getMaxPlayersPerTrade()));
+        int congifMaxPlayerPerTrade = Integer.parseInt(gameConfig.getValueFromOurObject( gameConfig.getTrading(), gameConfig.getMaxPlayersPerTrade()));
         int maxPlayersInTrade = 0;
         for (IPlayer playerToBeOffered: offeringTeamPayers){
             for (IPlayer playerToGetInExchange: secondTeamPlayers){
