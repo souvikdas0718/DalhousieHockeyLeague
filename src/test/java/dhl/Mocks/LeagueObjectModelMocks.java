@@ -189,9 +189,13 @@ public class LeagueObjectModelMocks {
 
     public ILeagueObjectModel leagueModelMock() {
         List<IPlayer> playersList=new ArrayList<>();
-        IPlayerStatistics playerStatistics =new PlayerStatistics(20,10,10,10,0);
-        playersList.add(new Player("Henry","forward",false,playerStatistics));
-        playersList.add(new Player("Max","goalie",true,playerStatistics));
+        IPlayerStatistics playerStatistics =new PlayerStatistics(16,5,5,5,5);
+        playersList.add(new Player("Henry","forward",true,playerStatistics));
+        playersList.add(new Player("MaxG1","goalie",false,playerStatistics));
+        playersList.add(new Player("MaxG2","goalie",false,playerStatistics));
+        for (int i=1; i<=17; i++){
+            playersList.add(new Player("Max" + i,"forward",false,playerStatistics));
+        }
 
         ICoach headCoach = new Coach("Todd McLellan",0.1,0.5,1.0,0.2);
 
@@ -199,23 +203,27 @@ public class LeagueObjectModelMocks {
         List<ITeam> teamArrayList=new ArrayList<>();
         teamArrayList.add(team);
 
-        IDivision division = new Division("Atlantic",teamArrayList);
+        IDivision division1 = new Division("Atlantic1",teamArrayList);
+        IDivision division2 = new Division("Atlantic2",teamArrayList);
         List<IDivision> divisionsList=new ArrayList<>();
-        divisionsList.add(division);
+        divisionsList.add(division1);
+        divisionsList.add(division2);
 
-        IConference conference=new Conference("Western",divisionsList);
+        IConference conference1=new Conference("Western1",divisionsList);
+        IConference conference2=new Conference("Western2",divisionsList);
         List<IConference> conferences= new ArrayList<>();
-        conferences.add(conference);
+        conferences.add(conference1);
+        conferences.add(conference2);
 
         ArrayList<IPlayer> freeAgentsList=new ArrayList<>();
-        IPlayerStatistics freeAgentStatistics =new PlayerStatistics(20,10,10,10,0);
+        IPlayerStatistics freeAgentStatistics =new PlayerStatistics(20,10,10,10,5);
         freeAgentsList.add(new FreeAgent("Henry","forward",freeAgentStatistics));
         freeAgentsList.add(new FreeAgent("Max","goalie",freeAgentStatistics));
 
 
         ArrayList<ICoach> coaches = new ArrayList<>();
         ICoach coach1 = new Coach("Todd McLellan",0.1,0.5,1.0,0.2);
-        ICoach coach2 = new Coach("Todd McLellan",0.1,0.5,1.0,0.2);
+        ICoach coach2 = new Coach("Todd McLellan1",0.1,0.5,1.0,0.2);
         coaches.add(coach1);
         coaches.add(coach2);
         ArrayList<IGeneralManager> managers = new ArrayList<>();

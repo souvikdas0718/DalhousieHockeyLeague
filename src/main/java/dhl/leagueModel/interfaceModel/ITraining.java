@@ -8,6 +8,5 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface ITraining {
-    public ILeagueObjectModel findPlayersForStatIncrease(ILeagueObjectModel objLeagueObjectModel) throws Exception;
-    public List<IPlayer> updatePlayerStats(List<IPlayer> arrPlayer, ICoach objCoach, String[] randomValues) throws Exception;
+    public ILeagueObjectModel updatePlayerStats(ILeagueObjectModel objLeagueObjectModel) throws Exception;
 }

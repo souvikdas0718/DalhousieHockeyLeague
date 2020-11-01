@@ -14,6 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class LoadTeamStateLogicTest {
+
     ILoadTeamStateLogic objLoadTeamStateLogic;
 
     @BeforeEach
@@ -30,6 +31,7 @@ public class LoadTeamStateLogicTest {
         Boolean iTeamFound = objLoadTeamStateLogic.findTeamOfLeagueInDatabase("Dhl","Ontario",newInMemoryLeague,ourGame,databaseRefrenceOb);
         Assertions.assertEquals(true, iTeamFound);
     }
+
     @Test
     public void findTeamTest(){
         LeagueObjectModelMocks mocks = new LeagueObjectModelMocks();

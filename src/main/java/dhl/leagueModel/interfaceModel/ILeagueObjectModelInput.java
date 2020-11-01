@@ -1,5 +1,7 @@
 package dhl.leagueModel.interfaceModel;
 
+import dhl.database.interfaceDB.ILeagueObjectModelDB;
+
 public interface ILeagueObjectModelInput {
 
     public String getLeagueName();
@@ -11,5 +13,7 @@ public interface ILeagueObjectModelInput {
     public ITeam getNewlyCreatedTeam();
 
     public ILeagueObjectModelValidation getLeagueObjectModelValidation();
+
+    public ILeagueObjectModelDB getLeagueObjectModelDB();
 
 }

@@ -12,7 +12,7 @@ public class LeagueObjectModel implements ILeagueObjectModel {
     public List<IConference> conferences;
     public List<IPlayer>freeAgents;
     public List<ICoach> coaches;
-    public List <IGeneralManager> managers;
+    public List <IGeneralManager> generalManagers;
     public IGameConfig gameConfig;
 
     public LeagueObjectModel(){
@@ -26,7 +26,7 @@ public class LeagueObjectModel implements ILeagueObjectModel {
         this.conferences=conferences;
         this.freeAgents=freeAgents;
         this.coaches=coaches;
-        this.managers=managers;
+        this.generalManagers=managers;
         this.gameConfig=gameConfig;
     }
 
@@ -55,7 +55,7 @@ public class LeagueObjectModel implements ILeagueObjectModel {
     }
 
     public List<IGeneralManager> getGeneralManagers() {
-        return managers;
+        return generalManagers;
     }
 
     public boolean checkIfLeagueModelValid(IValidation validation,ILeagueObjectModelValidation leagueObjectModelValidation) throws Exception{

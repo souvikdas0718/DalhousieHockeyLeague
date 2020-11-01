@@ -13,6 +13,7 @@ import dhl.simulationStateMachine.States.Interface.IImportStateLogic;
 import java.util.Scanner;
 
 public class ImportStateUI implements IGameState {
+
     String validFilePath;
     ILeagueObjectModel newInMemoryLeague;
     int option = -1;
@@ -60,6 +61,7 @@ public class ImportStateUI implements IGameState {
             try {
                 IImportStateLogic objImportStateLogic = new ImportStateLogic();
                 newInMemoryLeague = objImportStateLogic.importAndGetLeagueObject(validFilePath, gameConfig, newInMemoryLeague);
+
                 userInputPutput.printMessage(newInMemoryLeague.getLeagueName() + "  Imported from the Json");
             }catch(Exception e){
                 userInputPutput.printMessage(e.getMessage());
@@ -80,6 +82,4 @@ public class ImportStateUI implements IGameState {
             }
         }
     }
-
-
 }

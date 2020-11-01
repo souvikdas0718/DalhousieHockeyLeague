@@ -2,6 +2,7 @@ package dhl.leagueModelTests;
 
 import dhl.InputOutput.importJson.GameConfig;
 import dhl.Mocks.LeagueObjectModelMocks;
+import dhl.database.interfaceDB.ILeagueObjectModelDB;
 import dhl.leagueModel.*;
 import dhl.leagueModel.interfaceModel.*;
 import org.json.simple.JSONObject;
@@ -18,6 +19,7 @@ public class LeagueObjectModelValidationTest {
     ILeagueObjectModelValidation leagueValidation;
     ILeagueObjectModel leagueModelParameterized;
     LeagueObjectModelMocks leagueMock;
+    ILeagueObjectModelDB leagueObjectModelDB;
 
     @BeforeEach
     public void initialize(){
@@ -25,7 +27,7 @@ public class LeagueObjectModelValidationTest {
         leagueValidation=new LeagueObjectModelValidation();
         leagueMock= new LeagueObjectModelMocks();
         leagueModelParameterized=leagueMock.getLeagueObjectMock();
-
+        leagueObjectModelDB=new MockDatabase();
     }
 
     @Test
@@ -56,7 +58,8 @@ public class LeagueObjectModelValidationTest {
     @Test
     void checkUserInputIncorrectLeagueTest() throws Exception{
         Exception error= Assertions.assertThrows(Exception.class,() ->{
-            ILeagueObjectModelInput leagueObjectModelInput=new LeagueObjectModelInput("Nhl","Western","Atlantic",leagueMock.getTeamObjectMock(),leagueValidation);
+
+            ILeagueObjectModelInput leagueObjectModelInput=new LeagueObjectModelInput("Nhl","Western","Atlantic",leagueMock.getTeamObjectMock(),leagueValidation,leagueObjectModelDB);
             leagueValidation.checkUserInputForLeague(leagueModelParameterized,leagueObjectModelInput);
         });
         Assertions.assertTrue(error.getMessage().contains("League name is not present in file imported."));
@@ -64,7 +67,7 @@ public class LeagueObjectModelValidationTest {
 
     @Test void checkUserInputIncorrectConferenceTest() throws Exception{
         Exception error=Assertions.assertThrows(Exception.class,() ->{
-            ILeagueObjectModelInput leagueObjectModelInput=new LeagueObjectModelInput("Dhl","Premier","Atlantic",leagueMock.getTeamObjectMock(),leagueValidation);
+            ILeagueObjectModelInput leagueObjectModelInput=new LeagueObjectModelInput("Dhl","Premier","Atlantic",leagueMock.getTeamObjectMock(),leagueValidation,leagueObjectModelDB);
             leagueValidation.checkUserInputForLeague(leagueModelParameterized,leagueObjectModelInput);
         });
         Assertions.assertTrue(error.getMessage().contains("Conference name is not present in file imported"));
@@ -72,7 +75,7 @@ public class LeagueObjectModelValidationTest {
 
     @Test void checkUserInputIncorrectDivisionTest() throws Exception{
         Exception error=Assertions.assertThrows(Exception.class,() ->{
-            ILeagueObjectModelInput leagueObjectModelInput=new LeagueObjectModelInput("Dhl","Western","Metropolitan",leagueMock.getTeamObjectMock(),leagueValidation);
+            ILeagueObjectModelInput leagueObjectModelInput=new LeagueObjectModelInput("Dhl","Western","Metropolitan",leagueMock.getTeamObjectMock(),leagueValidation,leagueObjectModelDB);
             leagueValidation.checkUserInputForLeague(leagueModelParameterized,leagueObjectModelInput);
         });
         Assertions.assertTrue(error.getMessage().contains("Division name is not present in file imported"));
@@ -82,14 +85,14 @@ public class LeagueObjectModelValidationTest {
         Exception error=Assertions.assertThrows(Exception.class,() ->{
             List<ICoach> coaches=leagueMock.getCoaches();
             ITeam newlyCreatedTeam= new Team("Ontario","harry",coaches.get(0),leagueMock.getPlayerArrayMock());
-            ILeagueObjectModelInput leagueObjectModelInput=new LeagueObjectModelInput("Dhl","Western","Atlantic",newlyCreatedTeam,leagueValidation);
+            ILeagueObjectModelInput leagueObjectModelInput=new LeagueObjectModelInput("Dhl","Western","Atlantic",newlyCreatedTeam,leagueValidation,leagueObjectModelDB);
             leagueValidation.checkUserInputForLeague(leagueModelParameterized,leagueObjectModelInput);
         });
         Assertions.assertTrue(error.getMessage().contains("Team name entered is already present in file imported"));
     }
 
     @Test void checkUserInputForLeagueTest() throws Exception{
-        ILeagueObjectModelInput leagueObjectModelInput=new LeagueObjectModelInput("Dhl","Western","Atlantic",leagueMock.getTeamObjectMock(),leagueValidation);
+        ILeagueObjectModelInput leagueObjectModelInput=new LeagueObjectModelInput("Dhl","Western","Atlantic",leagueMock.getTeamObjectMock(),leagueValidation,leagueObjectModelDB);
         Assertions.assertTrue(leagueValidation.checkUserInputForLeague(leagueModelParameterized,leagueObjectModelInput));
     }
 

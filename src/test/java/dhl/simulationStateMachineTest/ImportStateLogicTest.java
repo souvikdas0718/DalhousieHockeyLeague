@@ -13,32 +13,33 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class ImportStateLogicTest {
+
     ImportStateLogic testClassObject;
     GameContext ourGame;
-    LeagueObjectModelMocks mock;
+    LeagueObjectModelMocks leagueObjectModelMock;
 
     @BeforeEach
     public void initObject(){
         ourGame = new GameContext();
         testClassObject = new ImportStateLogic();
-        mock = new LeagueObjectModelMocks();
+        leagueObjectModelMock = new LeagueObjectModelMocks();
     }
 
     @Test
     public void importAndGetLeagueObjectTest() throws Exception {
-        IJsonFilePath objfilePath = new JsonFilePathMock();
+        IJsonFilePath filePath = new JsonFilePathMock();
         IGameConfig gameConfig = null;
         ILeagueObjectModel newInMemoryLeague = new LeagueObjectModel();
-        ILeagueObjectModel objLeagueObjectModel = new LeagueObjectModel();
-        objLeagueObjectModel = testClassObject.importAndGetLeagueObject(objfilePath.getFilePath(),gameConfig,newInMemoryLeague);
-        Assertions.assertEquals("Dalhousie Hockey League",objLeagueObjectModel.getLeagueName());
+        ILeagueObjectModel leagueObjectModel = new LeagueObjectModel();
+        leagueObjectModel = testClassObject.importAndGetLeagueObject(filePath.getFilePath(),gameConfig,newInMemoryLeague);
+        Assertions.assertEquals("Dalhousie Hockey League1",leagueObjectModel.getLeagueName());
     }
 
     @Test
     public void findTeamTest(){
         String team = "Ontario";
-        Assertions.assertTrue( testClassObject.findTeam(mock.getLeagueObjectMock() , team) != null);
-        Assertions.assertTrue( testClassObject.findTeam(mock.getLeagueObjectMock() , "Wrong Team") == null);
+        Assertions.assertTrue( testClassObject.findTeam(leagueObjectModelMock.getLeagueObjectMock() , team) != null);
+        Assertions.assertTrue( testClassObject.findTeam(leagueObjectModelMock.getLeagueObjectMock() , "Wrong Team") == null);
     }
 }
 

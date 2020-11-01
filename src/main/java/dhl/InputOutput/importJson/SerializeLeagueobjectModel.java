@@ -8,6 +8,8 @@ import java.io.FileWriter;
 
 public class SerializeLeagueobjectModel implements ISerializeLeagueobjectModel {
 
+    final String filepath = "testout.txt";
+
     public String serializeLeagueObjectModel(ILeagueObjectModel objLeagueObjectModel) throws Exception {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String jsonString = gson.toJson(objLeagueObjectModel);
@@ -15,10 +17,9 @@ public class SerializeLeagueobjectModel implements ISerializeLeagueobjectModel {
     }
 
     public void WriteSerializedLeagueObjectToFile(ILeagueObjectModel objLeagueObjectModel) throws Exception {
-        String content = serializeLeagueObjectModel(objLeagueObjectModel);
-        FileWriter fw=new FileWriter("src/main/testout.txt");
-        fw.write(content);
-        fw.close();
+        String serializedLeagueObjectModel = serializeLeagueObjectModel(objLeagueObjectModel);
+        FileWriter filewriter = new FileWriter(filepath);
+        filewriter.write(serializedLeagueObjectModel);
+        filewriter.close();
     }
-
 }

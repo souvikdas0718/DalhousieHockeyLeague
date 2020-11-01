@@ -12,6 +12,7 @@ import dhl.simulationStateMachine.Interface.IGameState;
 import dhl.simulationStateMachine.States.Interface.ILoadTeamStateLogic;
 
 public class LoadTeamStateUI implements IGameState {
+
     GameContext ourGame;
     ILeagueObjectModel ourLeague;
     ITeam selectedTeam;
@@ -27,6 +28,7 @@ public class LoadTeamStateUI implements IGameState {
     public void stateEntryProcess() {
         System.out.print("Enter LeagueName to load from DB: ");
         String leagueName = userInputPutput.getUserInput();
+
         while(leagueName.equals("")){
             userInputPutput.printMessage("Looks like you didnt add any input please try again: ");
             leagueName = userInputPutput.getUserInput();
@@ -34,6 +36,7 @@ public class LoadTeamStateUI implements IGameState {
 
         System.out.print("Enter Team Name:  ");
         String team = userInputPutput.getUserInput();
+
         while(team.equals("")){
             userInputPutput.printMessage("Looks like you didnt add any input please try again: ");
             team = userInputPutput.getUserInput();
@@ -47,7 +50,6 @@ public class LoadTeamStateUI implements IGameState {
             userInputPutput.printMessage(e.getMessage());
             ourGame.setGameInProgress(false);
         };
-
     }
 
     @Override
@@ -63,5 +65,4 @@ public class LoadTeamStateUI implements IGameState {
             ourGame.setGameState(ourGame.getSimulateState());
         }
     }
-
 }

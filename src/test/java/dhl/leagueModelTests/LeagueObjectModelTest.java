@@ -72,7 +72,8 @@ public class LeagueObjectModelTest {
         List<IPlayer> players= new ArrayList<>();
         ICoach headCoach = new Coach("Todd McLellan",0.1,0.5,1.0,0.2);
         ITeam newlyCreatedTeam=new Team("Nova Scotia","Mathew",headCoach,players);
-        ILeagueObjectModelInput leagueInput=new LeagueObjectModelInput("Dhl","Western","Atlantic",newlyCreatedTeam,leagueValidation);
+        ILeagueObjectModelDB leagueObjectModelDB=new MockDatabase();
+        ILeagueObjectModelInput leagueInput=new LeagueObjectModelInput("Dhl","Western","Atlantic",newlyCreatedTeam,leagueValidation,leagueObjectModelDB);
         leagueModelParameterized=leagueModelParameterized.saveLeagueObjectModel(mockDb,leagueInput);
         Assertions.assertEquals("Dhl",leagueModelParameterized.getLeagueName());
     }

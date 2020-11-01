@@ -11,17 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CreateTeamStateLogic implements ICreateTeamStateLogic {
+
     public ILeagueObjectModel saveleagueObject( GameContext ourGame, ILeagueObjectModel inMemoryLeague,ILeagueObjectModelInput leagueObjectModelInput) throws Exception {
+
         ILeagueObjectModel leagueObjectModel = new LeagueObjectModel();
+
         try {
-            ILeagueObjectModelDB leagueObjectModelDB = new LeagueObjectModelDB();
-            leagueObjectModel = inMemoryLeague.saveLeagueObjectModel(leagueObjectModelDB,leagueObjectModelInput);
+            leagueObjectModel = inMemoryLeague.saveLeagueObjectModel(leagueObjectModelInput.getLeagueObjectModelDB(),leagueObjectModelInput);
             ITeam team = leagueObjectModelInput.getNewlyCreatedTeam();
             ourGame.setSelectedTeam(findTeam(inMemoryLeague , team.getTeamName()));
         } catch (Exception e){
             System.out.println(e.getMessage());
             ourGame.setGameInProgress(false);
         }
+
         return leagueObjectModel;
     }
 
@@ -110,8 +113,10 @@ public class CreateTeamStateLogic implements ICreateTeamStateLogic {
 
         if (arrFreeAgents.length == 20) {
             for (int i = 0; i < arrFreeAgents.length; i++) {
+
                 String freeAgentName = arrFreeAgents[i].trim();
                 IPlayer foundFreeAgent = findFreeAgent(freeAgentsArray, freeAgentName);
+
                 if (foundFreeAgent == null) {
                     selectedFreeAgents = null;
                     throw new Exception("Free agent " + freeAgentName + " Doesn't Exist");

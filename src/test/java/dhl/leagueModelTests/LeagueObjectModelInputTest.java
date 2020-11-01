@@ -1,6 +1,7 @@
 package dhl.leagueModelTests;
 
 import dhl.Mocks.LeagueObjectModelMocks;
+import dhl.database.interfaceDB.ILeagueObjectModelDB;
 import dhl.leagueModel.CommonValidation;
 import dhl.leagueModel.LeagueObjectModelInput;
 import dhl.leagueModel.LeagueObjectModelValidation;
@@ -14,12 +15,14 @@ public class LeagueObjectModelInputTest {
     ILeagueObjectModelValidation leagueValidation;
     LeagueObjectModelMocks leagueMock;
     ILeagueObjectModelInput leagueObjectModelInput;
+    ILeagueObjectModelDB leagueObjectModelDB;
 
     @BeforeEach
     public void initialize(){
         leagueValidation=new LeagueObjectModelValidation();
         leagueMock= new LeagueObjectModelMocks();
-        leagueObjectModelInput=new LeagueObjectModelInput("Dhl","Western","Atlantic",leagueMock.getTeamObjectMock(),leagueValidation);
+        leagueObjectModelDB = new MockDatabase();
+        leagueObjectModelInput=new LeagueObjectModelInput("Dhl","Western","Atlantic",leagueMock.getTeamObjectMock(),leagueValidation, leagueObjectModelDB);
     }
 
     @Test

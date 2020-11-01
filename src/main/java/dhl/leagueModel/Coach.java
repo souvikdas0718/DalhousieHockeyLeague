@@ -4,18 +4,18 @@ import dhl.leagueModel.interfaceModel.ICoach;
 import dhl.leagueModel.interfaceModel.IValidation;
 
 public class Coach implements ICoach {
-    private String coachName;
+    private String name;
     private double skating;
     private double shooting;
     private double checking;
     private double saving;
 
     public Coach(){
-        coachName="";
+        name="";
     }
 
     public Coach(String coachName,double skating,double shooting,double checking,double saving){
-       this.coachName=coachName;
+        this.name=coachName;
         this.skating=skating;
         this.shooting=shooting;
         this.checking=checking;
@@ -23,7 +23,7 @@ public class Coach implements ICoach {
     }
 
     public String getCoachName() {
-        return coachName;
+        return name;
     }
 
     public double getSkating() {
@@ -43,7 +43,7 @@ public class Coach implements ICoach {
     }
 
     public boolean checkIfCoachValid(IValidation validation) throws Exception{
-        validation.isStringEmpty(coachName,"Coach name");
+        validation.isStringEmpty(name,"Coach name");
         checkCoachStatistics();
         return true;
     }

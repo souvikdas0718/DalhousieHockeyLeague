@@ -1,11 +1,7 @@
 package dhl.simulationStateMachine.States;
 
 import dhl.InputOutput.UI.UserInputOutput;
-import dhl.leagueModel.Coach;
-import dhl.leagueModel.LeagueObjectModelInput;
-import dhl.leagueModel.LeagueObjectModelValidation;
-import dhl.leagueModel.Team;
-import dhl.leagueModel.Player;
+import dhl.leagueModel.*;
 import dhl.leagueModel.interfaceModel.*;
 import dhl.database.interfaceDB.ILeagueObjectModelDB;
 import dhl.database.LeagueObjectModelDB;
@@ -18,6 +14,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CreateTeamStateUI implements IGameState {
+
     private GameContext ourGame;
     private ILeagueObjectModel inMemoryLeague;
     private IConference selectedConference;
@@ -60,6 +57,7 @@ public class CreateTeamStateUI implements IGameState {
     public void selectConference(){
         List<IConference> conferencesArray = inMemoryLeague.getConferences();
         userInputPutput.printMessage("Select the Conference");
+
         for(int i=0; i< conferencesArray.size();i++){
             Integer serialNumber = i+1;
             userInputPutput.printMessage(serialNumber +".  "+ conferencesArray.get(i).getConferenceName());
@@ -68,7 +66,6 @@ public class CreateTeamStateUI implements IGameState {
         String conference = userInputPutput.getUserInput();
 
         while ( selectedConference == null){
-
             selectedConference =  createTeamStateLogic.findConference(conferencesArray, conference);
             if(selectedConference!= null){
                 userInputPutput.printMessage("Confrence Found: " + selectedConference.getConferenceName());
@@ -87,6 +84,7 @@ public class CreateTeamStateUI implements IGameState {
     public void selectDivision(){
         List<IDivision> divisionArrayList = selectedConference.getDivisions();
         userInputPutput.printMessage("Select the Division");
+
         for(int i=0; i< divisionArrayList.size();i++){
             Integer serialNumber = i+1;
             userInputPutput.printMessage(serialNumber +".  "+ divisionArrayList.get(i).getDivisionName() );
@@ -94,7 +92,6 @@ public class CreateTeamStateUI implements IGameState {
         String division = userInputPutput.getUserInput();
 
         while ( selectedDivision == null){
-
             selectedDivision =  createTeamStateLogic.findDivision(divisionArrayList, division);
             if(selectedDivision!= null){
                 userInputPutput.printMessage("Division Found: " + selectedDivision.getDivisionName());
@@ -130,9 +127,11 @@ public class CreateTeamStateUI implements IGameState {
     private void selectGeneralManager(){
         userInputPutput.printMessage("Select Team's General Manager Name: ");
         List<IGeneralManager> generalManagerArray = inMemoryLeague.getGeneralManagers();
+
         generalManagerArray.forEach((generalManager)->{
             userInputPutput.printMessage(generalManager.getGeneralManagerName());
         });
+
         String generalManager  = userInputPutput.getUserInput();
 
         while ( selectedGeneralManager == null){
@@ -152,6 +151,7 @@ public class CreateTeamStateUI implements IGameState {
     private void selectTeamHeadCoach(){
         userInputPutput.printMessage("Select Team's Head Coach Name: ");
         List<ICoach> coachArray = inMemoryLeague.getCoaches();
+
         userInputPutput.printMessage("-----------------------------------------------------------------------------");
         String coachListHeader = String.format("%20s %10s %10s %10s %10s","Name","Checking","Saving","Shooting","Skating");
         userInputPutput.printMessage(coachListHeader);
@@ -164,7 +164,9 @@ public class CreateTeamStateUI implements IGameState {
 
         });
         userInputPutput.printMessage("-----------------------------------------------------------------------------");
+
         String headCoach = userInputPutput.getUserInput();
+
         while ( selectedHeadCoach == null){
             selectedHeadCoach =  createTeamStateLogic.findCoach(coachArray, headCoach);
             if(selectedHeadCoach == null){
@@ -185,14 +187,17 @@ public class CreateTeamStateUI implements IGameState {
 
     private void selectFreeAgents() {
         List<IPlayer> freeAgentsArray = inMemoryLeague.getFreeAgents();
+
         userInputPutput.printMessage("Select the Players from free Agents list (Input multiple names separated by a comma):");
         userInputPutput.printMessage("-----------------------------------------------------------------------------------------------------------------");
         String freeAgentListHeader = String.format("%20s %20s %10s %10s %10s %10s %10s %10s","Name","Position","Age","Checking","Saving","Shooting","Skating","Strength");
         userInputPutput.printMessage(freeAgentListHeader);
         userInputPutput.printMessage("-----------------------------------------------------------------------------------------------------------------");
+
         for(int i=0; i< freeAgentsArray.size();i++){
             IPlayer player = new  Player(freeAgentsArray.get(i).getPlayerName(),freeAgentsArray.get(i).getPosition(),freeAgentsArray.get(i).getPlayerStats());
             Double playerStrength = player.getPlayerStrength();
+
             String formattedFreeAgentList = String.format("%20s %20s %10d %10d %10d %10d %10d %10s", freeAgentsArray.get(i).getPlayerName(), freeAgentsArray.get(i).getPosition(), freeAgentsArray.get(i).getPlayerStats().getAge(), freeAgentsArray.get(i).getPlayerStats().getChecking(), freeAgentsArray.get(i).getPlayerStats().getSaving(), freeAgentsArray.get(i).getPlayerStats().getShooting(), freeAgentsArray.get(i).getPlayerStats().getSkating(), Double.toString(playerStrength));
             userInputPutput.printMessage(formattedFreeAgentList);
         }
@@ -233,7 +238,9 @@ public class CreateTeamStateUI implements IGameState {
             ITeam teamWithoutPlayers= new Team(selectedTeamName,selectedGeneralManager,selectedCoach,new ArrayList<>());
             ITeam newlyCreatedTeam= createTeamStateLogic.createNewTeamObject(selectedFreeAgents,teamWithoutPlayers,selectedCaptain);
             ILeagueObjectModelValidation leagueObjectModelValidation = new LeagueObjectModelValidation();
-            ILeagueObjectModelInput leagueObjectModelInput = new LeagueObjectModelInput(inMemoryLeague.getLeagueName(), selectedConference.getConferenceName(), selectedDivision.getDivisionName(), newlyCreatedTeam,leagueObjectModelValidation);
+            ILeagueObjectModelDB leagueObjectModelDB = new LeagueObjectModelDB();
+
+            ILeagueObjectModelInput leagueObjectModelInput = new LeagueObjectModelInput(inMemoryLeague.getLeagueName(), selectedConference.getConferenceName(), selectedDivision.getDivisionName(), newlyCreatedTeam,leagueObjectModelValidation, leagueObjectModelDB);
             createTeamStateLogic.saveleagueObject( ourGame, inMemoryLeague, leagueObjectModelInput);
 
         } catch (Exception e){
@@ -248,5 +255,4 @@ public class CreateTeamStateUI implements IGameState {
             ourGame.setGameState(ourGame.getSimulateState());
         }
     }
-
 }

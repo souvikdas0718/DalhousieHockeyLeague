@@ -1,5 +1,6 @@
 package dhl.leagueModel;
 
+import dhl.database.interfaceDB.ILeagueObjectModelDB;
 import dhl.leagueModel.interfaceModel.ILeagueObjectModelInput;
 import dhl.leagueModel.interfaceModel.ILeagueObjectModelValidation;
 import dhl.leagueModel.interfaceModel.ITeam;
@@ -10,13 +11,15 @@ public class LeagueObjectModelInput implements ILeagueObjectModelInput {
     String divisionName;
     ITeam newlyCreatedTeam;
     ILeagueObjectModelValidation leagueObjectModelValidation;
+    ILeagueObjectModelDB leagueObjectModelDB;
 
-    public LeagueObjectModelInput(String leagueName, String conferenceName, String divisionName, ITeam newlyCreatedTeam, ILeagueObjectModelValidation leagueObjectModelValidation){
+    public LeagueObjectModelInput(String leagueName, String conferenceName, String divisionName, ITeam newlyCreatedTeam, ILeagueObjectModelValidation leagueObjectModelValidation, ILeagueObjectModelDB leagueObjectModelDB ){
         this.leagueName=leagueName;
         this.conferenceName=conferenceName;
         this.divisionName=divisionName;
         this.newlyCreatedTeam=newlyCreatedTeam;
         this.leagueObjectModelValidation=leagueObjectModelValidation;
+        this.leagueObjectModelDB = leagueObjectModelDB;
     }
 
     public String getLeagueName() {
@@ -39,4 +42,5 @@ public class LeagueObjectModelInput implements ILeagueObjectModelInput {
         return leagueObjectModelValidation;
     }
 
+    public ILeagueObjectModelDB getLeagueObjectModelDB() { return leagueObjectModelDB; }
 }
