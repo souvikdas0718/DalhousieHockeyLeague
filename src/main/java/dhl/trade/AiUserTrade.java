@@ -28,7 +28,7 @@ public class AiUserTrade implements ITradeType {
             }else if( inputfromUser == 2){
                 return false;
             }else{
-                throw new Exception("Wrong Input please give valid input");
+                throw new Exception("Wrong Input ple---------------------------------------------------------------------------------------------------------------------------------------ase give valid input");
             }
         }catch(Exception e){
             ioObject.printMessage("----------ERROR----------");

@@ -17,13 +17,21 @@ public class TradingEngine implements ITradingEngine {
     private IGameConfig gameConfig;
     private ILeagueObjectModel leagueObjectModel;
     IUserInputOutput ioObject;
+    ITeam userTeam;
 
-    public TradingEngine(IGameConfig gameConfig, ILeagueObjectModel leagueObjectModel,IUserInputOutput ioObject){
+    public TradingEngine(IGameConfig gameConfig, ILeagueObjectModel leagueObjectModel,ITeam userTeam,IUserInputOutput ioObject){
         this.gameConfig = gameConfig;
         this.leagueObjectModel = leagueObjectModel;
         this.ioObject = ioObject;
+        this.userTeam = userTeam;
+
     }
 
+    public void performTrade(){
+
+        // TODO: 01-11-2020 one by one call methods for Trading
+        
+    }
     @Override
     public void makeOffer(ITeam tradingTeam ) throws Exception {
 

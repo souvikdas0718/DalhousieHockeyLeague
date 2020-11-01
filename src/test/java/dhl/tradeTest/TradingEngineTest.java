@@ -27,6 +27,8 @@ public class TradingEngineTest {
     ITeam goodTeamMock,badTeamMock;
     ILeagueObjectModel leagueMock;
     IUserInputOutput ioObject;
+    ITeam userTeam;
+
     @BeforeEach
     public void initObject(){
         ioObject = new UserInputOutput();
@@ -39,7 +41,8 @@ public class TradingEngineTest {
         leagueMock.getConferences().get(0).getDivisions().get(0).getTeams().add(goodTeamMock);
         leagueMock.getConferences().get(0).getDivisions().get(0).getTeams().add(badTeamMock);
         IGameConfig ourGameConfig = gameConfigMock.getGameConfigMock();
-        testClassObject = new TradingEngine(ourGameConfig ,leagueMock,ioObject);
+        userTeam = new Team();
+        testClassObject = new TradingEngine(ourGameConfig ,leagueMock,userTeam,ioObject);
     }
 
     @Test

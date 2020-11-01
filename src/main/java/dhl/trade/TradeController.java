@@ -30,7 +30,7 @@ public class TradeController implements ITradeController {
     public void startTrading() {
         long configLossPoint = Long.parseLong(gameConfig.getValueFromOurObject(gameConfig.getTrading(),gameConfig.getLossPoint()));
         double configRandomTradeChance = Double.parseDouble(gameConfig.getValueFromOurObject(gameConfig.getTrading(),gameConfig.getRandomTradeOfferChance()));
-        ITradingEngine tradeEngine = new TradingEngine(gameConfig,leagueObjectModel,ioObject);
+        ITradingEngine tradeEngine = new TradingEngine(gameConfig,leagueObjectModel,userTeam,ioObject);
 
         try{
             for(IConference conference: leagueObjectModel.getConferences()){

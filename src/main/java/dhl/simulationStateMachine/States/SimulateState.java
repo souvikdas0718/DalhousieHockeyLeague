@@ -41,7 +41,7 @@ public class SimulateState implements IGameState {
 
     @Override
     public void stateProcess() {
-        SimulationContext simulationContextObject = new SimulationContext();
+        SimulationContext simulationContextObject = new SimulationContext(ourGame);
         simulationContextObject.setGameConfig(ourGame.getGameConfig());
         simulationContextObject.setInMemoryLeague(ourGame.getInMemoryLeague());
 

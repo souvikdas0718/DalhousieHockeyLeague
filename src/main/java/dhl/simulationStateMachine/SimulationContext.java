@@ -1,10 +1,16 @@
 package dhl.simulationStateMachine;
 
+import dhl.InputOutput.UI.IUserInputOutput;
+import dhl.InputOutput.UI.UserInputOutput;
 import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.InputOutput.importJson.Interface.IGameConfig;
+import dhl.leagueModel.interfaceModel.ITeam;
+import dhl.simulationStateMachine.Interface.IGameState;
 import dhl.simulationStateMachine.Interface.ISimulationSeasonState;
 import dhl.simulationStateMachine.States.seasonSimulation.*;
+import dhl.trade.Interface.ITradingEngine;
+import dhl.trade.TradingEngine;
 
 public class SimulationContext implements ISimulationSeasonState{
 
@@ -19,9 +25,15 @@ public class SimulationContext implements ISimulationSeasonState{
     ISimulationSeasonState persistsSeason;
     ISimulationSeasonState simulateGame;
     ISimulationSeasonState training;
+
     boolean gameInProgress;
     IGameConfig gameConfig;
     ILeagueObjectModel inMemoryLeague;
+    ITeam userTeam;
+    IUserInputOutput ioObject;
+
+
+    ITradingEngine tradeEngine;
 
 //    ITeam selectedTeam;
 //    public GameContext() {
@@ -29,8 +41,9 @@ public class SimulationContext implements ISimulationSeasonState{
 //        gameInProgress = true;
 //    }
 
-    public SimulationContext(){
+    public SimulationContext(GameContext gameState){
 //      seasonSimulationState = new SeasonSimulationState(this);
+        userTeam = gameState.getSelectedTeam();
         advanceTime = new AdvanceTime(this);
         aging = new Aging(this);
         executeTrades = new ExecuteTrades(this);
@@ -43,12 +56,26 @@ public class SimulationContext implements ISimulationSeasonState{
         training = new Training(this);
         currentSimulation = initializeSeason;
         gameInProgress = true;
+        ioObject = new UserInputOutput();
+        tradeEngine = new TradingEngine(gameConfig,inMemoryLeague,userTeam,ioObject);
     }
 
     // delete parts
 //    public void startSeasonSimulation(int seasonNumber){
 //        currentSimulation.startSeasonSimulation(seasonNumber);
 //    }
+
+    public ITradingEngine getTradeEngine() {
+        return tradeEngine;
+    }
+
+    public IUserInputOutput getIoObject() {
+        return ioObject;
+    }
+
+    public ITeam getUserTeam() {
+        return userTeam;
+    }
 
     public IGameConfig getGameConfig() {
         return gameConfig;
