@@ -76,7 +76,7 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
             );
             leagueObjectModel.checkIfLeagueModelValid(validationObject,leagueObjectModelValidation);
         }catch (Exception e){
-            System.out.println(e);
+            System.out.println(e.getMessage());
             System.exit(0);
         }
         return leagueObjectModel;
@@ -99,7 +99,7 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
             JSONObject conferenceJsonObject = (JSONObject) conferenceListIterator.next();
             if(checkJsonArray(conferenceJsonObject , "divisions")){
                 if (conferenceJsonObject.get("conferenceName")==null || conferenceJsonObject.get("divisions")== null){
-                    throw new Exception("ERROR: Hey! Division cant have Null values....");
+                    throw new Exception("ERROR: Hey! Conference cant have Null values....");
                 }
                 divisionJsonArray = (JSONArray)conferenceJsonObject.get("divisions");
                 Conference conferenceObject = new Conference((String) conferenceJsonObject.get("conferenceName"),getDivisionObjectArrayList());
