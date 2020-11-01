@@ -1,5 +1,6 @@
 package dhl.leagueModelTests;
 
+import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.leagueModel.*;
 import dhl.factory.InitializeObjectFactory;
 import dhl.leagueModel.interfaceModel.*;
@@ -18,6 +19,7 @@ public class TeamTest {
     List<IPlayer> playerArrayList;
     IPlayerStatistics playerStatistics;
     ICoach headCoach;
+    LeagueObjectModelMocks leagueMock;
 
     @BeforeEach()
     public void initObject(){
@@ -28,6 +30,7 @@ public class TeamTest {
         playerArrayList.add(new Player("Harry","forward",false,playerStatistics));
         headCoach = new Coach("Todd McLellan",0.1,0.5,1.0,0.2);
         team = new Team("Ontario","Mathew",headCoach, playerArrayList);
+        leagueMock= new LeagueObjectModelMocks();
     }
 
     @Test
@@ -143,10 +146,17 @@ public class TeamTest {
 
     @Test
     public void checkIfSkatersGoaliesValid(){
-        dhl.Mocks.LeagueObjectModelMocks leagueObjectModelMocks = new dhl.Mocks.LeagueObjectModelMocks();
-        team = new Team("Ontario","Mathew",headCoach,leagueObjectModelMocks.get20FreeAgentArrayMock());
+        team = new Team("Ontario","Mathew",headCoach,leagueMock.get20FreeAgentArrayMock());
         Boolean isValid = team.checkIfSkatersGoaliesValid();
         Assertions.assertEquals(true,isValid);
+    }
+
+    @Test
+    public void checkIfSkatersGoaliesInValid(){
+        List<IPlayer> selectedPlayers= leagueMock.get20FreeAgentArrayMock();
+        selectedPlayers.remove(19);
+        team = new Team("Ontario","Mathew",headCoach,selectedPlayers);
+        Assertions.assertFalse(team.checkIfSkatersGoaliesValid());
     }
 
     @Test

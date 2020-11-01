@@ -7,19 +7,11 @@ public class GeneralManager implements IGeneralManager {
     private String generalManagerName;
 
     public GeneralManager(){
-        setDefaults();
-    }
-
-    public void setDefaults() {
-        generalManagerName = "";
+        generalManagerName="";
     }
 
     public GeneralManager(String generalManagerName){
-        this.setGeneralManagerName(generalManagerName);
-    }
-
-    public void setGeneralManagerName(String generalManagerName) {
-        this.generalManagerName=generalManagerName;
+        this.generalManagerName = generalManagerName;
     }
 
     public String getGeneralManagerName() {  return generalManagerName;   }

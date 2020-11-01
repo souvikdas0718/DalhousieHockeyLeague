@@ -33,6 +33,7 @@ public class LeagueObjectModelInputTest {
         ITeam team = leagueObjectModelInput.getNewlyCreatedTeam();
         Assertions.assertEquals(team.getTeamName(),"Mock Team");
         Assertions.assertNotNull(leagueObjectModelInput.getLeagueObjectModelValidation());
+        Assertions.assertNotNull(leagueObjectModelInput.getLeagueObjectModelDB());
     }
 
     @AfterEach
