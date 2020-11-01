@@ -5,7 +5,9 @@ import dhl.simulationStateMachine.GameContext;
 import dhl.simulationStateMachine.Interface.ISimulationSeasonState;
 import dhl.simulationStateMachine.SimulationContext;
 
-public class InitializeSeason implements ISimulationSeasonState {
+import java.time.LocalDate;
+
+public class InitializeSeasonState implements ISimulationSeasonState {
 
     SimulationContext ourSeasonGame;
     public InitializeSeasonState(SimulationContext simulationContext) {
@@ -20,7 +22,7 @@ public class InitializeSeason implements ISimulationSeasonState {
     @Override
     public void seasonStateProcess() {
         //TODO Generate full season schedule
-        LocalDate simulationStartDate = LocalDate.of(2020,9,30);
+        LocalDate simulationStartDate = LocalDate.of(ourSeasonGame.getYear(),9,30);
         ourSeasonGame.setStartOfSimulation(simulationStartDate);
     }
 

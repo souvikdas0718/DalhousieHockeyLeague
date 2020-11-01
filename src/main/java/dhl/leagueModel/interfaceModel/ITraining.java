@@ -8,5 +8,5 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface ITraining {
-    public ILeagueObjectModel updatePlayerStats(ILeagueObjectModel objLeagueObjectModel) throws Exception;
+    public ILeagueObjectModel updatePlayerStats(ILeagueObjectModel objLeagueObjectModel);
 }

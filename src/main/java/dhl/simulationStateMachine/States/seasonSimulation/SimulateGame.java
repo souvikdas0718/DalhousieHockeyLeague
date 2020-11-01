@@ -53,5 +53,7 @@ public class SimulateGame implements ISimulationSeasonState {
     @Override
     public void seasonStateExitProcess() {
         // check injury
+        //set an array teamInGame
+//        move to injury check state
     }
 }

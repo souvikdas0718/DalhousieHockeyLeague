@@ -1,10 +1,14 @@
 package dhl.simulationStateMachine.States.seasonSimulation;
 
-import dhl.simulationStateMachine.Interface.IGameState;
 import dhl.simulationStateMachine.Interface.ISimulationSeasonState;
 import dhl.simulationStateMachine.SimulationContext;
 
-public class AdvanceTime implements ISimulationSeasonState {
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.temporal.TemporalAdjusters;
+
+public class AdvanceTimeState implements ISimulationSeasonState {
 
     SimulationContext simulationContext;
 

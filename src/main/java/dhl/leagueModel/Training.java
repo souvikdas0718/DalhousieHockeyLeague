@@ -16,7 +16,7 @@ public class Training implements ITraining {
         this.injurySystem=injurySystem;
     }
 
-    public ILeagueObjectModel updatePlayerStats(ILeagueObjectModel leagueObjectModel) throws Exception{
+    public ILeagueObjectModel updatePlayerStats(ILeagueObjectModel leagueObjectModel) {
         for(IConference conference :  leagueObjectModel.getConferences()) {
             for (IDivision division : conference.getDivisions()) {
                 for (ITeam team : division.getTeams()) {
@@ -32,7 +32,7 @@ public class Training implements ITraining {
         return leagueObjectModel;
     }
 
-    public List<IPlayer> playerStatLessThanHeadCoachStat(List<IPlayer> arrPlayer, ICoach objCoach, String[] randomValues) throws Exception
+    public List<IPlayer> playerStatLessThanHeadCoachStat(List<IPlayer> arrPlayer, ICoach objCoach, String[] randomValues)
     {
         for (IPlayer player : arrPlayer) {
             IPlayerStatistics playerStat= player.getPlayerStats();

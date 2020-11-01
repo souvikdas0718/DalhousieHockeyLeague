@@ -1,9 +1,14 @@
 package dhl.simulationStateMachine.States.seasonSimulation;
 
+import dhl.InputOutput.importJson.Interface.IGameConfig;
+import dhl.leagueModel.Training;
+import dhl.leagueModel.interfaceModel.ITraining;
 import dhl.simulationStateMachine.Interface.ISimulationSeasonState;
 import dhl.simulationStateMachine.SimulationContext;
 
-public class Training implements ISimulationSeasonState {
+import java.util.HashMap;
+
+public class TrainingState implements ISimulationSeasonState {
 
     SimulationContext simulationContext;
     public TrainingState(SimulationContext simulationContext) {
@@ -19,14 +24,12 @@ public class Training implements ISimulationSeasonState {
     public void seasonStateProcess()  {
         simulationContext.setDaysSinceLastTraining(simulationContext.getDaysSinceLastTraining()+1);
         IGameConfig gameConfig = simulationContext.getGameConfig();
-        HashMap agingConfig=gameConfig.getHashMap("training");
-        int daysUntilStatIncreaseCheck=(int)(long)agingConfig.get("daysUntilStatIncreaseCheck");
+        int daysUntilStatIncreaseCheck=Integer.parseInt(gameConfig.getValueFromOurObject( gameConfig.getTrading(), gameConfig.getDaysUntilStatIncreaseCheck()));
         if(daysUntilStatIncreaseCheck==simulationContext.getDaysSinceLastTraining()){
             ITraining training = new Training(simulationContext.getInjurySystem());
-            training.statIncrease(simulationContext.getInMemoryLeague());
+            training.updatePlayerStats(simulationContext.getInMemoryLeague());
             simulationContext.setDaysSinceLastTraining(0);
         }
-
     }
 
     @Override

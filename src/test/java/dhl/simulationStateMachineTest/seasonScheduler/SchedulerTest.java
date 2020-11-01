@@ -1,13 +1,7 @@
 package dhl.simulationStateMachineTest.seasonScheduler;
 
-import dhl.leagueModel.Conference;
-import dhl.leagueModel.Division;
-import dhl.leagueModel.LeagueObjectModel;
-import dhl.leagueModel.Team;
-import dhl.leagueModel.interfaceModel.IConference;
-import dhl.leagueModel.interfaceModel.IDivision;
-import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
-import dhl.leagueModel.interfaceModel.ITeam;
+import dhl.leagueModel.*;
+import dhl.leagueModel.interfaceModel.*;
 import dhl.simulationStateMachine.Interface.ISchedule;
 import dhl.simulationStateMachine.Interface.IStandings;
 import dhl.simulationStateMachine.States.seasonScheduler.Scheduler;
@@ -149,7 +143,17 @@ public class SchedulerTest {
         IDivision division4 = new Division();
         division4.setDivisionName("Pacific Division");
 
-        ITeam team1 = new Team();
+        String generalManager = "generalManager";
+
+        ICoach headCoach = new Coach("Coach", 0.1, 0.2, .5, .9);
+        IPlayerStatistics playerStats = new PlayerStatistics(20, 5, 5, 8 , 9)
+        IPlayer playersList1 = new Player("playerName", "position",playerStats);
+        IPlayer playersList2 = new Player("playerName", "position",playerStats);
+        List<IPlayer> playersList = new ArrayList<>();
+        playersList.add(playersList1);
+        playersList.add(playersList2);
+
+        ITeam team1 = new Team("Bruins", generalManager , headCoach , playersList);
         team1.setTeamName("Bruins");
 
         IStandings standings1 = new Standings();
