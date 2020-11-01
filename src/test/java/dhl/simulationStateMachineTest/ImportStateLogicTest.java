@@ -32,7 +32,7 @@ public class ImportStateLogicTest {
         ILeagueObjectModel newInMemoryLeague = new LeagueObjectModel();
         ILeagueObjectModel leagueObjectModel = new LeagueObjectModel();
         leagueObjectModel = testClassObject.importAndGetLeagueObject(filePath.getFilePath(),gameConfig,newInMemoryLeague);
-        Assertions.assertEquals("Dalhousie Hockey League1",leagueObjectModel.getLeagueName());
+        Assertions.assertEquals("Dalhousie Hockey Leaguen1",leagueObjectModel.getLeagueName());
     }
 
     @Test
