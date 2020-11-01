@@ -1,5 +1,6 @@
 package dhl.trade;
 
+import dhl.InputOutput.UI.IUserInputOutput;
 import dhl.InputOutput.UI.UserInputOutput;
 import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.leagueModel.interfaceModel.*;
@@ -10,48 +11,28 @@ import dhl.trade.Interface.ITradingEngine;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerSwappingTradeEngine implements ITradingEngine {
+public class TradingEngine implements ITradingEngine {
 
     private ITradeOffer currentTrade;
     private IGameConfig gameConfig;
     private ILeagueObjectModel leagueObjectModel;
+    IUserInputOutput ioObject;
 
-    public PlayerSwappingTradeEngine(IGameConfig gameConfig, ILeagueObjectModel leagueObjectModel){
+    public TradingEngine(IGameConfig gameConfig, ILeagueObjectModel leagueObjectModel,IUserInputOutput ioObject){
         this.gameConfig = gameConfig;
         this.leagueObjectModel = leagueObjectModel;
+        this.ioObject = ioObject;
     }
 
     @Override
     public void makeOffer(ITeam tradingTeam ) throws Exception {
-        for(IConference conference : leagueObjectModel.getConferences()){
-            for(IDivision division : conference.getDivisions()){
-                for(ITeam team : division.getTeams()){
-                    if(isTeamDifferent(team , tradingTeam)){
-                        currentTrade = ifTradePossibleMakeOffer(tradingTeam , team);
-                        if( isObjectInitiated(currentTrade) ){
-                            tradingTeam.setLossPoint(0);
-                            break;
-                        }
-                    }
 
-                }
-            }
-        }
-    }
-
-    public boolean isObjectInitiated(Object obj){
-        if (obj == null){
-            return false;
-        }else{
-            return true;
-        }
-    }
-
-    public boolean isTeamDifferent(ITeam teamA , ITeam teamB){
-        if (teamA.getTeamName().equals(teamB.getTeamName())){
-            return false;
-        }else{
-            return true;
+        try {
+            ITeam teamToTradeWith = findTeamToTradeWith(tradingTeam);
+            currentTrade = generateTradeOffer(tradingTeam , teamToTradeWith);
+            tradingTeam.setLossPoint(0);
+        }catch (Exception e){
+            ioObject.printMessage(e.getMessage());
         }
     }
 
@@ -77,21 +58,25 @@ public class PlayerSwappingTradeEngine implements ITradingEngine {
 
     @Override
     public void checkPlayersAfterTrade() {
-        // TODO: 29-10-2020 useless method
-        if(isObjectInitiated(currentTrade)){
-            ITeam offeringTeam = currentTrade.getOfferingTeam();
-            ITeam recevingTeam = currentTrade.getReceivingTeam();
-            List<IPlayer> offeringTeamPlayers = offeringTeam.getPlayers();
-            List<IPlayer> recevingTeamPlayers = recevingTeam.getPlayers();
-            if (offeringTeam.checkIfSkatersGoaliesValid()){
-                
-            }
-            // TODO: 31-10-2020   checkIfSkatersGoaliesValid y is it taking free agents
-        }
-
+        // TODO: 01-11-2020 implement this
     }
 
-    public ITradeOffer ifTradePossibleMakeOffer(ITeam teamOffering, ITeam  teamGettingOffer) throws Exception {
+    public ITeam findTeamToTradeWith(ITeam tradingTeam) throws Exception {
+        for(IConference conference : leagueObjectModel.getConferences()){
+            for(IDivision division : conference.getDivisions()){
+                for(ITeam team : division.getTeams()){
+                    if(isTeamDifferent(team , tradingTeam)){
+                        if(isTeamGoodForTrading( tradingTeam , team)){
+                            return team;
+                        }
+                    }
+                }
+            }
+        }
+        throw new Exception(" No Good Player availabe to swap for Team: " + tradingTeam.getTeamName());
+    }
+
+    public ITradeOffer generateTradeOffer(ITeam teamOffering, ITeam  teamGettingOffer) throws Exception {
         ArrayList<IPlayer> offeringTeamPayers = sortPlayerList(teamOffering);
         ArrayList<IPlayer> secondTeamPlayers = sortPlayerList(teamGettingOffer);
         ArrayList<IPlayer> playersOffered = new ArrayList<>();
@@ -112,12 +97,9 @@ public class PlayerSwappingTradeEngine implements ITradingEngine {
                 }
             }
         }
-        if (maxPlayersInTrade > 0){
-            // TODO: 27-10-2020 is this decoupled ?
-            ExchangingPlayerTradeOffer newOffer = new ExchangingPlayerTradeOffer(teamOffering , teamGettingOffer , playersOffered , playersWanted );
-            return newOffer;
-        }
-        return null;
+        // TODO: 27-10-2020 voilation of dependency inversion
+        ITradeOffer newOffer = new ExchangingPlayerTradeOffer(teamOffering , teamGettingOffer , playersOffered , playersWanted );
+        return newOffer;
     }
 
     public ArrayList<IPlayer> sortPlayerList(ITeam tradingTeam) throws Exception {
@@ -138,5 +120,39 @@ public class PlayerSwappingTradeEngine implements ITradingEngine {
         }
         return sortedPlayerList;
     }
+    
+    public boolean isTeamDifferent(ITeam teamA , ITeam teamB){
+        if (teamA.getTeamName().equals(teamB.getTeamName())){
+            return false;
+        }else{
+            return true;
+        }
+    }
 
+    public boolean isTeamGoodForTrading(ITeam teamOffering , ITeam teamGettingOffer) throws Exception {
+
+        ArrayList<IPlayer> offeringTeamPayers = sortPlayerList(teamOffering);
+        ArrayList<IPlayer> secondTeamPlayers = sortPlayerList(teamGettingOffer);
+        int congifMaxPlayerPerTrade = Integer.parseInt(gameConfig.getValueFromOurObject( gameConfig.getTrading(), gameConfig.getMaxPlayersPerTrade()));
+        int maxPlayersInTrade = 0;
+
+        for (IPlayer playerToBeOffered: offeringTeamPayers){
+            for (IPlayer playerToGetInExchange: secondTeamPlayers){
+                if(maxPlayersInTrade + 2 >= congifMaxPlayerPerTrade){
+                    if (playerToGetInExchange.getPosition() == playerToBeOffered.getPosition()){
+                        if (playerToGetInExchange.getPlayerStrength() > playerToBeOffered.getPlayerStrength()){
+                            maxPlayersInTrade += 2;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (maxPlayersInTrade > 0){
+            return true;
+        }else {
+            return false;
+        }
+    }
 }

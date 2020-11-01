@@ -47,4 +47,17 @@ public class ExchangingPlayerTradeOfferTest {
     public void getReceivingTeamTest(){
         Assertions.assertTrue(testClassObject.getReceivingTeam().getTeamName() == "TeamWithGoodPlayer");
     }
+
+    @Test
+    public void getOfferingPlayersTest(){
+        ArrayList<IPlayer> offeredPlayers = testClassObject.getOfferingPlayers();
+        String OfferedPlayerName = offeredPlayers.get(0).getPlayerName();
+        Assertions.assertTrue(OfferedPlayerName.equals("WeakPlayer1"));
+    }
+    @Test
+    public void getPlayersWantedInReturn(){
+        ArrayList<IPlayer> playersWanted = testClassObject.getPlayersWantedInReturn();
+        String WantedPlayerName = playersWanted.get(0).getPlayerName();
+        Assertions.assertTrue(WantedPlayerName.equals("Player1"));
+    }
 }
