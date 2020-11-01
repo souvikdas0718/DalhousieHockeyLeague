@@ -32,7 +32,6 @@ public class ExchangingPlayerTradeOffer implements ITradeOffer {
         }
     }
 
-
     @Override
     public ITeam getOfferingTeam() {
         return offeringTeam;

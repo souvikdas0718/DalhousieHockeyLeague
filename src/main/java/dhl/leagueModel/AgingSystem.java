@@ -15,9 +15,8 @@ public class AgingSystem implements IAgingSystem {
     private double likelihoodForLesserThanAvg;
 
     public AgingSystem(IGameConfig gameConfig){
-        HashMap agingConfig=gameConfig.getHashMap("aging");
-        averageRetirementAge=(int)(long)agingConfig.get("averageRetirementAge");
-        maximumAge=(int)(long)agingConfig.get("maximumAge");
+        averageRetirementAge=Integer.parseInt(gameConfig.getValueFromOurObject( gameConfig.getAging(), gameConfig.getAverageRetirementAge()));
+        maximumAge=Integer.parseInt(gameConfig.getValueFromOurObject( gameConfig.getAging(), gameConfig.getMaximumAge()));
         likelihoodForGreaterThanAvg=80.0;
         likelihoodForLesserThanAvg=20.0;
     }

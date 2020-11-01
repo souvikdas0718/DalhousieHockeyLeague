@@ -21,14 +21,12 @@ public class AiAiTradeTest {
     IGameConfig ourGameConfig;
     ArrayList<IPlayer> playersOffered,playersWanted;
     ITeam strongTeam,weakTeam;
-
     @BeforeEach
     public void initObject(){
         tradeMock = new TradeMock();
 
         gameConfigMock = new GameConfigMock();
         ourGameConfig = gameConfigMock.getGameConfigMock();
-        ourGameConfig.setRequiredObjectFromConfig("trading");
 
         strongTeam = tradeMock.getTeamWithGoodPlayer();
         weakTeam = tradeMock.getTeamWithBadPlayer();
@@ -43,8 +41,6 @@ public class AiAiTradeTest {
     public void isTradeAcceptedTest(){
         ITradeOffer tradeNotAccepted = new ExchangingPlayerTradeOffer(weakTeam , strongTeam , playersOffered,playersWanted);
         testClassObject = new AiAiTrade(tradeNotAccepted , ourGameConfig);
-        // TODO: 30-10-2020 uncomment when random issue fix
-        //Assertions.assertFalse(testClassObject.isTradeAccepted());
 
         ITradeOffer acceptedTrade = new ExchangingPlayerTradeOffer(strongTeam ,weakTeam,playersWanted,playersOffered);
         testClassObject = new AiAiTrade(acceptedTrade , ourGameConfig);

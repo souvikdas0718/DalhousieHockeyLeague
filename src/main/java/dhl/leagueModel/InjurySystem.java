@@ -16,10 +16,9 @@ public class InjurySystem implements IInjurySystem {
     }
 
     public boolean checkIfPlayerInjured(IGameConfig gameConfig, IPlayer player) {
-        HashMap injuryConfig = gameConfig.getHashMap("injuries");
-        double randomInjuryChance = (double) injuryConfig.get("randomInjuryChance") * 100;
-        int injuryDaysLow = (int) (long) injuryConfig.get("injuryDaysLow");
-        int injuryDaysHigh = (int) (long) injuryConfig.get("injuryDaysHigh");
+        double randomInjuryChance =Double.parseDouble(gameConfig.getValueFromOurObject( gameConfig.getInjuries(), gameConfig.getRandomInjuryChance()))*100;
+        int injuryDaysLow = Integer.parseInt(gameConfig.getValueFromOurObject( gameConfig.getInjuries(), gameConfig.getInjuryDaysLow()));;
+        int injuryDaysHigh = Integer.parseInt(gameConfig.getValueFromOurObject( gameConfig.getInjuries(), gameConfig.getInjuryDaysHigh()));;
 
         double ramdomNumber = Math.random();
         ramdomNumber = ramdomNumber * 100;
