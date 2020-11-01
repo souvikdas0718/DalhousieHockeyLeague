@@ -442,7 +442,7 @@ public class SchedulerTest {
         Scheduler scheduler = new Scheduler();
         scheduler.playOffs(standings, league);
         int matchNumber = 1;
-        for (ISchedule schedules : scheduler.getPlayOffSchedule()) {
+        for (ISchedule schedules : scheduler.getPlayOffScheduleRound1()) {
             System.out.println("Match Number "+ matchNumber + ":- team 1: "+schedules.getTeamOne().getTeamName() + " VS team 2: "+schedules.getTeamTwo().getTeamName() );
             if(matchNumber == 1){
                 Assertions.assertTrue(schedules.getTeamOne().getTeamName().equals("Bruins"));

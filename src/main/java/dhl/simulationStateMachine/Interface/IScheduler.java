@@ -7,14 +7,14 @@ import dhl.leagueModel.interfaceModel.ITeam;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface IScheduller {
+public interface IScheduler {
     public List<ISchedule> getFullSeasonSchedule();
 
     public void setFullSeasonSchedule(List<ISchedule> fullSeasonSchedule);
 
-    public List<ISchedule> getPlayOffSchedule();
+    public List<ISchedule> getPlayOffScheduleRound1();
 
-    public void setPlayOffSchedule(List<ISchedule> playOffSchedule);
+    public void setPlayOffScheduleRound1(List<ISchedule> playOffSchedule);
 
     public LocalDate getSeasonStartDate();
 
@@ -43,4 +43,6 @@ public interface IScheduller {
     public List<IDivision> getDivisions();
 
     public void setDivisions(List<IDivision> divisions);
+
+    public void gameWinner(ITeam team);
 }
