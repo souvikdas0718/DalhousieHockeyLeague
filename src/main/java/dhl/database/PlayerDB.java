@@ -2,13 +2,19 @@ package dhl.database;
 
 import dhl.database.DatabaseConfigSetup.CallStoredProcedure;
 import dhl.database.interfaceDB.IPlayerDB;
+import dhl.leagueModel.FreeAgent;
+import dhl.leagueModel.Player;
+import dhl.leagueModel.PlayerStatistics;
 import dhl.leagueModel.interfaceModel.*;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class PlayerDB implements IPlayerDB {
+
     public int insertPlayer(IPlayer player, int teamId, int leagueId )  throws Exception {
         int playerId =0;
 
@@ -41,6 +47,29 @@ public class PlayerDB implements IPlayerDB {
         return playerId;
     }
 
+    public void updatePlayer(IPlayer player, String teamName, String leagueName )  throws Exception {
+        try {
+            CallStoredProcedure callproc = new CallStoredProcedure("updatePlayer(?,?,?,?,?,?,?,?,?,?,?)");
+            callproc.setParameter(1, player.getPlayerName());
+            callproc.setParameter(2, player.getPosition());
+            callproc.setParameter(3, player.getCaptain());
+            IPlayerStatistics playerStatistics = player.getPlayerStats();
+            callproc.setParameter(4, playerStatistics.getAge());
+            callproc.setParameter(5, playerStatistics.getSkating());
+            callproc.setParameter(6, playerStatistics.getShooting());
+            callproc.setParameter(7, playerStatistics.getChecking());
+            callproc.setParameter(8, playerStatistics.getSaving());
+            callproc.setParameter(9, player.getPlayerInjuredDays());
+            callproc.setParameter(10, teamName);
+            callproc.setParameter(11, leagueName);
+            callproc.execute();
+            callproc.cleanup();
+        }
+        catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
     public void insertRetiredPlayers(ILeagueObjectModel leagueObjectModel, Map<String, List<IPlayer>> playersToRetire, List<IPlayer> freeAgentsToRetire) throws Exception {
         try {
             CallStoredProcedure callproc = new CallStoredProcedure("insertVeteran(?,?,?,?)");
@@ -69,5 +98,27 @@ public class PlayerDB implements IPlayerDB {
         }
     }
 
+    public List<IPlayer> getPlayerList(int teamId,int leagueId) throws Exception {
+        List<IPlayer> playerList = new ArrayList<>();
+        CallStoredProcedure callPlayerProc = new CallStoredProcedure("loadPlayers(?,?)");
+        callPlayerProc.setParameter(1, teamId);
+        callPlayerProc.setParameter(2, leagueId);
+        ResultSet playerResultSet = callPlayerProc.executeWithResults();
+
+        if (playerResultSet==null){
+            throw new Exception("Error loading players");
+        }
+
+        while(playerResultSet.next()){
+            IPlayerStatistics playerStatistics=new PlayerStatistics(playerResultSet.getInt("age"), playerResultSet.getInt("skating"),
+                    playerResultSet.getInt("shooting"),playerResultSet.getInt("checking"),playerResultSet.getInt("saving"));
+            IPlayer player = new Player(playerResultSet.getString("playerName"),playerResultSet.getString("position"),playerResultSet.getBoolean("isCaptain"),playerStatistics);
+            player.setPlayerInjuredDays(playerResultSet.getInt("numberOfDaysInjured"));
+            playerList.add(player);
+
+        }
+        callPlayerProc.cleanup();
+        return playerList;
+    }
 
 }
