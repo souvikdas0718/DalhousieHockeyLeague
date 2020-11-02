@@ -35,6 +35,7 @@ public class InitializeSeasonState implements ISimulationSeasonState {
         LocalDate simulationStartDate = LocalDate.of(ourSeasonGame.getYear(),9,30);
 //        LocalDate simulationStartDate = LocalDate.of(ourSeasonGame.getYear(),9,30);
         ourSeasonGame.setStartOfSimulation(simulationStartDate);
+        scheduler.generateTeamList(ourSeasonGame.getInMemoryLeague());
         scheduler.generateTeamSchedule(ourSeasonGame.getInMemoryLeague());
         LocalDate localDate = LocalDate.of(ourSeasonGame.getYear() + 1,03,01);
         LocalDate reguarSeasonEndDate = localDate.with(firstDayOfNextMonth())

@@ -26,7 +26,7 @@ public class SimulateGameState implements ISimulationSeasonState {
     @Override
     public void seasonStateEntryProcess() {
         // Dates must be persisted from initalised season
-//        LocalDate date = LocalDate.of(2020,11,01);
+////        LocalDate date = LocalDate.of(2020,11,01);
         scheduler = ourSeasonGame.getRegularScheduler();
         injuryCheckTeams = new ArrayList<>();
 

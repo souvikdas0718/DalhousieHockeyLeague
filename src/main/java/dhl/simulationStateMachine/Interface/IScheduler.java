@@ -49,6 +49,8 @@ public interface IScheduler {
 
     public void gameWinner(ITeam team);
 
+    public void generateTeamList(ILeagueObjectModel inMemoryLeague);
+
     public void generateTeamSchedule(ILeagueObjectModel inMemoryLeague);
 
     public void gameScheduleDates( LocalDate seasonStartDate, LocalDate seasonEndDate );
@@ -68,4 +70,9 @@ public interface IScheduler {
     public void playOffs(List<IStandings> regularGamesStandings, ILeagueObjectModel leagueObjectModel);
 
     public boolean stanleyCupWinner(LocalDate date);
+
+    public List<ISchedule> getPlayOffScheduleRound2();
+
+    public void setPlayOffScheduleRound2(List<ISchedule> playOffScheduleRound2);
+
 }

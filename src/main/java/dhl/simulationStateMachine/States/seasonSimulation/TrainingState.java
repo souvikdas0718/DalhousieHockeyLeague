@@ -44,10 +44,8 @@ public class TrainingState implements ISimulationSeasonState {
         LocalDate startOfSimulation=simulationContext.getStartOfSimulation();
         LocalDate currentDate= startOfSimulation.plusDays(simulationContext.getNumberOfDays());
 
-
         if(currentDate.isAfter(scheduler.getSeasonStartDate()) && currentDate.isBefore(scheduler.getSeasonEndDate())){
             simulationContext.setCurrentSimulation(simulationContext.getSimulateGame());
-
         }
         else if (currentDate.isAfter(scheduler.getPlayOffStartDate()) && currentDate.isBefore(scheduler.getFinalDay())){
             simulationContext.setCurrentSimulation(simulationContext.getSimulateGame());
@@ -63,6 +61,5 @@ public class TrainingState implements ISimulationSeasonState {
                 simulationContext.setCurrentSimulation(simulationContext.getAging());
             }
         }
-
     }
 }
