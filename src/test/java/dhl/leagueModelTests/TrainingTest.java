@@ -45,7 +45,7 @@ public class TrainingTest {
     @Test
     public void playerStatLessThanHeadCoachStatTest() throws Exception{
         List<IPlayer> updatedPlayersList=new ArrayList<>();
-        Double [] randomValues = {0.1,0.2,0.3,0.4};
+        Double [] randomValues = {0.01,0.2,0.3,0.1};
 
         updatedPlayersList = trainingParameterized.playerStatLessThanHeadCoachStat(
                 leagueObjectModelMocks.getPlayerArrayMock(),
@@ -53,10 +53,10 @@ public class TrainingTest {
 
         for(int i=0; i<updatedPlayersList.size(); i++){
 
-            Assertions.assertEquals(10,updatedPlayersList.get(i).getPlayerStats().getSkating());
+            Assertions.assertEquals(11,updatedPlayersList.get(i).getPlayerStats().getSkating());
             Assertions.assertEquals(11,updatedPlayersList.get(i).getPlayerStats().getShooting());
             Assertions.assertEquals(11,updatedPlayersList.get(i).getPlayerStats().getChecking());
-            Assertions.assertEquals(10,updatedPlayersList.get(i).getPlayerStats().getSaving());
+            Assertions.assertEquals(11,updatedPlayersList.get(i).getPlayerStats().getSaving());
         }
     }
 

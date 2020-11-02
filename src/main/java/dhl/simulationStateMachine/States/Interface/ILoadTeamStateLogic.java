@@ -9,6 +9,6 @@ import dhl.simulationStateMachine.GameContext;
 import java.util.ArrayList;
 
 public interface ILoadTeamStateLogic {
-    public Boolean findTeamOfLeagueInDatabase(String leagueName, String team, ILeagueObjectModel newInMemoryLeague, GameContext ourGame, ILeagueObjectModelDB databaseRefrenceOb) throws Exception;
+    public Boolean findTeamOfLeagueInDatabase(ILeagueObjectModel newInMemoryLeague, GameContext ourGame, ILeagueObjectModelDB databaseRefrenceOb) throws Exception;
 
 }

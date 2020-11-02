@@ -12,19 +12,33 @@ import dhl.simulationStateMachine.States.Interface.ILoadTeamStateLogic;
 import java.util.ArrayList;
 
 public class LoadTeamStateLogic implements ILoadTeamStateLogic {
+    private String leagueName;
+    private String team;
+    private ILeagueObjectModel leagueObjectModel;
 
-    public Boolean findTeamOfLeagueInDatabase(String leagueName, String team, ILeagueObjectModel newInMemoryLeague,
-                                           GameContext ourGame, ILeagueObjectModelDB databaseRefrenceOb) throws Exception {
+    public LoadTeamStateLogic(){
+
+    }
+
+    public LoadTeamStateLogic(String leagueName, String team){
+        this.leagueName = leagueName;
+        this.team = team;
+    }
+
+    public Boolean findTeamOfLeagueInDatabase(ILeagueObjectModel newInMemoryLeague,
+                                              GameContext ourGame, ILeagueObjectModelDB databaseRefrenceOb) throws Exception {
 
         newInMemoryLeague = newInMemoryLeague.loadLeagueObjectModel(databaseRefrenceOb, leagueName, team);
         ITeam objteam = new Team();
         objteam = findTeam(newInMemoryLeague , team);
 
-        if(objteam.getTeamName()!= ""){
+        if(objteam == null){
+            return false;
+        }
+        else{
             ourGame.setSelectedTeam(objteam);
             return true;
         }
-        return false;
     }
 
     public ITeam findTeam(ILeagueObjectModel inMemoryLeague, String teamName){
