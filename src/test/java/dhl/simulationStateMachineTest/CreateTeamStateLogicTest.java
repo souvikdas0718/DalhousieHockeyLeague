@@ -93,4 +93,22 @@ public class CreateTeamStateLogicTest {
         Assertions.assertNotNull(freeAgent);
         Assertions.assertEquals(20,freeAgent.size());
     }
+
+    @Test
+    public void findGeneralManager(){
+        String generalManager = testClassObject.findGeneralManager(leagueObjectModelMocks.getManagers() , "Karen Potam");
+        assertTrue(generalManager.equals("Karen Potam"));
+
+        String wronggeneralManager = testClassObject.findGeneralManager(leagueObjectModelMocks.getManagers() , "Wrong generalmanager");
+        assertTrue(wronggeneralManager == null);
+    }
+
+    @Test
+    public void findCoach(){
+        String coach = testClassObject.findCoach(leagueObjectModelMocks.getCoaches() , "Todd McLellan");
+        assertTrue(coach.equals("Todd McLellan"));
+
+        String wrongcoach = testClassObject.findCoach(leagueObjectModelMocks.getCoaches() , "Wrong coach");
+        assertTrue(wrongcoach == null);
+    }
 }

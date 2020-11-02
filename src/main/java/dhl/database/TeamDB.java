@@ -50,9 +50,9 @@ public class TeamDB implements ITeamDB {
             CallStoredProcedure callproc = new CallStoredProcedure("updateTeam(?,?,?,?)");
             callproc.setParameter(1, team.getTeamName());
             callproc.setParameter(2, team.getGeneralManager());
-            callproc.setParameter(3, divisionName);
-            callproc.setParameter(4, leagueName);
-            callproc.execute();
+            callproc.setParameter(3, leagueName);
+            callproc.setParameter(4, divisionName);
+            callproc.executeWithResults();
             callproc.cleanup();
 
         } catch (SQLException throwables) {

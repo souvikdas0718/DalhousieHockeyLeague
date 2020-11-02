@@ -27,26 +27,6 @@ public class LoadTeamStateLogic implements ILoadTeamStateLogic {
         return false;
     }
 
-    public IConference findConference(ArrayList<IConference> confrenceArray, String conferenceName ){
-        for(int i= 0; i< confrenceArray.size(); i++){
-            IConference ourConference = confrenceArray.get(i);
-            if(ourConference.getConferenceName().equals(conferenceName)){
-                return ourConference;
-            }
-        }
-        return null;
-    }
-
-    public IDivision findDivision(ArrayList<IDivision> divisionArrayList , String divisionName){
-        for(int i= 0; i< divisionArrayList.size(); i++){
-            IDivision ourDivision = divisionArrayList.get(i);
-            if(ourDivision.getDivisionName().equals(divisionName)){
-                return ourDivision;
-            }
-        }
-        return null;
-    }
-
     public ITeam findTeam(ILeagueObjectModel inMemoryLeague, String teamName){
         ITeam teamObject = null;
 
