@@ -3,61 +3,61 @@ package dhl.database;
 import dhl.database.interfaceDB.*;
 
 public class DatabaseObjectCreationDB {
-    private ILeagueDB ileagueDB;
-    private IConferenceDB iConferenceDB;
-    private IDivisionDB iDivisionDB;
-    private ITeamDB iTeamDB;
-    private IPlayerDB iPlayerDB;
-    private IFreeAgentDB ifreeAgentDB;
-    private ICoachDB iCoachDB;
-    private IGeneralManagerDB iGeneralManagerDB;
-    private IGameConfigDB iGameConfigDB;
+    private ILeagueDB leagueDB;
+    private IConferenceDB conferenceDB;
+    private IDivisionDB divisionDB;
+    private ITeamDB teamDB;
+    private IPlayerDB playerDB;
+    private IFreeAgentDB freeAgentDB;
+    private ICoachDB coachDB;
+    private IGeneralManagerDB generalManagerDB;
+    private IGameConfigDB gameConfigDB;
 
     public DatabaseObjectCreationDB(){
-        ileagueDB = new LeagueDB();
-        iConferenceDB = new ConferenceDB();
-        iDivisionDB = new DivisionDB();
-        iTeamDB = new TeamDB();
-        iPlayerDB = new PlayerDB();
-        ifreeAgentDB = new FreeAgentDB();
-        iCoachDB=new CoachDB();
-        iGeneralManagerDB = new GeneralManagerDB();
-        //iGameConfigDB = new GameConfigDB();
+        leagueDB = new LeagueDB();
+        conferenceDB = new ConferenceDB();
+        divisionDB = new DivisionDB();
+        teamDB = new TeamDB();
+        playerDB = new PlayerDB();
+        freeAgentDB = new FreeAgentDB();
+        coachDB=new CoachDB();
+        generalManagerDB = new GeneralManagerDB();
+        gameConfigDB = new GameConfigDB();
     }
 
-    public ILeagueDB getIleagueDB() {
-        return ileagueDB;
+    public ILeagueDB getLeagueDB() {
+        return leagueDB;
     }
 
-    public IConferenceDB getiConferenceDB() {
-        return iConferenceDB;
+    public IConferenceDB getConferenceDB() {
+        return conferenceDB;
     }
 
-    public IGameConfigDB getiGameConfigDB() {
-        return iGameConfigDB;
+    public IDivisionDB getDivisionDB() {
+        return divisionDB;
     }
 
-    public IDivisionDB getiDivisionDB() {
-        return iDivisionDB;
+    public ITeamDB getTeamDB() {
+        return teamDB;
     }
 
-    public ITeamDB getiTeamDB() {
-        return iTeamDB;
+    public IPlayerDB getPlayerDB() {
+        return playerDB;
     }
 
-    public IPlayerDB getiPlayerDB() {
-        return iPlayerDB;
+    public IFreeAgentDB getFreeAgentDB() {
+        return freeAgentDB;
     }
 
-    public IFreeAgentDB getIfreeAgentDB() {
-        return ifreeAgentDB;
+    public ICoachDB getCoachDB() {
+        return coachDB;
     }
 
-    public ICoachDB getiCoachDB() {
-        return iCoachDB;
+    public IGeneralManagerDB getGeneralManagerDB() {
+        return generalManagerDB;
     }
 
-    public IGeneralManagerDB getiGeneralManagerDB() {
-        return iGeneralManagerDB;
+    public IGameConfigDB getGameConfigDB() {
+        return gameConfigDB;
     }
 }

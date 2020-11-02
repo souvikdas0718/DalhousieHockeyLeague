@@ -94,4 +94,9 @@ public class LeagueObjectModel implements ILeagueObjectModel {
         return leagueDatabase.loadLeagueModel(leagueName,teamName);
     }
 
+    public ILeagueObjectModel updateLeagueObjectModel(ILeagueObjectModelDB leagueDatabase ) throws Exception{
+        //TODO ADD METHOD CALL FOR DB CLASS
+        //return leagueDatabase.updateLeagueModel(this);
+        return this;
+    }
 }

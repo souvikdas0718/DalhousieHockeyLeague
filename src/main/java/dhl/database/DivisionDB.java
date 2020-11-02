@@ -35,7 +35,7 @@ public class DivisionDB implements IDivisionDB {
     }
 
     public List<IDivision> getDivisionList(int conferenceId, int leagueId, DatabaseObjectCreationDB databaseObjectCreationDB) throws Exception{
-        ITeamDB iTeamDB = databaseObjectCreationDB.getiTeamDB();
+        ITeamDB teamDB = databaseObjectCreationDB.getTeamDB();
         List<IDivision> divisionList = new ArrayList<>();
         CallStoredProcedure callDivisionProc = new CallStoredProcedure("loadDivisions(?,?)");
         callDivisionProc.setParameter(1, conferenceId);
@@ -48,7 +48,7 @@ public class DivisionDB implements IDivisionDB {
 
         while(divisionsResultSet.next()){
             IDivision division = new Division(divisionsResultSet.getString("divisionName"),
-                    iTeamDB.getTeamList(divisionsResultSet.getInt("divisionId"),leagueId, databaseObjectCreationDB));
+                    teamDB.getTeamList(divisionsResultSet.getInt("divisionId"),leagueId, databaseObjectCreationDB));
             divisionList.add(division);
         }
         callDivisionProc.cleanup();

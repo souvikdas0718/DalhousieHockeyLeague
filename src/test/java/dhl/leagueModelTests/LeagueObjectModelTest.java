@@ -70,7 +70,8 @@ public class LeagueObjectModelTest {
         Assertions.assertTrue(leagueModelParameterized.checkIfLeagueModelValid(validate,leagueValidation));
     }
 
-    @Test void saveLeagueObjectModelTest() throws Exception{
+    @Test
+    public void saveLeagueObjectModelTest() throws Exception{
         ILeagueObjectModelDB mockDb=new MockDatabase();
         List<IPlayer> players= new ArrayList<>();
         ICoach headCoach = new Coach("Todd McLellan",0.1,0.5,1.0,0.2);
@@ -81,9 +82,17 @@ public class LeagueObjectModelTest {
         Assertions.assertEquals("Dhl",leagueModelParameterized.getLeagueName());
     }
 
-    @Test void loadLeagueObjectModelTest() throws Exception{
+    @Test
+    public void loadLeagueObjectModelTest() throws Exception{
         ILeagueObjectModelDB mockDb=new MockDatabase();
         Assertions.assertEquals("Dhl",leagueModelParameterized.loadLeagueObjectModel(mockDb,"Dhl","Nova Scotia").getLeagueName());
+    }
+
+    @Test
+    public void updateLeagueObjectModel() throws Exception{
+        //TODO ADD METHOD CALL FOR DB CLASS
+        ILeagueObjectModelDB mockDb=new MockDatabase();
+        Assertions.assertEquals("Dhl",leagueModelParameterized.updateLeagueObjectModel(mockDb).getLeagueName());
     }
 
     @AfterEach
