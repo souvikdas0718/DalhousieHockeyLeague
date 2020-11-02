@@ -3,10 +3,11 @@ package dhl.simulationStateMachine;
 import dhl.InputOutput.UI.IUserInputOutput;
 import dhl.InputOutput.UI.UserInputOutput;
 import dhl.InputOutput.importJson.Interface.IGameConfig;
+import dhl.leagueModel.Aging;
+import dhl.leagueModel.AgingSystem;
 import dhl.leagueModel.InjurySystem;
-import dhl.leagueModel.interfaceModel.IInjurySystem;
-import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
-import dhl.leagueModel.interfaceModel.ITeam;
+import dhl.leagueModel.interfaceModel.*;
+import dhl.simulationStateMachine.Interface.IScheduler;
 import dhl.simulationStateMachine.Interface.ISimulationSeasonState;
 import dhl.simulationStateMachine.States.seasonSimulation.*;
 import dhl.trade.Interface.ITradingEngine;
@@ -29,6 +30,8 @@ public class SimulationContext implements ISimulationSeasonState{
     ISimulationSeasonState persistsSeason;
     ISimulationSeasonState simulateGame;
     ISimulationSeasonState training;
+    ISimulationSeasonState advanceToNextSeason;
+    IScheduler regularScheduler;
 
     boolean gameInProgress;
     IGameConfig gameConfig;
@@ -59,14 +62,14 @@ public class SimulationContext implements ISimulationSeasonState{
 //      seasonSimulationState = new SeasonSimulationState(this);
         userTeam = gameState.getSelectedTeam();
         advanceTime = new AdvanceTimeState(this);
-        aging = new Aging(this);
+        aging = new AgingState(this);
         executeTrades = new ExecuteTrades(this);
         playoffSchedule = new GeneratePlayOffSchedule(this);
         initializeSeason = new InitializeSeasonState(this);
         injuryCheck = new InjuryCheckState(this);
         persistsSeason = new PersistSameSeason(this);
         persistsSeason = new PersistSeason(this);
-        simulateGame = new SimulateGame(this);
+        simulateGame = new SimulateGameState(this);
         training = new TrainingState(this);
         currentSimulation = initializeSeason;
         gameInProgress = true;
@@ -77,12 +80,20 @@ public class SimulationContext implements ISimulationSeasonState{
         injurySystem = new InjurySystem() ;
         year = 2020;
         startOfSimulation = LocalDate.of(year,9,30);
+        advanceToNextSeason = new AdvanceToNextSeasonState(this);
     }
 
-    // delete parts
-//    public void startSeasonSimulation(int seasonNumber){
-//        currentSimulation.startSeasonSimulation(seasonNumber);
-//    }
+    public ISimulationSeasonState getAdvanceToNextSeason() {
+        return advanceToNextSeason;
+    }
+
+    public IScheduler getRegularScheduler() {
+        return regularScheduler;
+    }
+
+    public void setRegularScheduler(IScheduler regularScheduler) {
+        this.regularScheduler = regularScheduler;
+    }
 
     public void setUserTeam(ITeam userTeam) {
         this.userTeam = userTeam;

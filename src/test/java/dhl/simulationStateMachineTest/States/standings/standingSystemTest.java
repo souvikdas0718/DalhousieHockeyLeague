@@ -1,23 +1,40 @@
 package dhl.simulationStateMachineTest.States.standings;
 
+import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.leagueModel.Team;
+import dhl.leagueModel.interfaceModel.ICoach;
+import dhl.leagueModel.interfaceModel.IPlayer;
 import dhl.leagueModel.interfaceModel.ITeam;
 import dhl.simulationStateMachine.Interface.IStandings;
 import dhl.simulationStateMachine.States.standings.StandingSystem;
 import dhl.simulationStateMachine.States.standings.Standings;
 import org.junit.Assert;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class standingSystemTest {
-//    @Test
+
+    LeagueObjectModelMocks mockLeagueObjectModel;
+    ICoach coach;
+    List<IPlayer> players;
+    String manager;
+    @BeforeEach
+    public void initObject(){
+        mockLeagueObjectModel = new LeagueObjectModelMocks();
+        coach = mockLeagueObjectModel.getSingleCoach();
+        players=mockLeagueObjectModel.get20FreeAgentArrayMock();
+        manager="Harry";
+    }
+
+    //    @Test
 //    public List<IStandings> getStandingsList() {
 //        return null;
 //    }
 
-//    @Test
+    //    @Test
 //    public void setStandingsList(List<IStandings> standingsList) {
 //
 //    }
@@ -25,17 +42,14 @@ public class standingSystemTest {
     @Test
     public void updateWinningStandingsTest() {
 
-        ITeam team = new Team();
-        team.setTeamName("Maverick");
+        ITeam team = new Team("Maverick",manager,coach,players);
 
-        ITeam team2 = new Team();
-        team2.setTeamName("Denver");
+        ITeam team2 = new Team("Denver",manager,coach,players);
 
-        ITeam team3 = new Team();
-        team2.setTeamName("Vine");
+        ITeam team3 = new Team("Vine",manager,coach,players);
 
-        ITeam team4 = new Team();
-        team2.setTeamName("Loki");
+        ITeam team4 = new Team("Loki",manager,coach,players);
+
 
         StandingSystem standingSystem = new StandingSystem();
         ArrayList<IStandings> standings = new ArrayList<>();
@@ -62,7 +76,7 @@ public class standingSystemTest {
         standings3.setGamesPlayed(9);
 
         IStandings standings4 = new Standings();
-        standings4.setTeamName(team3);
+        standings4.setTeamName(team4);
         standings4.setPoints(8);
         standings4.setWins(4);
         standings4.setLoss(5);
@@ -90,12 +104,9 @@ public class standingSystemTest {
 
     @Test
     public void updateLosingStandingsTest() {
+        ITeam team = new Team("Maverick",manager,coach,players);
 
-        ITeam team = new Team();
-        team.setTeamName("Maverick");
-
-        ITeam team2 = new Team();
-        team2.setTeamName("Denver");
+        ITeam team2 = new Team("Denver",manager,coach,players);
 
         StandingSystem standingSystem = new StandingSystem();
         ArrayList<IStandings> standings = new ArrayList<>();

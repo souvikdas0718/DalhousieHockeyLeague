@@ -71,7 +71,6 @@ public class StandingSystem implements IStandingSystem {
         return standingsList;
     }
 
-
     public void rankGenerator(List<IStandings> rankList) {
         Collections.sort(rankList, (IStandings objectOne, IStandings objectTwo) -> {
             if (Integer.compare(objectOne.getPoints(), objectTwo.getPoints()) == 0){

@@ -35,4 +35,8 @@ public interface IGameConfig {
     HashMap getHashMap(String key);
 
     String getValueFromOurObject(String configChildKey , String ourObjectKey);
+
+    String getRandomWinChance();
+
+    String getGameResolver();
 }

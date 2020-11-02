@@ -3,14 +3,20 @@ package dhl.simulationStateMachine.States.seasonSimulation;
 import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.leagueModel.Training;
 import dhl.leagueModel.interfaceModel.ITraining;
+import dhl.simulationStateMachine.Interface.IScheduler;
 import dhl.simulationStateMachine.Interface.ISimulationSeasonState;
 import dhl.simulationStateMachine.SimulationContext;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.HashMap;
+
+import static java.time.temporal.TemporalAdjusters.*;
 
 public class TrainingState implements ISimulationSeasonState {
 
     SimulationContext simulationContext;
+    IScheduler scheduler;
     public TrainingState(SimulationContext simulationContext) {
         this.simulationContext=simulationContext;
     }
@@ -34,11 +40,29 @@ public class TrainingState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateExitProcess() {
-//    TODO Add call to switch to "Simulate state " or "Agein" here based on below conditions"
-        // any unplayed game scheduled
-        // yes then simulate game
-        // no then check trade deadline
-        // no execute trade
-        // yes aging
+        scheduler = simulationContext.getRegularScheduler();
+        LocalDate startOfSimulation=simulationContext.getStartOfSimulation();
+        LocalDate currentDate= startOfSimulation.plusDays(simulationContext.getNumberOfDays());
+
+
+        if(currentDate.isAfter(scheduler.getSeasonStartDate()) && currentDate.isBefore(scheduler.getSeasonEndDate())){
+            simulationContext.setCurrentSimulation(simulationContext.getSimulateGame());
+
+        }
+        else if (currentDate.isAfter(scheduler.getPlayOffStartDate()) && currentDate.isBefore(scheduler.getFinalDay())){
+            simulationContext.setCurrentSimulation(simulationContext.getSimulateGame());
+        }
+        else {
+            LocalDate localDate = LocalDate.of(simulationContext.getYear() + 1,02,01);
+            LocalDate regularSeasonEndDate = localDate.with(lastDayOfMonth())
+                    .with(previousOrSame(DayOfWeek.MONDAY));
+            if(currentDate.isBefore(regularSeasonEndDate) || currentDate.isEqual(regularSeasonEndDate)){
+                simulationContext.setCurrentSimulation(simulationContext.getExecuteTrades());
+            }
+            else {
+                simulationContext.setCurrentSimulation(simulationContext.getAging());
+            }
+        }
+
     }
 }

@@ -1,5 +1,8 @@
 package dhl.simulationStateMachineTest.seasonScheduler;
 
+import dhl.InputOutput.importJson.GameConfig;
+import dhl.InputOutput.importJson.Interface.IGameConfig;
+import dhl.Mocks.GameConfigMock;
 import dhl.leagueModel.*;
 import dhl.leagueModel.interfaceModel.*;
 import dhl.simulationStateMachine.Interface.ISchedule;
@@ -123,30 +126,14 @@ public class SchedulerTest {
 
         ArrayList<IStandings> standings = new ArrayList<>();
 
-        ILeagueObjectModel league = new LeagueObjectModel();
-
-        IConference conference1 = new Conference();
-        conference1.setConferenceName("Eastern Conference");
-
-        IConference conference2 = new Conference();
-        conference2.setConferenceName("Western Conference");
-
-        IDivision division1 = new Division();
-        division1.setDivisionName("Atlantic Division");
-
-        IDivision division2 = new Division();
-        division2.setDivisionName("Metropolitan Division");
-
-        IDivision division3 = new Division();
-        division3.setDivisionName("Central Division");
-
-        IDivision division4 = new Division();
-        division4.setDivisionName("Pacific Division");
-
         String generalManager = "generalManager";
 
         ICoach headCoach = new Coach("Coach", 0.1, 0.2, .5, .9);
-        IPlayerStatistics playerStats = new PlayerStatistics(20, 5, 5, 8 , 9)
+        ICoach headCoach2 = new Coach("Coach2", 0.1, 0.2, .5, .8);
+        List<ICoach> coaches = new ArrayList<>();
+        coaches.add(headCoach);
+        coaches.add(headCoach2);
+        IPlayerStatistics playerStats = new PlayerStatistics(20, 5, 5, 8 , 9);
         IPlayer playersList1 = new Player("playerName", "position",playerStats);
         IPlayer playersList2 = new Player("playerName", "position",playerStats);
         List<IPlayer> playersList = new ArrayList<>();
@@ -154,9 +141,100 @@ public class SchedulerTest {
         playersList.add(playersList2);
 
         ITeam team1 = new Team("Bruins", generalManager , headCoach , playersList);
-        team1.setTeamName("Bruins");
+        ITeam team2 = new Team("Lightning", generalManager , headCoach , playersList);
+        ITeam team3 = new Team("Maple", generalManager , headCoach , playersList);
+        ITeam team4 = new Team("Panthers", generalManager , headCoach , playersList);
+        ITeam team5 = new Team("Canadiens", generalManager , headCoach , playersList);
+
+        ITeam team6 = new Team("Capitals", generalManager , headCoach , playersList);
+        ITeam team7 = new Team("Flyers", generalManager , headCoach , playersList);
+        ITeam team8 = new Team("Penguins", generalManager , headCoach , playersList);
+        ITeam team9 = new Team("Hurricanes", generalManager , headCoach , playersList);
+        ITeam team10 = new Team("BlueJackets", generalManager , headCoach , playersList);
+
+        ITeam team11 = new Team("Blues", generalManager , headCoach , playersList);
+        ITeam team12 = new Team("Avalanche", generalManager , headCoach , playersList);
+        ITeam team13 = new Team("Stars", generalManager , headCoach , playersList);
+        ITeam team14 = new Team("Jets", generalManager , headCoach , playersList);
+        ITeam team15 = new Team("Predators", generalManager , headCoach , playersList);
+
+        ITeam team16 = new Team("Golden", generalManager , headCoach , playersList);
+        ITeam team17 = new Team("Oilers", generalManager , headCoach , playersList);
+        ITeam team18 = new Team("Flames", generalManager , headCoach , playersList);
+        ITeam team19 = new Team("Cancuks", generalManager , headCoach , playersList);
+        ITeam team20 = new Team("Coyotes", generalManager , headCoach , playersList);
+
+
+        ArrayList<ITeam> teamsListDivision1 = new ArrayList<>();
+        ArrayList<ITeam> teamsListDivision2 = new ArrayList<>();
+        ArrayList<ITeam> teamsListDivision3 = new ArrayList<>();
+        ArrayList<ITeam> teamsListDivision4 = new ArrayList<>();
+
+        teamsListDivision1.add(team1);
+        teamsListDivision1.add(team2);
+        teamsListDivision1.add(team3);
+        teamsListDivision1.add(team4);
+        teamsListDivision1.add(team5);
+
+        teamsListDivision2.add(team6);
+        teamsListDivision2.add(team7);
+        teamsListDivision2.add(team8);
+        teamsListDivision2.add(team9);
+        teamsListDivision2.add(team10);
+
+        teamsListDivision3.add(team11);
+        teamsListDivision3.add(team12);
+        teamsListDivision3.add(team13);
+        teamsListDivision3.add(team14);
+        teamsListDivision3.add(team15);
+
+        teamsListDivision4.add(team16);
+        teamsListDivision4.add(team17);
+        teamsListDivision4.add(team18);
+        teamsListDivision4.add(team19);
+        teamsListDivision4.add(team20);
+
+        IDivision division1 = new Division("Atlantic Division", teamsListDivision1);
+        IDivision division2 = new Division("Metropolitan Division", teamsListDivision2);
+        IDivision division3 = new Division("Central Division", teamsListDivision3);
+        IDivision division4 = new Division("Pacific Division", teamsListDivision4);
+
+        ArrayList<IDivision> conference1Divisions = new ArrayList<>();
+        ArrayList<IDivision> conference2Divisions = new ArrayList<>();
+
+        conference1Divisions.add(division1);
+        conference1Divisions.add(division2);
+        conference2Divisions.add(division3);
+        conference2Divisions.add(division4);
+
+        IConference conference1 = new Conference("Eastern Conference",conference1Divisions);
+        IConference conference2 = new Conference("Western Conference",conference2Divisions);
+
+        List<IConference> conferences = new ArrayList<>();
+        conferences.add(conference1);
+        conferences.add(conference2);
 
         IStandings standings1 = new Standings();
+        IStandings standings2 = new Standings();
+        IStandings standings3 = new Standings();
+        IStandings standings4 = new Standings();
+        IStandings standings5 = new Standings();
+        IStandings standings6 = new Standings();
+        IStandings standings7 = new Standings();
+        IStandings standings8 = new Standings();
+        IStandings standings9 = new Standings();
+        IStandings standings10 = new Standings();
+        IStandings standings11 = new Standings();
+        IStandings standings12 = new Standings();
+        IStandings standings13 = new Standings();
+        IStandings standings14 = new Standings();
+        IStandings standings15 = new Standings();
+        IStandings standings16 = new Standings();
+        IStandings standings17 = new Standings();
+        IStandings standings18 = new Standings();
+        IStandings standings19 = new Standings();
+        IStandings standings20 = new Standings();
+
         standings1.setTeamConference(conference1);
         standings1.setTeamDivision(division1);
         standings1.setTeamName(team1);
@@ -164,10 +242,9 @@ public class SchedulerTest {
         standings1.setWins(47);
         standings1.setLoss(3);
 
-        ITeam team2 = new Team();
-        team2.setTeamName("Lightning");
 
-        IStandings standings2 = new Standings();
+
+
         standings2.setTeamConference(conference1);
         standings2.setTeamDivision(division1);
         standings2.setTeamName(team2);
@@ -175,10 +252,8 @@ public class SchedulerTest {
         standings2.setWins(41);
         standings2.setLoss(9);
 
-        ITeam team3 = new Team();
-        team3.setTeamName("Maple");
 
-        IStandings standings3 = new Standings();
+
         standings3.setTeamConference(conference1);
         standings3.setTeamDivision(division1);
         standings3.setTeamName(team3);
@@ -186,10 +261,7 @@ public class SchedulerTest {
         standings3.setWins(40);
         standings3.setLoss(10);
 
-        ITeam team4 = new Team();
-        team4.setTeamName("Panthers");
 
-        IStandings standings4 = new Standings();
         standings4.setTeamConference(conference1);
         standings4.setTeamDivision(division1);
         standings4.setTeamName(team4);
@@ -197,10 +269,7 @@ public class SchedulerTest {
         standings4.setWins(38);
         standings4.setLoss(12);
 
-        ITeam team5 = new Team();
-        team5.setTeamName("Canadiens");
 
-        IStandings standings5 = new Standings();
         standings5.setTeamConference(conference1);
         standings5.setTeamDivision(division1);
         standings5.setTeamName(team5);
@@ -208,10 +277,7 @@ public class SchedulerTest {
         standings5.setWins(35);
         standings5.setLoss(15);
 
-        ITeam team6 = new Team();
-        team6.setTeamName("Capitals");
 
-        IStandings standings6 = new Standings();
         standings6.setTeamConference(conference1);
         standings6.setTeamDivision(division2);
         standings6.setTeamName(team6);
@@ -219,10 +285,7 @@ public class SchedulerTest {
         standings6.setWins(46);
         standings6.setLoss(4);
 
-        ITeam team7 = new Team();
-        team7.setTeamName("Flyers");
 
-        IStandings standings7 = new Standings();
         standings7.setTeamConference(conference1);
         standings7.setTeamDivision(division2);
         standings7.setTeamName(team7);
@@ -230,10 +293,8 @@ public class SchedulerTest {
         standings7.setWins(44);
         standings7.setLoss(6);
 
-        ITeam team8 = new Team();
-        team8.setTeamName("Penguins");
 
-        IStandings standings8 = new Standings();
+
         standings8.setTeamConference(conference1);
         standings8.setTeamDivision(division2);
         standings8.setTeamName(team8);
@@ -241,10 +302,7 @@ public class SchedulerTest {
         standings8.setWins(41);
         standings8.setLoss(9);
 
-        ITeam team9 = new Team();
-        team9.setTeamName("Hurricanes");
 
-        IStandings standings9 = new Standings();
         standings9.setTeamConference(conference1);
         standings9.setTeamDivision(division2);
         standings9.setTeamName(team9);
@@ -252,10 +310,7 @@ public class SchedulerTest {
         standings9.setWins(40);
         standings9.setLoss(10);
 
-        ITeam team10 = new Team();
-        team10.setTeamName("BlueJackets");
 
-        IStandings standings10 = new Standings();
         standings10.setTeamConference(conference1);
         standings10.setTeamDivision(division2);
         standings10.setTeamName(team10);
@@ -263,10 +318,7 @@ public class SchedulerTest {
         standings10.setWins(39);
         standings10.setLoss(11);
 
-        ITeam team11 = new Team();
-        team11.setTeamName("Blues");
 
-        IStandings standings11 = new Standings();
         standings11.setTeamConference(conference2);
         standings11.setTeamDivision(division3);
         standings11.setTeamName(team11);
@@ -274,10 +326,7 @@ public class SchedulerTest {
         standings11.setWins(45);
         standings11.setLoss(5);
 
-        ITeam team12 = new Team();
-        team12.setTeamName("Avalanche");
 
-        IStandings standings12 = new Standings();
         standings12.setTeamConference(conference2);
         standings12.setTeamDivision(division3);
         standings12.setTeamName(team12);
@@ -285,10 +334,7 @@ public class SchedulerTest {
         standings12.setWins(44);
         standings12.setLoss(6);
 
-        ITeam team13 = new Team();
-        team13.setTeamName("Stars");
 
-        IStandings standings13 = new Standings();
         standings13.setTeamConference(conference2);
         standings13.setTeamDivision(division3);
         standings13.setTeamName(team13);
@@ -296,10 +342,8 @@ public class SchedulerTest {
         standings13.setWins(42);
         standings13.setLoss(8);
 
-        ITeam team14 = new Team();
-        team14.setTeamName("Jets");
 
-        IStandings standings14 = new Standings();
+
         standings14.setTeamConference(conference2);
         standings14.setTeamDivision(division3);
         standings14.setTeamName(team14);
@@ -307,10 +351,7 @@ public class SchedulerTest {
         standings14.setWins(38);
         standings14.setLoss(12);
 
-        ITeam team15 = new Team();
-        team15.setTeamName("Predators");
 
-        IStandings standings15 = new Standings();
         standings15.setTeamConference(conference2);
         standings15.setTeamDivision(division3);
         standings15.setTeamName(team15);
@@ -318,11 +359,7 @@ public class SchedulerTest {
         standings15.setWins(36);
         standings15.setLoss(14);
 
-        ITeam team16 = new Team();
-        team16.setTeamName("Golden");
 
-
-        IStandings standings16 = new Standings();
         standings16.setTeamConference(conference2);
         standings16.setTeamDivision(division4);
         standings16.setTeamName(team16);
@@ -330,10 +367,8 @@ public class SchedulerTest {
         standings16.setWins(44);
         standings16.setLoss(6);
 
-        ITeam team17 = new Team();
-        team17.setTeamName("Oilers");
 
-        IStandings standings17 = new Standings();
+
         standings17.setTeamConference(conference2);
         standings17.setTeamDivision(division4);
         standings17.setTeamName(team17);
@@ -341,10 +376,8 @@ public class SchedulerTest {
         standings17.setWins(43);
         standings17.setLoss(7);
 
-        ITeam team18 = new Team();
-        team18.setTeamName("Flames");
 
-        IStandings standings18 = new Standings();
+
         standings18.setTeamConference(conference2);
         standings18.setTeamDivision(division4);
         standings18.setTeamName(team18);
@@ -352,10 +385,7 @@ public class SchedulerTest {
         standings18.setWins(41);
         standings18.setLoss(9);
 
-        ITeam team19 = new Team();
-        team19.setTeamName("Cancuks");
 
-        IStandings standings19 = new Standings();
         standings19.setTeamConference(conference2);
         standings19.setTeamDivision(division4);
         standings19.setTeamName(team19);
@@ -363,10 +393,7 @@ public class SchedulerTest {
         standings19.setWins(39);
         standings19.setLoss(11);
 
-        ITeam team20 = new Team();
-        team20.setTeamName("Coyotes");
 
-        IStandings standings20 = new Standings();
         standings20.setTeamConference(conference2);
         standings20.setTeamDivision(division4);
         standings20.setTeamName(team20);
@@ -395,54 +422,16 @@ public class SchedulerTest {
         standings.add(standings19);
         standings.add(standings20);
 
-        ArrayList<IConference> conferences = new ArrayList<>();
-        ArrayList<IDivision> conference1Divisions = new ArrayList<>();
-        ArrayList<IDivision> conference2Divisions = new ArrayList<>();
+        GameConfigMock gameConfig = new GameConfigMock();
 
-        ArrayList<ITeam> teamsListDivision1 = new ArrayList<>();
-        ArrayList<ITeam> teamsListDivision2 = new ArrayList<>();
-        ArrayList<ITeam> teamsListDivision3 = new ArrayList<>();
-        ArrayList<ITeam> teamsListDivision4 = new ArrayList<>();
+        IGeneralManager iGeneralManager = new GeneralManager("manager1");
+        IGeneralManager iGeneralManager2 = new GeneralManager("manager2");
+        List<IGeneralManager>  iGeneralManagers = new ArrayList<>();
+        iGeneralManagers.add(iGeneralManager);
+        iGeneralManagers.add(iGeneralManager2);
 
-        teamsListDivision1.add(team1);
-        teamsListDivision1.add(team2);
-        teamsListDivision1.add(team3);
-        teamsListDivision1.add(team4);
-        teamsListDivision1.add(team5);
-        division1.setTeams(teamsListDivision1);
-        conference1Divisions.add(division1);
+        ILeagueObjectModel league = new LeagueObjectModel("Dalhousie Hockey League", conferences, playersList, coaches,  iGeneralManagers, gameConfig.getGameConfigMock());
 
-        teamsListDivision2.add(team6);
-        teamsListDivision2.add(team7);
-        teamsListDivision2.add(team8);
-        teamsListDivision2.add(team9);
-        teamsListDivision2.add(team10);
-        division2.setTeams(teamsListDivision2);
-        conference1Divisions.add(division2);
-
-        teamsListDivision3.add(team11);
-        teamsListDivision3.add(team12);
-        teamsListDivision3.add(team13);
-        teamsListDivision3.add(team14);
-        teamsListDivision3.add(team15);
-        division3.setTeams(teamsListDivision3);
-        conference2Divisions.add(division3);
-
-        teamsListDivision4.add(team16);
-        teamsListDivision4.add(team17);
-        teamsListDivision4.add(team18);
-        teamsListDivision4.add(team19);
-        teamsListDivision4.add(team20);
-        division4.setTeams(teamsListDivision4);
-        conference2Divisions.add(division4);
-
-        conference1.setDivisions(conference1Divisions);
-        conference2.setDivisions(conference2Divisions);
-
-        conferences.add(conference1);
-        conferences.add(conference2);
-
-        league.setConferences(conferences);
         Scheduler scheduler = new Scheduler();
         scheduler.playOffs(standings, league);
         int matchNumber = 1;
@@ -459,4 +448,5 @@ public class SchedulerTest {
             matchNumber = matchNumber + 1;
         }
     }
+
 }

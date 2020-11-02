@@ -24,6 +24,13 @@ public class PersistSeason implements ISimulationSeasonState {
 
     @Override
     public void seasonStateExitProcess() {
-        //end
+        LocalDate startOfSimulation=ourSeasonGame.getStartOfSimulation();
+        LocalDate currentDate= startOfSimulation.plusDays(ourSeasonGame.getNumberOfDays());
+        if(currentDate.equals(LocalDate.of(ourSeasonGame.getYear(),9,29))){
+            //Decide how to move to next season
+        }
+        else {
+            ourSeasonGame.setCurrentSimulation(ourSeasonGame.getAdvanceTime());
+        }
     }
 }

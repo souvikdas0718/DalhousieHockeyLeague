@@ -110,6 +110,30 @@ public class Scheduler implements IScheduler {
         this.divisions = divisions;
     }
 
+    public List<ISchedule> getFinals() {
+        return finals;
+    }
+
+    public void setFinals(List<ISchedule> finals) {
+        this.finals = finals;
+    }
+
+    public LocalDate getCurrentDate() {
+        return currentDate;
+    }
+
+    public void setCurrentDate(LocalDate currentDate) {
+        this.currentDate = currentDate;
+    }
+
+    public List<IStandings> getGameStandings() {
+        return gameStandings;
+    }
+
+    public void setGameStandings(List<IStandings> gameStandings) {
+        this.gameStandings = gameStandings;
+    }
+
     public void generateTeamList(ILeagueObjectModel inMemoryLeague){
 
         for(IConference conference: inMemoryLeague.getConferences() ){
@@ -375,6 +399,14 @@ public class Scheduler implements IScheduler {
         return null;
     }
 
+    public boolean stanleyCupWinner(LocalDate date){
+        if(playOffScheduleRound1.get(playOffScheduleRound1.size()-1).getGameDate().isBefore(date) || playOffScheduleRound1.get(playOffScheduleRound1.size()-1).getGameDate().isEqual(date)){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 
 //    private  int calculateDays(int currentYear, int nextYear) {
 //        int totalDays = 181;

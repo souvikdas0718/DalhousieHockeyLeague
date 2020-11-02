@@ -2,9 +2,12 @@ package dhl.simulationStateMachine.Interface;
 
 import dhl.leagueModel.interfaceModel.IConference;
 import dhl.leagueModel.interfaceModel.IDivision;
+import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.leagueModel.interfaceModel.ITeam;
+import dhl.simulationStateMachine.States.seasonScheduler.SeasonSchedule;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 public interface IScheduler {
@@ -45,4 +48,24 @@ public interface IScheduler {
     public void setDivisions(List<IDivision> divisions);
 
     public void gameWinner(ITeam team);
+
+    public void generateTeamSchedule(ILeagueObjectModel inMemoryLeague);
+
+    public void gameScheduleDates( LocalDate seasonStartDate, LocalDate seasonEndDate );
+
+    public List<ISchedule> getFinals();
+
+    public void setFinals(List<ISchedule> finals);
+
+    public LocalDate getCurrentDate();
+
+    public void setCurrentDate(LocalDate currentDate);
+
+    public List<IStandings> getGameStandings();
+
+    public void setGameStandings(List<IStandings> gameStandings);
+
+    public void playOffs(List<IStandings> regularGamesStandings, ILeagueObjectModel leagueObjectModel);
+
+    public boolean stanleyCupWinner(LocalDate date);
 }
