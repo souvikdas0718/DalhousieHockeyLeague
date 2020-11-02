@@ -3,13 +3,12 @@ package dhl.simulationStateMachine;
 import dhl.InputOutput.UI.IUserInputOutput;
 import dhl.InputOutput.UI.UserInputOutput;
 import dhl.InputOutput.importJson.Interface.IGameConfig;
-import dhl.leagueModel.Aging;
-import dhl.leagueModel.AgingSystem;
 import dhl.leagueModel.InjurySystem;
 import dhl.leagueModel.interfaceModel.*;
 import dhl.simulationStateMachine.Interface.IScheduler;
 import dhl.simulationStateMachine.Interface.ISimulationSeasonState;
-import dhl.simulationStateMachine.States.seasonSimulation.*;
+import dhl.simulationStateMachine.Interface.IStandingSystem;
+import dhl.simulationStateMachine.states.seasonSimulation.*;
 import dhl.trade.Interface.ITradingEngine;
 import dhl.trade.TradingEngine;
 
@@ -17,7 +16,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SimulationContext implements ISimulationSeasonState{
+public class SimulationContext implements ISimulationSeasonState {
 
     ISimulationSeasonState seasonSimulationState;
     ISimulationSeasonState currentSimulation;
@@ -32,34 +31,24 @@ public class SimulationContext implements ISimulationSeasonState{
     ISimulationSeasonState training;
     ISimulationSeasonState advanceToNextSeason;
     IScheduler regularScheduler;
+    IScheduler playOffScheduleRound1;
+
+    IStandingSystem standingSystem;
 
     boolean gameInProgress;
     IGameConfig gameConfig;
 
     ILeagueObjectModel inMemoryLeague;
     ITeam userTeam;
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
     IUserInputOutput ioObject;
-
     int numberOfDays;
     int year;
     LocalDate startOfSimulation;
     int daysSinceLastTraining;
     List<ITeam> teamsPlayingInGame;
     IInjurySystem injurySystem;
-
     ITradingEngine tradeEngine;
-
-    public SimulationContext(GameContext gameState){
-//      seasonSimulationState = new SeasonSimulationState(this);
+    public SimulationContext(GameContext gameState) {
         userTeam = gameState.getSelectedTeam();
         advanceTime = new AdvanceTimeState(this);
         aging = new AgingState(this);
@@ -74,13 +63,29 @@ public class SimulationContext implements ISimulationSeasonState{
         currentSimulation = initializeSeason;
         gameInProgress = true;
         ioObject = new UserInputOutput();
-        tradeEngine = new TradingEngine(gameConfig,inMemoryLeague,userTeam,ioObject);
-        daysSinceLastTraining=0;
-        teamsPlayingInGame= new ArrayList<>();
-        injurySystem = new InjurySystem() ;
+        tradeEngine = new TradingEngine(gameConfig, inMemoryLeague, userTeam, ioObject);
+        daysSinceLastTraining = 0;
+        teamsPlayingInGame = new ArrayList<>();
+        injurySystem = new InjurySystem();
         year = 2020;
-        startOfSimulation = LocalDate.of(year,9,30);
+        startOfSimulation = LocalDate.of(year, 9, 30);
         advanceToNextSeason = new AdvanceToNextSeasonState(this);
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public IStandingSystem getStandingSystem() {
+        return standingSystem;
+    }
+
+    public void setStandingSystem(IStandingSystem standingSystem) {
+        this.standingSystem = standingSystem;
     }
 
     public ISimulationSeasonState getAdvanceToNextSeason() {
@@ -95,12 +100,12 @@ public class SimulationContext implements ISimulationSeasonState{
         this.regularScheduler = regularScheduler;
     }
 
-    public void setUserTeam(ITeam userTeam) {
-        this.userTeam = userTeam;
+    public IScheduler getPlayOffScheduleRound1() {
+        return playOffScheduleRound1;
     }
 
-    public void setIoObject(IUserInputOutput ioObject) {
-        this.ioObject = ioObject;
+    public void setPlayOffScheduleRound1(IScheduler playOffScheduleRound1) {
+        this.playOffScheduleRound1 = playOffScheduleRound1;
     }
 
     public int getNumberOfDays() {
@@ -143,20 +148,28 @@ public class SimulationContext implements ISimulationSeasonState{
         this.injurySystem = injurySystem;
     }
 
-    public void setTradeEngine(ITradingEngine tradeEngine) {
-        this.tradeEngine = tradeEngine;
-    }
-
     public ITradingEngine getTradeEngine() {
         return tradeEngine;
+    }
+
+    public void setTradeEngine(ITradingEngine tradeEngine) {
+        this.tradeEngine = tradeEngine;
     }
 
     public IUserInputOutput getIoObject() {
         return ioObject;
     }
 
+    public void setIoObject(IUserInputOutput ioObject) {
+        this.ioObject = ioObject;
+    }
+
     public ITeam getUserTeam() {
         return userTeam;
+    }
+
+    public void setUserTeam(ITeam userTeam) {
+        this.userTeam = userTeam;
     }
 
     public IGameConfig getGameConfig() {

@@ -7,7 +7,7 @@ import dhl.InputOutput.importJson.Interface.IJsonFilePath;
 import dhl.leagueModel.LeagueObjectModel;
 import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.simulationStateMachine.GameContext;
-import dhl.simulationStateMachine.States.ImportStateLogic;
+import dhl.simulationStateMachine.states.ImportStateLogic;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

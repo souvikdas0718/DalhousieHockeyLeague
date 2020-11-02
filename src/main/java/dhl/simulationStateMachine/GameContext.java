@@ -4,10 +4,10 @@ import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.leagueModel.interfaceModel.ITeam;
 import dhl.simulationStateMachine.Interface.IGameState;
-import dhl.simulationStateMachine.States.CreateTeamStateUI;
-import dhl.simulationStateMachine.States.ImportStateUI;
-import dhl.simulationStateMachine.States.LoadTeamStateUI;
-import dhl.simulationStateMachine.States.SimulateState;
+import dhl.simulationStateMachine.states.CreateTeamStateUI;
+import dhl.simulationStateMachine.states.ImportStateUI;
+import dhl.simulationStateMachine.states.LoadTeamStateUI;
+import dhl.simulationStateMachine.states.SimulateState;
 
 public class GameContext {
     IGameState importState;

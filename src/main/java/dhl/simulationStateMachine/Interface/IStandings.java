@@ -13,9 +13,9 @@ public interface IStandings {
 
     public void setTeamDivision(IDivision teamDivision);
 
-    public ITeam getTeamName();
+    public ITeam getTeam();
 
-    public void setTeamName(ITeam teamName);
+    public void setTeam(ITeam team);
 
     public int getGamesPlayed();
 

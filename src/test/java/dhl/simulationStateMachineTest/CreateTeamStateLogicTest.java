@@ -11,7 +11,7 @@ import dhl.leagueModel.*;
 import dhl.leagueModel.interfaceModel.*;
 import dhl.leagueModelTests.MockDatabase;
 import dhl.simulationStateMachine.GameContext;
-import dhl.simulationStateMachine.States.CreateTeamStateLogic;
+import dhl.simulationStateMachine.states.CreateTeamStateLogic;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
