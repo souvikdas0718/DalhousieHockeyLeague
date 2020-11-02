@@ -1,5 +1,6 @@
 package dhl.tradeTest;
 
+import dhl.InputOutput.importJson.GameConfig;
 import dhl.Mocks.GameConfigMock;
 import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.Mocks.LeagueObjectModelMocks;
@@ -45,11 +46,12 @@ public class AiAiTradeTest {
     public void isTradeAcceptedTest(){
         ITradeOffer tradeNotAccepted = new ExchangingPlayerTradeOffer(weakTeam , strongTeam , playersOffered,playersWanted);
         testClassObject = new AiAiTrade(tradeNotAccepted , ourGameConfig);
+        Assertions.assertTrue(testClassObject.isTradeAccepted());
 
         ITradeOffer acceptedTrade = new ExchangingPlayerTradeOffer(strongTeam ,weakTeam,playersWanted,playersOffered);
         testClassObject = new AiAiTrade(acceptedTrade , ourGameConfig);
-
         Assertions.assertTrue(testClassObject.isTradeAccepted());
+
     }
 
     @Test
