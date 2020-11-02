@@ -38,26 +38,7 @@ public class ExecuteTrades implements ISimulationSeasonState {
 
     @Override
     public void seasonStateProcess() {
-        long configLossPoint = Long.parseLong(gameConfig.getValueFromOurObject(gameConfig.getTrading(),gameConfig.getLossPoint()));
-        double configRandomTradeChance = Double.parseDouble(gameConfig.getValueFromOurObject(gameConfig.getTrading(),gameConfig.getRandomTradeOfferChance()));
-        try{
-            for(IConference conference: leagueObjectModel.getConferences()){
-                for(IDivision division : conference.getDivisions()){
-                    for(ITeam team : division.getTeams()){
-                        if(findLossPointOfTheTeam(team) > configLossPoint){
-                            double randomNumber = Math.random();
-                            if(randomNumber >configRandomTradeChance){
-                                tradeEngine.performTrade(team);
-                            }
-                        }
-                    }
-                }
-            }
-        }catch(Exception e){
-            ioObject = new UserInputOutput();
-            ioObject.printMessage("ERROR");
-            ioObject.printMessage(e.getMessage());
-        }
+        tradeEngine.startEngine();
     }
 
     @Override
@@ -65,9 +46,6 @@ public class ExecuteTrades implements ISimulationSeasonState {
         simulationContextObject.setCurrentSimulation(simulationContextObject.getAging());
     }
 
-    public ITeam getUserTeam() {
-        return userTeam;
-    }
     public int findLossPointOfTheTeam(ITeam team){
         int teamLossPoint = team.getLossPoint();
         return  teamLossPoint;

@@ -1,14 +1,14 @@
-package dhl.tradeTest;
+package dhl.Mocks;
 
 import dhl.InputOutput.UI.IUserInputOutput;
 
-public class MockUserInputOutputForTrade implements IUserInputOutput {
+public class MockUserInputOutput implements IUserInputOutput {
 
     String mockOutput;
 
     @Override
     public void printMessage(String message) {
-
+        System.out.println(message);
     }
 
     @Override
