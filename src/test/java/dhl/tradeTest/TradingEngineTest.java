@@ -126,9 +126,9 @@ public class TradingEngineTest {
     public void isPlayerNotInWantedListTest(){
         IPlayer player = tradeMock.getStrongPlayer("player1");
         ArrayList<IPlayer> playerList = tradeMock.get50FreeAgents();
-        Assertions.assertTrue(testClassObject.isPlayerNotInWantedList(player , playerList));
+        Assertions.assertTrue(testClassObject.isPlayerNotInWantedList(player, playerList));
         playerList.add(player);
-        Assertions.assertFalse(testClassObject.isPlayerNotInWantedList(player , playerList));
+        Assertions.assertFalse(testClassObject.isPlayerNotInWantedList(player, playerList));
     }
 
     @Test

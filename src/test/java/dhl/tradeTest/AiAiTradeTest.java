@@ -44,14 +44,20 @@ public class AiAiTradeTest {
 
     @Test
     public void isTradeAcceptedTest(){
-        ITradeOffer tradeNotAccepted = new ExchangingPlayerTradeOffer(weakTeam , strongTeam , playersOffered,playersWanted);
-        testClassObject = new AiAiTrade(tradeNotAccepted , ourGameConfig);
+
+        ITradeOffer unfairTradeAccepted = new ExchangingPlayerTradeOffer(weakTeam, strongTeam, playersOffered, playersWanted);
+        testClassObject = new AiAiTrade(unfairTradeAccepted, ourGameConfig);
         Assertions.assertTrue(testClassObject.isTradeAccepted());
 
-        ITradeOffer acceptedTrade = new ExchangingPlayerTradeOffer(strongTeam ,weakTeam,playersWanted,playersOffered);
-        testClassObject = new AiAiTrade(acceptedTrade , ourGameConfig);
+        ITradeOffer tradeAccepted = new ExchangingPlayerTradeOffer(strongTeam, weakTeam, playersWanted, playersOffered);
+        testClassObject = new AiAiTrade(tradeAccepted, ourGameConfig);
         Assertions.assertTrue(testClassObject.isTradeAccepted());
 
+        gameConfigMock.setRandomAcceptanceChance(1.0);
+        ourGameConfig = gameConfigMock.getGameConfigMock();
+        ITradeOffer tradeNotAccepted = new ExchangingPlayerTradeOffer(weakTeam, strongTeam, playersOffered, playersWanted);
+        testClassObject = new AiAiTrade(tradeNotAccepted, ourGameConfig);
+        Assertions.assertFalse(testClassObject.isTradeAccepted());
     }
 
     @Test
@@ -63,10 +69,10 @@ public class AiAiTradeTest {
         IPlayer player = new Player("player1", "goalie", false,
                 new PlayerStatistics(25,10,10,10,10));
         team.getPlayers().add(player);
-        ITradeOffer acceptedTrade = new ExchangingPlayerTradeOffer(strongTeam ,weakTeam,playersWanted,playersOffered);
-        testClassObject = new AiAiTrade(acceptedTrade , ourGameConfig);
+        ITradeOffer acceptedTrade = new ExchangingPlayerTradeOffer(strongTeam, weakTeam, playersWanted, playersOffered);
+        testClassObject = new AiAiTrade(acceptedTrade, ourGameConfig);
 
-        testClassObject.validateTeamRosterAfterTrade(team , league);
+        testClassObject.validateTeamRosterAfterTrade(team, league);
         Assertions.assertTrue(team.checkIfSkatersGoaliesValid());
     }
 
@@ -79,8 +85,8 @@ public class AiAiTradeTest {
         for(int i = 0 ; i < 10 ; i++){
             team.getPlayers().add(tradeMock.getWeakPlayer("randomPlayer"+ i));
         }
-        ITradeOffer acceptedTrade = new ExchangingPlayerTradeOffer(strongTeam ,weakTeam,playersWanted,playersOffered);
-        testClassObject = new AiAiTrade(acceptedTrade , ourGameConfig);
+        ITradeOffer acceptedTrade = new ExchangingPlayerTradeOffer(strongTeam, weakTeam, playersWanted, playersOffered);
+        testClassObject = new AiAiTrade(acceptedTrade, ourGameConfig);
 
         testClassObject.updateSkaters(team.getPlayers().size() , team , league);
         Assertions.assertTrue(team.getPlayers().size() == 18);
@@ -94,8 +100,8 @@ public class AiAiTradeTest {
 
     @Test
     public void findBestSkaterTest() throws Exception {
-        ITradeOffer acceptedTrade = new ExchangingPlayerTradeOffer(strongTeam ,weakTeam,playersWanted,playersOffered);
-        testClassObject = new AiAiTrade(acceptedTrade , ourGameConfig);
+        ITradeOffer acceptedTrade = new ExchangingPlayerTradeOffer(strongTeam, weakTeam, playersWanted, playersOffered);
+        testClassObject = new AiAiTrade(acceptedTrade, ourGameConfig);
         ArrayList<IPlayer> playerList = new ArrayList<>();
 
         Exception error=Assertions.assertThrows(Exception.class,() ->{
@@ -111,8 +117,8 @@ public class AiAiTradeTest {
 
     @Test
     public void findWeakSkaterTest() throws Exception {
-        ITradeOffer acceptedTrade = new ExchangingPlayerTradeOffer(strongTeam ,weakTeam,playersWanted,playersOffered);
-        testClassObject = new AiAiTrade(acceptedTrade , ourGameConfig);
+        ITradeOffer acceptedTrade = new ExchangingPlayerTradeOffer(strongTeam, weakTeam, playersWanted, playersOffered);
+        testClassObject = new AiAiTrade(acceptedTrade, ourGameConfig);
         ArrayList<IPlayer> playerList = new ArrayList<>();
 
         Exception error=Assertions.assertThrows(Exception.class,() ->{
@@ -134,8 +140,8 @@ public class AiAiTradeTest {
         league.freeAgents = freeAgents;
 
         ITeam team = tradeMock.getTeamWithGoodPlayer();
-        ITradeOffer acceptedTrade = new ExchangingPlayerTradeOffer(strongTeam ,weakTeam,playersWanted,playersOffered);
-        testClassObject = new AiAiTrade(acceptedTrade , ourGameConfig);
+        ITradeOffer acceptedTrade = new ExchangingPlayerTradeOffer(strongTeam, weakTeam, playersWanted, playersOffered);
+        testClassObject = new AiAiTrade(acceptedTrade, ourGameConfig);
         int sizeOfTeamWithoutGolie = team.getPlayers().size();
         testClassObject.updateGoalies(0 , team , league);
         Assertions.assertTrue(team.getPlayers().size() == sizeOfTeamWithoutGolie+2);
@@ -144,15 +150,15 @@ public class AiAiTradeTest {
                 new PlayerStatistics(25,10,10,10,10));
         team.getPlayers().add(player);
         int teamSizeWith3Golie = team.getPlayers().size();
-        testClassObject.updateGoalies(3 , team , league);
+        testClassObject.updateGoalies(3, team, league);
 
         Assertions.assertTrue(team.getPlayers().size() == teamSizeWith3Golie-1);
     }
 
     @Test
     public void findBestGolieTest() throws Exception {
-        ITradeOffer acceptedTrade = new ExchangingPlayerTradeOffer(strongTeam ,weakTeam,playersWanted,playersOffered);
-        testClassObject = new AiAiTrade(acceptedTrade , ourGameConfig);
+        ITradeOffer acceptedTrade = new ExchangingPlayerTradeOffer(strongTeam, weakTeam, playersWanted, playersOffered);
+        testClassObject = new AiAiTrade(acceptedTrade, ourGameConfig);
         ArrayList<IPlayer> playerList = new ArrayList<>();
 
         Exception error=Assertions.assertThrows(Exception.class,() ->{
@@ -173,8 +179,8 @@ public class AiAiTradeTest {
 
     @Test
     public void findWeakGolieTest() throws Exception {
-        ITradeOffer acceptedTrade = new ExchangingPlayerTradeOffer(strongTeam ,weakTeam,playersWanted,playersOffered);
-        testClassObject = new AiAiTrade(acceptedTrade , ourGameConfig);
+        ITradeOffer acceptedTrade = new ExchangingPlayerTradeOffer(strongTeam, weakTeam, playersWanted, playersOffered);
+        testClassObject = new AiAiTrade(acceptedTrade, ourGameConfig);
         ArrayList<IPlayer> playerList = new ArrayList<>();
 
         Exception error=Assertions.assertThrows(Exception.class,() ->{
@@ -195,8 +201,8 @@ public class AiAiTradeTest {
 
     @Test
     public void isTradeGoodForReceivingTeamTest(){
-        ITradeOffer testOffer = new ExchangingPlayerTradeOffer(weakTeam,strongTeam,playersOffered,playersWanted);
-        testClassObject = new AiAiTrade(testOffer , ourGameConfig);
+        ITradeOffer testOffer = new ExchangingPlayerTradeOffer(weakTeam, strongTeam, playersOffered, playersWanted);
+        testClassObject = new AiAiTrade(testOffer, ourGameConfig);
         Assertions.assertFalse(testClassObject.isTradeGoodForReceivingTeam(testOffer));
 
         ITeam goodTeam = tradeMock.getTeamWithGoodPlayer();
@@ -206,7 +212,7 @@ public class AiAiTradeTest {
         ArrayList<IPlayer> receivingPlayers = new ArrayList<>();
         receivingPlayers.add(badTeam.getPlayers().get(0));
         ExchangingPlayerTradeOffer goodTradeForReceiver = new ExchangingPlayerTradeOffer(goodTeam,badTeam,offeringPlayers,receivingPlayers );
-        testClassObject = new AiAiTrade(goodTradeForReceiver , ourGameConfig);
+        testClassObject = new AiAiTrade(goodTradeForReceiver, ourGameConfig);
         Assertions.assertTrue(testClassObject.isTradeGoodForReceivingTeam(goodTradeForReceiver));
     }
 
@@ -216,8 +222,8 @@ public class AiAiTradeTest {
         players.add(tradeMock.getStrongPlayer("player1"));
         players.add(tradeMock.getStrongPlayer("player2"));
 
-        ITradeOffer testOffer = new ExchangingPlayerTradeOffer(weakTeam,strongTeam,playersOffered,playersWanted);
-        testClassObject = new AiAiTrade(testOffer , ourGameConfig);
+        ITradeOffer testOffer = new ExchangingPlayerTradeOffer(weakTeam, strongTeam, playersOffered, playersWanted);
+        testClassObject = new AiAiTrade(testOffer, ourGameConfig);
         Assertions.assertTrue(testClassObject.getPlayerCombinedStrength(players) == 50.0);
     }
 }

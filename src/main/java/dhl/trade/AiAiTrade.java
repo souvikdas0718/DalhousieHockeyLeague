@@ -22,6 +22,7 @@ public class AiAiTrade implements ITradeType {
     @Override
     public boolean isTradeAccepted() {
         double configRandomAcceptanceChance = Double.parseDouble(gameConfig.getValueFromOurObject( gameConfig.getTrading(), gameConfig.getRandomAcceptanceChance()));
+        System.out.println(configRandomAcceptanceChance);
         double randomValue = Math.random();
         if(isTradeGoodForReceivingTeam(tradeOffer)){
             return true;
@@ -173,11 +174,11 @@ public class AiAiTrade implements ITradeType {
     }
 
     public double getPlayerCombinedStrength(ArrayList<IPlayer> players){
-        double totalstrength = 0;
-        for(int i=0;i<players.size();i++){
-            totalstrength+= players.get(i).getPlayerStrength();
+        double totalStrength = 0;
+        for(int i = 0 ; i < players.size() ; i++){
+            totalStrength += players.get(i).getPlayerStrength();
         }
-        return totalstrength;
+        return totalStrength;
     }
 
 }

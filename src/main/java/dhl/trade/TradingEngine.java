@@ -46,6 +46,10 @@ public class TradingEngine implements ITradingEngine {
         }
     }
 
+    public ITradeOffer getCurrentTrade() {
+        return currentTrade;
+    }
+
     public void performTrade(ITeam tradingTeam){
         try{
             ITeam teamToTradeWith = findTeamToTradeWith(tradingTeam);
@@ -60,8 +64,6 @@ public class TradingEngine implements ITradingEngine {
 
     public void sendTradeToRecevingTeam(ITradeOffer currentTrade , ITeam userTeam) throws Exception {
         ITradeType tradeType;
-        // TODO: 29-10-2020 check how to handle this  LSC
-
         if(currentTrade.getReceivingTeam() == userTeam){
             tradeType = new AiUserTrade(currentTrade , ioObject , updateUserTeamRoster);
         }else{
@@ -74,10 +76,7 @@ public class TradingEngine implements ITradingEngine {
         }
     }
 
-    @Override
-    public ITradeOffer getCurrentTrade() {
-        return currentTrade;
-    }
+
 
     public ITeam findTeamToTradeWith(ITeam tradingTeam) throws Exception {
         for(IConference conference : leagueObjectModel.getConferences()){
@@ -122,7 +121,6 @@ public class TradingEngine implements ITradingEngine {
                 }
             }
         }
-        // TODO: 27-10-2020 voilation of dependency inversion
         ITradeOffer newOffer = new ExchangingPlayerTradeOffer(teamOffering , teamGettingOffer , playersOffered , playersWanted );
         return newOffer;
     }

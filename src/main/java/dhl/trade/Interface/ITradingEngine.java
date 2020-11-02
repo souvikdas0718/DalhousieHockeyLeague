@@ -7,6 +7,6 @@ public interface ITradingEngine {
 
     public void startEngine();
 
-    public ITradeOffer getCurrentTrade();
+
 
 }

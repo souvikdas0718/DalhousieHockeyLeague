@@ -42,7 +42,7 @@ public class AiUserTradeTest {
         ITradeOffer tradeOffer = new ExchangingPlayerTradeOffer(offeringTeam,recevingTeam,offeringPlayers,playersWanted);
         ioObjectMock = new MockUserInputOutput();
         IUpdateUserTeamRoster updateUserTeamRoster = new UpdateUserTeamRoster(ioObjectMock);
-        testClassObject = new AiUserTrade(tradeOffer , ioObjectMock, updateUserTeamRoster);
+        testClassObject = new AiUserTrade(tradeOffer, ioObjectMock, updateUserTeamRoster);
         leagueObjectModelMocks = new LeagueObjectModelMocks();
         leagueObjectModel= (LeagueObjectModel) leagueObjectModelMocks.getLeagueObjectMock();
     }
@@ -53,7 +53,7 @@ public class AiUserTradeTest {
         ITeam team = tradeMock.getTeamWithGoodPlayer();
 
         ((MockUserInputOutput)ioObjectMock).setMockOutput("1");
-        testClassObject.validateTeamRosterAfterTrade(team , leagueObjectModel);
+        testClassObject.validateTeamRosterAfterTrade(team, leagueObjectModel);
         Assertions.assertTrue(team.checkIfSkatersGoaliesValid());
 
         team.getPlayers().add(tradeMock.getWeakPlayer("randomPlayer1"));
@@ -65,7 +65,7 @@ public class AiUserTradeTest {
                 new PlayerStatistics(25,3,1,4,5));
         team.getPlayers().add(player);
         ((MockUserInputOutput)ioObjectMock).setMockOutput("0");
-        testClassObject.validateTeamRosterAfterTrade(team , leagueObjectModel);
+        testClassObject.validateTeamRosterAfterTrade(team, leagueObjectModel);
         Assertions.assertTrue(team.checkIfSkatersGoaliesValid());
     }
 
