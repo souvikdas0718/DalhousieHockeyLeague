@@ -13,6 +13,7 @@ import dhl.leagueModelTests.MockDatabase;
 import dhl.simulationStateMachine.GameContext;
 import dhl.simulationStateMachine.States.CreateTeamStateLogic;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CreateTeamStateLogicTest {
@@ -41,6 +42,11 @@ public class CreateTeamStateLogicTest {
         objLeagueObjectModel = testClassObject.saveleagueObject( ourGame,inMemoryLeague,leagueObjectModelInput);
 
         Assertions.assertEquals("Dhl",objLeagueObjectModel.getLeagueName());
+
+        inMemoryLeague = null;
+        objLeagueObjectModel = testClassObject.saveleagueObject( ourGame,inMemoryLeague,leagueObjectModelInput);
+
+        Assertions.assertEquals(false, ourGame.isGameInProgress());
     }
 
     @Test
@@ -84,14 +90,34 @@ public class CreateTeamStateLogicTest {
     }
 
     @Test
-    public void validateInputFreeAgents() throws Exception{
+    public void validateCorrectInputFreeAgents() throws Exception{
         String inputFreeAgents = "Henry0,Henry1,Henry2,Henry3,Henry4,Henry5,Henry6,Henry7,Henry8,Henry9,Henry10,Henry11,Henry12,Henry13,Henry14,Henry15,Henry16,Henry17,Henry18,Henry19";
         ArrayList<IPlayer> freeAgent = new ArrayList<>();
-
         freeAgent = testClassObject.validateInputFreeAgents(inputFreeAgents, leagueObjectModelMocks.get20FreeAgentArrayMock());
 
         Assertions.assertNotNull(freeAgent);
         Assertions.assertEquals(20,freeAgent.size());
+    }
+
+    @Test
+    public void validateWrongInputFreeAgents() throws Exception{
+        String wrongInputFreeAgents = "Henry101,Henry1,Henry2,Henry3,Henry4,Henry5,Henry6,Henry7,Henry8,Henry9,Henry10,Henry11,Henry12,Henry13,Henry14,Henry15,Henry16,Henry17,Henry18,Henry19";
+        Exception thrown = assertThrows(Exception.class,
+                ()->{
+                    testClassObject.validateInputFreeAgents(wrongInputFreeAgents, leagueObjectModelMocks.get20FreeAgentArrayMock());
+                });
+        assertTrue(thrown.getMessage().equals("Free agent Henry101 Doesn't Exist"));
+    }
+
+    @Test
+    public void validate20InputFreeAgents() throws Exception{
+        String inputFreeAgents = "Henry5,Henry6,Henry7,Henry8,Henry9,Henry10,Henry11,Henry12,Henry13,Henry14,Henry15,Henry16,Henry17,Henry18,Henry19";
+        ArrayList<IPlayer> freeAgent = new ArrayList<>();
+        Exception thrown = assertThrows(Exception.class,
+                ()->{
+                    testClassObject.validateInputFreeAgents(inputFreeAgents, leagueObjectModelMocks.get20FreeAgentArrayMock());
+                });
+        assertTrue(thrown.getMessage().equals("Enter 20 Free Agents or enter Exit to Quit game"));
     }
 
     @Test

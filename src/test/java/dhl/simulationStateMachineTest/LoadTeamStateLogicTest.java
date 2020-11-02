@@ -24,12 +24,22 @@ public class LoadTeamStateLogicTest {
 
     @Test
     public void findTeamOfLeagueInDatabaseTest() throws Exception {
-
         ILeagueObjectModel newInMemoryLeague = new LeagueObjectModel();
         GameContext ourGame=new GameContext();
         ILeagueObjectModelDB databaseRefrenceOb = new MockDatabase();
-        Boolean iTeamFound = objLoadTeamStateLogic.findTeamOfLeagueInDatabase("Dhl","Ontario",newInMemoryLeague,ourGame,databaseRefrenceOb);
+        LoadTeamStateLogic objLoadTeamStateLogic = new LoadTeamStateLogic("Dhl","Ontario");
+        Boolean iTeamFound = objLoadTeamStateLogic.findTeamOfLeagueInDatabase(newInMemoryLeague,ourGame,databaseRefrenceOb);
         Assertions.assertEquals(true, iTeamFound);
+    }
+
+    @Test
+    public void teamNotFoundOfLeagueInDatabaseTest() throws Exception {
+        ILeagueObjectModel newInMemoryLeague = new LeagueObjectModel();
+        GameContext ourGame=new GameContext();
+        ILeagueObjectModelDB databaseRefrenceOb = new MockDatabase();
+        LoadTeamStateLogic objLoadTeamStateLogic = new LoadTeamStateLogic("Dhl","Ontario1");
+        Boolean iTeamFound = objLoadTeamStateLogic.findTeamOfLeagueInDatabase(newInMemoryLeague,ourGame,databaseRefrenceOb);
+        Assertions.assertEquals(false, iTeamFound);
     }
 
     @Test

@@ -43,9 +43,10 @@ public class LoadTeamStateUI implements IGameState {
         }
 
         try {
-            ILoadTeamStateLogic objLoadTeamStateLogic = new LoadTeamStateLogic();
+            ILoadTeamStateLogic objLoadTeamStateLogic = new LoadTeamStateLogic(leagueName,  team);
             ILeagueObjectModelDB databaseRefrenceOb = new LeagueObjectModelDB();
-            objLoadTeamStateLogic.findTeamOfLeagueInDatabase( leagueName,  team,  newInMemoryLeague,  ourGame, databaseRefrenceOb);
+
+            objLoadTeamStateLogic.findTeamOfLeagueInDatabase(newInMemoryLeague,  ourGame, databaseRefrenceOb);
         }catch(Exception e) {
             userInputPutput.printMessage(e.getMessage());
             ourGame.setGameInProgress(false);
