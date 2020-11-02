@@ -1,11 +1,11 @@
 package dhl.tradeTest;
 
 import dhl.InputOutput.UI.IUserInputOutput;
+import dhl.Mocks.MockUserInputOutput;
 import dhl.leagueModel.interfaceModel.IPlayer;
 import dhl.leagueModel.interfaceModel.ITeam;
-import dhl.simulationStateMachine.GameContext;
-import dhl.simulationStateMachine.Interface.IGameState;
-import dhl.simulationStateMachine.States.CreateTeamStateUI;
+import dhl.simulationStateMachine.Interface.IUpdateUserTeamRoster;
+import dhl.simulationStateMachine.UpdateUserTeamRoster;
 import dhl.trade.AiUserTrade;
 import dhl.trade.ExchangingPlayerTradeOffer;
 import dhl.trade.Interface.ITradeOffer;
@@ -34,26 +34,27 @@ public class AiUserTradeTest {
         playersWanted.add(recevingTeam.getPlayers().get(0));
 
         ITradeOffer tradeOffer = new ExchangingPlayerTradeOffer(offeringTeam,recevingTeam,offeringPlayers,playersWanted);
-        ioObjectMock = new MockUserInputOutputForTrade();
-        testClassObject = new AiUserTrade(tradeOffer , ioObjectMock);
+        ioObjectMock = new MockUserInputOutput();
+        IUpdateUserTeamRoster updateUserTeamRoster = new UpdateUserTeamRoster(ioObjectMock);
+        testClassObject = new AiUserTrade(tradeOffer , ioObjectMock, updateUserTeamRoster);
     }
 
     @Test
     public void isTradeAcceptedTest() throws Exception {
 
-        ((MockUserInputOutputForTrade) ioObjectMock).setMockOutput("1");
+        ((MockUserInputOutput) ioObjectMock).setMockOutput("1");
         Assertions.assertTrue(testClassObject.isTradeAccepted());
 
-        ((MockUserInputOutputForTrade) ioObjectMock).setMockOutput("2");
+        ((MockUserInputOutput) ioObjectMock).setMockOutput("2");
         Assertions.assertFalse(testClassObject.isTradeAccepted());
 
-        ((MockUserInputOutputForTrade) ioObjectMock).setMockOutput("3");
+        ((MockUserInputOutput) ioObjectMock).setMockOutput("3");
         Exception error=Assertions.assertThrows(Exception.class,() ->{
             Assertions.assertFalse(testClassObject.isTradeAccepted());
         });
         Assertions.assertTrue(error.getMessage().contains("Wrong Input please give valid input"));
 
-        ((MockUserInputOutputForTrade) ioObjectMock).setMockOutput("sdasd");
+        ((MockUserInputOutput) ioObjectMock).setMockOutput("sdasd");
         Exception error2=Assertions.assertThrows(Exception.class,() ->{
             Assertions.assertFalse(testClassObject.isTradeAccepted());
         });

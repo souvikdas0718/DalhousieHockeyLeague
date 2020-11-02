@@ -4,10 +4,9 @@ import dhl.InputOutput.UI.IUserInputOutput;
 import dhl.InputOutput.UI.UserInputOutput;
 import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
-import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.leagueModel.interfaceModel.ITeam;
-import dhl.simulationStateMachine.Interface.IGameState;
 import dhl.simulationStateMachine.Interface.ISimulationSeasonState;
+import dhl.simulationStateMachine.Interface.IUpdateUserTeamRoster;
 import dhl.simulationStateMachine.States.seasonSimulation.*;
 import dhl.trade.Interface.ITradingEngine;
 import dhl.trade.TradingEngine;
@@ -31,8 +30,6 @@ public class SimulationContext implements ISimulationSeasonState{
     ILeagueObjectModel inMemoryLeague;
     ITeam userTeam;
     IUserInputOutput ioObject;
-
-
     ITradingEngine tradeEngine;
 
 //    ITeam selectedTeam;
@@ -57,7 +54,8 @@ public class SimulationContext implements ISimulationSeasonState{
         currentSimulation = initializeSeason;
         gameInProgress = true;
         ioObject = new UserInputOutput();
-        tradeEngine = new TradingEngine(gameConfig,inMemoryLeague,userTeam,ioObject);
+        IUpdateUserTeamRoster updateUserTeamRoster = new UpdateUserTeamRoster(ioObject);
+        tradeEngine = new TradingEngine(gameConfig,inMemoryLeague,userTeam,ioObject,updateUserTeamRoster);
     }
 
     // delete parts
