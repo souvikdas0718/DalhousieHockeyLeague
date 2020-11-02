@@ -66,10 +66,10 @@ public class AiUserTrade implements ITradeType {
         if (totalGoalies > 2){
             while (totalGoalies > 2 ){
                 updateUserTeamRoster.dropGoalie(team , leagueObjectModel);
-                totalGoalies = totalGoalies + 1;
+                totalGoalies = totalGoalies - 1;
             }
 
-        }else if(totalSkaters < 2 ){
+        }else if(totalGoalies < 2 ){
             while (totalGoalies < 2 ){
                 updateUserTeamRoster.addGoalie(team , leagueObjectModel);
                 totalGoalies = totalGoalies + 1;

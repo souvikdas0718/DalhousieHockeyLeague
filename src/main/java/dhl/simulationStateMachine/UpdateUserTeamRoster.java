@@ -54,7 +54,7 @@ public class UpdateUserTeamRoster implements IUpdateUserTeamRoster {
     public void addGoalie(ITeam team, ILeagueObjectModel leagueObjectModel) {
         ioObject.printMessage("Enter ID of goalie to add");
         ArrayList<IPlayer> goalie = new ArrayList<>();
-        for(IPlayer player: team.getPlayers()){
+        for(IPlayer player: leagueObjectModel.getFreeAgents()){
             String position=player.getPosition();
             if (position.equals("goalie")){
                 goalie.add(player);
@@ -71,7 +71,7 @@ public class UpdateUserTeamRoster implements IUpdateUserTeamRoster {
     public void addSkater(ITeam team, ILeagueObjectModel leagueObjectModel) {
         ioObject.printMessage("Enter ID of Skater to add");
         ArrayList<IPlayer> skater = new ArrayList<>();
-        for(IPlayer player: team.getPlayers()){
+        for(IPlayer player: leagueObjectModel.getFreeAgents()){
             String position=player.getPosition();
             if (position.equals("forward") || position.equals("defense")){
                 skater.add(player);
@@ -90,8 +90,9 @@ public class UpdateUserTeamRoster implements IUpdateUserTeamRoster {
         int i = 0;
         for (IPlayer player : playerArrayList) {
             double playerStrength = player.getPlayerStrength();
-            String formattedFreeAgentList = String.format("%10 %20s %20s %10d %10d %10d %10d %10d %10s",Integer.toString(i), player.getPlayerName(), player.getPosition(), player.getPlayerStats().getAge(), player.getPlayerStats().getChecking(), player.getPlayerStats().getSaving(), player.getPlayerStats().getShooting(), player.getPlayerStats().getSkating(), Double.toString(playerStrength));
+            String formattedFreeAgentList = String.format("%10s %20s %20s %10d %10d %10d %10d %10d %10s",Integer.toString(i), player.getPlayerName(), player.getPosition(), player.getPlayerStats().getAge(), player.getPlayerStats().getChecking(), player.getPlayerStats().getSaving(), player.getPlayerStats().getShooting(), player.getPlayerStats().getSkating(), Double.toString(playerStrength));
             ioObject.printMessage(formattedFreeAgentList);
+            i = i + 1;
         }
 
 

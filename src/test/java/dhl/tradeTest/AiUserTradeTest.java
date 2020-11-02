@@ -1,7 +1,11 @@
 package dhl.tradeTest;
 
 import dhl.InputOutput.UI.IUserInputOutput;
+import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.Mocks.MockUserInputOutput;
+import dhl.leagueModel.LeagueObjectModel;
+import dhl.leagueModel.Player;
+import dhl.leagueModel.PlayerStatistics;
 import dhl.leagueModel.interfaceModel.IPlayer;
 import dhl.leagueModel.interfaceModel.ITeam;
 import dhl.simulationStateMachine.Interface.IUpdateUserTeamRoster;
@@ -20,6 +24,8 @@ public class AiUserTradeTest {
     AiUserTrade testClassObject;
     TradeMock tradeMock;
     IUserInputOutput ioObjectMock;
+    LeagueObjectModelMocks leagueObjectModelMocks;
+    LeagueObjectModel leagueObjectModel;
 
     @BeforeEach
     public void initObject(){
@@ -37,6 +43,30 @@ public class AiUserTradeTest {
         ioObjectMock = new MockUserInputOutput();
         IUpdateUserTeamRoster updateUserTeamRoster = new UpdateUserTeamRoster(ioObjectMock);
         testClassObject = new AiUserTrade(tradeOffer , ioObjectMock, updateUserTeamRoster);
+        leagueObjectModelMocks = new LeagueObjectModelMocks();
+        leagueObjectModel= (LeagueObjectModel) leagueObjectModelMocks.getLeagueObjectMock();
+    }
+
+    @Test
+    public void validateTeamRosterAfterTrade() throws Exception {
+        leagueObjectModel.freeAgents = tradeMock.get50FreeAgents();
+        ITeam team = tradeMock.getTeamWithGoodPlayer();
+
+        ((MockUserInputOutput)ioObjectMock).setMockOutput("1");
+        testClassObject.validateTeamRosterAfterTrade(team , leagueObjectModel);
+        Assertions.assertTrue(team.checkIfSkatersGoaliesValid());
+
+        team.getPlayers().add(tradeMock.getWeakPlayer("randomPlayer1"));
+        team.getPlayers().add(tradeMock.getWeakPlayer("randomPlayer2"));
+        IPlayer player = new Player("player1", "goalie", false,
+                new PlayerStatistics(25,10,10,10,10));
+        team.getPlayers().add(player);
+        player = new Player("player2", "goalie", false,
+                new PlayerStatistics(25,3,1,4,5));
+        team.getPlayers().add(player);
+        ((MockUserInputOutput)ioObjectMock).setMockOutput("0");
+        testClassObject.validateTeamRosterAfterTrade(team , leagueObjectModel);
+        Assertions.assertTrue(team.checkIfSkatersGoaliesValid());
     }
 
     @Test
