@@ -13,6 +13,7 @@ import dhl.simulationStateMachine.States.Interface.IImportStateLogic;
 import org.json.simple.JSONObject;
 
 public class ImportStateLogic implements IImportStateLogic {
+
     public ILeagueObjectModel importAndGetLeagueObject(String validFilePath, IGameConfig gameConfig, ILeagueObjectModel newInMemoryLeague) throws Exception {
         JSONObject leagueJsonObject = new ImportJsonFile(validFilePath).getJsonObject();
         gameConfig = new GameConfig(leagueJsonObject);
@@ -24,6 +25,7 @@ public class ImportStateLogic implements IImportStateLogic {
 
         return objLeagueObjectModel;
     }
+
     public ITeam findTeam(ILeagueObjectModel inMemoryLeague, String teamName){
         ITeam teamObject = null;
 

@@ -32,10 +32,13 @@ public class LeagueObjectModelTest {
     }
 
     @Test
-    public void defaultConstructorTest(){
+    public void LeagueObjectModelTest(){
         Assertions.assertTrue(leagueModel.getLeagueName().isEmpty());
         Assertions.assertEquals("Dhl",leagueModelParameterized.getLeagueName() );
         Assertions.assertTrue(leagueModel.conferences.size()==0);
+        List<IGeneralManager> managers = leagueModelParameterized.getGeneralManagers();
+        Assertions.assertEquals(3,managers.size());
+        Assertions.assertNotNull(leagueModelParameterized.getGameConfig());
     }
 
     @Test

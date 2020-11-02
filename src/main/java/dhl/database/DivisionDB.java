@@ -2,8 +2,13 @@ package dhl.database;
 
 import dhl.database.DatabaseConfigSetup.CallStoredProcedure;
 import dhl.database.interfaceDB.IDivisionDB;
+import dhl.database.interfaceDB.ITeamDB;
+import dhl.leagueModel.Division;
+import dhl.leagueModel.interfaceModel.IDivision;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DivisionDB implements IDivisionDB {
     public int insertDivision(String divisionName, int conferenceId, int leagueId) throws Exception {
@@ -29,4 +34,24 @@ public class DivisionDB implements IDivisionDB {
         return divisionId;
     }
 
+    public List<IDivision> getDivisionList(int conferenceId, int leagueId, DatabaseObjectCreationDB databaseObjectCreationDB) throws Exception{
+        ITeamDB iTeamDB = databaseObjectCreationDB.getiTeamDB();
+        List<IDivision> divisionList = new ArrayList<>();
+        CallStoredProcedure callDivisionProc = new CallStoredProcedure("loadDivisions(?,?)");
+        callDivisionProc.setParameter(1, conferenceId);
+        callDivisionProc.setParameter(2, leagueId);
+        ResultSet divisionsResultSet = callDivisionProc.executeWithResults();
+
+        if (divisionsResultSet==null){
+            throw new Exception("Error loading divisions");
+        }
+
+        while(divisionsResultSet.next()){
+            IDivision division = new Division(divisionsResultSet.getString("divisionName"),
+                    iTeamDB.getTeamList(divisionsResultSet.getInt("divisionId"),leagueId, databaseObjectCreationDB));
+            divisionList.add(division);
+        }
+        callDivisionProc.cleanup();
+        return divisionList;
+    }
 }

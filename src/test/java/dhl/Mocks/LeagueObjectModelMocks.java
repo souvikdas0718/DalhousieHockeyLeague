@@ -159,9 +159,8 @@ public class LeagueObjectModelMocks {
         IPlayer freeAgent2 = new FreeAgent("Jack","forward",playerStatistics2);
         freeAgentsList.add(freeAgent2);
         List<ICoach> coachList=new ArrayList<>();
-        List<IGeneralManager> generalManagerList=new ArrayList<>();
 
-        leagueObjectMock = new LeagueObjectModel("Dhl",conferences,freeAgentsList,coachList,generalManagerList,getGameConfig());
+        leagueObjectMock = new LeagueObjectModel("Dhl",conferences,freeAgentsList,coachList,getManagers(),getGameConfig());
         return leagueObjectMock;
     }
 
