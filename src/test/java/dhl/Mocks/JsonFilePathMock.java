@@ -4,7 +4,7 @@ import dhl.InputOutput.importJson.Interface.IJsonFilePath;
 
 public class JsonFilePathMock implements IJsonFilePath {
 
-//    String filePath = "src//test//java//dhl//simulationStateMachineTest//MockData.json";
+    //    String filePath = "src//test//java//dhl//simulationStateMachineTest//MockData.json";
     String filePath = "src//test//java//dhl//simulationStateMachineTest//MockData2.json";
 
     @Override
@@ -12,15 +12,15 @@ public class JsonFilePathMock implements IJsonFilePath {
         return filePath;
     }
 
-    public String getLeagueArrayKey(){
+    public String getLeagueArrayKey() {
         return "leagueName";
     }
 
-    public String getConferenceArrayKey(){
+    public String getConferenceArrayKey() {
         return "conferences";
     }
 
-    public String getFreeAgentArrayKey(){
+    public String getFreeAgentArrayKey() {
         return "freeAgents";
     }
 

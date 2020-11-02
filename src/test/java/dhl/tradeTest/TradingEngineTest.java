@@ -1,11 +1,14 @@
 package dhl.tradeTest;
 
 import dhl.InputOutput.UI.IUserInputOutput;
+import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.Mocks.GameConfigMock;
 import dhl.Mocks.LeagueObjectModelMocks;
-import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.Mocks.MockUserInputOutput;
-import dhl.leagueModel.*;
+import dhl.leagueModel.Coach;
+import dhl.leagueModel.Player;
+import dhl.leagueModel.PlayerStatistics;
+import dhl.leagueModel.Team;
 import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.leagueModel.interfaceModel.IPlayer;
 import dhl.leagueModel.interfaceModel.ITeam;
@@ -27,13 +30,13 @@ public class TradingEngineTest {
     GameConfigMock gameConfigMock;
     LeagueObjectModelMocks leagueObjectModelMocks;
     TradeMock tradeMock;
-    ITeam goodTeamMock,badTeamMock;
+    ITeam goodTeamMock, badTeamMock;
     ILeagueObjectModel leagueMock;
     IUserInputOutput ioObject;
     ITeam userTeam;
 
     @BeforeEach
-    public void initObject(){
+    public void initObject() {
         ioObject = new MockUserInputOutput();
         tradeMock = new TradeMock();
         gameConfigMock = new GameConfigMock();
@@ -46,11 +49,11 @@ public class TradingEngineTest {
         IGameConfig ourGameConfig = gameConfigMock.getGameConfigMock();
         userTeam = new Team();
         IUpdateUserTeamRoster updateUserTeamRoster = new UpdateUserTeamRoster(ioObject);
-        testClassObject = new TradingEngine(ourGameConfig ,leagueMock,userTeam,ioObject,updateUserTeamRoster);
+        testClassObject = new TradingEngine(ourGameConfig, leagueMock, userTeam, ioObject, updateUserTeamRoster);
     }
 
     @Test
-    public void startEngine(){
+    public void startEngine() {
         double badTeamStrengthBeforeTrade = badTeamMock.calculateTeamStrength();
         testClassObject.startEngine();
         Assertions.assertTrue(badTeamStrengthBeforeTrade < badTeamMock.calculateTeamStrength());
@@ -72,16 +75,16 @@ public class TradingEngineTest {
 
     @Test
     public void sendTradeToRecevingTeamTest() throws Exception {
-        ITradeOffer tradeOffer = testClassObject.generateTradeOffer(badTeamMock , goodTeamMock);
+        ITradeOffer tradeOffer = testClassObject.generateTradeOffer(badTeamMock, goodTeamMock);
         double teamStrength = badTeamMock.calculateTeamStrength();
 
         ((MockUserInputOutput) ioObject).setMockOutput("2");
-        testClassObject.sendTradeToRecevingTeam(tradeOffer , tradeOffer.getReceivingTeam());
+        testClassObject.sendTradeToRecevingTeam(tradeOffer, tradeOffer.getReceivingTeam());
         Assertions.assertTrue(teamStrength == badTeamMock.calculateTeamStrength());
 
         ((MockUserInputOutput) ioObject).setMockOutput("1");
-        Exception error=Assertions.assertThrows(Exception.class,() ->{
-            testClassObject.sendTradeToRecevingTeam(tradeOffer , tradeOffer.getReceivingTeam());
+        Exception error = Assertions.assertThrows(Exception.class, () -> {
+            testClassObject.sendTradeToRecevingTeam(tradeOffer, tradeOffer.getReceivingTeam());
         });
 
         Assertions.assertTrue(teamStrength < badTeamMock.calculateTeamStrength());
@@ -100,7 +103,7 @@ public class TradingEngineTest {
         ITeam team = testClassObject.findTeamToTradeWith(badTeamMock);
         Assertions.assertTrue(team.getTeamName().equals("TeamWithGoodPlayer"));
 
-        Exception error=Assertions.assertThrows(Exception.class,() ->{
+        Exception error = Assertions.assertThrows(Exception.class, () -> {
             testClassObject.findTeamToTradeWith(goodTeamMock);
         });
         Assertions.assertTrue(error.getMessage().contains("No Good Player availabe to swap for Team: "));
@@ -108,7 +111,7 @@ public class TradingEngineTest {
     }
 
     @Test
-    public void findLossPointOfTheTeamTest(){
+    public void findLossPointOfTheTeamTest() {
         tradeMock.getTeamWithBadPlayer().setLossPoint(10);
         int losspoint = testClassObject.findLossPointOfTheTeam(tradeMock.getTeamWithBadPlayer());
         Assertions.assertTrue(losspoint == 10);
@@ -116,14 +119,14 @@ public class TradingEngineTest {
 
     @Test
     public void generateTradeOfferTest() throws Exception {
-        ITradeOffer tradeOffer = testClassObject.generateTradeOffer(badTeamMock , goodTeamMock);
+        ITradeOffer tradeOffer = testClassObject.generateTradeOffer(badTeamMock, goodTeamMock);
         Assertions.assertFalse(tradeOffer == null);
-        Assertions.assertTrue( tradeOffer.getOfferingTeam() == badTeamMock);
+        Assertions.assertTrue(tradeOffer.getOfferingTeam() == badTeamMock);
         Assertions.assertTrue(tradeOffer.getReceivingTeam() == goodTeamMock);
     }
 
     @Test
-    public void isPlayerNotInWantedListTest(){
+    public void isPlayerNotInWantedListTest() {
         IPlayer player = tradeMock.getStrongPlayer("player1");
         ArrayList<IPlayer> playerList = tradeMock.get50FreeAgents();
         Assertions.assertTrue(testClassObject.isPlayerNotInWantedList(player, playerList));
@@ -135,34 +138,34 @@ public class TradingEngineTest {
     public void sortPlayerListTest() throws Exception {
         ITeam unsortedTeam = tradeMock.getTeamWithGoodPlayer();
         IPlayer player = new Player("PlayerA", "defense", false,
-                new PlayerStatistics(25,5,3,2,1));
+                new PlayerStatistics(25, 5, 3, 2, 1));
         unsortedTeam.getPlayers().add(player);
         player = new Player("AnotherPlayer", "defense", false,
-                new PlayerStatistics(34,7,3,9,7));
+                new PlayerStatistics(34, 7, 3, 9, 7));
         unsortedTeam.getPlayers().add(player);
         testClassObject.sortPlayerList(unsortedTeam);
         Assertions.assertTrue(unsortedTeam.getPlayers().get(0).getPlayerStrength() <= unsortedTeam.getPlayers().get(1).getPlayerStrength());
 
 
-        Team empytyPlayerTeam = new Team("EmptyPlayers","Larry",new Coach(),new ArrayList<>());
+        Team empytyPlayerTeam = new Team("EmptyPlayers", "Larry", new Coach(), new ArrayList<>());
 
-        Exception error = Assertions.assertThrows(Exception.class,() ->{
+        Exception error = Assertions.assertThrows(Exception.class, () -> {
             testClassObject.sortPlayerList(empytyPlayerTeam);
         });
         Assertions.assertTrue(error.getMessage().contains("EmptyPlayers Team have no players"));
     }
 
     @Test
-    public void isTeamDifferentTest(){
-        Team newTeam = new Team("team1","Larry",new Coach(),new ArrayList<>());
-        Assertions.assertFalse(testClassObject.isTeamDifferent(newTeam , newTeam));
-        Team otherTeam = new Team("secondTeam","Larry",new Coach(),new ArrayList<>());
-        Assertions.assertTrue(testClassObject.isTeamDifferent(newTeam,otherTeam));
+    public void isTeamDifferentTest() {
+        Team newTeam = new Team("team1", "Larry", new Coach(), new ArrayList<>());
+        Assertions.assertFalse(testClassObject.isTeamDifferent(newTeam, newTeam));
+        Team otherTeam = new Team("secondTeam", "Larry", new Coach(), new ArrayList<>());
+        Assertions.assertTrue(testClassObject.isTeamDifferent(newTeam, otherTeam));
     }
 
     @Test
     public void isTeamGoodForTradingTest() throws Exception {
-        Assertions.assertTrue(testClassObject.isTeamGoodForTrading(badTeamMock ,goodTeamMock));
+        Assertions.assertTrue(testClassObject.isTeamGoodForTrading(badTeamMock, goodTeamMock));
         Assertions.assertFalse(testClassObject.isTeamGoodForTrading(goodTeamMock, badTeamMock));
     }
 }

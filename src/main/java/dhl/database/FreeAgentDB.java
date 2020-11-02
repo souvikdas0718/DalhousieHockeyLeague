@@ -12,13 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FreeAgentDB implements IFreeAgentDB {
-    public int insertFreeAgent(IPlayer freeAgent, int leagueId )  throws Exception {
-        int freeAgentId =0;
+    public int insertFreeAgent(IPlayer freeAgent, int leagueId) throws Exception {
+        int freeAgentId = 0;
 
         CallStoredProcedure callproc = new CallStoredProcedure("insertFreeAgent(?,?,?,?,?,?,?,?,?)");
         callproc.setParameter(1, freeAgent.getPlayerName());
         callproc.setParameter(2, freeAgent.getPosition());
-        IPlayerStatistics playerStatistics=freeAgent.getPlayerStats();
+        IPlayerStatistics playerStatistics = freeAgent.getPlayerStats();
         callproc.setParameter(3, playerStatistics.getAge());
         callproc.setParameter(4, playerStatistics.getSkating());
         callproc.setParameter(5, playerStatistics.getShooting());
@@ -28,13 +28,12 @@ public class FreeAgentDB implements IFreeAgentDB {
         callproc.setParameter(9, leagueId);
         ResultSet results = callproc.executeWithResults();
 
-        if (null != results) {
-            while (results.next()) {
-                freeAgentId = results.getInt("freeAgent_Id");
-            }
-        }
-        else {
+        if (null == results) {
             throw new Exception("Free Agents not inserted properly");
+        }
+
+        while (results.next()) {
+            freeAgentId = results.getInt("freeAgent_Id");
         }
         callproc.cleanup();
 
@@ -47,14 +46,14 @@ public class FreeAgentDB implements IFreeAgentDB {
         callAgentProc.setParameter(1, leagueId);
         ResultSet agentsResultSet = callAgentProc.executeWithResults();
 
-        if (agentsResultSet==null){
+        if (agentsResultSet == null) {
             throw new Exception("Error loading Free agents");
         }
 
         while (agentsResultSet.next()) {
-            IPlayerStatistics playerStatistics=new PlayerStatistics(agentsResultSet.getInt("age"),agentsResultSet.getInt("skating"),
-                    agentsResultSet.getInt("shooting"),agentsResultSet.getInt("checking"),agentsResultSet.getInt("saving"));
-            IPlayer freeAgent = new FreeAgent(agentsResultSet.getString("playerName"),agentsResultSet.getString("playerPosition"),playerStatistics);
+            IPlayerStatistics playerStatistics = new PlayerStatistics(agentsResultSet.getInt("age"), agentsResultSet.getInt("skating"),
+                    agentsResultSet.getInt("shooting"), agentsResultSet.getInt("checking"), agentsResultSet.getInt("saving"));
+            IPlayer freeAgent = new FreeAgent(agentsResultSet.getString("playerName"), agentsResultSet.getString("playerPosition"), playerStatistics);
             freeAgent.setPlayerInjuredDays(agentsResultSet.getInt("numberOfDaysInjured"));
             freeAgentList.add(freeAgent);
         }

@@ -10,23 +10,22 @@ public class ExchangingPlayerTradeOffer implements ITradeOffer {
 
     ITeam offeringTeam;
     ITeam receivingTeam;
-    public ArrayList<IPlayer> playersOffered,playersWantedInExchange;
+    public ArrayList<IPlayer> playersOffered, playersWantedInExchange;
 
-    public ExchangingPlayerTradeOffer(ITeam offeringTeam , ITeam receivingTeam , ArrayList<IPlayer> playersOffered , ArrayList<IPlayer> playersWantedInExchange){
+    public ExchangingPlayerTradeOffer(ITeam offeringTeam, ITeam receivingTeam, ArrayList<IPlayer> playersOffered, ArrayList<IPlayer> playersWantedInExchange) {
         this.offeringTeam = offeringTeam;
         this.receivingTeam = receivingTeam;
         this.playersOffered = playersOffered;
         this.playersWantedInExchange = playersWantedInExchange;
     }
 
-
     @Override
     public void implementTrade() {
-        for(IPlayer player: playersOffered){
+        for (IPlayer player : playersOffered) {
             receivingTeam.getPlayers().add(player);
             offeringTeam.getPlayers().remove(player);
         }
-        for(IPlayer player: playersWantedInExchange){
+        for (IPlayer player : playersWantedInExchange) {
             receivingTeam.getPlayers().remove(player);
             offeringTeam.getPlayers().add(player);
         }
@@ -42,11 +41,11 @@ public class ExchangingPlayerTradeOffer implements ITradeOffer {
         return receivingTeam;
     }
 
-    public ArrayList<IPlayer> getOfferingPlayers(){
+    public ArrayList<IPlayer> getOfferingPlayers() {
         return playersOffered;
     }
 
-    public ArrayList<IPlayer> getPlayersWantedInReturn(){
+    public ArrayList<IPlayer> getPlayersWantedInReturn() {
         return playersWantedInExchange;
     }
 }

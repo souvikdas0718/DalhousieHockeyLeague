@@ -1,7 +1,7 @@
 package dhl.database;
 
 import dhl.database.DatabaseConfigSetup.CallStoredProcedure;
-import dhl.database.interfaceDB.*;
+import dhl.database.interfaceDB.ILeagueDB;
 
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -9,20 +9,17 @@ import java.sql.ResultSet;
 public class LeagueDB implements ILeagueDB {
 
     public int insertLeague(String leagueName) throws Exception {
-        int leagueId=0;
+        int leagueId = 0;
 
         CallStoredProcedure callproc = callproc = new CallStoredProcedure("insertLeague(?)");
         callproc.setParameter(1, leagueName);
         ResultSet results = callproc.executeWithResults();
-        if (null != results) {
-            while(results.next()){
-                leagueId = results.getInt("league_Id");
-            }
-        }
-        else {
+        if (null == results) {
             throw new Exception("League already exists.");
         }
-
+        while (results.next()) {
+            leagueId = results.getInt("league_Id");
+        }
         callproc.cleanup();
 
         return leagueId;
@@ -39,21 +36,18 @@ public class LeagueDB implements ILeagueDB {
     }
 
     public boolean checkIfLeagueAlreadyExists(String leagueName) throws Exception {
-        boolean isexist=false;
+        boolean isexist = false;
 
         CallStoredProcedure callproc = new CallStoredProcedure("checkIfLeagueAlreadyExists(?,?)");
         callproc.setParameter(1, leagueName);
         callproc.registerOutputParameterBoolean(2);
         ResultSet results = callproc.executeWithResults();
 
-        if (null != results) {
-            while (results.next()) {
-
-                isexist = results.getBoolean("league_exists");
-            }
-        }
-        else {
+        if (null == results) {
             throw new Exception("Error executing check on league");
+        }
+        while (results.next()) {
+            isexist = results.getBoolean("league_exists");
         }
 
         callproc.cleanup();

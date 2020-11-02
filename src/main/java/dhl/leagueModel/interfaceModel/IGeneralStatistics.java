@@ -1,28 +1,27 @@
 package dhl.leagueModel.interfaceModel;
 
 public interface IGeneralStatistics {
+    void setCoachName(String coachName);
 
-    public void setCoachName(String coachName);
+    String getCoachName();
 
-    public String getCoachName();
+    int getAge();
 
-    public int getAge();
+    void setAge(int age);
 
-    public void setAge(int age);
+    int getSkating();
 
-    public int getSkating();
+    void setSkating(int skating);
 
-    public void setSkating(int skating);
+    int getShooting();
 
-    public int getShooting();
+    void setShooting(int shooting);
 
-    public void setShooting(int shooting);
+    int getChecking();
 
-    public int getChecking();
+    void setChecking(int checking);
 
-    public void setChecking(int checking);
+    int getSaving();
 
-    public int getSaving();
-
-    public void setSaving(int saving);
+    void setSaving(int saving);
 }

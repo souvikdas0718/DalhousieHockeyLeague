@@ -6,15 +6,17 @@ public class GeneralManager implements IGeneralManager {
 
     private String generalManagerName;
 
-    public GeneralManager(){
-        generalManagerName="";
+    public GeneralManager() {
+        generalManagerName = "";
     }
 
-    public GeneralManager(String generalManagerName){
+    public GeneralManager(String generalManagerName) {
         this.generalManagerName = generalManagerName;
     }
 
-    public String getGeneralManagerName() {  return generalManagerName;   }
+    public String getGeneralManagerName() {
+        return generalManagerName;
+    }
 
 }
 

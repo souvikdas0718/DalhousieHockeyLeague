@@ -1,13 +1,13 @@
 package dhl.simulationStateMachine.States.seasonSimulation;
 
 
-import dhl.simulationStateMachine.GameContext;
 import dhl.simulationStateMachine.Interface.ISimulationSeasonState;
 import dhl.simulationStateMachine.SimulationContext;
 
 public class InitializeSeason implements ISimulationSeasonState {
 
     SimulationContext ourSeasonGame;
+
     public InitializeSeason(SimulationContext simulationContext) {
         ourSeasonGame = simulationContext;
     }
@@ -24,6 +24,6 @@ public class InitializeSeason implements ISimulationSeasonState {
 
     @Override
     public void seasonStateExitProcess() {
-    //Advance Time by one day
+        //Advance Time by one day
     }
 }

@@ -20,8 +20,8 @@ public class Aging implements ISimulationSeasonState {
 
     @Override
     public void seasonStateExitProcess() {
-            // check for stanley cup winner
-                    // yes, advance to next season
-                    // no, persist
+        // check for stanley cup winner
+        // yes, advance to next season
+        // no, persist
     }
 }

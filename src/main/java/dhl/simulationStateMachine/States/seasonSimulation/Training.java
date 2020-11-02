@@ -15,15 +15,15 @@ public class Training implements ISimulationSeasonState {
 
     @Override
     public void seasonStateProcess() {
-            // increment by one day
+        // increment by one day
     }
 
     @Override
     public void seasonStateExitProcess() {
-            // any unplayed game scheduled
-                    // yes then simulate game
-                // no then check trade deadline
-                    // no execute trade
-                    // yes aging
+        // any unplayed game scheduled
+        // yes then simulate game
+        // no then check trade deadline
+        // no execute trade
+        // yes aging
     }
 }

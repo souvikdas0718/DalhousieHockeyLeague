@@ -1,15 +1,12 @@
 package dhl.InputOutput.importJson;
 
+import dhl.InputOutput.importJson.Interface.IDeserializeLeagueObjectModel;
 import dhl.InputOutput.importJson.Interface.IGameConfig;
-import dhl.leagueModel.*;
-import dhl.leagueModel.interfaceModel.*;
+import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import dhl.InputOutput.importJson.Interface.IDeserializeLeagueObjectModel;
-import java.util.ArrayList;
+
 import java.util.Iterator;
-import java.util.List;
-import dhl.InputOutput.importJson.*;
 
 public class DeserializeLeagueObjectModel implements IDeserializeLeagueObjectModel {
 
@@ -19,14 +16,14 @@ public class DeserializeLeagueObjectModel implements IDeserializeLeagueObjectMod
         return createLeagueObjectModel.getLeagueObjectModel();
     }
 
-    public JSONObject updateLeagueObjectModelJson(JSONObject jsonLeagueObject){
+    public JSONObject updateLeagueObjectModelJson(JSONObject jsonLeagueObject) {
         jsonLeagueObject.get("conferences");
 
-        JSONArray freeAgentsJsonArray =  (JSONArray) jsonLeagueObject.get("freeAgents");
+        JSONArray freeAgentsJsonArray = (JSONArray) jsonLeagueObject.get("freeAgents");
         JSONArray newfreeAgentsJsonArray = new JSONArray();
         Iterator<?> freeAgentsListIterator = (freeAgentsJsonArray).iterator();
 
-        while(freeAgentsListIterator.hasNext()){
+        while (freeAgentsListIterator.hasNext()) {
             JSONObject freeAgentsJsonObject = (JSONObject) freeAgentsListIterator.next();
 
             JSONObject playerStatsJsonobject = (JSONObject) freeAgentsJsonObject.get("playerStats");
@@ -44,22 +41,22 @@ public class DeserializeLeagueObjectModel implements IDeserializeLeagueObjectMod
         jsonLeagueObject.remove("freeAgents");
         jsonLeagueObject.put("freeAgents", newfreeAgentsJsonArray);
 
-        JSONArray conferenceJsonArray =  (JSONArray) jsonLeagueObject.get("conferences");
+        JSONArray conferenceJsonArray = (JSONArray) jsonLeagueObject.get("conferences");
         Iterator<?> conferenceListIterator = (conferenceJsonArray).iterator();
 
-        while(conferenceListIterator.hasNext()){
+        while (conferenceListIterator.hasNext()) {
             JSONObject conferenceJsonObject = (JSONObject) conferenceListIterator.next();
 
-            JSONArray divisionJsonArray = (JSONArray)conferenceJsonObject.get("divisions");
+            JSONArray divisionJsonArray = (JSONArray) conferenceJsonObject.get("divisions");
             Iterator<?> divisionListIterator = (divisionJsonArray).iterator();
 
-            while(divisionListIterator.hasNext()){
+            while (divisionListIterator.hasNext()) {
                 JSONObject divisionJsonObject = (JSONObject) divisionListIterator.next();
 
-                JSONArray teamJsonArray = (JSONArray)divisionJsonObject.get("teams");
+                JSONArray teamJsonArray = (JSONArray) divisionJsonObject.get("teams");
                 Iterator<?> teamListIterator = (teamJsonArray).iterator();
 
-                while(teamListIterator.hasNext()) {
+                while (teamListIterator.hasNext()) {
                     JSONObject teamJsonObject = (JSONObject) teamListIterator.next();
                     JSONObject newTeamJsonObject = new JSONObject();
 

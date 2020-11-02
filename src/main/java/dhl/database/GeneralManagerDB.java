@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GeneralManagerDB implements IGeneralManagerDB {
-    public void insertGeneralManagers(String name, Integer leagueId)  throws Exception {
+    public void insertGeneralManagers(String name, Integer leagueId) throws Exception {
         try {
             CallStoredProcedure callproc = new CallStoredProcedure("insertGeneralManager(?,?)");
             callproc.setParameter(1, name);
@@ -29,12 +29,12 @@ public class GeneralManagerDB implements IGeneralManagerDB {
         callAgentProc.setParameter(1, leagueId);
         ResultSet managerResultSet = callAgentProc.executeWithResults();
 
-        if (managerResultSet==null){
+        if (managerResultSet == null) {
             throw new Exception("Error loading Managers List");
         }
 
         while (managerResultSet.next()) {
-            IGeneralManager manager=new GeneralManager(managerResultSet.getString("name"));
+            IGeneralManager manager = new GeneralManager(managerResultSet.getString("name"));
             managers.add(manager);
         }
         callAgentProc.cleanup();

@@ -7,7 +7,6 @@ import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.leagueModel.interfaceModel.ITeam;
 import dhl.leagueModelTests.MockDatabase;
 import dhl.simulationStateMachine.GameContext;
-import dhl.simulationStateMachine.States.Interface.ILoadTeamStateLogic;
 import dhl.simulationStateMachine.States.LoadTeamStateLogic;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,35 +17,35 @@ public class LoadTeamStateLogicTest {
     LoadTeamStateLogic objLoadTeamStateLogic;
 
     @BeforeEach
-    public void initObject(){
+    public void initObject() {
         objLoadTeamStateLogic = new LoadTeamStateLogic();
     }
 
     @Test
     public void findTeamOfLeagueInDatabaseTest() throws Exception {
         ILeagueObjectModel newInMemoryLeague = new LeagueObjectModel();
-        GameContext ourGame=new GameContext();
+        GameContext ourGame = new GameContext();
         ILeagueObjectModelDB databaseRefrenceOb = new MockDatabase();
-        LoadTeamStateLogic objLoadTeamStateLogic = new LoadTeamStateLogic("Dhl","Ontario");
-        Boolean iTeamFound = objLoadTeamStateLogic.findTeamOfLeagueInDatabase(newInMemoryLeague,ourGame,databaseRefrenceOb);
+        LoadTeamStateLogic objLoadTeamStateLogic = new LoadTeamStateLogic("Dhl", "Ontario");
+        Boolean iTeamFound = objLoadTeamStateLogic.findTeamOfLeagueInDatabase(newInMemoryLeague, ourGame, databaseRefrenceOb);
         Assertions.assertEquals(true, iTeamFound);
     }
 
     @Test
     public void teamNotFoundOfLeagueInDatabaseTest() throws Exception {
         ILeagueObjectModel newInMemoryLeague = new LeagueObjectModel();
-        GameContext ourGame=new GameContext();
+        GameContext ourGame = new GameContext();
         ILeagueObjectModelDB databaseRefrenceOb = new MockDatabase();
-        LoadTeamStateLogic objLoadTeamStateLogic = new LoadTeamStateLogic("Dhl","Ontario1");
-        Boolean iTeamFound = objLoadTeamStateLogic.findTeamOfLeagueInDatabase(newInMemoryLeague,ourGame,databaseRefrenceOb);
+        LoadTeamStateLogic objLoadTeamStateLogic = new LoadTeamStateLogic("Dhl", "Ontario1");
+        Boolean iTeamFound = objLoadTeamStateLogic.findTeamOfLeagueInDatabase(newInMemoryLeague, ourGame, databaseRefrenceOb);
         Assertions.assertEquals(false, iTeamFound);
     }
 
     @Test
-    public void findTeamTest(){
+    public void findTeamTest() {
         LeagueObjectModelMocks mocks = new LeagueObjectModelMocks();
         ILeagueObjectModel inMemoryLeague = mocks.getLeagueObjectMock();
         ITeam objTeam = objLoadTeamStateLogic.findTeam(inMemoryLeague, "Ontario");
-        Assertions.assertEquals("Ontario",objTeam.getTeamName());
+        Assertions.assertEquals("Ontario", objTeam.getTeamName());
     }
 }

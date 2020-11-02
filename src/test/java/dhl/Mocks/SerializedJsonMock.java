@@ -1,7 +1,7 @@
 package dhl.Mocks;
 
 public class SerializedJsonMock {
-    public String serializedJson(){
+    public String serializedJson() {
         String json = "{\n" +
                 "  \"leagueName\": \"Dhl\",\n" +
                 "  \"conferences\": [\n" +
@@ -1212,6 +1212,6 @@ public class SerializedJsonMock {
                 "    }\n" +
                 "  }\n" +
                 "}";
-        return  json;
+        return json;
     }
 }

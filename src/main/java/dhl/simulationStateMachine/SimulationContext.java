@@ -11,7 +11,7 @@ import dhl.simulationStateMachine.States.seasonSimulation.*;
 import dhl.trade.Interface.ITradingEngine;
 import dhl.trade.TradingEngine;
 
-public class SimulationContext implements ISimulationSeasonState{
+public class SimulationContext implements ISimulationSeasonState {
 
     ISimulationSeasonState seasonSimulationState;
     ISimulationSeasonState currentSimulation;
@@ -38,7 +38,7 @@ public class SimulationContext implements ISimulationSeasonState{
 //        gameInProgress = true;
 //    }
 
-    public SimulationContext(GameContext gameState){
+    public SimulationContext(GameContext gameState) {
 //      seasonSimulationState = new SeasonSimulationState(this);
         userTeam = gameState.getSelectedTeam();
         advanceTime = new AdvanceTime(this);
@@ -55,13 +55,8 @@ public class SimulationContext implements ISimulationSeasonState{
         gameInProgress = true;
         ioObject = new UserInputOutput();
         IUpdateUserTeamRoster updateUserTeamRoster = new UpdateUserTeamRoster(ioObject);
-        tradeEngine = new TradingEngine(gameConfig,inMemoryLeague,userTeam,ioObject,updateUserTeamRoster);
+        tradeEngine = new TradingEngine(gameConfig, inMemoryLeague, userTeam, ioObject, updateUserTeamRoster);
     }
-
-    // delete parts
-//    public void startSeasonSimulation(int seasonNumber){
-//        currentSimulation.startSeasonSimulation(seasonNumber);
-//    }
 
     public ITradingEngine getTradeEngine() {
         return tradeEngine;

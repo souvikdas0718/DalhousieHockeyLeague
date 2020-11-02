@@ -11,7 +11,7 @@ public class CheckInputFileFormatTest {
     CheckInputFileFormat testClassObject;
 
     @BeforeEach
-    public void initObject(){
+    public void initObject() {
         testClassObject = new CheckInputFileFormat();
     }
 
@@ -20,10 +20,10 @@ public class CheckInputFileFormatTest {
         String correctJson = "{ \"Name\" : \"correctJsonFile\" , \"secondKey\": \" SecondValue \" }";
         String wrongJson = "{ \"Name\"  \"missing : \" , \"secondKey\": \" SecondValue \" }";
 
-        Assert.assertTrue( testClassObject.isCorrectFormated(correctJson));
-        Assertions.assertThrows(Exception.class, ()-> {
+        Assert.assertTrue(testClassObject.isCorrectFormated(correctJson));
+        Assertions.assertThrows(Exception.class, () -> {
             testClassObject.isCorrectFormated(wrongJson);
-        } );
+        });
     }
 
 }

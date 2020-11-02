@@ -1,6 +1,5 @@
 package dhl.factory;
 
-import dhl.factory.InitializeObjectsAbstractFactory;
 import dhl.leagueModel.Conference;
 import dhl.leagueModel.Division;
 import dhl.leagueModel.Player;

@@ -1,9 +1,5 @@
 package dhl.leagueModel.interfaceModel;
 
-import dhl.InputOutput.importJson.Interface.IGameConfig;
-
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public interface ITeam {
@@ -26,10 +22,9 @@ public interface ITeam {
 
     boolean checkIfTeamValid(IValidation validation) throws Exception;
 
-    boolean checkIfSkatersGoaliesValid() ;
+    boolean checkIfSkatersGoaliesValid();
 
     double calculateTeamStrength();
-
 
 
 }

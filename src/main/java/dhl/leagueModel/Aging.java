@@ -16,47 +16,50 @@ public class Aging implements IAging {
     List<IPlayer> retiringFreeAgents;
     int noOfDays;
 
-    public Aging(IAgingSystem agingSystem,IRetirementSystem retirementSystem,IInjurySystem injurySystem, ILeagueObjectModel leagueObjectModel, int noOfDays, IPlayerDB playerDB){
-        this.leagueObjectModel=leagueObjectModel;
-        this.noOfDays=noOfDays;
-        this.playerDB=playerDB;
+    public Aging(IAgingSystem agingSystem, IRetirementSystem retirementSystem, IInjurySystem injurySystem, ILeagueObjectModel leagueObjectModel, int noOfDays, IPlayerDB playerDB) {
+        this.leagueObjectModel = leagueObjectModel;
+        this.noOfDays = noOfDays;
+        this.playerDB = playerDB;
         this.agingSystem = agingSystem;
-        this.retirementSystem=retirementSystem;
-        this.injurySystem=injurySystem;
+        this.retirementSystem = retirementSystem;
+        this.injurySystem = injurySystem;
     }
 
-    public ILeagueObjectModel initiateAging() throws Exception{
-        int noOfDaysInAYear=365;
-        if((noOfDays % noOfDaysInAYear)==0){
-            for(IConference conference : leagueObjectModel.getConferences()){
-                for (IDivision division : conference.getDivisions()){
-                    for(ITeam team : division.getTeams()){
+    public ILeagueObjectModel initiateAging() throws Exception {
+        int noOfDaysInAYear = 365;
+        if ((noOfDays % noOfDaysInAYear) == 0) {
+            for (IConference conference : leagueObjectModel.getConferences()) {
+                for (IDivision division : conference.getDivisions()) {
+                    for (ITeam team : division.getTeams()) {
                         agingSystem.ageAllPlayers(team.getPlayers());
-                        retiringPlayers=agingSystem.selectPlayersToRetire(team);
+                        retiringPlayers = agingSystem.selectPlayersToRetire(team);
                     }
                 }
             }
             agingSystem.ageAllPlayers(leagueObjectModel.getFreeAgents());
-            retiringFreeAgents=agingSystem.selectFreeAgentsToRetire(leagueObjectModel.getFreeAgents());
+            retiringFreeAgents = agingSystem.selectFreeAgentsToRetire(leagueObjectModel.getFreeAgents());
             initiateRetirementForAgedPlayers();
         }
         checkPlayerInjuryRecovery();
         return leagueObjectModel;
     }
 
-    public void initiateRetirementForAgedPlayers() throws Exception{
-        retirementSystem.initiateRetirement( retiringPlayers,  retiringFreeAgents) ;
+    public void initiateRetirementForAgedPlayers() throws Exception {
+        retirementSystem.initiateRetirement(retiringPlayers, retiringFreeAgents);
     }
 
-    public void checkPlayerInjuryRecovery(){
-        for(IConference conference : leagueObjectModel.getConferences()){
-            for (IDivision division : conference.getDivisions()){
-                for(ITeam team : division.getTeams()){
-                    for(IPlayer player : team.getPlayers()){
+    public void checkPlayerInjuryRecovery() {
+        for (IConference conference : leagueObjectModel.getConferences()) {
+            for (IDivision division : conference.getDivisions()) {
+                for (ITeam team : division.getTeams()) {
+                    for (IPlayer player : team.getPlayers()) {
                         injurySystem.healInjuredPlayers(player);
                     }
                 }
             }
+        }
+        for (IPlayer player : leagueObjectModel.getFreeAgents()) {
+            injurySystem.healInjuredPlayers(player);
         }
     }
 }

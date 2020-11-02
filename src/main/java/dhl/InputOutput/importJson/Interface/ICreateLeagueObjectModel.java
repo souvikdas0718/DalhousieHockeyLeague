@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface ICreateLeagueObjectModel {
 
-    public ILeagueObjectModel getLeagueObjectModel() throws Exception;
+    ILeagueObjectModel getLeagueObjectModel() throws Exception;
 
-    public List<IConference> getConferenceArrayList() throws Exception;
+    List<IConference> getConferenceArrayList() throws Exception;
 
-    public List<IDivision> getDivisionObjectArrayList() throws Exception;
+    List<IDivision> getDivisionObjectArrayList() throws Exception;
 
-    public List<ITeam> getTeamObjectArrayList() throws Exception;
+    List<ITeam> getTeamObjectArrayList() throws Exception;
 
-    public List<IPlayer> getPlayerArrayList() throws Exception;
+    List<IPlayer> getPlayerArrayList() throws Exception;
 }

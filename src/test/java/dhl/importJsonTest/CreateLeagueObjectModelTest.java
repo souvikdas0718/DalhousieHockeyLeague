@@ -1,10 +1,10 @@
 package dhl.importJsonTest;
 
+import dhl.InputOutput.importJson.CreateLeagueObjectModel;
 import dhl.InputOutput.importJson.GameConfig;
+import dhl.InputOutput.importJson.ImportJsonFile;
 import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.Mocks.JsonFilePathMock;
-import dhl.InputOutput.importJson.CreateLeagueObjectModel;
-import dhl.InputOutput.importJson.ImportJsonFile;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,21 +26,21 @@ public class CreateLeagueObjectModelTest {
     }
 
     @Test
-    public void checkJsonArrayTest(){
+    public void checkJsonArrayTest() {
         String conferenceArrayKey = filePathMock.getConferenceArrayKey();
         assertTrue(testClassObject.checkJsonArray(leagueObject, conferenceArrayKey));
 
         String freeAgentArrayKey = filePathMock.getFreeAgentArrayKey();
         assertTrue(testClassObject.checkJsonArray(leagueObject, freeAgentArrayKey));
 
-        assertFalse(testClassObject.checkJsonArray(leagueObject , "invalidArrayKey"));
+        assertFalse(testClassObject.checkJsonArray(leagueObject, "invalidArrayKey"));
     }
 
     @Test
     public void getLeagueObjectModel() throws Exception {
         IGameConfig gameConfig = new GameConfig(new JSONObject());
-        CreateLeagueObjectModel testObject = new CreateLeagueObjectModel(leagueObject,gameConfig);
-        assertTrue(testObject.getLeagueObjectModel() != null );
+        CreateLeagueObjectModel testObject = new CreateLeagueObjectModel(leagueObject, gameConfig);
+        assertTrue(testObject.getLeagueObjectModel() != null);
     }
 
 }

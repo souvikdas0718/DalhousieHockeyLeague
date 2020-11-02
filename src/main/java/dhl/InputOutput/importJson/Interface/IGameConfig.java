@@ -26,7 +26,7 @@ public interface IGameConfig {
 
     String getInjuryDaysLow();
 
-    String getInjuryDaysHigh() ;
+    String getInjuryDaysHigh();
 
     String getTraining();
 
@@ -37,7 +37,7 @@ public interface IGameConfig {
     public String getRandomWinChance();
 
 
-    HashMap<String,Object> getHashMap(String key);
+    HashMap<String, Object> getHashMap(String key);
 
-    String getValueFromOurObject(String configChildKey , String ourObjectKey);
+    String getValueFromOurObject(String configChildKey, String ourObjectKey);
 }

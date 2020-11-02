@@ -18,7 +18,7 @@ public class ImportStateLogic implements IImportStateLogic {
         JSONObject leagueJsonObject = new ImportJsonFile(validFilePath).getJsonObject();
         gameConfig = new GameConfig(leagueJsonObject);
 
-        CreateLeagueObjectModel createLeagueObjectModel = new CreateLeagueObjectModel(leagueJsonObject,gameConfig);
+        CreateLeagueObjectModel createLeagueObjectModel = new CreateLeagueObjectModel(leagueJsonObject, gameConfig);
         ILeagueObjectModel objLeagueObjectModel = new LeagueObjectModel();
 
         objLeagueObjectModel = createLeagueObjectModel.getLeagueObjectModel();
@@ -26,13 +26,13 @@ public class ImportStateLogic implements IImportStateLogic {
         return objLeagueObjectModel;
     }
 
-    public ITeam findTeam(ILeagueObjectModel inMemoryLeague, String teamName){
+    public ITeam findTeam(ILeagueObjectModel inMemoryLeague, String teamName) {
         ITeam teamObject = null;
 
-        for(IConference conference: inMemoryLeague.getConferences() ){
-            for(IDivision division: conference.getDivisions()){
-                for (ITeam team: division.getTeams()){
-                    if (team.getTeamName().equals(teamName)){
+        for (IConference conference : inMemoryLeague.getConferences()) {
+            for (IDivision division : conference.getDivisions()) {
+                for (ITeam team : division.getTeams()) {
+                    if (team.getTeamName().equals(teamName)) {
                         teamObject = team;
                     }
                 }

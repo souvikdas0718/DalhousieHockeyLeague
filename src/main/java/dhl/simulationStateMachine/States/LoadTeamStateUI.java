@@ -2,11 +2,11 @@ package dhl.simulationStateMachine.States;
 
 import dhl.InputOutput.UI.IUserInputOutput;
 import dhl.InputOutput.UI.UserInputOutput;
+import dhl.database.LeagueObjectModelDB;
+import dhl.database.interfaceDB.ILeagueObjectModelDB;
 import dhl.leagueModel.LeagueObjectModel;
 import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.leagueModel.interfaceModel.ITeam;
-import dhl.database.interfaceDB.ILeagueObjectModelDB;
-import dhl.database.LeagueObjectModelDB;
 import dhl.simulationStateMachine.GameContext;
 import dhl.simulationStateMachine.Interface.IGameState;
 import dhl.simulationStateMachine.States.Interface.ILoadTeamStateLogic;
@@ -29,7 +29,7 @@ public class LoadTeamStateUI implements IGameState {
         System.out.print("Enter LeagueName to load from DB: ");
         String leagueName = userInputPutput.getUserInput();
 
-        while(leagueName.equals("")){
+        while (leagueName.equals("")) {
             userInputPutput.printMessage("Looks like you didnt add any input please try again: ");
             leagueName = userInputPutput.getUserInput();
         }
@@ -37,32 +37,33 @@ public class LoadTeamStateUI implements IGameState {
         System.out.print("Enter Team Name:  ");
         String team = userInputPutput.getUserInput();
 
-        while(team.equals("")){
+        while (team.equals("")) {
             userInputPutput.printMessage("Looks like you didnt add any input please try again: ");
             team = userInputPutput.getUserInput();
         }
 
         try {
-            ILoadTeamStateLogic objLoadTeamStateLogic = new LoadTeamStateLogic(leagueName,  team);
+            ILoadTeamStateLogic objLoadTeamStateLogic = new LoadTeamStateLogic(leagueName, team);
             ILeagueObjectModelDB databaseRefrenceOb = new LeagueObjectModelDB();
 
-            objLoadTeamStateLogic.findTeamOfLeagueInDatabase(newInMemoryLeague,  ourGame, databaseRefrenceOb);
-        }catch(Exception e) {
+            objLoadTeamStateLogic.findTeamOfLeagueInDatabase(newInMemoryLeague, ourGame, databaseRefrenceOb);
+        } catch (Exception e) {
             userInputPutput.printMessage(e.getMessage());
             ourGame.setGameInProgress(false);
-        };
+        }
+        ;
     }
 
     @Override
     public void stateProcess() {
-        if(ourGame.isGameInProgress()) {
+        if (ourGame.isGameInProgress()) {
             userInputPutput.printMessage(ourGame.getSelectedTeam().getTeamName() + "  Team Selected");
         }
     }
 
     @Override
     public void stateExitProcess() {
-        if(ourGame.isGameInProgress()) {
+        if (ourGame.isGameInProgress()) {
             ourGame.setGameState(ourGame.getSimulateState());
         }
     }

@@ -8,6 +8,7 @@ public class DatabaseConfiguration {
     public DatabaseConfiguration() throws IOException {
         loadDbProperties();
     }
+
     private static String dbURL;
     private static String dbUserName;
     private static String dbPassword;
@@ -15,17 +16,16 @@ public class DatabaseConfiguration {
 
     private void loadDbProperties() throws IOException {
         FileInputStream fileInputStream = new FileInputStream("./config.properties");
-        if (fileInputStream != null) {
-            Properties dbProperties = new Properties();
-
-            dbProperties.load(fileInputStream);
-            dbURL = dbProperties.getProperty("dbURL");
-            dbUserName = dbProperties.getProperty("dbUserName");
-            dbPassword = dbProperties.getProperty("dbPassword");
-            dbDriver = dbProperties.getProperty("dbDriver");
-        } else {
+        if (fileInputStream == null) {
             throw new IOException("Error connecting to database.");
         }
+        Properties dbProperties = new Properties();
+
+        dbProperties.load(fileInputStream);
+        dbURL = dbProperties.getProperty("dbURL");
+        dbUserName = dbProperties.getProperty("dbUserName");
+        dbPassword = dbProperties.getProperty("dbPassword");
+        dbDriver = dbProperties.getProperty("dbDriver");
     }
 
     public String getDatabaseUserName() {

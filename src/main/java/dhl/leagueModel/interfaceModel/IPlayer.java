@@ -1,9 +1,5 @@
 package dhl.leagueModel.interfaceModel;
 
-import dhl.InputOutput.importJson.Interface.IGameConfig;
-
-import java.util.Date;
-
 public interface IPlayer {
 
     String getPlayerName();

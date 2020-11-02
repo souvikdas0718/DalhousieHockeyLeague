@@ -11,23 +11,23 @@ public class GeneralManagerTest {
     IGeneralManager generalManager;
 
     @BeforeEach()
-    public void initObject(){
-        generalManager=new GeneralManager();
+    public void initObject() {
+        generalManager = new GeneralManager();
     }
 
     @Test
-    public void ManagerTest(){
-        Assertions.assertEquals(generalManager.getGeneralManagerName(),"");
+    public void ManagerTest() {
+        Assertions.assertEquals(generalManager.getGeneralManagerName(), "");
     }
 
     @Test
-    public void ManageParameterized(){
-        generalManager= new GeneralManager("Mathew John");
-        Assertions.assertEquals(generalManager.getGeneralManagerName(),"Mathew John");
+    public void ManageParameterized() {
+        generalManager = new GeneralManager("Mathew John");
+        Assertions.assertEquals(generalManager.getGeneralManagerName(), "Mathew John");
     }
 
     @AfterEach()
-    public void destroyObject(){
-        generalManager=null;
+    public void destroyObject() {
+        generalManager = null;
     }
 }
