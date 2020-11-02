@@ -2,10 +2,18 @@ package dhl.database;
 
 import dhl.database.DatabaseConfigSetup.CallStoredProcedure;
 import dhl.database.interfaceDB.IConferenceDB;
+import dhl.database.interfaceDB.IDivisionDB;
+import dhl.database.interfaceDB.ITeamDB;
+import dhl.leagueModel.Conference;
+import dhl.leagueModel.interfaceModel.IConference;
+import dhl.leagueModel.interfaceModel.IDivision;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConferenceDB implements IConferenceDB {
+
     public int insertConference(String conferenceName, int leagudId) throws Exception{
         int conferenceId=0;
 
@@ -28,4 +36,23 @@ public class ConferenceDB implements IConferenceDB {
         return conferenceId;
     }
 
+    public List<IConference> getConferenceList(int leagueId, DatabaseObjectCreationDB databaseObjectCreationDB) throws Exception {
+        IDivisionDB iDivisionDB = databaseObjectCreationDB.getiDivisionDB();
+        List<IConference> conferencesList = new ArrayList<>();
+        CallStoredProcedure callConfProc = new CallStoredProcedure("loadConferences(?)");
+        callConfProc.setParameter(1, leagueId);
+        ResultSet conferencesResultSet = callConfProc.executeWithResults();
+
+        if (conferencesResultSet==null){
+            throw new Exception("Error loading conferences");
+        }
+
+        while(conferencesResultSet.next()){
+            IConference conference = new Conference(conferencesResultSet.getString("conferenceName"),
+                    iDivisionDB.getDivisionList(conferencesResultSet.getInt("conferenceId"),leagueId,databaseObjectCreationDB));
+            conferencesList.add(conference);
+        }
+        callConfProc.cleanup();
+        return conferencesList;
+    }
 }

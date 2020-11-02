@@ -22,13 +22,13 @@ public class gameConfigDB implements IGameConfigDB {
         }
     }
 
-    public String loadGamePlayConfig(String category, String subCategory, String leagueName)  throws Exception {
+    public IGameConfig loadGamePlayConfig(String leagueName)  throws Exception {
+        IGameConfig gameConfig=null;
         String configValue = "";
         try {
-            CallStoredProcedure callproc = new CallStoredProcedure("loadGamePlayConfig(?,?,?)");
-            callproc.setParameter(1, category);
-            callproc.setParameter(2, subCategory);
-            callproc.setParameter(3, leagueName);
+            CallStoredProcedure callproc = new CallStoredProcedure("loadGamePlayConfig(?)");
+
+            callproc.setParameter(1, leagueName);
             ResultSet results = callproc.executeWithResults();
 
             if (null != results) {
@@ -46,6 +46,6 @@ public class gameConfigDB implements IGameConfigDB {
             throwables.printStackTrace();
         }
 
-        return configValue;
+        return gameConfig;
     }
 }
