@@ -1,21 +1,24 @@
 package dhl.tradeTest;
 
 import dhl.InputOutput.UI.IUserInputOutput;
-import dhl.InputOutput.UI.UserInputOutput;
 import dhl.Mocks.GameConfigMock;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.InputOutput.importJson.Interface.IGameConfig;
+import dhl.Mocks.MockUserInputOutput;
 import dhl.leagueModel.*;
 import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.leagueModel.interfaceModel.IPlayer;
 import dhl.leagueModel.interfaceModel.ITeam;
+import dhl.simulationStateMachine.Interface.IUpdateUserTeamRoster;
+import dhl.simulationStateMachine.UpdateUserTeamRoster;
 import dhl.trade.Interface.ITradeOffer;
 import dhl.trade.TradingEngine;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javax.annotation.processing.SupportedAnnotationTypes;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 
 public class TradingEngineTest {
@@ -31,7 +34,7 @@ public class TradingEngineTest {
 
     @BeforeEach
     public void initObject(){
-        ioObject = new UserInputOutput();
+        ioObject = new MockUserInputOutput();
         tradeMock = new TradeMock();
         gameConfigMock = new GameConfigMock();
         leagueObjectModelMocks = new LeagueObjectModelMocks();
@@ -42,21 +45,47 @@ public class TradingEngineTest {
         leagueMock.getConferences().get(0).getDivisions().get(0).getTeams().add(badTeamMock);
         IGameConfig ourGameConfig = gameConfigMock.getGameConfigMock();
         userTeam = new Team();
-        testClassObject = new TradingEngine(ourGameConfig ,leagueMock,userTeam,ioObject);
+        IUpdateUserTeamRoster updateUserTeamRoster = new UpdateUserTeamRoster(ioObject);
+        testClassObject = new TradingEngine(ourGameConfig ,leagueMock,userTeam,ioObject,updateUserTeamRoster);
+    }
+
+    @Test
+    public void startEngine(){
+        double badTeamStrengthBeforeTrade = badTeamMock.calculateTeamStrength();
+        testClassObject.startEngine();
+        Assertions.assertTrue(badTeamStrengthBeforeTrade < badTeamMock.calculateTeamStrength());
+
     }
 
     @Test
     public void performTradeTest() throws Exception {
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
         testClassObject.performTrade(goodTeamMock);
-        System.out.println(goodTeamMock.getLossPoint());
+
+        Assertions.assertTrue(outContent.toString().contains("No Good Player availabe to swap for Team:"));
         Assertions.assertTrue(goodTeamMock.getLossPoint() > 0);
+
         testClassObject.performTrade(badTeamMock);
         Assertions.assertTrue(badTeamMock.getLossPoint() == 0);
     }
 
     @Test
-    public void sendTradeToRecevingTeamTest(){
-        // TODO: 01-11-2020 check this
+    public void sendTradeToRecevingTeamTest() throws Exception {
+        ITradeOffer tradeOffer = testClassObject.generateTradeOffer(badTeamMock , goodTeamMock);
+        double teamStrength = badTeamMock.calculateTeamStrength();
+
+        ((MockUserInputOutput) ioObject).setMockOutput("2");
+        testClassObject.sendTradeToRecevingTeam(tradeOffer , tradeOffer.getReceivingTeam());
+        Assertions.assertTrue(teamStrength == badTeamMock.calculateTeamStrength());
+
+        ((MockUserInputOutput) ioObject).setMockOutput("1");
+        Exception error=Assertions.assertThrows(Exception.class,() ->{
+            testClassObject.sendTradeToRecevingTeam(tradeOffer , tradeOffer.getReceivingTeam());
+        });
+
+        Assertions.assertTrue(teamStrength < badTeamMock.calculateTeamStrength());
+        Assertions.assertFalse(teamStrength == badTeamMock.calculateTeamStrength());
     }
 
     @Test
@@ -79,11 +108,27 @@ public class TradingEngineTest {
     }
 
     @Test
+    public void findLossPointOfTheTeamTest(){
+        tradeMock.getTeamWithBadPlayer().setLossPoint(10);
+        int losspoint = testClassObject.findLossPointOfTheTeam(tradeMock.getTeamWithBadPlayer());
+        Assertions.assertTrue(losspoint == 10);
+    }
+
+    @Test
     public void generateTradeOfferTest() throws Exception {
         ITradeOffer tradeOffer = testClassObject.generateTradeOffer(badTeamMock , goodTeamMock);
         Assertions.assertFalse(tradeOffer == null);
         Assertions.assertTrue( tradeOffer.getOfferingTeam() == badTeamMock);
         Assertions.assertTrue(tradeOffer.getReceivingTeam() == goodTeamMock);
+    }
+
+    @Test
+    public void isPlayerNotInWantedListTest(){
+        IPlayer player = tradeMock.getStrongPlayer("player1");
+        ArrayList<IPlayer> playerList = tradeMock.get50FreeAgents();
+        Assertions.assertTrue(testClassObject.isPlayerNotInWantedList(player , playerList));
+        playerList.add(player);
+        Assertions.assertFalse(testClassObject.isPlayerNotInWantedList(player , playerList));
     }
 
     @Test

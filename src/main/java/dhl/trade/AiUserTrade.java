@@ -4,6 +4,7 @@ import dhl.InputOutput.UI.IUserInputOutput;
 import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.leagueModel.interfaceModel.IPlayer;
 import dhl.leagueModel.interfaceModel.ITeam;
+import dhl.simulationStateMachine.Interface.IUpdateUserTeamRoster;
 import dhl.trade.Interface.ITradeOffer;
 import dhl.trade.Interface.ITradeType;
 
@@ -14,10 +15,12 @@ public class AiUserTrade implements ITradeType {
 
     IUserInputOutput ioObject;
     ITradeOffer tradeOffer;
+    IUpdateUserTeamRoster updateUserTeamRoster;
 
-    public AiUserTrade(ITradeOffer tradeOffer, IUserInputOutput ioObject){
+    public AiUserTrade(ITradeOffer tradeOffer, IUserInputOutput ioObject, IUpdateUserTeamRoster updateUserTeamRoster){
         this.tradeOffer = tradeOffer;
         this.ioObject = ioObject;
+        this.updateUserTeamRoster = updateUserTeamRoster;
     }
 
     @Override
@@ -49,20 +52,29 @@ public class AiUserTrade implements ITradeType {
                 totalGoalies = totalGoalies + 1;
             }
         }
-        if (totalSkaters < 18 || totalSkaters > 18){
-            updateSkaters(totalSkaters, team,leagueObjectModel);
+        if (totalSkaters > 18){
+            while (totalSkaters > 18){
+                updateUserTeamRoster.dropSkater(team , leagueObjectModel);
+                totalSkaters = totalSkaters - 1;
+            }
+        }else if(totalSkaters < 18 ){
+            while (totalSkaters < 18){
+                updateUserTeamRoster.addSkater(team , leagueObjectModel);
+                totalSkaters = totalSkaters + 1;
+            }
         }
-        if (totalGoalies < 2 || totalGoalies > 2){
-            updateGoalies(totalGoalies, team,leagueObjectModel);
+        if (totalGoalies > 2){
+            while (totalGoalies > 2 ){
+                updateUserTeamRoster.dropGoalie(team , leagueObjectModel);
+                totalGoalies = totalGoalies - 1;
+            }
+
+        }else if(totalGoalies < 2 ){
+            while (totalGoalies < 2 ){
+                updateUserTeamRoster.addGoalie(team , leagueObjectModel);
+                totalGoalies = totalGoalies + 1;
+            }
         }
-    }
-
-    public void updateSkaters(int totalSkaers,ITeam currentTeam, ILeagueObjectModel league){
-
-    }
-
-    public void updateGoalies(int totalGoalies,ITeam currentTeam, ILeagueObjectModel league){
-
     }
 
     public void DisplayTradeOfferToUser(List<IPlayer> playerList){
@@ -78,4 +90,5 @@ public class AiUserTrade implements ITradeType {
         }
         ioObject.printMessage("Enter 1 to Accept Trade, 2 to Reject");
     }
+
 }

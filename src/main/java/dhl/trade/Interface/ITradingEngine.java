@@ -5,7 +5,8 @@ import dhl.leagueModel.interfaceModel.ITeam;
 
 public interface ITradingEngine {
 
-    public void performTrade(ITeam tradingTeam) throws Exception;
+    public void startEngine();
 
     public ITradeOffer getCurrentTrade();
+
 }

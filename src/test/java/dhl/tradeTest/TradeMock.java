@@ -53,7 +53,7 @@ public class TradeMock {
         List<IPlayer> freeAgents = new ArrayList<>();
         Random r = new Random();
         for (int i=0; i<50; i++) {
-            if (i<2)
+            if (i%2 ==0)
             {
                freeAgents.add(new FreeAgent("Henry"+i, "goalie",
                         new PlayerStatistics(r.nextInt(45),r.nextInt(10),r.nextInt(10),r.nextInt(10),r.nextInt(10))));
