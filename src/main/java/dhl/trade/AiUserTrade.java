@@ -79,7 +79,7 @@ public class AiUserTrade implements ITradeType {
 
     public void DisplayTradeOfferToUser(List<IPlayer> playerList){
         ioObject.printMessage("---------------NEW TRADE OFFER FOR YOU---------------");
-        ioObject.printMessage("Players you will get are");
+        ioObject.printMessage("Player you will get are");
         for(IPlayer player : playerList ){
             ioObject.printMessage("Player Name: " + player.getPlayerName());
             ioObject.printMessage("Age: " + player.getPlayerStats().getAge());

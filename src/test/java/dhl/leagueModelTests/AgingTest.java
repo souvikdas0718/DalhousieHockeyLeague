@@ -67,6 +67,16 @@ public class AgingTest {
         }
     }
 
+    @Test
+    public void checkRetiredInjuryRecoveryTest(){
+        for(IPlayer agent : leagueObjectModel.getFreeAgents()) {
+            agent.setPlayerInjuredDays(20);
+            injurySystem.healInjuredPlayers(agent);
+            Assertions.assertEquals(19, agent.getPlayerInjuredDays());
+
+        }
+    }
+
     @AfterEach()
     public void destroyObject(){
         leagueMock= null;

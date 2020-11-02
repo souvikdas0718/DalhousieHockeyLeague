@@ -36,4 +36,9 @@ public class MockDatabase implements ILeagueObjectModelDB {
         return leagueModel;
     }
 
+    @Override
+    public void updateLeagueModel(ILeagueObjectModel leagueObjectModel) throws Exception {
+
+    }
+
 }

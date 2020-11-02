@@ -7,4 +7,6 @@ public interface ILeagueObjectModelDB {
     public void insertLeagueModel(ILeagueObjectModel conferences) throws Exception;
 
     public ILeagueObjectModel loadLeagueModel(String leagueName, String teamName) throws Exception;
+
+    public void updateLeagueModel(ILeagueObjectModel leagueObjectModel) throws Exception;
 }

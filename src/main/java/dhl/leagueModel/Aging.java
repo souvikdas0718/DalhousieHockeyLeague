@@ -58,5 +58,8 @@ public class Aging implements IAging {
                 }
             }
         }
+        for(IPlayer player:leagueObjectModel.getFreeAgents()){
+            injurySystem.healInjuredPlayers(player);
+        }
     }
 }

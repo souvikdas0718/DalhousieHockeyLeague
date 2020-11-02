@@ -188,7 +188,7 @@ public class CreateTeamStateUI implements IGameState {
     private void selectFreeAgents() {
         List<IPlayer> freeAgentsArray = inMemoryLeague.getFreeAgents();
 
-        userInputPutput.printMessage("Select the Players from free Agents list (Input multiple names separated by a comma):");
+        userInputPutput.printMessage("Select the Player from free Agents list (Input multiple names separated by a comma):");
         userInputPutput.printMessage("-----------------------------------------------------------------------------------------------------------------");
         String freeAgentListHeader = String.format("%20s %20s %10s %10s %10s %10s %10s %10s","Name","Position","Age","Checking","Saving","Shooting","Skating","Strength");
         userInputPutput.printMessage(freeAgentListHeader);
