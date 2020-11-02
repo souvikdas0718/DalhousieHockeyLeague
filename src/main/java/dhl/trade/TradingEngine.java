@@ -27,25 +27,22 @@ public class TradingEngine implements ITradingEngine {
 
     }
 
-    public void performTrade(){
+    @Override
+    public void performTrade(ITeam tradingTeam) throws Exception {
 
         // TODO: 01-11-2020 one by one call methods for Trading
-        
-    }
-    @Override
-    public void makeOffer(ITeam tradingTeam ) throws Exception {
-
-        try {
+        try{
             ITeam teamToTradeWith = findTeamToTradeWith(tradingTeam);
             currentTrade = generateTradeOffer(tradingTeam , teamToTradeWith);
             tradingTeam.setLossPoint(0);
-        }catch (Exception e){
+
+            sendTradeToRecevingTeam(userTeam);
+        }catch(Exception e){
             ioObject.printMessage(e.getMessage());
         }
     }
 
-    @Override
-    public void sendTradeToRecevingTeam(ITeam userTeam) {
+    public void sendTradeToRecevingTeam(ITeam userTeam) throws Exception {
         ITradeType tradeType;
         // TODO: 29-10-2020 check how to handle this  LSC
         if(currentTrade.getReceivingTeam() == userTeam){
@@ -54,19 +51,14 @@ public class TradingEngine implements ITradingEngine {
             tradeType = new AiAiTrade(currentTrade,gameConfig);
         }
         if(tradeType.isTradeAccepted()){
-            currentTrade.performTrade();
+            currentTrade.implementTrade();
+            tradeType.validateTeamRosterAfterTrade(currentTrade.getReceivingTeam() , leagueObjectModel);
         }
-
     }
 
     @Override
     public ITradeOffer getCurrentTrade() {
         return currentTrade;
-    }
-
-    @Override
-    public void checkPlayersAfterTrade() {
-        // TODO: 01-11-2020 implement this
     }
 
     public ITeam findTeamToTradeWith(ITeam tradingTeam) throws Exception {

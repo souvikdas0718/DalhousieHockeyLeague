@@ -1,11 +1,14 @@
 package dhl.trade;
 
 import dhl.InputOutput.UI.IUserInputOutput;
-import dhl.InputOutput.UI.UserInputOutput;
-import dhl.InputOutput.importJson.Interface.IGameConfig;
+import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.leagueModel.interfaceModel.IPlayer;
+import dhl.leagueModel.interfaceModel.ITeam;
 import dhl.trade.Interface.ITradeOffer;
 import dhl.trade.Interface.ITradeType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AiUserTrade implements ITradeType {
 
@@ -18,30 +21,54 @@ public class AiUserTrade implements ITradeType {
     }
 
     @Override
-    public boolean isTradeAccepted() {
-        try{
-            DisplayTradeOfferToUser();
-            int inputfromUser = Integer.parseInt(ioObject.getUserInput());
+    public boolean isTradeAccepted() throws Exception {
+        DisplayTradeOfferToUser(tradeOffer.getOfferingPlayers());
+        int inputfromUser = Integer.parseInt(ioObject.getUserInput());
 
-            if (inputfromUser == 1){
-                return true;
-            }else if( inputfromUser == 2){
-                return false;
-            }else{
-                throw new Exception("Wrong Input ple---------------------------------------------------------------------------------------------------------------------------------------ase give valid input");
-            }
-        }catch(Exception e){
-            ioObject.printMessage("----------ERROR----------");
-            ioObject.printMessage(e.getMessage());
+        if (inputfromUser == 1){
+            return true;
+        }else if( inputfromUser == 2){
+            return false;
+        }else{
+            throw new Exception("Wrong Input please give valid input");
         }
-
-        return false;
     }
 
-    public void DisplayTradeOfferToUser(){
+    @Override
+    public void validateTeamRosterAfterTrade(ITeam team , ILeagueObjectModel leagueObjectModel) throws Exception {
+        int totalSkaters = 0;
+        int totalGoalies = 0;
+        ArrayList<IPlayer> players = (ArrayList<IPlayer>) team.getPlayers();
+
+        for(IPlayer player: players){
+            String position=player.getPosition();
+            if (position.equals("forward") || position.equals("defense")){
+                totalSkaters = totalSkaters + 1;
+            }
+            if (position.equals("goalie")){
+                totalGoalies = totalGoalies + 1;
+            }
+        }
+        if (totalSkaters < 18 || totalSkaters > 18){
+            updateSkaters(totalSkaters, team,leagueObjectModel);
+        }
+        if (totalGoalies < 2 || totalGoalies > 2){
+            updateGoalies(totalGoalies, team,leagueObjectModel);
+        }
+    }
+
+    public void updateSkaters(int totalSkaers,ITeam currentTeam, ILeagueObjectModel league){
+
+    }
+
+    public void updateGoalies(int totalGoalies,ITeam currentTeam, ILeagueObjectModel league){
+
+    }
+
+    public void DisplayTradeOfferToUser(List<IPlayer> playerList){
         ioObject.printMessage("---------------NEW TRADE OFFER FOR YOU---------------");
         ioObject.printMessage("Players you will get are");
-        for(IPlayer player : tradeOffer.getOfferingPlayers()){
+        for(IPlayer player : playerList ){
             ioObject.printMessage("Player Name: " + player.getPlayerName());
             ioObject.printMessage("Age: " + player.getPlayerStats().getAge());
             ioObject.printMessage("Checking: " + player.getPlayerStats().getChecking());

@@ -3,6 +3,9 @@ package dhl.tradeTest;
 import dhl.InputOutput.UI.IUserInputOutput;
 import dhl.leagueModel.interfaceModel.IPlayer;
 import dhl.leagueModel.interfaceModel.ITeam;
+import dhl.simulationStateMachine.GameContext;
+import dhl.simulationStateMachine.Interface.IGameState;
+import dhl.simulationStateMachine.States.CreateTeamStateUI;
 import dhl.trade.AiUserTrade;
 import dhl.trade.ExchangingPlayerTradeOffer;
 import dhl.trade.Interface.ITradeOffer;
@@ -36,13 +39,25 @@ public class AiUserTradeTest {
     }
 
     @Test
-    public void isTradeAcceptedTest(){
+    public void isTradeAcceptedTest() throws Exception {
 
         ((MockUserInputOutputForTrade) ioObjectMock).setMockOutput("1");
         Assertions.assertTrue(testClassObject.isTradeAccepted());
 
         ((MockUserInputOutputForTrade) ioObjectMock).setMockOutput("2");
         Assertions.assertFalse(testClassObject.isTradeAccepted());
+
+        ((MockUserInputOutputForTrade) ioObjectMock).setMockOutput("3");
+        Exception error=Assertions.assertThrows(Exception.class,() ->{
+            Assertions.assertFalse(testClassObject.isTradeAccepted());
+        });
+        Assertions.assertTrue(error.getMessage().contains("Wrong Input please give valid input"));
+
+        ((MockUserInputOutputForTrade) ioObjectMock).setMockOutput("sdasd");
+        Exception error2=Assertions.assertThrows(Exception.class,() ->{
+            Assertions.assertFalse(testClassObject.isTradeAccepted());
+        });
+        Assertions.assertTrue(error.getMessage().contains("Wrong Input please give valid input"));
 
     }
 
