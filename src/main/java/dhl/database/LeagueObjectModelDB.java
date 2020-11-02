@@ -176,6 +176,39 @@ public class LeagueObjectModelDB implements ILeagueObjectModelDB {
        return leagueObjectModel;
     }
 
+    public void updateLeagueModel(ILeagueObjectModel leagueObjectModel) throws Exception {
 
+        String leagueName = leagueObjectModel.getLeagueName();
 
+        leagueObjectModel.getConferences().forEach((conference)-> {
+            List<IDivision> divisions = conference.getDivisions();
+            divisions.forEach((division)->{
+                String divisionName = division.getDivisionName();
+                List<ITeam> teams = division.getTeams();
+                teams.forEach((team)->{
+                    List<IPlayer> arrPlayer = team.getPlayers();
+                    try {
+                        ITeamDB iTeamDB = databaseObjectCreationDB.getTeamDB();
+                        iTeamDB.updateTeam(team, divisionName, leagueName);
+                    } catch (Exception eTeam) {
+                        throw new RuntimeException("Error updating Team:"+team.getTeamName());
+                    }
+                    try {
+                        ICoachDB iCoachDB = databaseObjectCreationDB.getCoachDB();
+                        iCoachDB.updateCoach(team.getHeadCoach(), team.getTeamName(), leagueName);
+                    } catch (Exception eCoach) {
+                        throw new RuntimeException("Error updating Coach:"+team.getHeadCoach().getCoachName());
+                    }
+                    arrPlayer.forEach((player)->{
+                        try {
+                            IPlayerDB iPlayerDB = databaseObjectCreationDB.getPlayerDB();
+                            iPlayerDB.updatePlayer(player, team.getTeamName(),leagueName);
+                        } catch (Exception ePlayer) {
+                            throw new RuntimeException("Error updating Player:"+player.getPlayerName());
+                        }
+                    });
+                });
+            });
+        });
+    }
 }

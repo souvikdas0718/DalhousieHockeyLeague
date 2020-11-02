@@ -10,6 +10,5 @@ import java.util.ArrayList;
 
 public interface ILoadTeamStateLogic {
     public Boolean findTeamOfLeagueInDatabase(String leagueName, String team, ILeagueObjectModel newInMemoryLeague, GameContext ourGame, ILeagueObjectModelDB databaseRefrenceOb) throws Exception;
-    public IConference findConference(ArrayList<IConference> confrenceArray, String conferenceName );
-    public ITeam findTeam(ILeagueObjectModel inMemoryLeague, String teamName);
+
 }

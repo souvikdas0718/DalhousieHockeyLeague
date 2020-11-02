@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 
 public class LoadTeamStateLogicTest {
 
-    ILoadTeamStateLogic objLoadTeamStateLogic;
+    LoadTeamStateLogic objLoadTeamStateLogic;
 
     @BeforeEach
     public void initObject(){
