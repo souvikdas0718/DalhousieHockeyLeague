@@ -9,7 +9,7 @@ import org.json.simple.JSONObject;
 import java.sql.ResultSet;
 import java.util.HashMap;
 
-public class GameConfigDB implements IGameConfigDB {
+public class GameConfigurationsDB implements IGameConfigDB {
     String leagueName;
     public void insertGamePlayConfig(IGameConfig gameConfig,String leagueName)  throws Exception {
         this.leagueName=leagueName;

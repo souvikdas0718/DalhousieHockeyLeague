@@ -22,7 +22,7 @@ public class DatabaseObjectCreationDB {
         freeAgentDB = new FreeAgentDB();
         coachDB=new CoachDB();
         generalManagerDB = new GeneralManagerDB();
-        gameConfigDB = new GameConfigDB();
+        gameConfigDB = new GameConfigurationsDB();
     }
 
     public ILeagueDB getLeagueDB() {
