@@ -7,11 +7,7 @@ import dhl.database.interfaceDB.IGameConfigDB;
 import org.json.simple.JSONObject;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 public class GameConfigDB implements IGameConfigDB {
     String leagueName;
@@ -63,7 +59,7 @@ public class GameConfigDB implements IGameConfigDB {
         String configValue = "";
         try {
             CallStoredProcedure callproc = new CallStoredProcedure("loadGamePlayConfig(?)");
-            callproc.setParameter(1, this.leagueName);
+            callproc.setParameter(1, leagueName);
             ResultSet results = callproc.executeWithResults();
             JSONObject subObj=new JSONObject();
             JSONObject mainObj = new JSONObject();
@@ -75,11 +71,38 @@ public class GameConfigDB implements IGameConfigDB {
                 }
                 mainObj.put(category,subObj);
 
-//                while (results.next()) {
-//                    category=results.getString("category");
-//                    subObj.put(results.getString("subCategory"),results.getString("configValue"));
-//                }
-//                mainObj.put(category,subObj);
+                subObj=new JSONObject();
+                ResultSet gameResolverResultSet = callproc.getMoreResults();
+                while (gameResolverResultSet.next()) {
+                    category=gameResolverResultSet.getString("category");
+                    subObj.put(gameResolverResultSet.getString("subCategory"),gameResolverResultSet.getString("configValue"));
+                }
+                mainObj.put(category,subObj);
+
+                subObj=new JSONObject();
+                ResultSet injuryResultSet = callproc.getMoreResults();
+                while (injuryResultSet.next()) {
+                    category=injuryResultSet.getString("category");
+                    subObj.put(injuryResultSet.getString("subCategory"),injuryResultSet.getString("configValue"));
+                }
+                mainObj.put(category,subObj);
+
+                subObj=new JSONObject();
+                ResultSet trainingResultSet = callproc.getMoreResults();
+                while (trainingResultSet.next()) {
+                    category=trainingResultSet.getString("category");
+                    subObj.put(trainingResultSet.getString("subCategory"),trainingResultSet.getString("configValue"));
+                }
+                mainObj.put(category,subObj);
+
+                subObj=new JSONObject();
+                ResultSet tradingResultSet = callproc.getMoreResults();
+                while (tradingResultSet.next()) {
+                    category=tradingResultSet.getString("category");
+                    subObj.put(tradingResultSet.getString("subCategory"),tradingResultSet.getString("configValue"));
+                }
+                mainObj.put(category,subObj);
+
             }
             else {
                 throw new Exception("Game config not loaded properly");

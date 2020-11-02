@@ -11,7 +11,7 @@ public class InjurySystem implements IInjurySystem {
 
     public void checkTeamInjury(IGameConfig  gameConfig, ITeam team){
         for(IPlayer player: team.getPlayers()){
-                checkIfPlayerInjured(gameConfig,player) ;
+            checkIfPlayerInjured(gameConfig,player) ;
         }
     }
 

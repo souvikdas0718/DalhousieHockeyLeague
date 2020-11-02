@@ -88,6 +88,7 @@ public class LeagueObjectModelDB implements ILeagueObjectModelDB {
         insertFreeAgents(leagueObjectModel,leagueId);
         insertUnassignedCoaches(leagueObjectModel,leagueId);
         insertGeneralManagers(leagueObjectModel, leagueId);
+        insertGameConfig(leagueObjectModel);
     }
 
     public void insertFreeAgents(ILeagueObjectModel leagueModelObj,int leagueId){
@@ -124,6 +125,16 @@ public class LeagueObjectModelDB implements ILeagueObjectModelDB {
         });
     }
 
+    public void insertGameConfig(ILeagueObjectModel leagueModelObj){
+        try {
+            IGameConfigDB gameConfigDB = databaseObjectCreationDB.getGameConfigDB();
+            gameConfigDB.insertGamePlayConfig(leagueModelObj.getGameConfig(), leagueModelObj.getLeagueName());
+        }
+        catch (Exception eGameConfig) {
+            throw new RuntimeException("Error inserting Game Config ");
+        }
+    }
+
     public ILeagueObjectModel loadLeagueModel(String leagueName, String teamName) throws Exception {
 
         ILeagueObjectModel leagueObjectModel=null;
@@ -149,7 +160,6 @@ public class LeagueObjectModelDB implements ILeagueObjectModelDB {
                             coachDB.getUnassignedCoachList(leagueId),
                             generalManagerDB.getManagersList(leagueId),
                             gameConfigDB.loadGamePlayConfig(leagueName));
-
                 }
                 catch(Exception exception){
                     exception.printStackTrace();
@@ -165,5 +175,7 @@ public class LeagueObjectModelDB implements ILeagueObjectModelDB {
         callproc.cleanup();
        return leagueObjectModel;
     }
+
+
 
 }

@@ -94,8 +94,8 @@ public class GameConfig implements IGameConfig {
     }
 
     @Override
-    public HashMap getHashMap(String key){
-        HashMap mapToReturn = new HashMap();
+    public HashMap<String,Object> getHashMap(String key){
+        HashMap<String,Object> mapToReturn = new HashMap();
         JSONObject subObject = (JSONObject) ourJsonObject.get(key);
         if (subObject != null){
             for (Object subObjectkey:subObject.keySet()){
@@ -110,7 +110,7 @@ public class GameConfig implements IGameConfig {
     }
     @Override
     public String getValueFromOurObject(String configChildKey , String ourObjectKey) {
-        HashMap gameConfigChildObject = getHashMap(configChildKey);
+        HashMap<String,Object> gameConfigChildObject = getHashMap(configChildKey);
         String valueToReturn = String.valueOf(gameConfigChildObject.get(ourObjectKey));
         return valueToReturn;
 
