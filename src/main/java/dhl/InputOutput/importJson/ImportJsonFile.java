@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 public class ImportJsonFile {
     private String filePath = "";
 
-    public ImportJsonFile(String filePath){
+    public ImportJsonFile(String filePath) {
         this.filePath = filePath;
     }
 
@@ -19,9 +19,8 @@ public class ImportJsonFile {
         JSONObject JsonLeagueObject = null;
         JSONParser jsonParser = new JSONParser();
         String jsonFileIntoString = getJsonIntoString(filePath);
-        try{
-            if(new CheckInputFileFormat().isCorrectFormated(jsonFileIntoString)) {
-                System.out.println("Valid JSON file Received");
+        try {
+            if (new CheckInputFileFormat().isCorrectFormated(jsonFileIntoString)) {
                 FileReader JsonReader = new FileReader(filePath);
                 Object genricObject = jsonParser.parse(JsonReader);
                 JsonLeagueObject = (JSONObject) genricObject;

@@ -1,9 +1,9 @@
 package dhl.simulationStateMachineTest;
 
-import dhl.Mocks.JsonFilePathMock;
-import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.InputOutput.importJson.Interface.IJsonFilePath;
+import dhl.Mocks.JsonFilePathMock;
+import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.leagueModel.LeagueObjectModel;
 import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.simulationStateMachine.GameContext;
@@ -19,7 +19,7 @@ public class ImportStateLogicTest {
     LeagueObjectModelMocks leagueObjectModelMock;
 
     @BeforeEach
-    public void initObject(){
+    public void initObject() {
         ourGame = new GameContext();
         testClassObject = new ImportStateLogic();
         leagueObjectModelMock = new LeagueObjectModelMocks();
@@ -31,15 +31,15 @@ public class ImportStateLogicTest {
         IGameConfig gameConfig = null;
         ILeagueObjectModel newInMemoryLeague = new LeagueObjectModel();
         ILeagueObjectModel leagueObjectModel = new LeagueObjectModel();
-        leagueObjectModel = testClassObject.importAndGetLeagueObject(filePath.getFilePath(),gameConfig,newInMemoryLeague);
-        Assertions.assertEquals("Dalhousie Hockey League",leagueObjectModel.getLeagueName());
+        leagueObjectModel = testClassObject.importAndGetLeagueObject(filePath.getFilePath(), gameConfig, newInMemoryLeague);
+        Assertions.assertEquals("Dalhousie Hockey League", leagueObjectModel.getLeagueName());
     }
 
     @Test
-    public void findTeamTest(){
+    public void findTeamTest() {
         String team = "Ontario";
-        Assertions.assertTrue( testClassObject.findTeam(leagueObjectModelMock.getLeagueObjectMock() , team) != null);
-        Assertions.assertTrue( testClassObject.findTeam(leagueObjectModelMock.getLeagueObjectMock() , "Wrong Team") == null);
+        Assertions.assertTrue(testClassObject.findTeam(leagueObjectModelMock.getLeagueObjectMock(), team) != null);
+        Assertions.assertTrue(testClassObject.findTeam(leagueObjectModelMock.getLeagueObjectMock(), "Wrong Team") == null);
     }
 }
 

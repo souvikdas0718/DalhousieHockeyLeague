@@ -13,14 +13,14 @@ public class DatabaseObjectCreationDB {
     private IGeneralManagerDB generalManagerDB;
     private IGameConfigDB gameConfigDB;
 
-    public DatabaseObjectCreationDB(){
+    public DatabaseObjectCreationDB() {
         leagueDB = new LeagueDB();
         conferenceDB = new ConferenceDB();
         divisionDB = new DivisionDB();
         teamDB = new TeamDB();
         playerDB = new PlayerDB();
         freeAgentDB = new FreeAgentDB();
-        coachDB=new CoachDB();
+        coachDB = new CoachDB();
         generalManagerDB = new GeneralManagerDB();
         gameConfigDB = new GameConfigurationsDB();
     }

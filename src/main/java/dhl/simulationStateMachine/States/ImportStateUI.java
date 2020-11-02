@@ -3,14 +3,12 @@ package dhl.simulationStateMachine.States;
 import dhl.InputOutput.UI.IUserInputOutput;
 import dhl.InputOutput.UI.UserInputOutput;
 import dhl.InputOutput.importJson.Interface.IGameConfig;
+import dhl.InputOutput.importJson.JsonFilePath;
 import dhl.leagueModel.LeagueObjectModel;
 import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.simulationStateMachine.GameContext;
 import dhl.simulationStateMachine.Interface.IGameState;
-import dhl.InputOutput.importJson.JsonFilePath;
 import dhl.simulationStateMachine.States.Interface.IImportStateLogic;
-
-import java.util.Scanner;
 
 public class ImportStateUI implements IGameState {
 
@@ -29,19 +27,19 @@ public class ImportStateUI implements IGameState {
 
     @Override
     public void stateEntryProcess() {
-        while(option == -1 || option > 3) {
+        while (option == -1 || option > 3) {
             userInputPutput.printMessage("Please Enter one option");
             userInputPutput.printMessage("1 for Loading JSON");
             userInputPutput.printMessage("2 for Loading Existing Team from DB");
             userInputPutput.printMessage("0 To Exit");
 
-            try{
+            try {
                 option = Integer.parseInt(userInputPutput.getUserInput());
-            } catch(NumberFormatException exception){
+            } catch (NumberFormatException exception) {
                 userInputPutput.printMessage("This is not a Correct Option");
             }
         }
-        switch (option){
+        switch (option) {
             case 0:
                 userInputPutput.printMessage("Case:0");
                 System.exit(0);
@@ -57,13 +55,13 @@ public class ImportStateUI implements IGameState {
 
     @Override
     public void stateProcess() throws Exception {
-        if (validFilePath!= null){
+        if (validFilePath != null) {
             try {
                 IImportStateLogic objImportStateLogic = new ImportStateLogic();
                 newInMemoryLeague = objImportStateLogic.importAndGetLeagueObject(validFilePath, gameConfig, newInMemoryLeague);
 
                 userInputPutput.printMessage(newInMemoryLeague.getLeagueName() + "  Imported from the Json");
-            }catch(Exception e){
+            } catch (Exception e) {
                 userInputPutput.printMessage(e.getMessage());
                 System.exit(0);
             }
@@ -72,7 +70,7 @@ public class ImportStateUI implements IGameState {
 
     @Override
     public void stateExitProcess() {
-        if(ourGame.isGameInProgress()) {
+        if (ourGame.isGameInProgress()) {
             ourGame.setInMemoryLeague(newInMemoryLeague);
             ourGame.setGameConfig(gameConfig);
             if (option == 1) {

@@ -1,7 +1,5 @@
 package dhl.database.interfaceDB;
 
-import dhl.database.DatabaseObjectCreationDB;
-import dhl.leagueModel.interfaceModel.IPlayer;
 import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.leagueModel.interfaceModel.IPlayer;
 
@@ -10,14 +8,14 @@ import java.util.Map;
 
 public interface IPlayerDB {
 
-    public int insertPlayer(IPlayer player, int teamId, int leagueId )  throws Exception;
+    int insertPlayer(IPlayer player, int teamId, int leagueId) throws Exception;
 
-    public void updatePlayer(IPlayer player, String teamName, String leagueName )  throws Exception;
+    void updatePlayer(IPlayer player, String teamName, String leagueName) throws Exception;
 
-    public void insertRetiredPlayers(ILeagueObjectModel leagueObjectModel,
-                                     Map<String, List<IPlayer>> playersToRetire,
-                                     List<IPlayer> freeAgentsToRetire)  throws Exception;
+    void insertRetiredPlayers(ILeagueObjectModel leagueObjectModel,
+                              Map<String, List<IPlayer>> playersToRetire,
+                              List<IPlayer> freeAgentsToRetire) throws Exception;
 
-    public List<IPlayer> getPlayerList(int teamId,int leagueId) throws Exception;
+    List<IPlayer> getPlayerList(int teamId, int leagueId) throws Exception;
 
 }

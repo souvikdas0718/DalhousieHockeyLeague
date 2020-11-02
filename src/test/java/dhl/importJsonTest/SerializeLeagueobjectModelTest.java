@@ -1,18 +1,18 @@
 package dhl.importJsonTest;
 
+import dhl.InputOutput.importJson.DeserializeLeagueObjectModel;
 import dhl.InputOutput.importJson.Interface.IDeserializeLeagueObjectModel;
-import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.InputOutput.importJson.Interface.ISerializeLeagueobjectModel;
-import dhl.leagueModel.*;
 import dhl.InputOutput.importJson.SerializeLeagueobjectModel;
-import dhl.leagueModel.interfaceModel.*;
+import dhl.Mocks.LeagueObjectModelMocks;
+import dhl.Mocks.SerializedJsonMock;
+import dhl.leagueModel.LeagueObjectModel;
+import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.json.simple.JSONObject;
-import dhl.InputOutput.importJson.DeserializeLeagueObjectModel;
-import dhl.Mocks.SerializedJsonMock;
 
 public class SerializeLeagueobjectModelTest {
 
@@ -22,7 +22,7 @@ public class SerializeLeagueobjectModelTest {
     SerializedJsonMock mockSerializedJson;
 
     @BeforeEach
-    public void initObject(){
+    public void initObject() {
         serializeLeagueobjectModel = new SerializeLeagueobjectModel();
         deserializeLeagueobjectModel = new DeserializeLeagueObjectModel();
         mockLeagueObjectModel = new LeagueObjectModelMocks();
@@ -30,8 +30,8 @@ public class SerializeLeagueobjectModelTest {
     }
 
     @Test
-    void serializeLeagueObjectModelTest() throws Exception{
-        ILeagueObjectModel leagueObjectModel=new LeagueObjectModel();
+    void serializeLeagueObjectModelTest() throws Exception {
+        ILeagueObjectModel leagueObjectModel = new LeagueObjectModel();
 
         String serializedleagueModel = serializeLeagueobjectModel.serializeLeagueObjectModel(mockLeagueObjectModel.leagueModelMock());
 
@@ -41,10 +41,10 @@ public class SerializeLeagueobjectModelTest {
         leagueObjectModel = deserializeLeagueobjectModel.deserializeLeagueObjectJson(jsonLeagueObject);
 
         Assertions.assertEquals(serializedleagueModel, mockSerializedJson.serializedJson());
-        Assertions.assertEquals("Dhl",leagueObjectModel.getLeagueName());
-        Assertions.assertEquals(2,leagueObjectModel.getConferences().size());
-        Assertions.assertEquals(2,leagueObjectModel.getFreeAgents().size());
-        Assertions.assertEquals(2,leagueObjectModel.getCoaches().size());
-        Assertions.assertEquals(2,leagueObjectModel.getGeneralManagers().size());
+        Assertions.assertEquals("Dhl", leagueObjectModel.getLeagueName());
+        Assertions.assertEquals(2, leagueObjectModel.getConferences().size());
+        Assertions.assertEquals(2, leagueObjectModel.getFreeAgents().size());
+        Assertions.assertEquals(2, leagueObjectModel.getCoaches().size());
+        Assertions.assertEquals(2, leagueObjectModel.getGeneralManagers().size());
     }
 }

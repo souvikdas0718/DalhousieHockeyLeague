@@ -4,14 +4,17 @@ import dhl.InputOutput.importJson.GameConfig;
 import dhl.InputOutput.importJson.ImportJsonFile;
 import dhl.Mocks.JsonFilePathMock;
 import dhl.Mocks.LeagueObjectModelMocks;
-import dhl.leagueModel.interfaceModel.ITraining;
-import dhl.leagueModel.Training;
-import dhl.leagueModel.*;
-import dhl.leagueModel.interfaceModel.*;
 import dhl.database.interfaceDB.ILeagueObjectModelDB;
+import dhl.leagueModel.InjurySystem;
+import dhl.leagueModel.LeagueObjectModel;
+import dhl.leagueModel.Training;
+import dhl.leagueModel.interfaceModel.IInjurySystem;
+import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
+import dhl.leagueModel.interfaceModel.IPlayer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,50 +32,50 @@ public class TrainingTest {
         importJsonFile = new ImportJsonFile(filePathMock.getFilePath());
         IInjurySystem injurySystem = new InjurySystem();
         gameConfig = new GameConfig(importJsonFile.getJsonObject());
-        trainingParameterized = new Training(injurySystem,gameConfig);
+        trainingParameterized = new Training(injurySystem, gameConfig);
         leagueObjectModelMocks = new LeagueObjectModelMocks();
     }
 
     @Test
-    public void updatePlayerStatsTest() throws Exception{
-        ILeagueObjectModelDB mockLeagueObject=new MockDatabase();
-        ILeagueObjectModel newLeagueObject=new LeagueObjectModel();
-        newLeagueObject = trainingParameterized.updatePlayerStats(mockLeagueObject.loadLeagueModel("Dhl","Ontario"));
+    public void updatePlayerStatsTest() throws Exception {
+        ILeagueObjectModelDB mockLeagueObject = new MockDatabase();
+        ILeagueObjectModel newLeagueObject = new LeagueObjectModel();
+        newLeagueObject = trainingParameterized.updatePlayerStats(mockLeagueObject.loadLeagueModel("Dhl", "Ontario"));
 
         Assertions.assertNotNull("Dhl", newLeagueObject.getLeagueName());
     }
 
     @Test
-    public void playerStatLessThanHeadCoachStatTest() throws Exception{
-        List<IPlayer> updatedPlayersList=new ArrayList<>();
-        Double [] randomValues = {0.01,0.2,0.3,0.1};
+    public void playerStatLessThanHeadCoachStatTest() throws Exception {
+        List<IPlayer> updatedPlayersList = new ArrayList<>();
+        Double[] randomValues = {0.01, 0.2, 0.3, 0.1};
 
         updatedPlayersList = trainingParameterized.playerStatLessThanHeadCoachStat(
                 leagueObjectModelMocks.getPlayerArrayMock(),
                 leagueObjectModelMocks.getSingleCoach(), randomValues);
 
-        for(int i=0; i<updatedPlayersList.size(); i++){
+        for (int i = 0; i < updatedPlayersList.size(); i++) {
 
-            Assertions.assertEquals(11,updatedPlayersList.get(i).getPlayerStats().getSkating());
-            Assertions.assertEquals(11,updatedPlayersList.get(i).getPlayerStats().getShooting());
-            Assertions.assertEquals(11,updatedPlayersList.get(i).getPlayerStats().getChecking());
-            Assertions.assertEquals(11,updatedPlayersList.get(i).getPlayerStats().getSaving());
+            Assertions.assertEquals(11, updatedPlayersList.get(i).getPlayerStats().getSkating());
+            Assertions.assertEquals(11, updatedPlayersList.get(i).getPlayerStats().getShooting());
+            Assertions.assertEquals(11, updatedPlayersList.get(i).getPlayerStats().getChecking());
+            Assertions.assertEquals(11, updatedPlayersList.get(i).getPlayerStats().getSaving());
         }
     }
 
     @Test
     public void playerStatMoreThanHeadCoachStatTest() throws Exception {
-        List<IPlayer> updatedPlayersList=new ArrayList<>();
-        Double [] randomValues = {0.1,0.2,0.3,0.4};
+        List<IPlayer> updatedPlayersList = new ArrayList<>();
+        Double[] randomValues = {0.1, 0.2, 0.3, 0.4};
 
         trainingParameterized.gameConfig = new GameConfig(importJsonFile.getJsonObject());
         trainingParameterized.playerStatMoreThanHeadCoachStat(leagueObjectModelMocks.getPlayerArrayMock()
                 , leagueObjectModelMocks.getSingleCoach(), randomValues);
     }
-    
+
     @Test
-    public void getRandomValueTest(){
+    public void getRandomValueTest() {
         Double randoValue = trainingParameterized.getRandomValue();
-        Assertions.assertTrue(randoValue<1);
-    } 
+        Assertions.assertTrue(randoValue < 1);
+    }
 }

@@ -5,11 +5,11 @@ import dhl.leagueModel.interfaceModel.ITeam;
 
 public interface IUpdateUserTeamRoster {
 
-    public void dropSkater(ITeam team, ILeagueObjectModel leagueObjectModel);
+    void dropSkater(ITeam team, ILeagueObjectModel leagueObjectModel);
 
-    public void dropGoalie(ITeam team, ILeagueObjectModel leagueObjectModel);
+    void dropGoalie(ITeam team, ILeagueObjectModel leagueObjectModel);
 
-    public void addGoalie(ITeam team, ILeagueObjectModel leagueObjectModel);
+    void addGoalie(ITeam team, ILeagueObjectModel leagueObjectModel);
 
-    public void addSkater(ITeam team, ILeagueObjectModel leagueObjectModel);
+    void addSkater(ITeam team, ILeagueObjectModel leagueObjectModel);
 }

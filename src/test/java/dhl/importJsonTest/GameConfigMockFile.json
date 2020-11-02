@@ -1,27 +1,26 @@
 {
-        "leagueName":"Dalhousie Hockey League",
-        "gameplayConfig":{
-        "aging":{
-        "averageRetirementAge":35,
-        "maximumAge":50
-        },
-        "gameResolver":{
-        "randomWinChance":0.1
-        },
-        "injuries":{
-        "randomInjuryChance":1.0,
-        "injuryDaysLow":1,
-        "injuryDaysHigh":1
-        },
-        "training":{
-        "daysUntilStatIncreaseCheck":100
-        },
-        "trading":{
-        "lossPoint":8,
-        "randomTradeOfferChance":0.05,
-        "maxPlayersPerTrade":2,
-        "randomAcceptanceChance":0.05
-        }
-        }
-
+  "leagueName": "Dalhousie Hockey League",
+  "gameplayConfig": {
+    "aging": {
+      "averageRetirementAge": 35,
+      "maximumAge": 50
+    },
+    "gameResolver": {
+      "randomWinChance": 0.1
+    },
+    "injuries": {
+      "randomInjuryChance": 1.0,
+      "injuryDaysLow": 1,
+      "injuryDaysHigh": 1
+    },
+    "training": {
+      "daysUntilStatIncreaseCheck": 100
+    },
+    "trading": {
+      "lossPoint": 8,
+      "randomTradeOfferChance": 0.05,
+      "maxPlayersPerTrade": 2,
+      "randomAcceptanceChance": 0.05
+    }
+  }
 }

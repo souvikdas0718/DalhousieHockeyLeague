@@ -16,7 +16,7 @@ public class MockUserInputOutput implements IUserInputOutput {
         return mockOutput;
     }
 
-    public void setMockOutput(String s){
+    public void setMockOutput(String s) {
         this.mockOutput = s;
     }
 

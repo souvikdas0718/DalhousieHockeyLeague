@@ -2,9 +2,7 @@ package dhl.leagueModelTests;
 
 import dhl.leagueModel.Coach;
 import dhl.leagueModel.CommonValidation;
-import dhl.leagueModel.PlayerStatistics;
 import dhl.leagueModel.interfaceModel.ICoach;
-import dhl.leagueModel.interfaceModel.IPlayerStatistics;
 import dhl.leagueModel.interfaceModel.IValidation;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -17,64 +15,65 @@ public class CoachTest {
     IValidation validate;
 
     @BeforeEach()
-    public void initObject(){
-        validate=new CommonValidation();
+    public void initObject() {
+        validate = new CommonValidation();
         coachDefault = new Coach();
-        coach =new Coach("Mary Smith",0.1,0.2,0.5,1.0);
+        coach = new Coach("Mary Smith", 0.1, 0.2, 0.5, 1.0);
     }
 
     @Test
-    public void CoachDefaultConstructorTest(){
-        Assertions.assertTrue(coachDefault.getCoachName().isEmpty());
+    public void CoachDefaultConstructorTest() {
+        String name = coachDefault.getCoachName();
+        Assertions.assertTrue(name.length() == 0);
     }
 
     @Test
     void getCoachNameTest() {
-        Assertions.assertEquals("Mary Smith",coach.getCoachName());
+        Assertions.assertEquals("Mary Smith", coach.getCoachName());
     }
 
     @Test
     void getSkatingTest() {
-        Assertions.assertEquals(0.1,coach.getSkating());
+        Assertions.assertEquals(0.1, coach.getSkating());
     }
 
     @Test
     void getShootingTest() {
-        Assertions.assertEquals(0.2,coach.getShooting());
+        Assertions.assertEquals(0.2, coach.getShooting());
     }
 
     @Test
     void getCheckingTest() {
-        Assertions.assertEquals(0.5,coach.getChecking());
+        Assertions.assertEquals(0.5, coach.getChecking());
     }
 
     @Test
     void getSavingTest() {
-        Assertions.assertEquals(1.0,coach.getSaving());
+        Assertions.assertEquals(1.0, coach.getSaving());
     }
 
     @Test
-    void checkIfCoachValidTest() throws Exception{
+    void checkIfCoachValidTest() throws Exception {
 
-       Assertions.assertTrue(coach.checkIfCoachValid(validate));
+        Assertions.assertTrue(coach.checkIfCoachValid(validate));
     }
 
     @Test
-    void checkCoachStatisticsTest() throws Exception{
-        ICoach coach = new Coach("Mary Smith",0.1,0,3,1);
-        Exception errorMsg=Assertions.assertThrows(Exception.class,() ->{
+    void checkCoachStatisticsTest() throws Exception {
+        ICoach coach = new Coach("Mary Smith", 0.1, 0, 3, 1);
+        Exception errorMsg = Assertions.assertThrows(Exception.class, () -> {
             coach.checkIfCoachValid(validate);
         });
         Assertions.assertTrue(errorMsg.getMessage().contains("Coach statistics must be between 0 and 1"));
     }
 
     @Test
-    void checkCoachStatisticsValidTest() throws Exception{
-        Assertions.assertDoesNotThrow(()->coach.checkIfCoachValid(validate));
+    void checkCoachStatisticsValidTest() throws Exception {
+        Assertions.assertDoesNotThrow(() -> coach.checkIfCoachValid(validate));
     }
 
     @AfterEach()
-    public void destroyObject(){
-        coach=null;
+    public void destroyObject() {
+        coach = null;
     }
 }

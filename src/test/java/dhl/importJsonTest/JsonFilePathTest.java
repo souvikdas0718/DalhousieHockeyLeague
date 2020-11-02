@@ -1,7 +1,7 @@
 package dhl.importJsonTest;
 
-import dhl.Mocks.JsonFilePathMock;
 import dhl.InputOutput.importJson.JsonFilePath;
+import dhl.Mocks.JsonFilePathMock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,15 +13,15 @@ public class JsonFilePathTest {
     JsonFilePathMock jsonDataMock;
 
     @BeforeEach
-    public void initObject(){
+    public void initObject() {
         testClassObject = new JsonFilePath();
         jsonDataMock = new JsonFilePathMock();
     }
 
     @Test
-    public void validatePathTest(){
+    public void validatePathTest() {
         assertFalse(testClassObject.validatePath("Wrong Json File Path"));
         System.out.println();
-        assertTrue( testClassObject.validatePath(jsonDataMock.getFilePath()) );
+        assertTrue(testClassObject.validatePath(jsonDataMock.getFilePath()));
     }
 }

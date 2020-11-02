@@ -9,12 +9,12 @@ public class PlayerStatistics implements IPlayerStatistics {
     private int checking;
     private int saving;
 
-    public PlayerStatistics(int age, int skating,int shooting,int checking, int saving){
-        this.age=age;
-        this.skating=skating;
-        this.shooting=shooting;
-        this.checking=checking;
-        this.saving=saving;
+    public PlayerStatistics(int age, int skating, int shooting, int checking, int saving) {
+        this.age = age;
+        this.skating = skating;
+        this.shooting = shooting;
+        this.checking = checking;
+        this.saving = saving;
     }
 
     public int getAge() {
@@ -57,14 +57,14 @@ public class PlayerStatistics implements IPlayerStatistics {
         this.saving = saving;
     }
 
-    public void checkPlayerStatistics() throws Exception{
-        if(isStatValueInvalid(saving) || isStatValueInvalid(checking) || isStatValueInvalid(shooting) || isStatValueInvalid(skating)){
+    public void checkPlayerStatistics() throws Exception {
+        if (isStatValueInvalid(saving) || isStatValueInvalid(checking) || isStatValueInvalid(shooting) || isStatValueInvalid(skating)) {
             throw new Exception("Player statistics must be between 1 and 20");
         }
     }
 
-    public boolean isStatValueInvalid(double statValue){
-        if(statValue<1 || statValue >20){
+    public boolean isStatValueInvalid(double statValue) {
+        if (statValue < 1 || statValue > 20) {
             return true;
         }
         return false;

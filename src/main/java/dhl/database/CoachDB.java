@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CoachDB implements ICoachDB {
-    public int insertCoach(ICoach coach, int teamId, int leagueId )  throws Exception {
-        int coachId =0;
+    public int insertCoach(ICoach coach, int teamId, int leagueId) throws Exception {
+        int coachId = 0;
 
         CallStoredProcedure callproc = new CallStoredProcedure("insertCoach(?,?,?,?,?,?,?)");
         callproc.setParameter(1, coach.getCoachName());
@@ -24,24 +24,19 @@ public class CoachDB implements ICoachDB {
         callproc.setParameter(7, leagueId);
         ResultSet results = callproc.executeWithResults();
 
-        if (null != results) {
+        if (null == results) {
+            throw new Exception("Coach not inserted properly");
+        } else {
             while (results.next()) {
                 coachId = results.getInt("coach_Id");
             }
         }
-        else {
-            throw new Exception("Coach not inserted properly");
-        }
-
         callproc.cleanup();
-
         return coachId;
     }
 
-    public void updateCoach(ICoach coach, String teamName, String leagueName)  throws Exception
-    {
-        try
-        {
+    public void updateCoach(ICoach coach, String teamName, String leagueName) throws Exception {
+        try {
             CallStoredProcedure callproc = new CallStoredProcedure("updateCoach(?,?,?,?,?,?,?)");
             callproc.setParameter(1, coach.getCoachName());
             callproc.setParameter(2, coach.getSkating());
@@ -52,14 +47,13 @@ public class CoachDB implements ICoachDB {
             callproc.setParameter(7, leagueName);
             callproc.execute();
             callproc.cleanup();
-        }
-        catch (SQLException throwables) {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
 
-    public int insertUnassignedCoach(ICoach coach, int leagueId )  throws Exception {
-        int coachId =0;
+    public int insertUnassignedCoach(ICoach coach, int leagueId) throws Exception {
+        int coachId = 0;
 
         CallStoredProcedure callproc = new CallStoredProcedure("`insertUnassignedCoaches`(?,?,?,?,?,?)");
         callproc.setParameter(1, coach.getCoachName());
@@ -70,13 +64,12 @@ public class CoachDB implements ICoachDB {
         callproc.setParameter(6, leagueId);
         ResultSet results = callproc.executeWithResults();
 
-        if (null != results) {
-            while (results.next()) {
-                coachId = results.getInt("coach_Id");
-            }
-        }
-        else {
+        if (results == null) {
             throw new Exception("Coach not inserted properly");
+        }
+
+        while (results.next()) {
+            coachId = results.getInt("coach_Id");
         }
 
         callproc.cleanup();
@@ -84,20 +77,20 @@ public class CoachDB implements ICoachDB {
         return coachId;
     }
 
-    public ICoach getTeamCoach(int teamId,int leagueId, DatabaseObjectCreationDB databaseObjectCreationDB) throws Exception {
-        ICoach headCoach=null;
+    public ICoach getTeamCoach(int teamId, int leagueId, DatabaseObjectCreationDB databaseObjectCreationDB) throws Exception {
+        ICoach headCoach = null;
         CallStoredProcedure callCoachProc = new CallStoredProcedure("loadCoach(?,?)");
         callCoachProc.setParameter(1, teamId);
         callCoachProc.setParameter(2, leagueId);
         ResultSet coachResultSet = callCoachProc.executeWithResults();
 
-        if (coachResultSet==null){
+        if (coachResultSet == null) {
             throw new Exception("Error loading coach");
         }
 
-        while(coachResultSet.next()){
-            headCoach=new Coach(coachResultSet.getString("coachName"),coachResultSet.getInt("skating"),
-                    coachResultSet.getInt("shooting"),coachResultSet.getInt("checking"),coachResultSet.getInt("saving"));
+        while (coachResultSet.next()) {
+            headCoach = new Coach(coachResultSet.getString("coachName"), coachResultSet.getInt("skating"),
+                    coachResultSet.getInt("shooting"), coachResultSet.getInt("checking"), coachResultSet.getInt("saving"));
         }
         callCoachProc.cleanup();
         return headCoach;
@@ -109,13 +102,13 @@ public class CoachDB implements ICoachDB {
         callAgentProc.setParameter(1, leagueId);
         ResultSet coachResultSet = callAgentProc.executeWithResults();
 
-        if (coachResultSet==null){
+        if (coachResultSet == null) {
             throw new Exception("Error loading Coaches List");
         }
 
         while (coachResultSet.next()) {
-            ICoach headCoach=new Coach(coachResultSet.getString("coachName"),coachResultSet.getInt("skating"),
-                    coachResultSet.getInt("shooting"),coachResultSet.getInt("checking"),coachResultSet.getInt("saving"));
+            ICoach headCoach = new Coach(coachResultSet.getString("coachName"), coachResultSet.getInt("skating"),
+                    coachResultSet.getInt("shooting"), coachResultSet.getInt("checking"), coachResultSet.getInt("saving"));
             coaches.add(headCoach);
         }
         callAgentProc.cleanup();

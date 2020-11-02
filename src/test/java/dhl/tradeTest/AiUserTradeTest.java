@@ -28,7 +28,7 @@ public class AiUserTradeTest {
     LeagueObjectModel leagueObjectModel;
 
     @BeforeEach
-    public void initObject(){
+    public void initObject() {
         tradeMock = new TradeMock();
         ITeam offeringTeam = tradeMock.getTeamWithBadPlayer();
         ITeam recevingTeam = tradeMock.getTeamWithGoodPlayer();
@@ -39,12 +39,12 @@ public class AiUserTradeTest {
         ArrayList<IPlayer> playersWanted = new ArrayList<>();
         playersWanted.add(recevingTeam.getPlayers().get(0));
 
-        ITradeOffer tradeOffer = new ExchangingPlayerTradeOffer(offeringTeam,recevingTeam,offeringPlayers,playersWanted);
+        ITradeOffer tradeOffer = new ExchangingPlayerTradeOffer(offeringTeam, recevingTeam, offeringPlayers, playersWanted);
         ioObjectMock = new MockUserInputOutput();
         IUpdateUserTeamRoster updateUserTeamRoster = new UpdateUserTeamRoster(ioObjectMock);
-        testClassObject = new AiUserTrade(tradeOffer , ioObjectMock, updateUserTeamRoster);
+        testClassObject = new AiUserTrade(tradeOffer, ioObjectMock, updateUserTeamRoster);
         leagueObjectModelMocks = new LeagueObjectModelMocks();
-        leagueObjectModel= (LeagueObjectModel) leagueObjectModelMocks.getLeagueObjectMock();
+        leagueObjectModel = (LeagueObjectModel) leagueObjectModelMocks.getLeagueObjectMock();
     }
 
     @Test
@@ -52,20 +52,20 @@ public class AiUserTradeTest {
         leagueObjectModel.freeAgents = tradeMock.get50FreeAgents();
         ITeam team = tradeMock.getTeamWithGoodPlayer();
 
-        ((MockUserInputOutput)ioObjectMock).setMockOutput("1");
-        testClassObject.validateTeamRosterAfterTrade(team , leagueObjectModel);
+        ((MockUserInputOutput) ioObjectMock).setMockOutput("1");
+        testClassObject.validateTeamRosterAfterTrade(team, leagueObjectModel);
         Assertions.assertTrue(team.checkIfSkatersGoaliesValid());
 
         team.getPlayers().add(tradeMock.getWeakPlayer("randomPlayer1"));
         team.getPlayers().add(tradeMock.getWeakPlayer("randomPlayer2"));
         IPlayer player = new Player("player1", "goalie", false,
-                new PlayerStatistics(25,10,10,10,10));
+                new PlayerStatistics(25, 10, 10, 10, 10));
         team.getPlayers().add(player);
         player = new Player("player2", "goalie", false,
-                new PlayerStatistics(25,3,1,4,5));
+                new PlayerStatistics(25, 3, 1, 4, 5));
         team.getPlayers().add(player);
-        ((MockUserInputOutput)ioObjectMock).setMockOutput("0");
-        testClassObject.validateTeamRosterAfterTrade(team , leagueObjectModel);
+        ((MockUserInputOutput) ioObjectMock).setMockOutput("0");
+        testClassObject.validateTeamRosterAfterTrade(team, leagueObjectModel);
         Assertions.assertTrue(team.checkIfSkatersGoaliesValid());
     }
 
@@ -79,13 +79,13 @@ public class AiUserTradeTest {
         Assertions.assertFalse(testClassObject.isTradeAccepted());
 
         ((MockUserInputOutput) ioObjectMock).setMockOutput("3");
-        Exception error=Assertions.assertThrows(Exception.class,() ->{
+        Exception error = Assertions.assertThrows(Exception.class, () -> {
             Assertions.assertFalse(testClassObject.isTradeAccepted());
         });
         Assertions.assertTrue(error.getMessage().contains("Wrong Input please give valid input"));
 
         ((MockUserInputOutput) ioObjectMock).setMockOutput("sdasd");
-        Exception error2=Assertions.assertThrows(Exception.class,() ->{
+        Exception error2 = Assertions.assertThrows(Exception.class, () -> {
             Assertions.assertFalse(testClassObject.isTradeAccepted());
         });
         Assertions.assertTrue(error.getMessage().contains("Wrong Input please give valid input"));

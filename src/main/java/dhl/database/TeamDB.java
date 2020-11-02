@@ -5,8 +5,6 @@ import dhl.database.interfaceDB.ICoachDB;
 import dhl.database.interfaceDB.IPlayerDB;
 import dhl.database.interfaceDB.ITeamDB;
 import dhl.leagueModel.Team;
-import dhl.leagueModel.interfaceModel.ICoach;
-import dhl.leagueModel.interfaceModel.IPlayer;
 import dhl.leagueModel.interfaceModel.ITeam;
 
 import java.sql.ResultSet;
@@ -15,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TeamDB implements ITeamDB {
-    public int insertTeam(ITeam team, int divisionId, int leagueId)  throws Exception {
+    public int insertTeam(ITeam team, int divisionId, int leagueId) throws Exception {
         int teamId = 0;
 
         try {
@@ -26,26 +24,24 @@ public class TeamDB implements ITeamDB {
             callproc.setParameter(4, leagueId);
             ResultSet results = callproc.executeWithResults();
 
-            if (null != results) {
-                while (results.next()) {
-
-                    teamId = results.getInt("team_Id");
-                }
-            }
-            else {
+            if (null == results) {
                 throw new Exception("Team not inserted properly");
+            }
+            while (results.next()) {
+
+                teamId = results.getInt("team_Id");
             }
 
             callproc.cleanup();
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException exception) {
+            throw new Exception("Team not inserted properly");
         }
 
         return teamId;
     }
 
-    public void updateTeam(ITeam team, String divisionName, String leagueName)  throws Exception {
+    public void updateTeam(ITeam team, String divisionName, String leagueName) throws Exception {
         try {
             CallStoredProcedure callproc = new CallStoredProcedure("updateTeam(?,?,?,?)");
             callproc.setParameter(1, team.getTeamName());
@@ -55,13 +51,13 @@ public class TeamDB implements ITeamDB {
             callproc.executeWithResults();
             callproc.cleanup();
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException exception) {
+            throw new Exception("Update team failed");
         }
     }
 
     public boolean checkIfTeamAlreadyExists(String teamName, String divisionName) throws Exception {
-        boolean isexist=false;
+        boolean isexist = false;
 
         CallStoredProcedure callproc = new CallStoredProcedure("checkIfTeamAlreadyExists(?,?,?)");
         callproc.setParameter(1, teamName);
@@ -69,13 +65,12 @@ public class TeamDB implements ITeamDB {
         callproc.registerOutputParameterBoolean(3);
         ResultSet results = callproc.executeWithResults();
 
-        if (null != results) {
-            while (results.next()) {
-                isexist = results.getBoolean("team_Exists");
-            }
-        }
-        else {
+        if (null == results) {
             throw new Exception("Error executing check on team");
+
+        }
+        while (results.next()) {
+            isexist = results.getBoolean("team_Exists");
         }
 
         callproc.cleanup();
@@ -83,7 +78,7 @@ public class TeamDB implements ITeamDB {
         return isexist;
     }
 
-    public List<ITeam> getTeamList(int divisionId, int leagueId ,DatabaseObjectCreationDB databaseObjectCreationDB) throws Exception {
+    public List<ITeam> getTeamList(int divisionId, int leagueId, DatabaseObjectCreationDB databaseObjectCreationDB) throws Exception {
 
         ICoachDB coachDB = databaseObjectCreationDB.getCoachDB();
         IPlayerDB playerDB = databaseObjectCreationDB.getPlayerDB();
@@ -95,14 +90,14 @@ public class TeamDB implements ITeamDB {
 
         ResultSet teamResultSet = callTeamProc.executeWithResults();
 
-        if (teamResultSet==null){
+        if (teamResultSet == null) {
             throw new Exception("Error loading teams");
         }
 
-        while(teamResultSet.next()){
+        while (teamResultSet.next()) {
             ITeam team = new Team(teamResultSet.getString("teamName"),
-                    teamResultSet.getString("generalManager"),coachDB.getTeamCoach(teamResultSet.getInt("teamId"),leagueId,databaseObjectCreationDB),
-                    playerDB.getPlayerList(teamResultSet.getInt("teamId"),leagueId));
+                    teamResultSet.getString("generalManager"), coachDB.getTeamCoach(teamResultSet.getInt("teamId"), leagueId, databaseObjectCreationDB),
+                    playerDB.getPlayerList(teamResultSet.getInt("teamId"), leagueId));
             teamList.add(team);
         }
         callTeamProc.cleanup();

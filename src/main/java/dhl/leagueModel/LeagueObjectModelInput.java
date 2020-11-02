@@ -13,12 +13,12 @@ public class LeagueObjectModelInput implements ILeagueObjectModelInput {
     ILeagueObjectModelValidation leagueObjectModelValidation;
     ILeagueObjectModelDB leagueObjectModelDB;
 
-    public LeagueObjectModelInput(String leagueName, String conferenceName, String divisionName, ITeam newlyCreatedTeam, ILeagueObjectModelValidation leagueObjectModelValidation, ILeagueObjectModelDB leagueObjectModelDB ){
-        this.leagueName=leagueName;
-        this.conferenceName=conferenceName;
-        this.divisionName=divisionName;
-        this.newlyCreatedTeam=newlyCreatedTeam;
-        this.leagueObjectModelValidation=leagueObjectModelValidation;
+    public LeagueObjectModelInput(String leagueName, String conferenceName, String divisionName, ITeam newlyCreatedTeam, ILeagueObjectModelValidation leagueObjectModelValidation, ILeagueObjectModelDB leagueObjectModelDB) {
+        this.leagueName = leagueName;
+        this.conferenceName = conferenceName;
+        this.divisionName = divisionName;
+        this.newlyCreatedTeam = newlyCreatedTeam;
+        this.leagueObjectModelValidation = leagueObjectModelValidation;
         this.leagueObjectModelDB = leagueObjectModelDB;
     }
 
@@ -42,5 +42,7 @@ public class LeagueObjectModelInput implements ILeagueObjectModelInput {
         return leagueObjectModelValidation;
     }
 
-    public ILeagueObjectModelDB getLeagueObjectModelDB() { return leagueObjectModelDB; }
+    public ILeagueObjectModelDB getLeagueObjectModelDB() {
+        return leagueObjectModelDB;
+    }
 }

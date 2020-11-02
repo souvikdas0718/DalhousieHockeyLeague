@@ -13,7 +13,7 @@ public class InjuryCheck implements ISimulationSeasonState {
     }
 
     @Override
-    public void seasonStateProcess()  {
+    public void seasonStateProcess() {
         // checks injuries
     }
 

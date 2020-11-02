@@ -22,7 +22,7 @@ public class DatabaseInitialize {
     public DatabaseInitialize() throws IOException {
         DatabaseConfiguration defaultConfig = null;
 
-            defaultConfig = new DatabaseConfiguration();
+        defaultConfig = new DatabaseConfiguration();
 
         dbURL = defaultConfig.getDatabaseURL();
         dbUserName = defaultConfig.getDatabaseUserName();

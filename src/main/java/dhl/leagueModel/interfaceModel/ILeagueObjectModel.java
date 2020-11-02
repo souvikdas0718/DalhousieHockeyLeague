@@ -13,19 +13,19 @@ public interface ILeagueObjectModel {
 
     List<IPlayer> getFreeAgents();
 
-    List<ICoach> getCoaches() ;
+    List<ICoach> getCoaches();
 
     List<IGeneralManager> getGeneralManagers();
 
     IGameConfig getGameConfig();
 
-    boolean checkIfLeagueModelValid(IValidation validation,ILeagueObjectModelValidation leagueObjectModelValidation) throws Exception;
+    boolean checkIfLeagueModelValid(IValidation validation, ILeagueObjectModelValidation leagueObjectModelValidation) throws Exception;
 
     ILeagueObjectModel saveLeagueObjectModel(ILeagueObjectModelDB leagueDatabase, ILeagueObjectModelInput saveLeagueInput) throws Exception;
 
     ILeagueObjectModel loadLeagueObjectModel(ILeagueObjectModelDB leagueDatabase, String leagueName, String teamName) throws Exception;
 
-    ILeagueObjectModel updateLeagueObjectModel(ILeagueObjectModelDB leagueDatabase ) throws Exception;
+    ILeagueObjectModel updateLeagueObjectModel(ILeagueObjectModelDB leagueDatabase) throws Exception;
 
 
 }

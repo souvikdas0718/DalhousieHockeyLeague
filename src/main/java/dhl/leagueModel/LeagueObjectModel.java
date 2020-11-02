@@ -1,8 +1,17 @@
 package dhl.leagueModel;
 
 import dhl.InputOutput.importJson.Interface.IGameConfig;
-import dhl.leagueModel.interfaceModel.*;
 import dhl.database.interfaceDB.ILeagueObjectModelDB;
+import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
+import dhl.leagueModel.interfaceModel.IConference;
+import dhl.leagueModel.interfaceModel.IDivision;
+import dhl.leagueModel.interfaceModel.ITeam;
+import dhl.leagueModel.interfaceModel.IPlayer;
+import dhl.leagueModel.interfaceModel.ICoach;
+import dhl.leagueModel.interfaceModel.IGeneralManager;
+import dhl.leagueModel.interfaceModel.ILeagueObjectModelValidation;
+import dhl.leagueModel.interfaceModel.ILeagueObjectModelInput;
+import dhl.leagueModel.interfaceModel.IValidation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,24 +19,24 @@ import java.util.List;
 public class LeagueObjectModel implements ILeagueObjectModel {
     public String leagueName;
     public List<IConference> conferences;
-    public List<IPlayer>freeAgents;
+    public List<IPlayer> freeAgents;
     public List<ICoach> coaches;
-    public List <IGeneralManager> generalManagers;
+    public List<IGeneralManager> generalManagers;
     public IGameConfig gameConfig;
 
-    public LeagueObjectModel(){
-        leagueName="";
-        conferences=new ArrayList<>();
+    public LeagueObjectModel() {
+        leagueName = "";
+        conferences = new ArrayList<>();
         freeAgents = new ArrayList<>();
     }
 
-    public LeagueObjectModel(String leagueName, List<IConference> conferences, List<IPlayer>freeAgents, List<ICoach> coaches, List<IGeneralManager> managers, IGameConfig gameConfig){
-        this.leagueName=leagueName;
-        this.conferences=conferences;
-        this.freeAgents=freeAgents;
-        this.coaches=coaches;
-        this.generalManagers=managers;
-        this.gameConfig=gameConfig;
+    public LeagueObjectModel(String leagueName, List<IConference> conferences, List<IPlayer> freeAgents, List<ICoach> coaches, List<IGeneralManager> managers, IGameConfig gameConfig) {
+        this.leagueName = leagueName;
+        this.conferences = conferences;
+        this.freeAgents = freeAgents;
+        this.coaches = coaches;
+        this.generalManagers = managers;
+        this.gameConfig = gameConfig;
     }
 
     public String getLeagueName() {
@@ -58,45 +67,44 @@ public class LeagueObjectModel implements ILeagueObjectModel {
         return generalManagers;
     }
 
-    public boolean checkIfLeagueModelValid(IValidation validation,ILeagueObjectModelValidation leagueObjectModelValidation) throws Exception{
-        return leagueObjectModelValidation.checkIfLeagueObjectModelValid(validation,this);
+    public boolean checkIfLeagueModelValid(IValidation validation, ILeagueObjectModelValidation leagueObjectModelValidation) throws Exception {
+        return leagueObjectModelValidation.checkIfLeagueObjectModelValid(validation, this);
     }
 
-    public ILeagueObjectModel saveLeagueObjectModel(ILeagueObjectModelDB leagueDatabase, ILeagueObjectModelInput saveLeagueInput) throws Exception{
-        ILeagueObjectModelValidation leagueObjectModelValidation=saveLeagueInput.getLeagueObjectModelValidation();
-        leagueObjectModelValidation.checkUserInputForLeague(this,saveLeagueInput);
-        List<IConference> conferenceArrayList=this.getConferences();
-        boolean newTeamAddedToLeague=false;
-        for(int i=0; i< conferenceArrayList.size();i++){
-            IConference conference=  conferenceArrayList.get(i);
-            if(conference.getConferenceName()==saveLeagueInput.getConferenceName()){
-                List<IDivision> divisionArrayList=conference.getDivisions();
-                for(int j=0;j<divisionArrayList.size();j++){
-                    IDivision division=divisionArrayList.get(j);
-                    if(division.getDivisionName()==saveLeagueInput.getDivisionName()){
-                        List<ITeam> teamArrayList =division.getTeams();
+    public ILeagueObjectModel saveLeagueObjectModel(ILeagueObjectModelDB leagueDatabase, ILeagueObjectModelInput saveLeagueInput) throws Exception {
+        ILeagueObjectModelValidation leagueObjectModelValidation = saveLeagueInput.getLeagueObjectModelValidation();
+        leagueObjectModelValidation.checkUserInputForLeague(this, saveLeagueInput);
+        List<IConference> conferenceArrayList = this.getConferences();
+        boolean newTeamAddedToLeague = false;
+        for (int i = 0; i < conferenceArrayList.size(); i++) {
+            IConference conference = conferenceArrayList.get(i);
+            if (conference.getConferenceName() == saveLeagueInput.getConferenceName()) {
+                List<IDivision> divisionArrayList = conference.getDivisions();
+                for (int j = 0; j < divisionArrayList.size(); j++) {
+                    IDivision division = divisionArrayList.get(j);
+                    if (division.getDivisionName() == saveLeagueInput.getDivisionName()) {
+                        List<ITeam> teamArrayList = division.getTeams();
                         teamArrayList.add(saveLeagueInput.getNewlyCreatedTeam());
-                        newTeamAddedToLeague=true;
+                        newTeamAddedToLeague = true;
                         break;
                     }
                 }
-                if(newTeamAddedToLeague){
+                if (newTeamAddedToLeague) {
                     break;
                 }
             }
         }
-        this.conferences=conferenceArrayList;
+        this.conferences = conferenceArrayList;
         leagueDatabase.insertLeagueModel(this);
         return this;
     }
 
-    public ILeagueObjectModel loadLeagueObjectModel(ILeagueObjectModelDB leagueDatabase, String leagueName, String teamName) throws Exception{
-        return leagueDatabase.loadLeagueModel(leagueName,teamName);
+    public ILeagueObjectModel loadLeagueObjectModel(ILeagueObjectModelDB leagueDatabase, String leagueName, String teamName) throws Exception {
+        return leagueDatabase.loadLeagueModel(leagueName, teamName);
     }
 
-    public ILeagueObjectModel updateLeagueObjectModel(ILeagueObjectModelDB leagueDatabase ) throws Exception{
-        //TODO ADD METHOD CALL FOR DB CLASS
-        //return leagueDatabase.updateLeagueModel(this);
+    public ILeagueObjectModel updateLeagueObjectModel(ILeagueObjectModelDB leagueDatabase) throws Exception {
+        leagueDatabase.updateLeagueModel(this);
         return this;
     }
 }

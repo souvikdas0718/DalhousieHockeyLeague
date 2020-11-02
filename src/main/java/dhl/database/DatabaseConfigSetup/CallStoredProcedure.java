@@ -1,11 +1,11 @@
 package dhl.database.DatabaseConfigSetup;
 
-import java.sql.SQLException;
-import java.sql.Connection;
 import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.sql.ResultSet;
-import java.sql.Types;
 import java.sql.Date;
+import java.sql.Types;
 
 public class CallStoredProcedure {
     private String storedProcedureName;
@@ -31,16 +31,24 @@ public class CallStoredProcedure {
 
     public void cleanup() {
         try {
-            if (null != statement) {
+            if (checkStatment()) {
                 statement.close();
             }
-            if (null != connection) {
+            if (checkConnection()) {
                 connection.close();
             }
         } catch (Exception e) {
             System.out.println(String.format("SQL Exception encountered"
                     + "while attempting to cleanup database connections"));
         }
+    }
+
+    public boolean checkStatment() throws SQLException {
+        return !statement.isClosed();
+    }
+
+    public boolean checkConnection() throws SQLException {
+        return !connection.isClosed();
     }
 
     public void setParameter(int paramIndex, String value) throws SQLException {
@@ -58,6 +66,7 @@ public class CallStoredProcedure {
     public void setParameter(int paramIndex, long value) throws SQLException {
         statement.setLong(paramIndex, value);
     }
+
     public void setParameter(int paramIndex, double value) throws SQLException {
         statement.setDouble(paramIndex, value);
     }

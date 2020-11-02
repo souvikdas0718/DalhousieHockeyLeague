@@ -1,7 +1,6 @@
 package dhl.leagueModelTests;
 
 import dhl.database.interfaceDB.IPlayerDB;
-import dhl.leagueModel.interfaceModel.IPlayer;
 import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.leagueModel.interfaceModel.IPlayer;
 

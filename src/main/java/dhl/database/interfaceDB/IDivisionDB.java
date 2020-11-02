@@ -6,7 +6,7 @@ import dhl.leagueModel.interfaceModel.IDivision;
 import java.util.List;
 
 public interface IDivisionDB {
-    public int insertDivision(String divisionName, int conferenceId,int leagueId) throws Exception;
+    int insertDivision(String divisionName, int conferenceId, int leagueId) throws Exception;
 
-    public List<IDivision> getDivisionList(int conferenceId, int leagueId, DatabaseObjectCreationDB databaseObjectCreationDB) throws Exception;
+    List<IDivision> getDivisionList(int conferenceId, int leagueId, DatabaseObjectCreationDB databaseObjectCreationDB) throws Exception;
 }

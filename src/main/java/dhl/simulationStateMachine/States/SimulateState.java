@@ -14,7 +14,7 @@ public class SimulateState implements IGameState {
     int simulationSeasonsCount;
 
     public SimulateState(GameContext newGame) {
-        ourGame =  newGame;
+        ourGame = newGame;
         simulationSeasonsCount = 0;
     }
 
@@ -24,14 +24,14 @@ public class SimulateState implements IGameState {
         int seasonsNumber = 0;
 
         System.out.println("--------------------LETS SIMULATE------------------------");
-        System.out.println(" Selected League: "+ ourGame.getInMemoryLeague().getLeagueName());
+        System.out.println(" Selected League: " + ourGame.getInMemoryLeague().getLeagueName());
         System.out.println(" Selected Team:" + ourGame.getSelectedTeam().getTeamName());
         System.out.println("How many seasons you wana simulate? ");
 
-        while(seasonsNumber < minSeasons || seasonsNumber > maxSeasons){
+        while (seasonsNumber < minSeasons || seasonsNumber > maxSeasons) {
             seasonsNumber = sc.nextInt();
 
-            if(seasonsNumber <= minSeasons || seasonsNumber >= maxSeasons){
+            if (seasonsNumber <= minSeasons || seasonsNumber >= maxSeasons) {
                 System.out.println("You can't simulate less than 1 season or more than 10 seasons");
                 System.out.println("How many seasons you wana simulate or Enter Exit to quit ");
             }
@@ -45,7 +45,7 @@ public class SimulateState implements IGameState {
         simulationContextObject.setGameConfig(ourGame.getGameConfig());
         simulationContextObject.setInMemoryLeague(ourGame.getInMemoryLeague());
 
-        for(int i=0; i< simulationSeasonsCount; i++){
+        for (int i = 0; i < simulationSeasonsCount; i++) {
             simulationContextObject.seasonStateEntryProcess();
             simulationContextObject.seasonStateProcess();
             simulationContextObject.seasonStateExitProcess();

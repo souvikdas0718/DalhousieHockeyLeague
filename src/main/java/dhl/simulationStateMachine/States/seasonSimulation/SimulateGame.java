@@ -14,7 +14,7 @@ public class SimulateGame implements ISimulationSeasonState {
 
     @Override
     public void seasonStateProcess() {
-            // simulate one game win/loss
+        // simulate one game win/loss
     }
 
     @Override

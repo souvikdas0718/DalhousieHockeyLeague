@@ -2,7 +2,6 @@ package dhl.tradeTest;
 
 import dhl.leagueModel.*;
 import dhl.leagueModel.interfaceModel.ICoach;
-import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.leagueModel.interfaceModel.IPlayer;
 import dhl.leagueModel.interfaceModel.ITeam;
 
@@ -52,17 +51,16 @@ public class TradeMock {
     public ArrayList<IPlayer> get50FreeAgents() {
         List<IPlayer> freeAgents = new ArrayList<>();
         Random r = new Random();
-        for (int i=0; i<50; i++) {
-            if (i%2 ==0)
-            {
-               freeAgents.add(new FreeAgent("Henry"+i, "goalie",
-                        new PlayerStatistics(r.nextInt(45),r.nextInt(10),r.nextInt(10),r.nextInt(10),r.nextInt(10))));
-           }else {
-               freeAgents.add(new FreeAgent("Henry" + i, "forward",
-                       new PlayerStatistics(r.nextInt(45),r.nextInt(10),r.nextInt(10),r.nextInt(10),0)));
-           }
+        for (int i = 0; i < 50; i++) {
+            if (i % 2 == 0) {
+                freeAgents.add(new FreeAgent("Henry" + i, "goalie",
+                        new PlayerStatistics(r.nextInt(45), r.nextInt(10), r.nextInt(10), r.nextInt(10), r.nextInt(10))));
+            } else {
+                freeAgents.add(new FreeAgent("Henry" + i, "forward",
+                        new PlayerStatistics(r.nextInt(45), r.nextInt(10), r.nextInt(10), r.nextInt(10), 0)));
+            }
         }
-       return (ArrayList<IPlayer>) freeAgents;
+        return (ArrayList<IPlayer>) freeAgents;
     }
 }
 

@@ -13,27 +13,29 @@ public class JsonFilePath implements IJsonFilePath {
     public String getFilePath() {
         String path = null;
 
-        while(path== null){
+        while (path == null) {
             System.out.println("Enter JSON File Path or Enter Exit if u want to exit: ");
             Scanner sc = new Scanner(System.in);
             String inputPath = sc.nextLine();
 
-            if(inputPath.equals("Exit")) System.exit(0);
-            else{
-                if(validatePath(inputPath)){
+            if (inputPath.equals("Exit")) System.exit(0);
+            else {
+                if (validatePath(inputPath)) {
                     System.out.println("File Path is valid");
                     path = inputPath;
-                }else{System.out.println("Invalid Json Path");}
+                } else {
+                    System.out.println("Invalid Json Path");
+                }
             }
         }
         return path;
     }
 
-    public boolean validatePath(String inputPath){
-        Path path= null;
-        if (inputPath.length() > 0){
+    public boolean validatePath(String inputPath) {
+        Path path;
+        if (inputPath.length() > 0) {
             path = Paths.get(inputPath);
-            if(Files.exists(path)) {
+            if (Files.exists(path)) {
                 return true;
             }
         }

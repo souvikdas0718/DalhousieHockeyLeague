@@ -7,7 +7,7 @@ public interface ITradeType {
 
     public boolean isTradeAccepted() throws Exception;
 
-    public void validateTeamRosterAfterTrade(ITeam team , ILeagueObjectModel leagueObjectModel) throws Exception;
+    public void validateTeamRosterAfterTrade(ITeam team, ILeagueObjectModel leagueObjectModel) throws Exception;
 
 }
 
