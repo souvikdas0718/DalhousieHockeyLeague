@@ -46,11 +46,12 @@ public class TradingEngineTest {
     }
 
     @Test
-    public void makeOfferTest() throws Exception {
-        testClassObject.makeOffer(badTeamMock);
-        Assertions.assertTrue(badTeamMock.getLossPoint() == 0);
-        testClassObject.makeOffer(goodTeamMock);
+    public void performTradeTest() throws Exception {
+        testClassObject.performTrade(goodTeamMock);
+        System.out.println(goodTeamMock.getLossPoint());
         Assertions.assertTrue(goodTeamMock.getLossPoint() > 0);
+        testClassObject.performTrade(badTeamMock);
+        Assertions.assertTrue(badTeamMock.getLossPoint() == 0);
     }
 
     @Test
@@ -60,7 +61,7 @@ public class TradingEngineTest {
 
     @Test
     public void getCurrentTradeTest() throws Exception {
-        testClassObject.makeOffer(badTeamMock);
+        testClassObject.performTrade(badTeamMock);
         ITradeOffer tradeOffer = testClassObject.getCurrentTrade();
         Assertions.assertTrue(tradeOffer.getOfferingTeam() == badTeamMock);
     }

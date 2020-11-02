@@ -32,7 +32,12 @@ public interface IGameConfig {
 
     String getDaysUntilStatIncreaseCheck();
 
-    HashMap getHashMap(String key);
+    public String getGameResolver();
+
+    public String getRandomWinChance();
+
+
+    HashMap<String,Object> getHashMap(String key);
 
     String getValueFromOurObject(String configChildKey , String ourObjectKey);
 }

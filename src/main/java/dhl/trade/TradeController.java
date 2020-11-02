@@ -40,11 +40,7 @@ public class TradeController implements ITradeController {
                             double randomNumber = Math.random();
                             if(randomNumber >configRandomTradeChance){
                                 // TODO: 27-10-2020 Check how can i decouple this
-                                tradeEngine.makeOffer(team);
-                                if(isTradeGenerated(tradeEngine)){
-                                    tradeEngine.sendTradeToRecevingTeam(userTeam);
-                                    tradeEngine.checkPlayersAfterTrade();
-                                }
+                                tradeEngine.performTrade(team);
                             }
                         }
                     }

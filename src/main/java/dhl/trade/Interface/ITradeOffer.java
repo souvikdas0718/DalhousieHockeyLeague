@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public interface ITradeOffer {
 
-    public void performTrade();
+    public void implementTrade();
 
     public ITeam getOfferingTeam();
 

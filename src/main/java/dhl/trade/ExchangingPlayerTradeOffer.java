@@ -21,7 +21,7 @@ public class ExchangingPlayerTradeOffer implements ITradeOffer {
 
 
     @Override
-    public void performTrade() {
+    public void implementTrade() {
         for(IPlayer player: playersOffered){
             receivingTeam.getPlayers().add(player);
             offeringTeam.getPlayers().remove(player);

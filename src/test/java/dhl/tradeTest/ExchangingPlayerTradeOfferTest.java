@@ -29,7 +29,7 @@ public class ExchangingPlayerTradeOfferTest {
     @Test
     public void performTradeTest(){
 
-        testClassObject.performTrade();
+        testClassObject.implementTrade();
         IPlayer playerNowInStrongTeam = testClassObject.playersOffered.get(0);
         IPlayer playerNowInWeakTeam = testClassObject.playersWantedInExchange.get(0);
 

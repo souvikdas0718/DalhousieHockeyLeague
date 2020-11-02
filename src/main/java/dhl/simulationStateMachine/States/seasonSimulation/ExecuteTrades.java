@@ -47,7 +47,7 @@ public class ExecuteTrades implements ISimulationSeasonState {
                         if(findLossPointOfTheTeam(team) > configLossPoint){
                             double randomNumber = Math.random();
                             if(randomNumber >configRandomTradeChance){
-                                tradeEngine.performTrade();
+                                tradeEngine.performTrade(team);
                             }
                         }
                     }

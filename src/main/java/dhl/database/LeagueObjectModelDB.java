@@ -26,14 +26,14 @@ public class LeagueObjectModelDB implements ILeagueObjectModelDB {
     }
 
     public void insertLeagueModel(ILeagueObjectModel leagueObjectModel) throws Exception {
-        ILeagueDB ileagueDB = databaseObjectCreationDB.getIleagueDB();
+        ILeagueDB ileagueDB = databaseObjectCreationDB.getLeagueDB();
         int leagueId = ileagueDB.insertLeague(leagueObjectModel.getLeagueName());
 
         leagueObjectModel.getConferences().forEach((conference)-> {
             List<IDivision> divisions = conference.getDivisions();
             int conferenceId = 0;
             try {
-                IConferenceDB iConferenceDB = databaseObjectCreationDB.getiConferenceDB();
+                IConferenceDB iConferenceDB = databaseObjectCreationDB.getConferenceDB();
                 conferenceId = iConferenceDB.insertConference(conference.getConferenceName(), leagueId);
             }
             catch(Exception eConference){
@@ -46,7 +46,7 @@ public class LeagueObjectModelDB implements ILeagueObjectModelDB {
                 List<ITeam> teams = division.getTeams();
                 int divisionId = 0;
                 try {
-                    IDivisionDB iDivisionDB = databaseObjectCreationDB.getiDivisionDB();
+                    IDivisionDB iDivisionDB = databaseObjectCreationDB.getDivisionDB();
                     divisionId = iDivisionDB.insertDivision(division.getDivisionName(), finalConferenceId1, leagueId);
                 } catch (Exception eDivision) {
                     throw new RuntimeException("Error inserting Division:"+division.getDivisionName());
@@ -58,7 +58,7 @@ public class LeagueObjectModelDB implements ILeagueObjectModelDB {
                     List<IPlayer> arrPlayer = team.getPlayers();
                     int teamId = 0;
                     try {
-                        ITeamDB iTeamDB = databaseObjectCreationDB.getiTeamDB();
+                        ITeamDB iTeamDB = databaseObjectCreationDB.getTeamDB();
                         teamId = iTeamDB.insertTeam(team, finalDivisionId, leagueId);
                     } catch (Exception eTeam) {
                         throw new RuntimeException("Error inserting Team:"+team.getTeamName());
@@ -66,7 +66,7 @@ public class LeagueObjectModelDB implements ILeagueObjectModelDB {
 
                     int finalCoachTeamId = teamId;
                     try {
-                        ICoachDB iCoachDB = databaseObjectCreationDB.getiCoachDB();
+                        ICoachDB iCoachDB = databaseObjectCreationDB.getCoachDB();
                         iCoachDB.insertCoach(team.getHeadCoach(), finalCoachTeamId,leagueId);
                     } catch (Exception eCoach) {
                         throw new RuntimeException("Error inserting Coach:"+team.getHeadCoach().getCoachName());
@@ -74,7 +74,7 @@ public class LeagueObjectModelDB implements ILeagueObjectModelDB {
                     int finalTeamId = teamId;
                     arrPlayer.forEach((player)->{
                         try {
-                            IPlayerDB iPlayerDB = databaseObjectCreationDB.getiPlayerDB();
+                            IPlayerDB iPlayerDB = databaseObjectCreationDB.getPlayerDB();
                             iPlayerDB.insertPlayer(player, finalTeamId,leagueId);
                         } catch (Exception ePlayer) {
                             throw new RuntimeException("Error inserting Player:"+player.getPlayerName());
@@ -88,12 +88,13 @@ public class LeagueObjectModelDB implements ILeagueObjectModelDB {
         insertFreeAgents(leagueObjectModel,leagueId);
         insertUnassignedCoaches(leagueObjectModel,leagueId);
         insertGeneralManagers(leagueObjectModel, leagueId);
+        insertGameConfig(leagueObjectModel);
     }
 
     public void insertFreeAgents(ILeagueObjectModel leagueModelObj,int leagueId){
         leagueModelObj.getFreeAgents().forEach((freeAgent) -> {
             try {
-                IFreeAgentDB ifreeAgentDB = databaseObjectCreationDB.getIfreeAgentDB();
+                IFreeAgentDB ifreeAgentDB = databaseObjectCreationDB.getFreeAgentDB();
                 ifreeAgentDB.insertFreeAgent(freeAgent,leagueId);
             } catch (Exception eFreeAgent) {
                 throw new RuntimeException("Error inserting Free agent:"+ freeAgent.getPlayerName());
@@ -104,7 +105,7 @@ public class LeagueObjectModelDB implements ILeagueObjectModelDB {
     public void insertUnassignedCoaches(ILeagueObjectModel leagueModelObj,int leagueId){
         leagueModelObj.getCoaches().forEach((coach) -> {
             try {
-                ICoachDB iCoachDB = databaseObjectCreationDB.getiCoachDB();
+                ICoachDB iCoachDB = databaseObjectCreationDB.getCoachDB();
                 iCoachDB.insertUnassignedCoach(coach,leagueId);
             } catch (Exception eCoach) {
                 throw new RuntimeException("Error inserting coach from coach List "+coach.getCoachName());
@@ -116,12 +117,22 @@ public class LeagueObjectModelDB implements ILeagueObjectModelDB {
     public void insertGeneralManagers(ILeagueObjectModel leagueModelObj, int leagueId){
         leagueModelObj.getGeneralManagers().forEach((generalManager) -> {
             try {
-                IGeneralManagerDB iGeneralManagerDB = databaseObjectCreationDB.getiGeneralManagerDB();
+                IGeneralManagerDB iGeneralManagerDB = databaseObjectCreationDB.getGeneralManagerDB();
                 iGeneralManagerDB.insertGeneralManagers(generalManager.getGeneralManagerName(),leagueId);
             } catch (Exception eCoach) {
                 throw new RuntimeException("Error inserting General managers from List "+generalManager.getGeneralManagerName());
             }
         });
+    }
+
+    public void insertGameConfig(ILeagueObjectModel leagueModelObj){
+        try {
+            IGameConfigDB gameConfigDB = databaseObjectCreationDB.getGameConfigDB();
+            gameConfigDB.insertGamePlayConfig(leagueModelObj.getGameConfig(), leagueModelObj.getLeagueName());
+        }
+        catch (Exception eGameConfig) {
+            throw new RuntimeException("Error inserting Game Config ");
+        }
     }
 
     public ILeagueObjectModel loadLeagueModel(String leagueName, String teamName) throws Exception {
@@ -137,19 +148,18 @@ public class LeagueObjectModelDB implements ILeagueObjectModelDB {
             while(leagueIdResult.next()) {
                 leagueId = leagueIdResult.getInt("leagueId");
                 try {
-                    IConferenceDB conferenceDB = databaseObjectCreationDB.getiConferenceDB();
+                    IConferenceDB conferenceDB = databaseObjectCreationDB.getConferenceDB();
                     List<IConference> conferenceList = conferenceDB.getConferenceList(leagueId,databaseObjectCreationDB);
 
-                    IFreeAgentDB freeAgentDB = databaseObjectCreationDB.getIfreeAgentDB();
-                    ICoachDB coachDB = databaseObjectCreationDB.getiCoachDB();
-                    IGeneralManagerDB generalManagerDB = databaseObjectCreationDB.getiGeneralManagerDB();
-                    IGameConfigDB gameConfigDB = databaseObjectCreationDB.getiGameConfigDB();
+                    IFreeAgentDB freeAgentDB = databaseObjectCreationDB.getFreeAgentDB();
+                    ICoachDB coachDB = databaseObjectCreationDB.getCoachDB();
+                    IGeneralManagerDB generalManagerDB = databaseObjectCreationDB.getGeneralManagerDB();
+                    IGameConfigDB gameConfigDB = databaseObjectCreationDB.getGameConfigDB();
                     leagueObjectModel=new LeagueObjectModel(leagueName,conferenceList,
                             freeAgentDB.getFreeAgentList(leagueId),
                             coachDB.getUnassignedCoachList(leagueId),
                             generalManagerDB.getManagersList(leagueId),
                             gameConfigDB.loadGamePlayConfig(leagueName));
-
                 }
                 catch(Exception exception){
                     exception.printStackTrace();
@@ -178,20 +188,20 @@ public class LeagueObjectModelDB implements ILeagueObjectModelDB {
                 teams.forEach((team)->{
                     List<IPlayer> arrPlayer = team.getPlayers();
                     try {
-                        ITeamDB iTeamDB = databaseObjectCreationDB.getiTeamDB();
+                        ITeamDB iTeamDB = databaseObjectCreationDB.getTeamDB();
                         iTeamDB.updateTeam(team, divisionName, leagueName);
                     } catch (Exception eTeam) {
                         throw new RuntimeException("Error updating Team:"+team.getTeamName());
                     }
                     try {
-                        ICoachDB iCoachDB = databaseObjectCreationDB.getiCoachDB();
+                        ICoachDB iCoachDB = databaseObjectCreationDB.getCoachDB();
                         iCoachDB.updateCoach(team.getHeadCoach(), team.getTeamName(), leagueName);
                     } catch (Exception eCoach) {
                         throw new RuntimeException("Error updating Coach:"+team.getHeadCoach().getCoachName());
                     }
                     arrPlayer.forEach((player)->{
                         try {
-                            IPlayerDB iPlayerDB = databaseObjectCreationDB.getiPlayerDB();
+                            IPlayerDB iPlayerDB = databaseObjectCreationDB.getPlayerDB();
                             iPlayerDB.updatePlayer(player, team.getTeamName(),leagueName);
                         } catch (Exception ePlayer) {
                             throw new RuntimeException("Error updating Player:"+player.getPlayerName());

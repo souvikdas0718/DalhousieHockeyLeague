@@ -93,8 +93,8 @@ public class GameConfigTest {
 
     @Test
     public void getHashMapTest(){
-        HashMap tradingObject = testClassObject.getHashMap("trading");
-        HashMap agingObject = testClassObject.getHashMap("aging");
+        HashMap<String,Object> tradingObject = testClassObject.getHashMap("trading");
+        HashMap<String,Object> agingObject = testClassObject.getHashMap("aging");
         Assertions.assertFalse(tradingObject.isEmpty());
         Assertions.assertTrue(tradingObject.size() == 4);
         Assertions.assertTrue(agingObject.size() ==2);
