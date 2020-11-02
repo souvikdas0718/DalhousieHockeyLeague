@@ -37,7 +37,7 @@ public class ConferenceDB implements IConferenceDB {
     }
 
     public List<IConference> getConferenceList(int leagueId, DatabaseObjectCreationDB databaseObjectCreationDB) throws Exception {
-        IDivisionDB iDivisionDB = databaseObjectCreationDB.getiDivisionDB();
+        IDivisionDB divisionDB = databaseObjectCreationDB.getDivisionDB();
         List<IConference> conferencesList = new ArrayList<>();
         CallStoredProcedure callConfProc = new CallStoredProcedure("loadConferences(?)");
         callConfProc.setParameter(1, leagueId);
@@ -49,7 +49,7 @@ public class ConferenceDB implements IConferenceDB {
 
         while(conferencesResultSet.next()){
             IConference conference = new Conference(conferencesResultSet.getString("conferenceName"),
-                    iDivisionDB.getDivisionList(conferencesResultSet.getInt("conferenceId"),leagueId,databaseObjectCreationDB));
+                    divisionDB.getDivisionList(conferencesResultSet.getInt("conferenceId"),leagueId,databaseObjectCreationDB));
             conferencesList.add(conference);
         }
         callConfProc.cleanup();

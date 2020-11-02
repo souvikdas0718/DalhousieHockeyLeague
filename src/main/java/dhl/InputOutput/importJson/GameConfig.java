@@ -21,6 +21,8 @@ public class GameConfig implements IGameConfig {
     private String injuryDaysHigh = "injuryDaysHigh";
     private String training = "training";
     private String daysUntilStatIncreaseCheck = "daysUntilStatIncreaseCheck";
+    private String gameResolver="gameResolver";
+    private String randomWinChance="randomWinChance";
 
     public GameConfig(JSONObject jsonObject){
         ourJsonObject = jsonObject;
@@ -81,6 +83,14 @@ public class GameConfig implements IGameConfig {
 
     public String getDaysUntilStatIncreaseCheck() {
         return daysUntilStatIncreaseCheck;
+    }
+
+    public String getGameResolver() {
+        return gameResolver;
+    }
+
+    public String getRandomWinChance() {
+        return randomWinChance;
     }
 
     @Override

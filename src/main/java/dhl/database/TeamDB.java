@@ -85,8 +85,8 @@ public class TeamDB implements ITeamDB {
 
     public List<ITeam> getTeamList(int divisionId, int leagueId ,DatabaseObjectCreationDB databaseObjectCreationDB) throws Exception {
 
-        ICoachDB iCoachDB = databaseObjectCreationDB.getiCoachDB();
-        IPlayerDB iPlayerDB = databaseObjectCreationDB.getiPlayerDB();
+        ICoachDB coachDB = databaseObjectCreationDB.getCoachDB();
+        IPlayerDB playerDB = databaseObjectCreationDB.getPlayerDB();
         List<ITeam> teamList = new ArrayList<>();
 
         CallStoredProcedure callTeamProc = new CallStoredProcedure("loadTeams(?,?)");
@@ -101,8 +101,8 @@ public class TeamDB implements ITeamDB {
 
         while(teamResultSet.next()){
             ITeam team = new Team(teamResultSet.getString("teamName"),
-                    teamResultSet.getString("generalManager"),iCoachDB.getTeamCoach(teamResultSet.getInt("teamId"),leagueId,databaseObjectCreationDB),
-                    iPlayerDB.getPlayerList(teamResultSet.getInt("teamId"),leagueId));
+                    teamResultSet.getString("generalManager"),coachDB.getTeamCoach(teamResultSet.getInt("teamId"),leagueId,databaseObjectCreationDB),
+                    playerDB.getPlayerList(teamResultSet.getInt("teamId"),leagueId));
             teamList.add(team);
         }
         callTeamProc.cleanup();
