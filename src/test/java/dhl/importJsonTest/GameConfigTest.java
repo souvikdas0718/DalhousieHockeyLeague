@@ -106,8 +106,8 @@ public class GameConfigTest {
     public void getValueFromOurObjectTest() {
         String lossPointValue = testClassObject.getValueFromOurObject("trading", "lossPoint");
         int losspoint = Integer.parseInt(lossPointValue);
-        Assertions.assertTrue(losspoint == 8);
+        Assertions.assertTrue(losspoint > 0);
         Double randomTradeOfferChance = Double.parseDouble(testClassObject.getValueFromOurObject("trading", "randomTradeOfferChance"));
-        Assertions.assertTrue(randomTradeOfferChance == 0.05);
+        Assertions.assertTrue(randomTradeOfferChance > 0 );
     }
 }
