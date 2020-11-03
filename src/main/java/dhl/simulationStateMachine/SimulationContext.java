@@ -56,7 +56,6 @@ public class SimulationContext implements ISimulationSeasonState {
         playoffSchedule = new GeneratePlayOffSchedule(this);
         initializeSeason = new InitializeSeasonState(this);
         injuryCheck = new InjuryCheckState(this);
-        persistsSeason = new PersistSameSeason(this);
         persistsSeason = new PersistSeason(this);
         simulateGame = new SimulateGameState(this);
         training = new TrainingState(this);
