@@ -1,14 +1,14 @@
 package dhl;
 
-import dhl.simulationStateMachine.GameContext;
+import dhl.businessLogic.simulationStateMachine.GameContext;
 
 public class StartGame {
 
     public static void main(String[] args) throws Exception {
         System.out.println(" Welcome to Dynasty Mode ");
-        GameContext ourGame= new GameContext();
+        GameContext ourGame = new GameContext();
 
-        while(ourGame.isGameinProgress()){
+        while (ourGame.isGameInProgress()) {
             ourGame.stateEntryProcess();
             ourGame.stateProcess();
             ourGame.stateExitProcess();
