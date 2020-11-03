@@ -2,7 +2,7 @@ package dhl.InputOutput.importJson;
 
 import dhl.InputOutput.importJson.Interface.IDeserializeLeagueObjectModel;
 import dhl.InputOutput.importJson.Interface.IGameConfig;
-import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
+import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 

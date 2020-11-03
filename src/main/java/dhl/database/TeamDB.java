@@ -4,8 +4,8 @@ import dhl.database.DatabaseConfigSetup.CallStoredProcedure;
 import dhl.database.interfaceDB.ICoachDB;
 import dhl.database.interfaceDB.IPlayerDB;
 import dhl.database.interfaceDB.ITeamDB;
-import dhl.leagueModel.Team;
-import dhl.leagueModel.interfaceModel.ITeam;
+import dhl.businessLogic.leagueModel.Team;
+import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

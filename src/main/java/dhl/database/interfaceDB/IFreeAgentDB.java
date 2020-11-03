@@ -1,6 +1,6 @@
 package dhl.database.interfaceDB;
 
-import dhl.leagueModel.interfaceModel.IPlayer;
+import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 
 import java.util.List;
 

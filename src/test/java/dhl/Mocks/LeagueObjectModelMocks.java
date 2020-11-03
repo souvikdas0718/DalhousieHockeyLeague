@@ -3,8 +3,8 @@ package dhl.Mocks;
 import dhl.InputOutput.importJson.GameConfig;
 import dhl.InputOutput.importJson.ImportJsonFile;
 import dhl.InputOutput.importJson.Interface.IGameConfig;
-import dhl.leagueModel.*;
-import dhl.leagueModel.interfaceModel.*;
+import dhl.businessLogic.leagueModel.*;
+import dhl.businessLogic.leagueModel.interfaceModel.*;
 
 import java.util.ArrayList;
 import java.util.List;

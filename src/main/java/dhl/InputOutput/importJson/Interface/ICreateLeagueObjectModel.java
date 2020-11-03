@@ -1,6 +1,6 @@
 package dhl.InputOutput.importJson.Interface;
 
-import dhl.leagueModel.interfaceModel.*;
+import dhl.businessLogic.leagueModel.interfaceModel.*;
 
 import java.util.List;
 

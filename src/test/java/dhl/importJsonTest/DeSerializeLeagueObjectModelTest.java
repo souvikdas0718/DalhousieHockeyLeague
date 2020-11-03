@@ -2,8 +2,8 @@ package dhl.importJsonTest;
 
 import dhl.InputOutput.importJson.DeserializeLeagueObjectModel;
 import dhl.Mocks.SerializedJsonMock;
-import dhl.leagueModel.LeagueObjectModel;
-import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
+import dhl.businessLogic.leagueModel.LeagueObjectModel;
+import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.junit.jupiter.api.Assertions;

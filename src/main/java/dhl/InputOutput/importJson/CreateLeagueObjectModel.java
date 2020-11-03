@@ -2,8 +2,8 @@ package dhl.InputOutput.importJson;
 
 import dhl.InputOutput.importJson.Interface.ICreateLeagueObjectModel;
 import dhl.InputOutput.importJson.Interface.IGameConfig;
-import dhl.leagueModel.*;
-import dhl.leagueModel.interfaceModel.*;
+import dhl.businessLogic.leagueModel.*;
+import dhl.businessLogic.leagueModel.interfaceModel.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 

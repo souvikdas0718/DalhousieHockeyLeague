@@ -1,6 +1,6 @@
 package dhl.database.interfaceDB;
 
-import dhl.leagueModel.interfaceModel.IGeneralManager;
+import dhl.businessLogic.leagueModel.interfaceModel.IGeneralManager;
 
 import java.util.List;
 

@@ -4,8 +4,7 @@ import dhl.InputOutput.importJson.Interface.IJsonFilePath;
 
 public class JsonFilePathMock implements IJsonFilePath {
 
-    //    String filePath = "src//test//java//dhl//simulationStateMachineTest//MockData.json";
-    String filePath = "src//test//java//dhl//simulationStateMachineTest//MockData2.json";
+    String filePath = "src/test/java/dhl/Mocks/MockData2.json";
 
     @Override
     public String getFilePath() {

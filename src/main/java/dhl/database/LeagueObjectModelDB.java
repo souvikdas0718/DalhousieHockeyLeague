@@ -3,8 +3,8 @@ package dhl.database;
 import dhl.database.DatabaseConfigSetup.CallStoredProcedure;
 import dhl.database.DatabaseConfigSetup.DatabaseInitialize;
 import dhl.database.interfaceDB.*;
-import dhl.leagueModel.LeagueObjectModel;
-import dhl.leagueModel.interfaceModel.*;
+import dhl.businessLogic.leagueModel.LeagueObjectModel;
+import dhl.businessLogic.leagueModel.interfaceModel.*;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

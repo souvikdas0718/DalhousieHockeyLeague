@@ -28,13 +28,11 @@ public class ImportJsonFile {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
         return JsonLeagueObject;
     }
 
     public String getJsonIntoString(String filePath) throws IOException {
         String jsonFileIntoString = new String(Files.readAllBytes(Paths.get(filePath)));
-
         return jsonFileIntoString;
     }
 }

@@ -1,7 +1,7 @@
 package dhl.database.interfaceDB;
 
 import dhl.database.DatabaseObjectCreationDB;
-import dhl.leagueModel.interfaceModel.ICoach;
+import dhl.businessLogic.leagueModel.interfaceModel.ICoach;
 
 import java.util.List;
 

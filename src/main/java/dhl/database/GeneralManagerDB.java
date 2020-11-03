@@ -2,8 +2,8 @@ package dhl.database;
 
 import dhl.database.DatabaseConfigSetup.CallStoredProcedure;
 import dhl.database.interfaceDB.IGeneralManagerDB;
-import dhl.leagueModel.GeneralManager;
-import dhl.leagueModel.interfaceModel.IGeneralManager;
+import dhl.businessLogic.leagueModel.GeneralManager;
+import dhl.businessLogic.leagueModel.interfaceModel.IGeneralManager;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

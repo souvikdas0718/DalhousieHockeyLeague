@@ -3,7 +3,7 @@ package dhl.InputOutput.importJson;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dhl.InputOutput.importJson.Interface.ISerializeLeagueobjectModel;
-import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
+import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 
 import java.io.FileWriter;
 

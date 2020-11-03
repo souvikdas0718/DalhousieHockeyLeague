@@ -1,6 +1,6 @@
 package dhl.database.interfaceDB;
 
-import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
+import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 
 public interface ILeagueObjectModelDB {
 

@@ -1,6 +1,6 @@
 package dhl.InputOutput.importJson.Interface;
 
-import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
+import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 
 public interface ISerializeLeagueobjectModel {
     public String serializeLeagueObjectModel(ILeagueObjectModel objLeagueObjectModel) throws Exception;

@@ -1,7 +1,7 @@
 package dhl.database.interfaceDB;
 
-import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
-import dhl.leagueModel.interfaceModel.IPlayer;
+import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
+import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 
 import java.util.List;
 import java.util.Map;

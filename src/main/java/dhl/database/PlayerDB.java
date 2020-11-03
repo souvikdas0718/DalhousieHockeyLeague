@@ -2,11 +2,11 @@ package dhl.database;
 
 import dhl.database.DatabaseConfigSetup.CallStoredProcedure;
 import dhl.database.interfaceDB.IPlayerDB;
-import dhl.leagueModel.Player;
-import dhl.leagueModel.PlayerStatistics;
-import dhl.leagueModel.interfaceModel.ILeagueObjectModel;
-import dhl.leagueModel.interfaceModel.IPlayer;
-import dhl.leagueModel.interfaceModel.IPlayerStatistics;
+import dhl.businessLogic.leagueModel.Player;
+import dhl.businessLogic.leagueModel.PlayerStatistics;
+import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
+import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
+import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

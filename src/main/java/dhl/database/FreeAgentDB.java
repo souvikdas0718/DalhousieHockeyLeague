@@ -2,10 +2,10 @@ package dhl.database;
 
 import dhl.database.DatabaseConfigSetup.CallStoredProcedure;
 import dhl.database.interfaceDB.IFreeAgentDB;
-import dhl.leagueModel.FreeAgent;
-import dhl.leagueModel.PlayerStatistics;
-import dhl.leagueModel.interfaceModel.IPlayer;
-import dhl.leagueModel.interfaceModel.IPlayerStatistics;
+import dhl.businessLogic.leagueModel.FreeAgent;
+import dhl.businessLogic.leagueModel.PlayerStatistics;
+import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
+import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
