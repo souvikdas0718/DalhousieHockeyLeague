@@ -1209,7 +1209,23 @@ public class SerializedJsonMock {
                 "        \"averageRetirementAge\": 35,\n" +
                 "        \"maximumAge\": 50\n" +
                 "      }\n" +
-                "    }\n" +
+                "    },\n" +
+                "    \"trading\": \"trading\",\n" +
+                "    \"lossPoint\": \"lossPoint\",\n" +
+                "    \"randomTradeOfferChance\": \"randomTradeOfferChance\",\n" +
+                "    \"maxPlayersPerTrade\": \"maxPlayersPerTrade\",\n" +
+                "    \"randomAcceptanceChance\": \"randomAcceptanceChance\",\n" +
+                "    \"aging\": \"aging\",\n" +
+                "    \"averageRetirementAge\": \"averageRetirementAge\",\n" +
+                "    \"maximumAge\": \"maximumAge\",\n" +
+                "    \"injuries\": \"injuries\",\n" +
+                "    \"randomInjuryChance\": \"randomInjuryChance\",\n" +
+                "    \"injuryDaysLow\": \"injuryDaysLow\",\n" +
+                "    \"injuryDaysHigh\": \"injuryDaysHigh\",\n" +
+                "    \"training\": \"training\",\n" +
+                "    \"daysUntilStatIncreaseCheck\": \"daysUntilStatIncreaseCheck\",\n" +
+                "    \"gameResolver\": \"gameResolver\",\n" +
+                "    \"randomWinChance\": \"randomWinChance\"\n" +
                 "  }\n" +
                 "}";
         return json;
