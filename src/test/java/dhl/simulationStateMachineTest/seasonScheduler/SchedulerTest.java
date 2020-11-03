@@ -23,8 +23,6 @@ import static java.time.temporal.TemporalAdjusters.previousOrSame;
 
 public class SchedulerTest {
 
-    IScheduler scheduler;
-
     LeagueObjectModelMocks mockLeagueObjectModel;
 
     @BeforeEach
