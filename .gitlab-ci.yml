@@ -24,20 +24,6 @@ build:
   artifacts:
     paths:
       - build/libs/*.jar
-  only:
-    - develop
-
-build_master:
-  stage: build
-  tags:
-    - ugrad
-  script:
-    - ./gradlew --build-cache assemble
-  artifacts:
-    paths:
-      - build/libs/*.jar
-  only:
-    - releaseN
 
 test:
   stage: test
@@ -87,4 +73,4 @@ deploy_master:
     - scp -r -o StrictHostKeyChecking=no ${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip "${DEPLOY_PRODUCTION_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip"
     - scp -r -o StrictHostKeyChecking=no config.properties "${DEPLOY_PRODUCTION_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/config.properties"
   only:
-    - releaseN
+    - release
