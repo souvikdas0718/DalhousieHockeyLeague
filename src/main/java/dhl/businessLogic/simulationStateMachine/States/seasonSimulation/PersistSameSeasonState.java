@@ -3,8 +3,8 @@ package dhl.businessLogic.simulationStateMachine.States.seasonSimulation;
 import dhl.businessLogic.simulationStateMachine.Interface.ISimulationSeasonState;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 
-public class SimulateGame implements ISimulationSeasonState {
-    public SimulateGame(SimulationContext simulationContext) {
+public class PersistSameSeasonState implements ISimulationSeasonState {
+    public PersistSameSeasonState(SimulationContext simulationContext) {
     }
 
     @Override
@@ -14,11 +14,11 @@ public class SimulateGame implements ISimulationSeasonState {
 
     @Override
     public void seasonStateProcess() {
-        // simulate one game win/loss
+        // save the data in the db
     }
 
     @Override
     public void seasonStateExitProcess() {
-        // check injury
+        // call advanced time class
     }
 }
