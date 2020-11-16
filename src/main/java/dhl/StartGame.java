@@ -1,21 +1,31 @@
 package dhl;
 
+import dhl.InputOutput.UI.IUserInputOutput;
+import dhl.InputOutput.UI.UserInputOutput;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 
 public class StartGame {
 
     public static void main(String[] args) throws Exception {
-        System.out.println(" Welcome to Dynasty Mode ");
+        IUserInputOutput ioObject = new UserInputOutput();
+        ioObject.printMessage(" Welcome to Dynasty Mode ");
         GameContext ourGame = new GameContext();
 
         while (ourGame.isGameInProgress()) {
-            ourGame.stateEntryProcess();
-            ourGame.stateProcess();
-            ourGame.stateExitProcess();
+            if (ourGame.isGameInProgress()){
+                ourGame.stateEntryProcess();
+            }
+            if (ourGame.isGameInProgress()) {
+                ourGame.stateProcess();
+            }
+            if (ourGame.isGameInProgress()) {
+                ourGame.stateExitProcess();
+            }
         }
 
-        System.out.println("==============================GAME FINISHED==============================");
-        System.out.println("Thanks for Playing");
+        ioObject.printMessage("==============================GAME FINISHED==============================");
+        ioObject.printMessage("Thanks for Playing");
     }
+
 
 }

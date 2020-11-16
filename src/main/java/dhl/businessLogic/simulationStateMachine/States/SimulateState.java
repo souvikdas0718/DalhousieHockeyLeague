@@ -1,5 +1,7 @@
 package dhl.businessLogic.simulationStateMachine.States;
 
+import dhl.InputOutput.UI.IUserInputOutput;
+import dhl.InputOutput.UI.UserInputOutput;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.Interface.IGameState;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
@@ -12,28 +14,28 @@ public class SimulateState implements IGameState {
     final int maxSeasons = 10;
     final int minSeasons = 1;
     int simulationSeasonsCount;
+    IUserInputOutput userInputPutput;
 
     public SimulateState(GameContext newGame) {
         ourGame = newGame;
         simulationSeasonsCount = 0;
+        userInputPutput = new UserInputOutput();
     }
 
     @Override
     public void stateEntryProcess() {
-        Scanner sc = new Scanner(System.in);
         int seasonsNumber = 0;
 
-        System.out.println("--------------------LETS SIMULATE------------------------");
-        System.out.println(" Selected League: " + ourGame.getInMemoryLeague().getLeagueName());
-        System.out.println(" Selected Team:" + ourGame.getSelectedTeam().getTeamName());
-        System.out.println("How many seasons you wana simulate? ");
+        userInputPutput.printMessage("--------------------LETS SIMULATE------------------------");
+        userInputPutput.printMessage(" Selected League: " + ourGame.getInMemoryLeague().getLeagueName());
+        userInputPutput.printMessage(" Selected Team:" + ourGame.getSelectedTeam().getTeamName());
+        userInputPutput.printMessage("How many seasons you wana simulate? ");
 
         while (seasonsNumber < minSeasons || seasonsNumber > maxSeasons) {
-            seasonsNumber = sc.nextInt();
-
+            seasonsNumber = Integer.parseInt(userInputPutput.getUserInput());
             if (seasonsNumber <= minSeasons || seasonsNumber >= maxSeasons) {
-                System.out.println("You can't simulate less than 1 season or more than 10 seasons");
-                System.out.println("How many seasons you wana simulate or Enter Exit to quit ");
+                userInputPutput.printMessage("You can't simulate less than 1 season or more than 10 seasons");
+                userInputPutput.printMessage("How many seasons you wana simulate or Enter Exit to quit ");
             }
         }
         simulationSeasonsCount = seasonsNumber;

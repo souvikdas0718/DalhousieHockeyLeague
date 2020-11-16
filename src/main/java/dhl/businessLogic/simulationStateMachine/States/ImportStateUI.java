@@ -63,7 +63,7 @@ public class ImportStateUI implements IGameState {
                 userInputPutput.printMessage(newInMemoryLeague.getLeagueName() + "  Imported from the Json");
             } catch (Exception e) {
                 userInputPutput.printMessage(e.getMessage());
-                System.exit(0);
+                ourGame.setGameInProgress(false);
             }
         }
     }
