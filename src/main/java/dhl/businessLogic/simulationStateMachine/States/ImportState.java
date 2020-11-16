@@ -10,7 +10,7 @@ import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.Interface.IGameState;
 import dhl.businessLogic.simulationStateMachine.States.Interface.IImportStateLogic;
 
-public class ImportStateUI implements IGameState {
+public class ImportState implements IGameState {
 
     String validFilePath;
     ILeagueObjectModel newInMemoryLeague;
@@ -19,7 +19,7 @@ public class ImportStateUI implements IGameState {
     IGameConfig gameConfig;
     IUserInputOutput userInputPutput = new UserInputOutput();
 
-    public ImportStateUI(GameContext newGame) {
+    public ImportState(GameContext newGame) {
         ourGame = newGame;
         validFilePath = null;
         newInMemoryLeague = new LeagueObjectModel();

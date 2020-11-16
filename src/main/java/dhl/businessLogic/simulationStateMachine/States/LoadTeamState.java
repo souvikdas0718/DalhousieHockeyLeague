@@ -11,13 +11,13 @@ import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.Interface.IGameState;
 import dhl.businessLogic.simulationStateMachine.States.Interface.ILoadTeamStateLogic;
 
-public class LoadTeamStateUI implements IGameState {
+public class LoadTeamState implements IGameState {
 
     GameContext ourGame;
     ILeagueObjectModel newInMemoryLeague;
     IUserInputOutput userInputPutput;
 
-    public LoadTeamStateUI(GameContext newGame) {
+    public LoadTeamState(GameContext newGame) {
         newInMemoryLeague = new LeagueObjectModel();
         userInputPutput = new UserInputOutput();
         ourGame = newGame;

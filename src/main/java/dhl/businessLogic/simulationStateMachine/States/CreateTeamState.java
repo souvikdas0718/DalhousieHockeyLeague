@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class CreateTeamStateUI implements IGameState {
+public class CreateTeamState implements IGameState {
 
     private GameContext ourGame;
     private ILeagueObjectModel inMemoryLeague;
@@ -30,7 +30,7 @@ public class CreateTeamStateUI implements IGameState {
 
     IUserInputOutput userInputPutput = new UserInputOutput();
 
-    public CreateTeamStateUI(GameContext newGame) {
+    public CreateTeamState(GameContext newGame) {
         ourGame = newGame;
         selectedConference = null;
         selectedDivision = null;
