@@ -15,7 +15,9 @@ import dhl.businessLogic.simulationStateMachine.States.standings.StandingSystem;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Scheduler implements IScheduler {
     private List<ISchedule> fullSeasonSchedule;
@@ -208,171 +210,163 @@ public class Scheduler implements IScheduler {
         IConference conference1 = leagueObjectModel.getConferences().get(0);
         IConference conference2 = leagueObjectModel.getConferences().get(1);
 
-        IDivision division1 = conference1.getDivisions().get(0);
-        IDivision division2 = conference1.getDivisions().get(1);
-        IDivision division3 = conference2.getDivisions().get(0);
-        IDivision division4 = conference2.getDivisions().get(1);
+        List<IDivision> divisionList = new ArrayList<>();
+        divisionList.add(conference1.getDivisions().get(0));
+        divisionList.add(conference1.getDivisions().get(1));
+        divisionList.add(conference2.getDivisions().get(0));
+        divisionList.add(conference2.getDivisions().get(1));
 
         List<IStandings> conference1StandingList = new ArrayList<>();
         List<IStandings> conference2StandingList = new ArrayList<>();
 
-        List<IStandings> division1StandingList = new ArrayList<>();
-        List<IStandings> division2StandingList = new ArrayList<>();
-        List<IStandings> division3StandingList = new ArrayList<>();
-        List<IStandings> division4StandingList = new ArrayList<>();
+        HashMap<Integer, List<IStandings>> divisionStandingMap = new HashMap<>();
+        divisionStandingMap.put(1, new ArrayList<>());
+        divisionStandingMap.put(2, new ArrayList<>());
+        divisionStandingMap.put(3, new ArrayList<>());
+        divisionStandingMap.put(4, new ArrayList<>());
 
-        for (IStandings standings : regularGamesStandings) {
-            if (standings.getTeamConference().getConferenceName().equals(conference1.getConferenceName())) {
-                if (standings.getTeamDivision().getDivisionName().equals(division1.getDivisionName())) {
-                    division1StandingList.add(standings);
-                } else if (standings.getTeamDivision().getDivisionName().equals(division2.getDivisionName())) {
-                    division2StandingList.add(standings);
-                }
-                conference1StandingList.add(standings);
-            } else if (standings.getTeamConference().getConferenceName().equals(conference2.getConferenceName())) {
-                if (standings.getTeamDivision().getDivisionName().equals(division3.getDivisionName())) {
-                    division3StandingList.add(standings);
-                } else if (standings.getTeamDivision().getDivisionName().equals(division4.getDivisionName())) {
-                    division4StandingList.add(standings);
-                }
-                conference2StandingList.add(standings);
-            }
-        }
+        addStandingsToConferences(regularGamesStandings, conference1, conference2, divisionList, conference1StandingList, conference2StandingList, divisionStandingMap);
 
-        standingSystem.rankGenerator(conference1StandingList);
-        standingSystem.rankGenerator(conference2StandingList);
+        generateRanks(standingSystem, conference1StandingList, conference2StandingList, divisionStandingMap);
 
-        standingSystem.rankGenerator(division1StandingList);
-        standingSystem.rankGenerator(division2StandingList);
-        standingSystem.rankGenerator(division3StandingList);
-        standingSystem.rankGenerator(division4StandingList);
+        Map<Integer, List<IStandings>> conferenceWildCardListMap = new HashMap<>();
+        conferenceWildCardListMap.put(1, new ArrayList<>());
+        conferenceWildCardListMap.put(2, new ArrayList<>());
 
-        List<IStandings> conferenceOneWildCardList = new ArrayList<>();
-        conferenceOneWildCardList.add(division1StandingList.get(3));
-        conferenceOneWildCardList.add(division1StandingList.get(4));
-        conferenceOneWildCardList.add(division2StandingList.get(3));
-        conferenceOneWildCardList.add(division2StandingList.get(4));
+        addDivisionStandingsToConference(divisionStandingMap, conferenceWildCardListMap);
 
-        List<IStandings> conferenceTwoWildCardList = new ArrayList<>();
-        conferenceTwoWildCardList.add(division3StandingList.get(3));
-        conferenceTwoWildCardList.add(division3StandingList.get(4));
-        conferenceTwoWildCardList.add(division4StandingList.get(3));
-        conferenceTwoWildCardList.add(division4StandingList.get(4));
+        standingSystem.rankGenerator(conferenceWildCardListMap.get(1));
+        conferenceWildCardListMap.get(1).remove(2);
+        conferenceWildCardListMap.get(1).remove(2);
 
-        standingSystem.rankGenerator(conferenceOneWildCardList);
-        conferenceOneWildCardList.remove(2);
-        conferenceOneWildCardList.remove(2);
+        standingSystem.rankGenerator(conferenceWildCardListMap.get(2));
+        conferenceWildCardListMap.get(2).remove(2);
+        conferenceWildCardListMap.get(2).remove(2);
 
-        standingSystem.rankGenerator(conferenceTwoWildCardList);
-        conferenceTwoWildCardList.remove(2);
-        conferenceTwoWildCardList.remove(2);
 
-        ISchedule match1 = new SeasonSchedule();
-        match1.setTeamOneConference(conference1);
-        match1.setTeamTwoConference(conference1);
-        match1.setTeamOneDivision(conference1StandingList.get(0).getTeamDivision());
-        match1.setTeamTwoDivision(conferenceOneWildCardList.get(1).getTeamDivision());
-        match1.setTeamOne(conference1StandingList.get(0).getTeam());
-        match1.setTeamTwo(conferenceOneWildCardList.get(1).getTeam());
+        ISchedule match1 = setMatchConferenceAndDivision(conference1, conference1StandingList.get(0).getTeamDivision(), conferenceWildCardListMap.get(1).get(1).getTeamDivision());
+        setTeams(match1, conference1StandingList.get(0).getTeam(), conferenceWildCardListMap.get(1).get(1).getTeam());
+        currentDate = currentDate.plusDays(1);
         match1.setGameDate(currentDate);
         playOffScheduleRound1.add(match1);
 
         IDivision conference1LeadDivision = conference1StandingList.get(0).getTeamDivision();
-        IDivision anotherDivision = division1;
-        if (division1.getDivisionName().equals(conference1LeadDivision.getDivisionName())) {
-            anotherDivision = division2;
+        IDivision anotherDivision = divisionList.get(0);
+        if (divisionList.get(0).getDivisionName().equals(conference1LeadDivision.getDivisionName())) {
+            anotherDivision = divisionList.get(1);
         }
 
-        ISchedule match2 = new SeasonSchedule();
-        match2.setTeamOneConference(conference1);
-        match2.setTeamTwoConference(conference1);
-        match2.setTeamOneDivision(division1);
-        match2.setTeamTwoDivision(division1);
-        match2.setTeamOne(division1StandingList.get(1).getTeam());
-        match2.setTeamTwo(division1StandingList.get(2).getTeam());
+        ISchedule match2 = setMatchConferenceAndDivision(conference1, divisionList.get(0), divisionList.get(0));
+        setTeams(match2, divisionStandingMap.get(1).get(1).getTeam(), divisionStandingMap.get(1).get(2).getTeam());
         currentDate = currentDate.plusDays(1);
         match2.setGameDate(currentDate);
         playOffScheduleRound1.add(match2);
 
-        ISchedule match3 = new SeasonSchedule();
-        match3.setTeamOneConference(conference1);
-        match3.setTeamTwoConference(conference1);
-        match3.setTeamOneDivision(anotherDivision);
-        match3.setTeamTwoDivision(conferenceOneWildCardList.get(0).getTeamDivision());
-        if (anotherDivision == division1) {
-            match3.setTeamOne(division1StandingList.get(0).getTeam());
-        } else if (anotherDivision == division2) {
-            match3.setTeamOne(division2StandingList.get(0).getTeam());
+        ISchedule match3 = setMatchConferenceAndDivision(conference1, anotherDivision, conferenceWildCardListMap.get(1).get(0).getTeamDivision());
+        if (anotherDivision == divisionList.get(0)) {
+            setTeams(match3, divisionStandingMap.get(1).get(0).getTeam(), conferenceWildCardListMap.get(1).get(0).getTeam());
+        } else if (anotherDivision == divisionList.get(1)) {
+            setTeams(match3, divisionStandingMap.get(2).get(0).getTeam(), conferenceWildCardListMap.get(1).get(0).getTeam());
         }
-        match3.setTeamTwo(conferenceOneWildCardList.get(0).getTeam());
         currentDate = currentDate.plusDays(1);
         match3.setGameDate(currentDate);
         playOffScheduleRound1.add(match3);
 
-        ISchedule match4 = new SeasonSchedule();
-        match4.setTeamOneConference(conference1);
-        match4.setTeamTwoConference(conference1);
-        match4.setTeamOneDivision(division2);
-        match4.setTeamTwoDivision(division2);
-        match4.setTeamOne(division2StandingList.get(1).getTeam());
-        match4.setTeamTwo(division2StandingList.get(2).getTeam());
+        ISchedule match4 = setMatchConferenceAndDivision(conference1, divisionList.get(1), divisionList.get(1));
+        setTeams(match4, divisionStandingMap.get(2).get(1).getTeam(), divisionStandingMap.get(2).get(2).getTeam());
         currentDate = currentDate.plusDays(1);
         match4.setGameDate(currentDate);
         playOffScheduleRound1.add(match4);
 
-        ISchedule match5 = new SeasonSchedule();
-        match5.setTeamOneConference(conference2);
-        match5.setTeamTwoConference(conference2);
-        match5.setTeamOneDivision(conference2StandingList.get(0).getTeamDivision());
-        match5.setTeamTwoDivision(conferenceTwoWildCardList.get(1).getTeamDivision());
-        match5.setTeamOne(conference2StandingList.get(0).getTeam());
-        match5.setTeamTwo(conferenceTwoWildCardList.get(1).getTeam());
+        ISchedule match5 = setMatchConferenceAndDivision(conference2, conference2StandingList.get(0).getTeamDivision(), conferenceWildCardListMap.get(2).get(1).getTeamDivision());
+        setTeams(match5, conference2StandingList.get(0).getTeam(), conferenceWildCardListMap.get(2).get(1).getTeam());
         currentDate = currentDate.plusDays(1);
         match5.setGameDate(currentDate);
         playOffScheduleRound1.add(match5);
 
         IDivision conference2LeadDivision = conference2StandingList.get(0).getTeamDivision();
-        IDivision anotherDivision2 = division3;
-        if (division3.getDivisionName().equals(conference2LeadDivision.getDivisionName())) {
-            anotherDivision2 = division4;
+        IDivision anotherDivision2 = divisionList.get(2);
+        if (divisionList.get(2).getDivisionName().equals(conference2LeadDivision.getDivisionName())) {
+            anotherDivision2 = divisionList.get(3);
         }
 
-        ISchedule match6 = new SeasonSchedule();
-        match6.setTeamOneConference(conference2);
-        match6.setTeamTwoConference(conference2);
-        match6.setTeamOneDivision(division3);
-        match6.setTeamTwoDivision(division3);
-        match6.setTeamOne(division3StandingList.get(1).getTeam());
-        match6.setTeamTwo(division3StandingList.get(2).getTeam());
+        ISchedule match6 = setMatchConferenceAndDivision(conference2, divisionList.get(2), divisionList.get(2));
+        setTeams(match6, divisionStandingMap.get(3).get(1).getTeam(), divisionStandingMap.get(3).get(2).getTeam());
         currentDate = currentDate.plusDays(1);
         match6.setGameDate(currentDate);
         playOffScheduleRound1.add(match6);
 
-        ISchedule match7 = new SeasonSchedule();
-        match7.setTeamOneConference(conference2);
-        match7.setTeamTwoConference(conference2);
-        match7.setTeamOneDivision(anotherDivision2);
-        match7.setTeamTwoDivision(conferenceTwoWildCardList.get(0).getTeamDivision());
-        if (anotherDivision2 == division3) {
-            match7.setTeamOne(division3StandingList.get(0).getTeam());
-        } else if (anotherDivision2 == division4) {
-            match7.setTeamOne(division4StandingList.get(0).getTeam());
+        ISchedule match7 = setMatchConferenceAndDivision(conference2, anotherDivision2, conferenceWildCardListMap.get(2).get(0).getTeamDivision());
+        if (anotherDivision2 == divisionList.get(2)) {
+            setTeams(match7, divisionStandingMap.get(3).get(0).getTeam(), conferenceWildCardListMap.get(2).get(0).getTeam());
+        } else if (anotherDivision2 == divisionList.get(3)) {
+            setTeams(match7, divisionStandingMap.get(4).get(0).getTeam(), conferenceWildCardListMap.get(2).get(0).getTeam());
         }
-        match7.setTeamTwo(conferenceTwoWildCardList.get(0).getTeam());
         currentDate = currentDate.plusDays(1);
         match7.setGameDate(currentDate);
         playOffScheduleRound1.add(match7);
 
-        ISchedule match8 = new SeasonSchedule();
-        match8.setTeamOneConference(conference2);
-        match8.setTeamTwoConference(conference2);
-        match8.setTeamOneDivision(division4);
-        match8.setTeamTwoDivision(division4);
-        match8.setTeamOne(division4StandingList.get(1).getTeam());
-        match8.setTeamTwo(division4StandingList.get(2).getTeam());
+        ISchedule match8 = setMatchConferenceAndDivision(conference2, divisionList.get(3), divisionList.get(3));
+        setTeams(match8, divisionStandingMap.get(4).get(1).getTeam(), divisionStandingMap.get(4).get(2).getTeam());
         currentDate = currentDate.plusDays(1);
         match8.setGameDate(currentDate);
         playOffScheduleRound1.add(match8);
+    }
+
+    private ISchedule setMatchConferenceAndDivision(IConference conference, IDivision division1, IDivision division2) {
+        ISchedule match = new SeasonSchedule();
+        match.setTeamOneConference(conference);
+        match.setTeamTwoConference(conference);
+        match.setTeamOneDivision(division1);
+        match.setTeamTwoDivision(division2);
+        return match;
+    }
+
+    private void setTeams(ISchedule match, ITeam team1, ITeam team2) {
+        match.setTeamOne(team1);
+        match.setTeamTwo(team2);
+    }
+
+    private void generateRanks(StandingSystem standingSystem, List<IStandings> conference1StandingList, List<IStandings> conference2StandingList, HashMap<Integer, List<IStandings>> divisionStandingMap) {
+        standingSystem.rankGenerator(conference1StandingList);
+        standingSystem.rankGenerator(conference2StandingList);
+
+        standingSystem.rankGenerator(divisionStandingMap.get(1));
+        standingSystem.rankGenerator(divisionStandingMap.get(2));
+        standingSystem.rankGenerator(divisionStandingMap.get(3));
+        standingSystem.rankGenerator(divisionStandingMap.get(4));
+    }
+
+    private void addDivisionStandingsToConference(HashMap<Integer, List<IStandings>> divisionStandingMap, Map<Integer, List<IStandings>> conferenceWildCardListMap) {
+        conferenceWildCardListMap.get(1).add(divisionStandingMap.get(1).get(3));
+        conferenceWildCardListMap.get(1).add(divisionStandingMap.get(1).get(4));
+        conferenceWildCardListMap.get(1).add(divisionStandingMap.get(2).get(3));
+        conferenceWildCardListMap.get(1).add(divisionStandingMap.get(2).get(4));
+
+        conferenceWildCardListMap.get(2).add(divisionStandingMap.get(3).get(3));
+        conferenceWildCardListMap.get(2).add(divisionStandingMap.get(3).get(4));
+        conferenceWildCardListMap.get(2).add(divisionStandingMap.get(4).get(3));
+        conferenceWildCardListMap.get(2).add(divisionStandingMap.get(4).get(4));
+    }
+
+    private void addStandingsToConferences(List<IStandings> regularGamesStandings, IConference conference1, IConference conference2, List<IDivision> divisionList, List<IStandings> conference1StandingList, List<IStandings> conference2StandingList, HashMap<Integer, List<IStandings>> divisionStandingMap) {
+        for (IStandings standings : regularGamesStandings) {
+            if (standings.getTeamConference().getConferenceName().equals(conference1.getConferenceName())) {
+                if (standings.getTeamDivision().getDivisionName().equals(divisionList.get(0).getDivisionName())) {
+                    divisionStandingMap.get(1).add(standings);
+                } else if (standings.getTeamDivision().getDivisionName().equals(divisionList.get(1).getDivisionName())) {
+                    divisionStandingMap.get(2).add(standings);
+                }
+                conference1StandingList.add(standings);
+            } else if (standings.getTeamConference().getConferenceName().equals(conference2.getConferenceName())) {
+                if (standings.getTeamDivision().getDivisionName().equals(divisionList.get(2).getDivisionName())) {
+                    divisionStandingMap.get(3).add(standings);
+                } else if (standings.getTeamDivision().getDivisionName().equals(divisionList.get(3).getDivisionName())) {
+                    divisionStandingMap.get(4).add(standings);
+                }
+                conference2StandingList.add(standings);
+            }
+        }
     }
 
     public void gameWinner(ITeam team) {

@@ -66,7 +66,7 @@ public class StandingSystem implements IStandingSystem {
     }
 
     public List<IStandings> leagueRanking() {
-        List<IStandings> standingsList = new ArrayList<>();
+        List<IStandings> standingsList;
         standingsList = this.standingsList;
         rankGenerator(standingsList);
         return standingsList;
@@ -74,8 +74,8 @@ public class StandingSystem implements IStandingSystem {
 
     public void rankGenerator(List<IStandings> rankList) {
         Collections.sort(rankList, (IStandings objectOne, IStandings objectTwo) -> {
-            if (Integer.compare(objectOne.getPoints(), objectTwo.getPoints()) == 0) {
-                if (Integer.compare(objectOne.getWins(), objectTwo.getWins()) == 0) {
+            if (objectOne.getPoints() == objectTwo.getPoints()) {
+                if (objectOne.getWins() == objectTwo.getWins()) {
                     return Integer.compare(objectTwo.getLoss(), objectOne.getLoss());
                 } else {
                     return Integer.compare(objectTwo.getWins(), objectOne.getWins());
