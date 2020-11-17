@@ -4,7 +4,7 @@ import dhl.InputOutput.UI.IUserInputOutput;
 import dhl.InputOutput.UI.UserInputOutput;
 import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.businessLogic.aging.InjurySystem;
-import dhl.businessLogic.aging.Interface.IInjurySystem;
+import dhl.businessLogic.aging.interfaceAging.IInjurySystem;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.simulationStateMachine.Interface.IScheduler;

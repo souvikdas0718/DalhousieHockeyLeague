@@ -102,7 +102,7 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
                     throw new Exception("ERROR: Hey! Conference cant have Null values....");
                 }
                 divisionJsonArray = (JSONArray) conferenceJsonObject.get("divisions");
-                Conference conferenceObject = new Conference((String) conferenceJsonObject.get("conferenceName"), getDivisionObjectArrayList());
+                IConference conferenceObject = new Conference((String) conferenceJsonObject.get("conferenceName"), getDivisionObjectArrayList());
                 if (conferenceObject.checkIfConferenceValid(validationObject)) {
                     conferencesListToReturn.add(conferenceObject);
                 }
@@ -122,7 +122,7 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
                 throw new Exception("ERROR: Hey! Division cant have Null values....");
             }
             teamJsonArray = (JSONArray) divisionJsonObject.get("teams");
-            Division divisionObject = new Division(
+            IDivision divisionObject = new Division(
                     (String) divisionJsonObject.get("divisionName"),
                     getTeamObjectArrayList()
             );

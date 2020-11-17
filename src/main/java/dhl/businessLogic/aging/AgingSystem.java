@@ -1,7 +1,7 @@
 package dhl.businessLogic.aging;
 
 import dhl.InputOutput.importJson.Interface.IGameConfig;
-import dhl.businessLogic.aging.Interface.IAgingSystem;
+import dhl.businessLogic.aging.interfaceAging.IAgingSystem;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
@@ -20,8 +20,8 @@ public class AgingSystem implements IAgingSystem {
     public AgingSystem(IGameConfig gameConfig) {
         averageRetirementAge = Integer.parseInt(gameConfig.getValueFromOurObject(gameConfig.getAging(), gameConfig.getAverageRetirementAge()));
         maximumAge = Integer.parseInt(gameConfig.getValueFromOurObject(gameConfig.getAging(), gameConfig.getMaximumAge()));
-        likelihoodForGreaterThanAvg = 80.0;
-        likelihoodForLesserThanAvg = 20.0;
+        likelihoodForGreaterThanAvg = AgingConstant.LIKELIHOODFORGREATERTHANAVGAGE.getValue();
+        likelihoodForLesserThanAvg = AgingConstant.LIKELIHOODFORLESSERTHANAVGAGE.getValue();
     }
 
     public double getLikelihoodForGreaterThanAvg() {
@@ -70,7 +70,7 @@ public class AgingSystem implements IAgingSystem {
     }
 
     public List<IPlayer> retirementAlgorithmBasedOnAge(List<IPlayer> players) {
-        int rangeOfAge = (maximumAge - averageRetirementAge) / 3;
+        int rangeOfAge = (maximumAge - averageRetirementAge) / AgingConstant.RANGEDIVISION.getValue();
         List<IPlayer> retiringPlayers = new ArrayList<>();
         for (IPlayer player : players) {
             IPlayerStatistics playerStatistics = player.getPlayerStats();

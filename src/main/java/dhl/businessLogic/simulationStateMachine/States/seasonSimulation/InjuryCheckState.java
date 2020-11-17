@@ -1,7 +1,6 @@
 package dhl.businessLogic.simulationStateMachine.States.seasonSimulation;
 
-
-import dhl.businessLogic.aging.Interface.IInjurySystem;
+import dhl.businessLogic.aging.interfaceAging.IInjurySystem;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.simulationStateMachine.Interface.IScheduler;
 import dhl.businessLogic.simulationStateMachine.Interface.ISimulationSeasonState;

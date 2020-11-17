@@ -86,6 +86,12 @@ public class PlayerTest {
     }
 
     @Test
+    public void setActive() {
+        player.setActive(true);
+        Assertions.assertTrue(player.isActive());
+    }
+
+    @Test
     void setPlayerInjuredDaysTest() {
         player.setPlayerInjuredDays(10);
         Assertions.assertEquals(10, player.getPlayerInjuredDays());
