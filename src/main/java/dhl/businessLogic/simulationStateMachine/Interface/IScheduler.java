@@ -1,7 +1,6 @@
 package dhl.businessLogic.simulationStateMachine.Interface;
 
 
-
 import dhl.businessLogic.leagueModel.interfaceModel.IConference;
 import dhl.businessLogic.leagueModel.interfaceModel.IDivision;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
@@ -13,11 +12,7 @@ import java.util.List;
 public interface IScheduler {
     public List<ISchedule> getFullSeasonSchedule();
 
-    public void setFullSeasonSchedule(List<ISchedule> fullSeasonSchedule);
-
     public List<ISchedule> getPlayOffScheduleRound1();
-
-    public void setPlayOffScheduleRound1(List<ISchedule> playOffSchedule);
 
     public LocalDate getSeasonStartDate();
 
@@ -37,15 +32,15 @@ public interface IScheduler {
 
     public List<ITeam> getTeamList();
 
-    public void setTeamList(List<ITeam> teamList);
+//    public void setTeamList(List<ITeam> teamList);
 
     public List<IConference> getConferences();
 
-    public void setConferences(List<IConference> conferences);
+//    public void setConferences(List<IConference> conferences);
 
     public List<IDivision> getDivisions();
 
-    public void setDivisions(List<IDivision> divisions);
+//    public void setDivisions(List<IDivision> divisions);
 
     public void gameWinner(ITeam team);
 
@@ -53,11 +48,11 @@ public interface IScheduler {
 
     public void generateTeamSchedule(ILeagueObjectModel inMemoryLeague);
 
-    public void gameScheduleDates( LocalDate seasonStartDate, LocalDate seasonEndDate );
+    public void gameScheduleDates(LocalDate seasonStartDate, LocalDate seasonEndDate);
 
-    public List<ISchedule> getFinals();
-
-    public void setFinals(List<ISchedule> finals);
+//    public List<ISchedule> getFinals();
+//
+//    public void setFinals(List<ISchedule> finals);
 
     public LocalDate getCurrentDate();
 
@@ -70,9 +65,5 @@ public interface IScheduler {
     public void playOffs(List<IStandings> regularGamesStandings, ILeagueObjectModel leagueObjectModel);
 
     public boolean stanleyCupWinner(LocalDate date);
-
-    public List<ISchedule> getPlayOffScheduleRound2();
-
-    public void setPlayOffScheduleRound2(List<ISchedule> playOffScheduleRound2);
 
 }
