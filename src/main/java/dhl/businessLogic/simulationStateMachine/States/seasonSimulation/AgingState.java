@@ -3,10 +3,10 @@ package dhl.businessLogic.simulationStateMachine.States.seasonSimulation;
 
 import dhl.businessLogic.aging.Aging;
 import dhl.businessLogic.aging.AgingSystem;
-import dhl.businessLogic.aging.Interface.IAging;
-import dhl.businessLogic.aging.Interface.IAgingSystem;
-import dhl.businessLogic.aging.Interface.IRetirementSystem;
 import dhl.businessLogic.aging.RetirementSystem;
+import dhl.businessLogic.aging.interfaceAging.IAging;
+import dhl.businessLogic.aging.interfaceAging.IAgingSystem;
+import dhl.businessLogic.aging.interfaceAging.IRetirementSystem;
 import dhl.businessLogic.simulationStateMachine.Interface.IScheduler;
 import dhl.businessLogic.simulationStateMachine.Interface.ISimulationSeasonState;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
