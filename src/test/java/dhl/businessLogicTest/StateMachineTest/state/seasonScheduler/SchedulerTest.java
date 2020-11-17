@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,12 +27,110 @@ public class SchedulerTest {
 
     LeagueObjectModelMocks mockLeagueObjectModel;
     LeagueObjectModel20TeamMocks model20TeamMocks;
+    IScheduler scheduler;
 
     @BeforeEach
     public void initObject() {
         mockLeagueObjectModel = new LeagueObjectModelMocks();
         model20TeamMocks = new LeagueObjectModel20TeamMocks();
         model20TeamMocks.leagueModel20TeamGeneralStandings();
+        scheduler = new Scheduler();
+    }
+
+    @Test
+    public void getGameStandingsTest() {
+        ArrayList<IStandings> standings = model20TeamMocks.getGeneralStandings();
+        IScheduler scheduler = new Scheduler();
+        scheduler.setGameStandings(standings);
+        Assertions.assertEquals(scheduler.getGameStandings().size(), 20);
+    }
+
+    @Test
+    public void setGameStandingsTest() {
+        ArrayList<IStandings> standings = model20TeamMocks.getGeneralStandings();
+
+        scheduler.setGameStandings(standings);
+        Assertions.assertEquals(scheduler.getGameStandings().size(), 20);
+    }
+
+    @Test
+    public void getCurrentDate() {
+        LocalDate date = LocalDate.now();
+        scheduler.setCurrentDate(date);
+        Assertions.assertTrue(scheduler.getCurrentDate().equals(date));
+    }
+
+    @Test
+    public void setCurrentDate() {
+        LocalDate date = LocalDate.now();
+        scheduler.setCurrentDate(date);
+        Assertions.assertTrue(scheduler.getCurrentDate().equals(date));
+    }
+
+    @Test
+    public void getSeasonStartDateTest() {
+        LocalDate startDate = LocalDate.of(2020, 10, 01);
+        scheduler.setSeasonStartDate(startDate);
+        Assertions.assertTrue(scheduler.getSeasonStartDate().equals(startDate));
+    }
+
+    @Test
+    public void setSeasonStartDateTest() {
+        LocalDate startDate = LocalDate.of(2020, 10, 01);
+        scheduler.setSeasonStartDate(startDate);
+        Assertions.assertTrue(scheduler.getSeasonStartDate().equals(startDate));
+    }
+
+    @Test
+    public void getSeasonEndDateTest() {
+        LocalDate endDate = LocalDate.of(2021, 04, 01);
+        LocalDate endOfRegularSeasonDate = endDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.SATURDAY));
+        scheduler.setSeasonEndDate(endOfRegularSeasonDate);
+        Assertions.assertTrue(scheduler.getSeasonEndDate().equals(endOfRegularSeasonDate));
+    }
+
+    @Test
+    public void setSeasonEndDateTest() {
+        LocalDate endDate = LocalDate.of(2021, 04, 01);
+        LocalDate endOfRegularSeasonDate = endDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.SATURDAY));
+        scheduler.setSeasonEndDate(endOfRegularSeasonDate);
+        Assertions.assertTrue(scheduler.getSeasonEndDate().equals(endOfRegularSeasonDate));
+    }
+
+    @Test
+    public void getPlayOffStartDateTest() {
+        LocalDate endDate = LocalDate.of(2021, 04, 01);
+        LocalDate playOffStartDate = endDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.WEDNESDAY));
+        playOffStartDate = playOffStartDate.plusDays(7);
+        scheduler.setPlayOffStartDate(playOffStartDate);
+        Assertions.assertTrue(scheduler.getPlayOffStartDate().equals(playOffStartDate));
+    }
+
+    @Test
+    public void setPlayOffStartDateTest() {
+        LocalDate endDate = LocalDate.of(2021, 04, 01);
+        LocalDate playOffStartDate = endDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.WEDNESDAY));
+        playOffStartDate = playOffStartDate.plusDays(7);
+        scheduler.setPlayOffStartDate(playOffStartDate);
+        Assertions.assertTrue(scheduler.getPlayOffStartDate().equals(playOffStartDate));
+    }
+
+    @Test
+    public void getFinalDayTest() {
+        LocalDate endDate = LocalDate.of(2021, 04, 01);
+        LocalDate finalsDate = endDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.WEDNESDAY));
+        finalsDate = finalsDate.plusDays(14);
+        scheduler.setFinalDay(finalsDate);
+        Assertions.assertTrue(scheduler.getFinalDay().equals(finalsDate));
+    }
+
+    @Test
+    public void setFinalDayTest() {
+        LocalDate endDate = LocalDate.of(2021, 04, 01);
+        LocalDate finalsDate = endDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.WEDNESDAY));
+        finalsDate = finalsDate.plusDays(14);
+        scheduler.setFinalDay(finalsDate);
+        Assertions.assertTrue(scheduler.getFinalDay().equals(finalsDate));
     }
 
     @Test

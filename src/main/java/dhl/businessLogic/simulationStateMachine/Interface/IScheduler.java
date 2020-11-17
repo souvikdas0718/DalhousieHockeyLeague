@@ -32,15 +32,15 @@ public interface IScheduler {
 
     public List<ITeam> getTeamList();
 
-    public void setTeamList(List<ITeam> teamList);
+//    public void setTeamList(List<ITeam> teamList);
 
     public List<IConference> getConferences();
 
-    public void setConferences(List<IConference> conferences);
+//    public void setConferences(List<IConference> conferences);
 
     public List<IDivision> getDivisions();
 
-    public void setDivisions(List<IDivision> divisions);
+//    public void setDivisions(List<IDivision> divisions);
 
     public void gameWinner(ITeam team);
 
@@ -50,9 +50,9 @@ public interface IScheduler {
 
     public void gameScheduleDates(LocalDate seasonStartDate, LocalDate seasonEndDate);
 
-    public List<ISchedule> getFinals();
-
-    public void setFinals(List<ISchedule> finals);
+//    public List<ISchedule> getFinals();
+//
+//    public void setFinals(List<ISchedule> finals);
 
     public LocalDate getCurrentDate();
 

@@ -22,7 +22,7 @@ import java.util.Map;
 public class Scheduler implements IScheduler {
     private List<ISchedule> fullSeasonSchedule;
     private List<ISchedule> playOffScheduleRound1;
-    private List<ISchedule> finals;
+//    private List<ISchedule> finals;
     private LocalDate seasonStartDate;
     private LocalDate seasonEndDate;
     private LocalDate playOffStartDate;
@@ -41,6 +41,7 @@ public class Scheduler implements IScheduler {
         teamList = new ArrayList<>();
         conferences = new ArrayList<>();
         divisions = new ArrayList<>();
+        gameStandings = new ArrayList<>();
     }
 
     public List<ISchedule> getFullSeasonSchedule() {
@@ -87,34 +88,34 @@ public class Scheduler implements IScheduler {
         return teamList;
     }
 
-    public void setTeamList(List<ITeam> teamList) {
-        this.teamList = teamList;
-    }
+//    public void setTeamList(List<ITeam> teamList) {
+//        this.teamList = teamList;
+//    }
 
     public List<IConference> getConferences() {
         return conferences;
     }
 
-    public void setConferences(List<IConference> conferences) {
-        this.conferences = conferences;
-    }
+//    public void setConferences(List<IConference> conferences) {
+//        this.conferences = conferences;
+//    }
 
     public List<IDivision> getDivisions() {
         return divisions;
     }
 
-    public void setDivisions(List<IDivision> divisions) {
-        this.divisions = divisions;
-    }
+//    public void setDivisions(List<IDivision> divisions) {
+//        this.divisions = divisions;
+//    }
 
 
-    public List<ISchedule> getFinals() {
-        return finals;
-    }
-
-    public void setFinals(List<ISchedule> finals) {
-        this.finals = finals;
-    }
+//    public List<ISchedule> getFinals() {
+//        return finals;
+//    }
+//
+//    public void setFinals(List<ISchedule> finals) {
+//        this.finals = finals;
+//    }
 
     public LocalDate getCurrentDate() {
         return currentDate;
@@ -370,6 +371,9 @@ public class Scheduler implements IScheduler {
                 currentDate = currentDate.plusDays(1);
                 match.setGameDate(currentDate);
                 playOffScheduleRound1.add(match);
+                if(playOffScheduleRound1.size() == 15) {
+                    setFinalDay(playOffScheduleRound1.get(14).getGameDate());
+                }
             }
         }
     }
