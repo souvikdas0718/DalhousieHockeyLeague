@@ -10,9 +10,13 @@ public interface IPlayer {
 
     IPlayerStatistics getPlayerStats();
 
-    public int getPlayerInjuredDays();
+    int getPlayerInjuredDays();
 
-    public void setPlayerInjuredDays(int playerInjuredDays);
+    void setPlayerInjuredDays(int playerInjuredDays);
+
+    boolean isActive() ;
+
+    void setActive(boolean active);
 
     boolean checkPlayerValid() throws Exception;
 

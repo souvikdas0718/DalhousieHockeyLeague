@@ -4,10 +4,13 @@ import dhl.InputOutput.importJson.GameConfig;
 import dhl.InputOutput.importJson.ImportJsonFile;
 import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.businessLogic.leagueModel.*;
+import dhl.businessLogic.leagueModel.constants.PlayerPosition;
+import dhl.businessLogic.leagueModel.constants.TeamConstant;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class LeagueObjectModelMocks {
 
@@ -242,5 +245,29 @@ public class LeagueObjectModelMocks {
 
         }
         return gameConfig;
+    }
+
+    public List<IPlayer> getTeamPlayers(){
+        List<IPlayer> playerList = new ArrayList<>();
+        Random rand = new Random();
+
+        for(int i=0;i<TeamConstant.TOTALTEAMSIZE.getValue();i++){
+            IPlayerStatistics playerStatistics= new PlayerStatistics(20,rand.nextInt((20 - 1) + 1) + 1,rand.nextInt((20 - 1) + 1) + 1,rand.nextInt((20 - 1) + 1) + 1,rand.nextInt((20 - 1) + 1) + 1);
+            IPlayer player;
+            if(i==0){
+                player= new Player("Player"+i, PlayerPosition.FORWARD.toString(),true,playerStatistics);
+            }
+            else if(i< TeamConstant.TOTALFORWARDS.getValue()){
+                player= new Player("Player"+i,PlayerPosition.FORWARD.toString(),false,playerStatistics);
+            }
+            else if(i<TeamConstant.TOTALTEAMSIZE.getValue()- TeamConstant.TOTALGOALIES.getValue()){
+                player = new Player("Player"+i,PlayerPosition.DEFENSE.toString(),false,playerStatistics);
+            }
+            else{
+                player= new Player("Player"+i,PlayerPosition.GOALIE.toString(),false,playerStatistics);
+            }
+            playerList.add(player);
+        }
+        return playerList;
     }
 }

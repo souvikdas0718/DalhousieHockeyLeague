@@ -1,4 +1,4 @@
-package dhl.businessLogic.aging.Interface;
+package dhl.businessLogic.aging.interfaceAging;
 
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 

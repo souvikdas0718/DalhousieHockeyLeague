@@ -4,12 +4,14 @@ import dhl.InputOutput.importJson.GameConfig;
 import dhl.InputOutput.importJson.ImportJsonFile;
 import dhl.Mocks.JsonFilePathMock;
 import dhl.Mocks.LeagueObjectModelMocks;
+import dhl.businessLogic.leagueModel.Team;
+import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogicTest.leagueModelTests.MockDatabase;
 import dhl.database.interfaceDB.ILeagueObjectModelDB;
 import dhl.businessLogic.aging.InjurySystem;
 import dhl.businessLogic.leagueModel.LeagueObjectModel;
 import dhl.businessLogic.traning.Training;
-import dhl.businessLogic.aging.Interface.IInjurySystem;
+import dhl.businessLogic.aging.interfaceAging.IInjurySystem;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import org.junit.jupiter.api.Assertions;
@@ -50,10 +52,11 @@ public class TrainingTest {
     public void playerStatLessThanHeadCoachStatTest() throws Exception {
         List<IPlayer> updatedPlayersList = new ArrayList<>();
         Double[] randomValues = {0.01, 0.2, 0.3, 0.1};
+        ITeam team = new Team("Ontario","Sam",leagueObjectModelMocks.getSingleCoach(),updatedPlayersList);
 
         updatedPlayersList = trainingParameterized.playerStatLessThanHeadCoachStat(
                 leagueObjectModelMocks.getPlayerArrayMock(),
-                leagueObjectModelMocks.getSingleCoach(), randomValues);
+                team, randomValues);
 
         for (int i = 0; i < updatedPlayersList.size(); i++) {
 
@@ -68,10 +71,11 @@ public class TrainingTest {
     public void playerStatMoreThanHeadCoachStatTest() throws Exception {
         List<IPlayer> updatedPlayersList = new ArrayList<>();
         Double[] randomValues = {0.1, 0.2, 0.3, 0.4};
+        ITeam team = new Team("Ontario","Sam",leagueObjectModelMocks.getSingleCoach(),updatedPlayersList);
 
         trainingParameterized.gameConfig = new GameConfig(importJsonFile.getJsonObject());
         trainingParameterized.playerStatMoreThanHeadCoachStat(leagueObjectModelMocks.getPlayerArrayMock()
-                , leagueObjectModelMocks.getSingleCoach(), randomValues);
+                , team, randomValues);
     }
 
     @Test

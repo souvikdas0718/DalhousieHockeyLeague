@@ -7,7 +7,7 @@ import dhl.businessLogic.leagueModel.interfaceModel.IConference;
 import dhl.businessLogic.leagueModel.interfaceModel.IDivision;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
-import dhl.businessLogic.aging.Interface.IRetirementSystem;
+import dhl.businessLogic.aging.interfaceAging.IRetirementSystem;
 
 import java.util.ArrayList;
 import java.util.Collections;

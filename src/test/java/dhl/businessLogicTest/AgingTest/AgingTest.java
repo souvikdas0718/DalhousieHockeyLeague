@@ -3,9 +3,9 @@ package dhl.businessLogicTest.AgingTest;
 
 import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.Mocks.LeagueObjectModelMocks;
-import dhl.businessLogic.aging.Interface.IAgingSystem;
-import dhl.businessLogic.aging.Interface.IInjurySystem;
-import dhl.businessLogic.aging.Interface.IRetirementSystem;
+import dhl.businessLogic.aging.interfaceAging.IAgingSystem;
+import dhl.businessLogic.aging.interfaceAging.IInjurySystem;
+import dhl.businessLogic.aging.interfaceAging.IRetirementSystem;
 import dhl.businessLogicTest.leagueModelTests.PlayerDBMock;
 import dhl.database.interfaceDB.IPlayerDB;
 import dhl.businessLogic.aging.Aging;
