@@ -1,5 +1,7 @@
 package dhl.businessLogic.simulationStateMachine.States.seasonSimulation;
 
+import com.sun.org.slf4j.internal.Logger;
+import com.sun.org.slf4j.internal.LoggerFactory;
 import dhl.InputOutput.UI.IUserInputOutput;
 import dhl.InputOutput.UI.UserInputOutput;
 import dhl.InputOutput.importJson.Interface.IGameConfig;
@@ -13,6 +15,8 @@ import dhl.businessLogic.trade.Interface.ITradingEngine;
 
 
 public class ExecuteTradesState implements ISimulationSeasonState {
+
+    private static Logger log = LoggerFactory.getLogger(ExecuteTradesState.class);
 
     SimulationContext simulationContextObject;
     IGameConfig gameConfig;
@@ -54,9 +58,8 @@ public class ExecuteTradesState implements ISimulationSeasonState {
                 }
             }
         } catch (Exception e) {
-            ioObject = new UserInputOutput();
-            ioObject.printMessage("ERROR");
-            ioObject.printMessage(e.getMessage());
+            log.error("Error occured while aging"+ e.getMessage());
+            e.printStackTrace();
         }
 
     }
