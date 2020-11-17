@@ -3,7 +3,7 @@ package dhl.businessLogic.traning;
 import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.businessLogic.traning.Interfaces.ITraining;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
-import dhl.businessLogic.aging.Interface.IInjurySystem;
+import dhl.businessLogic.aging.interfaceAging.IInjurySystem;
 import dhl.businessLogic.leagueModel.interfaceModel.IConference;
 import dhl.businessLogic.leagueModel.interfaceModel.IDivision;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
@@ -29,16 +29,17 @@ public class Training implements ITraining {
                 for (ITeam team : division.getTeams()) {
 
                     Double[] randomValues = {getRandomValue(), getRandomValue(), getRandomValue(), getRandomValue()};
-                    playerStatLessThanHeadCoachStat(team.getPlayers(), team.getHeadCoach(), randomValues);
+                    playerStatLessThanHeadCoachStat(team.getPlayers(), team, randomValues);
 
-                    playerStatMoreThanHeadCoachStat(team.getPlayers(), team.getHeadCoach(), randomValues);
+                    playerStatMoreThanHeadCoachStat(team.getPlayers(), team, randomValues);
                 }
             }
         }
         return leagueObjectModel;
     }
 
-    public List<IPlayer> playerStatLessThanHeadCoachStat(List<IPlayer> arrPlayer, ICoach objCoach, Double[] randomValues) throws Exception {
+    public List<IPlayer> playerStatLessThanHeadCoachStat(List<IPlayer> arrPlayer, ITeam team, Double[] randomValues) throws Exception {
+        ICoach objCoach = team.getHeadCoach();
         for (IPlayer player : arrPlayer) {
             IPlayerStatistics playerStat = player.getPlayerStats();
             if (randomValues[0] < objCoach.getSkating()) {
@@ -57,13 +58,14 @@ public class Training implements ITraining {
         return arrPlayer;
     }
 
-    public void playerStatMoreThanHeadCoachStat(List<IPlayer> arrPlayer, ICoach objCoach, Double[] randomValues) {
+    public void playerStatMoreThanHeadCoachStat(List<IPlayer> arrPlayer, ITeam team, Double[] randomValues) {
+        ICoach objCoach= team.getHeadCoach();
         for (IPlayer player : arrPlayer) {
             if ((randomValues[0] > objCoach.getSkating()) ||
                     (randomValues[1] > objCoach.getShooting()) ||
                     (randomValues[2] > objCoach.getChecking()) ||
                     (randomValues[3] > objCoach.getSaving())) {
-                injurySystem.checkIfPlayerInjured(gameConfig, player);
+                injurySystem.checkIfPlayerInjured(gameConfig, player,team);
             }
         }
     }

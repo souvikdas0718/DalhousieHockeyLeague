@@ -3,10 +3,7 @@ package dhl.businessLogicTest.leagueModelTests;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.factory.InitializeObjectFactory;
 import dhl.businessLogic.leagueModel.*;
-import dhl.businessLogic.leagueModel.interfaceModel.ICoach;
-import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
-import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
-import dhl.businessLogic.leagueModel.interfaceModel.IValidation;
+import dhl.businessLogic.leagueModel.interfaceModel.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,12 +37,12 @@ public class TeamTest {
     public void TeamDefaultConstructorTest() {
         team = new Team();
         String teamName = team.getTeamName();
-        Assertions.assertTrue(teamName.length() == 0);
+        Assertions.assertEquals(0,teamName.length() );
         ICoach coach = team.getHeadCoach();
         String coachName = coach.getCoachName();
-        Assertions.assertTrue(coachName.length() == 0);
+        Assertions.assertEquals(0,coachName.length() );
         String generalManagerName = team.getGeneralManager();
-        Assertions.assertTrue(generalManagerName.length() == 0);
+        Assertions.assertEquals(0,generalManagerName.length() );
         Assertions.assertEquals(0, team.getPlayers().size());
     }
 
@@ -92,10 +89,32 @@ public class TeamTest {
     }
 
     @Test
+    public void setActiveRosterTest(){
+        List<IPlayer> player =leagueMock.getTeamPlayers();
+        Team testTeam = new Team("Ontario", "Mathew", headCoach, player);
+        Assertions.assertEquals(20, testTeam.getActiveRoster().size());
+    }
+
+    @Test
+    public void setInactiveRosterTest(){
+        Team testTeam = new Team("Ontario", "Mathew", headCoach, leagueMock.getTeamPlayers());
+        Assertions.assertEquals(10, testTeam.getInactiveRoster().size());
+    }
+
+    @Test
+    public void sortPlayersInTeamByStrengthTest(){
+        team = new Team("Ontario", "Mathew", headCoach, leagueMock.getTeamPlayers());
+        List<IPlayer> players = leagueMock.getTeamPlayers();
+        team.sortPlayersInTeamByStrength(players);
+        IPlayer firstPlayer=players.get(0);
+        IPlayer lastPlayer=players.get(players.size()-1);
+       Assertions.assertTrue(firstPlayer.getPlayerStrength()>lastPlayer.getPlayerStrength());
+    }
+
+    @Test
     public void checkIfOneCaptainPerTeamErrorTest() {
-        List<IPlayer> playersList = new ArrayList<>();
-        playersList.add(new Player("Henry", "forward", false, playerStatistics));
-        playersList.add(new Player("Max", "goalie", false, playerStatistics));
+        List<IPlayer> playersList = leagueMock.getTeamPlayers();
+        playersList.remove(0);
         team = new Team("Ontario", "Mathew", headCoach, playersList);
         Exception errorMsg = Assertions.assertThrows(Exception.class, () -> {
             team.checkIfOneCaptainPerTeam(playersList);
@@ -117,23 +136,12 @@ public class TeamTest {
 
     @Test
     public void checkNumberOfPlayersInTeamTest() {
-        List<IPlayer> playersList = new ArrayList<>();
-        playersList.add(new Player("Henry", "forward", true, playerStatistics));
-        for (int i = 1; i < 20; i++) {
-            playersList.add(new Player("Player" + i, "forward", false, playerStatistics));
-        }
-        team = new Team("Ontario", "Mathew", headCoach, playersList);
-        Assertions.assertTrue(team.checkIfSizeOfTeamValid(playersList));
+        Assertions.assertTrue(team.checkIfSizeOfTeamValid(leagueMock.getTeamPlayers()));
     }
 
     @Test
     public void checkIfTeamValidTest() throws Exception {
-        List<IPlayer> playersList = new ArrayList<>();
-        playersList.add(new Player("Max", "goalie", true, playerStatistics));
-        for (int i = 1; i < 20; i++) {
-            playersList.add(new Player("Player" + i, "forward", false, playerStatistics));
-        }
-        team = new Team("Ontario", "Mathew", headCoach, playersList);
+        team = new Team("Ontario", "Mathew", headCoach, leagueMock.getTeamPlayers());
         Assertions.assertTrue(team.checkIfTeamValid(validate));
     }
 
@@ -141,19 +149,26 @@ public class TeamTest {
     public void checkIfTeamPlayerMoreThan20Test() throws Exception {
         List<IPlayer> playersList = new ArrayList<>();
         playersList.add(new Player("Max", "goalie", true, playerStatistics));
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 30; i++) {
             playersList.add(new Player("Player" + i, "forward", false, playerStatistics));
         }
         team = new Team("Ontario", "Mathew", headCoach, playersList);
         Exception error = Assertions.assertThrows(Exception.class, () -> {
             team.checkIfTeamValid(validate);
         });
-        Assertions.assertTrue(error.getMessage().contains("Each team must have 20 players"));
+        Assertions.assertTrue(error.getMessage().contains("Each team must have 30 players"));
+    }
+
+    @Test
+    public void calculateTeamStrength() {
+        playerArrayList.add(new Player("Jared", "defense", false, playerStatistics));
+        team = new Team("Ontario", "Mathew", headCoach, leagueMock.getTeamPlayers());
+        Assertions.assertTrue( team.calculateTeamStrength()>0);
     }
 
     @Test
     public void checkIfSkatersGoaliesValid() {
-        team = new Team("Ontario", "Mathew", headCoach, leagueMock.get20FreeAgentArrayMock());
+        team = new Team("Ontario", "Mathew", headCoach, leagueMock.getTeamPlayers());
         Boolean isValid = team.checkIfSkatersGoaliesValid();
         Assertions.assertEquals(true, isValid);
     }
@@ -166,12 +181,6 @@ public class TeamTest {
         Assertions.assertFalse(team.checkIfSkatersGoaliesValid());
     }
 
-    @Test
-    public void calculateTeamStrength() {
-        playerArrayList.add(new Player("Jared", "defense", false, playerStatistics));
-        team = new Team("Ontario", "Mathew", headCoach, playerArrayList);
-        Assertions.assertEquals(50, team.calculateTeamStrength());
-    }
 
     @AfterEach()
     public void destroyObject() {

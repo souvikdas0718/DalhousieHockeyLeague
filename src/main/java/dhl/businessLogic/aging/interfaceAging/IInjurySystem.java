@@ -1,4 +1,4 @@
-package dhl.businessLogic.aging.Interface;
+package dhl.businessLogic.aging.interfaceAging;
 
 import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
@@ -7,7 +7,10 @@ import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 public interface IInjurySystem {
     void checkTeamInjury(IGameConfig gameConfig, ITeam team);
 
-    boolean checkIfPlayerInjured(IGameConfig gameConfig, IPlayer player);
+    boolean checkIfPlayerInjured(IGameConfig gameConfig, IPlayer player, ITeam team);
 
     void healInjuredPlayers(IPlayer player);
+
+    void healInjuredPlayersInTeam(IPlayer player,ITeam team);
+
 }

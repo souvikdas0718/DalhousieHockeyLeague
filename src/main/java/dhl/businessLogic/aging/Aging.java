@@ -1,9 +1,9 @@
 package dhl.businessLogic.aging;
 
-import dhl.businessLogic.aging.Interface.IAging;
-import dhl.businessLogic.aging.Interface.IAgingSystem;
-import dhl.businessLogic.aging.Interface.IInjurySystem;
-import dhl.businessLogic.aging.Interface.IRetirementSystem;
+import dhl.businessLogic.aging.interfaceAging.IAging;
+import dhl.businessLogic.aging.interfaceAging.IAgingSystem;
+import dhl.businessLogic.aging.interfaceAging.IInjurySystem;
+import dhl.businessLogic.aging.interfaceAging.IRetirementSystem;
 import dhl.database.interfaceDB.IPlayerDB;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 
@@ -30,7 +30,7 @@ public class Aging implements IAging {
     }
 
     public ILeagueObjectModel initiateAging() throws Exception {
-        int noOfDaysInAYear = 365;
+        int noOfDaysInAYear = AgingConstant.NOOFDAYSINYEAR.getValue();
         if ((noOfDays % noOfDaysInAYear) == 0) {
             for (IConference conference : leagueObjectModel.getConferences()) {
                 for (IDivision division : conference.getDivisions()) {
@@ -57,7 +57,7 @@ public class Aging implements IAging {
             for (IDivision division : conference.getDivisions()) {
                 for (ITeam team : division.getTeams()) {
                     for (IPlayer player : team.getPlayers()) {
-                        injurySystem.healInjuredPlayers(player);
+                        injurySystem.healInjuredPlayersInTeam(player,team);
                     }
                 }
             }

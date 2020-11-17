@@ -1,5 +1,7 @@
 package dhl.businessLogic.leagueModel;
 
+import dhl.businessLogic.aging.AgingConstant;
+import dhl.businessLogic.leagueModel.constants.PlayerPosition;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
 
@@ -9,6 +11,7 @@ public class Player implements IPlayer {
     private Boolean captain;
     private IPlayerStatistics playerStats;
     private int playerInjuredDays;
+    private boolean active;
 
     public Player() {
         setDefaults();
@@ -17,14 +20,15 @@ public class Player implements IPlayer {
     public void setDefaults() {
         playerName = "";
         position = null;
-        this.playerInjuredDays = -1;
+        this.playerInjuredDays = AgingConstant.INJUREDDAYSDEFAULTVALUE.getValue();
+        this.active = false;
     }
 
     public Player(String playerName, String position, IPlayerStatistics playerStats) {
+        setDefaults();
         this.playerName = playerName;
         this.setPosition(position);
         this.playerStats = playerStats;
-        this.playerInjuredDays = -1;
     }
 
     public Player(String playerName, String position, Boolean captain, IPlayerStatistics playerStats) {
@@ -37,27 +41,26 @@ public class Player implements IPlayer {
     }
 
     public void setPosition(String playerPosition) {
-        switch (playerPosition) {
-            case "goalie": {
-                this.position = PlayerPosition.GOALIE;
-                break;
-            }
-            case "forward": {
-                this.position = PlayerPosition.FORWARD;
-                break;
-            }
-            case "defense": {
-                this.position = PlayerPosition.DEFENSE;
-                break;
-            }
+        if(playerPosition.equals(PlayerPosition.GOALIE.toString())){
+            this.position = PlayerPosition.GOALIE;
         }
-
+        else if(playerPosition.equals(PlayerPosition.FORWARD.toString())){
+            this.position = PlayerPosition.FORWARD;
+        }
+        else if(playerPosition.equals(PlayerPosition.DEFENSE.toString())){
+            this.position = PlayerPosition.DEFENSE;
+        }
+        else{
+            this.position = null;
+        }
     }
 
     public String getPosition() {
         if (position == null) {
             return "";
-        } else return position.toString();
+        } else {
+            return position.toString();
+        }
     }
 
     public void setCaptain(Boolean isCaptain) {
@@ -78,6 +81,14 @@ public class Player implements IPlayer {
 
     public void setPlayerInjuredDays(int playerInjuredDays) {
         this.playerInjuredDays = playerInjuredDays;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public boolean isPlayerNameEmpty() {
@@ -120,6 +131,5 @@ public class Player implements IPlayer {
         }
         return playerStrength;
     }
-
 }
 
