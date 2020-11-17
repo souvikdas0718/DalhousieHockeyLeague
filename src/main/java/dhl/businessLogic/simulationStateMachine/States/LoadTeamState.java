@@ -11,22 +11,21 @@ import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.Interface.IGameState;
 import dhl.businessLogic.simulationStateMachine.States.Interface.ILoadTeamStateLogic;
 
-public class LoadTeamStateUI implements IGameState {
+public class LoadTeamState implements IGameState {
 
     GameContext ourGame;
-    ILeagueObjectModel ourLeague;
-    ITeam selectedTeam;
     ILeagueObjectModel newInMemoryLeague;
-    IUserInputOutput userInputPutput = new UserInputOutput();
+    IUserInputOutput userInputPutput;
 
-    public LoadTeamStateUI(GameContext newGame) {
+    public LoadTeamState(GameContext newGame) {
         newInMemoryLeague = new LeagueObjectModel();
+        userInputPutput = new UserInputOutput();
         ourGame = newGame;
     }
 
     @Override
     public void stateEntryProcess() {
-        System.out.print("Enter LeagueName to load from DB: ");
+        userInputPutput.printMessage("Enter LeagueName to load from DB: ");
         String leagueName = userInputPutput.getUserInput();
 
         while (leagueName.equals("")) {
@@ -34,7 +33,7 @@ public class LoadTeamStateUI implements IGameState {
             leagueName = userInputPutput.getUserInput();
         }
 
-        System.out.print("Enter Team Name:  ");
+        userInputPutput.printMessage("Enter Team Name:  ");
         String team = userInputPutput.getUserInput();
 
         while (team.equals("")) {
