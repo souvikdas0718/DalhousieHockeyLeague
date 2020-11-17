@@ -4,6 +4,7 @@ import dhl.Mocks.LeagueObjectModel20TeamMocks;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.leagueModel.Team;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
+import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.simulationStateMachine.Interface.ISchedule;
 import dhl.businessLogic.simulationStateMachine.Interface.IScheduler;
@@ -31,6 +32,24 @@ public class SchedulerTest {
         mockLeagueObjectModel = new LeagueObjectModelMocks();
         model20TeamMocks = new LeagueObjectModel20TeamMocks();
         model20TeamMocks.leagueModel20TeamGeneralStandings();
+    }
+
+    @Test
+    public void getFullSeasonScheduleTest() {
+        ILeagueObjectModel league = model20TeamMocks.getLeagueData();
+        IScheduler scheduler = new Scheduler();
+        scheduler.generateTeamList(league);
+        scheduler.generateTeamSchedule(league);
+        Assertions.assertFalse(scheduler.getFullSeasonSchedule().isEmpty());
+    }
+
+    @Test
+    public void getPlayOffScheduleRound1Test() {
+        ILeagueObjectModel league = model20TeamMocks.getLeagueData();
+        ArrayList<IStandings> standings = model20TeamMocks.getGeneralStandings();
+        IScheduler scheduler = new Scheduler();
+        scheduler.playOffs(standings, league);
+        Assertions.assertFalse(scheduler.getPlayOffScheduleRound1().isEmpty());
     }
 
     @Test
@@ -87,7 +106,6 @@ public class SchedulerTest {
         scheduler.playOffs(standings, league);
         int matchNumber = 1;
         for (ISchedule schedules : scheduler.getPlayOffScheduleRound1()) {
-            System.out.println("Match Number " + matchNumber + ":- team 1: " + schedules.getTeamOne().getTeamName() + " VS team 2: " + schedules.getTeamTwo().getTeamName());
             if (matchNumber == 1) {
                 Assertions.assertTrue(schedules.getTeamOne().getTeamName().equals("Bruins"));
                 Assertions.assertTrue(schedules.getTeamTwo().getTeamName().equals("BlueJackets"));
@@ -122,25 +140,21 @@ public class SchedulerTest {
         scheduler.gameWinner(teamPlayoff2);
         Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamOne().getTeamName().equals("Bruins"));
         Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamTwo().getTeamName().equals("Maple"));
-        System.out.println("Match " + scheduler.getPlayOffScheduleRound1().size() + ": " + scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamOne().getTeamName() + " VS " + scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamTwo().getTeamName());
 
         scheduler.gameWinner(teamPlayoff3);
         scheduler.gameWinner(teamPlayoff4);
         Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamOne().getTeamName().equals("Hurricanes"));
         Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamTwo().getTeamName().equals("Flyers"));
-        System.out.println("Match " + scheduler.getPlayOffScheduleRound1().size() + ": " + scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamOne().getTeamName() + " VS " + scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamTwo().getTeamName());
 
         scheduler.gameWinner(teamPlayoff5);
         scheduler.gameWinner(teamPlayoff6);
         Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamOne().getTeamName().equals("Blues"));
         Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamTwo().getTeamName().equals("Avalanche"));
-        System.out.println("Match " + scheduler.getPlayOffScheduleRound1().size() + ": " + scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamOne().getTeamName() + " VS " + scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamTwo().getTeamName());
 
         scheduler.gameWinner(teamPlayoff7);
         scheduler.gameWinner(teamPlayoff8);
         Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamOne().getTeamName().equals("Cancuks"));
         Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamTwo().getTeamName().equals("Flames"));
-        System.out.println("Match " + scheduler.getPlayOffScheduleRound1().size() + ": " + scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamOne().getTeamName() + " VS " + scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamTwo().getTeamName());
 
         ITeam teamPlayOffRoundThree1 = new Team("Maple", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
         ITeam teamPlayOffRoundThree2 = new Team("Flyers", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
@@ -151,13 +165,11 @@ public class SchedulerTest {
         scheduler.gameWinner(teamPlayOffRoundThree2);
         Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamOne().getTeamName().equals("Maple"));
         Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamTwo().getTeamName().equals("Flyers"));
-        System.out.println("Match " + scheduler.getPlayOffScheduleRound1().size() + ": " + scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamOne().getTeamName() + " VS " + scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamTwo().getTeamName());
 
         scheduler.gameWinner(teamPlayOffRoundThree3);
         scheduler.gameWinner(teamPlayOffRoundThree4);
         Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamOne().getTeamName().equals("Avalanche"));
         Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamTwo().getTeamName().equals("Cancuks"));
-        System.out.println("Match " + scheduler.getPlayOffScheduleRound1().size() + ": " + scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamOne().getTeamName() + " VS " + scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamTwo().getTeamName());
 
         ITeam teamPlayOffRoundFour1 = new Team("Maple", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
         ITeam teamPlayOffRoundFour2 = new Team("Avalanche", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
@@ -166,13 +178,12 @@ public class SchedulerTest {
         scheduler.gameWinner(teamPlayOffRoundFour2);
         Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamOne().getTeamName().equals("Maple"));
         Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamTwo().getTeamName().equals("Avalanche"));
-        System.out.println("Match " + scheduler.getPlayOffScheduleRound1().size() + ": " + scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamOne().getTeamName() + " VS " + scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamTwo().getTeamName());
     }
 
     @Test
     public void stanleyCupWinnerTest() {
 
-        List statistics = mockLeagueObjectModel.getPlayerArrayMock();
+        List<IPlayer> statistics = mockLeagueObjectModel.getPlayerArrayMock();
         ILeagueObjectModel league = model20TeamMocks.getLeagueData();
         ArrayList<IStandings> standings = model20TeamMocks.getGeneralStandings();
 

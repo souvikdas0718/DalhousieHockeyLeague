@@ -22,7 +22,6 @@ import java.util.Map;
 public class Scheduler implements IScheduler {
     private List<ISchedule> fullSeasonSchedule;
     private List<ISchedule> playOffScheduleRound1;
-    private List<ISchedule> playOffScheduleRound2;
     private List<ISchedule> finals;
     private LocalDate seasonStartDate;
     private LocalDate seasonEndDate;
@@ -37,7 +36,6 @@ public class Scheduler implements IScheduler {
     public Scheduler() {
         fullSeasonSchedule = new ArrayList<>();
         playOffScheduleRound1 = new ArrayList<>();
-        playOffScheduleRound2 = new ArrayList<>();
         playOffStartDate = LocalDate.of(2021, 03, 01);
         currentDate = playOffStartDate;
         teamList = new ArrayList<>();
@@ -49,24 +47,8 @@ public class Scheduler implements IScheduler {
         return fullSeasonSchedule;
     }
 
-    public void setFullSeasonSchedule(List<ISchedule> fullSeasonSchedule) {
-        this.fullSeasonSchedule = fullSeasonSchedule;
-    }
-
     public List<ISchedule> getPlayOffScheduleRound1() {
         return playOffScheduleRound1;
-    }
-
-    public void setPlayOffScheduleRound1(List<ISchedule> playOffScheduleRound1) {
-        this.playOffScheduleRound1 = playOffScheduleRound1;
-    }
-
-    public List<ISchedule> getPlayOffScheduleRound2() {
-        return playOffScheduleRound2;
-    }
-
-    public void setPlayOffScheduleRound2(List<ISchedule> playOffScheduleRound2) {
-        this.playOffScheduleRound2 = playOffScheduleRound2;
     }
 
     public LocalDate getSeasonStartDate() {
@@ -165,7 +147,6 @@ public class Scheduler implements IScheduler {
 
     public void generateTeamSchedule(ILeagueObjectModel inMemoryLeague) {
 
-        System.out.println(teamList.size());
         for (int i = 0; i < teamList.size(); i++) {
             for (int j = i + 1; j < teamList.size(); j++) {
                 ISchedule match = new SeasonSchedule();
@@ -403,8 +384,6 @@ public class Scheduler implements IScheduler {
     }
 
     public boolean stanleyCupWinner(LocalDate date) {
-        System.out.println("Today's date: " + date);
-        System.out.println("Last match date: " + playOffScheduleRound1.get(14).getGameDate());
         IUserInputOutput output = new UserInputOutput();
         output.printMessage("Today's date: " + date);
         if (playOffScheduleRound1.get(14).getGameDate().isBefore(date) || playOffScheduleRound1.get(14).getGameDate().isEqual(date)) {
