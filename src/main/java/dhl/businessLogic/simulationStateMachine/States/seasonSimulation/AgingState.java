@@ -1,8 +1,7 @@
 package dhl.businessLogic.simulationStateMachine.States.seasonSimulation;
 
 
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
+
 import dhl.businessLogic.aging.Aging;
 import dhl.businessLogic.aging.LeagueSchedule;
 import dhl.businessLogic.aging.Retirement;
@@ -14,11 +13,13 @@ import dhl.businessLogic.simulationStateMachine.Interface.ISimulationSeasonState
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.database.PlayerDB;
 import dhl.database.interfaceDB.IPlayerDB;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 
 public class AgingState implements ISimulationSeasonState {
-    private static Logger log = LoggerFactory.getLogger(AgingState.class);
+    public static Logger log = LogManager.getLogger(AgingState.class);
     SimulationContext simulationContext;
 
     public AgingState(SimulationContext simulationContext) {
