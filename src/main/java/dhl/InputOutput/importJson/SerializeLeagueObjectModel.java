@@ -2,7 +2,6 @@ package dhl.InputOutput.importJson;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.sun.corba.se.spi.protocol.ForwardException;
 import dhl.InputOutput.importJson.Interface.ISerializeLeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
@@ -13,7 +12,6 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.apache.logging.log4j.*;
 
-import javax.xml.bind.ValidationException;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
