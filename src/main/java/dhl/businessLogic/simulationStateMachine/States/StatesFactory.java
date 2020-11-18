@@ -2,27 +2,41 @@ package dhl.businessLogic.simulationStateMachine.States;
 
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogic.simulationStateMachine.GameContext;
+import dhl.businessLogic.simulationStateMachine.Interface.IGameState;
+import dhl.businessLogic.simulationStateMachine.States.Interface.ICreateTeamStateLogic;
+import dhl.businessLogic.simulationStateMachine.States.Interface.IImportStateLogic;
+import dhl.businessLogic.simulationStateMachine.States.Interface.ILoadTeamStateLogic;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public interface StatesFactory {
-    ILeagueObjectModel saveleagueObject(GameContext ourGame, ILeagueObjectModel inMemoryLeague, ILeagueObjectModelInput leagueObjectModelInput) throws Exception;
+public class StatesFactory implements StatesAbstractFactory {
 
-    ITeam createNewTeamObject(List<IPlayer> freeAgents, ITeam team, String captain) throws Exception;
+    public IGameState createCreateTeamState(GameContext newGame) {
+        return new CreateTeamState(newGame);
+    }
 
-    IConference findConference(List<IConference> confrenceArray, String conferenceName);
+    public ICreateTeamStateLogic createCreateTeamStateLogic() {
+        return new CreateTeamStateLogic();
+    }
 
-    IDivision findDivision(List<IDivision> divisionArrayList, String divisionName);
+    public IGameState createImportState(GameContext newGame) {
+        return new ImportState(newGame);
+    }
 
-    ITeam findTeam(ILeagueObjectModel inMemoryLeague, String teamName);
+    public IImportStateLogic createImportStateLogic() {
+        return new ImportStateLogic();
+    }
 
-    IPlayer findFreeAgent(List<IPlayer> freeAgentArrayList, String freeAgentName);
+    public IGameState createLoadTeamState(GameContext newGame) {
+        return new LoadTeamState(newGame);
+    }
 
-    String findGeneralManager(List<IGeneralManager> generalManagerArray, String generalManager);
+    public ILoadTeamStateLogic createLoadTeamStateLogic() {
+        return new LoadTeamStateLogic();
+    }
 
-    String findCoach(List<ICoach> coachArray, String coachName);
-
-    ArrayList<IPlayer> validateInputFreeAgents(String inputfreeAgents,
-                                               List<IPlayer> freeAgentsArray) throws Exception;
+    public IGameState createSimulateState(GameContext newGame) {
+        return new SimulateState(newGame);
+    }
 }
