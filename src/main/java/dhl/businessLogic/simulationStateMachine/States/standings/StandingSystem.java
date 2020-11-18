@@ -22,6 +22,10 @@ public class StandingSystem implements IStandingSystem {
         this.standingsList = standingsList;
     }
 
+    public StandingSystem() {
+        this.standingsList = new ArrayList<>();
+    }
+
     public void updateWinningStandings(ITeam team) {
 
         for (IStandings standings : standingsList) {

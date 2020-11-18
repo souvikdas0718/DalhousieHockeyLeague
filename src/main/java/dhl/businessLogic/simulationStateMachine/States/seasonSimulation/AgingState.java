@@ -1,6 +1,8 @@
 package dhl.businessLogic.simulationStateMachine.States.seasonSimulation;
 
 
+import com.sun.org.slf4j.internal.Logger;
+import com.sun.org.slf4j.internal.LoggerFactory;
 import dhl.businessLogic.aging.Aging;
 import dhl.businessLogic.aging.LeagueSchedule;
 import dhl.businessLogic.aging.Retirement;
@@ -16,6 +18,7 @@ import dhl.database.interfaceDB.IPlayerDB;
 import java.time.LocalDate;
 
 public class AgingState implements ISimulationSeasonState {
+    private static Logger log = LoggerFactory.getLogger(AgingState.class);
     SimulationContext simulationContext;
 
     public AgingState(SimulationContext simulationContext) {
@@ -30,7 +33,8 @@ public class AgingState implements ISimulationSeasonState {
         try {
             leagueSchedule.initiateAging();
         } catch (Exception e) {
-            System.out.println("Error occured while aging");
+            log.error("Error occured while aging"+ e.getMessage());
+            e.printStackTrace();
         }
     }
 

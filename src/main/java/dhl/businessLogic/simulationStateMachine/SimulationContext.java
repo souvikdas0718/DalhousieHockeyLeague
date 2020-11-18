@@ -24,18 +24,21 @@ public class SimulationContext implements ISimulationSeasonState {
     ISimulationSeasonState seasonSimulationState;
     ISimulationSeasonState currentSimulation;
     ISimulationSeasonState advanceTime;
+    ISimulationSeasonState advanceToNextSeason;
     ISimulationSeasonState aging;
     ISimulationSeasonState executeTrades;
     ISimulationSeasonState playoffSchedule;
     ISimulationSeasonState initializeSeason;
     ISimulationSeasonState injuryCheck;
     ISimulationSeasonState persistsSeason;
+    ISimulationSeasonState persistsSameSeason;
     ISimulationSeasonState simulateGame;
     ISimulationSeasonState training;
-    ISimulationSeasonState advanceToNextSeason;
+
     IScheduler regularScheduler;
     IScheduler playOffScheduleRound1;
     IUpdateUserTeamRoster updateUserTeamRoster;
+
 
     IStandingSystem standingSystem;
 
@@ -53,16 +56,20 @@ public class SimulationContext implements ISimulationSeasonState {
     IInjury injury;
     ITradingEngine tradeEngine;
     public SimulationContext(GameContext gameState) {
+        SimulationStateAbstractFactory factory = new SeasonSimulationStateFactory();
+        advanceTime = factory.getAdvanceTimeState(this);
+        advanceToNextSeason = factory.getAdvanceToNextSeasonState(this);
+        aging = factory.getAgingState(this);
+        executeTrades = factory.getExecuteTradesState(this);
+        playoffSchedule = factory.getGeneratePlayoffScheduleState(this);
+        initializeSeason = factory.getInitializeSeasonState(this);
+        injuryCheck = factory.getInjuryCheckState(this);
+        persistsSeason = factory.getPersistSeasonState(this);
+        persistsSameSeason = factory.getPersistSameSeasonState(this);
+        simulateGame = factory.getSimulateGameState(this);
+        training = factory.getTrainingState(this);
+
         userTeam = gameState.getSelectedTeam();
-        advanceTime = new AdvanceTimeState(this);
-        aging = new AgingState(this);
-        executeTrades = new ExecuteTradesState(this);
-        playoffSchedule = new GeneratePlayOffScheduleState(this);
-        initializeSeason = new InitializeSeasonState(this);
-        injuryCheck = new InjuryCheckState(this);
-        persistsSeason = new PersistSeasonState(this);
-        simulateGame = new SimulateGameState(this);
-        training = new TrainingState(this);
         currentSimulation = initializeSeason;
         gameInProgress = true;
         ioObject = new UserInputOutput();
@@ -73,7 +80,7 @@ public class SimulationContext implements ISimulationSeasonState {
         injury = new Injury();
         year = 2020;
         startOfSimulation = LocalDate.of(year, 9, 30);
-        advanceToNextSeason = new AdvanceToNextSeasonState(this);
+
     }
 
     public int getYear() {

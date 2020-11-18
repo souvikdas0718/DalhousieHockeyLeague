@@ -1,282 +1,124 @@
 package dhl.businessLogicTest.StateMachineTest.state.seasonScheduler;
 
-import dhl.businessLogic.leagueModel.*;
-import dhl.businessLogic.leagueModel.interfaceModel.*;
+import dhl.Mocks.LeagueObjectModel20TeamMocks;
+import dhl.Mocks.LeagueObjectModelMocks;
+import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.simulationStateMachine.Interface.ISchedule;
+import dhl.businessLogic.simulationStateMachine.Interface.IScheduler;
+import dhl.businessLogic.simulationStateMachine.States.seasonScheduler.Scheduler;
 import dhl.businessLogic.simulationStateMachine.States.seasonScheduler.SeasonSchedule;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
 
 public class SeasonScheduleTest {
 
+    LeagueObjectModelMocks mockLeagueObjectModel;
+    LeagueObjectModel20TeamMocks model20TeamMocks;
+    ILeagueObjectModel league;
+    ISchedule seasonSchedule;
+    IScheduler scheduler;
+
+    @BeforeEach
+    public void initObject() {
+        mockLeagueObjectModel = new LeagueObjectModelMocks();
+        model20TeamMocks = new LeagueObjectModel20TeamMocks();
+        model20TeamMocks.leagueModel20TeamGeneralStandings();
+        league = model20TeamMocks.getLeagueData();
+        seasonSchedule = new SeasonSchedule();
+        scheduler = new Scheduler();
+    }
+
     @Test
     public void getTeamOneConferenceTest() {
-        ISchedule seasonSchedule = new SeasonSchedule();
+        seasonSchedule.setTeamOneConference(league.getConferences().get(0));
         Assertions.assertNotNull(seasonSchedule.getTeamOneConference());
     }
 
     @Test
     public void setTeamOneConferenceTest() {
-        ISchedule seasonSchedule = new SeasonSchedule();
-
-        String generalManager = "generalManager";
-
-        ICoach headCoach = new Coach("Coach", 0.1, 0.2, .5, .9);
-        ICoach headCoach2 = new Coach("Coach2", 0.1, 0.2, .5, .8);
-        List<ICoach> coaches = new ArrayList<>();
-        coaches.add(headCoach);
-        coaches.add(headCoach2);
-        IPlayerStatistics playerStats = new PlayerStatistics(20, 5, 5, 8, 9);
-        IPlayer playersList1 = new Player("playerName", "position", playerStats);
-        IPlayer playersList2 = new Player("playerName", "position", playerStats);
-        List<IPlayer> playersList = new ArrayList<>();
-        playersList.add(playersList1);
-        playersList.add(playersList2);
-
-        ITeam team1 = new Team("Bruins", generalManager, headCoach, playersList);
-        ITeam team2 = new Team("Lightning", generalManager, headCoach, playersList);
-        ITeam team3 = new Team("Maple", generalManager, headCoach, playersList);
-        ITeam team4 = new Team("Panthers", generalManager, headCoach, playersList);
-        ITeam team5 = new Team("Canadiens", generalManager, headCoach, playersList);
-
-        ITeam team6 = new Team("Capitals", generalManager, headCoach, playersList);
-        ITeam team7 = new Team("Flyers", generalManager, headCoach, playersList);
-        ITeam team8 = new Team("Penguins", generalManager, headCoach, playersList);
-        ITeam team9 = new Team("Hurricanes", generalManager, headCoach, playersList);
-        ITeam team10 = new Team("BlueJackets", generalManager, headCoach, playersList);
-
-        ArrayList<ITeam> teamsListDivision1 = new ArrayList<>();
-        ArrayList<ITeam> teamsListDivision2 = new ArrayList<>();
-
-        teamsListDivision1.add(team1);
-        teamsListDivision1.add(team2);
-        teamsListDivision1.add(team3);
-        teamsListDivision1.add(team4);
-        teamsListDivision1.add(team5);
-
-        teamsListDivision2.add(team6);
-        teamsListDivision2.add(team7);
-        teamsListDivision2.add(team8);
-        teamsListDivision2.add(team9);
-        teamsListDivision2.add(team10);
-
-        IDivision division1 = new Division("Atlantic Division", teamsListDivision1);
-        IDivision division2 = new Division("Metropolitan Division", teamsListDivision2);
-
-        ArrayList<IDivision> conference1Divisions = new ArrayList<>();
-        conference1Divisions.add(division1);
-        conference1Divisions.add(division2);
-
-        IConference conference = new Conference("Eastern Conference", conference1Divisions);
-        seasonSchedule.setTeamOneConference(conference);
+        seasonSchedule.setTeamOneConference(league.getConferences().get(0));
         Assertions.assertEquals("Eastern Conference", seasonSchedule.getTeamOneConference().getConferenceName());
     }
 
     @Test
     public void getTeamTwoConferenceTest() {
-        ISchedule seasonSchedule = new SeasonSchedule();
+        seasonSchedule.setTeamTwoConference(league.getConferences().get(0));
         Assertions.assertNotNull(seasonSchedule.getTeamTwoConference());
     }
 
     @Test
     public void setTeamTwoConferenceTest() {
-        ISchedule seasonSchedule = new SeasonSchedule();
-
-        String generalManager = "generalManager";
-
-        ICoach headCoach = new Coach("Coach", 0.1, 0.2, .5, .9);
-        ICoach headCoach2 = new Coach("Coach2", 0.1, 0.2, .5, .8);
-        List<ICoach> coaches = new ArrayList<>();
-        coaches.add(headCoach);
-        coaches.add(headCoach2);
-        IPlayerStatistics playerStats = new PlayerStatistics(20, 5, 5, 8, 9);
-        IPlayer playersList1 = new Player("playerName", "position", playerStats);
-        IPlayer playersList2 = new Player("playerName", "position", playerStats);
-        List<IPlayer> playersList = new ArrayList<>();
-        playersList.add(playersList1);
-        playersList.add(playersList2);
-
-        ITeam team1 = new Team("Bruins", generalManager, headCoach, playersList);
-        ITeam team2 = new Team("Lightning", generalManager, headCoach, playersList);
-        ITeam team3 = new Team("Maple", generalManager, headCoach, playersList);
-        ITeam team4 = new Team("Panthers", generalManager, headCoach, playersList);
-        ITeam team5 = new Team("Canadiens", generalManager, headCoach, playersList);
-
-        ITeam team6 = new Team("Capitals", generalManager, headCoach, playersList);
-        ITeam team7 = new Team("Flyers", generalManager, headCoach, playersList);
-        ITeam team8 = new Team("Penguins", generalManager, headCoach, playersList);
-        ITeam team9 = new Team("Hurricanes", generalManager, headCoach, playersList);
-        ITeam team10 = new Team("BlueJackets", generalManager, headCoach, playersList);
-
-        ArrayList<ITeam> teamsListDivision1 = new ArrayList<>();
-        ArrayList<ITeam> teamsListDivision2 = new ArrayList<>();
-
-        teamsListDivision1.add(team1);
-        teamsListDivision1.add(team2);
-        teamsListDivision1.add(team3);
-        teamsListDivision1.add(team4);
-        teamsListDivision1.add(team5);
-
-        teamsListDivision2.add(team6);
-        teamsListDivision2.add(team7);
-        teamsListDivision2.add(team8);
-        teamsListDivision2.add(team9);
-        teamsListDivision2.add(team10);
-
-        IDivision division1 = new Division("Atlantic Division", teamsListDivision1);
-        IDivision division2 = new Division("Metropolitan Division", teamsListDivision2);
-
-        ArrayList<IDivision> conference1Divisions = new ArrayList<>();
-        conference1Divisions.add(division1);
-        conference1Divisions.add(division2);
-
-        IConference conference = new Conference("Western Conference", conference1Divisions);
-        seasonSchedule.setTeamOneConference(conference);
-        Assertions.assertEquals("Western Conference", seasonSchedule.getTeamOneConference().getConferenceName());
+        seasonSchedule.setTeamTwoConference(league.getConferences().get(0));
+        Assertions.assertEquals("Eastern Conference", seasonSchedule.getTeamTwoConference().getConferenceName());
     }
 
     @Test
-    public void getTeamOneDivision() {
-        ISchedule seasonSchedule = new SeasonSchedule();
-        Assertions.assertNotNull(seasonSchedule.getTeamOneDivision());
+    public void getTeamOneDivisionTest() {
+        seasonSchedule.setTeamOneDivision(league.getConferences().get(0).getDivisions().get(0));
+        Assertions.assertEquals("Atlantic Division", seasonSchedule.getTeamOneDivision().getDivisionName());
     }
 
     @Test
-    public void setTeamOneDivision() {
-        ISchedule seasonSchedule = new SeasonSchedule();
-
-        String generalManager = "generalManager";
-
-        ICoach headCoach = new Coach("Coach", 0.1, 0.2, .5, .9);
-        ICoach headCoach2 = new Coach("Coach2", 0.1, 0.2, .5, .8);
-        List<ICoach> coaches = new ArrayList<>();
-        coaches.add(headCoach);
-        coaches.add(headCoach2);
-        IPlayerStatistics playerStats = new PlayerStatistics(20, 5, 5, 8, 9);
-        IPlayer playersList1 = new Player("playerName", "position", playerStats);
-        IPlayer playersList2 = new Player("playerName", "position", playerStats);
-        List<IPlayer> playersList = new ArrayList<>();
-        playersList.add(playersList1);
-        playersList.add(playersList2);
-
-        ITeam team1 = new Team("Bruins", generalManager, headCoach, playersList);
-        ITeam team2 = new Team("Lightning", generalManager, headCoach, playersList);
-        ITeam team3 = new Team("Maple", generalManager, headCoach, playersList);
-        ITeam team4 = new Team("Panthers", generalManager, headCoach, playersList);
-        ITeam team5 = new Team("Canadiens", generalManager, headCoach, playersList);
-
-        ITeam team6 = new Team("Capitals", generalManager, headCoach, playersList);
-        ITeam team7 = new Team("Flyers", generalManager, headCoach, playersList);
-        ITeam team8 = new Team("Penguins", generalManager, headCoach, playersList);
-        ITeam team9 = new Team("Hurricanes", generalManager, headCoach, playersList);
-        ITeam team10 = new Team("BlueJackets", generalManager, headCoach, playersList);
-
-        ArrayList<ITeam> teamsListDivision1 = new ArrayList<>();
-        ArrayList<ITeam> teamsListDivision2 = new ArrayList<>();
-
-        teamsListDivision1.add(team1);
-        teamsListDivision1.add(team2);
-        teamsListDivision1.add(team3);
-        teamsListDivision1.add(team4);
-        teamsListDivision1.add(team5);
-
-        teamsListDivision2.add(team6);
-        teamsListDivision2.add(team7);
-        teamsListDivision2.add(team8);
-        teamsListDivision2.add(team9);
-        teamsListDivision2.add(team10);
-
-        IDivision division1 = new Division("Atlantic Division", teamsListDivision1);
-        IDivision division2 = new Division("Metropolitan Division", teamsListDivision2);
-
-        ArrayList<IDivision> conference1Divisions = new ArrayList<>();
-        conference1Divisions.add(division1);
-        conference1Divisions.add(division2);
-
-        IConference conference = new Conference("Western Conference", conference1Divisions);
-        seasonSchedule.setTeamOneConference(conference);
-
-        Assertions.assertEquals("Atlantic Division", seasonSchedule.getTeamOneConference().getDivisions().get(0).getDivisionName());
-        Assertions.assertEquals("Metropolitan Division", seasonSchedule.getTeamOneConference().getDivisions().get(1).getDivisionName());
+    public void setTeamOneDivisionTest() {
+        seasonSchedule.setTeamOneDivision(league.getConferences().get(0).getDivisions().get(0));
+        Assertions.assertEquals("Atlantic Division", seasonSchedule.getTeamOneDivision().getDivisionName());
     }
 
     @Test
-    public void getTeamTwoDivision() {
-        ISchedule seasonSchedule = new SeasonSchedule();
-        Assertions.assertNotNull(seasonSchedule.getTeamTwoDivision());
+    public void getTeamTwoDivisionTest() {
+        seasonSchedule.setTeamTwoDivision(league.getConferences().get(0).getDivisions().get(0));
+        Assertions.assertEquals("Atlantic Division", seasonSchedule.getTeamTwoDivision().getDivisionName());
     }
 
     @Test
-    public void setTeamTwoDivision() {
-        ISchedule seasonSchedule = new SeasonSchedule();
-
-        String generalManager = "generalManager";
-
-        ICoach headCoach = new Coach("Coach", 0.1, 0.2, .5, .9);
-        ICoach headCoach2 = new Coach("Coach2", 0.1, 0.2, .5, .8);
-        List<ICoach> coaches = new ArrayList<>();
-        coaches.add(headCoach);
-        coaches.add(headCoach2);
-        IPlayerStatistics playerStats = new PlayerStatistics(20, 5, 5, 8, 9);
-        IPlayer playersList1 = new Player("playerName", "position", playerStats);
-        IPlayer playersList2 = new Player("playerName", "position", playerStats);
-        List<IPlayer> playersList = new ArrayList<>();
-        playersList.add(playersList1);
-        playersList.add(playersList2);
-
-        ITeam team1 = new Team("Bruins", generalManager, headCoach, playersList);
-        ITeam team2 = new Team("Lightning", generalManager, headCoach, playersList);
-        ITeam team3 = new Team("Maple", generalManager, headCoach, playersList);
-        ITeam team4 = new Team("Panthers", generalManager, headCoach, playersList);
-        ITeam team5 = new Team("Canadiens", generalManager, headCoach, playersList);
-
-        ITeam team6 = new Team("Capitals", generalManager, headCoach, playersList);
-        ITeam team7 = new Team("Flyers", generalManager, headCoach, playersList);
-        ITeam team8 = new Team("Penguins", generalManager, headCoach, playersList);
-        ITeam team9 = new Team("Hurricanes", generalManager, headCoach, playersList);
-        ITeam team10 = new Team("BlueJackets", generalManager, headCoach, playersList);
-
-        ArrayList<ITeam> teamsListDivision1 = new ArrayList<>();
-        ArrayList<ITeam> teamsListDivision2 = new ArrayList<>();
-
-        teamsListDivision1.add(team1);
-        teamsListDivision1.add(team2);
-        teamsListDivision1.add(team3);
-        teamsListDivision1.add(team4);
-        teamsListDivision1.add(team5);
-
-        teamsListDivision2.add(team6);
-        teamsListDivision2.add(team7);
-        teamsListDivision2.add(team8);
-        teamsListDivision2.add(team9);
-        teamsListDivision2.add(team10);
-
-        IDivision division1 = new Division("Atlantic Division", teamsListDivision1);
-        IDivision division2 = new Division("Metropolitan Division", teamsListDivision2);
-
-        ArrayList<IDivision> conference1Divisions = new ArrayList<>();
-        conference1Divisions.add(division1);
-        conference1Divisions.add(division2);
-
-        IConference conference = new Conference("Western Conference", conference1Divisions);
-        seasonSchedule.setTeamOneConference(conference);
-
-        Assertions.assertEquals("Metropolitan Division", seasonSchedule.getTeamOneConference().getDivisions().get(1).getDivisionName());
+    public void setTeamTwoDivisionTest() {
+        seasonSchedule.setTeamTwoDivision(league.getConferences().get(1).getDivisions().get(1));
+        Assertions.assertEquals("Pacific Division", seasonSchedule.getTeamTwoDivision().getDivisionName());
     }
 
     @Test
-    public void getTeamOne() {
-        ISchedule seasonSchedule = new SeasonSchedule();
-        Assertions.assertNotNull(seasonSchedule.getTeamOne());
+    public void getTeamOneTest() {
+        seasonSchedule.setTeamOne(league.getConferences().get(0).getDivisions().get(0).getTeams().get(1));
+        Assertions.assertEquals("Lightning", seasonSchedule.getTeamOne().getTeamName());
     }
 
     @Test
-    public void getTeamTwo() {
-        ISchedule seasonSchedule = new SeasonSchedule();
-        Assertions.assertNotNull(seasonSchedule.getTeamTwo());
+    public void getTeamTwoTest() {
+        seasonSchedule.setTeamTwo(league.getConferences().get(0).getDivisions().get(0).getTeams().get(2));
+        Assertions.assertEquals("Maple", seasonSchedule.getTeamTwo().getTeamName());
+    }
+
+    @Test
+    public void setTeamOneTest() {
+        seasonSchedule.setTeamOne(league.getConferences().get(0).getDivisions().get(0).getTeams().get(1));
+        Assertions.assertEquals("Lightning", seasonSchedule.getTeamOne().getTeamName());
+    }
+
+    @Test
+    public void setTeamTwoTest() {
+        seasonSchedule.setTeamTwo(league.getConferences().get(0).getDivisions().get(0).getTeams().get(2));
+        Assertions.assertEquals("Maple", seasonSchedule.getTeamTwo().getTeamName());
+    }
+
+    @Test
+    public void getGameDateTest() {
+        scheduler.generateTeamList(league);
+        scheduler.generateTeamSchedule(league);
+        LocalDate date = LocalDate.now();
+        scheduler.getFullSeasonSchedule().get(0).setGameDate(date);
+        Assertions.assertTrue(scheduler.getFullSeasonSchedule().get(0).getGameDate().equals(date));
+    }
+
+    @Test
+    public void setGameDateTest() {
+        scheduler.generateTeamList(league);
+        scheduler.generateTeamSchedule(league);
+        LocalDate date = LocalDate.now();
+        scheduler.getFullSeasonSchedule().get(0).setGameDate(date);
+        Assertions.assertTrue(scheduler.getFullSeasonSchedule().get(0).getGameDate().equals(date));
     }
 
 }
