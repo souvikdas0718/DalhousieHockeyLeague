@@ -3,7 +3,7 @@ package dhl.businessLogic.traning;
 import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.businessLogic.traning.Interfaces.ITraining;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
-import dhl.businessLogic.aging.interfaceAging.IInjurySystem;
+import dhl.businessLogic.aging.interfaceAging.IInjury;
 import dhl.businessLogic.leagueModel.interfaceModel.IConference;
 import dhl.businessLogic.leagueModel.interfaceModel.IDivision;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
@@ -15,10 +15,10 @@ import java.util.List;
 
 public class Training implements ITraining {
 
-    private IInjurySystem injurySystem;
+    private IInjury injurySystem;
     public IGameConfig gameConfig;
 
-    public Training(IInjurySystem injurySystem, IGameConfig gameConfig) {
+    public Training(IInjury injurySystem, IGameConfig gameConfig) {
         this.injurySystem = injurySystem;
         this.gameConfig = gameConfig;
     }

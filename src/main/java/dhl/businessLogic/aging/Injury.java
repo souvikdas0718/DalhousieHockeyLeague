@@ -1,13 +1,13 @@
 package dhl.businessLogic.aging;
 
 import dhl.InputOutput.importJson.Interface.IGameConfig;
-import dhl.businessLogic.aging.interfaceAging.IInjurySystem;
+import dhl.businessLogic.aging.interfaceAging.IInjury;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 
 import java.util.List;
 
-public class InjurySystem implements IInjurySystem {
+public class Injury implements IInjury {
 
     public void checkTeamInjury(IGameConfig gameConfig, ITeam team) {
         for (IPlayer player : team.getPlayers()) {
@@ -42,7 +42,7 @@ public class InjurySystem implements IInjurySystem {
         if (player.getPlayerInjuredDays() >= 1) {
             player.setPlayerInjuredDays(player.getPlayerInjuredDays() - 1);
         } else {
-            player.setPlayerInjuredDays(AgingConstant.INJUREDDAYSDEFAULTVALUE.getValue());
+            player.setPlayerInjuredDays(-1);
         }
     }
 

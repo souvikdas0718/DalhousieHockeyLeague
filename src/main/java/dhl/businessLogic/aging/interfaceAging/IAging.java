@@ -1,11 +1,16 @@
 package dhl.businessLogic.aging.interfaceAging;
 
-import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
+import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
+import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
+
+import java.util.List;
+import java.util.Map;
 
 public interface IAging {
+    void ageAllPlayers(List<IPlayer> players);
 
-    ILeagueObjectModel initiateAging() throws Exception;
+    Map<String, List<IPlayer>> selectPlayersToRetire(ITeam team);
 
-    void initiateRetirementForAgedPlayers() throws Exception;
+    List<IPlayer> selectFreeAgentsToRetire(List<IPlayer> freeAgents);
 
 }

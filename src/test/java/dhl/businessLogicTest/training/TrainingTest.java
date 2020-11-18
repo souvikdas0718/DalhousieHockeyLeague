@@ -8,10 +8,10 @@ import dhl.businessLogic.leagueModel.Team;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogicTest.leagueModelTests.MockDatabase;
 import dhl.database.interfaceDB.ILeagueObjectModelDB;
-import dhl.businessLogic.aging.InjurySystem;
+import dhl.businessLogic.aging.Injury;
 import dhl.businessLogic.leagueModel.LeagueObjectModel;
 import dhl.businessLogic.traning.Training;
-import dhl.businessLogic.aging.interfaceAging.IInjurySystem;
+import dhl.businessLogic.aging.interfaceAging.IInjury;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import org.junit.jupiter.api.Assertions;
@@ -33,7 +33,7 @@ public class TrainingTest {
     public void initObject() throws Exception {
         filePathMock = new JsonFilePathMock();
         importJsonFile = new ImportJsonFile(filePathMock.getFilePath());
-        IInjurySystem injurySystem = new InjurySystem();
+        IInjury injurySystem = new Injury();
         gameConfig = new GameConfig(importJsonFile.getJsonObject());
         trainingParameterized = new Training(injurySystem, gameConfig);
         leagueObjectModelMocks = new LeagueObjectModelMocks();

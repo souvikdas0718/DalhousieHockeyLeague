@@ -7,7 +7,7 @@ import dhl.businessLogic.leagueModel.interfaceModel.IConference;
 import dhl.businessLogic.leagueModel.interfaceModel.IDivision;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
-import dhl.businessLogic.aging.interfaceAging.IRetirementSystem;
+import dhl.businessLogic.aging.interfaceAging.IRetirement;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,11 +15,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class RetirementSystem implements IRetirementSystem {
+public class Retirement implements IRetirement {
     private ILeagueObjectModel leagueObjectModel;
     private IPlayerDB playerDB;
 
-    public RetirementSystem(IPlayerDB playerDB, ILeagueObjectModel leagueObjectModel) {
+    public Retirement(IPlayerDB playerDB, ILeagueObjectModel leagueObjectModel) {
         this.leagueObjectModel = leagueObjectModel;
         this.playerDB = playerDB;
     }

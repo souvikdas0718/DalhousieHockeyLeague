@@ -1,4 +1,4 @@
-package dhl.businessLogic.leagueModel.constants;
+package dhl.businessLogic.leagueModel;
 
 public enum PlayerPosition {
     GOALIE {
