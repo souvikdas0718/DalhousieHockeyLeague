@@ -2,17 +2,16 @@ package dhl.businessLogic.simulationStateMachine.States.seasonSimulation;
 
 
 import dhl.businessLogic.aging.Aging;
-import dhl.businessLogic.aging.AgingSystem;
-import dhl.businessLogic.aging.RetirementSystem;
+import dhl.businessLogic.aging.LeagueSchedule;
+import dhl.businessLogic.aging.Retirement;
 import dhl.businessLogic.aging.interfaceAging.IAging;
-import dhl.businessLogic.aging.interfaceAging.IAgingSystem;
-import dhl.businessLogic.aging.interfaceAging.IRetirementSystem;
+import dhl.businessLogic.aging.interfaceAging.ILeagueSchedule;
+import dhl.businessLogic.aging.interfaceAging.IRetirement;
 import dhl.businessLogic.simulationStateMachine.Interface.IScheduler;
 import dhl.businessLogic.simulationStateMachine.Interface.ISimulationSeasonState;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.database.PlayerDB;
 import dhl.database.interfaceDB.IPlayerDB;
-
 
 import java.time.LocalDate;
 
@@ -24,12 +23,12 @@ public class AgingState implements ISimulationSeasonState {
     }
 
     static void agingCalculation(SimulationContext simulationContext) {
-        IAgingSystem agingSystem = new AgingSystem(simulationContext.getGameConfig());
+        IAging aging = new Aging(simulationContext.getGameConfig());
         IPlayerDB playerDB = new PlayerDB();
-        IRetirementSystem retirementSystem = new RetirementSystem(playerDB, simulationContext.getInMemoryLeague());
-        IAging aging = new Aging(agingSystem, retirementSystem, simulationContext.getInjurySystem(), simulationContext.getInMemoryLeague(), simulationContext.getNumberOfDays(), playerDB);
+        IRetirement retirement = new Retirement(playerDB, simulationContext.getInMemoryLeague());
+        ILeagueSchedule leagueSchedule = new LeagueSchedule(aging, retirement, simulationContext.getInjurySystem(), simulationContext.getInMemoryLeague(), simulationContext.getNumberOfDays(), playerDB);
         try {
-            aging.initiateAging();
+            leagueSchedule.initiateAging();
         } catch (Exception e) {
             System.out.println("Error occured while aging");
         }

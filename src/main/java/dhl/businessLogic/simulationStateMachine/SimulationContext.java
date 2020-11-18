@@ -3,8 +3,8 @@ package dhl.businessLogic.simulationStateMachine;
 import dhl.InputOutput.UI.IUserInputOutput;
 import dhl.InputOutput.UI.UserInputOutput;
 import dhl.InputOutput.importJson.Interface.IGameConfig;
-import dhl.businessLogic.aging.InjurySystem;
-import dhl.businessLogic.aging.interfaceAging.IInjurySystem;
+import dhl.businessLogic.aging.Injury;
+import dhl.businessLogic.aging.interfaceAging.IInjury;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.simulationStateMachine.Interface.IScheduler;
@@ -50,7 +50,7 @@ public class SimulationContext implements ISimulationSeasonState {
     LocalDate startOfSimulation;
     int daysSinceLastTraining;
     List<ITeam> teamsPlayingInGame;
-    IInjurySystem injurySystem;
+    IInjury injury;
     ITradingEngine tradeEngine;
     public SimulationContext(GameContext gameState) {
         userTeam = gameState.getSelectedTeam();
@@ -70,7 +70,7 @@ public class SimulationContext implements ISimulationSeasonState {
         tradeEngine = new TradingEngine(gameConfig, inMemoryLeague, userTeam, ioObject, updateUserTeamRoster);
         daysSinceLastTraining = 0;
         teamsPlayingInGame = new ArrayList<>();
-        injurySystem = new InjurySystem();
+        injury = new Injury();
         year = 2020;
         startOfSimulation = LocalDate.of(year, 9, 30);
         advanceToNextSeason = new AdvanceToNextSeasonState(this);
@@ -144,12 +144,12 @@ public class SimulationContext implements ISimulationSeasonState {
         this.teamsPlayingInGame = teamsPlayingInGame;
     }
 
-    public IInjurySystem getInjurySystem() {
-        return injurySystem;
+    public IInjury getInjurySystem() {
+        return injury;
     }
 
-    public void setInjurySystem(IInjurySystem injurySystem) {
-        this.injurySystem = injurySystem;
+    public void setInjurySystem(IInjury injury) {
+        this.injury = injury;
     }
 
     public ITradingEngine getTradeEngine() {

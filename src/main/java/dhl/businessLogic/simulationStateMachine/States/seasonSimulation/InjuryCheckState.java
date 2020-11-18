@@ -1,6 +1,6 @@
 package dhl.businessLogic.simulationStateMachine.States.seasonSimulation;
 
-import dhl.businessLogic.aging.interfaceAging.IInjurySystem;
+import dhl.businessLogic.aging.interfaceAging.IInjury;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.simulationStateMachine.Interface.IScheduler;
 import dhl.businessLogic.simulationStateMachine.Interface.ISimulationSeasonState;
@@ -29,8 +29,8 @@ public class InjuryCheckState implements ISimulationSeasonState {
     @Override
     public void seasonStateProcess() {
         for (ITeam team : simulationContext.getTeamsPlayingInGame()) {
-            IInjurySystem injurySystem = simulationContext.getInjurySystem();
-            injurySystem.checkTeamInjury(simulationContext.getGameConfig(), team);
+            IInjury injury = simulationContext.getInjurySystem();
+            injury.checkTeamInjury(simulationContext.getGameConfig(), team);
             simulationContext.setTeamsPlayingInGame(new ArrayList<>());
         }
     }
