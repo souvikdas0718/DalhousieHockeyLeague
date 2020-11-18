@@ -1,7 +1,11 @@
 package dhl.businessLogicTest.leagueModelTests;
 
 import dhl.InputOutput.importJson.GameConfig;
+import dhl.InputOutput.importJson.Interface.IDeserializeLeagueObjectModel;
+import dhl.InputOutput.importJson.Interface.ISerializeLeagueObjectModel;
+import dhl.InputOutput.importJson.SerializeLeagueObjectModel;
 import dhl.Mocks.LeagueObjectModelMocks;
+import dhl.Mocks.SerializedJsonMock;
 import dhl.database.interfaceDB.ILeagueObjectModelDB;
 import dhl.businessLogic.leagueModel.*;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
@@ -72,26 +76,26 @@ public class LeagueObjectModelTest {
 
     @Test
     public void saveLeagueObjectModelTest() throws Exception {
-        ILeagueObjectModelDB mockDb = new MockDatabase();
+        ISerializeLeagueObjectModel mockSerializeLeagueObjectModel = new MockSerializeLeagueObjectModel();
         List<IPlayer> players = new ArrayList<>();
         ICoach headCoach = new Coach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
         ITeam newlyCreatedTeam = new Team("Nova Scotia", "Mathew", headCoach, players);
-        ILeagueObjectModelDB leagueObjectModelDB = new MockDatabase();
-        ILeagueObjectModelInput leagueInput = new LeagueObjectModelInput("Dhl", "Western", "Atlantic", newlyCreatedTeam, leagueValidation, leagueObjectModelDB);
-        leagueModelParameterized = leagueModelParameterized.saveLeagueObjectModel(mockDb, leagueInput);
+
+        ILeagueObjectModelInput leagueInput = new LeagueObjectModelInput("Dhl", "Western", "Atlantic", newlyCreatedTeam, leagueValidation, mockSerializeLeagueObjectModel);
+        leagueModelParameterized = leagueModelParameterized.saveLeagueObjectModel(mockSerializeLeagueObjectModel, leagueInput);
         Assertions.assertEquals("Dhl", leagueModelParameterized.getLeagueName());
     }
 
     @Test
     public void loadLeagueObjectModelTest() throws Exception {
-        ILeagueObjectModelDB mockDb = new MockDatabase();
-        Assertions.assertEquals("Dhl", leagueModelParameterized.loadLeagueObjectModel(mockDb, "Dhl", "Nova Scotia").getLeagueName());
+        IDeserializeLeagueObjectModel mockDeserializeLeagueObjectModel = new MockDeserializeLeagueObjectModel();
+        Assertions.assertEquals("Dhl", leagueModelParameterized.loadLeagueObjectModel(mockDeserializeLeagueObjectModel, "Dhl", "Nova Scotia").getLeagueName());
     }
 
     @Test
     public void updateLeagueObjectModel() throws Exception {
-        ILeagueObjectModelDB mockDb = new MockDatabase();
-        Assertions.assertEquals("Dhl", leagueModelParameterized.updateLeagueObjectModel(mockDb).getLeagueName());
+        ISerializeLeagueObjectModel mock = new MockSerializeLeagueObjectModel();
+        Assertions.assertEquals("Dhl", leagueModelParameterized.updateLeagueObjectModel(mock).getLeagueName());
     }
 
     @AfterEach

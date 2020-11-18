@@ -11,8 +11,7 @@ import org.apache.logging.log4j.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreateTeamStateLogic implements ICreateTeamStateLogic {
-    Logger myLogger = LogManager.getLogger(CreateTeamStateLogic.class);
+public class StatesAbstractFactory implements StatesFactory {
 
     public ILeagueObjectModel saveleagueObject(GameContext ourGame, ILeagueObjectModel inMemoryLeague, ILeagueObjectModelInput leagueObjectModelInput) throws Exception {
         ILeagueObjectModel leagueObjectModel = new LeagueObjectModel();
@@ -22,7 +21,6 @@ public class CreateTeamStateLogic implements ICreateTeamStateLogic {
             ITeam team = leagueObjectModelInput.getNewlyCreatedTeam();
             ourGame.setSelectedTeam(findTeam(inMemoryLeague, team.getTeamName()));
         } catch (Exception  e) {
-            myLogger.log(myLogger.getLevel(),e.getMessage());
             System.out.println(e.getMessage());
             ourGame.setGameInProgress(false);
         }
@@ -130,8 +128,7 @@ public class CreateTeamStateLogic implements ICreateTeamStateLogic {
                 }
             }
         } else {
-            myLogger.log(myLogger.getLevel(),"Enter 20 Free Agents or enter Exit to Quit game");
-
+            throw new Exception("Enter 20 Free Agents or enter Exit to Quit game");
         }
         return selectedFreeAgents;
     }

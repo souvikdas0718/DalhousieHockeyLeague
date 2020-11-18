@@ -1,6 +1,6 @@
 package dhl.businessLogic.leagueModel;
 
-import dhl.database.interfaceDB.ILeagueObjectModelDB;
+import dhl.InputOutput.importJson.Interface.ISerializeLeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModelInput;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModelValidation;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
@@ -11,15 +11,15 @@ public class LeagueObjectModelInput implements ILeagueObjectModelInput {
     String divisionName;
     ITeam newlyCreatedTeam;
     ILeagueObjectModelValidation leagueObjectModelValidation;
-    ILeagueObjectModelDB leagueObjectModelDB;
+    ISerializeLeagueObjectModel serializeLeagueObjectModel;
 
-    public LeagueObjectModelInput(String leagueName, String conferenceName, String divisionName, ITeam newlyCreatedTeam, ILeagueObjectModelValidation leagueObjectModelValidation, ILeagueObjectModelDB leagueObjectModelDB) {
+    public LeagueObjectModelInput(String leagueName, String conferenceName, String divisionName, ITeam newlyCreatedTeam, ILeagueObjectModelValidation leagueObjectModelValidation, ISerializeLeagueObjectModel serializeLeagueObjectModel) {
         this.leagueName = leagueName;
         this.conferenceName = conferenceName;
         this.divisionName = divisionName;
         this.newlyCreatedTeam = newlyCreatedTeam;
         this.leagueObjectModelValidation = leagueObjectModelValidation;
-        this.leagueObjectModelDB = leagueObjectModelDB;
+        this.serializeLeagueObjectModel = serializeLeagueObjectModel;
     }
 
     public String getLeagueName() {
@@ -42,7 +42,7 @@ public class LeagueObjectModelInput implements ILeagueObjectModelInput {
         return leagueObjectModelValidation;
     }
 
-    public ILeagueObjectModelDB getLeagueObjectModelDB() {
-        return leagueObjectModelDB;
+    public ISerializeLeagueObjectModel getserializeLeagueObjectModel() {
+        return serializeLeagueObjectModel;
     }
 }

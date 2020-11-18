@@ -1,5 +1,6 @@
 package dhl.businessLogicTest.leagueModelTests;
 
+import dhl.InputOutput.importJson.Interface.ISerializeLeagueObjectModel;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.database.interfaceDB.ILeagueObjectModelDB;
 import dhl.businessLogic.leagueModel.LeagueObjectModelInput;
@@ -16,14 +17,14 @@ public class LeagueObjectModelInputTest {
     ILeagueObjectModelValidation leagueValidation;
     LeagueObjectModelMocks leagueMock;
     ILeagueObjectModelInput leagueObjectModelInput;
-    ILeagueObjectModelDB leagueObjectModelDB;
+    ISerializeLeagueObjectModel serializeLeagueObjectModel;
 
     @BeforeEach
     public void initialize() {
         leagueValidation = new LeagueObjectModelValidation();
         leagueMock = new LeagueObjectModelMocks();
-        leagueObjectModelDB = new MockDatabase();
-        leagueObjectModelInput = new LeagueObjectModelInput("Dhl", "Western", "Atlantic", leagueMock.getTeamObjectMock(), leagueValidation, leagueObjectModelDB);
+        serializeLeagueObjectModel = new MockSerializeLeagueObjectModel();
+        leagueObjectModelInput = new LeagueObjectModelInput("Dhl", "Western", "Atlantic", leagueMock.getTeamObjectMock(), leagueValidation, serializeLeagueObjectModel);
     }
 
     @Test
@@ -34,7 +35,7 @@ public class LeagueObjectModelInputTest {
         ITeam team = leagueObjectModelInput.getNewlyCreatedTeam();
         Assertions.assertEquals(team.getTeamName(), "Mock Team");
         Assertions.assertNotNull(leagueObjectModelInput.getLeagueObjectModelValidation());
-        Assertions.assertNotNull(leagueObjectModelInput.getLeagueObjectModelDB());
+        Assertions.assertNotNull(leagueObjectModelInput.getserializeLeagueObjectModel());
     }
 
     @AfterEach

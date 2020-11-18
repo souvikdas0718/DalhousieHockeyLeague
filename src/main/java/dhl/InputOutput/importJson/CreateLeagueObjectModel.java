@@ -17,6 +17,7 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
     ILeagueObjectModel leagueObjectModel;
     ILeagueObjectModelValidation leagueObjectModelValidation;
     private JSONArray conferenceJsonArray, divisionJsonArray, teamJsonArray, playerJsonArray, freeAgentJsonArray, coachesJsonArrayList, generalManagerJsonArrayList;
+    private JSONObject objgame;
     IGameConfig gameConfig;
 
     public CreateLeagueObjectModel() {
@@ -66,6 +67,13 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
             } else {
                 throw new Exception("General manager Array not Found in JSON");
             }
+            if (checkJsonObject(jsonLeagueObject, "gameConfig")) {
+                objgame = (JSONObject) jsonLeagueObject.get("gameConfig");
+                gameConfig = new GameConfig(objgame);
+
+            } else {
+                throw new Exception("Game config Array not Found in JSON");
+            }
             leagueObjectModel = new LeagueObjectModel(
                     leagueName,
                     conferenceObjectList,
@@ -86,6 +94,15 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
         Object arrayToCheck = jsonLeagueObject.get(arrayKey);
 
         if (arrayToCheck instanceof JSONArray && ((JSONArray) arrayToCheck).size() > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean checkJsonObject(JSONObject jsonLeagueObject, String arrayKey) {
+        Object arrayToCheck = jsonLeagueObject.get(arrayKey);
+
+        if (arrayToCheck instanceof JSONObject && ((JSONObject) arrayToCheck).size() > 0) {
             return true;
         }
         return false;
@@ -235,5 +252,4 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
         }
         return generalManagerListToReturn;
     }
-
 }

@@ -1,6 +1,8 @@
 package dhl.businessLogicTest.StateMachineTest;
 
+import dhl.InputOutput.importJson.Interface.IDeserializeLeagueObjectModel;
 import dhl.Mocks.LeagueObjectModelMocks;
+import dhl.businessLogicTest.leagueModelTests.MockDeserializeLeagueObjectModel;
 import dhl.database.interfaceDB.ILeagueObjectModelDB;
 import dhl.businessLogic.leagueModel.LeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
@@ -25,9 +27,9 @@ public class LoadTeamStateLogicTest {
     public void findTeamOfLeagueInDatabaseTest() throws Exception {
         ILeagueObjectModel newInMemoryLeague = new LeagueObjectModel();
         GameContext ourGame = new GameContext();
-        ILeagueObjectModelDB databaseRefrenceOb = new MockDatabase();
+        IDeserializeLeagueObjectModel deserializeLeagueObjectModel = new MockDeserializeLeagueObjectModel();
         LoadTeamStateLogic objLoadTeamStateLogic = new LoadTeamStateLogic("Dhl", "Ontario");
-        Boolean iTeamFound = objLoadTeamStateLogic.findTeamOfLeagueInDatabase(newInMemoryLeague, ourGame, databaseRefrenceOb);
+        Boolean iTeamFound = objLoadTeamStateLogic.findTeamOfLeagueInDatabase(newInMemoryLeague, ourGame, deserializeLeagueObjectModel);
         Assertions.assertEquals(true, iTeamFound);
     }
 
@@ -35,9 +37,9 @@ public class LoadTeamStateLogicTest {
     public void teamNotFoundOfLeagueInDatabaseTest() throws Exception {
         ILeagueObjectModel newInMemoryLeague = new LeagueObjectModel();
         GameContext ourGame = new GameContext();
-        ILeagueObjectModelDB databaseRefrenceOb = new MockDatabase();
+        IDeserializeLeagueObjectModel deserializeLeagueObjectModel = new MockDeserializeLeagueObjectModel();
         LoadTeamStateLogic objLoadTeamStateLogic = new LoadTeamStateLogic("Dhl", "Ontario1");
-        Boolean iTeamFound = objLoadTeamStateLogic.findTeamOfLeagueInDatabase(newInMemoryLeague, ourGame, databaseRefrenceOb);
+        Boolean iTeamFound = objLoadTeamStateLogic.findTeamOfLeagueInDatabase(newInMemoryLeague, ourGame, deserializeLeagueObjectModel);
         Assertions.assertEquals(false, iTeamFound);
     }
 

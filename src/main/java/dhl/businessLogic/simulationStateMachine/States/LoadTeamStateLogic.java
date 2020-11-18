@@ -1,5 +1,6 @@
 package dhl.businessLogic.simulationStateMachine.States;
 
+import dhl.InputOutput.importJson.Interface.IDeserializeLeagueObjectModel;
 import dhl.database.interfaceDB.ILeagueObjectModelDB;
 import dhl.businessLogic.leagueModel.Team;
 import dhl.businessLogic.leagueModel.interfaceModel.IConference;
@@ -24,9 +25,9 @@ public class LoadTeamStateLogic implements ILoadTeamStateLogic {
     }
 
     public Boolean findTeamOfLeagueInDatabase(ILeagueObjectModel newInMemoryLeague,
-                                              GameContext ourGame, ILeagueObjectModelDB databaseRefrenceOb) throws Exception {
+                                              GameContext ourGame, IDeserializeLeagueObjectModel deserializeLeagueObjectModel) throws Exception {
 
-        newInMemoryLeague = newInMemoryLeague.loadLeagueObjectModel(databaseRefrenceOb, leagueName, team);
+        newInMemoryLeague = newInMemoryLeague.loadLeagueObjectModel(deserializeLeagueObjectModel, leagueName, team);
         ITeam objteam = new Team();
         objteam = findTeam(newInMemoryLeague, team);
 

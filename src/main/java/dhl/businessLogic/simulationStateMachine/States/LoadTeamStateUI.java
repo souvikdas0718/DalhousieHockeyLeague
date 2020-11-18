@@ -2,6 +2,8 @@ package dhl.businessLogic.simulationStateMachine.States;
 
 import dhl.InputOutput.UI.IUserInputOutput;
 import dhl.InputOutput.UI.UserInputOutput;
+import dhl.InputOutput.importJson.DeserializeLeagueObjectModel;
+import dhl.InputOutput.importJson.Interface.IDeserializeLeagueObjectModel;
 import dhl.database.LeagueObjectModelDB;
 import dhl.database.interfaceDB.ILeagueObjectModelDB;
 import dhl.businessLogic.leagueModel.LeagueObjectModel;
@@ -44,9 +46,9 @@ public class LoadTeamStateUI implements IGameState {
 
         try {
             ILoadTeamStateLogic objLoadTeamStateLogic = new LoadTeamStateLogic(leagueName, team);
-            ILeagueObjectModelDB databaseRefrenceOb = new LeagueObjectModelDB();
+            IDeserializeLeagueObjectModel deserializeLeagueObjectModel = new DeserializeLeagueObjectModel();
 
-            objLoadTeamStateLogic.findTeamOfLeagueInDatabase(newInMemoryLeague, ourGame, databaseRefrenceOb);
+            objLoadTeamStateLogic.findTeamOfLeagueInDatabase(newInMemoryLeague, ourGame, deserializeLeagueObjectModel);
         } catch (Exception e) {
             userInputPutput.printMessage(e.getMessage());
             ourGame.setGameInProgress(false);

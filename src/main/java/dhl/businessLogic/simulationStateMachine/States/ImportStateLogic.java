@@ -12,6 +12,7 @@ import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.simulationStateMachine.States.Interface.IImportStateLogic;
 import org.json.simple.JSONObject;
 
+
 public class ImportStateLogic implements IImportStateLogic {
 
     public ILeagueObjectModel importAndGetLeagueObject(String validFilePath, IGameConfig gameConfig, ILeagueObjectModel newInMemoryLeague) throws Exception {

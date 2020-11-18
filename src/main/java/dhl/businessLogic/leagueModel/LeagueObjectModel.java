@@ -1,6 +1,9 @@
 package dhl.businessLogic.leagueModel;
 
+import dhl.InputOutput.importJson.DeserializeLeagueObjectModel;
+import dhl.InputOutput.importJson.Interface.IDeserializeLeagueObjectModel;
 import dhl.InputOutput.importJson.Interface.IGameConfig;
+import dhl.InputOutput.importJson.SerializeLeagueObjectModel;
 import dhl.database.interfaceDB.ILeagueObjectModelDB;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IConference;
@@ -12,11 +15,20 @@ import dhl.businessLogic.leagueModel.interfaceModel.IGeneralManager;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModelValidation;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModelInput;
 import dhl.businessLogic.leagueModel.interfaceModel.IValidation;
+import dhl.InputOutput.importJson.Interface.ISerializeLeagueObjectModel;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LeagueObjectModel implements ILeagueObjectModel {
+    private static final String filepath = "src/main/java/dhl/InputOutput/SerializedJsonFiles/";
+    private static final String extension = ".json";
+    private String jsonFilePath;
     public String leagueName;
     public List<IConference> conferences;
     public List<IPlayer> freeAgents;
@@ -71,7 +83,7 @@ public class LeagueObjectModel implements ILeagueObjectModel {
         return leagueObjectModelValidation.checkIfLeagueObjectModelValid(validation, this);
     }
 
-    public ILeagueObjectModel saveLeagueObjectModel(ILeagueObjectModelDB leagueDatabase, ILeagueObjectModelInput saveLeagueInput) throws Exception {
+    public ILeagueObjectModel saveLeagueObjectModel(ISerializeLeagueObjectModel serializeLeagueObjectModel, ILeagueObjectModelInput saveLeagueInput) throws Exception {
         ILeagueObjectModelValidation leagueObjectModelValidation = saveLeagueInput.getLeagueObjectModelValidation();
         leagueObjectModelValidation.checkUserInputForLeague(this, saveLeagueInput);
         List<IConference> conferenceArrayList = this.getConferences();
@@ -95,16 +107,26 @@ public class LeagueObjectModel implements ILeagueObjectModel {
             }
         }
         this.conferences = conferenceArrayList;
-        leagueDatabase.insertLeagueModel(this);
+        jsonFilePath = filepath + leagueName + extension;
+        serializeLeagueObjectModel.writeSerializedLeagueObjectToJsonFile(this, jsonFilePath);
+
         return this;
     }
 
-    public ILeagueObjectModel loadLeagueObjectModel(ILeagueObjectModelDB leagueDatabase, String leagueName, String teamName) throws Exception {
-        return leagueDatabase.loadLeagueModel(leagueName, teamName);
+    public ILeagueObjectModel loadLeagueObjectModel( IDeserializeLeagueObjectModel deserializeLeagueObjectModel, String leagueName, String teamName) throws Exception, ParseException {
+        jsonFilePath = filepath + leagueName + extension;
+        FileReader reader = new FileReader(jsonFilePath);
+        JSONParser jsonParser = new JSONParser();
+        JSONObject obj = (JSONObject) jsonParser.parse(reader);
+        ILeagueObjectModel leagueObjectModel = new LeagueObjectModel();
+        leagueObjectModel =deserializeLeagueObjectModel.deserializeLeagueObjectJson(obj);
+
+        return leagueObjectModel;
     }
 
-    public ILeagueObjectModel updateLeagueObjectModel(ILeagueObjectModelDB leagueDatabase) throws Exception {
-        leagueDatabase.updateLeagueModel(this);
+    public ILeagueObjectModel updateLeagueObjectModel(ISerializeLeagueObjectModel serializeLeagueObjectModel) throws Exception {
+        jsonFilePath = filepath + leagueName + extension;
+        serializeLeagueObjectModel.writeSerializedLeagueObjectToJsonFile(this, jsonFilePath);
         return this;
     }
 }

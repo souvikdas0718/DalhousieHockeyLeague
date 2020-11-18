@@ -1,6 +1,6 @@
 package dhl.businessLogic.leagueModel.interfaceModel;
 
-import dhl.database.interfaceDB.ILeagueObjectModelDB;
+import dhl.InputOutput.importJson.Interface.ISerializeLeagueObjectModel;
 
 public interface ILeagueObjectModelInput {
 
@@ -14,6 +14,6 @@ public interface ILeagueObjectModelInput {
 
     public ILeagueObjectModelValidation getLeagueObjectModelValidation();
 
-    public ILeagueObjectModelDB getLeagueObjectModelDB();
+    public ISerializeLeagueObjectModel getserializeLeagueObjectModel();
 
 }
