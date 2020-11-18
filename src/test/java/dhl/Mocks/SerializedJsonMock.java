@@ -1230,4 +1230,22 @@ public class SerializedJsonMock {
                 "}";
         return json;
     }
+    public String serializedPlayerList(){
+        String json = "[\n" +
+                "   {\n" +
+                "      \"playerName\": \"Henry\",\n" +
+                "      \"position\": \"FORWARD\",\n" +
+                "      \"captain\": false,\n" +
+                "      \"playerStats\": {\n" +
+                "         \"age\": 50,\n" +
+                "         \"skating\": 5,\n" +
+                "         \"shooting\": 5,\n" +
+                "         \"checking\": 5,\n" +
+                "         \"saving\": 5\n" +
+                "      },\n" +
+                "      \"playerInjuredDays\": -1\n" +
+                "   }\n" +
+                "]";
+        return json;
+    }
 }

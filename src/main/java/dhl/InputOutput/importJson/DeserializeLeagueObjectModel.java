@@ -2,18 +2,58 @@ package dhl.InputOutput.importJson;
 
 import dhl.InputOutput.importJson.Interface.IDeserializeLeagueObjectModel;
 import dhl.InputOutput.importJson.Interface.IGameConfig;
+import dhl.businessLogic.leagueModel.Player;
+import dhl.businessLogic.leagueModel.PlayerStatistics;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
+import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
+import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class DeserializeLeagueObjectModel implements IDeserializeLeagueObjectModel {
+    private final String conferences = "conferences";
+    private final String freeAgents = "freeAgents";
+    private final String playerStats = "playerStats";
+    private final String age = "age";
+    private final String skating = "skating";
+    private final String checking = "checking";
+    private final String shooting = "shooting";
+    private final String saving = "saving";
 
     public ILeagueObjectModel deserializeLeagueObjectJson(JSONObject jsonLeagueObject) {
         IGameConfig gameConfig = null;
         CreateLeagueObjectModel createLeagueObjectModel = new CreateLeagueObjectModel(updateLeagueObjectModelJson(jsonLeagueObject), gameConfig);
         return createLeagueObjectModel.getLeagueObjectModel();
+    }
+
+    public List<IPlayer> deserializePlayers(JSONArray arrPlayers) throws ParseException {
+        List<IPlayer> playerList = new ArrayList<>();
+
+        Iterator<?> arrPlayersIterator = (arrPlayers).iterator();
+        while (arrPlayersIterator.hasNext()) {
+            JSONObject existingPlayersJsonObject = (JSONObject) arrPlayersIterator.next();
+            JSONObject playerStatsJsonobject = (JSONObject) existingPlayersJsonObject.get("playerStats");
+            IPlayerStatistics playerStatistics = new PlayerStatistics
+                    ((int) (long) playerStatsJsonobject.get("age"),
+                            (int) (long) playerStatsJsonobject.get("skating") ,
+                            (int) (long) playerStatsJsonobject.get("shooting"),
+                            (int) (long) playerStatsJsonobject.get("checking"),
+                            (int) (long) playerStatsJsonobject.get("saving"));
+            playerList.add(new Player(
+                    (String) existingPlayersJsonObject.get("playerName"),
+                    (String) existingPlayersJsonObject.get("position"),
+                    (Boolean) existingPlayersJsonObject.get("captain"),
+                    playerStatistics
+            ));
+
+        }
+        return playerList;
     }
 
     public JSONObject updateLeagueObjectModelJson(JSONObject jsonLeagueObject) {

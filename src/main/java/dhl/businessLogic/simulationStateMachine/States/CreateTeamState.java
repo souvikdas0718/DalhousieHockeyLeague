@@ -2,6 +2,8 @@ package dhl.businessLogic.simulationStateMachine.States;
 
 import dhl.InputOutput.UI.IUserInputOutput;
 import dhl.InputOutput.UI.UserInputOutput;
+import dhl.InputOutput.importJson.Interface.ISerializeLeagueObjectModel;
+import dhl.InputOutput.importJson.SerializeLeagueObjectModel;
 import dhl.database.LeagueObjectModelDB;
 import dhl.database.interfaceDB.ILeagueObjectModelDB;
 import dhl.businessLogic.leagueModel.*;
@@ -28,6 +30,7 @@ public class CreateTeamState implements IGameState {
     private String selectedCaptain;
     ICreateTeamStateLogic createTeamStateLogic;
 
+    Scanner sc = new Scanner(System.in);
     IUserInputOutput userInputPutput = new UserInputOutput();
 
     public CreateTeamState(GameContext newGame) {
@@ -52,33 +55,6 @@ public class CreateTeamState implements IGameState {
         selectGeneralManager();
         selectTeamHeadCoach();
         selectFreeAgents();
-    }
-
-    @Override
-    public void stateProcess() throws Exception {
-        try {
-            userInputPutput.printMessage("Adding Team " + selectedTeamName + " to the DB");
-
-            ICreateTeamStateLogic createTeamStateLogic = new CreateTeamStateLogic();
-            ITeam teamWithoutPlayers = new Team(selectedTeamName, selectedGeneralManager, selectedCoach, new ArrayList<>());
-            ITeam newlyCreatedTeam = createTeamStateLogic.createNewTeamObject(selectedFreeAgents, teamWithoutPlayers, selectedCaptain);
-            ILeagueObjectModelValidation leagueObjectModelValidation = new LeagueObjectModelValidation();
-            ILeagueObjectModelDB leagueObjectModelDB = new LeagueObjectModelDB();
-
-            ILeagueObjectModelInput leagueObjectModelInput = new LeagueObjectModelInput(inMemoryLeague.getLeagueName(), selectedConference.getConferenceName(), selectedDivision.getDivisionName(), newlyCreatedTeam, leagueObjectModelValidation, leagueObjectModelDB);
-            createTeamStateLogic.saveleagueObject(ourGame, inMemoryLeague, leagueObjectModelInput);
-
-        } catch (Exception e) {
-            userInputPutput.printMessage(e.getMessage());
-            ourGame.setGameInProgress(false);
-        }
-    }
-
-    @Override
-    public void stateExitProcess() {
-        if (ourGame.isGameInProgress()) {
-            ourGame.setGameState(ourGame.getSimulateState());
-        }
     }
 
     public void selectConference() {
@@ -230,7 +206,7 @@ public class CreateTeamState implements IGameState {
         }
         userInputPutput.printMessage("-----------------------------------------------------------------------------------------------------------------");
 
-        userInputPutput.printMessage("Select 16 forwards, 10 defense and 4 Goalies");
+        userInputPutput.printMessage("Select 18 Skaters and 2 Goalies");
         String inputfreeAgents = userInputPutput.getUserInput();
 
         userInputPutput.printMessage("Choose a captain for this team from the selected players");
@@ -243,7 +219,7 @@ public class CreateTeamState implements IGameState {
                 ITeam team = new Team(selectedTeamName, selectedGeneralManager, selectedCoach, selectedFreeAgents);
                 if (team.checkIfSkatersGoaliesValid() == false) {
                     selectedFreeAgents = null;
-                    throw new Exception("A team must have 16 forwards, 10 defense and 4 Goalies");
+                    throw new Exception("A team must have 18 Skaters and 2 Goalies");
                 }
             } catch (Exception ex) {
                 userInputPutput.printMessage(ex.getMessage());
@@ -255,5 +231,30 @@ public class CreateTeamState implements IGameState {
         }
     }
 
+    @Override
+    public void stateProcess() throws Exception {
+        try {
+            userInputPutput.printMessage("Adding Team " + selectedTeamName + " to the DB");
 
+            ICreateTeamStateLogic createTeamStateLogic = new CreateTeamStateLogic();
+            ITeam teamWithoutPlayers = new Team(selectedTeamName, selectedGeneralManager, selectedCoach, new ArrayList<>());
+            ITeam newlyCreatedTeam = createTeamStateLogic.createNewTeamObject(selectedFreeAgents, teamWithoutPlayers, selectedCaptain);
+            ILeagueObjectModelValidation leagueObjectModelValidation = new LeagueObjectModelValidation();
+            ISerializeLeagueObjectModel serializeLeagueObjectModel = new SerializeLeagueObjectModel();
+
+            ILeagueObjectModelInput leagueObjectModelInput = new LeagueObjectModelInput(inMemoryLeague.getLeagueName(), selectedConference.getConferenceName(), selectedDivision.getDivisionName(), newlyCreatedTeam, leagueObjectModelValidation, serializeLeagueObjectModel);
+            createTeamStateLogic.saveleagueObject(ourGame, inMemoryLeague, leagueObjectModelInput);
+
+        } catch (Exception e) {
+            userInputPutput.printMessage(e.getMessage());
+            ourGame.setGameInProgress(false);
+        }
+    }
+
+    @Override
+    public void stateExitProcess() {
+        if (ourGame.isGameInProgress()) {
+            ourGame.setGameState(ourGame.getSimulateState());
+        }
+    }
 }
