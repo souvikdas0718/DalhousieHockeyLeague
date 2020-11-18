@@ -1,7 +1,5 @@
 package dhl.businessLogic.leagueModel;
 
-import dhl.businessLogic.leagueModel.constants.PlayerPosition;
-import dhl.businessLogic.leagueModel.constants.TeamConstant;
 import dhl.businessLogic.leagueModel.interfaceModel.ICoach;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
@@ -13,6 +11,13 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class Team implements ITeam {
+    private static final int TOTALTEAMSIZE = 30;
+    private static final int TOTALGOALIES = 4;
+    private static final int TOTALFORWARDS = 16;
+    private static final int TOTALDEFENSE = 10;
+    private static final int NOOFFORWARDS = 12;
+    private static final int NOOFDEFENCE = 6;
+    private static final int NOOFGOALIES = 2;
     private String teamName;
     private String generalManager;
     private ICoach headCoach;
@@ -37,7 +42,7 @@ public class Team implements ITeam {
         this.generalManager = generalManager;
         this.headCoach = headCoach;
         this.players = playersList;
-        if(this.players.size()== TeamConstant.TOTALTEAMSIZE.getValue()){
+        if(this.players.size()== TOTALTEAMSIZE){
             this.setRoster();
         }
     }
@@ -84,9 +89,9 @@ public class Team implements ITeam {
 
     public void setRoster() {
         sortPlayersInTeamByStrength(this.players);
-        addPlayersToTeamRoster(PlayerPosition.FORWARD.toString(),TeamConstant.NOOFFORWARDS.getValue());
-        addPlayersToTeamRoster(PlayerPosition.DEFENSE.toString(),TeamConstant.NOOFDEFENCE.getValue());
-        addPlayersToTeamRoster(PlayerPosition.GOALIE.toString(),TeamConstant.NOOFGOALIES.getValue());
+        addPlayersToTeamRoster(PlayerPosition.FORWARD.toString(),NOOFFORWARDS);
+        addPlayersToTeamRoster(PlayerPosition.DEFENSE.toString(),NOOFDEFENCE);
+        addPlayersToTeamRoster(PlayerPosition.GOALIE.toString(),NOOFGOALIES);
     }
 
     public void addPlayersToTeamRoster( String position,int playerCount){
@@ -116,7 +121,7 @@ public class Team implements ITeam {
     }
 
     public boolean checkIfSizeOfTeamValid(List<IPlayer> playerList) {
-        return playerList.size() == TeamConstant.TOTALTEAMSIZE.getValue();
+        return playerList.size() == TOTALTEAMSIZE;
     }
 
     public boolean checkIfSkatersGoaliesValid() {
@@ -129,8 +134,8 @@ public class Team implements ITeam {
         List<IPlayer> forwardsInTeam = filterPlayersInTeam(PlayerPosition.FORWARD.toString(), players);
         List<IPlayer> defenseInTeam = filterPlayersInTeam(PlayerPosition.DEFENSE.toString(), players);
 
-        if(goaliesInTeam.size()==TeamConstant.TOTALGOALIES.getValue() && forwardsInTeam.size()==TeamConstant.TOTALFORWARDS.getValue() && defenseInTeam.size()==TeamConstant.TOTALDEFENSE.getValue()
-         && goaliesInActiveRoster.size()==TeamConstant.NOOFGOALIES.getValue() && (forwardsInActiveRoster.size()+defenseInActiveRoster.size()==TeamConstant.NOOFSKATERS.getValue())){
+        if(goaliesInTeam.size() == TOTALGOALIES && forwardsInTeam.size() == TOTALFORWARDS && defenseInTeam.size() == TOTALDEFENSE
+         && goaliesInActiveRoster.size()==NOOFGOALIES && (forwardsInActiveRoster.size()+defenseInActiveRoster.size()==NOOFFORWARDS + NOOFDEFENCE)){
             return true;
         }
         return false;

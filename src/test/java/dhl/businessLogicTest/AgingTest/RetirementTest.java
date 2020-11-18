@@ -6,7 +6,7 @@ import dhl.database.interfaceDB.IPlayerDB;
 import dhl.businessLogic.leagueModel.FreeAgent;
 import dhl.businessLogic.leagueModel.Player;
 import dhl.businessLogic.leagueModel.PlayerStatistics;
-import dhl.businessLogic.aging.RetirementSystem;
+import dhl.businessLogic.aging.Retirement;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
@@ -21,8 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class RetirementSystemTest {
-    RetirementSystem retirementSystem;
+public class RetirementTest {
+    Retirement retirement;
     LeagueObjectModelMocks leagueMock;
     IPlayerDB playerDBMock;
 
@@ -30,13 +30,13 @@ public class RetirementSystemTest {
     public void initObject() {
         leagueMock = new LeagueObjectModelMocks();
         playerDBMock = new PlayerDBMock();
-        retirementSystem = new RetirementSystem(playerDBMock, leagueMock.getLeagueObjectMock());
+        retirement = new Retirement(playerDBMock, leagueMock.getLeagueObjectMock());
     }
 
     @Test
     public void setLeagueObjectModelTest() {
-        retirementSystem.setLeagueObjectModel(leagueMock.getLeagueObjectMock());
-        ILeagueObjectModel leagueObjectModel = retirementSystem.getLeagueObjectModel();
+        retirement.setLeagueObjectModel(leagueMock.getLeagueObjectMock());
+        ILeagueObjectModel leagueObjectModel = retirement.getLeagueObjectModel();
         Assertions.assertEquals("Dhl", leagueObjectModel.getLeagueName());
     }
 
@@ -49,8 +49,8 @@ public class RetirementSystemTest {
         playersSelectedToRetire.put("Ontario", players);
         List<IPlayer> freeAgentsToRetire = new ArrayList<>();
 
-        retirementSystem.initiateRetirement(playersSelectedToRetire, freeAgentsToRetire);
-        ILeagueObjectModel leagueObjectModel = retirementSystem.getLeagueObjectModel();
+        retirement.initiateRetirement(playersSelectedToRetire, freeAgentsToRetire);
+        ILeagueObjectModel leagueObjectModel = retirement.getLeagueObjectModel();
         List<IPlayer> freeAgents = leagueObjectModel.getFreeAgents();
         Assertions.assertTrue(freeAgents.size() == 1);
     }
@@ -65,8 +65,8 @@ public class RetirementSystemTest {
         IPlayerStatistics playerStatistics1 = new PlayerStatistics(50, 5, 5, 5, 5);
         freeAgents.add(new FreeAgent("Jack", "forward", playerStatistics1));
 
-        retirementSystem.initiateRetirement(playersSelectedToRetire, freeAgents);
-        ILeagueObjectModel leagueObjectModel = retirementSystem.getLeagueObjectModel();
+        retirement.initiateRetirement(playersSelectedToRetire, freeAgents);
+        ILeagueObjectModel leagueObjectModel = retirement.getLeagueObjectModel();
         List<IPlayer> freeAgentsList = leagueObjectModel.getFreeAgents();
         Assertions.assertTrue(freeAgentsList.size() == 1);
     }
@@ -75,7 +75,7 @@ public class RetirementSystemTest {
     public void insertVeteransTest() throws Exception {
         Map<String, List<IPlayer>> playersSelectedToRetire = new HashMap<>();
         List<IPlayer> freeAgentsToRetire = new ArrayList<>();
-        retirementSystem.insertVeterans(playersSelectedToRetire, freeAgentsToRetire);
+        retirement.insertVeterans(playersSelectedToRetire, freeAgentsToRetire);
         ILeagueObjectModel leagueObjectModel = leagueMock.getLeagueObjectMock();
         Assertions.assertEquals("Dhl", leagueObjectModel.getLeagueName());
     }
@@ -96,7 +96,7 @@ public class RetirementSystemTest {
         freeAgentsList.add(new FreeAgent("F4", "goalie", freeAgentStatistics4));
         freeAgentsList.add(new FreeAgent("F5", "goalie", freeAgentStatistics5));
 
-        retirementSystem.sortFreeAgentsByStrength(freeAgentsList);
+        retirement.sortFreeAgentsByStrength(freeAgentsList);
         IPlayer bestFreeAgent = freeAgentsList.get(0);
         Assertions.assertEquals("F1", bestFreeAgent.getPlayerName());
     }
@@ -104,7 +104,7 @@ public class RetirementSystemTest {
     @Test
     public void removeSelectedAgentFromFreeAgentsTest() {
         List<IPlayer> freeAgents = leagueMock.getFreeAgentArrayMock();
-        retirementSystem.removeSelectedAgentFromFreeAgents(freeAgents, new Player("Mock Free Agent 2", "forward", new PlayerStatistics(26, 12, 12, 12, 12)));
+        retirement.removeSelectedAgentFromFreeAgents(freeAgents, new Player("Mock Free Agent 2", "forward", new PlayerStatistics(26, 12, 12, 12, 12)));
         Assertions.assertTrue(freeAgents.size() == 1);
     }
 
@@ -114,7 +114,7 @@ public class RetirementSystemTest {
         List<String> playerNames = new ArrayList<>();
         playerNames.add("Mock Player");
 
-        retirementSystem.removeRetiredPlayersFromTeam(playerNames, team);
+        retirement.removeRetiredPlayersFromTeam(playerNames, team);
         List<IPlayer> players = team.getPlayers();
         Assertions.assertTrue(players.size() == 1);
     }
@@ -122,7 +122,7 @@ public class RetirementSystemTest {
     @AfterEach()
     public void destroyObject() {
         leagueMock = null;
-        retirementSystem = null;
+        retirement = null;
 
     }
 

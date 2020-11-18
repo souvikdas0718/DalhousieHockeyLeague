@@ -1,11 +1,10 @@
 package dhl.businessLogic.leagueModel;
 
-import dhl.businessLogic.aging.AgingConstant;
-import dhl.businessLogic.leagueModel.constants.PlayerPosition;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
 
 public class Player implements IPlayer {
+    private static final int INJUREDDAYSDEFAULTVALUE=-1;
     private String playerName;
     private PlayerPosition position;
     private Boolean captain;
@@ -20,7 +19,7 @@ public class Player implements IPlayer {
     public void setDefaults() {
         playerName = "";
         position = null;
-        this.playerInjuredDays = AgingConstant.INJUREDDAYSDEFAULTVALUE.getValue();
+        this.playerInjuredDays = INJUREDDAYSDEFAULTVALUE;
         this.active = false;
     }
 
@@ -41,17 +40,12 @@ public class Player implements IPlayer {
     }
 
     public void setPosition(String playerPosition) {
-        if(playerPosition.equals(PlayerPosition.GOALIE.toString())){
-            this.position = PlayerPosition.GOALIE;
-        }
-        else if(playerPosition.equals(PlayerPosition.FORWARD.toString())){
-            this.position = PlayerPosition.FORWARD;
-        }
-        else if(playerPosition.equals(PlayerPosition.DEFENSE.toString())){
-            this.position = PlayerPosition.DEFENSE;
-        }
-        else{
-            this.position = null;
+        this.position = null;
+        for(PlayerPosition position:  PlayerPosition.values()){
+            if(playerPosition.equals(position.toString())){
+                this.position = position;
+                break;
+            }
         }
     }
 

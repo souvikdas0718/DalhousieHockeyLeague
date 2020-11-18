@@ -2,7 +2,7 @@ package dhl.businessLogicTest.AgingTest;
 
 import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.Mocks.LeagueObjectModelMocks;
-import dhl.businessLogic.aging.InjurySystem;
+import dhl.businessLogic.aging.Injury;
 import dhl.businessLogic.leagueModel.Coach;
 import dhl.businessLogic.leagueModel.Player;
 import dhl.businessLogic.leagueModel.PlayerStatistics;
@@ -18,9 +18,9 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 
-public class InjurySystemTest {
+public class InjuryTest {
     IGameConfig gameConfig;
-    InjurySystem injurySystem;
+    Injury injury;
     LeagueObjectModelMocks leagueMock;
     ITeam team;
 
@@ -28,7 +28,7 @@ public class InjurySystemTest {
     public void initObject() {
         leagueMock = new LeagueObjectModelMocks();
         gameConfig = leagueMock.getGameConfig();
-        injurySystem = new InjurySystem();
+        injury = new Injury();
         team = leagueMock.getTeamObjectMock();
     }
 
@@ -36,7 +36,7 @@ public class InjurySystemTest {
     public void checkTeamInjuryTest() {
         LeagueObjectModelMocks leagueMock = new LeagueObjectModelMocks();
         IGameConfig gameConfig = leagueMock.getGameConfig();
-        injurySystem.checkTeamInjury(gameConfig, team);
+        injury.checkTeamInjury(gameConfig, team);
         List<IPlayer> playerList = team.getPlayers();
         IPlayer player = playerList.get(0);
         Assertions.assertEquals(-1, player.getPlayerInjuredDays());
@@ -46,7 +46,7 @@ public class InjurySystemTest {
     public void checkIfPlayerInjuredTest() {
         IPlayer player = new Player();
         ITeam team = leagueMock.getTeamObjectMock();
-        injurySystem.checkIfPlayerInjured(gameConfig, player,team);
+        injury.checkIfPlayerInjured(gameConfig, player,team);
         Assertions.assertEquals(-1, player.getPlayerInjuredDays());
     }
 
@@ -54,15 +54,15 @@ public class InjurySystemTest {
     public void isPlayerAlreadyInjuredTest() {
         IPlayer player = new Player();
         player.setPlayerInjuredDays(10);
-        injurySystem.checkIfPlayerInjured(gameConfig, player,team);
-        Assertions.assertTrue(injurySystem.checkIfPlayerInjured(gameConfig, player,team));
+        injury.checkIfPlayerInjured(gameConfig, player,team);
+        Assertions.assertTrue(injury.checkIfPlayerInjured(gameConfig, player,team));
     }
 
     @Test
     public void healInjuredPlayersTest() {
         IPlayer player = new Player();
         player.setPlayerInjuredDays(10);
-        injurySystem.healInjuredPlayers(player);
+        injury.healInjuredPlayers(player);
         Assertions.assertEquals(9, player.getPlayerInjuredDays());
     }
 
@@ -70,7 +70,7 @@ public class InjurySystemTest {
     public void InjuryHealedPlayersTest() {
         IPlayer player = new Player();
         player.setPlayerInjuredDays(0);
-        injurySystem.healInjuredPlayers(player);
+        injury.healInjuredPlayers(player);
         Assertions.assertEquals(-1, player.getPlayerInjuredDays());
     }
 
@@ -79,7 +79,7 @@ public class InjurySystemTest {
         List<IPlayer> playersInTeam = leagueMock.getTeamPlayers();
         Team testTeam = new Team("Ontario", "Mathew", new Coach(),playersInTeam );
         IPlayer player = playersInTeam.get(0);
-        injurySystem.swapInjuredPlayer(player,testTeam);
+        injury.swapInjuredPlayer(player,testTeam);
         Assertions.assertFalse(player.isActive());
     }
 
@@ -89,7 +89,7 @@ public class InjurySystemTest {
         Team testTeam = new Team("Ontario", "Mathew", new Coach(),playersInTeam );
         IPlayerStatistics playerStatistics = new PlayerStatistics(21,20,20,20,20);
         IPlayer player = new Player("Rehab","forward",false,playerStatistics);
-        injurySystem.swapRecoveredPlayer(player,testTeam);
+        injury.swapRecoveredPlayer(player,testTeam);
         Assertions.assertTrue(player.isActive());
     }
 
@@ -101,13 +101,13 @@ public class InjurySystemTest {
         IPlayer player = new Player("Rehab","forward",false,playerStatistics);
         player.setPlayerInjuredDays(0);
         player.setActive(false);
-        injurySystem.healInjuredPlayersInTeam(player,testTeam);
+        injury.healInjuredPlayersInTeam(player,testTeam);
         Assertions.assertTrue(player.isActive());
     }
 
     @AfterEach()
     public void destroyObject() {
-        injurySystem = null;
+        injury = null;
         gameConfig = null;
         leagueMock = null;
     }

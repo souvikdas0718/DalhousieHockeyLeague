@@ -4,7 +4,7 @@ import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 
-public interface IInjurySystem {
+public interface IInjury {
     void checkTeamInjury(IGameConfig gameConfig, ITeam team);
 
     boolean checkIfPlayerInjured(IGameConfig gameConfig, IPlayer player, ITeam team);

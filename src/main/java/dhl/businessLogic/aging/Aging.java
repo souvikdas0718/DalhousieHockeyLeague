@@ -1,69 +1,91 @@
 package dhl.businessLogic.aging;
 
+import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.businessLogic.aging.interfaceAging.IAging;
-import dhl.businessLogic.aging.interfaceAging.IAgingSystem;
-import dhl.businessLogic.aging.interfaceAging.IInjurySystem;
-import dhl.businessLogic.aging.interfaceAging.IRetirementSystem;
-import dhl.database.interfaceDB.IPlayerDB;
-import dhl.businessLogic.leagueModel.interfaceModel.*;
+import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
+import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
+import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Aging implements IAging {
-    ILeagueObjectModel leagueObjectModel;
-    IAgingSystem agingSystem;
-    IRetirementSystem retirementSystem;
-    IInjurySystem injurySystem;
-    IPlayerDB playerDB;
-    Map<String, List<IPlayer>> retiringPlayers;
-    List<IPlayer> retiringFreeAgents;
-    int noOfDays;
+    private static final double LIKELIHOODFORGREATERTHANAVGAGE=80.0;
+    private static final double LIKELIHOODFORLESSERTHANAVGAGE=20.0;
 
-    public Aging(IAgingSystem agingSystem, IRetirementSystem retirementSystem, IInjurySystem injurySystem, ILeagueObjectModel leagueObjectModel, int noOfDays, IPlayerDB playerDB) {
-        this.leagueObjectModel = leagueObjectModel;
-        this.noOfDays = noOfDays;
-        this.playerDB = playerDB;
-        this.agingSystem = agingSystem;
-        this.retirementSystem = retirementSystem;
-        this.injurySystem = injurySystem;
+    private int averageRetirementAge;
+    private int maximumAge;
+    private Random randomNumberGenerator;
+
+    public Aging(IGameConfig gameConfig) {
+        averageRetirementAge = Integer.parseInt(gameConfig.getValueFromOurObject(gameConfig.getAging(), gameConfig.getAverageRetirementAge()));
+        maximumAge = Integer.parseInt(gameConfig.getValueFromOurObject(gameConfig.getAging(), gameConfig.getMaximumAge()));
+        setRandomNumberGenerator();
     }
 
-    public ILeagueObjectModel initiateAging() throws Exception {
-        int noOfDaysInAYear = AgingConstant.NOOFDAYSINYEAR.getValue();
-        if ((noOfDays % noOfDaysInAYear) == 0) {
-            for (IConference conference : leagueObjectModel.getConferences()) {
-                for (IDivision division : conference.getDivisions()) {
-                    for (ITeam team : division.getTeams()) {
-                        agingSystem.ageAllPlayers(team.getPlayers());
-                        retiringPlayers = agingSystem.selectPlayersToRetire(team);
-                    }
+    public int getAverageRetirementAge() {
+        return averageRetirementAge;
+    }
+
+    public int getMaximumAge() {
+        return maximumAge;
+    }
+
+    public Random getRandomGenerator(){
+        return randomNumberGenerator;
+    }
+
+    public void setRandomNumberGenerator() {
+        this.randomNumberGenerator = new Random();
+    }
+
+    public void ageAllPlayers(List<IPlayer> players) {
+        for (IPlayer player : players) {
+            agePlayer(player.getPlayerStats());
+        }
+    }
+
+    public void agePlayer(IPlayerStatistics playerStatistics) {
+        playerStatistics.setAge(playerStatistics.getAge() + 1);
+
+    }
+
+    public Map<String, List<IPlayer>> selectPlayersToRetire(ITeam team) {
+        Map<String, List<IPlayer>> playersSelectedToRetire = new HashMap<>();
+        playersSelectedToRetire.put(team.getTeamName(), retirementAlgorithmBasedOnAge(team.getPlayers()));
+        return playersSelectedToRetire;
+    }
+
+    public List<IPlayer> selectFreeAgentsToRetire(List<IPlayer> freeAgents) {
+        return retirementAlgorithmBasedOnAge(freeAgents);
+    }
+
+    public List<IPlayer> retirementAlgorithmBasedOnAge(List<IPlayer> players) {
+        int rangeOfAge = (maximumAge - averageRetirementAge) /3;
+        List<IPlayer> retiringPlayers = new ArrayList<>();
+        for (IPlayer player : players) {
+            IPlayerStatistics playerStatistics = player.getPlayerStats();
+            if (playerStatistics.getAge() == maximumAge) {
+                retiringPlayers.add(player);
+            } else if (playerStatistics.getAge() >= averageRetirementAge) {
+                if (checkLikelihoodOfRetirement(LIKELIHOODFORGREATERTHANAVGAGE)) {
+                    retiringPlayers.add(player);
+                }
+            } else if (playerStatistics.getAge() < averageRetirementAge && playerStatistics.getAge() > averageRetirementAge - rangeOfAge) {
+                if (checkLikelihoodOfRetirement(LIKELIHOODFORLESSERTHANAVGAGE)) {
+                    retiringPlayers.add(player);
                 }
             }
-            agingSystem.ageAllPlayers(leagueObjectModel.getFreeAgents());
-            retiringFreeAgents = agingSystem.selectFreeAgentsToRetire(leagueObjectModel.getFreeAgents());
-            initiateRetirementForAgedPlayers();
         }
-        checkPlayerInjuryRecovery();
-        return leagueObjectModel;
+        return retiringPlayers;
     }
 
-    public void initiateRetirementForAgedPlayers() throws Exception {
-        retirementSystem.initiateRetirement(retiringPlayers, retiringFreeAgents);
+    public boolean checkLikelihoodOfRetirement(double likelihood) {
+        double randomNumber = randomNumberGenerator.nextDouble();
+        randomNumber = randomNumber * 100;
+        if (randomNumber <= likelihood) {
+            return true;
+        }
+        return false;
     }
 
-    public void checkPlayerInjuryRecovery() {
-        for (IConference conference : leagueObjectModel.getConferences()) {
-            for (IDivision division : conference.getDivisions()) {
-                for (ITeam team : division.getTeams()) {
-                    for (IPlayer player : team.getPlayers()) {
-                        injurySystem.healInjuredPlayersInTeam(player,team);
-                    }
-                }
-            }
-        }
-        for (IPlayer player : leagueObjectModel.getFreeAgents()) {
-            injurySystem.healInjuredPlayers(player);
-        }
-    }
 }
