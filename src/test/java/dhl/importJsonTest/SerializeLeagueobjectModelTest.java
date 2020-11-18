@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class SerializeLeagueObjectModelTest {
+class SerializeLeagueObjectModelTest {
     private static final String filepath = "src/test/java/dhl/importJsonTest/";
     private static final String extension = ".json";
 
