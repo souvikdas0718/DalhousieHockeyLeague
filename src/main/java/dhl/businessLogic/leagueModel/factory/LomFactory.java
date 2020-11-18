@@ -1,6 +1,7 @@
 package dhl.businessLogic.leagueModel.factory;
 
 import dhl.InputOutput.importJson.Interface.IGameConfig;
+import dhl.InputOutput.importJson.Interface.ISerializeLeagueObjectModel;
 import dhl.businessLogic.leagueModel.*;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.database.interfaceDB.ILeagueObjectModelDB;
@@ -51,8 +52,8 @@ public class LomFactory implements LomAbstractFactory {
         return new LeagueObjectModel(leagueName, conferences, freeAgents, coaches, managers, gameConfig);
     }
 
-    public ILeagueObjectModelInput createLeagueObjectModelInput(String leagueName, String conferenceName, String divisionName, ITeam newlyCreatedTeam, ILeagueObjectModelValidation leagueObjectModelValidation, ILeagueObjectModelDB leagueObjectModelDB) {
-        return new LeagueObjectModelInput(leagueName, conferenceName, divisionName, newlyCreatedTeam, leagueObjectModelValidation, leagueObjectModelDB);
+    public ILeagueObjectModelInput createLeagueObjectModelInput(String leagueName, String conferenceName, String divisionName, ITeam newlyCreatedTeam, ILeagueObjectModelValidation leagueObjectModelValidation, ISerializeLeagueObjectModel serializeLeagueObjectModel) {
+        return new LeagueObjectModelInput(leagueName, conferenceName, divisionName, newlyCreatedTeam, leagueObjectModelValidation, serializeLeagueObjectModel);
     }
 
     public ILeagueObjectModelValidation createLeagueObjectModelValidation() {

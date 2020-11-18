@@ -1,6 +1,7 @@
 package dhl.businessLogic.leagueModel.factory;
 
 import dhl.InputOutput.importJson.Interface.IGameConfig;
+import dhl.InputOutput.importJson.Interface.ISerializeLeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.database.interfaceDB.ILeagueObjectModelDB;
 
@@ -15,7 +16,7 @@ public interface LomAbstractFactory {
     public IPlayer createFreeAgent(String playerName, String position, IPlayerStatistics playerStatistics);
     public IGeneralManager createGeneralManager();
     public ILeagueObjectModel createLeagueObjectModel(String leagueName, List<IConference> conferences, List<IPlayer> freeAgents, List<ICoach> coaches, List<IGeneralManager> managers, IGameConfig gameConfig);
-    public ILeagueObjectModelInput createLeagueObjectModelInput(String leagueName, String conferenceName, String divisionName, ITeam newlyCreatedTeam, ILeagueObjectModelValidation leagueObjectModelValidation, ILeagueObjectModelDB leagueObjectModelDB);
+    public ILeagueObjectModelInput createLeagueObjectModelInput(String leagueName, String conferenceName, String divisionName, ITeam newlyCreatedTeam, ILeagueObjectModelValidation leagueObjectModelValidation, ISerializeLeagueObjectModel serializeLeagueObjectModel);
     public ILeagueObjectModelValidation createLeagueObjectModelValidation();
     public IPlayer createPlayer(String playerName, String position, Boolean captain, IPlayerStatistics playerStats);
     public IPlayerStatistics createPlayerStatistics(int age, int skating, int shooting, int checking, int saving);
