@@ -7,21 +7,7 @@ import dhl.businessLogic.leagueModel.interfaceModel.*;
 
 import java.util.List;
 
-public class LomFactory implements LomAbstractFactory {
-
-    private static LomFactory uniqueInstance = null;
-
-    private LomFactory() {
-
-    }
-
-    public static LomFactory instance() {
-        if (null == uniqueInstance)
-        {
-            uniqueInstance = new LomFactory();
-        }
-        return uniqueInstance;
-    }
+public class LomFactory extends LomAbstractFactory {
 
     public ICoach createCoach(String coachName, double skating, double shooting, double checking, double saving) {
         return new Coach(coachName, skating, shooting, checking, saving);

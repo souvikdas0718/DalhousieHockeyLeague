@@ -1,8 +1,6 @@
 package dhl.inputOutput.ui;
 
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerListFormat implements IListFormat {
