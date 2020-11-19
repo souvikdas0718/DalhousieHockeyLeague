@@ -17,9 +17,9 @@ public interface IStandingSystem {
 
     public void updateLosingStandings(ITeam team);
 
-    public List<IStandings> divisionRanking(IDivision division);
+    public List<IStandings> divisionRanking(IDivision division, List<IStandings> standingsList);
 
-    public List<IStandings> conferenceRanking(IConference conference);
+    public List<IStandings> conferenceRanking(IConference conference, List<IStandings> standingsList);
 
     public List<IStandings> leagueRanking();
 

@@ -12,7 +12,11 @@ import java.util.Collections;
 import java.util.List;
 
 public class StandingSystem implements IStandingSystem {
-    private List<IStandings> standingsList;
+    public List<IStandings> standingsList;
+
+    public StandingSystem() {
+        this.standingsList = new ArrayList<>();
+    }
 
     public List<IStandings> getStandingsList() {
         return standingsList;
@@ -20,10 +24,6 @@ public class StandingSystem implements IStandingSystem {
 
     public void setStandingsList(List<IStandings> standingsList) {
         this.standingsList = standingsList;
-    }
-
-    public StandingSystem() {
-        this.standingsList = new ArrayList<>();
     }
 
     public void updateWinningStandings(ITeam team) {
@@ -47,10 +47,10 @@ public class StandingSystem implements IStandingSystem {
         }
     }
 
-    public List<IStandings> divisionRanking(IDivision division) {
+    public List<IStandings> divisionRanking(IDivision division, List<IStandings> standingsList) {
         List<IStandings> divisionStandingsList = new ArrayList<>();
         for (IStandings standings : standingsList) {
-            if (standings.getTeamDivision().equals(division.getDivisionName())) {
+            if (standings.getTeamDivision().getDivisionName().equals(division.getDivisionName())) {
                 divisionStandingsList.add(standings);
             }
         }
@@ -58,10 +58,10 @@ public class StandingSystem implements IStandingSystem {
         return divisionStandingsList;
     }
 
-    public List<IStandings> conferenceRanking(IConference conference) {
+    public List<IStandings> conferenceRanking(IConference conference, List<IStandings> standingsList) {
         List<IStandings> conferenceStandingsList = new ArrayList<>();
         for (IStandings standings : standingsList) {
-            if (standings.getTeamConference().equals(conference.getConferenceName())) {
+            if (standings.getTeamConference().getConferenceName().equals(conference.getConferenceName())) {
                 conferenceStandingsList.add(standings);
             }
         }
