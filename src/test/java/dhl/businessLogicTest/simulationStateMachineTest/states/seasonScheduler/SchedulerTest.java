@@ -1,4 +1,4 @@
-package dhl.businessLogicTest.StateMachineTest.state.seasonScheduler;
+package dhl.businessLogicTest.simulationStateMachineTest.states.seasonScheduler;
 
 import dhl.Mocks.LeagueObjectModel20TeamMocks;
 import dhl.Mocks.LeagueObjectModelMocks;
@@ -157,7 +157,6 @@ public class SchedulerTest {
         ILeagueObjectModel leagueObjectModel = mockLeagueObjectModel.getLeagueObjectMock();
 
         scheduler.generateTeamList(leagueObjectModel);
-        System.out.println(scheduler.getTeamList().size());
         Assertions.assertTrue(scheduler.getTeamList().size() > 0);
         Assertions.assertTrue(scheduler.getDivisions().size() > 0);
         Assertions.assertTrue(scheduler.getConferences().size() > 0);

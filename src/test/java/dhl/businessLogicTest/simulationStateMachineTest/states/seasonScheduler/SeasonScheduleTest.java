@@ -1,4 +1,4 @@
-package dhl.businessLogicTest.StateMachineTest.state.seasonScheduler;
+package dhl.businessLogicTest.simulationStateMachineTest.states.seasonScheduler;
 
 import dhl.Mocks.LeagueObjectModel20TeamMocks;
 import dhl.Mocks.LeagueObjectModelMocks;

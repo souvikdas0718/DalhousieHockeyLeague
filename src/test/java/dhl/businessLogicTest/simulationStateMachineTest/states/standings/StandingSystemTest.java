@@ -1,4 +1,4 @@
-package dhl.businessLogicTest.StateMachineTest.state.standings;
+package dhl.businessLogicTest.simulationStateMachineTest.states.standings;
 
 
 import dhl.Mocks.LeagueObjectModel20TeamMocks;
