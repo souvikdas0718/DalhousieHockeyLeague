@@ -16,7 +16,7 @@ public abstract class LomAbstractFactory {
 
     public static LomAbstractFactory instance() {
         if (null == uniqueInstance) {
-            uniqueInstance = new LomFactory();
+            uniqueInstance = new LeagueModelFactory();
         }
         return uniqueInstance;
     }

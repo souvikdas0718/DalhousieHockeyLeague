@@ -7,7 +7,7 @@ import dhl.businessLogic.leagueModel.interfaceModel.*;
 
 import java.util.List;
 
-public class LomFactory extends LomAbstractFactory {
+public class LeagueModelFactory extends LomAbstractFactory {
 
     public ICoach createCoach(String coachName, double skating, double shooting, double checking, double saving) {
         return new Coach(coachName, skating, shooting, checking, saving);
