@@ -105,7 +105,7 @@ public class TradingEngine implements ITradingEngine {
         for (IPlayer playerToBeOffered : offeringTeamPayers) {
             for (IPlayer playerToGetInExchange : secondTeamPlayers) {
                 if (maxPlayersInTrade + 2 <= congifMaxPlayerPerTrade) {
-                    if (playerToGetInExchange.getPosition() == playerToBeOffered.getPosition()) {
+                    if (playerToGetInExchange.getPosition().equals(playerToBeOffered.getPosition())) {
                         if (playerToGetInExchange.getPlayerStrength() > playerToBeOffered.getPlayerStrength()) {
                             if (isPlayerNotInWantedList(playerToGetInExchange, playersWanted)) {
                                 playersOffered.add(playerToBeOffered);
@@ -169,7 +169,7 @@ public class TradingEngine implements ITradingEngine {
         for (IPlayer playerToBeOffered : offeringTeamPayers) {
             for (IPlayer playerToGetInExchange : secondTeamPlayers) {
                 if (maxPlayersInTrade + 2 <= congifMaxPlayerPerTrade) {
-                    if (playerToGetInExchange.getPosition() == playerToBeOffered.getPosition()) {
+                    if ( playerToGetInExchange.getPosition().equals(playerToBeOffered.getPosition()) ) {
                         if (playerToGetInExchange.getPlayerStrength() > playerToBeOffered.getPlayerStrength()) {
                             maxPlayersInTrade += 2;
                             break;

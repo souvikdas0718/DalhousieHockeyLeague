@@ -26,11 +26,11 @@ public class AiUserTrade implements ITradeType {
     @Override
     public boolean isTradeAccepted() throws Exception {
         DisplayTradeOfferToUser(tradeOffer.getOfferingPlayers());
-        int inputfromUser = Integer.parseInt(ioObject.getUserInput());
+        int inputFromUser = Integer.parseInt(ioObject.getUserInput());
 
-        if (inputfromUser == 1) {
+        if (inputFromUser == 1) {
             return true;
-        } else if (inputfromUser == 2) {
+        } else if (inputFromUser == 2) {
             return false;
         } else {
             throw new Exception("Wrong Input please give valid input");
