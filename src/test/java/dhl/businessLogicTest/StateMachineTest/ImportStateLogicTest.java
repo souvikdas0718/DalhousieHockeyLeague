@@ -1,13 +1,13 @@
 package dhl.businessLogicTest.StateMachineTest;
 
-import dhl.InputOutput.importJson.Interface.IGameConfig;
-import dhl.InputOutput.importJson.Interface.IJsonFilePath;
+import dhl.inputOutput.importJson.interfaces.IGameConfig;
+import dhl.inputOutput.importJson.interfaces.IJsonFilePath;
 import dhl.Mocks.JsonFilePathMock;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.leagueModel.LeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.simulationStateMachine.GameContext;
-import dhl.businessLogic.simulationStateMachine.States.ImportStateLogic;
+import dhl.businessLogic.simulationStateMachine.states.ImportStateLogic;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

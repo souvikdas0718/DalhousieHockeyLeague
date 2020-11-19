@@ -1,8 +1,8 @@
 package dhl.database;
 
-import dhl.InputOutput.importJson.GameConfig;
-import dhl.InputOutput.importJson.Interface.IGameConfig;
-import dhl.database.DatabaseConfigSetup.CallStoredProcedure;
+import dhl.inputOutput.importJson.GameConfig;
+import dhl.inputOutput.importJson.interfaces.IGameConfig;
+import dhl.database.databaseConfigSetup.CallStoredProcedure;
 import dhl.database.interfaceDB.IGameConfigDB;
 import org.json.simple.JSONObject;
 

@@ -1,10 +1,10 @@
 package dhl.businessLogic.simulationStateMachine;
 
-import dhl.InputOutput.UI.IUserInputOutput;
+import dhl.inputOutput.ui.IUserInputOutput;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.simulationStateMachine.Interface.IUpdateUserTeamRoster;
+import dhl.businessLogic.simulationStateMachine.interfaces.IUpdateUserTeamRoster;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,9 +1,9 @@
 package dhl.importJsonTest;
 
-import dhl.InputOutput.importJson.CreateLeagueObjectModel;
-import dhl.InputOutput.importJson.GameConfig;
-import dhl.InputOutput.importJson.ImportJsonFile;
-import dhl.InputOutput.importJson.Interface.IGameConfig;
+import dhl.inputOutput.importJson.CreateLeagueObjectModel;
+import dhl.inputOutput.importJson.GameConfig;
+import dhl.inputOutput.importJson.ImportJsonFile;
+import dhl.inputOutput.importJson.interfaces.IGameConfig;
 import dhl.Mocks.JsonFilePathMock;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeEach;

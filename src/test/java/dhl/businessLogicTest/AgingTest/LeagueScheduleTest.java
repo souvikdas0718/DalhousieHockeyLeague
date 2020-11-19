@@ -1,7 +1,7 @@
 package dhl.businessLogicTest.AgingTest;
 
 
-import dhl.InputOutput.importJson.Interface.IGameConfig;
+import dhl.inputOutput.importJson.interfaces.IGameConfig;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.aging.interfaceAging.IAging;
 import dhl.businessLogic.aging.interfaceAging.IInjury;

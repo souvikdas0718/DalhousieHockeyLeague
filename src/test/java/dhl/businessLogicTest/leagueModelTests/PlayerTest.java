@@ -1,6 +1,6 @@
 package dhl.businessLogicTest.leagueModelTests;
 
-import dhl.InputOutput.importJson.Interface.IGameConfig;
+import dhl.inputOutput.importJson.interfaces.IGameConfig;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.factory.InitializeObjectFactory;
 import dhl.businessLogic.leagueModel.Player;

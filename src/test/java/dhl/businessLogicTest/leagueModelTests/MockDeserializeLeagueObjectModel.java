@@ -1,7 +1,6 @@
 package dhl.businessLogicTest.leagueModelTests;
 
-import dhl.InputOutput.importJson.Interface.IDeserializeLeagueObjectModel;
-import dhl.InputOutput.importJson.Interface.ISerializeLeagueObjectModel;
+import dhl.inputOutput.importJson.interfaces.IDeserializeLeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import org.json.simple.JSONArray;

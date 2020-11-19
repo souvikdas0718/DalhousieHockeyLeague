@@ -1,9 +1,8 @@
 package dhl.businessLogicTest.leagueModelTests;
 
-import dhl.InputOutput.importJson.GameConfig;
-import dhl.InputOutput.importJson.Interface.ISerializeLeagueObjectModel;
+import dhl.inputOutput.importJson.GameConfig;
+import dhl.inputOutput.importJson.interfaces.ISerializeLeagueObjectModel;
 import dhl.Mocks.LeagueObjectModelMocks;
-import dhl.database.interfaceDB.ILeagueObjectModelDB;
 import dhl.businessLogic.leagueModel.*;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import org.json.simple.JSONObject;

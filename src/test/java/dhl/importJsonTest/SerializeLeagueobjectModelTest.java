@@ -1,9 +1,8 @@
 package dhl.importJsonTest;
 
-import dhl.InputOutput.importJson.DeserializeLeagueObjectModel;
-import dhl.InputOutput.importJson.Interface.IDeserializeLeagueObjectModel;
-import dhl.InputOutput.importJson.Interface.ISerializeLeagueObjectModel;
-import dhl.InputOutput.importJson.SerializeLeagueObjectModel;
+import dhl.inputOutput.importJson.DeserializeLeagueObjectModel;
+import dhl.inputOutput.importJson.interfaces.IDeserializeLeagueObjectModel;
+import dhl.inputOutput.importJson.SerializeLeagueObjectModel;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.Mocks.SerializedJsonMock;
 import dhl.businessLogic.leagueModel.LeagueObjectModel;
@@ -24,7 +23,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 class SerializeLeagueObjectModelTest {

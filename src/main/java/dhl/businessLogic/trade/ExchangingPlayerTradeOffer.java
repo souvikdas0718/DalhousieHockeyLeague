@@ -2,7 +2,7 @@ package dhl.businessLogic.trade;
 
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.trade.Interface.ITradeOffer;
+import dhl.businessLogic.trade.interfaces.ITradeOffer;
 
 import java.util.ArrayList;
 

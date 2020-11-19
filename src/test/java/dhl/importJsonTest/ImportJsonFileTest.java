@@ -1,6 +1,6 @@
 package dhl.importJsonTest;
 
-import dhl.InputOutput.importJson.ImportJsonFile;
+import dhl.inputOutput.importJson.ImportJsonFile;
 import dhl.Mocks.JsonFilePathMock;
 import org.junit.jupiter.api.Test;
 

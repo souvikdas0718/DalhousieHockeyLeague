@@ -1,6 +1,6 @@
 package dhl.database;
 
-import dhl.database.DatabaseConfigSetup.CallStoredProcedure;
+import dhl.database.databaseConfigSetup.CallStoredProcedure;
 import dhl.database.interfaceDB.ICoachDB;
 import dhl.businessLogic.leagueModel.Coach;
 import dhl.businessLogic.leagueModel.interfaceModel.ICoach;

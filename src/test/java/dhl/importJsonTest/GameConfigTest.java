@@ -1,8 +1,8 @@
 package dhl.importJsonTest;
 
-import dhl.InputOutput.importJson.GameConfig;
-import dhl.InputOutput.importJson.ImportJsonFile;
-import dhl.InputOutput.importJson.Interface.IGameConfig;
+import dhl.inputOutput.importJson.GameConfig;
+import dhl.inputOutput.importJson.ImportJsonFile;
+import dhl.inputOutput.importJson.interfaces.IGameConfig;
 import dhl.Mocks.JsonFilePathMock;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

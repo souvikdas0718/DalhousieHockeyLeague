@@ -1,7 +1,7 @@
 package dhl.database;
 
-import dhl.database.DatabaseConfigSetup.CallStoredProcedure;
-import dhl.database.DatabaseConfigSetup.DatabaseInitialize;
+import dhl.database.databaseConfigSetup.CallStoredProcedure;
+import dhl.database.databaseConfigSetup.DatabaseInitialize;
 import dhl.database.interfaceDB.*;
 import dhl.businessLogic.leagueModel.LeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.*;

@@ -1,7 +1,7 @@
 package dhl.Mocks;
 
-import dhl.InputOutput.importJson.GameConfig;
-import dhl.InputOutput.importJson.Interface.IGameConfig;
+import dhl.inputOutput.importJson.GameConfig;
+import dhl.inputOutput.importJson.interfaces.IGameConfig;
 import org.json.simple.JSONObject;
 
 public class GameConfigMock {

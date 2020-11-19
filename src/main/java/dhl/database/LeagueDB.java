@@ -1,6 +1,6 @@
 package dhl.database;
 
-import dhl.database.DatabaseConfigSetup.CallStoredProcedure;
+import dhl.database.databaseConfigSetup.CallStoredProcedure;
 import dhl.database.interfaceDB.ILeagueDB;
 
 import java.sql.Date;

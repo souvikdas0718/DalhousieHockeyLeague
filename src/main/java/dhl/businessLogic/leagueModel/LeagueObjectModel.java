@@ -1,10 +1,7 @@
 package dhl.businessLogic.leagueModel;
 
-import dhl.InputOutput.importJson.DeserializeLeagueObjectModel;
-import dhl.InputOutput.importJson.Interface.IDeserializeLeagueObjectModel;
-import dhl.InputOutput.importJson.Interface.IGameConfig;
-import dhl.InputOutput.importJson.SerializeLeagueObjectModel;
-import dhl.database.interfaceDB.ILeagueObjectModelDB;
+import dhl.inputOutput.importJson.interfaces.IDeserializeLeagueObjectModel;
+import dhl.inputOutput.importJson.interfaces.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IConference;
 import dhl.businessLogic.leagueModel.interfaceModel.IDivision;
@@ -15,8 +12,7 @@ import dhl.businessLogic.leagueModel.interfaceModel.IGeneralManager;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModelValidation;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModelInput;
 import dhl.businessLogic.leagueModel.interfaceModel.IValidation;
-import dhl.InputOutput.importJson.Interface.ISerializeLeagueObjectModel;
-import org.json.simple.JSONArray;
+import dhl.inputOutput.importJson.interfaces.ISerializeLeagueObjectModel;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;

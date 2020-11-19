@@ -1,9 +1,8 @@
 package dhl.businessLogic.traning;
 
-import dhl.InputOutput.importJson.Interface.IGameConfig;
+import dhl.inputOutput.importJson.interfaces.IGameConfig;
 import dhl.businessLogic.aging.interfaceAging.IInjury;
-import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
-import dhl.businessLogic.traning.Interfaces.ITraining;
+import dhl.businessLogic.traning.interfaces.ITraining;
 
 public class TrainingFactory implements TrainingAbstractFactory {
 

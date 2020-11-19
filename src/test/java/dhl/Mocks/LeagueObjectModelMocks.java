@@ -1,8 +1,8 @@
 package dhl.Mocks;
 
-import dhl.InputOutput.importJson.GameConfig;
-import dhl.InputOutput.importJson.ImportJsonFile;
-import dhl.InputOutput.importJson.Interface.IGameConfig;
+import dhl.inputOutput.importJson.GameConfig;
+import dhl.inputOutput.importJson.ImportJsonFile;
+import dhl.inputOutput.importJson.interfaces.IGameConfig;
 import dhl.businessLogic.leagueModel.*;
 import dhl.businessLogic.leagueModel.PlayerPosition;
 import dhl.businessLogic.leagueModel.interfaceModel.*;

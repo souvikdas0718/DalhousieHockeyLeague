@@ -1,18 +1,18 @@
 package dhl.businessLogic.simulationStateMachine;
 
-import dhl.InputOutput.UI.IUserInputOutput;
-import dhl.InputOutput.UI.UserInputOutput;
-import dhl.InputOutput.importJson.Interface.IGameConfig;
+import dhl.inputOutput.ui.IUserInputOutput;
+import dhl.inputOutput.ui.UserInputOutput;
+import dhl.inputOutput.importJson.interfaces.IGameConfig;
 import dhl.businessLogic.aging.Injury;
 import dhl.businessLogic.aging.interfaceAging.IInjury;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.simulationStateMachine.Interface.IScheduler;
-import dhl.businessLogic.simulationStateMachine.Interface.ISimulationSeasonState;
-import dhl.businessLogic.simulationStateMachine.Interface.IStandingSystem;
-import dhl.businessLogic.simulationStateMachine.Interface.IUpdateUserTeamRoster;
-import dhl.businessLogic.simulationStateMachine.States.seasonSimulation.*;
-import dhl.businessLogic.trade.Interface.ITradingEngine;
+import dhl.businessLogic.simulationStateMachine.interfaces.IScheduler;
+import dhl.businessLogic.simulationStateMachine.interfaces.ISimulationSeasonState;
+import dhl.businessLogic.simulationStateMachine.interfaces.IStandingSystem;
+import dhl.businessLogic.simulationStateMachine.interfaces.IUpdateUserTeamRoster;
+import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.*;
+import dhl.businessLogic.trade.interfaces.ITradingEngine;
 import dhl.businessLogic.trade.TradingEngine;
 
 import java.time.LocalDate;

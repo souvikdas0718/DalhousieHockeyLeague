@@ -1,7 +1,7 @@
 package dhl.database.interfaceDB;
 
 
-import dhl.InputOutput.importJson.Interface.IGameConfig;
+import dhl.inputOutput.importJson.interfaces.IGameConfig;
 
 public interface IGameConfigDB {
 

@@ -1,6 +1,6 @@
 package dhl.database;
 
-import dhl.database.DatabaseConfigSetup.CallStoredProcedure;
+import dhl.database.databaseConfigSetup.CallStoredProcedure;
 import dhl.database.interfaceDB.IPlayerDB;
 import dhl.businessLogic.leagueModel.Player;
 import dhl.businessLogic.leagueModel.PlayerStatistics;

@@ -2,8 +2,8 @@ package dhl.Mocks;
 
 import dhl.businessLogic.leagueModel.*;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
-import dhl.businessLogic.simulationStateMachine.Interface.IStandings;
-import dhl.businessLogic.simulationStateMachine.States.standings.Standings;
+import dhl.businessLogic.simulationStateMachine.interfaces.IStandings;
+import dhl.businessLogic.simulationStateMachine.states.standings.Standings;
 
 import java.util.ArrayList;
 import java.util.List;

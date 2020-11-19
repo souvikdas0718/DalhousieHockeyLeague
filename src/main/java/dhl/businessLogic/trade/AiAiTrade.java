@@ -1,11 +1,11 @@
 package dhl.businessLogic.trade;
 
-import dhl.InputOutput.importJson.Interface.IGameConfig;
+import dhl.inputOutput.importJson.interfaces.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.trade.Interface.ITradeOffer;
-import dhl.businessLogic.trade.Interface.ITradeType;
+import dhl.businessLogic.trade.interfaces.ITradeOffer;
+import dhl.businessLogic.trade.interfaces.ITradeType;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,9 +1,8 @@
 package dhl.businessLogic.leagueModel.interfaceModel;
 
-import dhl.InputOutput.importJson.Interface.IDeserializeLeagueObjectModel;
-import dhl.InputOutput.importJson.Interface.IGameConfig;
-import dhl.InputOutput.importJson.Interface.ISerializeLeagueObjectModel;
-import dhl.database.interfaceDB.ILeagueObjectModelDB;
+import dhl.inputOutput.importJson.interfaces.IDeserializeLeagueObjectModel;
+import dhl.inputOutput.importJson.interfaces.IGameConfig;
+import dhl.inputOutput.importJson.interfaces.ISerializeLeagueObjectModel;
 
 import java.util.List;
 
