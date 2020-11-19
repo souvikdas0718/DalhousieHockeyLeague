@@ -19,7 +19,6 @@ public class ExchangingPlayerTradeOffer implements ITradeOffer {
         this.playersWantedInExchange = playersWantedInExchange;
     }
 
-    @Override
     public void implementTrade() {
         for (IPlayer player : playersOffered) {
             receivingTeam.getPlayers().add(player);
@@ -31,12 +30,10 @@ public class ExchangingPlayerTradeOffer implements ITradeOffer {
         }
     }
 
-    @Override
     public ITeam getOfferingTeam() {
         return offeringTeam;
     }
 
-    @Override
     public ITeam getReceivingTeam() {
         return receivingTeam;
     }

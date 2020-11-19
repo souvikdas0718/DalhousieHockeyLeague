@@ -49,7 +49,7 @@ public class TradingEngineTest {
         IGameConfig ourGameConfig = gameConfigMock.getGameConfigMock();
         userTeam = new Team();
         IUpdateUserTeamRoster updateUserTeamRoster = new UpdateUserTeamRoster(ioObject);
-        testClassObject = new TradingEngine(ourGameConfig, leagueMock, userTeam, ioObject, updateUserTeamRoster);
+        testClassObject = (TradingEngine) TradingEngine.getInstance(ourGameConfig, leagueMock, userTeam, ioObject, updateUserTeamRoster);
     }
 
     @Test

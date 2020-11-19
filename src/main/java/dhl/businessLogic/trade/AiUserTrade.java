@@ -1,5 +1,6 @@
 package dhl.businessLogic.trade;
 
+import dhl.businessLogic.leagueModel.PlayerPosition;
 import dhl.inputOutput.ui.IUserInputOutput;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
@@ -23,7 +24,6 @@ public class AiUserTrade implements ITradeType {
         this.updateUserTeamRoster = updateUserTeamRoster;
     }
 
-    @Override
     public boolean isTradeAccepted() throws Exception {
         DisplayTradeOfferToUser(tradeOffer.getOfferingPlayers());
         int inputFromUser = Integer.parseInt(ioObject.getUserInput());
@@ -37,7 +37,6 @@ public class AiUserTrade implements ITradeType {
         }
     }
 
-    @Override
     public void validateTeamRosterAfterTrade(ITeam team, ILeagueObjectModel leagueObjectModel) throws Exception {
         int totalSkaters = 0;
         int totalGoalies = 0;
@@ -45,10 +44,10 @@ public class AiUserTrade implements ITradeType {
 
         for (IPlayer player : players) {
             String position = player.getPosition();
-            if (position.equals("forward") || position.equals("defense")) {
+            if (position.equals(PlayerPosition.FORWARD) || position.equals(PlayerPosition.DEFENSE)) {
                 totalSkaters = totalSkaters + 1;
             }
-            if (position.equals("goalie")) {
+            if (position.equals(PlayerPosition.GOALIE)) {
                 totalGoalies = totalGoalies + 1;
             }
         }

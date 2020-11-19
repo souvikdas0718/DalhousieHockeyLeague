@@ -1,5 +1,7 @@
 package dhl.businessLogic.trade;
 
+import dhl.businessLogic.trade.factory.TradeAbstractFactory;
+import dhl.businessLogic.trade.factory.TradeConcreteFactory;
 import dhl.inputOutput.ui.IUserInputOutput;
 import dhl.inputOutput.importJson.interfaces.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
@@ -19,8 +21,12 @@ public class TradingEngine implements ITradingEngine {
     IUserInputOutput ioObject;
     ITeam userTeam;
     IUpdateUserTeamRoster updateUserTeamRoster;
+    TradeAbstractFactory factory;
 
-    public TradingEngine(IGameConfig gameConfig, ILeagueObjectModel leagueObjectModel, ITeam userTeam, IUserInputOutput ioObject, IUpdateUserTeamRoster updateUserTeamRoster) {
+    private static ITradingEngine instance;
+
+    private TradingEngine(IGameConfig gameConfig, ILeagueObjectModel leagueObjectModel, ITeam userTeam, IUserInputOutput ioObject, IUpdateUserTeamRoster updateUserTeamRoster) {
+        factory = new TradeConcreteFactory();
         this.gameConfig = gameConfig;
         this.leagueObjectModel = leagueObjectModel;
         this.ioObject = ioObject;
@@ -28,7 +34,13 @@ public class TradingEngine implements ITradingEngine {
         this.updateUserTeamRoster = updateUserTeamRoster;
     }
 
-    @Override
+    public static ITradingEngine getInstance(IGameConfig gameConfig, ILeagueObjectModel leagueObjectModel, ITeam userTeam, IUserInputOutput ioObject, IUpdateUserTeamRoster updateUserTeamRoster) {
+        if (instance == null) {
+            instance = new TradingEngine(gameConfig, leagueObjectModel, userTeam, ioObject, updateUserTeamRoster);
+        }
+        return instance;
+    }
+
     public void startEngine() {
         long configLossPoint = Long.parseLong(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getLossPoint()));
         double configRandomTradeChance = Double.parseDouble(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getRandomTradeOfferChance()));
@@ -64,9 +76,9 @@ public class TradingEngine implements ITradingEngine {
     public void sendTradeToRecevingTeam(ITradeOffer currentTrade, ITeam userTeam) throws Exception {
         ITradeType tradeType;
         if(currentTrade.getReceivingTeam() == userTeam){
-            tradeType = new AiUserTrade(currentTrade , ioObject , updateUserTeamRoster);
+            tradeType = factory.createAiUserTrade(currentTrade, ioObject, updateUserTeamRoster);
         }else{
-            tradeType = new AiAiTrade(currentTrade , gameConfig);
+            tradeType = factory.createAiAiTrade(currentTrade, gameConfig);
         }
         if (tradeType.isTradeAccepted()) {
             ioObject.printMessage("Trade done between: " + currentTrade.getOfferingTeam().getTeamName() + " And " + currentTrade.getReceivingTeam().getTeamName());
@@ -118,7 +130,7 @@ public class TradingEngine implements ITradingEngine {
                 }
             }
         }
-        ITradeOffer newOffer = new ExchangingPlayerTradeOffer(teamOffering , teamGettingOffer , playersOffered , playersWanted );
+        ITradeOffer newOffer = factory.createExchangingPlayerTradeOffer(teamOffering, teamGettingOffer, playersOffered, playersWanted);
         return newOffer;
     }
 

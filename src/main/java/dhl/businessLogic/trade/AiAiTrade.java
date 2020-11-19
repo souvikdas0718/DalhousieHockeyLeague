@@ -1,5 +1,6 @@
 package dhl.businessLogic.trade;
 
+import dhl.businessLogic.leagueModel.PlayerPosition;
 import dhl.inputOutput.importJson.interfaces.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
@@ -19,7 +20,6 @@ public class AiAiTrade implements ITradeType {
         this.gameConfig = gameConfig;
     }
 
-    @Override
     public boolean isTradeAccepted() {
         double configRandomAcceptanceChance = Double.parseDouble(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getRandomAcceptanceChance()));
         double randomValue = Math.random();
@@ -31,7 +31,6 @@ public class AiAiTrade implements ITradeType {
         return false;
     }
 
-    @Override
     public void validateTeamRosterAfterTrade(ITeam team, ILeagueObjectModel leagueObjectModel) throws Exception {
         int totalSkaters = 0;
         int totalGoalies = 0;
@@ -39,10 +38,10 @@ public class AiAiTrade implements ITradeType {
 
         for (IPlayer player : players) {
             String position = player.getPosition();
-            if (position.equals("forward") || position.equals("defense")) {
+            if (position.equals(PlayerPosition.FORWARD) || position.equals(PlayerPosition.DEFENSE)) {
                 totalSkaters = totalSkaters + 1;
             }
-            if (position.equals("goalie")) {
+            if (position.equals(PlayerPosition.GOALIE)) {
                 totalGoalies = totalGoalies + 1;
             }
         }
@@ -78,7 +77,7 @@ public class AiAiTrade implements ITradeType {
         double bestPlayerStrength = 0.0;
         for (IPlayer player : playerList) {
             String position = player.getPosition();
-            if (position.equals("forward") || position.equals("defense")) {
+            if (position.equals(PlayerPosition.FORWARD) || position.equals(PlayerPosition.DEFENSE)) {
                 if (player.getPlayerStrength() > bestPlayerStrength) {
                     bestSkater = player;
                     bestPlayerStrength = player.getPlayerStrength();
@@ -96,7 +95,7 @@ public class AiAiTrade implements ITradeType {
         double skaterStrength = 1000.0;
         for (IPlayer player : playerList) {
             String position = player.getPosition();
-            if (position.equals("forward") || position.equals("defense")) {
+            if (position.equals(PlayerPosition.FORWARD) || position.equals(PlayerPosition.DEFENSE)) {
 
                 if (player.getPlayerStrength() < skaterStrength) {
                     skater = player;
@@ -134,7 +133,7 @@ public class AiAiTrade implements ITradeType {
         double bestPlayerStrength = 0.0;
         for (IPlayer player : playerList) {
             String position = player.getPosition();
-            if (position.equals("goalie")) {
+            if (position.equals(PlayerPosition.GOALIE)) {
                 if (player.getPlayerStrength() > bestPlayerStrength) {
                     bestPlayer = player;
                     bestPlayerStrength = player.getPlayerStrength();
@@ -152,7 +151,7 @@ public class AiAiTrade implements ITradeType {
         double playerStrength = 1200.0;
         for (IPlayer player : playerList) {
             String position = player.getPosition();
-            if (position.equals("goalie")) {
+            if (position.equals(PlayerPosition.GOALIE)) {
                 if (player.getPlayerStrength() < playerStrength) {
                     weakplayer = player;
                     playerStrength = player.getPlayerStrength();
