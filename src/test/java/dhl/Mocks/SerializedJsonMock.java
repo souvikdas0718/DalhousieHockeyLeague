@@ -4,29 +4,6 @@ public class SerializedJsonMock {
     public String serializedJson() {
         String json = "{\n" +
                 "  \"leagueName\": \"Dhl\",\n" +
-                "\"gameplayConfig\": {\n" +
-                "      \"aging\": {\n" +
-                "         \"averageRetirementAge\": 36,\n" +
-                "         \"maximumAge\": 49\n" +
-                "      },\n" +
-                "      \"gameResolver\": {\n" +
-                "         \"randomWinChance\": 0.02\n" +
-                "      },\n" +
-                "      \"injuries\": {\n" +
-                "         \"randomInjuryChance\": 0.43,\n" +
-                "         \"injuryDaysLow\": 5,\n" +
-                "         \"injuryDaysHigh\": 359\n" +
-                "      },\n" +
-                "      \"training\": {\n" +
-                "         \"daysUntilStatIncreaseCheck\": 54\n" +
-                "      },\n" +
-                "      \"trading\": {\n" +
-                "         \"lossPoint\": 10,\n" +
-                "         \"randomTradeOfferChance\": 0.11,\n" +
-                "         \"maxPlayersPerTrade\": 4,\n" +
-                "         \"randomAcceptanceChance\": 0.25\n" +
-                "      }\n" +
-                "   }," +
                 "  \"conferences\": [\n" +
                 "    {\n" +
                 "      \"conferenceName\": \"Western1\",\n" +
@@ -58,33 +35,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
-                "                },\n" +
-                "                {\n" +
-                "                  \"playerName\": \"MaxG1\",\n" +
-                "                  \"position\": \"GOALIE\",\n" +
-                "                  \"captain\": false,\n" +
-                "                  \"playerStats\": {\n" +
-                "                    \"age\": 16,\n" +
-                "                    \"skating\": 5,\n" +
-                "                    \"shooting\": 5,\n" +
-                "                    \"checking\": 5,\n" +
-                "                    \"saving\": 5\n" +
-                "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
-                "                },\n" +
-                "                {\n" +
-                "                  \"playerName\": \"MaxG2\",\n" +
-                "                  \"position\": \"GOALIE\",\n" +
-                "                  \"captain\": false,\n" +
-                "                  \"playerStats\": {\n" +
-                "                    \"age\": 16,\n" +
-                "                    \"skating\": 5,\n" +
-                "                    \"shooting\": 5,\n" +
-                "                    \"checking\": 5,\n" +
-                "                    \"saving\": 5\n" +
-                "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max1\",\n" +
@@ -97,7 +49,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max2\",\n" +
@@ -110,7 +63,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max3\",\n" +
@@ -123,7 +77,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max4\",\n" +
@@ -136,7 +91,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max5\",\n" +
@@ -149,7 +105,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max6\",\n" +
@@ -162,7 +119,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max7\",\n" +
@@ -175,7 +133,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max8\",\n" +
@@ -188,7 +147,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max9\",\n" +
@@ -201,7 +161,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max10\",\n" +
@@ -214,7 +175,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max11\",\n" +
@@ -227,7 +189,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max12\",\n" +
@@ -240,7 +203,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max13\",\n" +
@@ -253,7 +217,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max14\",\n" +
@@ -266,7 +231,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max15\",\n" +
@@ -279,7 +245,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max16\",\n" +
@@ -292,7 +259,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max17\",\n" +
@@ -305,7 +273,176 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max18\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max19\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max20\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max21\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max22\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max23\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max24\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max25\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max26\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max27\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"MaxG1\",\n" +
+                "                  \"position\": \"GOALIE\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"MaxG2\",\n" +
+                "                  \"position\": \"GOALIE\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                }\n" +
                 "              ]\n" +
                 "            }\n" +
@@ -338,33 +475,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
-                "                },\n" +
-                "                {\n" +
-                "                  \"playerName\": \"MaxG1\",\n" +
-                "                  \"position\": \"GOALIE\",\n" +
-                "                  \"captain\": false,\n" +
-                "                  \"playerStats\": {\n" +
-                "                    \"age\": 16,\n" +
-                "                    \"skating\": 5,\n" +
-                "                    \"shooting\": 5,\n" +
-                "                    \"checking\": 5,\n" +
-                "                    \"saving\": 5\n" +
-                "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
-                "                },\n" +
-                "                {\n" +
-                "                  \"playerName\": \"MaxG2\",\n" +
-                "                  \"position\": \"GOALIE\",\n" +
-                "                  \"captain\": false,\n" +
-                "                  \"playerStats\": {\n" +
-                "                    \"age\": 16,\n" +
-                "                    \"skating\": 5,\n" +
-                "                    \"shooting\": 5,\n" +
-                "                    \"checking\": 5,\n" +
-                "                    \"saving\": 5\n" +
-                "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max1\",\n" +
@@ -377,7 +489,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max2\",\n" +
@@ -390,7 +503,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max3\",\n" +
@@ -403,7 +517,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max4\",\n" +
@@ -416,7 +531,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max5\",\n" +
@@ -429,7 +545,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max6\",\n" +
@@ -442,7 +559,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max7\",\n" +
@@ -455,7 +573,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max8\",\n" +
@@ -468,7 +587,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max9\",\n" +
@@ -481,7 +601,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max10\",\n" +
@@ -494,7 +615,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max11\",\n" +
@@ -507,7 +629,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max12\",\n" +
@@ -520,7 +643,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max13\",\n" +
@@ -533,7 +657,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max14\",\n" +
@@ -546,7 +671,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max15\",\n" +
@@ -559,7 +685,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max16\",\n" +
@@ -572,7 +699,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max17\",\n" +
@@ -585,7 +713,176 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max18\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max19\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max20\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max21\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max22\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max23\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max24\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max25\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max26\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max27\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"MaxG1\",\n" +
+                "                  \"position\": \"GOALIE\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"MaxG2\",\n" +
+                "                  \"position\": \"GOALIE\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                }\n" +
                 "              ]\n" +
                 "            }\n" +
@@ -623,33 +920,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
-                "                },\n" +
-                "                {\n" +
-                "                  \"playerName\": \"MaxG1\",\n" +
-                "                  \"position\": \"GOALIE\",\n" +
-                "                  \"captain\": false,\n" +
-                "                  \"playerStats\": {\n" +
-                "                    \"age\": 16,\n" +
-                "                    \"skating\": 5,\n" +
-                "                    \"shooting\": 5,\n" +
-                "                    \"checking\": 5,\n" +
-                "                    \"saving\": 5\n" +
-                "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
-                "                },\n" +
-                "                {\n" +
-                "                  \"playerName\": \"MaxG2\",\n" +
-                "                  \"position\": \"GOALIE\",\n" +
-                "                  \"captain\": false,\n" +
-                "                  \"playerStats\": {\n" +
-                "                    \"age\": 16,\n" +
-                "                    \"skating\": 5,\n" +
-                "                    \"shooting\": 5,\n" +
-                "                    \"checking\": 5,\n" +
-                "                    \"saving\": 5\n" +
-                "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max1\",\n" +
@@ -662,7 +934,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max2\",\n" +
@@ -675,7 +948,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max3\",\n" +
@@ -688,7 +962,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max4\",\n" +
@@ -701,7 +976,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max5\",\n" +
@@ -714,7 +990,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max6\",\n" +
@@ -727,7 +1004,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max7\",\n" +
@@ -740,7 +1018,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max8\",\n" +
@@ -753,7 +1032,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max9\",\n" +
@@ -766,7 +1046,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max10\",\n" +
@@ -779,7 +1060,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max11\",\n" +
@@ -792,7 +1074,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max12\",\n" +
@@ -805,7 +1088,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max13\",\n" +
@@ -818,7 +1102,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max14\",\n" +
@@ -831,7 +1116,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max15\",\n" +
@@ -844,7 +1130,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max16\",\n" +
@@ -857,7 +1144,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max17\",\n" +
@@ -870,7 +1158,176 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max18\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max19\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max20\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max21\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max22\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max23\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max24\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max25\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max26\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max27\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"MaxG1\",\n" +
+                "                  \"position\": \"GOALIE\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"MaxG2\",\n" +
+                "                  \"position\": \"GOALIE\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                }\n" +
                 "              ]\n" +
                 "            }\n" +
@@ -903,33 +1360,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
-                "                },\n" +
-                "                {\n" +
-                "                  \"playerName\": \"MaxG1\",\n" +
-                "                  \"position\": \"GOALIE\",\n" +
-                "                  \"captain\": false,\n" +
-                "                  \"playerStats\": {\n" +
-                "                    \"age\": 16,\n" +
-                "                    \"skating\": 5,\n" +
-                "                    \"shooting\": 5,\n" +
-                "                    \"checking\": 5,\n" +
-                "                    \"saving\": 5\n" +
-                "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
-                "                },\n" +
-                "                {\n" +
-                "                  \"playerName\": \"MaxG2\",\n" +
-                "                  \"position\": \"GOALIE\",\n" +
-                "                  \"captain\": false,\n" +
-                "                  \"playerStats\": {\n" +
-                "                    \"age\": 16,\n" +
-                "                    \"skating\": 5,\n" +
-                "                    \"shooting\": 5,\n" +
-                "                    \"checking\": 5,\n" +
-                "                    \"saving\": 5\n" +
-                "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max1\",\n" +
@@ -942,7 +1374,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max2\",\n" +
@@ -955,7 +1388,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max3\",\n" +
@@ -968,7 +1402,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max4\",\n" +
@@ -981,7 +1416,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max5\",\n" +
@@ -994,7 +1430,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max6\",\n" +
@@ -1007,7 +1444,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max7\",\n" +
@@ -1020,7 +1458,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max8\",\n" +
@@ -1033,7 +1472,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max9\",\n" +
@@ -1046,7 +1486,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max10\",\n" +
@@ -1059,7 +1500,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max11\",\n" +
@@ -1072,7 +1514,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max12\",\n" +
@@ -1085,7 +1528,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max13\",\n" +
@@ -1098,7 +1542,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max14\",\n" +
@@ -1111,7 +1556,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max15\",\n" +
@@ -1124,7 +1570,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max16\",\n" +
@@ -1137,7 +1584,8 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
                 "                },\n" +
                 "                {\n" +
                 "                  \"playerName\": \"Max17\",\n" +
@@ -1150,7 +1598,176 @@ public class SerializedJsonMock {
                 "                    \"checking\": 5,\n" +
                 "                    \"saving\": 5\n" +
                 "                  },\n" +
-                "                  \"playerInjuredDays\": -1\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max18\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max19\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max20\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max21\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max22\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max23\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max24\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max25\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max26\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"Max27\",\n" +
+                "                  \"position\": \"FORWARD\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"MaxG1\",\n" +
+                "                  \"position\": \"GOALIE\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
+                "                },\n" +
+                "                {\n" +
+                "                  \"playerName\": \"MaxG2\",\n" +
+                "                  \"position\": \"GOALIE\",\n" +
+                "                  \"captain\": false,\n" +
+                "                  \"playerStats\": {\n" +
+                "                    \"age\": 16,\n" +
+                "                    \"skating\": 5,\n" +
+                "                    \"shooting\": 5,\n" +
+                "                    \"checking\": 5,\n" +
+                "                    \"saving\": 5\n" +
+                "                  },\n" +
+                "                  \"playerInjuredDays\": -1,\n" +
+                "                  \"active\": true\n" +
                 "                }\n" +
                 "              ]\n" +
                 "            }\n" +
@@ -1170,7 +1787,8 @@ public class SerializedJsonMock {
                 "        \"checking\": 10,\n" +
                 "        \"saving\": 5\n" +
                 "      },\n" +
-                "      \"playerInjuredDays\": -1\n" +
+                "      \"playerInjuredDays\": -1,\n" +
+                "      \"active\": false\n" +
                 "    },\n" +
                 "    {\n" +
                 "      \"playerName\": \"Max\",\n" +
@@ -1182,7 +1800,8 @@ public class SerializedJsonMock {
                 "        \"checking\": 10,\n" +
                 "        \"saving\": 5\n" +
                 "      },\n" +
-                "      \"playerInjuredDays\": -1\n" +
+                "      \"playerInjuredDays\": -1,\n" +
+                "      \"active\": false\n" +
                 "    }\n" +
                 "  ],\n" +
                 "  \"coaches\": [\n" +
