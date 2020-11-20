@@ -1,4 +1,4 @@
-package dhl.inputOutput.importJson.SerializeDeserialize.interfaces;
+package dhl.inputOutput.importJson.serializeDeserialize.interfaces;
 
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
@@ -6,9 +6,11 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 public interface IDeserializeLeagueObjectModel {
-    ILeagueObjectModel deserializeLeagueObjectJson(JSONObject jsonLeagueObject);
-    List<IPlayer> deserializePlayers(JSONArray arrPlayers) throws ParseException;
+    ILeagueObjectModel deserializeLeagueObjectJson() throws Exception;
+    List<IPlayer> deserializePlayers() throws ParseException, IOException;
 }

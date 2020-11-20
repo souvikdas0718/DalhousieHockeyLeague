@@ -1,16 +1,15 @@
-package dhl.inputOutput.importJson.SerializeDeserialize;
+package dhl.inputOutput.importJson.serializeDeserialize;
 
-import dhl.inputOutput.importJson.SerializeDeserialize.interfaces.IDeserializeLeagueObjectModel;
-import dhl.inputOutput.importJson.SerializeDeserialize.interfaces.ISerializeLeagueObjectModel;
+import dhl.inputOutput.importJson.serializeDeserialize.interfaces.IDeserializeLeagueObjectModel;
+import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 
 public class SerializeDeserializeFactory extends SerializeDeserializeAbstractFactory {
-    @Override
-    public ISerializeLeagueObjectModel createSerializeLeagueObjectModel() {
-        return new SerializeLeagueObjectModel();
+
+    public ISerializeLeagueObjectModel createSerializeLeagueObjectModel(String leagueName) {
+        return new SerializeLeagueObjectModel(leagueName);
     }
 
-    @Override
-    public IDeserializeLeagueObjectModel createDeserializeLeagueObjectModel() {
-        return new DeserializeLeagueObjectModel();
+    public IDeserializeLeagueObjectModel createDeserializeLeagueObjectModel(String leagueName) {
+        return new DeserializeLeagueObjectModel(leagueName);
     }
 }

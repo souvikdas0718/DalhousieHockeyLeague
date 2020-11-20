@@ -1,7 +1,7 @@
 package dhl.businessLogic.leagueModel.factory;
 
 import dhl.inputOutput.importJson.interfaces.IGameConfig;
-import dhl.inputOutput.importJson.SerializeDeserialize.interfaces.ISerializeLeagueObjectModel;
+import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import dhl.businessLogic.leagueModel.*;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 

@@ -1,12 +1,7 @@
-package dhl.inputOutput.importJson.SerializeDeserialize;
+package dhl.inputOutput.importJson.serializeDeserialize;
 
-import dhl.businessLogic.aging.interfaceAging.IInjury;
-import dhl.businessLogic.traning.TrainingAbstractFactory;
-import dhl.businessLogic.traning.TrainingFactory;
-import dhl.businessLogic.traning.interfaces.ITraining;
-import dhl.inputOutput.importJson.SerializeDeserialize.interfaces.IDeserializeLeagueObjectModel;
-import dhl.inputOutput.importJson.SerializeDeserialize.interfaces.ISerializeLeagueObjectModel;
-import dhl.inputOutput.importJson.interfaces.IGameConfig;
+import dhl.inputOutput.importJson.serializeDeserialize.interfaces.IDeserializeLeagueObjectModel;
+import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 
 public abstract class SerializeDeserializeAbstractFactory {
     private static SerializeDeserializeAbstractFactory uniqueInstance = null;
@@ -24,6 +19,6 @@ public abstract class SerializeDeserializeAbstractFactory {
 
     public static void setFactory(SerializeDeserializeAbstractFactory f) { uniqueInstance = f; }
 
-    public abstract ISerializeLeagueObjectModel createSerializeLeagueObjectModel();
-    public abstract IDeserializeLeagueObjectModel createDeserializeLeagueObjectModel();
+    public abstract ISerializeLeagueObjectModel createSerializeLeagueObjectModel(String leagueName);
+    public abstract IDeserializeLeagueObjectModel createDeserializeLeagueObjectModel(String leagueName);
 }
