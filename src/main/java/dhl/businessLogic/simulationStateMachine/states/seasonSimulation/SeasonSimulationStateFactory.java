@@ -3,7 +3,7 @@ package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 import dhl.businessLogic.simulationStateMachine.interfaces.ISimulationSeasonState;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 
-public class SeasonSimulationStateFactory implements SimulationStateAbstractFactory {
+public class SeasonSimulationStateFactory extends SimulationStateAbstractFactory {
     @Override
     public ISimulationSeasonState getAdvanceTimeState(SimulationContext simulationContext) {
         return new AdvanceTimeState(simulationContext);

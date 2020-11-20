@@ -58,7 +58,7 @@ public class SimulationContext implements ISimulationSeasonState {
     ITradingEngine tradeEngine;
 
     public SimulationContext(GameContext gameState) {
-        SimulationStateAbstractFactory factory = new SeasonSimulationStateFactory();
+        SimulationStateAbstractFactory factory = SimulationStateAbstractFactory.instance();
         advanceTime = factory.getAdvanceTimeState(this);
         advanceToNextSeason = factory.getAdvanceToNextSeasonState(this);
         aging = factory.getAgingState(this);

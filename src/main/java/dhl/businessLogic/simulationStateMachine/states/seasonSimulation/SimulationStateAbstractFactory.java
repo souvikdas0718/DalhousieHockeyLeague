@@ -1,20 +1,43 @@
 package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 
-import dhl.businessLogic.simulationStateMachine.interfaces.ISimulationSeasonState;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
+import dhl.businessLogic.simulationStateMachine.interfaces.ISimulationSeasonState;
 
-public interface SimulationStateAbstractFactory {
+public abstract class SimulationStateAbstractFactory {
+
+    private static SimulationStateAbstractFactory uniqueInstance = null;
+
+    protected SimulationStateAbstractFactory() {
+
+    }
+
+    public static SimulationStateAbstractFactory instance() {
+        if (null == uniqueInstance) {
+            uniqueInstance = new SeasonSimulationStateFactory();
+        }
+        return uniqueInstance;
+    }
 
 
-    public ISimulationSeasonState getAdvanceTimeState(SimulationContext simulationContext);
-    public ISimulationSeasonState getAdvanceToNextSeasonState(SimulationContext simulationContext);
-    public ISimulationSeasonState getAgingState(SimulationContext simulationContext);
-    public ISimulationSeasonState getExecuteTradesState(SimulationContext simulationContext);
-    public ISimulationSeasonState getGeneratePlayoffScheduleState(SimulationContext simulationContext);
-    public ISimulationSeasonState getInitializeSeasonState(SimulationContext simulationContext);
-    public ISimulationSeasonState getInjuryCheckState(SimulationContext simulationContext);
-    public ISimulationSeasonState getPersistSameSeasonState(SimulationContext simulationContext);
-    public ISimulationSeasonState getPersistSeasonState(SimulationContext simulationContext);
-    public ISimulationSeasonState getSimulateGameState(SimulationContext simulationContext);
-    public ISimulationSeasonState getTrainingState(SimulationContext simulationContext);
+    public abstract ISimulationSeasonState getAdvanceTimeState(SimulationContext simulationContext);
+
+    public abstract ISimulationSeasonState getAdvanceToNextSeasonState(SimulationContext simulationContext);
+
+    public abstract ISimulationSeasonState getAgingState(SimulationContext simulationContext);
+
+    public abstract ISimulationSeasonState getExecuteTradesState(SimulationContext simulationContext);
+
+    public abstract ISimulationSeasonState getGeneratePlayoffScheduleState(SimulationContext simulationContext);
+
+    public abstract ISimulationSeasonState getInitializeSeasonState(SimulationContext simulationContext);
+
+    public abstract ISimulationSeasonState getInjuryCheckState(SimulationContext simulationContext);
+
+    public abstract ISimulationSeasonState getPersistSameSeasonState(SimulationContext simulationContext);
+
+    public abstract ISimulationSeasonState getPersistSeasonState(SimulationContext simulationContext);
+
+    public abstract ISimulationSeasonState getSimulateGameState(SimulationContext simulationContext);
+
+    public abstract ISimulationSeasonState getTrainingState(SimulationContext simulationContext);
 }
