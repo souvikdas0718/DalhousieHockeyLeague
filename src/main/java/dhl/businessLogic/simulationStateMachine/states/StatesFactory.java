@@ -6,7 +6,7 @@ import dhl.businessLogic.simulationStateMachine.states.interfaces.ICreateTeamSta
 import dhl.businessLogic.simulationStateMachine.states.interfaces.IImportStateLogic;
 import dhl.businessLogic.simulationStateMachine.states.interfaces.ILoadTeamStateLogic;
 
-public class StatesFactory implements StatesAbstractFactory {
+public class StatesFactory extends StatesAbstractFactory {
 
     public IGameState createCreateTeamState(GameContext newGame) {
         return new CreateTeamState(newGame);
