@@ -1,16 +1,15 @@
 package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 
 
-
 import dhl.businessLogic.aging.Aging;
 import dhl.businessLogic.aging.LeagueSchedule;
 import dhl.businessLogic.aging.Retirement;
 import dhl.businessLogic.aging.interfaceAging.IAging;
 import dhl.businessLogic.aging.interfaceAging.ILeagueSchedule;
 import dhl.businessLogic.aging.interfaceAging.IRetirement;
+import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.interfaces.ISimulationSeasonState;
-import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.database.PlayerDB;
 import dhl.database.interfaceDB.IPlayerDB;
 import org.apache.logging.log4j.LogManager;
@@ -23,7 +22,7 @@ public class AgingState implements ISimulationSeasonState {
     SimulationContext simulationContext;
 
     public AgingState(SimulationContext simulationContext) {
-
+        this.simulationContext = simulationContext;
     }
 
     static void agingCalculation(SimulationContext simulationContext) {
@@ -34,9 +33,17 @@ public class AgingState implements ISimulationSeasonState {
         try {
             leagueSchedule.initiateAging();
         } catch (Exception e) {
-            log.error("Error occured while aging"+ e.getMessage());
+            log.error("Error occured while aging" + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    public SimulationContext getSimulationContext() {
+        return simulationContext;
+    }
+
+    public void setSimulationContext(SimulationContext simulationContext) {
+        this.simulationContext = simulationContext;
     }
 
     @Override
@@ -51,9 +58,11 @@ public class AgingState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateExitProcess() {
-        IScheduler scheduler = simulationContext.getRegularScheduler();
-        LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
-        LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());
+//        IScheduler scheduler = simulationContext.getRegularScheduler();
+        IScheduler scheduler = simulationContext.getPlayOffScheduleRound1();
+//        LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
+//        LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());
+        LocalDate currentDate = LocalDate.now();
         if (scheduler.stanleyCupWinner(currentDate)) {
             simulationContext.setCurrentSimulation(simulationContext.getAdvanceToNextSeason());
         } else {

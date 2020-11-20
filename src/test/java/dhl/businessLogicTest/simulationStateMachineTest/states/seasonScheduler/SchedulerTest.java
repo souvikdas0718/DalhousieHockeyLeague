@@ -2,10 +2,7 @@ package dhl.businessLogicTest.simulationStateMachineTest.states.seasonScheduler;
 
 import dhl.Mocks.LeagueObjectModel20TeamMocks;
 import dhl.Mocks.LeagueObjectModelMocks;
-import dhl.businessLogic.leagueModel.Team;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
-import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
-import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.simulationStateMachine.interfaces.ISchedule;
 import dhl.businessLogic.simulationStateMachine.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.interfaces.IStandings;
@@ -18,7 +15,6 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
-import java.util.List;
 
 import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
 import static java.time.temporal.TemporalAdjusters.previousOrSame;
@@ -218,109 +214,18 @@ public class SchedulerTest {
     @Test
     public void gameWinnerTest() {
 
-        List statistics = mockLeagueObjectModel.getPlayerArrayMock();
-        ILeagueObjectModel league = model20TeamMocks.getLeagueData();
-        ArrayList<IStandings> standings = model20TeamMocks.getGeneralStandings();
+        scheduler = model20TeamMocks.leagueModel20TeamPlayoffsSchedules();
 
-        ITeam teamPlayOff1 = new Team("Bruins", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
-        ITeam teamPlayoff2 = new Team("Maple", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
-        ITeam teamPlayoff3 = new Team("Hurricanes", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
-        ITeam teamPlayoff4 = new Team("Flyers", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
-        ITeam teamPlayoff5 = new Team("Blues", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
-        ITeam teamPlayoff6 = new Team("Avalanche", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
-        ITeam teamPlayoff7 = new Team("Cancuks", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
-        ITeam teamPlayoff8 = new Team("Flames", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
+        Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(8).getTeamOne().getTeamName().equals("Bruins"));
+        Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(8).getTeamTwo().getTeamName().equals("Maple"));
 
-        IScheduler scheduler = new Scheduler();
-        scheduler.playOffs(standings, league);
-
-        scheduler.gameWinner(teamPlayOff1);
-        scheduler.gameWinner(teamPlayoff2);
-        Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamOne().getTeamName().equals("Bruins"));
-        Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamTwo().getTeamName().equals("Maple"));
-
-        scheduler.gameWinner(teamPlayoff3);
-        scheduler.gameWinner(teamPlayoff4);
-        Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamOne().getTeamName().equals("Hurricanes"));
-        Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamTwo().getTeamName().equals("Flyers"));
-
-        scheduler.gameWinner(teamPlayoff5);
-        scheduler.gameWinner(teamPlayoff6);
-        Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamOne().getTeamName().equals("Blues"));
-        Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamTwo().getTeamName().equals("Avalanche"));
-
-        scheduler.gameWinner(teamPlayoff7);
-        scheduler.gameWinner(teamPlayoff8);
-        Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamOne().getTeamName().equals("Cancuks"));
-        Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamTwo().getTeamName().equals("Flames"));
-
-        ITeam teamPlayOffRoundThree1 = new Team("Maple", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
-        ITeam teamPlayOffRoundThree2 = new Team("Flyers", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
-        ITeam teamPlayOffRoundThree3 = new Team("Avalanche", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
-        ITeam teamPlayOffRoundThree4 = new Team("Cancuks", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
-
-        scheduler.gameWinner(teamPlayOffRoundThree1);
-        scheduler.gameWinner(teamPlayOffRoundThree2);
-        Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamOne().getTeamName().equals("Maple"));
-        Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamTwo().getTeamName().equals("Flyers"));
-
-        scheduler.gameWinner(teamPlayOffRoundThree3);
-        scheduler.gameWinner(teamPlayOffRoundThree4);
-        Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamOne().getTeamName().equals("Avalanche"));
-        Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamTwo().getTeamName().equals("Cancuks"));
-
-        ITeam teamPlayOffRoundFour1 = new Team("Maple", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
-        ITeam teamPlayOffRoundFour2 = new Team("Avalanche", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
-
-        scheduler.gameWinner(teamPlayOffRoundFour1);
-        scheduler.gameWinner(teamPlayOffRoundFour2);
-        Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamOne().getTeamName().equals("Maple"));
-        Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(scheduler.getPlayOffScheduleRound1().size() - 1).getTeamTwo().getTeamName().equals("Avalanche"));
+        Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(14).getTeamOne().getTeamName().equals("Maple"));
+        Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(14).getTeamTwo().getTeamName().equals("Avalanche"));
     }
 
     @Test
     public void stanleyCupWinnerTest() {
-
-        List<IPlayer> statistics = mockLeagueObjectModel.getPlayerArrayMock();
-        ILeagueObjectModel league = model20TeamMocks.getLeagueData();
-        ArrayList<IStandings> standings = model20TeamMocks.getGeneralStandings();
-
-        ITeam teamPlayOff1 = new Team("Bruins", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
-        ITeam teamPlayoff2 = new Team("Maple", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
-        ITeam teamPlayoff3 = new Team("Hurricanes", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
-        ITeam teamPlayoff4 = new Team("Flyers", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
-        ITeam teamPlayoff5 = new Team("Blues", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
-        ITeam teamPlayoff6 = new Team("Avalanche", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
-        ITeam teamPlayoff7 = new Team("Cancuks", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
-        ITeam teamPlayoff8 = new Team("Flames", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
-
-        IScheduler scheduler = new Scheduler();
-        scheduler.playOffs(standings, league);
-
-        scheduler.gameWinner(teamPlayOff1);
-        scheduler.gameWinner(teamPlayoff2);
-        scheduler.gameWinner(teamPlayoff3);
-        scheduler.gameWinner(teamPlayoff4);
-        scheduler.gameWinner(teamPlayoff5);
-        scheduler.gameWinner(teamPlayoff6);
-        scheduler.gameWinner(teamPlayoff7);
-        scheduler.gameWinner(teamPlayoff8);
-
-        ITeam teamPlayOffRoundThree1 = new Team("Maple", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
-        ITeam teamPlayOffRoundThree2 = new Team("Flyers", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
-        ITeam teamPlayOffRoundThree3 = new Team("Avalanche", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
-        ITeam teamPlayOffRoundThree4 = new Team("Cancuks", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
-
-        scheduler.gameWinner(teamPlayOffRoundThree1);
-        scheduler.gameWinner(teamPlayOffRoundThree2);
-        scheduler.gameWinner(teamPlayOffRoundThree3);
-        scheduler.gameWinner(teamPlayOffRoundThree4);
-
-        ITeam teamPlayOffRoundFour1 = new Team("Maple", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
-        ITeam teamPlayOffRoundFour2 = new Team("Avalanche", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
-
-        scheduler.gameWinner(teamPlayOffRoundFour1);
-        scheduler.gameWinner(teamPlayOffRoundFour2);
+        scheduler = model20TeamMocks.leagueModel20TeamPlayoffsSchedules();
 
         LocalDate currentDate = LocalDate.now();
 
