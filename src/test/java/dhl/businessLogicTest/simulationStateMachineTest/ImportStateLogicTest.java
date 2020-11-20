@@ -1,4 +1,4 @@
-package dhl.businessLogicTest.StateMachineTest;
+package dhl.businessLogicTest.simulationStateMachineTest;
 
 import dhl.inputOutput.importJson.interfaces.IGameConfig;
 import dhl.inputOutput.importJson.interfaces.IJsonFilePath;

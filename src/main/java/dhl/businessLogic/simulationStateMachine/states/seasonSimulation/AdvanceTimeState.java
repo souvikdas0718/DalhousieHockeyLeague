@@ -16,6 +16,14 @@ public class AdvanceTimeState implements ISimulationSeasonState {
         this.simulationContext = simulationContext;
     }
 
+    public SimulationContext getSimulationContext() {
+        return simulationContext;
+    }
+
+    public void setSimulationContext(SimulationContext simulationContext) {
+        this.simulationContext = simulationContext;
+    }
+
     @Override
     public void seasonStateEntryProcess() {
 
