@@ -1,6 +1,6 @@
 package dhl.businessLogicTest.training;
 
-import dhl.InputOutput.importJson.GameConfig;
+import dhl.businessLogic.leagueModel.GameConfig;
 import dhl.InputOutput.importJson.ImportJsonFile;
 import dhl.Mocks.JsonFilePathMock;
 import dhl.Mocks.LeagueObjectModelMocks;

@@ -28,7 +28,7 @@ public class DeserializeLeagueObjectModel implements IDeserializeLeagueObjectMod
 
     public ILeagueObjectModel deserializeLeagueObjectJson(JSONObject jsonLeagueObject) {
         IGameConfig gameConfig = null;
-        CreateLeagueObjectModel createLeagueObjectModel = new CreateLeagueObjectModel(updateLeagueObjectModelJson(jsonLeagueObject), gameConfig);
+        CreateLeagueObjectModel createLeagueObjectModel = new CreateLeagueObjectModel(updateLeagueObjectModelJson(jsonLeagueObject));
         return createLeagueObjectModel.getLeagueObjectModel();
     }
 

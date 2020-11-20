@@ -1,6 +1,6 @@
 package dhl.businessLogicTest.leagueModelTests;
 
-import dhl.InputOutput.importJson.GameConfig;
+import dhl.businessLogic.leagueModel.GameConfig;
 import dhl.database.interfaceDB.ILeagueObjectModelDB;
 import dhl.businessLogic.leagueModel.*;
 import dhl.businessLogic.leagueModel.interfaceModel.*;

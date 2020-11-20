@@ -206,7 +206,7 @@ public class CreateTeamState implements IGameState {
         }
         userInputPutput.printMessage("-----------------------------------------------------------------------------------------------------------------");
 
-        userInputPutput.printMessage("Select 18 Skaters and 2 Goalies");
+        userInputPutput.printMessage("Select 16 forwards, 10 defense and 4 Goalies");
         String inputfreeAgents = userInputPutput.getUserInput();
 
         userInputPutput.printMessage("Choose a captain for this team from the selected players");
@@ -217,9 +217,9 @@ public class CreateTeamState implements IGameState {
                 selectedFreeAgents = createTeamStateLogic.validateInputFreeAgents(inputfreeAgents, freeAgentsArray);
 
                 ITeam team = new Team(selectedTeamName, selectedGeneralManager, selectedCoach, selectedFreeAgents);
-                if (team.checkIfSkatersGoaliesValid() == false) {
+                if (team.checkTeamPlayersCount() == false) {
                     selectedFreeAgents = null;
-                    throw new Exception("A team must have 18 Skaters and 2 Goalies");
+                    throw new Exception("A team must have 16 forwards, 10 defense and 4 Goalies");
                 }
             } catch (Exception ex) {
                 userInputPutput.printMessage(ex.getMessage());

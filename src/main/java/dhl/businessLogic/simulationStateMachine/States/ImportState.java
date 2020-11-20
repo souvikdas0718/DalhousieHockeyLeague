@@ -16,7 +16,6 @@ public class ImportState implements IGameState {
     ILeagueObjectModel newInMemoryLeague;
     int option = -1;
     GameContext ourGame;
-    IGameConfig gameConfig;
     IUserInputOutput userInputPutput = new UserInputOutput();
 
     public ImportState(GameContext newGame) {
@@ -54,11 +53,11 @@ public class ImportState implements IGameState {
     }
 
     @Override
-    public void stateProcess() throws Exception {
+    public void stateProcess() {
         if (validFilePath != null) {
             try {
                 IImportStateLogic objImportStateLogic = new ImportStateLogic();
-                newInMemoryLeague = objImportStateLogic.importAndGetLeagueObject(validFilePath, gameConfig, newInMemoryLeague);
+                newInMemoryLeague = objImportStateLogic.importAndGetLeagueObject(validFilePath);
 
                 userInputPutput.printMessage(newInMemoryLeague.getLeagueName() + "  Imported from the Json");
             } catch (Exception e) {
@@ -72,7 +71,7 @@ public class ImportState implements IGameState {
     public void stateExitProcess() {
         if (ourGame.isGameInProgress()) {
             ourGame.setInMemoryLeague(newInMemoryLeague);
-            ourGame.setGameConfig(gameConfig);
+            ourGame.setGameConfig(newInMemoryLeague.getGameConfig());
             if (option == 1) {
                 ourGame.setGameState(ourGame.getCreateTeamState());
             } else if (option == 2) {

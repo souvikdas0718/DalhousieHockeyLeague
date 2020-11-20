@@ -1,6 +1,6 @@
 package dhl.database;
 
-import dhl.InputOutput.importJson.GameConfig;
+import dhl.businessLogic.leagueModel.GameConfig;
 import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.database.DatabaseConfigSetup.CallStoredProcedure;
 import dhl.database.interfaceDB.IGameConfigDB;

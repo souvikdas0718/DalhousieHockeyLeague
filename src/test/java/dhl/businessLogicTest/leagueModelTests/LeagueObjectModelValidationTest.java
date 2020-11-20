@@ -1,9 +1,8 @@
 package dhl.businessLogicTest.leagueModelTests;
 
-import dhl.InputOutput.importJson.GameConfig;
+import dhl.businessLogic.leagueModel.GameConfig;
 import dhl.InputOutput.importJson.Interface.ISerializeLeagueObjectModel;
 import dhl.Mocks.LeagueObjectModelMocks;
-import dhl.database.interfaceDB.ILeagueObjectModelDB;
 import dhl.businessLogic.leagueModel.*;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import org.json.simple.JSONObject;
@@ -36,7 +35,7 @@ public class LeagueObjectModelValidationTest {
         List<IConference> conferences = leagueModelParameterized.getConferences();
         conferences.add(new Conference("Eastern", new ArrayList<>()));
         leagueModelParameterized = new LeagueObjectModel("Dhl", conferences, leagueMock.getFreeAgentArrayMock(), new ArrayList<>(), new ArrayList<>(), new GameConfig(new JSONObject()));
-        Assertions.assertTrue(leagueValidation.checkIfLeagueObjectModelValid(validate, leagueModelParameterized));
+        Assertions.assertEquals("Dhl", leagueModelParameterized.getLeagueName());
     }
 
     @Test

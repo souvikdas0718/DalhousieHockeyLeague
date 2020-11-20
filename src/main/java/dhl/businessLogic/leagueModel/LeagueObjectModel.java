@@ -37,18 +37,23 @@ public class LeagueObjectModel implements ILeagueObjectModel {
     public IGameConfig gameConfig;
 
     public LeagueObjectModel() {
+        setDefault();
+    }
+
+    private void setDefault(){
         leagueName = "";
         conferences = new ArrayList<>();
         freeAgents = new ArrayList<>();
     }
 
     public LeagueObjectModel(String leagueName, List<IConference> conferences, List<IPlayer> freeAgents, List<ICoach> coaches, List<IGeneralManager> managers, IGameConfig gameConfig) {
-        this.leagueName = leagueName;
-        this.conferences = conferences;
-        this.freeAgents = freeAgents;
-        this.coaches = coaches;
-        this.generalManagers = managers;
-        this.gameConfig = gameConfig;
+        setDefault();
+        setLeagueName(leagueName);
+        setConferences(conferences);
+        setFreeAgents(freeAgents);
+        setCoaches(coaches);
+        setManagers(managers);
+        setGameConfig(gameConfig);
     }
 
     public String getLeagueName() {
@@ -67,16 +72,36 @@ public class LeagueObjectModel implements ILeagueObjectModel {
         return coaches;
     }
 
-    public void setCoaches(List<ICoach> coaches) {
-        this.coaches = coaches;
-    }
-
     public IGameConfig getGameConfig() {
         return gameConfig;
     }
 
     public List<IGeneralManager> getGeneralManagers() {
         return generalManagers;
+    }
+
+    public void setLeagueName(String leagueName) {
+        this.leagueName = leagueName;
+    }
+
+    public void setConferences(List<IConference> conferences) {
+        this.conferences = conferences;
+    }
+
+    public void setFreeAgents(List<IPlayer> freeAgents) {
+        this.freeAgents = freeAgents;
+    }
+
+    public void setManagers(List managers) {
+        this.generalManagers = managers;
+    }
+
+    public void setCoaches(List<ICoach> coaches) {
+        this.coaches = coaches;
+    }
+
+    public void setGameConfig(IGameConfig gameConfig) {
+        this.gameConfig = gameConfig;
     }
 
     public boolean checkIfLeagueModelValid(IValidation validation, ILeagueObjectModelValidation leagueObjectModelValidation) throws Exception {

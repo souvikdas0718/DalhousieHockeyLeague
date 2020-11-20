@@ -1,0 +1,165 @@
+{
+  "leagueName":"Dalhousie Hockey League",
+  "gameplayConfig":{
+    "aging":{
+      "averageRetirementAge":35,
+      "maximumAge":50,
+      "statDecayChance":0.05
+    },
+    "injuries":{
+      "randomInjuryChance":0.05,
+      "injuryDaysLow":1,
+      "injuryDaysHigh":260
+    },
+    "training":{
+      "daysUntilStatIncreaseCheck":100
+    },
+    "trading":{
+      "lossPoint":8,
+      "randomTradeOfferChance":0.05,
+      "maxPlayersPerTrade":2,
+      "randomAcceptanceChance":0.05,
+      "gmTable":{
+        "shrewd":-0.1,
+        "gambler":0.1,
+        "normal":0.0
+      }
+    }
+  },
+  "conferences":[
+    {
+      "conferenceName":"Eastern Conference",
+      "divisions":[
+        {
+          "divisionName":"Atlantic",
+          "teams":[
+            {
+              "teamName":"Boston",
+              "generalManager":{
+                "name":"Bonnie Chang",
+                "personality":"normal"
+              },
+              "headCoach":{
+                "name":"Mary Smith",
+                "skating":0.5,
+                "shooting":0.8,
+                "checking":0.3,
+                "saving":0.5
+              },
+              "players":[
+                {
+                  "playerName":"Player One",
+                  "position":"forward",
+                  "captain":true,
+                  "skating":15,
+                  "shooting":18,
+                  "checking":12,
+                  "saving":0,
+                  "birthDay":20,
+                  "birthMonth":10,
+                  "birthYear":2000
+                },
+                {
+                  "playerName":"Player Two",
+                  "position":"defense",
+                  "captain":false,
+                  "skating":10,
+                  "shooting":10,
+                  "checking":10,
+                  "saving":0,
+                  "birthDay":20,
+                  "birthMonth":10,
+                  "birthYear":2000
+                },
+                {
+                  "playerName":"Player Three",
+                  "position":"goalie",
+                  "captain":false,
+                  "skating":10,
+                  "shooting":4,
+                  "checking":9,
+                  "saving":18,
+                  "birthDay":20,
+                  "birthMonth":10,
+                  "birthYear":2000
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "freeAgents":[
+    {
+      "playerName":"Agent One",
+      "position":"forward",
+      "skating":10,
+      "shooting":10,
+      "checking":10,
+      "saving":0,
+      "birthDay":20,
+      "birthMonth":10,
+      "birthYear":2000
+    },
+    {
+      "playerName":"Agent Two",
+      "position":"defense",
+      "skating":10,
+      "shooting":10,
+      "checking":10,
+      "saving":0,
+      "birthDay":20,
+      "birthMonth":10,
+      "birthYear":2000
+    },
+    {
+      "playerName":"Agent Three",
+      "position":"goalie",
+      "skating":10,
+      "shooting":5,
+      "checking":5,
+      "saving":0,
+      "birthDay":20,
+      "birthMonth":10,
+      "birthYear":2000
+    }
+  ],
+  "coaches":[
+    {
+      "name":"Joe Smith",
+      "skating":0.5,
+      "shooting":0.8,
+      "checking":0.3,
+      "saving":1.0
+    },
+    {
+      "name":"Frank Smith",
+      "skating":0.5,
+      "shooting":0.8,
+      "checking":0.3,
+      "saving":0.5
+    },
+    {
+      "name":"Samantha Smith",
+      "skating":1.0,
+      "shooting":0.5,
+      "checking":0.5,
+      "saving":0.0
+    }
+  ],
+  "generalManagers":[
+    {
+      "name":"Raghav Cherry",
+      "personality":"gambler"
+    },
+    {
+      "name":"Joseph Squidly",
+      "personality":"normal"
+    },
+    {
+      "name":"Tom Spaghetti",
+      "personality":"shrewd"
+    }
+  ]
+}

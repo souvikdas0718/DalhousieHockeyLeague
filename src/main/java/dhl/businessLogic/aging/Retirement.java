@@ -1,12 +1,8 @@
 package dhl.businessLogic.aging;
 
+import dhl.InputOutput.importJson.Interface.ISerializeLeagueObjectModel;
 import dhl.businessLogic.leagueModel.Player;
-import dhl.database.interfaceDB.IPlayerDB;
-import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
-import dhl.businessLogic.leagueModel.interfaceModel.IConference;
-import dhl.businessLogic.leagueModel.interfaceModel.IDivision;
-import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
+import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogic.aging.interfaceAging.IRetirement;
 
 import java.util.ArrayList;
@@ -17,11 +13,11 @@ import java.util.stream.Collectors;
 
 public class Retirement implements IRetirement {
     private ILeagueObjectModel leagueObjectModel;
-    private IPlayerDB playerDB;
+    private ISerializeLeagueObjectModel serializeModel;
 
-    public Retirement(IPlayerDB playerDB, ILeagueObjectModel leagueObjectModel) {
+    public Retirement(ISerializeLeagueObjectModel serializeModel, ILeagueObjectModel leagueObjectModel) {
         this.leagueObjectModel = leagueObjectModel;
-        this.playerDB = playerDB;
+        this.serializeModel = serializeModel;
     }
 
     public ILeagueObjectModel getLeagueObjectModel() {
@@ -114,6 +110,11 @@ public class Retirement implements IRetirement {
     }
 
     public void insertVeterans(Map<String, List<IPlayer>> playersToRetire, List<IPlayer> freeAgentsToRetire) throws Exception {
-        playerDB.insertRetiredPlayers(leagueObjectModel, playersToRetire, freeAgentsToRetire);
+        List<IPlayer> retiredPlayers= new ArrayList<>();
+        retiredPlayers.addAll(freeAgentsToRetire);
+        for (String teamName : playersToRetire.keySet()) {
+            retiredPlayers.addAll(playersToRetire.get(teamName));
+        }
+        serializeModel.updateSerializedPlayerListToJsonFile(retiredPlayers,"retiringPlayers");
     }
 }

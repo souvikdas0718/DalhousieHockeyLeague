@@ -1,6 +1,6 @@
 package dhl.Mocks;
 
-import dhl.InputOutput.importJson.GameConfig;
+import dhl.businessLogic.leagueModel.GameConfig;
 import dhl.InputOutput.importJson.Interface.IGameConfig;
 import org.json.simple.JSONObject;
 

@@ -21,6 +21,18 @@ public interface ILeagueObjectModel {
 
     IGameConfig getGameConfig();
 
+    void setLeagueName(String leagueName);
+
+    void setConferences(List<IConference> conferences);
+
+    void setFreeAgents(List<IPlayer> freeAgents);
+
+    void setManagers(List managers);
+
+    void setCoaches(List<ICoach> coaches);
+
+    void setGameConfig(IGameConfig gameConfig);
+
     boolean checkIfLeagueModelValid(IValidation validation, ILeagueObjectModelValidation leagueObjectModelValidation) throws Exception;
 
     ILeagueObjectModel saveLeagueObjectModel(ISerializeLeagueObjectModel serializeLeagueObjectModel, ILeagueObjectModelInput saveLeagueInput) throws Exception;

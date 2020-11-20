@@ -1,5 +1,7 @@
 package dhl.businessLogicTest.AgingTest;
 
+import dhl.InputOutput.importJson.Interface.ISerializeLeagueObjectModel;
+import dhl.InputOutput.importJson.SerializeLeagueObjectModel;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.businessLogicTest.leagueModelTests.PlayerDBMock;
 import dhl.database.interfaceDB.IPlayerDB;
@@ -29,8 +31,8 @@ public class RetirementTest {
     @BeforeEach()
     public void initObject() {
         leagueMock = new LeagueObjectModelMocks();
-        playerDBMock = new PlayerDBMock();
-        retirement = new Retirement(playerDBMock, leagueMock.getLeagueObjectMock());
+        ISerializeLeagueObjectModel serializeModel = new SerializeLeagueObjectModel();
+        retirement = new Retirement(serializeModel, leagueMock.getLeagueObjectMock());
     }
 
     @Test

@@ -29,7 +29,7 @@ public interface ITeam {
 
     boolean checkIfTeamValid(IValidation validation) throws Exception;
 
-    boolean checkIfSkatersGoaliesValid();
+    boolean checkTeamPlayersCount();
 
     double calculateTeamStrength();
 

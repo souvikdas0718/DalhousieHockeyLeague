@@ -2,6 +2,8 @@ package dhl.businessLogicTest.AgingTest;
 
 
 import dhl.InputOutput.importJson.Interface.IGameConfig;
+import dhl.InputOutput.importJson.Interface.ISerializeLeagueObjectModel;
+import dhl.InputOutput.importJson.SerializeLeagueObjectModel;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.aging.interfaceAging.IAging;
 import dhl.businessLogic.aging.interfaceAging.IInjury;
@@ -34,12 +36,12 @@ public class LeagueScheduleTest {
     public void initObject() {
         leagueMock = new LeagueObjectModelMocks();
         gameConfig = leagueMock.getGameConfig();
-        IPlayerDB playerDB = new PlayerDBMock();
+        ISerializeLeagueObjectModel serializeModel = new SerializeLeagueObjectModel();
         leagueObjectModel = leagueMock.getLeagueObjectMock();
         IAging agingSystem = new Aging(gameConfig);
-        retirementSystem = new Retirement(playerDB, leagueObjectModel);
+        retirementSystem = new Retirement(serializeModel, leagueObjectModel);
         injurySystem = new Injury();
-        leagueSchedule = new LeagueSchedule(agingSystem, retirementSystem, injurySystem, leagueMock.getLeagueObjectMock(), 365, playerDB);
+        leagueSchedule = new LeagueSchedule(agingSystem, retirementSystem, injurySystem, leagueMock.getLeagueObjectMock(), 365);
 
     }
 

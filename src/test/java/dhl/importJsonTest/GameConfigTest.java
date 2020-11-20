@@ -1,6 +1,6 @@
 package dhl.importJsonTest;
 
-import dhl.InputOutput.importJson.GameConfig;
+import dhl.businessLogic.leagueModel.GameConfig;
 import dhl.InputOutput.importJson.ImportJsonFile;
 import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.Mocks.JsonFilePathMock;
@@ -97,8 +97,8 @@ public class GameConfigTest {
         HashMap<String, Object> tradingObject = testClassObject.getHashMap("trading");
         HashMap<String, Object> agingObject = testClassObject.getHashMap("aging");
         Assertions.assertFalse(tradingObject.isEmpty());
-        Assertions.assertTrue(tradingObject.size() == 4);
-        Assertions.assertTrue(agingObject.size() == 2);
+        Assertions.assertTrue(tradingObject.size() == 5);
+        Assertions.assertTrue(agingObject.size() == 3);
         Assertions.assertTrue(testClassObject.getHashMap("WrongKey").isEmpty());
     }
 

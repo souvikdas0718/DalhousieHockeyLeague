@@ -167,18 +167,18 @@ public class TeamTest {
     }
 
     @Test
-    public void checkIfSkatersGoaliesValid() {
+    public void checkTeamPlayersCountValid() {
         team = new Team("Ontario", "Mathew", headCoach, leagueMock.getTeamPlayers());
-        Boolean isValid = team.checkIfSkatersGoaliesValid();
+        Boolean isValid = team.checkTeamPlayersCount();
         Assertions.assertEquals(true, isValid);
     }
 
     @Test
-    public void checkIfSkatersGoaliesInValid() {
+    public void checkTeamPlayersCountInValid() {
         List<IPlayer> selectedPlayers = leagueMock.get20FreeAgentArrayMock();
         selectedPlayers.remove(19);
         team = new Team("Ontario", "Mathew", headCoach, selectedPlayers);
-        Assertions.assertFalse(team.checkIfSkatersGoaliesValid());
+        Assertions.assertFalse(team.checkTeamPlayersCount());
     }
 
 
