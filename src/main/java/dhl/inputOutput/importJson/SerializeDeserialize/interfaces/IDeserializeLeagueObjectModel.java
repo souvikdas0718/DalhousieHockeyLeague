@@ -11,6 +11,6 @@ import java.io.IOException;
 import java.util.List;
 
 public interface IDeserializeLeagueObjectModel {
-    ILeagueObjectModel deserializeLeagueObjectJson() throws Exception;
-    List<IPlayer> deserializePlayers() throws ParseException, IOException;
+    ILeagueObjectModel deserializeLeagueObjectJson(String leagueName) throws Exception;
+    List<IPlayer> deserializePlayers(String leagueName) throws ParseException, IOException;
 }

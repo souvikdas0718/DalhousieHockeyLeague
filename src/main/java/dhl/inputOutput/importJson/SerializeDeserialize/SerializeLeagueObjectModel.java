@@ -21,53 +21,18 @@ import java.util.List;
 
 public class SerializeLeagueObjectModel implements ISerializeLeagueObjectModel {
     Logger myLogger = LogManager.getLogger(CreateTeamStateLogic.class);
-    String leagueObjectModelFilePath;
-    String playersFilePath;
+    String jsonFilePath;
+    final String playerFileName = "--InjuredPlayer.json";
+    final String jsonExtension = ".json";
 
-    public SerializeLeagueObjectModel(String leagueName){
-        leagueObjectModelFilePath = "src/main/java/dhl/inputOutput/importJson/serializeDeserialize/serializedJsonFiles/" + leagueName + ".json";
-        playersFilePath = "src/main/java/dhl/inputOutput/importJson/serializeDeserialize/serializedJsonFiles/injuredPlayers" + leagueName + ".json";
+    public SerializeLeagueObjectModel(String jsonFilePath){
+        jsonFilePath = jsonFilePath;
     }
 
     public String serializeData(Object objLeagueObjectModel) throws Exception {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String jsonString = gson.toJson(objLeagueObjectModel);
         return jsonString;
-    }
-
-    public void writeSerializedLeagueObjectToJsonFile(ILeagueObjectModel objLeagueObjectModel) throws IOException, Exception {
-        String serializedLeagueObjectModel = serializeData(objLeagueObjectModel);
-        File objFile = new File(leagueObjectModelFilePath);
-        if (objFile.exists()){
-            myLogger.log(myLogger.getLevel(),"League Already exists");
-        }else {
-            if (objFile.createNewFile()) {
-                writeJsonToFile(leagueObjectModelFilePath, serializedLeagueObjectModel);
-            } else {
-                myLogger.log(myLogger.getLevel(),"Error saving league object data to json");
-            }
-        }
-    }
-
-    public void updateSerializedLeagueObjectToJsonFile(ILeagueObjectModel objLeagueObjectModel) throws IOException, Exception {
-        String serializedLeagueObjectModel = serializeData(objLeagueObjectModel);
-        File objFile = new File(leagueObjectModelFilePath);
-        if (objFile.exists()){
-            writeJsonToFile(leagueObjectModelFilePath, serializedLeagueObjectModel);
-        }else {
-            myLogger.log(myLogger.getLevel(),"This league doesn't exist");
-        }
-    }
-
-    public void updateSerializedPlayerListToJsonFile(List<IPlayer> playersToRetire) throws IOException, Exception {
-        String serializedplayers = serializeData(playersToRetire);
-        File objFile = new File(playersFilePath);
-        if (objFile.exists()){
-            updateJsonFile(serializedplayers);
-        }else {
-            objFile.createNewFile();
-            writeJsonToFile(playersFilePath, serializedplayers);
-        }
     }
 
     public void writeJsonToFile(String filePath, String serializedData) throws IOException {
@@ -81,8 +46,49 @@ public class SerializeLeagueObjectModel implements ISerializeLeagueObjectModel {
         }
     }
 
-    public void updateJsonFile(String newPlayers) throws IOException, ParseException {
-        FileReader existingPlayers = new FileReader(playersFilePath);
+    public void writeSerializedLeagueObjectToJsonFile(ILeagueObjectModel objLeagueObjectModel) throws IOException, Exception {
+        String serializedLeagueObjectModel = serializeData(objLeagueObjectModel);
+        String leagueObjectModelJsonPath = jsonFilePath + objLeagueObjectModel.getLeagueName() + jsonExtension;
+
+        File objFile = new File(jsonFilePath);
+        if (objFile.exists()){
+            myLogger.log(myLogger.getLevel(),"League Already exists");
+        }else {
+            if (objFile.createNewFile()) {
+                writeJsonToFile(jsonFilePath, serializedLeagueObjectModel);
+            } else {
+                myLogger.log(myLogger.getLevel(),"Error saving league object data to json");
+            }
+        }
+    }
+
+    public void updateSerializedLeagueObjectToJsonFile(ILeagueObjectModel objLeagueObjectModel) throws IOException, Exception {
+        String serializedLeagueObjectModel = serializeData(objLeagueObjectModel);
+        String leagueObjectModelJsonPath = jsonFilePath + objLeagueObjectModel.getLeagueName() + jsonExtension;
+
+        File objFile = new File(jsonFilePath);
+        if (objFile.exists()){
+            writeJsonToFile(jsonFilePath, serializedLeagueObjectModel);
+        }else {
+            myLogger.log(myLogger.getLevel(),"This league doesn't exist");
+        }
+    }
+
+    public void updateSerializedPlayerListToJsonFile(List<IPlayer> playersToRetire, String leagueName) throws IOException, Exception {
+        String playersJsonPath = jsonFilePath + leagueName + playerFileName;
+
+        String serializedplayers = serializeData(playersToRetire);
+        File objFile = new File(jsonFilePath);
+        if (objFile.exists()){
+            updateJsonFile(serializedplayers, playersJsonPath);
+        }else {
+            objFile.createNewFile();
+            writeJsonToFile(jsonFilePath, serializedplayers);
+        }
+    }
+
+    public void updateJsonFile(String newPlayers, String playersJsonPath) throws IOException, ParseException {
+        FileReader existingPlayers = new FileReader(playersJsonPath);
         JSONParser jsonParser = new JSONParser();
         JSONArray arrExistingPlayers = (JSONArray) jsonParser.parse(existingPlayers);
         JSONArray arrNewPlayers = (JSONArray) jsonParser.parse(newPlayers);
@@ -100,6 +106,6 @@ public class SerializeLeagueObjectModel implements ISerializeLeagueObjectModel {
             arrCombined.add(newPlayersJsonObject);
         }
 
-        writeJsonToFile(playersFilePath, String.valueOf(arrCombined));
+        writeJsonToFile(playersJsonPath, String.valueOf(arrCombined));
     }
 }

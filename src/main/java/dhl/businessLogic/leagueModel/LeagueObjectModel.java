@@ -22,9 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LeagueObjectModel implements ILeagueObjectModel {
-    private static final String filepath = "src/main/java/dhl/InputOutput/SerializedJsonFiles/";
-    private static final String extension = ".json";
-    private String jsonFilePath;
     public String leagueName;
     public List<IConference> conferences;
     public List<IPlayer> freeAgents;
@@ -103,23 +100,21 @@ public class LeagueObjectModel implements ILeagueObjectModel {
             }
         }
         this.conferences = conferenceArrayList;
-        jsonFilePath = filepath + leagueName + extension;
+
         serializeLeagueObjectModel.writeSerializedLeagueObjectToJsonFile(this);
 
         return this;
     }
 
     public ILeagueObjectModel loadLeagueObjectModel( IDeserializeLeagueObjectModel deserializeLeagueObjectModel, String leagueName, String teamName) throws Exception, ParseException {
-
         ILeagueObjectModel leagueObjectModel = new LeagueObjectModel();
-        leagueObjectModel =deserializeLeagueObjectModel.deserializeLeagueObjectJson();
+        leagueObjectModel =deserializeLeagueObjectModel.deserializeLeagueObjectJson(leagueName);
 
         return leagueObjectModel;
     }
 
     public ILeagueObjectModel updateLeagueObjectModel(ISerializeLeagueObjectModel serializeLeagueObjectModel) throws Exception {
-        jsonFilePath = filepath + leagueName + extension;
-        serializeLeagueObjectModel.writeSerializedLeagueObjectToJsonFile(this);
+        serializeLeagueObjectModel.updateSerializedLeagueObjectToJsonFile(this);
         return this;
     }
 }

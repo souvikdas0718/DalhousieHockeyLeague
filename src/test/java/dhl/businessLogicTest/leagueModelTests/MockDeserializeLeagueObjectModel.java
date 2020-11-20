@@ -11,11 +11,11 @@ import java.util.List;
 
 public class MockDeserializeLeagueObjectModel implements IDeserializeLeagueObjectModel {
 
-    public ILeagueObjectModel deserializeLeagueObjectJson() {
+    public ILeagueObjectModel deserializeLeagueObjectJson(String leagueName) {
         return null;
     }
 
-    public List<IPlayer> deserializePlayers() throws ParseException {
+    public List<IPlayer> deserializePlayers(String leagueName) throws ParseException {
         return null;
     }
 }

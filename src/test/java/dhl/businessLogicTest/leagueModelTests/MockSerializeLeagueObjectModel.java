@@ -17,7 +17,7 @@ public class MockSerializeLeagueObjectModel implements ISerializeLeagueObjectMod
 
     }
 
-    public void updateSerializedPlayerListToJsonFile(List<IPlayer> playersToRetire) throws IOException, Exception {
+    public void updateSerializedPlayerListToJsonFile(List<IPlayer> playersToRetire, String leagueName) throws IOException, Exception {
 
     }
 }

@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CreateTeamState implements IGameState {
-
+    private final String jsonFilePath = "src/main/java/dhl/inputOutput/importJson/serializeDeserialize/serializedJsonFiles/";
     private GameContext ourGame;
     private ILeagueObjectModel inMemoryLeague;
     private IConference selectedConference;
@@ -238,13 +238,14 @@ public class CreateTeamState implements IGameState {
             ITeam teamWithoutPlayers = new Team(selectedTeamName, selectedGeneralManager, selectedCoach, new ArrayList<>());
             ITeam newlyCreatedTeam = createTeamStateLogic.createNewTeamObject(selectedFreeAgents, teamWithoutPlayers, selectedCaptain);
             ILeagueObjectModelValidation leagueObjectModelValidation = new LeagueObjectModelValidation();
-            ISerializeLeagueObjectModel serializeLeagueObjectModel = new SerializeLeagueObjectModel(inMemoryLeague.getLeagueName());
+            ISerializeLeagueObjectModel serializeLeagueObjectModel = new SerializeLeagueObjectModel(jsonFilePath);
 
             ILeagueObjectModelInput leagueObjectModelInput = new LeagueObjectModelInput(inMemoryLeague.getLeagueName(), selectedConference.getConferenceName(), selectedDivision.getDivisionName(), newlyCreatedTeam, leagueObjectModelValidation, serializeLeagueObjectModel);
             createTeamStateLogic.saveleagueObject(ourGame, inMemoryLeague, leagueObjectModelInput);
 
         } catch (Exception e) {
-            userInputPutput.printMessage(e.getMessage());
+            userInputPutput.printMessage(e.getMessage())
+            ;
             ourGame.setGameInProgress(false);
         }
     }

@@ -21,16 +21,18 @@ import java.util.Iterator;
 import java.util.List;
 
 public class DeserializeLeagueObjectModel implements IDeserializeLeagueObjectModel {
-    String leagueObjectModelFilePath;
-    String playersFilePath;
+    String jsonFilePath;
+    final String playerFileName = "--InjuredPlayer.json";
+    final String jsonExtension = ".json";
 
-    public DeserializeLeagueObjectModel(String leagueName){
-        leagueObjectModelFilePath = "src/main/java/dhl/inputOutput/importJson/serializeDeserialize/serializedJsonFiles/" + leagueName + ".json";
-        playersFilePath = "src/main/java/dhl/inputOutput/importJson/serializeDeserialize/serializedJsonFiles/injuredPlayers" + leagueName + ".json";
+    public DeserializeLeagueObjectModel(String jsonFilePath){
+        jsonFilePath = jsonFilePath;
     }
 
-    public ILeagueObjectModel deserializeLeagueObjectJson() throws Exception {
-        FileReader reader = new FileReader(leagueObjectModelFilePath);
+    public ILeagueObjectModel deserializeLeagueObjectJson(String leagueName) throws Exception {
+        String leagueObjectModelJsonPath = jsonFilePath + leagueName + jsonExtension;
+
+        FileReader reader = new FileReader(leagueObjectModelJsonPath);
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonLeagueObject = (JSONObject) jsonParser.parse(reader);
 
@@ -39,8 +41,10 @@ public class DeserializeLeagueObjectModel implements IDeserializeLeagueObjectMod
         return createLeagueObjectModel.getLeagueObjectModel();
     }
 
-    public List<IPlayer> deserializePlayers() throws ParseException, IOException {
-        FileReader reader = new FileReader(playersFilePath);
+    public List<IPlayer> deserializePlayers(String leagueName) throws ParseException, IOException {
+        String playersJsonPath = jsonFilePath + leagueName + playerFileName;
+
+        FileReader reader = new FileReader(playersJsonPath);
         JSONParser jsonParser = new JSONParser();
         JSONArray arrPlayers = (JSONArray) jsonParser.parse(reader);
         List<IPlayer> playerList = new ArrayList<>();
