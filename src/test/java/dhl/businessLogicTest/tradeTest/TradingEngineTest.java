@@ -1,5 +1,6 @@
 package dhl.businessLogicTest.tradeTest;
 
+import dhl.businessLogic.trade.interfaces.ITradingEngine;
 import dhl.inputOutput.ui.IUserInputOutput;
 import dhl.inputOutput.importJson.interfaces.IGameConfig;
 import dhl.Mocks.GameConfigMock;
@@ -48,8 +49,7 @@ public class TradingEngineTest {
         leagueMock.getConferences().get(0).getDivisions().get(0).getTeams().add(badTeamMock);
         IGameConfig ourGameConfig = gameConfigMock.getGameConfigMock();
         userTeam = new Team();
-        IUpdateUserTeamRoster updateUserTeamRoster = new UpdateUserTeamRoster(ioObject);
-        testClassObject = (TradingEngine) TradingEngine.getInstance(ourGameConfig, leagueMock, userTeam, ioObject, updateUserTeamRoster);
+        testClassObject = (TradingEngine) ITradingEngine.instance(ourGameConfig, leagueMock, userTeam);
     }
 
     @Test

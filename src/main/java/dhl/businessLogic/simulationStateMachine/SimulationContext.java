@@ -74,7 +74,7 @@ public class SimulationContext implements ISimulationSeasonState {
         gameInProgress = true;
         ioObject = new UserInputOutput();
         updateUserTeamRoster = new UpdateUserTeamRoster(ioObject);
-        tradeEngine = TradingEngine.getInstance(gameConfig, inMemoryLeague, userTeam, ioObject, updateUserTeamRoster);
+        tradeEngine = ITradingEngine.instance(gameConfig, inMemoryLeague, userTeam);
         daysSinceLastTraining = 0;
         teamsPlayingInGame = new ArrayList<>();
         injury = new Injury();
