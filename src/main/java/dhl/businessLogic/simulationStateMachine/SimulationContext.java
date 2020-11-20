@@ -1,8 +1,5 @@
 package dhl.businessLogic.simulationStateMachine;
 
-import dhl.inputOutput.ui.IUserInputOutput;
-import dhl.inputOutput.ui.UserInputOutput;
-import dhl.inputOutput.importJson.interfaces.IGameConfig;
 import dhl.businessLogic.aging.Injury;
 import dhl.businessLogic.aging.interfaceAging.IInjury;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
@@ -11,9 +8,13 @@ import dhl.businessLogic.simulationStateMachine.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.interfaces.ISimulationSeasonState;
 import dhl.businessLogic.simulationStateMachine.interfaces.IStandingSystem;
 import dhl.businessLogic.simulationStateMachine.interfaces.IUpdateUserTeamRoster;
-import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.*;
-import dhl.businessLogic.trade.interfaces.ITradingEngine;
+import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.SeasonSimulationStateFactory;
+import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.SimulationStateAbstractFactory;
 import dhl.businessLogic.trade.TradingEngine;
+import dhl.businessLogic.trade.interfaces.ITradingEngine;
+import dhl.inputOutput.importJson.interfaces.IGameConfig;
+import dhl.inputOutput.ui.IUserInputOutput;
+import dhl.inputOutput.ui.UserInputOutput;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -56,6 +57,7 @@ public class SimulationContext implements ISimulationSeasonState {
     List<ITeam> teamsPlayingInGame;
     IInjury injury;
     ITradingEngine tradeEngine;
+
     public SimulationContext(GameContext gameState) {
         SimulationStateAbstractFactory factory = new SeasonSimulationStateFactory();
         advanceTime = factory.getAdvanceTimeState(this);

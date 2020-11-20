@@ -2,7 +2,9 @@ package dhl.Mocks;
 
 import dhl.businessLogic.leagueModel.*;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
+import dhl.businessLogic.simulationStateMachine.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.interfaces.IStandings;
+import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.Scheduler;
 import dhl.businessLogic.simulationStateMachine.states.standings.Standings;
 
 import java.util.ArrayList;
@@ -12,10 +14,14 @@ public class LeagueObjectModel20TeamMocks {
 
     ILeagueObjectModel leagueData;
     ArrayList<IStandings> generalStandings;
+    LeagueObjectModelMocks mockLeagueObjectModel;
+    IScheduler scheduler;
 
     public LeagueObjectModel20TeamMocks() {
         this.leagueData = new LeagueObjectModel();
         this.generalStandings = new ArrayList<>();
+        mockLeagueObjectModel = new LeagueObjectModelMocks();
+        scheduler = new Scheduler();
     }
 
     public ILeagueObjectModel getLeagueData() {
@@ -319,5 +325,51 @@ public class LeagueObjectModel20TeamMocks {
         standings.add(standings20);
 
         setGeneralStandings(standings);
+    }
+
+    public IScheduler leagueModel20TeamPlayoffsSchedules() {
+        leagueModel20TeamGeneralStandings();
+        ILeagueObjectModel league = this.getLeagueData();
+        List<IPlayer> statistics = mockLeagueObjectModel.getPlayerArrayMock();
+        ArrayList<IStandings> standings = getGeneralStandings();
+
+        ITeam teamPlayOff1 = new Team("Bruins", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
+        ITeam teamPlayoff2 = new Team("Maple", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
+        ITeam teamPlayoff3 = new Team("Hurricanes", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
+        ITeam teamPlayoff4 = new Team("Flyers", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
+        ITeam teamPlayoff5 = new Team("Blues", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
+        ITeam teamPlayoff6 = new Team("Avalanche", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
+        ITeam teamPlayoff7 = new Team("Cancuks", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
+        ITeam teamPlayoff8 = new Team("Flames", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
+
+
+        scheduler.playOffs(standings, league);
+
+        scheduler.gameWinner(teamPlayOff1);
+        scheduler.gameWinner(teamPlayoff2);
+        scheduler.gameWinner(teamPlayoff3);
+        scheduler.gameWinner(teamPlayoff4);
+        scheduler.gameWinner(teamPlayoff5);
+        scheduler.gameWinner(teamPlayoff6);
+        scheduler.gameWinner(teamPlayoff7);
+        scheduler.gameWinner(teamPlayoff8);
+
+        ITeam teamPlayOffRoundThree1 = new Team("Maple", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
+        ITeam teamPlayOffRoundThree2 = new Team("Flyers", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
+        ITeam teamPlayOffRoundThree3 = new Team("Avalanche", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
+        ITeam teamPlayOffRoundThree4 = new Team("Cancuks", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
+
+        scheduler.gameWinner(teamPlayOffRoundThree1);
+        scheduler.gameWinner(teamPlayOffRoundThree2);
+        scheduler.gameWinner(teamPlayOffRoundThree3);
+        scheduler.gameWinner(teamPlayOffRoundThree4);
+
+        ITeam teamPlayOffRoundFour1 = new Team("Maple", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
+        ITeam teamPlayOffRoundFour2 = new Team("Avalanche", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
+
+        scheduler.gameWinner(teamPlayOffRoundFour1);
+        scheduler.gameWinner(teamPlayOffRoundFour2);
+
+        return scheduler;
     }
 }

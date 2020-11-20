@@ -390,6 +390,7 @@ public class Scheduler implements IScheduler {
     public boolean stanleyCupWinner(LocalDate date) {
         IUserInputOutput output = new UserInputOutput();
         output.printMessage("Today's date: " + date);
+        output.printMessage("Final Game date: " + playOffScheduleRound1.get(14).getGameDate());
         if (playOffScheduleRound1.get(14).getGameDate().isBefore(date) || playOffScheduleRound1.get(14).getGameDate().isEqual(date)) {
             return true;
         } else {

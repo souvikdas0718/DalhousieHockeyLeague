@@ -19,7 +19,6 @@ public class AdvanceTimeStateTest {
     public void initObject() {
         gameState = new GameContext();
         simulationContext = new SimulationContext(gameState);
-
     }
 
     @Test
@@ -45,7 +44,7 @@ public class AdvanceTimeStateTest {
 
 
     @Test
-    public void seasonStateEntryProcess() {
+    public void seasonStateEntryProcessTest() {
 
     }
 
