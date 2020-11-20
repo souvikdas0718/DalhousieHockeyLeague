@@ -1,4 +1,4 @@
-package dhl.inputOutput.importJson.interfaces;
+package dhl.inputOutput.importJson.SerializeDeserialize.interfaces;
 
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;

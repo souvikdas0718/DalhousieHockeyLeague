@@ -1,8 +1,8 @@
-package dhl.inputOutput.importJson;
+package dhl.inputOutput.importJson.SerializeDeserialize;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dhl.inputOutput.importJson.interfaces.ISerializeLeagueObjectModel;
+import dhl.inputOutput.importJson.SerializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.simulationStateMachine.states.CreateTeamStateLogic;

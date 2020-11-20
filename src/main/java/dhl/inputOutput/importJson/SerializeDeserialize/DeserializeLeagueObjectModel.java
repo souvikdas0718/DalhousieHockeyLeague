@@ -1,12 +1,13 @@
-package dhl.inputOutput.importJson;
+package dhl.inputOutput.importJson.SerializeDeserialize;
 
-import dhl.inputOutput.importJson.interfaces.IDeserializeLeagueObjectModel;
+import dhl.inputOutput.importJson.SerializeDeserialize.interfaces.IDeserializeLeagueObjectModel;
 import dhl.inputOutput.importJson.interfaces.IGameConfig;
 import dhl.businessLogic.leagueModel.Player;
 import dhl.businessLogic.leagueModel.PlayerStatistics;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
+;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -27,7 +28,7 @@ public class DeserializeLeagueObjectModel implements IDeserializeLeagueObjectMod
 
     public ILeagueObjectModel deserializeLeagueObjectJson(JSONObject jsonLeagueObject) {
         IGameConfig gameConfig = null;
-        CreateLeagueObjectModel createLeagueObjectModel = new CreateLeagueObjectModel(updateLeagueObjectModelJson(jsonLeagueObject), gameConfig);
+        dhl.inputOutput.importJson.CreateLeagueObjectModel createLeagueObjectModel = new dhl.inputOutput.importJson.CreateLeagueObjectModel(updateLeagueObjectModelJson(jsonLeagueObject), gameConfig);
         return createLeagueObjectModel.getLeagueObjectModel();
     }
 

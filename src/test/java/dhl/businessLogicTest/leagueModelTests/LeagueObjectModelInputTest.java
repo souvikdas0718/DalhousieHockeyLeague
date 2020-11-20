@@ -1,6 +1,6 @@
 package dhl.businessLogicTest.leagueModelTests;
 
-import dhl.inputOutput.importJson.interfaces.ISerializeLeagueObjectModel;
+import dhl.inputOutput.importJson.SerializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.leagueModel.LeagueObjectModelInput;
 import dhl.businessLogic.leagueModel.LeagueObjectModelValidation;
