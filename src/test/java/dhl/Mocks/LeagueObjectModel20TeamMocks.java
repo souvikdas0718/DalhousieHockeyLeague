@@ -16,12 +16,14 @@ public class LeagueObjectModel20TeamMocks {
     ArrayList<IStandings> generalStandings;
     LeagueObjectModelMocks mockLeagueObjectModel;
     IScheduler scheduler;
+    List<IPlayer> statistics;
 
     public LeagueObjectModel20TeamMocks() {
         this.leagueData = new LeagueObjectModel();
         this.generalStandings = new ArrayList<>();
         mockLeagueObjectModel = new LeagueObjectModelMocks();
         scheduler = new Scheduler();
+        statistics = mockLeagueObjectModel.getPlayerArrayMock();
     }
 
     public ILeagueObjectModel getLeagueData() {
@@ -330,7 +332,6 @@ public class LeagueObjectModel20TeamMocks {
     public IScheduler leagueModel20TeamPlayoffsSchedules() {
         leagueModel20TeamGeneralStandings();
         ILeagueObjectModel league = this.getLeagueData();
-        List<IPlayer> statistics = mockLeagueObjectModel.getPlayerArrayMock();
         ArrayList<IStandings> standings = getGeneralStandings();
 
         ITeam teamPlayOff1 = new Team("Bruins", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);

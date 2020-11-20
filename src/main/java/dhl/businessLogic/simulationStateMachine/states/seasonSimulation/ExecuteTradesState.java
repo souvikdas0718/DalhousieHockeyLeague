@@ -17,7 +17,7 @@ public class ExecuteTradesState implements ISimulationSeasonState {
 
     private static Logger log = LogManager.getLogger(ExecuteTradesState.class);
 
-    SimulationContext simulationContextObject;
+    SimulationContext simulationContext;
     IGameConfig gameConfig;
     ILeagueObjectModel leagueObjectModel;
     IUserInputOutput ioObject;
@@ -26,12 +26,20 @@ public class ExecuteTradesState implements ISimulationSeasonState {
 
     public ExecuteTradesState(SimulationContext simulationContext) {
 
-        this.simulationContextObject = simulationContext;
-        leagueObjectModel = simulationContextObject.getInMemoryLeague();
-        gameConfig = simulationContextObject.getGameConfig();
-        userTeam = simulationContextObject.getUserTeam();
-        ioObject = simulationContextObject.getIoObject();
+        this.simulationContext = simulationContext;
+        leagueObjectModel = this.simulationContext.getInMemoryLeague();
+        gameConfig = this.simulationContext.getGameConfig();
+        userTeam = this.simulationContext.getUserTeam();
+        ioObject = this.simulationContext.getIoObject();
         tradeEngine = simulationContext.getTradeEngine();
+    }
+
+    public SimulationContext getSimulationContext() {
+        return simulationContext;
+    }
+
+    public void setSimulationContext(SimulationContext simulationContext) {
+        this.simulationContext = simulationContext;
     }
 
     @Override
@@ -65,7 +73,7 @@ public class ExecuteTradesState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateExitProcess() {
-        simulationContextObject.setCurrentSimulation(simulationContextObject.getAging());
+        simulationContext.setCurrentSimulation(simulationContext.getAging());
     }
 
     public ITeam getUserTeam() {
