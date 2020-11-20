@@ -1,6 +1,6 @@
 package dhl.importJsonTest;
 
-import dhl.inputOutput.importJson.SerializeDeserialize.DeserializeLeagueObjectModel;
+import dhl.inputOutput.importJson.serializeDeserialize.DeserializeLeagueObjectModel;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.Mocks.SerializedJsonMock;
 import dhl.businessLogic.leagueModel.LeagueObjectModel;
@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.List;
 
 public class DeSerializeLeagueObjectModelTest {
@@ -26,7 +27,7 @@ public class DeSerializeLeagueObjectModelTest {
 
     @BeforeEach
     public void initObject() {
-        deserializeleagueObjectModel = new DeserializeLeagueObjectModel();
+        deserializeleagueObjectModel = new DeserializeLeagueObjectModel("testLeagueName");
         jsonMock = new SerializedJsonMock();
         leagueObjectModel = new LeagueObjectModel();
         jsonParser = new JSONParser();
@@ -36,7 +37,7 @@ public class DeSerializeLeagueObjectModelTest {
     @Test
     public void deserializeLeagueObjectJsonTest() throws Exception {
         JSONObject jsonLeagueObject = (JSONObject) jsonParser.parse(jsonMock.serializedJson());
-        leagueObjectModel = deserializeleagueObjectModel.deserializeLeagueObjectJson(jsonLeagueObject);
+        leagueObjectModel = deserializeleagueObjectModel.deserializeLeagueObjectJson();
         Assertions.assertEquals("Dhl", leagueObjectModel.getLeagueName());
     }
 
@@ -48,9 +49,9 @@ public class DeSerializeLeagueObjectModelTest {
     }
 
     @Test
-    public void deserializePlayersTest() throws ParseException {
+    public void deserializePlayersTest() throws ParseException, IOException {
         JSONArray jsonPlayerObject = (JSONArray) jsonParser.parse(jsonMock.serializedPlayerList());
-        List<IPlayer> playersObject = deserializeleagueObjectModel.deserializePlayers(jsonPlayerObject);
+        List<IPlayer> playersObject = deserializeleagueObjectModel.deserializePlayers();
         Assertions.assertEquals(1, playersObject.size());
     }
 }
