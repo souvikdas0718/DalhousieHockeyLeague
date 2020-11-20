@@ -7,11 +7,20 @@ import dhl.businessLogic.simulationStateMachine.SimulationContext;
 
 public class GeneratePlayOffScheduleState implements ISimulationSeasonState {
 
-    SimulationContext ourSeasonGame;
+    SimulationContext simulationContext;
     IScheduler scheduler;
 
+
     public GeneratePlayOffScheduleState(SimulationContext simulationContext) {
-        this.ourSeasonGame = simulationContext;
+        this.simulationContext = simulationContext;
+    }
+
+    public SimulationContext getSimulationContext() {
+        return simulationContext;
+    }
+
+    public void setSimulationContext(SimulationContext simulationContext) {
+        this.simulationContext = simulationContext;
     }
 
     @Override
@@ -21,13 +30,13 @@ public class GeneratePlayOffScheduleState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateProcess() {
-        ourSeasonGame.getRegularScheduler();
-        scheduler.playOffs(scheduler.getGameStandings(), ourSeasonGame.getInMemoryLeague());
+        scheduler = simulationContext.getRegularScheduler();
+        scheduler.playOffs(scheduler.getGameStandings(), simulationContext.getInMemoryLeague());
     }
 
     @Override
     public void seasonStateExitProcess() {
-        ourSeasonGame.setCurrentSimulation(ourSeasonGame.getTraining());
+        simulationContext.setCurrentSimulation(simulationContext.getTraining());
     }
 }
 
