@@ -2,8 +2,8 @@ package dhl.businessLogic.simulationStateMachine.states;
 
 import dhl.inputOutput.ui.IUserInputOutput;
 import dhl.inputOutput.ui.UserInputOutput;
-import dhl.inputOutput.importJson.SerializeDeserialize.interfaces.ISerializeLeagueObjectModel;
-import dhl.inputOutput.importJson.SerializeDeserialize.SerializeLeagueObjectModel;
+import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
+import dhl.inputOutput.importJson.serializeDeserialize.SerializeLeagueObjectModel;
 import dhl.businessLogic.leagueModel.*;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogic.simulationStateMachine.GameContext;
@@ -238,7 +238,7 @@ public class CreateTeamState implements IGameState {
             ITeam teamWithoutPlayers = new Team(selectedTeamName, selectedGeneralManager, selectedCoach, new ArrayList<>());
             ITeam newlyCreatedTeam = createTeamStateLogic.createNewTeamObject(selectedFreeAgents, teamWithoutPlayers, selectedCaptain);
             ILeagueObjectModelValidation leagueObjectModelValidation = new LeagueObjectModelValidation();
-            ISerializeLeagueObjectModel serializeLeagueObjectModel = new SerializeLeagueObjectModel();
+            ISerializeLeagueObjectModel serializeLeagueObjectModel = new SerializeLeagueObjectModel(inMemoryLeague.getLeagueName());
 
             ILeagueObjectModelInput leagueObjectModelInput = new LeagueObjectModelInput(inMemoryLeague.getLeagueName(), selectedConference.getConferenceName(), selectedDivision.getDivisionName(), newlyCreatedTeam, leagueObjectModelValidation, serializeLeagueObjectModel);
             createTeamStateLogic.saveleagueObject(ourGame, inMemoryLeague, leagueObjectModelInput);

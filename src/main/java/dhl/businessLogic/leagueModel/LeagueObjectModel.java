@@ -1,6 +1,6 @@
 package dhl.businessLogic.leagueModel;
 
-import dhl.inputOutput.importJson.SerializeDeserialize.interfaces.IDeserializeLeagueObjectModel;
+import dhl.inputOutput.importJson.serializeDeserialize.interfaces.IDeserializeLeagueObjectModel;
 import dhl.inputOutput.importJson.interfaces.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IConference;
@@ -12,7 +12,7 @@ import dhl.businessLogic.leagueModel.interfaceModel.IGeneralManager;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModelValidation;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModelInput;
 import dhl.businessLogic.leagueModel.interfaceModel.IValidation;
-import dhl.inputOutput.importJson.SerializeDeserialize.interfaces.ISerializeLeagueObjectModel;
+import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -104,25 +104,22 @@ public class LeagueObjectModel implements ILeagueObjectModel {
         }
         this.conferences = conferenceArrayList;
         jsonFilePath = filepath + leagueName + extension;
-        serializeLeagueObjectModel.writeSerializedLeagueObjectToJsonFile(this, jsonFilePath);
+        serializeLeagueObjectModel.writeSerializedLeagueObjectToJsonFile(this);
 
         return this;
     }
 
     public ILeagueObjectModel loadLeagueObjectModel( IDeserializeLeagueObjectModel deserializeLeagueObjectModel, String leagueName, String teamName) throws Exception, ParseException {
-        jsonFilePath = filepath + leagueName + extension;
-        FileReader reader = new FileReader(jsonFilePath);
-        JSONParser jsonParser = new JSONParser();
-        JSONObject obj = (JSONObject) jsonParser.parse(reader);
+
         ILeagueObjectModel leagueObjectModel = new LeagueObjectModel();
-        leagueObjectModel =deserializeLeagueObjectModel.deserializeLeagueObjectJson(obj);
+        leagueObjectModel =deserializeLeagueObjectModel.deserializeLeagueObjectJson();
 
         return leagueObjectModel;
     }
 
     public ILeagueObjectModel updateLeagueObjectModel(ISerializeLeagueObjectModel serializeLeagueObjectModel) throws Exception {
         jsonFilePath = filepath + leagueName + extension;
-        serializeLeagueObjectModel.writeSerializedLeagueObjectToJsonFile(this, jsonFilePath);
+        serializeLeagueObjectModel.writeSerializedLeagueObjectToJsonFile(this);
         return this;
     }
 }
