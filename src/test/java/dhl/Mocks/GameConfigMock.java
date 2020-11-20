@@ -30,6 +30,11 @@ public class GameConfigMock {
         tradingJson.put("randomTradeOfferChance", randomTradeOfferChance);
         tradingJson.put("maxPlayersPerTrade", maxPlayersPerTrade);
         tradingJson.put("randomAcceptanceChance", randomAcceptanceChance);
+        JSONObject gmTable = new JSONObject();
+        gmTable.put("shrewd",-0.1);
+        gmTable.put("gambler",0.1);
+        gmTable.put("normal",0.0);
+        tradingJson.put("gmTable", gmTable);
         return tradingJson;
     }
 

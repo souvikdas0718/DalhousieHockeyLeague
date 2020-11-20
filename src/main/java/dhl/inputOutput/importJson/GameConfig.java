@@ -13,6 +13,7 @@ public class GameConfig implements IGameConfig {
     private String randomTradeOfferChance = "randomTradeOfferChance";
     private String maxPlayersPerTrade = "maxPlayersPerTrade";
     private String randomAcceptanceChance = "randomAcceptanceChance";
+    private String gmTable = "gmTable";
     private String aging = "aging";
     private String averageRetirementAge = "averageRetirementAge";
     private String maximumAge = "maximumAge";
@@ -118,4 +119,7 @@ public class GameConfig implements IGameConfig {
 
     }
 
+    public String getGmTable() {
+        return gmTable;
+    }
 }
