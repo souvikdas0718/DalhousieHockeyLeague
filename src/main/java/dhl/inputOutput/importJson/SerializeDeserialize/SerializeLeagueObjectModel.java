@@ -25,8 +25,8 @@ public class SerializeLeagueObjectModel implements ISerializeLeagueObjectModel {
     final String playerFileName = "--InjuredPlayer.json";
     final String jsonExtension = ".json";
 
-    public SerializeLeagueObjectModel(String jsonFilePath){
-        jsonFilePath = jsonFilePath;
+    public SerializeLeagueObjectModel(String inputJsonFilePath){
+        jsonFilePath = inputJsonFilePath;
     }
 
     public String serializeData(Object objLeagueObjectModel) throws Exception {
@@ -50,12 +50,13 @@ public class SerializeLeagueObjectModel implements ISerializeLeagueObjectModel {
         String serializedLeagueObjectModel = serializeData(objLeagueObjectModel);
         String leagueObjectModelJsonPath = jsonFilePath + objLeagueObjectModel.getLeagueName() + jsonExtension;
 
-        File objFile = new File(jsonFilePath);
+        File objFile = new File(leagueObjectModelJsonPath);
+
         if (objFile.exists()){
             myLogger.log(myLogger.getLevel(),"League Already exists");
         }else {
             if (objFile.createNewFile()) {
-                writeJsonToFile(jsonFilePath, serializedLeagueObjectModel);
+                writeJsonToFile(leagueObjectModelJsonPath, serializedLeagueObjectModel);
             } else {
                 myLogger.log(myLogger.getLevel(),"Error saving league object data to json");
             }
@@ -66,9 +67,9 @@ public class SerializeLeagueObjectModel implements ISerializeLeagueObjectModel {
         String serializedLeagueObjectModel = serializeData(objLeagueObjectModel);
         String leagueObjectModelJsonPath = jsonFilePath + objLeagueObjectModel.getLeagueName() + jsonExtension;
 
-        File objFile = new File(jsonFilePath);
+        File objFile = new File(leagueObjectModelJsonPath);
         if (objFile.exists()){
-            writeJsonToFile(jsonFilePath, serializedLeagueObjectModel);
+            writeJsonToFile(leagueObjectModelJsonPath, serializedLeagueObjectModel);
         }else {
             myLogger.log(myLogger.getLevel(),"This league doesn't exist");
         }
@@ -78,34 +79,39 @@ public class SerializeLeagueObjectModel implements ISerializeLeagueObjectModel {
         String playersJsonPath = jsonFilePath + leagueName + playerFileName;
 
         String serializedplayers = serializeData(playersToRetire);
-        File objFile = new File(jsonFilePath);
+        File objFile = new File(playersJsonPath);
         if (objFile.exists()){
             updateJsonFile(serializedplayers, playersJsonPath);
         }else {
             objFile.createNewFile();
-            writeJsonToFile(jsonFilePath, serializedplayers);
+            writeJsonToFile(playersJsonPath, serializedplayers);
         }
     }
 
     public void updateJsonFile(String newPlayers, String playersJsonPath) throws IOException, ParseException {
         FileReader existingPlayers = new FileReader(playersJsonPath);
-        JSONParser jsonParser = new JSONParser();
-        JSONArray arrExistingPlayers = (JSONArray) jsonParser.parse(existingPlayers);
-        JSONArray arrNewPlayers = (JSONArray) jsonParser.parse(newPlayers);
-        JSONArray arrCombined = new JSONArray();
+        try {
+            JSONParser jsonParser = new JSONParser();
+            JSONArray arrExistingPlayers = (JSONArray) jsonParser.parse(existingPlayers);
+            JSONArray arrNewPlayers = (JSONArray) jsonParser.parse(newPlayers);
+            JSONArray arrCombined = new JSONArray();
 
-        Iterator<?> existingPlayersIterator = (arrNewPlayers).iterator();
-        while (existingPlayersIterator.hasNext()) {
-            JSONObject existingPlayersJsonObject = (JSONObject) existingPlayersIterator.next();
-            arrCombined.add(existingPlayersJsonObject);
+            Iterator<?> existingPlayersIterator = (arrNewPlayers).iterator();
+            while (existingPlayersIterator.hasNext()) {
+                JSONObject existingPlayersJsonObject = (JSONObject) existingPlayersIterator.next();
+                arrCombined.add(existingPlayersJsonObject);
+            }
+
+            Iterator<?> newPlayersIterator = (arrExistingPlayers).iterator();
+            while (newPlayersIterator.hasNext()) {
+                JSONObject newPlayersJsonObject = (JSONObject) newPlayersIterator.next();
+                arrCombined.add(newPlayersJsonObject);
+            }
+
+            writeJsonToFile(playersJsonPath, String.valueOf(arrCombined));
         }
-
-        Iterator<?> newPlayersIterator = (arrExistingPlayers).iterator();
-        while (newPlayersIterator.hasNext()) {
-            JSONObject newPlayersJsonObject = (JSONObject) newPlayersIterator.next();
-            arrCombined.add(newPlayersJsonObject);
+        finally {
+            existingPlayers.close();
         }
-
-        writeJsonToFile(playersJsonPath, String.valueOf(arrCombined));
     }
 }
