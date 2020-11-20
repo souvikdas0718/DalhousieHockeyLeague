@@ -13,10 +13,19 @@ public class AdvanceToNextSeasonState implements ISimulationSeasonState {
         this.simulationContext = simulationContext;
     }
 
+    public SimulationContext getSimulationContext() {
+        return simulationContext;
+    }
+
+    public void setSimulationContext(SimulationContext simulationContext) {
+        this.simulationContext = simulationContext;
+    }
+
     @Override
     public void seasonStateEntryProcess() {
         simulationContext.setYear(simulationContext.getYear() + 1);
-        LocalDate endOfSeason = LocalDate.of(simulationContext.getYear() + 1, 9, 29);
+        LocalDate endOfSeason = LocalDate.of(simulationContext.getYear() , 9, 29);
+        simulationContext.setEndOfSimulation(endOfSeason);
         simulationContext.setNumberOfDays(365);
     }
 

@@ -51,6 +51,7 @@ public class SimulationContext implements ISimulationSeasonState {
     int numberOfDays;
     int year;
     LocalDate startOfSimulation;
+    LocalDate endOfSimulation;
     int daysSinceLastTraining;
     List<ITeam> teamsPlayingInGame;
     IInjury injury;
@@ -309,5 +310,13 @@ public class SimulationContext implements ISimulationSeasonState {
 
     public void setInMemoryLeague(ILeagueObjectModel inMemoryLeague) {
         this.inMemoryLeague = inMemoryLeague;
+    }
+
+    public LocalDate getEndOfSimulation() {
+        return endOfSimulation;
+    }
+
+    public void setEndOfSimulation(LocalDate endOfSimulation) {
+        this.endOfSimulation = endOfSimulation;
     }
 }
