@@ -12,6 +12,11 @@ import java.util.List;
 
 public class AiAiTrade implements ITradeType {
 
+
+    private static final int TOTAL_GOALIES = 4;
+    private static final int TOTAL_FORWARDS = 16;
+    private static final int TOTAL_DEFENSE = 10;
+
     ITradeOffer tradeOffer;
     IGameConfig gameConfig;
 
@@ -32,108 +37,79 @@ public class AiAiTrade implements ITradeType {
     }
 
     public void validateTeamRosterAfterTrade(ITeam team, ILeagueObjectModel leagueObjectModel) throws Exception {
-        int totalSkaters = 0;
+        int totalForwards = 0;
+        int totalDefense = 0;
         int totalGoalies = 0;
         ArrayList<IPlayer> players = (ArrayList<IPlayer>) team.getPlayers();
 
         for (IPlayer player : players) {
             String position = player.getPosition();
-            if (position.equals(PlayerPosition.FORWARD) || position.equals(PlayerPosition.DEFENSE)) {
-                totalSkaters = totalSkaters + 1;
+            if (position.equals(PlayerPosition.FORWARD.toString())){
+                totalForwards = totalForwards + 1;
             }
-            if (position.equals(PlayerPosition.GOALIE)) {
+            else if (position.equals(PlayerPosition.DEFENSE.toString())){
+                totalDefense = totalDefense + 1;
+            }
+            else if (position.equals(PlayerPosition.GOALIE.toString())) {
                 totalGoalies = totalGoalies + 1;
             }
         }
-        if (totalSkaters < 18 || totalSkaters > 18) {
-            updateSkaters(totalSkaters, team, leagueObjectModel);
+        if (totalForwards < TOTAL_FORWARDS || totalForwards > TOTAL_FORWARDS) {
+            updatePlayers(totalForwards, PlayerPosition.FORWARD.toString(), TOTAL_FORWARDS, team, leagueObjectModel);
         }
-        if (totalGoalies < 2 || totalGoalies > 2) {
-            updateGoalies(totalGoalies, team, leagueObjectModel);
+        if (totalDefense < TOTAL_DEFENSE || totalDefense > TOTAL_DEFENSE) {
+            updatePlayers(totalDefense, PlayerPosition.DEFENSE.toString(), TOTAL_DEFENSE, team, leagueObjectModel);
         }
-    }
-
-    public void updateSkaters(int totalSkaters, ITeam team, ILeagueObjectModel leagueObjectModel) throws Exception {
-        if (totalSkaters < 18) {
-            while (totalSkaters < 18) {
-                IPlayer skater = findBestSkater(leagueObjectModel.getFreeAgents());
-                team.getPlayers().add(skater);
-                leagueObjectModel.getFreeAgents().remove(skater);
-                totalSkaters = totalSkaters + 1;
-            }
-        } else if (totalSkaters > 18) {
-            while (totalSkaters > 18) {
-                IPlayer skater = findWeakSkater(team.getPlayers());
-                team.getPlayers().remove(skater);
-                leagueObjectModel.getFreeAgents().add(skater);
-                totalSkaters = totalSkaters - 1;
-            }
+        if (totalGoalies < TOTAL_GOALIES || totalGoalies > TOTAL_GOALIES) {
+            updatePlayers(totalGoalies, PlayerPosition.GOALIE.toString(), TOTAL_GOALIES, team, leagueObjectModel);
         }
     }
 
-    public IPlayer findBestSkater(List<IPlayer> playerList) throws Exception {
+    public void updatePlayers(int availablePlayer, String playerPosition, int validCount, ITeam team, ILeagueObjectModel leagueObjectModel) throws Exception {
+        if (availablePlayer < validCount){
+            while (availablePlayer < validCount){
+                IPlayer player = findBestPlayerInList(playerPosition, leagueObjectModel.getFreeAgents());
+                team.getPlayers().add(player);
+                leagueObjectModel.getFreeAgents().remove(player);
+                availablePlayer = availablePlayer + 1;
+            }
+        }else if (availablePlayer > validCount) {
+            while (availablePlayer > validCount) {
+                IPlayer player = findWeakestPlayerInList(playerPosition, team.getPlayers());
+                team.getPlayers().remove(player);
+                leagueObjectModel.getFreeAgents().add(player);
+                availablePlayer = availablePlayer - 1;
+            }
+        }
+    }
 
-        IPlayer bestSkater = null;
-        double bestPlayerStrength = 0.0;
-        for (IPlayer player : playerList) {
+    public IPlayer findWeakestPlayerInList(String neededPosition, List playerList) throws Exception {
+        IPlayer weakPlayer = null;
+        double skaterStrength = 10000.0;
+        for (Object ob : playerList) {
+            IPlayer player = (IPlayer) ob;
             String position = player.getPosition();
-            if (position.equals(PlayerPosition.FORWARD) || position.equals(PlayerPosition.DEFENSE)) {
-                if (player.getPlayerStrength() > bestPlayerStrength) {
-                    bestSkater = player;
-                    bestPlayerStrength = player.getPlayerStrength();
-                }
-            }
-        }
-        if (bestSkater == null) {
-            throw new Exception("No Skater found in List");
-        }
-        return bestSkater;
-    }
-
-    public IPlayer findWeakSkater(List<IPlayer> playerList) throws Exception {
-        IPlayer skater = null;
-        double skaterStrength = 1000.0;
-        for (IPlayer player : playerList) {
-            String position = player.getPosition();
-            if (position.equals(PlayerPosition.FORWARD) || position.equals(PlayerPosition.DEFENSE)) {
-
+            if (position.equals(neededPosition)) {
                 if (player.getPlayerStrength() < skaterStrength) {
-                    skater = player;
+                    weakPlayer = player;
                     skaterStrength = player.getPlayerStrength();
                 }
             }
         }
-        if (skater == null) {
+        if (weakPlayer == null) {
             throw new Exception("No Skater found in List");
         }
-        return skater;
+        return weakPlayer;
     }
 
-    public void updateGoalies(int totalGoalies, ITeam team, ILeagueObjectModel leagueObjectModel) throws Exception {
-        if (totalGoalies < 2) {
-            while (totalGoalies < 2) {
-                IPlayer skater = findBestGolie(leagueObjectModel.getFreeAgents());
-                team.getPlayers().add(skater);
-                leagueObjectModel.getFreeAgents().remove(skater);
-                totalGoalies = totalGoalies + 1;
-            }
-        } else if (totalGoalies > 2) {
-            while (totalGoalies > 2) {
-                IPlayer skater = findWeakGolie(team.getPlayers());
-                team.getPlayers().remove(skater);
-                leagueObjectModel.getFreeAgents().add(skater);
-                totalGoalies = totalGoalies - 1;
-            }
-        }
-    }
 
-    public IPlayer findBestGolie(List<IPlayer> playerList) throws Exception {
-
+    public IPlayer findBestPlayerInList(String playerPosition, List playerList) throws Exception {
         IPlayer bestPlayer = null;
         double bestPlayerStrength = 0.0;
-        for (IPlayer player : playerList) {
+        for (Object ob : playerList) {
+            IPlayer player = (IPlayer) ob;
             String position = player.getPosition();
-            if (position.equals(PlayerPosition.GOALIE)) {
+            if ( position.equals(playerPosition) ) {
                 if (player.getPlayerStrength() > bestPlayerStrength) {
                     bestPlayer = player;
                     bestPlayerStrength = player.getPlayerStrength();
@@ -141,27 +117,9 @@ public class AiAiTrade implements ITradeType {
             }
         }
         if (bestPlayer == null) {
-            throw new Exception("No Golie found in List");
+            throw new Exception("No Skater found in List");
         }
         return bestPlayer;
-    }
-
-    public IPlayer findWeakGolie(List<IPlayer> playerList) throws Exception {
-        IPlayer weakplayer = null;
-        double playerStrength = 1200.0;
-        for (IPlayer player : playerList) {
-            String position = player.getPosition();
-            if (position.equals(PlayerPosition.GOALIE)) {
-                if (player.getPlayerStrength() < playerStrength) {
-                    weakplayer = player;
-                    playerStrength = player.getPlayerStrength();
-                }
-            }
-        }
-        if (weakplayer == null) {
-            throw new Exception("No Golie found in List");
-        }
-        return weakplayer;
     }
 
     public boolean isTradeGoodForReceivingTeam(ITradeOffer tradeOffer) {

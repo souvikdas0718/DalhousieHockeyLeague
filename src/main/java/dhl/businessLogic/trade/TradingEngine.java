@@ -193,4 +193,8 @@ public class TradingEngine extends ITradingEngine {
             return false;
         }
     }
+
+    public void setIoObject(IUserInputOutput ioObject) {
+        this.ioObject = ioObject;
+    }
 }

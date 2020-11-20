@@ -14,6 +14,10 @@ import java.util.List;
 
 public class AiUserTrade implements ITradeType {
 
+    private static final int TOTAL_GOALIES = 4;
+    private static final int TOTAL_FORWARDS = 16;
+    private static final int TOTAL_DEFENSE = 10;
+
     IUserInputOutput ioObject;
     ITradeOffer tradeOffer;
     IUpdateUserTeamRoster updateUserTeamRoster;
@@ -44,10 +48,10 @@ public class AiUserTrade implements ITradeType {
 
         for (IPlayer player : players) {
             String position = player.getPosition();
-            if (position.equals(PlayerPosition.FORWARD) || position.equals(PlayerPosition.DEFENSE)) {
+            if (position.equals(PlayerPosition.FORWARD.toString()) || position.equals(PlayerPosition.DEFENSE.toString())) {
                 totalSkaters = totalSkaters + 1;
             }
-            if (position.equals(PlayerPosition.GOALIE)) {
+            if (position.equals(PlayerPosition.GOALIE.toString())) {
                 totalGoalies = totalGoalies + 1;
             }
         }
