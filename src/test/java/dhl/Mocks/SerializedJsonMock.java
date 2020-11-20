@@ -4,6 +4,29 @@ public class SerializedJsonMock {
     public String serializedJson() {
         String json = "{\n" +
                 "  \"leagueName\": \"Dhl\",\n" +
+                "\"gameplayConfig\": {\n" +
+                "      \"aging\": {\n" +
+                "         \"averageRetirementAge\": 36,\n" +
+                "         \"maximumAge\": 49\n" +
+                "      },\n" +
+                "      \"gameResolver\": {\n" +
+                "         \"randomWinChance\": 0.02\n" +
+                "      },\n" +
+                "      \"injuries\": {\n" +
+                "         \"randomInjuryChance\": 0.43,\n" +
+                "         \"injuryDaysLow\": 5,\n" +
+                "         \"injuryDaysHigh\": 359\n" +
+                "      },\n" +
+                "      \"training\": {\n" +
+                "         \"daysUntilStatIncreaseCheck\": 54\n" +
+                "      },\n" +
+                "      \"trading\": {\n" +
+                "         \"lossPoint\": 10,\n" +
+                "         \"randomTradeOfferChance\": 0.11,\n" +
+                "         \"maxPlayersPerTrade\": 4,\n" +
+                "         \"randomAcceptanceChance\": 0.25\n" +
+                "      }\n" +
+                "   }," +
                 "  \"conferences\": [\n" +
                 "    {\n" +
                 "      \"conferenceName\": \"Western1\",\n" +
