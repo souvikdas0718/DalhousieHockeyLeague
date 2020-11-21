@@ -1,6 +1,6 @@
 package dhl.Mocks;
 
-import dhl.InputOutput.importJson.Interface.IJsonFilePath;
+import dhl.inputOutput.importJson.interfaces.IJsonFilePath;
 
 public class JsonFilePathMock implements IJsonFilePath {
 

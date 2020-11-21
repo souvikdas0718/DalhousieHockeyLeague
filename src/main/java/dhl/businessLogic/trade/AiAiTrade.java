@@ -1,11 +1,13 @@
 package dhl.businessLogic.trade;
 
-import dhl.InputOutput.importJson.Interface.IGameConfig;
+import dhl.businessLogic.leagueModel.PlayerPosition;
+import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.trade.Interface.ITradeOffer;
-import dhl.businessLogic.trade.Interface.ITradeType;
+import dhl.businessLogic.trade.interfaces.ITradeOffer;
+import dhl.businessLogic.trade.interfaces.ITradeType;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +21,6 @@ public class AiAiTrade implements ITradeType {
         this.gameConfig = gameConfig;
     }
 
-    @Override
     public boolean isTradeAccepted() {
         double configRandomAcceptanceChance = Double.parseDouble(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getRandomAcceptanceChance()));
         double randomValue = Math.random();
@@ -31,7 +32,6 @@ public class AiAiTrade implements ITradeType {
         return false;
     }
 
-    @Override
     public void validateTeamRosterAfterTrade(ITeam team, ILeagueObjectModel leagueObjectModel) throws Exception {
         int totalSkaters = 0;
         int totalGoalies = 0;
@@ -39,10 +39,10 @@ public class AiAiTrade implements ITradeType {
 
         for (IPlayer player : players) {
             String position = player.getPosition();
-            if (position.equals("forward") || position.equals("defense")) {
+            if (position.equals(PlayerPosition.FORWARD.toString()) || position.equals(PlayerPosition.DEFENSE.toString())) {
                 totalSkaters = totalSkaters + 1;
             }
-            if (position.equals("goalie")) {
+            if (position.equals(PlayerPosition.GOALIE.toString())) {
                 totalGoalies = totalGoalies + 1;
             }
         }
@@ -78,7 +78,7 @@ public class AiAiTrade implements ITradeType {
         double bestPlayerStrength = 0.0;
         for (IPlayer player : playerList) {
             String position = player.getPosition();
-            if (position.equals("forward") || position.equals("defense")) {
+            if (position.equals(PlayerPosition.FORWARD.toString()) || position.equals(PlayerPosition.DEFENSE.toString())) {
                 if (player.getPlayerStrength() > bestPlayerStrength) {
                     bestSkater = player;
                     bestPlayerStrength = player.getPlayerStrength();
@@ -96,7 +96,7 @@ public class AiAiTrade implements ITradeType {
         double skaterStrength = 1000.0;
         for (IPlayer player : playerList) {
             String position = player.getPosition();
-            if (position.equals("forward") || position.equals("defense")) {
+            if (position.equals(PlayerPosition.FORWARD.toString()) || position.equals(PlayerPosition.DEFENSE.toString())) {
 
                 if (player.getPlayerStrength() < skaterStrength) {
                     skater = player;
@@ -134,7 +134,7 @@ public class AiAiTrade implements ITradeType {
         double bestPlayerStrength = 0.0;
         for (IPlayer player : playerList) {
             String position = player.getPosition();
-            if (position.equals("goalie")) {
+            if (position.equals(PlayerPosition.GOALIE.toString())) {
                 if (player.getPlayerStrength() > bestPlayerStrength) {
                     bestPlayer = player;
                     bestPlayerStrength = player.getPlayerStrength();
@@ -152,7 +152,7 @@ public class AiAiTrade implements ITradeType {
         double playerStrength = 1200.0;
         for (IPlayer player : playerList) {
             String position = player.getPosition();
-            if (position.equals("goalie")) {
+            if (position.equals(PlayerPosition.GOALIE.toString())) {
                 if (player.getPlayerStrength() < playerStrength) {
                     weakplayer = player;
                     playerStrength = player.getPlayerStrength();

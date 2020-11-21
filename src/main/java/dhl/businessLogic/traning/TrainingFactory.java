@@ -1,11 +1,10 @@
 package dhl.businessLogic.traning;
 
-import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.businessLogic.aging.interfaceAging.IInjury;
-import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
-import dhl.businessLogic.traning.Interfaces.ITraining;
+import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
+import dhl.businessLogic.traning.interfaces.ITraining;
 
-public class TrainingFactory implements TrainingAbstractFactory {
+public class TrainingFactory extends TrainingAbstractFactory {
 
     public ITraining createTraining(IInjury injurySystem, IGameConfig gameConfig) {
         return new Training(injurySystem, gameConfig);

@@ -2,7 +2,7 @@ package dhl.businessLogic.trade;
 
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.trade.Interface.ITradeOffer;
+import dhl.businessLogic.trade.interfaces.ITradeOffer;
 
 import java.util.ArrayList;
 
@@ -19,7 +19,6 @@ public class ExchangingPlayerTradeOffer implements ITradeOffer {
         this.playersWantedInExchange = playersWantedInExchange;
     }
 
-    @Override
     public void implementTrade() {
         for (IPlayer player : playersOffered) {
             receivingTeam.getPlayers().add(player);
@@ -31,12 +30,10 @@ public class ExchangingPlayerTradeOffer implements ITradeOffer {
         }
     }
 
-    @Override
     public ITeam getOfferingTeam() {
         return offeringTeam;
     }
 
-    @Override
     public ITeam getReceivingTeam() {
         return receivingTeam;
     }

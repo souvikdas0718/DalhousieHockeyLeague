@@ -1,17 +1,18 @@
 package dhl.importJsonTest;
 
-import dhl.InputOutput.importJson.CreateLeagueObjectModel;
-import dhl.InputOutput.importJson.ImportJsonFile;
-import dhl.InputOutput.importJson.Interface.ICreateLeagueObjectModel;
-import dhl.InputOutput.importJson.Interface.IImportJsonFile;
 import dhl.Mocks.JsonFilePathMock;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
+import dhl.inputOutput.importJson.CreateLeagueObjectModel;
+import dhl.inputOutput.importJson.ImportJsonFile;
+
+import dhl.inputOutput.importJson.interfaces.IImportJsonFile;
+import dhl.inputOutput.importJson.interfaces.ICreateLeagueObjectModel;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CreateLeagueObjectModelTest {
     JSONObject leagueObject;

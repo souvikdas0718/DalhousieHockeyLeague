@@ -1,7 +1,5 @@
 package dhl.businessLogicTest.tradeTest;
 
-import dhl.InputOutput.UI.IUserInputOutput;
-import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.Mocks.GameConfigMock;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.Mocks.MockUserInputOutput;
@@ -9,13 +7,15 @@ import dhl.businessLogic.leagueModel.Coach;
 import dhl.businessLogic.leagueModel.Player;
 import dhl.businessLogic.leagueModel.PlayerStatistics;
 import dhl.businessLogic.leagueModel.Team;
+import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.simulationStateMachine.Interface.IUpdateUserTeamRoster;
 import dhl.businessLogic.simulationStateMachine.UpdateUserTeamRoster;
-import dhl.businessLogic.trade.Interface.ITradeOffer;
+import dhl.businessLogic.simulationStateMachine.interfaces.IUpdateUserTeamRoster;
 import dhl.businessLogic.trade.TradingEngine;
+import dhl.businessLogic.trade.interfaces.ITradeOffer;
+import dhl.inputOutput.ui.IUserInputOutput;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -49,7 +49,7 @@ public class TradingEngineTest {
         IGameConfig ourGameConfig = gameConfigMock.getGameConfigMock();
         userTeam = new Team();
         IUpdateUserTeamRoster updateUserTeamRoster = new UpdateUserTeamRoster(ioObject);
-        testClassObject = new TradingEngine(ourGameConfig, leagueMock, userTeam, ioObject, updateUserTeamRoster);
+        testClassObject = (TradingEngine) TradingEngine.getInstance(ourGameConfig, leagueMock, userTeam, ioObject, updateUserTeamRoster);
     }
 
     @Test

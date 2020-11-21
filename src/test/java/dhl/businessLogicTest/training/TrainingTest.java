@@ -1,19 +1,15 @@
 package dhl.businessLogicTest.training;
 
-import dhl.businessLogic.leagueModel.GameConfig;
-import dhl.InputOutput.importJson.ImportJsonFile;
 import dhl.Mocks.JsonFilePathMock;
 import dhl.Mocks.LeagueObjectModelMocks;
-import dhl.businessLogic.leagueModel.Team;
-import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogicTest.leagueModelTests.MockDatabase;
-import dhl.database.interfaceDB.ILeagueObjectModelDB;
 import dhl.businessLogic.aging.Injury;
-import dhl.businessLogic.leagueModel.LeagueObjectModel;
-import dhl.businessLogic.traning.Training;
 import dhl.businessLogic.aging.interfaceAging.IInjury;
-import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
+import dhl.businessLogic.leagueModel.GameConfig;
+import dhl.businessLogic.leagueModel.Team;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
+import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
+import dhl.businessLogic.traning.Training;
+import dhl.inputOutput.importJson.ImportJsonFile;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,15 +34,16 @@ public class TrainingTest {
         trainingParameterized = new Training(injurySystem, gameConfig);
         leagueObjectModelMocks = new LeagueObjectModelMocks();
     }
+// TODO: 21-11-2020 REMOVE DB METHOD CALL!
 
-    @Test
-    public void updatePlayerStatsTest() throws Exception {
-        ILeagueObjectModelDB mockLeagueObject = new MockDatabase();
-        ILeagueObjectModel newLeagueObject = new LeagueObjectModel();
-        newLeagueObject = trainingParameterized.updatePlayerStats(mockLeagueObject.loadLeagueModel("Dhl", "Ontario"));
-
-        Assertions.assertNotNull("Dhl", newLeagueObject.getLeagueName());
-    }
+//    @Test
+//    public void updatePlayerStatsTest() throws Exception {
+//        ILeagueObjectModelDB mockLeagueObject = new MockDatabase();
+//        ILeagueObjectModel newLeagueObject = new LeagueObjectModel();
+//        newLeagueObject = trainingParameterized.updatePlayerStats(mockLeagueObject.loadLeagueModel("Dhl", "Ontario"));
+//
+//        Assertions.assertNotNull("Dhl", newLeagueObject.getLeagueName());
+//    }
 
     @Test
     public void playerStatLessThanHeadCoachStatTest() throws Exception {

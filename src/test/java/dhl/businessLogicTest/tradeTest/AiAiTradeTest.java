@@ -1,19 +1,20 @@
 package dhl.businessLogicTest.tradeTest;
 
-import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.Mocks.GameConfigMock;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.leagueModel.LeagueObjectModel;
 import dhl.businessLogic.leagueModel.Player;
 import dhl.businessLogic.leagueModel.PlayerStatistics;
+import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.trade.AiAiTrade;
 import dhl.businessLogic.trade.ExchangingPlayerTradeOffer;
-import dhl.businessLogic.trade.Interface.ITradeOffer;
+import dhl.businessLogic.trade.interfaces.ITradeOffer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 
 public class AiAiTradeTest {

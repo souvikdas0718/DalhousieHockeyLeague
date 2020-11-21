@@ -1,12 +1,12 @@
 package dhl.businessLogicTest.AgingTest;
 
-import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.aging.Injury;
 import dhl.businessLogic.leagueModel.Coach;
 import dhl.businessLogic.leagueModel.Player;
 import dhl.businessLogic.leagueModel.PlayerStatistics;
 import dhl.businessLogic.leagueModel.Team;
+import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;

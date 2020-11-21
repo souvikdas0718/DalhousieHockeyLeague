@@ -1,12 +1,13 @@
 package dhl.businessLogic.trade;
 
-import dhl.InputOutput.UI.IUserInputOutput;
+import dhl.businessLogic.leagueModel.PlayerPosition;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.simulationStateMachine.Interface.IUpdateUserTeamRoster;
-import dhl.businessLogic.trade.Interface.ITradeOffer;
-import dhl.businessLogic.trade.Interface.ITradeType;
+import dhl.businessLogic.simulationStateMachine.interfaces.IUpdateUserTeamRoster;
+import dhl.businessLogic.trade.interfaces.ITradeOffer;
+import dhl.businessLogic.trade.interfaces.ITradeType;
+import dhl.inputOutput.ui.IUserInputOutput;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,21 +24,19 @@ public class AiUserTrade implements ITradeType {
         this.updateUserTeamRoster = updateUserTeamRoster;
     }
 
-    @Override
     public boolean isTradeAccepted() throws Exception {
         DisplayTradeOfferToUser(tradeOffer.getOfferingPlayers());
-        int inputfromUser = Integer.parseInt(ioObject.getUserInput());
+        int inputFromUser = Integer.parseInt(ioObject.getUserInput());
 
-        if (inputfromUser == 1) {
+        if (inputFromUser == 1) {
             return true;
-        } else if (inputfromUser == 2) {
+        } else if (inputFromUser == 2) {
             return false;
         } else {
             throw new Exception("Wrong Input please give valid input");
         }
     }
 
-    @Override
     public void validateTeamRosterAfterTrade(ITeam team, ILeagueObjectModel leagueObjectModel) throws Exception {
         int totalSkaters = 0;
         int totalGoalies = 0;
@@ -45,10 +44,10 @@ public class AiUserTrade implements ITradeType {
 
         for (IPlayer player : players) {
             String position = player.getPosition();
-            if (position.equals("forward") || position.equals("defense")) {
+            if (position.equals(PlayerPosition.FORWARD.toString()) || position.equals(PlayerPosition.DEFENSE.toString())) {
                 totalSkaters = totalSkaters + 1;
             }
-            if (position.equals("goalie")) {
+            if (position.equals(PlayerPosition.GOALIE.toString())) {
                 totalGoalies = totalGoalies + 1;
             }
         }

@@ -1,6 +1,6 @@
 package dhl.businessLogic.leagueModel;
 
-import dhl.InputOutput.importJson.Interface.IGameConfig;
+import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import org.json.simple.JSONObject;
 
 import java.util.HashMap;

@@ -1,6 +1,6 @@
 package dhl.Mocks;
 
-import dhl.InputOutput.UI.IUserInputOutput;
+import dhl.inputOutput.ui.IUserInputOutput;
 
 public class MockUserInputOutput implements IUserInputOutput {
 

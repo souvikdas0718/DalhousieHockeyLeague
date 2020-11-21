@@ -1,10 +1,9 @@
 package dhl.businessLogicTest.leagueModelTests;
 
-import dhl.businessLogic.leagueModel.GameConfig;
-import dhl.InputOutput.importJson.Interface.ISerializeLeagueObjectModel;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.leagueModel.*;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
+import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;

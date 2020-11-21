@@ -1,12 +1,13 @@
 package dhl.businessLogic.trade;
 
-import dhl.InputOutput.UI.IUserInputOutput;
-import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
-import dhl.businessLogic.simulationStateMachine.Interface.IUpdateUserTeamRoster;
-import dhl.businessLogic.trade.Interface.ITradeOffer;
-import dhl.businessLogic.trade.Interface.ITradeType;
-import dhl.businessLogic.trade.Interface.ITradingEngine;
+import dhl.businessLogic.simulationStateMachine.interfaces.IUpdateUserTeamRoster;
+import dhl.businessLogic.trade.factory.TradeAbstractFactory;
+import dhl.businessLogic.trade.factory.TradeConcreteFactory;
+import dhl.businessLogic.trade.interfaces.ITradeOffer;
+import dhl.businessLogic.trade.interfaces.ITradeType;
+import dhl.businessLogic.trade.interfaces.ITradingEngine;
+import dhl.inputOutput.ui.IUserInputOutput;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +20,12 @@ public class TradingEngine implements ITradingEngine {
     IUserInputOutput ioObject;
     ITeam userTeam;
     IUpdateUserTeamRoster updateUserTeamRoster;
+    TradeAbstractFactory factory;
 
-    public TradingEngine(IGameConfig gameConfig, ILeagueObjectModel leagueObjectModel, ITeam userTeam, IUserInputOutput ioObject, IUpdateUserTeamRoster updateUserTeamRoster) {
+    private static ITradingEngine instance;
+
+    private TradingEngine(IGameConfig gameConfig, ILeagueObjectModel leagueObjectModel, ITeam userTeam, IUserInputOutput ioObject, IUpdateUserTeamRoster updateUserTeamRoster) {
+        factory = new TradeConcreteFactory();
         this.gameConfig = gameConfig;
         this.leagueObjectModel = leagueObjectModel;
         this.ioObject = ioObject;
@@ -28,7 +33,13 @@ public class TradingEngine implements ITradingEngine {
         this.updateUserTeamRoster = updateUserTeamRoster;
     }
 
-    @Override
+    public static ITradingEngine getInstance(IGameConfig gameConfig, ILeagueObjectModel leagueObjectModel, ITeam userTeam, IUserInputOutput ioObject, IUpdateUserTeamRoster updateUserTeamRoster) {
+        if (instance == null) {
+            instance = new TradingEngine(gameConfig, leagueObjectModel, userTeam, ioObject, updateUserTeamRoster);
+        }
+        return instance;
+    }
+
     public void startEngine() {
         long configLossPoint = Long.parseLong(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getLossPoint()));
         double configRandomTradeChance = Double.parseDouble(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getRandomTradeOfferChance()));
@@ -64,9 +75,9 @@ public class TradingEngine implements ITradingEngine {
     public void sendTradeToRecevingTeam(ITradeOffer currentTrade, ITeam userTeam) throws Exception {
         ITradeType tradeType;
         if(currentTrade.getReceivingTeam() == userTeam){
-            tradeType = new AiUserTrade(currentTrade , ioObject , updateUserTeamRoster);
+            tradeType = factory.createAiUserTrade(currentTrade, ioObject, updateUserTeamRoster);
         }else{
-            tradeType = new AiAiTrade(currentTrade , gameConfig);
+            tradeType = factory.createAiAiTrade(currentTrade, gameConfig);
         }
         if (tradeType.isTradeAccepted()) {
             ioObject.printMessage("Trade done between: " + currentTrade.getOfferingTeam().getTeamName() + " And " + currentTrade.getReceivingTeam().getTeamName());
@@ -105,7 +116,7 @@ public class TradingEngine implements ITradingEngine {
         for (IPlayer playerToBeOffered : offeringTeamPayers) {
             for (IPlayer playerToGetInExchange : secondTeamPlayers) {
                 if (maxPlayersInTrade + 2 <= congifMaxPlayerPerTrade) {
-                    if (playerToGetInExchange.getPosition() == playerToBeOffered.getPosition()) {
+                    if (playerToGetInExchange.getPosition().equals(playerToBeOffered.getPosition())) {
                         if (playerToGetInExchange.getPlayerStrength() > playerToBeOffered.getPlayerStrength()) {
                             if (isPlayerNotInWantedList(playerToGetInExchange, playersWanted)) {
                                 playersOffered.add(playerToBeOffered);
@@ -118,7 +129,7 @@ public class TradingEngine implements ITradingEngine {
                 }
             }
         }
-        ITradeOffer newOffer = new ExchangingPlayerTradeOffer(teamOffering , teamGettingOffer , playersOffered , playersWanted );
+        ITradeOffer newOffer = factory.createExchangingPlayerTradeOffer(teamOffering, teamGettingOffer, playersOffered, playersWanted);
         return newOffer;
     }
 
@@ -169,7 +180,7 @@ public class TradingEngine implements ITradingEngine {
         for (IPlayer playerToBeOffered : offeringTeamPayers) {
             for (IPlayer playerToGetInExchange : secondTeamPlayers) {
                 if (maxPlayersInTrade + 2 <= congifMaxPlayerPerTrade) {
-                    if (playerToGetInExchange.getPosition() == playerToBeOffered.getPosition()) {
+                    if ( playerToGetInExchange.getPosition().equals(playerToBeOffered.getPosition()) ) {
                         if (playerToGetInExchange.getPlayerStrength() > playerToBeOffered.getPlayerStrength()) {
                             maxPlayersInTrade += 2;
                             break;

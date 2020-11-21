@@ -1,13 +1,13 @@
 package dhl.businessLogic.simulationStateMachine;
 
-import dhl.InputOutput.importJson.Interface.IGameConfig;
+import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.simulationStateMachine.Interface.IGameState;
-import dhl.businessLogic.simulationStateMachine.States.CreateTeamState;
-import dhl.businessLogic.simulationStateMachine.States.ImportState;
-import dhl.businessLogic.simulationStateMachine.States.LoadTeamState;
-import dhl.businessLogic.simulationStateMachine.States.SimulateState;
+import dhl.businessLogic.simulationStateMachine.interfaces.IGameState;
+import dhl.businessLogic.simulationStateMachine.states.CreateTeamState;
+import dhl.businessLogic.simulationStateMachine.states.ImportState;
+import dhl.businessLogic.simulationStateMachine.states.LoadTeamState;
+import dhl.businessLogic.simulationStateMachine.states.SimulateState;
 
 public class GameContext {
     IGameState importState;

@@ -1,9 +1,9 @@
 package dhl.businessLogic.aging;
 
-import dhl.InputOutput.importJson.Interface.ISerializeLeagueObjectModel;
+import dhl.businessLogic.aging.interfaceAging.IRetirement;
 import dhl.businessLogic.leagueModel.Player;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
-import dhl.businessLogic.aging.interfaceAging.IRetirement;
+import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -115,6 +115,6 @@ public class Retirement implements IRetirement {
         for (String teamName : playersToRetire.keySet()) {
             retiredPlayers.addAll(playersToRetire.get(teamName));
         }
-        serializeModel.updateSerializedPlayerListToJsonFile(retiredPlayers,"retiringPlayers");
+        serializeModel.updateSerializedPlayerListToJsonFile(retiredPlayers,leagueObjectModel.getLeagueName());
     }
 }

@@ -1,29 +1,13 @@
 package dhl.businessLogic.leagueModel.factory;
 
-import dhl.businessLogic.leagueModel.GameConfig;
-import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.businessLogic.leagueModel.*;
-import dhl.businessLogic.leagueModel.factory.interfaceFactory.LomAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
+import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import org.json.simple.JSONObject;
 
 import java.util.List;
 
-public class LeagueModelFactory implements LomAbstractFactory {
-
-    private static LeagueModelFactory uniqueInstance = null;
-
-    private LeagueModelFactory() {
-
-    }
-
-    public static LeagueModelFactory instance() {
-        if (null == uniqueInstance)
-        {
-            uniqueInstance = new LeagueModelFactory();
-        }
-        return uniqueInstance;
-    }
+public class LeagueModelFactory extends LeagueModelAbstractFactory {
 
     public IValidation createCommonValidation() {
         return new CommonValidation();
@@ -67,6 +51,11 @@ public class LeagueModelFactory implements LomAbstractFactory {
 
     public IGameConfig createGameConfig(JSONObject leagueJson ){
         return new GameConfig(leagueJson);
+    }
+
+    public ILeagueObjectModelInput createLeagueObjectModelInput(String leagueName, String conferenceName, String divisionName, ITeam newlyCreatedTeam, ISerializeLeagueObjectModel serializeLeagueObjectModel) {
+        ILeagueObjectModelValidation leagueObjectModelValidation = createLeagueObjectModelValidation();
+        return new LeagueObjectModelInput(leagueName, conferenceName, divisionName, newlyCreatedTeam, leagueObjectModelValidation, serializeLeagueObjectModel);
     }
 
 }

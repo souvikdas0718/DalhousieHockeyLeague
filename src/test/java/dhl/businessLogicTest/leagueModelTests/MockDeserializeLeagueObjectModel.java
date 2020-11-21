@@ -1,22 +1,19 @@
 package dhl.businessLogicTest.leagueModelTests;
 
-import dhl.InputOutput.importJson.Interface.IDeserializeLeagueObjectModel;
-import dhl.InputOutput.importJson.Interface.ISerializeLeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import dhl.inputOutput.importJson.serializeDeserialize.interfaces.IDeserializeLeagueObjectModel;
 import org.json.simple.parser.ParseException;
 
 import java.util.List;
 
 public class MockDeserializeLeagueObjectModel implements IDeserializeLeagueObjectModel {
 
-    public ILeagueObjectModel deserializeLeagueObjectJson(JSONObject jsonLeagueObject) {
+    public ILeagueObjectModel deserializeLeagueObjectJson(String leagueName) {
         return null;
     }
 
-    public List<IPlayer> deserializePlayers(JSONArray arrPlayers) throws ParseException {
+    public List<IPlayer> deserializePlayers(String leagueName) throws ParseException {
         return null;
     }
 }

@@ -1,18 +1,17 @@
 package dhl.businessLogicTest.AgingTest;
 
-import dhl.InputOutput.importJson.Interface.ISerializeLeagueObjectModel;
-import dhl.InputOutput.importJson.SerializeLeagueObjectModel;
 import dhl.Mocks.LeagueObjectModelMocks;
-import dhl.businessLogicTest.leagueModelTests.PlayerDBMock;
-import dhl.database.interfaceDB.IPlayerDB;
+import dhl.businessLogic.aging.Retirement;
 import dhl.businessLogic.leagueModel.FreeAgent;
 import dhl.businessLogic.leagueModel.Player;
 import dhl.businessLogic.leagueModel.PlayerStatistics;
-import dhl.businessLogic.aging.Retirement;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
+
+import dhl.inputOutput.importJson.serializeDeserialize.SerializeLeagueObjectModel;
+import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,12 +25,11 @@ import java.util.Map;
 public class RetirementTest {
     Retirement retirement;
     LeagueObjectModelMocks leagueMock;
-    IPlayerDB playerDBMock;
 
     @BeforeEach()
     public void initObject() {
         leagueMock = new LeagueObjectModelMocks();
-        ISerializeLeagueObjectModel serializeModel = new SerializeLeagueObjectModel();
+        ISerializeLeagueObjectModel serializeModel = new SerializeLeagueObjectModel("src/test/java/dhl/Mocks/");
         retirement = new Retirement(serializeModel, leagueMock.getLeagueObjectMock());
     }
 

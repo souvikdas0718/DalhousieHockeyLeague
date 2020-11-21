@@ -1,20 +1,17 @@
 package dhl.businessLogicTest.AgingTest;
 
-
-import dhl.InputOutput.importJson.Interface.IGameConfig;
-import dhl.InputOutput.importJson.Interface.ISerializeLeagueObjectModel;
-import dhl.InputOutput.importJson.SerializeLeagueObjectModel;
 import dhl.Mocks.LeagueObjectModelMocks;
+import dhl.businessLogic.aging.Aging;
+import dhl.businessLogic.aging.Injury;
+import dhl.businessLogic.aging.LeagueSchedule;
+import dhl.businessLogic.aging.Retirement;
 import dhl.businessLogic.aging.interfaceAging.IAging;
 import dhl.businessLogic.aging.interfaceAging.IInjury;
 import dhl.businessLogic.aging.interfaceAging.IRetirement;
-import dhl.businessLogicTest.leagueModelTests.PlayerDBMock;
-import dhl.database.interfaceDB.IPlayerDB;
-import dhl.businessLogic.aging.LeagueSchedule;
-import dhl.businessLogic.aging.Aging;
-import dhl.businessLogic.aging.Injury;
-import dhl.businessLogic.aging.Retirement;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
+
+import dhl.inputOutput.importJson.serializeDeserialize.SerializeLeagueObjectModel;
+import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,8 +33,8 @@ public class LeagueScheduleTest {
     public void initObject() {
         leagueMock = new LeagueObjectModelMocks();
         gameConfig = leagueMock.getGameConfig();
-        ISerializeLeagueObjectModel serializeModel = new SerializeLeagueObjectModel();
         leagueObjectModel = leagueMock.getLeagueObjectMock();
+        ISerializeLeagueObjectModel serializeModel = new SerializeLeagueObjectModel(leagueObjectModel.getLeagueName());
         IAging agingSystem = new Aging(gameConfig);
         retirementSystem = new Retirement(serializeModel, leagueObjectModel);
         injurySystem = new Injury();

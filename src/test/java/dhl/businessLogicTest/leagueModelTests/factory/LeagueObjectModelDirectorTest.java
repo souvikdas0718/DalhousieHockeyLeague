@@ -1,9 +1,5 @@
 package dhl.businessLogicTest.leagueModelTests.factory;
 
-import dhl.InputOutput.importJson.ImportJsonFile;
-import dhl.InputOutput.importJson.Interface.IGameConfig;
-import dhl.InputOutput.importJson.Interface.IImportJsonFile;
-import dhl.InputOutput.importJson.JsonFilePath;
 import dhl.Mocks.JsonFilePathMock;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.leagueModel.factory.LeagueObjectModelBuilder;
@@ -11,6 +7,8 @@ import dhl.businessLogic.leagueModel.factory.LeagueObjectModelDirector;
 import dhl.businessLogic.leagueModel.factory.interfaceFactory.ILeagueObjectModelBuilder;
 import dhl.businessLogic.leagueModel.factory.interfaceFactory.ILeagueObjectModelDirector;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
+import dhl.inputOutput.importJson.ImportJsonFile;
+import dhl.inputOutput.importJson.interfaces.IImportJsonFile;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

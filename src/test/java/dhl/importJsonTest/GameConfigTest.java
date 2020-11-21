@@ -1,9 +1,9 @@
 package dhl.importJsonTest;
 
-import dhl.businessLogic.leagueModel.GameConfig;
-import dhl.InputOutput.importJson.ImportJsonFile;
-import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.Mocks.JsonFilePathMock;
+import dhl.businessLogic.leagueModel.GameConfig;
+import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
+import dhl.inputOutput.importJson.ImportJsonFile;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

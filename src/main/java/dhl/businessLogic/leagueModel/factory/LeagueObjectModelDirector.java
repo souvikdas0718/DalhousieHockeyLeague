@@ -1,6 +1,5 @@
 package dhl.businessLogic.leagueModel.factory;
 
-import dhl.InputOutput.importJson.Interface.IGameConfig;
 import dhl.businessLogic.leagueModel.factory.interfaceFactory.ILeagueObjectModelBuilder;
 import dhl.businessLogic.leagueModel.factory.interfaceFactory.ILeagueObjectModelDirector;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
@@ -13,11 +12,11 @@ import java.util.List;
 
 public class LeagueObjectModelDirector implements ILeagueObjectModelDirector {
     private ILeagueObjectModelBuilder builder;
-    private LeagueModelFactory factory;
+    private LeagueModelAbstractFactory factory;
 
     public LeagueObjectModelDirector(ILeagueObjectModelBuilder builder) {
         this.builder = builder;
-        factory = LeagueModelFactory.instance();
+        factory = LeagueModelAbstractFactory.instance();
     }
 
     public ILeagueObjectModel construct(String leagueName,List<IConference> conferences,List<IPlayer> freeAgents, List<ICoach> coaches, List<IGeneralManager> managers, IGameConfig gameConfig) {

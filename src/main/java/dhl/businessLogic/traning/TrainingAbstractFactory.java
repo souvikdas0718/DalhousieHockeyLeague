@@ -1,18 +1,22 @@
 package dhl.businessLogic.traning;
 
-import dhl.InputOutput.importJson.Interface.IGameConfig;
-import dhl.businessLogic.traning.Interfaces.ITraining;
-import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.aging.interfaceAging.IInjury;
-import dhl.businessLogic.leagueModel.interfaceModel.IConference;
-import dhl.businessLogic.leagueModel.interfaceModel.IDivision;
-import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
-import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
-import dhl.businessLogic.leagueModel.interfaceModel.ICoach;
+import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
+import dhl.businessLogic.traning.interfaces.ITraining;
 
-import java.util.List;
+public abstract class TrainingAbstractFactory {
+    private static TrainingAbstractFactory uniqueInstance = null;
 
-public interface TrainingAbstractFactory {
-    public ITraining createTraining(IInjury injurySystem, IGameConfig gameConfig);
+    protected TrainingAbstractFactory(){
+
+    }
+
+    public static TrainingAbstractFactory instance(){
+        if (null == uniqueInstance){
+            uniqueInstance = new TrainingFactory();
+        }
+        return uniqueInstance;
+    }
+
+    public abstract ITraining createTraining(IInjury injurySystem, IGameConfig gameConfig);
 }

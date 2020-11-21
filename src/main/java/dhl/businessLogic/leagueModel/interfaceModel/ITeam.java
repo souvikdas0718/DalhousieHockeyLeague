@@ -1,7 +1,6 @@
 package dhl.businessLogic.leagueModel.interfaceModel;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public interface ITeam {
 
