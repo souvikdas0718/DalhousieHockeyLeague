@@ -10,6 +10,7 @@ import dhl.businessLogic.aging.interfaceAging.IInjury;
 import dhl.businessLogic.aging.interfaceAging.IRetirement;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 
+import dhl.businessLogicTest.leagueModelTests.MockSerializeLeagueObjectModel;
 import dhl.inputOutput.importJson.serializeDeserialize.SerializeLeagueObjectModel;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import org.junit.jupiter.api.AfterEach;
@@ -34,7 +35,7 @@ public class LeagueScheduleTest {
         leagueMock = new LeagueObjectModelMocks();
         gameConfig = leagueMock.getGameConfig();
         leagueObjectModel = leagueMock.getLeagueObjectMock();
-        ISerializeLeagueObjectModel serializeModel = new SerializeLeagueObjectModel(leagueObjectModel.getLeagueName());
+        ISerializeLeagueObjectModel serializeModel = new MockSerializeLeagueObjectModel();
         IAging agingSystem = new Aging(gameConfig);
         retirementSystem = new Retirement(serializeModel, leagueObjectModel);
         injurySystem = new Injury();

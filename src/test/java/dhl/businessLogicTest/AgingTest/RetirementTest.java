@@ -10,6 +10,7 @@ import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 
+import dhl.businessLogicTest.leagueModelTests.MockSerializeLeagueObjectModel;
 import dhl.inputOutput.importJson.serializeDeserialize.SerializeLeagueObjectModel;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import org.junit.jupiter.api.AfterEach;
@@ -29,7 +30,7 @@ public class RetirementTest {
     @BeforeEach()
     public void initObject() {
         leagueMock = new LeagueObjectModelMocks();
-        ISerializeLeagueObjectModel serializeModel = new SerializeLeagueObjectModel("src/test/java/dhl/Mocks/");
+        ISerializeLeagueObjectModel serializeModel = new MockSerializeLeagueObjectModel();
         retirement = new Retirement(serializeModel, leagueMock.getLeagueObjectMock());
     }
 
