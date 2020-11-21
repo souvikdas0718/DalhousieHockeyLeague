@@ -8,22 +8,23 @@ import java.util.HashMap;
 public class GameConfig implements IGameConfig {
 
     JSONObject ourJsonObject;
-    private static final String trading = "trading";
-    private static final String lossPoint = "lossPoint";
-    private static final String randomTradeOfferChance = "randomTradeOfferChance";
-    private static final String maxPlayersPerTrade = "maxPlayersPerTrade";
-    private static final String randomAcceptanceChance = "randomAcceptanceChance";
-    private static final String aging = "aging";
-    private static final String averageRetirementAge = "averageRetirementAge";
-    private static final String maximumAge = "maximumAge";
-    private static final String injuries = "injuries";
-    private static final String randomInjuryChance = "randomInjuryChance";
-    private static final String injuryDaysLow = "injuryDaysLow";
-    private static final String injuryDaysHigh = "injuryDaysHigh";
-    private static final String training = "training";
-    private static final String daysUntilStatIncreaseCheck = "daysUntilStatIncreaseCheck";
-    private static final String gameResolver = "gameResolver";
-    private static final String randomWinChance = "randomWinChance";
+    private String trading = "trading";
+    private String lossPoint = "lossPoint";
+    private String randomTradeOfferChance = "randomTradeOfferChance";
+    private String maxPlayersPerTrade = "maxPlayersPerTrade";
+    private String randomAcceptanceChance = "randomAcceptanceChance";
+    private String gmTable = "gmTable";
+    private String aging = "aging";
+    private String averageRetirementAge = "averageRetirementAge";
+    private String maximumAge = "maximumAge";
+    private String injuries = "injuries";
+    private String randomInjuryChance = "randomInjuryChance";
+    private String injuryDaysLow = "injuryDaysLow";
+    private String injuryDaysHigh = "injuryDaysHigh";
+    private String training = "training";
+    private String daysUntilStatIncreaseCheck = "daysUntilStatIncreaseCheck";
+    private String gameResolver = "gameResolver";
+    private String randomWinChance = "randomWinChance";
 
     public GameConfig(JSONObject jsonObject) {
         ourJsonObject = jsonObject;
@@ -110,7 +111,6 @@ public class GameConfig implements IGameConfig {
         return mapToReturn;
     }
 
-    @Override
     public String getValueFromOurObject(String configChildKey, String ourObjectKey) {
         HashMap<String, Object> gameConfigChildObject = getHashMap(configChildKey);
         String valueToReturn = String.valueOf(gameConfigChildObject.get(ourObjectKey));
@@ -118,4 +118,7 @@ public class GameConfig implements IGameConfig {
 
     }
 
+    public String getGmTable() {
+        return gmTable;
+    }
 }

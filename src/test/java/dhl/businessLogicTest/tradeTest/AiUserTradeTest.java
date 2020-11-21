@@ -1,16 +1,18 @@
 package dhl.businessLogicTest.tradeTest;
 
+import dhl.inputOutput.ui.IUserInputOutput;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.Mocks.MockUserInputOutput;
 import dhl.businessLogic.leagueModel.LeagueObjectModel;
+import dhl.businessLogic.leagueModel.Player;
+import dhl.businessLogic.leagueModel.PlayerStatistics;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.simulationStateMachine.UpdateUserTeamRoster;
 import dhl.businessLogic.simulationStateMachine.interfaces.IUpdateUserTeamRoster;
+import dhl.businessLogic.simulationStateMachine.UpdateUserTeamRoster;
 import dhl.businessLogic.trade.AiUserTrade;
 import dhl.businessLogic.trade.ExchangingPlayerTradeOffer;
 import dhl.businessLogic.trade.interfaces.ITradeOffer;
-import dhl.inputOutput.ui.IUserInputOutput;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -45,28 +47,28 @@ public class AiUserTradeTest {
         leagueObjectModel = (LeagueObjectModel) leagueObjectModelMocks.getLeagueObjectMock();
     }
 
-//    @Test
-//    public void validateTeamRosterAfterTrade() throws Exception {
-//        leagueObjectModel.freeAgents = tradeMock.get50FreeAgents();
-//        ITeam team = tradeMock.getTeamWithGoodPlayer();
-//
-//        ((MockUserInputOutput) ioObjectMock).setMockOutput("1");
-//        testClassObject.validateTeamRosterAfterTrade(team, leagueObjectModel);
-//        // TODO: 20-11-2020 Update tests
-////        Assertions.assertTrue(team.checkTeamPlayersCount());
-//
-//        team.getPlayers().add(tradeMock.getWeakPlayer("randomPlayer1"));
-//        team.getPlayers().add(tradeMock.getWeakPlayer("randomPlayer2"));
-//        IPlayer player = new Player("player1", "goalie", false,
-//                new PlayerStatistics(25, 10, 10, 10, 10));
-//        team.getPlayers().add(player);
-//        player = new Player("player2", "goalie", false,
-//                new PlayerStatistics(25, 3, 1, 4, 5));
-//        team.getPlayers().add(player);
-//        ((MockUserInputOutput) ioObjectMock).setMockOutput("0");
-//        testClassObject.validateTeamRosterAfterTrade(team, leagueObjectModel);
-//        Assertions.assertTrue(team.checkTeamPlayersCount());
-//    }
+    @Test
+    public void validateTeamRosterAfterTrade() throws Exception {
+        leagueObjectModel.freeAgents = tradeMock.get50FreeAgents();
+        ITeam team = tradeMock.getTeamWithGoodPlayer();
+
+        ((MockUserInputOutput) ioObjectMock).setMockOutput("1");
+        testClassObject.validateTeamRosterAfterTrade(team, leagueObjectModel);
+        //Assertions.assertTrue(team.checkIfSkatersGoaliesValid());
+
+        team.getPlayers().add(tradeMock.getWeakPlayer("randomPlayer1"));
+        team.getPlayers().add(tradeMock.getWeakPlayer("randomPlayer2"));
+        IPlayer player = new Player("player1", "goalie", false,
+                new PlayerStatistics(25, 10, 10, 10, 10));
+        team.getPlayers().add(player);
+        player = new Player("player2", "goalie", false,
+                new PlayerStatistics(25, 3, 1, 4, 5));
+        team.getPlayers().add(player);
+        ((MockUserInputOutput) ioObjectMock).setMockOutput("0");
+        testClassObject.validateTeamRosterAfterTrade(team, leagueObjectModel);
+        // TODO: 21-11-2020 Update Test 
+        //Assertions.assertTrue(team.checkIfSkatersGoaliesValid());
+    }
 
     @Test
     public void isTradeAcceptedTest() throws Exception {

@@ -14,6 +14,10 @@ import java.util.List;
 
 public class AiUserTrade implements ITradeType {
 
+    private static final int TOTAL_GOALIES = 4;
+    private static final int TOTAL_FORWARDS = 16;
+    private static final int TOTAL_DEFENSE = 10;
+
     IUserInputOutput ioObject;
     ITradeOffer tradeOffer;
     IUpdateUserTeamRoster updateUserTeamRoster;

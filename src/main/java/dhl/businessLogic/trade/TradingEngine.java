@@ -1,18 +1,21 @@
 package dhl.businessLogic.trade;
 
-import dhl.businessLogic.leagueModel.interfaceModel.*;
-import dhl.businessLogic.simulationStateMachine.interfaces.IUpdateUserTeamRoster;
+import dhl.businessLogic.simulationStateMachine.UpdateUserTeamRoster;
 import dhl.businessLogic.trade.factory.TradeAbstractFactory;
 import dhl.businessLogic.trade.factory.TradeConcreteFactory;
+import dhl.inputOutput.ui.IUserInputOutput;
+
+import dhl.businessLogic.leagueModel.interfaceModel.*;
+import dhl.businessLogic.simulationStateMachine.interfaces.IUpdateUserTeamRoster;
 import dhl.businessLogic.trade.interfaces.ITradeOffer;
 import dhl.businessLogic.trade.interfaces.ITradeType;
 import dhl.businessLogic.trade.interfaces.ITradingEngine;
-import dhl.inputOutput.ui.IUserInputOutput;
+import dhl.inputOutput.ui.UserInputOutput;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TradingEngine implements ITradingEngine {
+public class TradingEngine extends ITradingEngine {
 
     private ITradeOffer currentTrade;
     private IGameConfig gameConfig;
@@ -22,22 +25,16 @@ public class TradingEngine implements ITradingEngine {
     IUpdateUserTeamRoster updateUserTeamRoster;
     TradeAbstractFactory factory;
 
-    private static ITradingEngine instance;
-
-    private TradingEngine(IGameConfig gameConfig, ILeagueObjectModel leagueObjectModel, ITeam userTeam, IUserInputOutput ioObject, IUpdateUserTeamRoster updateUserTeamRoster) {
+    public TradingEngine(IGameConfig gameConfig, ILeagueObjectModel leagueObjectModel, ITeam userTeam) {
         factory = new TradeConcreteFactory();
+
+        // TODO: 20-11-2020 remove these new when team make factory
+        this.ioObject = new UserInputOutput();
+        this.updateUserTeamRoster = new UpdateUserTeamRoster(ioObject);
+
         this.gameConfig = gameConfig;
         this.leagueObjectModel = leagueObjectModel;
-        this.ioObject = ioObject;
         this.userTeam = userTeam;
-        this.updateUserTeamRoster = updateUserTeamRoster;
-    }
-
-    public static ITradingEngine getInstance(IGameConfig gameConfig, ILeagueObjectModel leagueObjectModel, ITeam userTeam, IUserInputOutput ioObject, IUpdateUserTeamRoster updateUserTeamRoster) {
-        if (instance == null) {
-            instance = new TradingEngine(gameConfig, leagueObjectModel, userTeam, ioObject, updateUserTeamRoster);
-        }
-        return instance;
     }
 
     public void startEngine() {
@@ -195,5 +192,9 @@ public class TradingEngine implements ITradingEngine {
         } else {
             return false;
         }
+    }
+
+    public void setIoObject(IUserInputOutput ioObject) {
+        this.ioObject = ioObject;
     }
 }

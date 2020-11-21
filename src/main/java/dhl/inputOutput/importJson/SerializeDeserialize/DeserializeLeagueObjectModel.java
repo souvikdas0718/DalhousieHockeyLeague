@@ -1,71 +1,84 @@
 package dhl.inputOutput.importJson.serializeDeserialize;
 
+import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
+import dhl.inputOutput.importJson.serializeDeserialize.interfaces.IDeserializeLeagueObjectModel;
 import dhl.businessLogic.leagueModel.Player;
 import dhl.businessLogic.leagueModel.PlayerStatistics;
-import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
-import dhl.inputOutput.importJson.serializeDeserialize.interfaces.IDeserializeLeagueObjectModel;
+import dhl.inputOutput.importJson.interfaces.ICreateLeagueObjectModel;
+import dhl.inputOutput.importJson.CreateLeagueObjectModel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-;
-
 public class DeserializeLeagueObjectModel implements IDeserializeLeagueObjectModel {
     String jsonFilePath;
-    final String playerFileName = "--InjuredPlayer.json";
+    final String playerFileName = "--RetiredPlayer.json";
     final String jsonExtension = ".json";
 
-    public DeserializeLeagueObjectModel(String jsonFilePath){
-        jsonFilePath = jsonFilePath;
+    public DeserializeLeagueObjectModel(String inputJsonFilePath){
+        jsonFilePath = inputJsonFilePath;
     }
 
     public ILeagueObjectModel deserializeLeagueObjectJson(String leagueName) throws Exception {
         String leagueObjectModelJsonPath = jsonFilePath + leagueName + jsonExtension;
-
         FileReader reader = new FileReader(leagueObjectModelJsonPath);
-        JSONParser jsonParser = new JSONParser();
-        JSONObject jsonLeagueObject = (JSONObject) jsonParser.parse(reader);
+        ICreateLeagueObjectModel createLeagueObjectModel;
 
-        IGameConfig gameConfig = null;
-        dhl.inputOutput.importJson.CreateLeagueObjectModel createLeagueObjectModel = new dhl.inputOutput.importJson.CreateLeagueObjectModel(updateLeagueObjectModelJson(jsonLeagueObject));
+        try {
+
+            JSONParser jsonParser = new JSONParser();
+            JSONObject jsonLeagueObject = (JSONObject) jsonParser.parse(reader);
+
+            IGameConfig gameConfig = null;
+            JSONObject jsonLeagueObjectModel = updateLeagueObjectModelJson(jsonLeagueObject);
+            createLeagueObjectModel = new CreateLeagueObjectModel(jsonLeagueObjectModel);
+        }
+        finally {
+            reader.close();
+        }
         return createLeagueObjectModel.getLeagueObjectModel();
     }
 
     public List<IPlayer> deserializePlayers(String leagueName) throws ParseException, IOException {
         String playersJsonPath = jsonFilePath + leagueName + playerFileName;
-
+        List<IPlayer> playerList = new ArrayList<>();
         FileReader reader = new FileReader(playersJsonPath);
         JSONParser jsonParser = new JSONParser();
-        JSONArray arrPlayers = (JSONArray) jsonParser.parse(reader);
-        List<IPlayer> playerList = new ArrayList<>();
 
-        Iterator<?> arrPlayersIterator = (arrPlayers).iterator();
-        while (arrPlayersIterator.hasNext()) {
-            JSONObject existingPlayersJsonObject = (JSONObject) arrPlayersIterator.next();
-            JSONObject playerStatsJsonobject = (JSONObject) existingPlayersJsonObject.get("playerStats");
-            IPlayerStatistics playerStatistics = new PlayerStatistics
-                    ((int) (long) playerStatsJsonobject.get("age"),
-                            (int) (long) playerStatsJsonobject.get("skating") ,
-                            (int) (long) playerStatsJsonobject.get("shooting"),
-                            (int) (long) playerStatsJsonobject.get("checking"),
-                            (int) (long) playerStatsJsonobject.get("saving"));
-            playerList.add(new Player(
-                    (String) existingPlayersJsonObject.get("playerName"),
-                    (String) existingPlayersJsonObject.get("position"),
-                    (Boolean) existingPlayersJsonObject.get("captain"),
-                    playerStatistics
-            ));
+        try{
+            JSONArray arrPlayers = (JSONArray) jsonParser.parse(reader);
 
+            Iterator<?> arrPlayersIterator = (arrPlayers).iterator();
+            while (arrPlayersIterator.hasNext()) {
+                JSONObject existingPlayersJsonObject = (JSONObject) arrPlayersIterator.next();
+                JSONObject playerStatsJsonobject = (JSONObject) existingPlayersJsonObject.get("playerStats");
+                IPlayerStatistics playerStatistics = new PlayerStatistics
+                        ((int) (long) playerStatsJsonobject.get("age"),
+                                (int) (long) playerStatsJsonobject.get("skating") ,
+                                (int) (long) playerStatsJsonobject.get("shooting"),
+                                (int) (long) playerStatsJsonobject.get("checking"),
+                                (int) (long) playerStatsJsonobject.get("saving"));
+                playerList.add(new Player(
+                        (String) existingPlayersJsonObject.get("playerName"),
+                        (String) existingPlayersJsonObject.get("position"),
+                        (Boolean) existingPlayersJsonObject.get("captain"),
+                        playerStatistics
+                ));
+            }
+        }
+        finally {
+            reader.close();
         }
         return playerList;
     }
