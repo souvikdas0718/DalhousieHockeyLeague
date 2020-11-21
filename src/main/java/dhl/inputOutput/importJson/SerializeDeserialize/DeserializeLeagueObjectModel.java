@@ -23,7 +23,7 @@ import java.util.List;
 
 public class DeserializeLeagueObjectModel implements IDeserializeLeagueObjectModel {
     String jsonFilePath;
-    final String playerFileName = "--RetiredPlayer.json";
+    final String playerFileName = "--RetiredPlayersInLeague.json";
     final String jsonExtension = ".json";
 
     public DeserializeLeagueObjectModel(String inputJsonFilePath){

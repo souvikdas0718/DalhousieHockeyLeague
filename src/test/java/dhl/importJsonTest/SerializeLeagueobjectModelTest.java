@@ -30,7 +30,7 @@ import java.util.List;
 class SerializeLeagueobjectModelTest {
     private static final String filepath = "src/test/java/dhl/Mocks/";
     private static final String extension = ".json";
-    private final String playerFileName = "--RetiredPlayers.json";
+    private final String playerFileName = "--RetiredPlayersInLeague.json";
 
     SerializeLeagueObjectModel serializeLeagueobjectModel;
     IDeserializeLeagueObjectModel deserializeLeagueobjectModel;
