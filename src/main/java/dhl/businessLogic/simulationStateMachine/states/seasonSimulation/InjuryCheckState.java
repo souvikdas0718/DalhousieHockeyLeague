@@ -2,9 +2,10 @@ package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 
 import dhl.businessLogic.aging.interfaceAging.IInjury;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
+import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.interfaces.ISimulationSeasonState;
-import dhl.businessLogic.simulationStateMachine.SimulationContext;
+import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.Scheduler;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -18,7 +19,16 @@ public class InjuryCheckState implements ISimulationSeasonState {
     IScheduler scheduler;
 
     public InjuryCheckState(SimulationContext simulationContext) {
+        this.simulationContext = simulationContext;
+        scheduler = new Scheduler();
+    }
 
+    public SimulationContext getSimulationContext() {
+        return simulationContext;
+    }
+
+    public void setSimulationContext(SimulationContext simulationContext) {
+        this.simulationContext = simulationContext;
     }
 
     @Override
@@ -37,7 +47,8 @@ public class InjuryCheckState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateExitProcess() {
-        scheduler = simulationContext.getRegularScheduler();
+//        scheduler = simulationContext.getRegularScheduler();
+        scheduler = simulationContext.getPlayOffScheduleRound1();
         LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
         LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());
 

@@ -3,7 +3,6 @@ package dhl.businessLogicTest.simulationStateMachineTest.states.seasonSimulation
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.AdvanceToNextSeasonState;
-import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.AgingState;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,6 @@ public class AdvanceToNextSeasonStateTest {
 
     SimulationContext simulationContext;
     AdvanceToNextSeasonState advanceToNextSeasonState;
-    AgingState agingState;
     GameContext gameState;
 
     @BeforeEach
@@ -53,7 +51,7 @@ public class AdvanceToNextSeasonStateTest {
         advanceToNextSeasonState = new AdvanceToNextSeasonState(simulationContext);
         advanceToNextSeasonState.seasonStateEntryProcess();
         Assertions.assertTrue(advanceToNextSeasonState.getSimulationContext().getNumberOfDays() == 365);
-        Assertions.assertTrue(advanceToNextSeasonState.getSimulationContext().getEndOfSimulation().equals(LocalDate.of(simulationContext.getYear() , 9, 29)));
+        Assertions.assertTrue(advanceToNextSeasonState.getSimulationContext().getEndOfSimulation().equals(LocalDate.of(simulationContext.getYear(), 9, 29)));
     }
 
 //    @Test

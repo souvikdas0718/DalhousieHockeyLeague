@@ -2,7 +2,10 @@ package dhl.businessLogicTest.simulationStateMachineTest.states.seasonScheduler;
 
 import dhl.Mocks.LeagueObjectModel20TeamMocks;
 import dhl.Mocks.LeagueObjectModelMocks;
+import dhl.businessLogic.leagueModel.Team;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
+import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
+import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.simulationStateMachine.interfaces.ISchedule;
 import dhl.businessLogic.simulationStateMachine.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.interfaces.IStandings;
@@ -15,15 +18,14 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
-
-import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
-import static java.time.temporal.TemporalAdjusters.previousOrSame;
+import java.util.List;
 
 public class SchedulerTest {
 
     LeagueObjectModelMocks mockLeagueObjectModel;
     LeagueObjectModel20TeamMocks model20TeamMocks;
     IScheduler scheduler;
+    List<IPlayer> statistics;
 
     @BeforeEach
     public void initObject() {
@@ -31,6 +33,7 @@ public class SchedulerTest {
         model20TeamMocks = new LeagueObjectModel20TeamMocks();
         model20TeamMocks.leagueModel20TeamGeneralStandings();
         scheduler = new Scheduler();
+        statistics = mockLeagueObjectModel.getPlayerArrayMock();
     }
 
     @Test
@@ -143,7 +146,14 @@ public class SchedulerTest {
         ILeagueObjectModel league = model20TeamMocks.getLeagueData();
         ArrayList<IStandings> standings = model20TeamMocks.getGeneralStandings();
         IScheduler scheduler = new Scheduler();
+
+        LocalDate playOffStartDate = LocalDate.of(2021, 04, 01);
+        LocalDate playOffStarts = playOffStartDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.SATURDAY)).with(
+                TemporalAdjusters.next(DayOfWeek.SATURDAY));
+
+        scheduler.setPlayOffStartDate(playOffStarts);
         scheduler.playOffs(standings, league);
+
         Assertions.assertFalse(scheduler.getPlayOffScheduleRound1().isEmpty());
     }
 
@@ -181,9 +191,12 @@ public class SchedulerTest {
         scheduler.generateTeamSchedule(league);
 
         LocalDate regularSeasonStartDate = LocalDate.of(2020, 10, 01);
-        LocalDate localDate = LocalDate.of(2021, 02, 01);
-        LocalDate regularSeasonEndDate = localDate.with(lastDayOfMonth())
-                .with(previousOrSame(DayOfWeek.MONDAY));
+        //Trade Deadline
+//        LocalDate localDate = LocalDate.of(2021, 02, 01);
+//        LocalDate regularSeasonEndDate = localDate.with(lastDayOfMonth())
+//                .with(previousOrSame(DayOfWeek.MONDAY));
+        LocalDate localDate = LocalDate.of(2021, 04, 01);
+        LocalDate regularSeasonEndDate = localDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.SATURDAY));
         scheduler.gameScheduleDates(regularSeasonStartDate, regularSeasonEndDate);
         for (ISchedule schedules : scheduler.getFullSeasonSchedule()) {
             Assertions.assertNotNull(schedules.getGameDate());
@@ -197,6 +210,11 @@ public class SchedulerTest {
         ILeagueObjectModel league = model20TeamMocks.getLeagueData();
         ArrayList<IStandings> standings = model20TeamMocks.getGeneralStandings();
         IScheduler scheduler = new Scheduler();
+
+        LocalDate playOffStartDate = LocalDate.of(2021, 04, 01);
+        LocalDate playOffStarts = playOffStartDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.SATURDAY)).with(
+                TemporalAdjusters.next(DayOfWeek.SATURDAY));
+        scheduler.setPlayOffStartDate(playOffStarts);
         scheduler.playOffs(standings, league);
         int matchNumber = 1;
         for (ISchedule schedules : scheduler.getPlayOffScheduleRound1()) {
@@ -214,19 +232,40 @@ public class SchedulerTest {
     @Test
     public void gameWinnerTest() {
 
-        scheduler = model20TeamMocks.leagueModel20TeamPlayoffsSchedules();
+        ILeagueObjectModel league = model20TeamMocks.getLeagueData();
+        ArrayList<IStandings> standings = model20TeamMocks.getGeneralStandings();
+        IScheduler scheduler = new Scheduler();
+
+        LocalDate playOffStartDate = LocalDate.of(2021, 04, 01);
+        LocalDate playOffStarts = playOffStartDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.SATURDAY)).with(
+                TemporalAdjusters.next(DayOfWeek.SATURDAY));
+        scheduler.setPlayOffStartDate(playOffStarts);
+        scheduler.playOffs(standings, league);
+
+        ITeam teamPlayOff1 = new Team("Bruins", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
+        ITeam teamPlayoff2 = new Team("Maple", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
+        ITeam teamPlayoff3 = new Team("Hurricanes", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
+        ITeam teamPlayoff4 = new Team("Flyers", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
+
+        scheduler.gameWinner(teamPlayOff1);
+        scheduler.gameWinner(teamPlayoff2);
+        scheduler.gameWinner(teamPlayoff3);
+        scheduler.gameWinner(teamPlayoff4);
+//        scheduler = model20TeamMocks.leagueModel20TeamPlayoffsSchedules();
+// call game winner method
 
         Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(8).getTeamOne().getTeamName().equals("Bruins"));
         Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(8).getTeamTwo().getTeamName().equals("Maple"));
+        Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(8).getGameDate().equals(LocalDate.of(2021, 04, 18)));
 
-        Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(14).getTeamOne().getTeamName().equals("Maple"));
-        Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(14).getTeamTwo().getTeamName().equals("Avalanche"));
+        Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(9).getTeamOne().getTeamName().equals("Hurricanes"));
+        Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(9).getTeamTwo().getTeamName().equals("Flyers"));
+        Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(9).getGameDate().equals(LocalDate.of(2021, 04, 19)));
     }
 
     @Test
     public void stanleyCupWinnerTest() {
         scheduler = model20TeamMocks.leagueModel20TeamPlayoffsSchedules();
-
         LocalDate currentDate = LocalDate.now();
 
         Assertions.assertFalse(scheduler.stanleyCupWinner(currentDate));

@@ -14,7 +14,6 @@ import java.time.LocalDate;
 
 public class AgingStateTest {
 
-    LeagueObjectModelMocks mockLeagueObjectModel;
     LeagueObjectModel20TeamMocks model20TeamMocks;
     IScheduler scheduler;
     SimulationContext simulationContext;
@@ -23,7 +22,6 @@ public class AgingStateTest {
 
     @BeforeEach
     public void initObject() {
-        mockLeagueObjectModel = new LeagueObjectModelMocks();
         model20TeamMocks = new LeagueObjectModel20TeamMocks();
         model20TeamMocks.leagueModel20TeamGeneralStandings();
         scheduler = model20TeamMocks.leagueModel20TeamPlayoffsSchedules();

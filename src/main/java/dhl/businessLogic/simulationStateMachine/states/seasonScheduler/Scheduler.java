@@ -36,8 +36,10 @@ public class Scheduler implements IScheduler {
     public Scheduler() {
         fullSeasonSchedule = new ArrayList<>();
         playOffScheduleRound1 = new ArrayList<>();
-        playOffStartDate = LocalDate.of(2021, 03, 01);
-        currentDate = playOffStartDate;
+        //Set Date to dynamic date for every 2nd wednesday of april
+//        playOffStartDate = LocalDate.of(2021, 03, 01);
+//        playOffStartDate = LocalDate.of(2021, 03, 01);
+//        currentDate = playOffStartDate;
         teamList = new ArrayList<>();
         conferences = new ArrayList<>();
         divisions = new ArrayList<>();
@@ -179,6 +181,7 @@ public class Scheduler implements IScheduler {
             if (remainingGames > 0) {
                 fullSeasonSchedule.get(startingIndex).setGameDate(dateIndex);
                 remainingGames = remainingGames - 1;
+                startingIndex = startingIndex + 1;
             }
             dateIndex = dateIndex.plusDays(1);
         }
@@ -225,10 +228,10 @@ public class Scheduler implements IScheduler {
         conferenceWildCardListMap.get(2).remove(2);
         conferenceWildCardListMap.get(2).remove(2);
 
+        currentDate = playOffStartDate;
 
         ISchedule match1 = setMatchConferenceAndDivision(conference1, conference1StandingList.get(0).getTeamDivision(), conferenceWildCardListMap.get(1).get(1).getTeamDivision());
         setTeams(match1, conference1StandingList.get(0).getTeam(), conferenceWildCardListMap.get(1).get(1).getTeam());
-        currentDate = currentDate.plusDays(1);
         match1.setGameDate(currentDate);
         playOffScheduleRound1.add(match1);
 

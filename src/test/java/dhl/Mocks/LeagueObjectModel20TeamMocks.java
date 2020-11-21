@@ -7,6 +7,9 @@ import dhl.businessLogic.simulationStateMachine.interfaces.IStandings;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.Scheduler;
 import dhl.businessLogic.simulationStateMachine.states.standings.Standings;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -343,6 +346,10 @@ public class LeagueObjectModel20TeamMocks {
         ITeam teamPlayoff7 = new Team("Cancuks", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
         ITeam teamPlayoff8 = new Team("Flames", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
 
+        LocalDate playOffStartDate = LocalDate.of(2021, 04, 01);
+        LocalDate playOffStarts = playOffStartDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.SATURDAY)).with(
+                TemporalAdjusters.next(DayOfWeek.SATURDAY));
+        scheduler.setPlayOffStartDate(playOffStarts);
 
         scheduler.playOffs(standings, league);
 

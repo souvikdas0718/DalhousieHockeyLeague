@@ -1,9 +1,13 @@
 package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 
 
+import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.interfaces.ISimulationSeasonState;
-import dhl.businessLogic.simulationStateMachine.SimulationContext;
+
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 
 public class GeneratePlayOffScheduleState implements ISimulationSeasonState {
 
@@ -31,6 +35,10 @@ public class GeneratePlayOffScheduleState implements ISimulationSeasonState {
     @Override
     public void seasonStateProcess() {
         scheduler = simulationContext.getRegularScheduler();
+        LocalDate playOffStartDate = LocalDate.of(simulationContext.getYear(), 04, 01);
+        LocalDate playOffStarts = playOffStartDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.SATURDAY)).with(
+                TemporalAdjusters.next(DayOfWeek.SATURDAY));
+        scheduler.setPlayOffStartDate(playOffStarts);
         scheduler.playOffs(scheduler.getGameStandings(), simulationContext.getInMemoryLeague());
     }
 
