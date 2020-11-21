@@ -1,7 +1,6 @@
 package dhl.businessLogic.leagueModel.interfaceModel;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public interface ITeam {
 
@@ -29,7 +28,7 @@ public interface ITeam {
 
     boolean checkIfTeamValid(IValidation validation) throws Exception;
 
-    boolean checkIfSkatersGoaliesValid();
+    boolean checkTeamPlayersCount();
 
     double calculateTeamStrength();
 

@@ -1,7 +1,8 @@
 package dhl.businessLogic.trade;
 
 import dhl.businessLogic.leagueModel.PlayerPosition;
-import dhl.inputOutput.importJson.interfaces.IGameConfig;
+
+import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;

@@ -1,18 +1,18 @@
 package dhl.businessLogicTest.AgingTest;
 
-
-import dhl.inputOutput.importJson.interfaces.IGameConfig;
 import dhl.Mocks.LeagueObjectModelMocks;
+import dhl.businessLogic.aging.Aging;
+import dhl.businessLogic.aging.Injury;
+import dhl.businessLogic.aging.LeagueSchedule;
+import dhl.businessLogic.aging.Retirement;
 import dhl.businessLogic.aging.interfaceAging.IAging;
 import dhl.businessLogic.aging.interfaceAging.IInjury;
 import dhl.businessLogic.aging.interfaceAging.IRetirement;
-import dhl.businessLogicTest.leagueModelTests.PlayerDBMock;
-import dhl.database.interfaceDB.IPlayerDB;
-import dhl.businessLogic.aging.LeagueSchedule;
-import dhl.businessLogic.aging.Aging;
-import dhl.businessLogic.aging.Injury;
-import dhl.businessLogic.aging.Retirement;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
+
+import dhl.businessLogicTest.leagueModelTests.MockSerializeLeagueObjectModel;
+import dhl.inputOutput.importJson.serializeDeserialize.SerializeLeagueObjectModel;
+import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,12 +34,12 @@ public class LeagueScheduleTest {
     public void initObject() {
         leagueMock = new LeagueObjectModelMocks();
         gameConfig = leagueMock.getGameConfig();
-        IPlayerDB playerDB = new PlayerDBMock();
         leagueObjectModel = leagueMock.getLeagueObjectMock();
+        ISerializeLeagueObjectModel serializeModel = new MockSerializeLeagueObjectModel();
         IAging agingSystem = new Aging(gameConfig);
-        retirementSystem = new Retirement(playerDB, leagueObjectModel);
+        retirementSystem = new Retirement(serializeModel, leagueObjectModel);
         injurySystem = new Injury();
-        leagueSchedule = new LeagueSchedule(agingSystem, retirementSystem, injurySystem, leagueMock.getLeagueObjectMock(), 365, playerDB);
+        leagueSchedule = new LeagueSchedule(agingSystem, retirementSystem, injurySystem, leagueMock.getLeagueObjectMock(), 365);
 
     }
 

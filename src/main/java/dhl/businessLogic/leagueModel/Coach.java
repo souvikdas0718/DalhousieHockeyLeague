@@ -2,6 +2,8 @@ package dhl.businessLogic.leagueModel;
 
 import dhl.businessLogic.leagueModel.interfaceModel.ICoach;
 import dhl.businessLogic.leagueModel.interfaceModel.IValidation;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Coach implements ICoach {
     private String name;
@@ -9,6 +11,7 @@ public class Coach implements ICoach {
     private double shooting;
     private double checking;
     private double saving;
+    private static final Logger logger = LogManager.getLogger(Coach.class);
 
     public Coach() {
         name = "";
@@ -50,6 +53,7 @@ public class Coach implements ICoach {
 
     public void checkCoachStatistics() throws Exception {
         if (isCoachStatInvalid(saving) || isCoachStatInvalid(checking) || isCoachStatInvalid(shooting) || isCoachStatInvalid(skating)) {
+            logger.error( "Coach: " + name + " have invalid statistics" );
             throw new Exception("Coach statistics must be between 0 and 1");
         }
     }

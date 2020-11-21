@@ -2,9 +2,9 @@ package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 
 import dhl.businessLogic.aging.interfaceAging.IInjury;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
+import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.interfaces.ISimulationSeasonState;
-import dhl.businessLogic.simulationStateMachine.SimulationContext;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;

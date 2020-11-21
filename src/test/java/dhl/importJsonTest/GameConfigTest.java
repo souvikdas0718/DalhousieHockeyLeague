@@ -1,9 +1,9 @@
 package dhl.importJsonTest;
 
-import dhl.inputOutput.importJson.GameConfig;
-import dhl.inputOutput.importJson.ImportJsonFile;
-import dhl.inputOutput.importJson.interfaces.IGameConfig;
 import dhl.Mocks.JsonFilePathMock;
+import dhl.businessLogic.leagueModel.GameConfig;
+import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
+import dhl.inputOutput.importJson.ImportJsonFile;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -97,8 +97,8 @@ public class GameConfigTest {
         HashMap<String, Object> tradingObject = testClassObject.getHashMap("trading");
         HashMap<String, Object> agingObject = testClassObject.getHashMap("aging");
         Assertions.assertFalse(tradingObject.isEmpty());
-        Assertions.assertTrue(tradingObject.size() == 4);
-        Assertions.assertTrue(agingObject.size() == 2);
+        Assertions.assertTrue(tradingObject.size() == 5);
+        Assertions.assertTrue(agingObject.size() == 3);
         Assertions.assertTrue(testClassObject.getHashMap("WrongKey").isEmpty());
     }
 

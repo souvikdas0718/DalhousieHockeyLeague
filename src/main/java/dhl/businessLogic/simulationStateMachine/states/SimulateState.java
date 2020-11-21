@@ -1,10 +1,10 @@
 package dhl.businessLogic.simulationStateMachine.states;
 
+import dhl.businessLogic.simulationStateMachine.GameContext;
+import dhl.businessLogic.simulationStateMachine.SimulationContext;
+import dhl.businessLogic.simulationStateMachine.interfaces.IGameState;
 import dhl.inputOutput.ui.IUserInputOutput;
 import dhl.inputOutput.ui.UserInputOutput;
-import dhl.businessLogic.simulationStateMachine.GameContext;
-import dhl.businessLogic.simulationStateMachine.interfaces.IGameState;
-import dhl.businessLogic.simulationStateMachine.SimulationContext;
 
 public class SimulateState implements IGameState {
 

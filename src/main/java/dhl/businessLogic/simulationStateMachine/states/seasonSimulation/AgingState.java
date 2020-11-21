@@ -7,11 +7,13 @@ import dhl.businessLogic.aging.Retirement;
 import dhl.businessLogic.aging.interfaceAging.IAging;
 import dhl.businessLogic.aging.interfaceAging.ILeagueSchedule;
 import dhl.businessLogic.aging.interfaceAging.IRetirement;
+import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.interfaces.ISimulationSeasonState;
-import dhl.database.PlayerDB;
-import dhl.database.interfaceDB.IPlayerDB;
+
+import dhl.inputOutput.importJson.serializeDeserialize.SerializeLeagueObjectModel;
+import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -27,9 +29,10 @@ public class AgingState implements ISimulationSeasonState {
 
     static void agingCalculation(SimulationContext simulationContext) {
         IAging aging = new Aging(simulationContext.getGameConfig());
-        IPlayerDB playerDB = new PlayerDB();
-        IRetirement retirement = new Retirement(playerDB, simulationContext.getInMemoryLeague());
-        ILeagueSchedule leagueSchedule = new LeagueSchedule(aging, retirement, simulationContext.getInjurySystem(), simulationContext.getInMemoryLeague(), simulationContext.getNumberOfDays(), playerDB);
+        ILeagueObjectModel leagueObjectModel= simulationContext.getInMemoryLeague();
+        ISerializeLeagueObjectModel serializeModel = new SerializeLeagueObjectModel(leagueObjectModel.getLeagueName());
+        IRetirement retirement = new Retirement(serializeModel, simulationContext.getInMemoryLeague());
+        ILeagueSchedule leagueSchedule = new LeagueSchedule(aging, retirement, simulationContext.getInjurySystem(), simulationContext.getInMemoryLeague(), simulationContext.getNumberOfDays());
         try {
             leagueSchedule.initiateAging();
         } catch (Exception e) {

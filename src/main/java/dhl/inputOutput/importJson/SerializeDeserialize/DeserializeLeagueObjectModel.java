@@ -1,7 +1,7 @@
 package dhl.inputOutput.importJson.serializeDeserialize;
 
+import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.IDeserializeLeagueObjectModel;
-import dhl.inputOutput.importJson.interfaces.IGameConfig;
 import dhl.businessLogic.leagueModel.Player;
 import dhl.businessLogic.leagueModel.PlayerStatistics;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
@@ -23,7 +23,7 @@ import java.util.List;
 
 public class DeserializeLeagueObjectModel implements IDeserializeLeagueObjectModel {
     String jsonFilePath;
-    final String playerFileName = "--InjuredPlayer.json";
+    final String playerFileName = "--RetiredPlayersInLeague.json";
     final String jsonExtension = ".json";
 
     public DeserializeLeagueObjectModel(String inputJsonFilePath){
@@ -42,7 +42,7 @@ public class DeserializeLeagueObjectModel implements IDeserializeLeagueObjectMod
 
             IGameConfig gameConfig = null;
             JSONObject jsonLeagueObjectModel = updateLeagueObjectModelJson(jsonLeagueObject);
-            createLeagueObjectModel = new CreateLeagueObjectModel(jsonLeagueObjectModel, gameConfig);
+            createLeagueObjectModel = new CreateLeagueObjectModel(jsonLeagueObjectModel);
         }
         finally {
             reader.close();

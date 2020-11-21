@@ -124,7 +124,7 @@ public class Team implements ITeam {
         return playerList.size() == TOTALTEAMSIZE;
     }
 
-    public boolean checkIfSkatersGoaliesValid() {
+    public boolean checkTeamPlayersCount() {
         List<IPlayer> activeRoster = getActiveRoster();
         List<IPlayer> goaliesInActiveRoster = filterPlayersInTeam(PlayerPosition.GOALIE.toString(), activeRoster);
         List<IPlayer> forwardsInActiveRoster = filterPlayersInTeam(PlayerPosition.FORWARD.toString(), activeRoster);

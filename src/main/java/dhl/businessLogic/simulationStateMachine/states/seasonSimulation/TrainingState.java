@@ -1,12 +1,12 @@
 package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 
 
-import dhl.inputOutput.importJson.interfaces.IGameConfig;
+import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
+import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.interfaces.ISimulationSeasonState;
-import dhl.businessLogic.simulationStateMachine.SimulationContext;
-import dhl.businessLogic.traning.interfaces.ITraining;
 import dhl.businessLogic.traning.Training;
+import dhl.businessLogic.traning.interfaces.ITraining;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;

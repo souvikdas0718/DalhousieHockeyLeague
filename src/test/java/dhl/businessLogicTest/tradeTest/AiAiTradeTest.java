@@ -1,11 +1,11 @@
 package dhl.businessLogicTest.tradeTest;
 
-import dhl.inputOutput.importJson.interfaces.IGameConfig;
 import dhl.Mocks.GameConfigMock;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.leagueModel.LeagueObjectModel;
 import dhl.businessLogic.leagueModel.Player;
 import dhl.businessLogic.leagueModel.PlayerStatistics;
+import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.trade.AiAiTrade;
@@ -75,7 +75,7 @@ public class AiAiTradeTest {
             System.out.println(p.getPosition());
         }
         team.setRoster();
-        Assertions.assertTrue(team.checkIfSkatersGoaliesValid());
+        Assertions.assertTrue(team.checkTeamPlayersCount());
     }
 
     @Test

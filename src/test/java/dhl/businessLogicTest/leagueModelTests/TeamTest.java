@@ -3,7 +3,10 @@ package dhl.businessLogicTest.leagueModelTests;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.factory.InitializeObjectFactory;
 import dhl.businessLogic.leagueModel.*;
-import dhl.businessLogic.leagueModel.interfaceModel.*;
+import dhl.businessLogic.leagueModel.interfaceModel.ICoach;
+import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
+import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
+import dhl.businessLogic.leagueModel.interfaceModel.IValidation;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -167,18 +170,18 @@ public class TeamTest {
     }
 
     @Test
-    public void checkIfSkatersGoaliesValid() {
+    public void checkTeamPlayersCountValid() {
         team = new Team("Ontario", "Mathew", headCoach, leagueMock.getTeamPlayers());
-        Boolean isValid = team.checkIfSkatersGoaliesValid();
+        Boolean isValid = team.checkTeamPlayersCount();
         Assertions.assertEquals(true, isValid);
     }
 
     @Test
-    public void checkIfSkatersGoaliesInValid() {
+    public void checkTeamPlayersCountInValid() {
         List<IPlayer> selectedPlayers = leagueMock.get20FreeAgentArrayMock();
         selectedPlayers.remove(19);
         team = new Team("Ontario", "Mathew", headCoach, selectedPlayers);
-        Assertions.assertFalse(team.checkIfSkatersGoaliesValid());
+        Assertions.assertFalse(team.checkTeamPlayersCount());
     }
 
 
