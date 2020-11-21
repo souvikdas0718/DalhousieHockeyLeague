@@ -347,8 +347,8 @@ public class LeagueObjectModel20TeamMocks {
         ITeam teamPlayoff8 = new Team("Flames", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
 
         LocalDate playOffStartDate = LocalDate.of(2021, 04, 01);
-        LocalDate playOffStarts = playOffStartDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.SATURDAY)).with(
-                TemporalAdjusters.next(DayOfWeek.SATURDAY));
+        LocalDate playOffStarts = playOffStartDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.WEDNESDAY)).with(
+                TemporalAdjusters.next(DayOfWeek.WEDNESDAY));
         scheduler.setPlayOffStartDate(playOffStarts);
 
         scheduler.playOffs(standings, league);

@@ -6,11 +6,9 @@ import dhl.Mocks.LeagueObjectModel20TeamMocks;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.aging.Injury;
 import dhl.businessLogic.aging.interfaceAging.IInjury;
-import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.interfaces.IScheduler;
-import dhl.businessLogic.simulationStateMachine.interfaces.IStandings;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.InjuryCheckState;
 import dhl.businessLogic.traning.Training;
 import dhl.inputOutput.importJson.GameConfig;
@@ -19,10 +17,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 import static java.time.temporal.ChronoUnit.DAYS;
+import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
+import static java.time.temporal.TemporalAdjusters.previousOrSame;
 
 public class InjuryCheckStateTest {
     SimulationContext simulationContext;
@@ -123,28 +123,12 @@ public class InjuryCheckStateTest {
 
     @Test
     public void seasonStateExitProcessTest() {
-//        injuryCheckState.seasonStateExitProcess();
-//        Assertions.assertTrue(injuryCheckState.getSimulationContext().getCurrentSimulation() == injuryCheckState.getSimulationContext().getPersistsSeason());
-        ILeagueObjectModel league = model20TeamMocks.getLeagueData();
-        ArrayList<IStandings> standings = model20TeamMocks.getGeneralStandings();
-        scheduler = model20TeamMocks.leagueModel20TeamPlayoffsSchedules();
-
         LocalDate startOfSimulation = LocalDate.of(2020, 9, 30);
         LocalDate seasonStartDate = LocalDate.of(2020, 10, 1);
         LocalDate regularSeasonEndDate = LocalDate.of(2021, 04, 3);
-        LocalDate seasonEndDate = LocalDate.of(2021, 06, 1);
+        LocalDate playOffStartDate = LocalDate.of(2021, 04, 10);
         LocalDate currentDate = LocalDate.now();
         long numberOfDays = DAYS.between(startOfSimulation, currentDate);
-//        System.out.println(numberOfDays);
-//
-//        System.out.println(scheduler.getPlayOffScheduleRound1().get(0).getGameDate());
-//        System.out.println(scheduler.getPlayOffScheduleRound1().get(14).getGameDate());
-//
-//
-//        System.out.println(scheduler.getSeasonStartDate());
-//        System.out.println(scheduler.getSeasonEndDate());
-//        System.out.println(scheduler.getPlayOffStartDate());
-//        System.out.println(scheduler.getFinalDay());
 
         scheduler.setSeasonStartDate(seasonStartDate);
         scheduler.setSeasonEndDate(regularSeasonEndDate);
@@ -152,30 +136,25 @@ public class InjuryCheckStateTest {
         simulationContext.setStartOfSimulation(startOfSimulation);
         simulationContext.setNumberOfDays((int) numberOfDays);
         simulationContext.setYear(2020);
-//        simulationContext.set
-//        simulationContext.setStartOfSimulation(startOfSimulation);
-//        agingState = new AgingState(simulationContext);
-//        agingState.seasonStateExitProcess();
+
+        injuryCheckState = new InjuryCheckState(simulationContext);
+        injuryCheckState.seasonStateExitProcess();
+        Assertions.assertTrue(injuryCheckState.getSimulationContext().getCurrentSimulation() == injuryCheckState.getSimulationContext().getSimulateGame());
 
 
-//        scheduler = simulationContext.getRegularScheduler();
-//        LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
-//        LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());
-//
-//
-//        if (currentDate.isAfter(scheduler.getSeasonStartDate()) && currentDate.isBefore(scheduler.getSeasonEndDate())) {
-//            simulationContext.setCurrentSimulation(simulationContext.getSimulateGame());
-//        } else if (currentDate.isAfter(scheduler.getPlayOffStartDate()) && currentDate.isBefore(scheduler.getFinalDay())) {
-//            simulationContext.setCurrentSimulation(simulationContext.getSimulateGame());
-//        } else {
-//            LocalDate localDate = LocalDate.of(simulationContext.getYear() + 1, 02, 01);
-//            LocalDate regularSeasonEndDate = localDate.with(lastDayOfMonth())
-//                    .with(previousOrSame(DayOfWeek.MONDAY));
-//            if (currentDate.isBefore(regularSeasonEndDate) || currentDate.isEqual(regularSeasonEndDate)) {
-//                simulationContext.setCurrentSimulation(simulationContext.getExecuteTrades());
-//            } else {
-//                simulationContext.setCurrentSimulation(simulationContext.getAging());
-//            }
-//        }
+        currentDate = playOffStartDate.plusDays(2);
+        numberOfDays = DAYS.between(startOfSimulation, currentDate);
+        simulationContext.setNumberOfDays((int) numberOfDays);
+        injuryCheckState = new InjuryCheckState(simulationContext);
+        injuryCheckState.seasonStateExitProcess();
+        Assertions.assertTrue(injuryCheckState.getSimulationContext().getCurrentSimulation() == injuryCheckState.getSimulationContext().getAging());
+
+        LocalDate localDate = LocalDate.of(simulationContext.getYear() + 1, 02, 01);
+        LocalDate tradeDeadline = localDate.with(lastDayOfMonth()).with(previousOrSame(DayOfWeek.MONDAY));
+        numberOfDays = DAYS.between(startOfSimulation, tradeDeadline) - 1;
+        simulationContext.setNumberOfDays((int) numberOfDays);
+        injuryCheckState = new InjuryCheckState(simulationContext);
+        injuryCheckState.seasonStateExitProcess();
+        Assertions.assertTrue(injuryCheckState.getSimulationContext().getCurrentSimulation() == injuryCheckState.getSimulationContext().getSimulateGame());
     }
 }

@@ -237,8 +237,8 @@ public class SchedulerTest {
         IScheduler scheduler = new Scheduler();
 
         LocalDate playOffStartDate = LocalDate.of(2021, 04, 01);
-        LocalDate playOffStarts = playOffStartDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.SATURDAY)).with(
-                TemporalAdjusters.next(DayOfWeek.SATURDAY));
+        LocalDate playOffStarts = playOffStartDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.WEDNESDAY)).with(
+                TemporalAdjusters.next(DayOfWeek.WEDNESDAY));
         scheduler.setPlayOffStartDate(playOffStarts);
         scheduler.playOffs(standings, league);
 
@@ -251,16 +251,14 @@ public class SchedulerTest {
         scheduler.gameWinner(teamPlayoff2);
         scheduler.gameWinner(teamPlayoff3);
         scheduler.gameWinner(teamPlayoff4);
-//        scheduler = model20TeamMocks.leagueModel20TeamPlayoffsSchedules();
-// call game winner method
 
         Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(8).getTeamOne().getTeamName().equals("Bruins"));
         Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(8).getTeamTwo().getTeamName().equals("Maple"));
-        Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(8).getGameDate().equals(LocalDate.of(2021, 04, 18)));
+        Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(8).getGameDate().equals(LocalDate.of(2021, 04, 22)));
 
         Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(9).getTeamOne().getTeamName().equals("Hurricanes"));
         Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(9).getTeamTwo().getTeamName().equals("Flyers"));
-        Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(9).getGameDate().equals(LocalDate.of(2021, 04, 19)));
+        Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(9).getGameDate().equals(LocalDate.of(2021, 04, 23)));
     }
 
     @Test
