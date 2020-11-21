@@ -1857,6 +1857,7 @@ public class SerializedJsonMock {
                 "    \"randomTradeOfferChance\": \"randomTradeOfferChance\",\n" +
                 "    \"maxPlayersPerTrade\": \"maxPlayersPerTrade\",\n" +
                 "    \"randomAcceptanceChance\": \"randomAcceptanceChance\",\n" +
+                "    \"gmTable\": \"gmTable\",\n" +
                 "    \"aging\": \"aging\",\n" +
                 "    \"averageRetirementAge\": \"averageRetirementAge\",\n" +
                 "    \"maximumAge\": \"maximumAge\",\n" +
