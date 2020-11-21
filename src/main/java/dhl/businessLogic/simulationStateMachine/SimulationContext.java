@@ -82,6 +82,18 @@ public class SimulationContext implements ISimulationSeasonState {
 
     }
 
+    public void seasonStateEntryProcess() {
+        currentSimulation.seasonStateEntryProcess();
+    }
+
+    public void seasonStateProcess() {
+        currentSimulation.seasonStateProcess();
+    }
+
+    public void seasonStateExitProcess() {
+        currentSimulation.seasonStateExitProcess();
+    }
+
     public int getYear() {
         return year;
     }
@@ -201,18 +213,6 @@ public class SimulationContext implements ISimulationSeasonState {
 
     public void setSeasonGameState(ISimulationSeasonState newSeasonState) {
         this.currentSimulation = newSeasonState;
-    }
-
-    public void seasonStateEntryProcess() {
-        currentSimulation.seasonStateEntryProcess();
-    }
-
-    public void seasonStateProcess() {
-        currentSimulation.seasonStateProcess();
-    }
-
-    public void seasonStateExitProcess() {
-        currentSimulation.seasonStateExitProcess();
     }
 
     public ISimulationSeasonState getSeasonSimulationState() {

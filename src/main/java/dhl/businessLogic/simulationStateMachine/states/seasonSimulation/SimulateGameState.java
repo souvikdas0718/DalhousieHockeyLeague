@@ -15,20 +15,23 @@ import java.util.List;
 
 
 public class SimulateGameState implements ISimulationSeasonState {
-    SimulationContext ourSeasonGame;
+    SimulationContext simulationContext;
     List<ITeam> injuryCheckTeams;
     IScheduler scheduler;
     IStandingSystem standingSystem;
 
     public SimulateGameState(SimulationContext simulationContext) {
-        ourSeasonGame = simulationContext;
+        this.simulationContext = simulationContext;
+        scheduler = this.simulationContext.getRegularScheduler();
+        injuryCheckTeams = new ArrayList<>();
     }
 
-    @Override
-    public void seasonStateEntryProcess() {
-        scheduler = ourSeasonGame.getRegularScheduler();
-        injuryCheckTeams = new ArrayList<>();
+    public SimulationContext getSimulationContext() {
+        return simulationContext;
+    }
 
+    public void setSimulationContext(SimulationContext simulationContext) {
+        this.simulationContext = simulationContext;
     }
 
     private void winDecider(LocalDate currentDate, IScheduler scheduler) {
@@ -36,7 +39,7 @@ public class SimulateGameState implements ISimulationSeasonState {
         ITeam losingTeam;
         for (ISchedule schedule : scheduler.getFullSeasonSchedule()) {
             if (schedule.getGameDate().equals(currentDate)) {
-                IGameConfig gameConfig = ourSeasonGame.getGameConfig();
+                IGameConfig gameConfig = simulationContext.getGameConfig();
                 Double randomWinChance = Double.parseDouble(gameConfig.getValueFromOurObject(gameConfig.getGameResolver(), gameConfig.getRandomWinChance())) * 100;
                 Double randomNumber = Math.random() * 100;
                 injuryCheckTeams.add(schedule.getTeamOne());
@@ -56,7 +59,7 @@ public class SimulateGameState implements ISimulationSeasonState {
                         losingTeam = schedule.getTeamTwo();
                     }
                 }
-                standingSystem = ourSeasonGame.getStandingSystem();
+                standingSystem = simulationContext.getStandingSystem();
                 if (currentDate.isAfter(scheduler.getSeasonStartDate()) && currentDate.isBefore(scheduler.getSeasonEndDate())) {
                     standingSystem.updateWinningStandings(winningTeam);
                     standingSystem.updateLosingStandings(losingTeam);
@@ -68,16 +71,22 @@ public class SimulateGameState implements ISimulationSeasonState {
     }
 
     @Override
+    public void seasonStateEntryProcess() {
+
+    }
+
+    @Override
     public void seasonStateProcess() {
-        LocalDate startOfSimulation = ourSeasonGame.getStartOfSimulation();
-        LocalDate currentDate = startOfSimulation.plusDays(ourSeasonGame.getNumberOfDays());
+        LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
+        LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());
         winDecider(currentDate, scheduler);
     }
 
     @Override
     public void seasonStateExitProcess() {
-        this.ourSeasonGame.setTeamsPlayingInGame(injuryCheckTeams);
-        ourSeasonGame.setCurrentSimulation(ourSeasonGame.getInjuryCheck());
-
+        //Figure out how to set add teams for Playing in game.
+        //Use getter and setter for injury check Teams
+        this.simulationContext.setTeamsPlayingInGame(injuryCheckTeams);
+        simulationContext.setCurrentSimulation(simulationContext.getInjuryCheck());
     }
 }

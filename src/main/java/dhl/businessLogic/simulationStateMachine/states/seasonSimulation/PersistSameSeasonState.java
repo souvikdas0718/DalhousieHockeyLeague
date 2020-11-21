@@ -4,7 +4,17 @@ import dhl.businessLogic.simulationStateMachine.interfaces.ISimulationSeasonStat
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 
 public class PersistSameSeasonState implements ISimulationSeasonState {
+    SimulationContext simulationContext;
     public PersistSameSeasonState(SimulationContext simulationContext) {
+        this.simulationContext = simulationContext;
+    }
+
+    public SimulationContext getSimulationContext() {
+        return simulationContext;
+    }
+
+    public void setSimulationContext(SimulationContext simulationContext) {
+        this.simulationContext = simulationContext;
     }
 
     @Override
@@ -20,5 +30,6 @@ public class PersistSameSeasonState implements ISimulationSeasonState {
     @Override
     public void seasonStateExitProcess() {
         // call advanced time class
+        simulationContext.setCurrentSimulation(simulationContext.getAdvanceTime());
     }
 }
