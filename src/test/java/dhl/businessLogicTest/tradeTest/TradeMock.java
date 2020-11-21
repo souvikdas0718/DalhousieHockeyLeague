@@ -43,19 +43,24 @@ public class TradeMock {
     }
 
     public IPlayer getWeakPlayer(String playerName) {
-        return new Player(playerName, "defense", false,
+        return new Player(playerName, PlayerPosition.DEFENSE.toString(), false,
                 new PlayerStatistics(25, 1, 1, 1, 0));
     }
 
     public ArrayList<IPlayer> get50FreeAgents() {
         List<IPlayer> freeAgents = new ArrayList<>();
         Random r = new Random();
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 250; i++) {
             if (i % 2 == 0) {
-                freeAgents.add(new FreeAgent("Henry" + i, "goalie",
+                freeAgents.add(new FreeAgent("Henry" + i, PlayerPosition.GOALIE.toString(),
                         new PlayerStatistics(r.nextInt(45), r.nextInt(10), r.nextInt(10), r.nextInt(10), r.nextInt(10))));
-            } else {
-                freeAgents.add(new FreeAgent("Henry" + i, "forward",
+            }
+            else if(i % 3 == 0){
+                freeAgents.add(new FreeAgent("Henry" + i, PlayerPosition.FORWARD.toString(),
+                        new PlayerStatistics(r.nextInt(45), r.nextInt(10), r.nextInt(10), r.nextInt(10), 0)));
+            }
+            else {
+                freeAgents.add(new FreeAgent("Henry" + i, PlayerPosition.DEFENSE.toString(),
                         new PlayerStatistics(r.nextInt(45), r.nextInt(10), r.nextInt(10), r.nextInt(10), 0)));
             }
         }

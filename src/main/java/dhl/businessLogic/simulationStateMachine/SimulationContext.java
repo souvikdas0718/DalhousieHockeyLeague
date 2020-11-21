@@ -1,5 +1,8 @@
 package dhl.businessLogic.simulationStateMachine;
 
+import dhl.inputOutput.ui.IUserInputOutput;
+import dhl.inputOutput.ui.UserInputOutput;
+import dhl.inputOutput.importJson.interfaces.IGameConfig;
 import dhl.businessLogic.aging.Injury;
 import dhl.businessLogic.aging.interfaceAging.IInjury;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
@@ -76,8 +79,7 @@ public class SimulationContext implements ISimulationSeasonState {
         gameInProgress = true;
         ioObject = new UserInputOutput();
         updateUserTeamRoster = new UpdateUserTeamRoster(ioObject);
-        standings = new ArrayList<>();
-        tradeEngine = TradingEngine.getInstance(gameConfig, inMemoryLeague, userTeam, ioObject, updateUserTeamRoster);
+        tradeEngine = ITradingEngine.instance(gameConfig, inMemoryLeague, userTeam);
         daysSinceLastTraining = 0;
         teamsPlayingInGame = new ArrayList<>();
         injury = new Injury();
