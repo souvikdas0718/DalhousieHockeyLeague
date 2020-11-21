@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 
 public class ImportStateLogicTest {
-    private static final String SCHEMAFILEPATH = "src/main/java/dhl/inputOutput/importJson/serializeDeserialize/jsonSchema/schema.json";
+    private static final String SCHEMAFILEPATH = "src/main/java/dhl/inputOutput/importJson/jsonSchema/schema.json";
     ImportStateLogic testClassObject;
     GameContext ourGame;
     LeagueObjectModelMocks leagueObjectModelMock;

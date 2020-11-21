@@ -17,7 +17,7 @@ import org.json.simple.JSONObject;
 
 
 public class ImportStateLogic implements IImportStateLogic {
-    private static final String SCHEMAFILEPATH ="src/main/java/dhl/inputOutput/importJson/serializeDeserialize/jsonSchema/schema.json";
+    private static final String SCHEMAFILEPATH ="src/main/java/dhl/inputOutput/importJson/jsonSchema/schema.json";
 
     IUserInputOutput userInputPutput = new UserInputOutput();
 
