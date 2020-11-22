@@ -70,7 +70,8 @@ public class AgingTest {
         players.add(new Player("PlayerOne", "forward", true, playerStatistics1));
 
         ICoach headCoach = new Coach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
-        ITeam team = new Team("Mock Team", "Mock Manager", headCoach, players);
+        IGeneralManager manager = new GeneralManager("Mock Manager", "normal");
+        ITeam team = new Team("Mock Team", manager, headCoach, players);
         List<ITeam> teams = new ArrayList<>();
         teams.add(team);
         playersSelectedToRetire = aging.selectPlayersToRetire(team);
@@ -89,7 +90,8 @@ public class AgingTest {
         players.add(new Player("PlayerTwo", "forward", true, playerStatistics2));
 
         ICoach headCoach = new Coach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
-        ITeam team = new Team("Mock Team", "Mock Manager", headCoach, players);
+        IGeneralManager manager = new GeneralManager("Mock Manager", "normal");
+        ITeam team = new Team("Mock Team", manager, headCoach, players);
         List<ITeam> teams = new ArrayList<>();
         teams.add(team);
         playersSelectedToRetire = aging.selectPlayersToRetire(team);
@@ -108,7 +110,8 @@ public class AgingTest {
         players.add(new Player("PlayerThree", "forward", true, playerStatistics3));
 
         ICoach headCoach = new Coach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
-        ITeam team = new Team("Mock Team", "Mock Manager", headCoach, players);
+        IGeneralManager manager = new GeneralManager("Mock Manager", "normal");
+        ITeam team = new Team("Mock Team", manager, headCoach, players);
         List<ITeam> teams = new ArrayList<>();
         teams.add(team);
         playersSelectedToRetire = aging.selectPlayersToRetire(team);

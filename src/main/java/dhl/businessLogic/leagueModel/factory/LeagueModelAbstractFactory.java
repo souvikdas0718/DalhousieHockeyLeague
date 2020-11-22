@@ -33,11 +33,11 @@ public abstract class LeagueModelAbstractFactory {
 
     public abstract IDivision createDivision(String divisionName, List<ITeam> teamsList);
 
-    public abstract IGeneralManager createGeneralManager(String managerName);
+    public abstract IGeneralManager createGeneralManager(String managerName, String personality);
 
     public abstract ICoach createCoach(String coachName, double skating, double shooting, double checking, double saving);
 
-    public abstract ITeam createTeam(String teamName, String generalManager, ICoach headCoach, List<IPlayer> playersList);
+    public abstract ITeam createTeam(String teamName, IGeneralManager generalManager, ICoach headCoach, List<IPlayer> playersList);
 
     public abstract IPlayer createPlayer(String playerName, String position, Boolean captain, IPlayerStatistics playerStats);
 

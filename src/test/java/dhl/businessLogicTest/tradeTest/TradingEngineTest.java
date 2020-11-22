@@ -1,18 +1,12 @@
 package dhl.businessLogicTest.tradeTest;
 
-import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
+import dhl.businessLogic.leagueModel.*;
+import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogic.trade.interfaces.ITradingEngine;
 import dhl.inputOutput.ui.IUserInputOutput;
 import dhl.Mocks.GameConfigMock;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.Mocks.MockUserInputOutput;
-import dhl.businessLogic.leagueModel.Coach;
-import dhl.businessLogic.leagueModel.Player;
-import dhl.businessLogic.leagueModel.PlayerStatistics;
-import dhl.businessLogic.leagueModel.Team;
-import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
-import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
-import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.trade.interfaces.ITradeOffer;
 import dhl.businessLogic.trade.TradingEngine;
 import org.junit.jupiter.api.Assertions;
@@ -146,8 +140,8 @@ public class TradingEngineTest {
         testClassObject.sortPlayerList(unsortedTeam);
         Assertions.assertTrue(unsortedTeam.getPlayers().get(0).getPlayerStrength() <= unsortedTeam.getPlayers().get(1).getPlayerStrength());
 
-
-        Team empytyPlayerTeam = new Team("EmptyPlayers", "Larry", new Coach(), new ArrayList<>());
+        IGeneralManager manager = new GeneralManager("Larry", "normal");
+        Team empytyPlayerTeam = new Team("EmptyPlayers", manager, new Coach(), new ArrayList<>());
 
         Exception error = Assertions.assertThrows(Exception.class, () -> {
             testClassObject.sortPlayerList(empytyPlayerTeam);
@@ -157,9 +151,10 @@ public class TradingEngineTest {
 
     @Test
     public void isTeamDifferentTest() {
-        Team newTeam = new Team("team1", "Larry", new Coach(), new ArrayList<>());
+        IGeneralManager manager = new GeneralManager("Larry", "normal");
+        Team newTeam = new Team("team1", manager, new Coach(), new ArrayList<>());
         Assertions.assertFalse(testClassObject.isTeamDifferent(newTeam, newTeam));
-        Team otherTeam = new Team("secondTeam", "Larry", new Coach(), new ArrayList<>());
+        Team otherTeam = new Team("secondTeam", manager, new Coach(), new ArrayList<>());
         Assertions.assertTrue(testClassObject.isTeamDifferent(newTeam, otherTeam));
     }
 

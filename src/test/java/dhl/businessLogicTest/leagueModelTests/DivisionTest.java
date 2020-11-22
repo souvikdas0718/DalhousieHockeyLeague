@@ -28,7 +28,8 @@ public class DivisionTest {
         playersList.add(new Player("Henry", "forward", false, playerStatistics));
         playersList.add(new Player("Max", "goalie", true, playerStatistics));
         ICoach headCoach = new Coach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
-        ITeam team = new Team("Ontario", "Mathew", headCoach, playersList);
+        IGeneralManager manager = new GeneralManager("Mathew", "normal");
+        ITeam team = new Team("Ontario", manager, headCoach, playersList);
         List<ITeam> teamArrayList = new ArrayList<>();
         teamArrayList.add(team);
         divisionParameterized = new Division("Atlantic", teamArrayList);
@@ -70,7 +71,8 @@ public class DivisionTest {
         List<IPlayer> playersListTeamTwo = new ArrayList<>();
         playersListTeamTwo.add(new Player("Henry", "forward", false, playerStatistics));
         ICoach headCoach = new Coach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
-        teams.add(new Team("Ontario", "Mathew", headCoach, playersListTeamTwo));
+        IGeneralManager manager = new GeneralManager("Mathew", "normal");
+        teams.add(new Team("Ontario", manager, headCoach, playersListTeamTwo));
         divisionParameterized = new Division("Atlantic", teams);
         Exception error = Assertions.assertThrows(Exception.class, () -> {
             divisionParameterized.checkIfDivisionValid(validate);

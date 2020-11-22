@@ -2,6 +2,7 @@ package dhl.businessLogicTest.tradeTest;
 
 import dhl.businessLogic.leagueModel.*;
 import dhl.businessLogic.leagueModel.interfaceModel.ICoach;
+import dhl.businessLogic.leagueModel.interfaceModel.IGeneralManager;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 
@@ -18,8 +19,8 @@ public class TradeMock {
         strongPlayers.add(getStrongPlayer("Player3"));
 
         ICoach headCoach = new Coach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
-
-        ITeam team = new Team("TeamWithGoodPlayer", "Mock Manager A", headCoach, strongPlayers);
+        IGeneralManager manager = new GeneralManager("Mock Manager A", "normal");
+        ITeam team = new Team("TeamWithGoodPlayer", manager, headCoach, strongPlayers);
         team.setLossPoint(10);
         return team;
     }
@@ -32,7 +33,8 @@ public class TradeMock {
         weakPlayers.add(getWeakPlayer("WeakPlayer4"));
 
         ICoach headCoach = new Coach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
-        ITeam team = new Team("TeamWithBadPlayer", "Mock Manager A", headCoach, weakPlayers);
+        IGeneralManager manager = new GeneralManager("Mock Manager A", "normal");
+        ITeam team = new Team("TeamWithBadPlayer", manager, headCoach, weakPlayers);
         team.setLossPoint(10);
 
         return team;

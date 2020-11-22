@@ -90,13 +90,20 @@ public class LeagueObjectModelDirector implements ILeagueObjectModelDirector {
             JSONObject teamJson = (JSONObject) teamIterator.next();
             JSONArray playerJsonArray = (JSONArray) teamJson.get("players");
             JSONObject coachJson = (JSONObject) teamJson.get("headCoach");
+            JSONObject managerJson = (JSONObject) teamJson.get("generalManager");
 
             ICoach coach = getCoach(coachJson);
+            IGeneralManager manager = getManager(managerJson);
             List<IPlayer> players = getPlayers(playerJsonArray);
-            ITeam team = factory.createTeam((String) teamJson.get("teamName"), (String) teamJson.get("generalManager"),coach,players);
+            ITeam team = factory.createTeam((String) teamJson.get("teamName"), manager,coach,players);
             teams.add(team);
         }
         return teams;
+    }
+
+    public IGeneralManager getManager(JSONObject managerJson) {
+        IGeneralManager manager = factory.createGeneralManager((String) managerJson.get("name"), (String) managerJson.get("personality") );
+        return manager;
     }
 
     public ICoach getCoach(JSONObject coachJson) {
@@ -118,7 +125,7 @@ public class LeagueObjectModelDirector implements ILeagueObjectModelDirector {
     }
 
     public IPlayerStatistics getPlayerStatistics(JSONObject playerJson) {
-        return factory.createPlayerStatistics((int) (long) playerJson.get("age"), (int) (long) playerJson.get("skating"), (int) (long) playerJson.get("shooting"), (int) (long) playerJson.get("checking"), (int) (long) playerJson.get("saving"));
+        return factory.createPlayerStatistics(23, (int) (long) playerJson.get("skating"), (int) (long) playerJson.get("shooting"), (int) (long) playerJson.get("checking"), (int) (long) playerJson.get("saving"));
     }
 
     public List<IPlayer> getFreeAgents(JSONArray freeAgentsJsonArray) {
@@ -152,8 +159,10 @@ public class LeagueObjectModelDirector implements ILeagueObjectModelDirector {
         List<IGeneralManager> generalManagers = new ArrayList<>();
 
         while (managerIterator.hasNext()) {
-            String managerName = managerIterator.next().toString();
-            IGeneralManager generalManager = factory.createGeneralManager(managerName);
+            JSONObject managerJson = (JSONObject) managerIterator.next();
+            String managerName = (String) managerJson.get("name");
+            String managerPersonality = (String) managerJson.get("personality");
+            IGeneralManager generalManager = factory.createGeneralManager(managerName, managerPersonality);
             generalManagers.add(generalManager);
         }
         return generalManagers;

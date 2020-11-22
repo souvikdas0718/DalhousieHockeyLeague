@@ -87,7 +87,8 @@ public class LeagueObjectModelValidationTest {
     void checkUserInputTeamAlreadyPresentTest() throws Exception {
         Exception error = Assertions.assertThrows(Exception.class, () -> {
             List<ICoach> coaches = leagueMock.getCoaches();
-            ITeam newlyCreatedTeam = new Team("Ontario", "harry", coaches.get(0), leagueMock.getPlayerArrayMock());
+            IGeneralManager manager = new GeneralManager("harry", "normal");
+            ITeam newlyCreatedTeam = new Team("Ontario", manager, coaches.get(0), leagueMock.getPlayerArrayMock());
             ILeagueObjectModelInput leagueObjectModelInput = new LeagueObjectModelInput("Dhl", "Western", "Atlantic", newlyCreatedTeam, leagueValidation, serializeLeagueObjectModel);
             leagueValidation.checkUserInputForLeague(leagueModelParameterized, leagueObjectModelInput);
         });

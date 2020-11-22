@@ -81,7 +81,8 @@ public class LeagueObjectModelTest {
         ISerializeLeagueObjectModel mockSerializeLeagueObjectModel = new MockSerializeLeagueObjectModel();
         List<IPlayer> players = new ArrayList<>();
         ICoach headCoach = new Coach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
-        ITeam newlyCreatedTeam = new Team("Nova Scotia", "Mathew", headCoach, players);
+        IGeneralManager manager = new GeneralManager("Mathew", "normal");
+        ITeam newlyCreatedTeam = new Team("Nova Scotia", manager, headCoach, players);
 
         ILeagueObjectModelInput leagueInput = new LeagueObjectModelInput("Dhl", "Western", "Atlantic", newlyCreatedTeam, leagueValidation, mockSerializeLeagueObjectModel);
         leagueModelParameterized = leagueModelParameterized.saveLeagueObjectModel(mockSerializeLeagueObjectModel, leagueInput);

@@ -29,11 +29,11 @@ public class LeagueModelFactory extends LeagueModelAbstractFactory {
         return new Coach(coachName, skating, shooting, checking, saving);
     }
 
-    public IGeneralManager createGeneralManager(String managerName) {
-        return new GeneralManager(managerName);
+    public IGeneralManager createGeneralManager(String managerName, String personality) {
+        return new GeneralManager(managerName , personality);
     }
 
-    public ITeam createTeam(String teamName, String generalManager, ICoach headCoach, List<IPlayer> playersList) {
+    public ITeam createTeam(String teamName, IGeneralManager generalManager, ICoach headCoach, List<IPlayer> playersList) {
         return new Team(teamName, generalManager, headCoach, playersList);
     }
 
