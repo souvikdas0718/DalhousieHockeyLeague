@@ -5,6 +5,7 @@ import dhl.businessLogic.aging.Injury;
 import dhl.businessLogic.aging.Retirement;
 import dhl.businessLogic.aging.interfaceAging.IAging;
 import dhl.businessLogic.aging.interfaceAging.IInjury;
+import dhl.businessLogic.aging.interfaceAging.ILeagueSchedule;
 import dhl.businessLogic.aging.interfaceAging.IRetirement;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
@@ -33,16 +34,12 @@ public abstract class AgingAbstractFactory{
         uniqueInstance = f;
     }
 
-    public IInjury createInjury(){
-        return new Injury();
-    }
+    public abstract IInjury createInjury();
 
-    public IRetirement createRetirement(ISerializeLeagueObjectModel serializeModel, ILeagueObjectModel leagueObjectModel){
-        return new Retirement(serializeModel,leagueObjectModel);
-    }
+    public abstract IRetirement createRetirement(ISerializeLeagueObjectModel serializeModel, ILeagueObjectModel leagueObjectModel);
 
-    public IAging createAging(IGameConfig gameConfig){
-        return new Aging(gameConfig);
-    }
+    public abstract IAging createAging(IGameConfig gameConfig);
+
+    public abstract ILeagueSchedule createLeagueSchedule(int daysSinceStartOfSimulation, ILeagueObjectModel leagueObjectModel);
 
 }

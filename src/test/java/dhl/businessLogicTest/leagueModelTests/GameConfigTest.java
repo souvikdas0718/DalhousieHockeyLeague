@@ -1,9 +1,8 @@
-package dhl.importJsonTest;
-
-import dhl.Mocks.JsonFilePathMock;
-import dhl.businessLogic.leagueModel.GameConfig;
+package dhl.businessLogicTest.leagueModelTests;
+;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
-import dhl.inputOutput.importJson.ImportJsonFile;
+import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
+import dhl.businessLogicTest.leagueModelTests.mocks.GameplayConfigMock;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,13 +12,13 @@ import java.util.HashMap;
 public class GameConfigTest {
 
     IGameConfig testClassObject;
-    JsonFilePathMock filePathMock;
+    LeagueModelMockAbstractFactory mockFactory;
 
     @BeforeEach
     public void initObject() throws Exception {
-        filePathMock = new JsonFilePathMock();
-        ImportJsonFile importJsonFile = new ImportJsonFile(filePathMock.getFilePath());
-        testClassObject = new GameConfig(importJsonFile.getJsonObject());
+        mockFactory = LeagueModelMockAbstractFactory.instance();
+        GameplayConfigMock gameConfigMock = mockFactory.createGameplayConfig();
+        testClassObject = gameConfigMock.getGameplayConfig();
     }
 
     @Test

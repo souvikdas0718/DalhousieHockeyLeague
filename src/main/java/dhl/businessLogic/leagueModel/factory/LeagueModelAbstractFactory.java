@@ -1,6 +1,7 @@
 package dhl.businessLogic.leagueModel.factory;
 
 import dhl.businessLogic.leagueModel.interfaceModel.*;
+import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import org.json.simple.JSONObject;
 
 import java.util.List;
@@ -47,5 +48,16 @@ public abstract class LeagueModelAbstractFactory {
 
     public abstract IPlayer createFreeAgent(String playerName, String position, IPlayerStatistics playerStatistics);
 
-    public abstract ILeagueObjectModelInput createLeagueObjectModelInput(String leagueName, String conferenceName, String divisionName, ITeam newlyCreatedTeam, dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel serializeLeagueObjectModel);
+    public abstract ILeagueObjectModelInput createLeagueObjectModelInput(String leagueName, String conferenceName, String divisionName, ITeam newlyCreatedTeam, ISerializeLeagueObjectModel serializeLeagueObjectModel);
+
+
+    public abstract IConference createConferenceDefault();
+
+    public abstract IDivision createDivisionDefault();
+
+    public abstract ICoach createCoachDefault();
+
+    public abstract IGeneralManager createGeneralManagerDefault();
+
+    public abstract ITeam createTeamDefault();
 }

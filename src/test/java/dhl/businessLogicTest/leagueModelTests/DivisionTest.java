@@ -1,38 +1,32 @@
 package dhl.businessLogicTest.leagueModelTests;
 
-import dhl.businessLogic.factory.InitializeObjectFactory;
-import dhl.businessLogic.leagueModel.*;
+import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
+import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
+import dhl.businessLogicTest.leagueModelTests.mocks.DivisionMock;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DivisionTest {
-    InitializeObjectFactory initObj;
     IDivision division;
     IDivision divisionParameterized;
     IValidation validate;
-    IPlayerStatistics playerStatistics;
+    LeagueModelAbstractFactory factory;
+    LeagueModelMockAbstractFactory mockFactory;
+    DivisionMock divisionMock;
 
     @BeforeEach()
     public void initObject() {
-        initObj = new InitializeObjectFactory();
-        division = initObj.createDivision();
-        validate = new CommonValidation();
-        List<IPlayer> playersList = new ArrayList<>();
-        playerStatistics = new PlayerStatistics(20, 10, 10, 10, 10);
-        playersList.add(new Player("Henry", "forward", false, playerStatistics));
-        playersList.add(new Player("Max", "goalie", true, playerStatistics));
-        ICoach headCoach = new Coach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
-        IGeneralManager manager = new GeneralManager("Mathew", "normal");
-        ITeam team = new Team("Ontario", manager, headCoach, playersList);
-        List<ITeam> teamArrayList = new ArrayList<>();
-        teamArrayList.add(team);
-        divisionParameterized = new Division("Atlantic", teamArrayList);
+        factory = LeagueModelAbstractFactory.instance();
+        mockFactory = LeagueModelMockAbstractFactory.instance();
+        division = factory.createDivisionDefault();
+        validate = factory.createCommonValidation();
+        divisionMock = mockFactory.createDivisionMock();
+        divisionParameterized = divisionMock.getDivision();
     }
 
     @Test
@@ -61,19 +55,12 @@ public class DivisionTest {
 
     @Test
     public void checkIfDivisionValidTest() throws Exception {
-
         Assertions.assertTrue(divisionParameterized.checkIfDivisionValid(validate));
     }
 
     @Test
     public void checkIfTeamNamesUniqueInDivisionTest() throws Exception {
-        List<ITeam> teams = divisionParameterized.getTeams();
-        List<IPlayer> playersListTeamTwo = new ArrayList<>();
-        playersListTeamTwo.add(new Player("Henry", "forward", false, playerStatistics));
-        ICoach headCoach = new Coach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
-        IGeneralManager manager = new GeneralManager("Mathew", "normal");
-        teams.add(new Team("Ontario", manager, headCoach, playersListTeamTwo));
-        divisionParameterized = new Division("Atlantic", teams);
+        divisionParameterized = divisionMock.getDivisionWithSameTeamName();
         Exception error = Assertions.assertThrows(Exception.class, () -> {
             divisionParameterized.checkIfDivisionValid(validate);
         });
@@ -82,7 +69,6 @@ public class DivisionTest {
 
     @AfterEach()
     public void destroyObject() {
-        initObj = null;
         division = null;
     }
 
