@@ -3,10 +3,7 @@ package dhl.businessLogicTest.leagueModelTests.mocks;
 import dhl.businessLogic.leagueModel.PlayerPosition;
 import dhl.businessLogic.leagueModel.PlayerStatistics;
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
-import dhl.businessLogic.leagueModel.interfaceModel.ICoach;
-import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
-import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
-import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
+import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
 
 import java.util.ArrayList;
@@ -24,12 +21,14 @@ public class TeamMock {
 
     public ITeam getTeam(){
         ICoach coach = factory.createCoach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
-        return factory.createTeam("Ontario", "Mathew", coach, getTeamPlayers());
+        IGeneralManager manager = factory.createGeneralManager("Mathew", "normal");
+        return factory.createTeam("Ontario", manager, coach, getTeamPlayers());
     }
 
     public ITeam getTeamByName(String teamName){
         ICoach coach = factory.createCoach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
-        return factory.createTeam(teamName, "Mathew", coach, getTeamPlayers());
+        IGeneralManager manager = factory.createGeneralManager("Mathew", "normal");
+        return factory.createTeam(teamName, manager, coach, getTeamPlayers());
     }
 
 
@@ -38,7 +37,8 @@ public class TeamMock {
         List<IPlayer> players = getTeamPlayers();
         PlayerMock playerMock = mockFactory.createPlayerMock();
         players.add(playerMock.getPlayer());
-        return factory.createTeam("Ontario", "Mathew", coach,players );
+        IGeneralManager manager = factory.createGeneralManager("Mathew", "normal");
+        return factory.createTeam("Ontario", manager, coach,players );
     }
 
     public List<IPlayer> getTeamPlayers(){

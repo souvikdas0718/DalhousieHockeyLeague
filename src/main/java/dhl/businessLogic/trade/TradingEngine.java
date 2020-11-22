@@ -30,8 +30,8 @@ public class TradingEngine extends ITradingEngine {
 
         // TODO: 20-11-2020 remove these new when team make factory
         this.ioObject = new UserInputOutput();
-        this.updateUserTeamRoster = new UpdateUserTeamRoster(ioObject);
 
+        this.updateUserTeamRoster =  IUpdateUserTeamRoster.instance(ioObject);
         this.gameConfig = gameConfig;
         this.leagueObjectModel = leagueObjectModel;
         this.userTeam = userTeam;

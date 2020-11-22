@@ -93,11 +93,11 @@ public class CreateTeamStateLogic implements ICreateTeamStateLogic {
         return null;
     }
 
-    public String findGeneralManager(List<IGeneralManager> generalManagerArray, String generalManager) {
+    public IGeneralManager findGeneralManager(List<IGeneralManager> generalManagerArray, String generalManager) {
         for (IGeneralManager ourGeneralManager : generalManagerArray) {
             String ourGeneralManagerName = ourGeneralManager.getGeneralManagerName();
             if (ourGeneralManagerName.equals(generalManager)) {
-                return generalManager;
+                return ourGeneralManager;
             }
         }
         return null;

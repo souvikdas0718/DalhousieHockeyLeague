@@ -5,7 +5,9 @@ import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.aging.Injury;
 import dhl.businessLogic.aging.interfaceAging.IInjury;
 import dhl.businessLogic.leagueModel.GameConfig;
+import dhl.businessLogic.leagueModel.GeneralManager;
 import dhl.businessLogic.leagueModel.Team;
+import dhl.businessLogic.leagueModel.interfaceModel.IGeneralManager;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.traning.Training;
@@ -49,7 +51,8 @@ public class TrainingTest {
     public void playerStatLessThanHeadCoachStatTest() throws Exception {
         List<IPlayer> updatedPlayersList = new ArrayList<>();
         Double[] randomValues = {0.01, 0.2, 0.3, 0.1};
-        ITeam team = new Team("Ontario","Sam",leagueObjectModelMocks.getSingleCoach(),updatedPlayersList);
+        IGeneralManager manager = new GeneralManager("Sam", "normal");
+        ITeam team = new Team("Ontario",manager,leagueObjectModelMocks.getSingleCoach(),updatedPlayersList);
 
         updatedPlayersList = trainingParameterized.playerStatLessThanHeadCoachStat(
                 leagueObjectModelMocks.getPlayerArrayMock(),
@@ -68,7 +71,9 @@ public class TrainingTest {
     public void playerStatMoreThanHeadCoachStatTest() throws Exception {
         List<IPlayer> updatedPlayersList = new ArrayList<>();
         Double[] randomValues = {0.1, 0.2, 0.3, 0.4};
-        ITeam team = new Team("Ontario","Sam",leagueObjectModelMocks.getSingleCoach(),updatedPlayersList);
+
+        IGeneralManager manager = new GeneralManager("Sam", "normal");
+        ITeam team = new Team("Ontario",manager,leagueObjectModelMocks.getSingleCoach(),updatedPlayersList);
 
         trainingParameterized.gameConfig = new GameConfig(importJsonFile.getJsonObject());
         trainingParameterized.playerStatMoreThanHeadCoachStat(leagueObjectModelMocks.getPlayerArrayMock()

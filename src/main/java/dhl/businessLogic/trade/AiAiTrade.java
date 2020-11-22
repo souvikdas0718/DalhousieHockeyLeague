@@ -2,10 +2,7 @@ package dhl.businessLogic.trade;
 
 import dhl.businessLogic.leagueModel.PlayerPosition;
 
-import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
-import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
-import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
-import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
+import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogic.trade.interfaces.ITradeOffer;
 import dhl.businessLogic.trade.interfaces.ITradeType;
 import java.util.ArrayList;
@@ -31,8 +28,12 @@ public class AiAiTrade implements ITradeType {
         double randomValue = Math.random();
         if (isTradeGoodForReceivingTeam(tradeOffer)) {
             return true;
-        } else if (randomValue > configRandomAcceptanceChance) {
-            return true;
+        } else{
+            ITeam receivingTeam = tradeOffer.getReceivingTeam();
+            IGeneralManager receivingManager = receivingTeam.getGeneralManager();
+            if (randomValue > configRandomAcceptanceChance) {
+                return true;
+            }
         }
         return false;
     }
@@ -66,20 +67,20 @@ public class AiAiTrade implements ITradeType {
         }
     }
 
-    public void updatePlayers(int availablePlayer, String playerPosition, int validCount, ITeam team, ILeagueObjectModel leagueObjectModel) throws Exception {
-        if (availablePlayer < validCount){
-            while (availablePlayer < validCount){
+    public void updatePlayers(int currentCount, String playerPosition, int validCount, ITeam team, ILeagueObjectModel leagueObjectModel) throws Exception {
+        if (currentCount < validCount){
+            while (currentCount < validCount){
                 IPlayer player = findBestPlayerInList(playerPosition, leagueObjectModel.getFreeAgents());
                 team.getPlayers().add(player);
                 leagueObjectModel.getFreeAgents().remove(player);
-                availablePlayer = availablePlayer + 1;
+                currentCount = currentCount + 1;
             }
-        }else if (availablePlayer > validCount) {
-            while (availablePlayer > validCount) {
+        }else if (currentCount > validCount) {
+            while (currentCount > validCount) {
                 IPlayer player = findWeakestPlayerInList(playerPosition, team.getPlayers());
                 team.getPlayers().remove(player);
                 leagueObjectModel.getFreeAgents().add(player);
-                availablePlayer = availablePlayer - 1;
+                currentCount = currentCount - 1;
             }
         }
     }
@@ -98,11 +99,10 @@ public class AiAiTrade implements ITradeType {
             }
         }
         if (weakPlayer == null) {
-            throw new Exception("No Skater found in List");
+            throw new Exception("No" + neededPosition +" found in List");
         }
         return weakPlayer;
     }
-
 
     public IPlayer findBestPlayerInList(String playerPosition, List playerList) throws Exception {
         IPlayer bestPlayer = null;
@@ -118,7 +118,7 @@ public class AiAiTrade implements ITradeType {
             }
         }
         if (bestPlayer == null) {
-            throw new Exception("No Skater found in List");
+            throw new Exception("No "+ playerPosition +" found in List");
         }
         return bestPlayer;
     }

@@ -16,11 +16,11 @@ public class ManagerMock {
     }
 
     public IGeneralManager getManager(){
-        return factory.createGeneralManager("Mathew Jacob");
+        return factory.createGeneralManager("Mathew Jacob","normal");
     }
 
     public IGeneralManager getManagerWithoutName(){
-        return factory.createGeneralManager("");
+        return factory.createGeneralManager("","normal");
     }
 
     public List<IGeneralManager> getManagers(){

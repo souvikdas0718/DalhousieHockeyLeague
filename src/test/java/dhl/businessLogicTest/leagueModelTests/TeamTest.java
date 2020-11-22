@@ -3,10 +3,7 @@ package dhl.businessLogicTest.leagueModelTests;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.leagueModel.*;
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
-import dhl.businessLogic.leagueModel.interfaceModel.ICoach;
-import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
-import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
-import dhl.businessLogic.leagueModel.interfaceModel.IValidation;
+import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
 import dhl.businessLogicTest.leagueModelTests.mocks.PlayerMock;
 import dhl.businessLogicTest.leagueModelTests.mocks.TeamMock;
@@ -42,8 +39,8 @@ public class TeamTest {
         ICoach coach = team.getHeadCoach();
         String coachName = coach.getCoachName();
         Assertions.assertEquals(0,coachName.length() );
-        String generalManagerName = team.getGeneralManager();
-        Assertions.assertEquals(0,generalManagerName.length() );
+        IGeneralManager manager = team.getGeneralManager();
+        Assertions.assertEquals(0,manager.getGeneralManagerName().length() );
         Assertions.assertEquals(0, team.getPlayers().size());
     }
 
@@ -60,7 +57,7 @@ public class TeamTest {
 
     @Test
     public void getGeneralManagerTest() {
-        Assertions.assertEquals("Mathew", team.getGeneralManager());
+        Assertions.assertEquals("Mathew", team.getGeneralManager().getGeneralManagerName());
     }
 
 

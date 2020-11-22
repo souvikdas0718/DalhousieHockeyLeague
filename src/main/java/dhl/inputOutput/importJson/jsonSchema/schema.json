@@ -162,10 +162,16 @@
                                   },
                                   "generalManager": {
                                     "id": "#/properties/conferences/items/anyOf/0/properties/divisions/items/anyOf/0/properties/teams/items/anyOf/0/properties/generalManager",
-                                    "type": "string",
-                                    "title": "General Manager",
-                                    "description": "Name of the general manager",
-                                    "minLength": 1
+                                    "type": "object",
+                                    "required": [],
+                                    "properties": {
+                                      "name": {
+                                        "type": "string"
+                                      },
+                                      "personality": {
+                                        "type": "string"
+                                      }
+                                    }
                                   },
                                   "headCoach": {
                                     "id": "#/properties/conferences/items/anyOf/0/properties/divisions/items/anyOf/0/properties/teams/items/anyOf/0/properties/headCoach",
@@ -239,7 +245,6 @@
                                             "playerName",
                                             "position",
                                             "captain",
-                                            "age",
                                             "skating",
                                             "shooting",
                                             "checking",
@@ -269,13 +274,6 @@
                                               "type": "boolean",
                                               "title": "Captain",
                                               "description": "Captain status"
-                                            },
-                                            "age": {
-                                              "id": "#/properties/conferences/items/anyOf/0/properties/divisions/items/anyOf/0/properties/teams/items/anyOf/0/properties/players/items/anyOf/0/properties/age",
-                                              "type": "integer",
-                                              "title": "Age",
-                                              "description": "FreeAgent's age",
-                                              "minLength": 1
                                             },
                                             "skating": {
                                               "id": "#/properties/conferences/items/anyOf/0/properties/divisions/items/anyOf/0/properties/teams/items/anyOf/0/properties/players/items/anyOf/0/properties/skating",
@@ -345,7 +343,6 @@
             "required": [
               "playerName",
               "position",
-              "age",
               "skating",
               "shooting",
               "checking",
@@ -369,13 +366,6 @@
                   "defense",
                   "goalie"
                 ]
-              },
-              "age": {
-                "id": "#/properties/freeAgents/items/anyOf/0/properties/captain",
-                "type": "integer",
-                "title": "Age",
-                "description": "FreeAgent's age",
-                "minLength": 1
               },
               "skating": {
                 "id": "#/properties/freeAgents/items/anyOf/0/properties/captain",
@@ -408,6 +398,21 @@
             }
           }
         ]
+      }
+    },
+    "generalManagers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "personality": {
+            "type": "string"
+          }
+        }
       }
     }
   }

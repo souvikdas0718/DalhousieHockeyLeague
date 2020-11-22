@@ -46,7 +46,8 @@ public class AgingMock {
         IPlayerStatistics playerStatistics = leagueFactory.createPlayerStatistics(age, 20, 20, 20, 20);
         players.add(leagueFactory.createPlayer("PlayerOne", "forward", true, playerStatistics));
         ICoach headCoach = leagueFactory.createCoach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
-        return leagueFactory.createTeam("Mock Team", "Mock Manager", headCoach, players);
+        IGeneralManager manager = leagueFactory.createGeneralManager("Mathew", "normal");
+        return leagueFactory.createTeam("Mock Team", manager, headCoach, players);
     }
 
     public IPlayer getPlayerAtMaxAge(){
@@ -90,7 +91,8 @@ public class AgingMock {
         playersList.add(leagueFactory.createPlayer( "Henry", "forward", false, playerMock.getPlayerStats()));
         playersList.add(leagueFactory.createPlayer("Max", "goalie", true, playerMock.getPlayerStats()));
         ICoach headCoach = leagueFactory.createCoach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
-        ITeam team = leagueFactory.createTeam("Ontario", "Mathew", headCoach, playersList);
+        IGeneralManager manager = leagueFactory.createGeneralManager("Mathew", "normal");
+        ITeam team = leagueFactory.createTeam("Ontario", manager, headCoach, playersList);
         List<ITeam> teamArrayList = new ArrayList<>();
         teamArrayList.add(team);
 

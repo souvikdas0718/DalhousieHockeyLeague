@@ -21,7 +21,7 @@ public class CreateTeamState implements IGameState {
     private IConference selectedConference;
     private IDivision selectedDivision;
     private String selectedTeamName;
-    private String selectedGeneralManager;
+    private IGeneralManager selectedGeneralManager;
     private String selectedHeadCoach;
     private ICoach selectedCoach;
     private List<IPlayer> selectedFreeAgents;
@@ -35,7 +35,8 @@ public class CreateTeamState implements IGameState {
         ourGame = newGame;
         selectedConference = null;
         selectedDivision = null;
-        selectedTeamName = selectedGeneralManager = selectedHeadCoach = null;
+        selectedTeamName  = selectedHeadCoach = null;
+        selectedGeneralManager = new GeneralManager();
         selectedCoach = new Coach();
         createTeamStateLogic = new CreateTeamStateLogic();
     }

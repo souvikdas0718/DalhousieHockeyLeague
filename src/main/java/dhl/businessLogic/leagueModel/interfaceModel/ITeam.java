@@ -6,7 +6,7 @@ public interface ITeam {
 
     String getTeamName();
 
-    String getGeneralManager();
+    IGeneralManager getGeneralManager();
 
     ICoach getHeadCoach();
 

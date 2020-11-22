@@ -45,15 +45,18 @@ public class LeagueObjectModelMocks {
 
     public ITeam getTeamObjectMock() {
         ICoach headCoach = new Coach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
-        return new Team("Mock Team", "Mock Manager", headCoach, getPlayerArrayMock());
+        IGeneralManager manager = new GeneralManager("Mock Manager", "normal");
+        return new Team("Mock Team", manager, headCoach, getPlayerArrayMock());
     }
 
     public List<ITeam> getTeamArrayMock() {
         List<ITeam> teamArrayListMock = new ArrayList<>();
         ICoach headCoachOne = new Coach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
         ICoach headCoachTwo = new Coach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
-        teamArrayListMock.add(new Team("Mock Team2", "mock Manager2", headCoachTwo, getPlayerArrayMock()));
-        teamArrayListMock.add(new Team("Mock Team1", "mock Manager1", headCoachOne, getPlayerArrayMock()));
+        IGeneralManager manager1 = new GeneralManager("Mock Manager1", "normal");
+        IGeneralManager manager2 = new GeneralManager("Mock Manager2", "normal");
+        teamArrayListMock.add(new Team("Mock Team2", manager1, headCoachTwo, getPlayerArrayMock()));
+        teamArrayListMock.add(new Team("Mock Team1", manager2, headCoachOne, getPlayerArrayMock()));
 
         return teamArrayListMock;
     }
@@ -121,7 +124,8 @@ public class LeagueObjectModelMocks {
         playersList.add(new Player("Henry", "forward", false, playerStatistics));
         playersList.add(new Player("Max", "goalie", true, playerStatistics));
         ICoach headCoach = new Coach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
-        ITeam team = new Team("Ontario", "Mathew", headCoach, playersList);
+        IGeneralManager manager = new GeneralManager("Mathew", "normal");
+        ITeam team = new Team("Ontario", manager, headCoach, playersList);
         List<ITeam> teamArrayList = new ArrayList<>();
         teamArrayList.add(team);
         IDivision division = new Division("Atlantic", teamArrayList);
@@ -137,7 +141,8 @@ public class LeagueObjectModelMocks {
         playersList.add(new Player("Henry", "forward", false, getPlayerStatistics()));
         playersList.add(new Player("Max", "goalie", true, getPlayerStatistics()));
         ICoach headCoach = new Coach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
-        ITeam team = new Team("Ontario", "Mathew", headCoach, playersList);
+        IGeneralManager manager = new GeneralManager("Mathew", "normal");
+        ITeam team = new Team("Ontario", manager, headCoach, playersList);
         List<ITeam> teamArrayList = new ArrayList<>();
         teamArrayList.add(team);
 
@@ -194,8 +199,8 @@ public class LeagueObjectModelMocks {
         }
 
         ICoach headCoach = new Coach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
-
-        ITeam team = new Team("Ontario", "Mathew", headCoach, playersList);
+        IGeneralManager manager = new GeneralManager("Mathew", "normal");
+        ITeam team = new Team("Ontario", manager, headCoach, playersList);
         List<ITeam> teamArrayList = new ArrayList<>();
         teamArrayList.add(team);
 
@@ -243,8 +248,8 @@ public class LeagueObjectModelMocks {
         }
 
         ICoach headCoach = new Coach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
-
-        ITeam team = new Team("Ontario", "Mathew", headCoach, playersList);
+        IGeneralManager manager = new GeneralManager("Mathew", "normal");
+        ITeam team = new Team("Ontario", manager, headCoach, playersList);
         List<ITeam> teamArrayList = new ArrayList<>();
         teamArrayList.add(team);
 
