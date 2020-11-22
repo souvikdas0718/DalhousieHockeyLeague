@@ -100,7 +100,4 @@ public class AiUserTrade implements ITradeType {
         ioObject.printMessage("Enter 1 to Accept Trade, 2 to Reject");
     }
 
-    public void setIoObject(IUserInputOutput ioObject) {
-        this.ioObject = ioObject;
-    }
 }

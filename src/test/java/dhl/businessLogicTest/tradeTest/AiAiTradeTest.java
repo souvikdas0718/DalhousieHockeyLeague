@@ -1,5 +1,6 @@
 package dhl.businessLogicTest.tradeTest;
 
+import dhl.businessLogic.leagueModel.PlayerPosition;
 import dhl.inputOutput.importJson.interfaces.IGameConfig;
 import dhl.Mocks.GameConfigMock;
 import dhl.Mocks.LeagueObjectModelMocks;
@@ -73,6 +74,73 @@ public class AiAiTradeTest {
         testClassObject.validateTeamRosterAfterTrade(team, league);
         team.setRoster();
         Assertions.assertTrue(team.checkIfSkatersGoaliesValid());
+    }
+
+    @Test
+    public void updatePlayersTest() throws Exception {
+
+        ArrayList<IPlayer> freeAgents = tradeMock.get50FreeAgents();
+        LeagueObjectModel league = (LeagueObjectModel) leagueObjectModelMocks.getLeagueObjectMock();
+        league.freeAgents = freeAgents;
+        ITeam team = tradeMock.getTeamWithGoodPlayer();
+        ITradeOffer testOffer = new ExchangingPlayerTradeOffer(weakTeam, strongTeam, playersOffered, playersWanted);
+        testClassObject = new AiAiTrade(testOffer, ourGameConfig);
+
+        int countDefence = 0;
+        for(IPlayer p : team.getPlayers()){
+            if (p.getPosition().equals(PlayerPosition.DEFENSE.toString())){
+                countDefence = countDefence + 1;
+            }
+        }
+        testClassObject.updatePlayers(countDefence, PlayerPosition.DEFENSE.toString(),10, team, league);
+
+        countDefence = 0;
+        for(IPlayer p : team.getPlayers()){
+            if (p.getPosition().equals(PlayerPosition.DEFENSE.toString())){
+                countDefence = countDefence + 1;
+            }
+        }
+        Assertions.assertTrue(countDefence == 10);
+
+        testClassObject.updatePlayers(countDefence, PlayerPosition.DEFENSE.toString(),5, team, league);
+        countDefence = 0;
+        for(IPlayer p : team.getPlayers()){
+            if (p.getPosition().equals(PlayerPosition.DEFENSE.toString())){
+                countDefence = countDefence + 1;
+            }
+        }
+        Assertions.assertTrue(countDefence == 5);
+
+    }
+
+    @Test
+    public void findWeakestPlayerInListTest() throws Exception {
+        ITradeOffer testOffer = new ExchangingPlayerTradeOffer(weakTeam, strongTeam, playersOffered, playersWanted);
+        testClassObject = new AiAiTrade(testOffer, ourGameConfig);
+        ITeam team = tradeMock.getTeamWithBadPlayer();
+
+        IPlayer player = testClassObject.findBestPlayerInList(PlayerPosition.DEFENSE.toString(), team.getPlayers());
+        Assertions.assertTrue(player.getPlayerName().contains("Weak"));
+
+        Exception error = Assertions.assertThrows(Exception.class, () -> {
+            testClassObject.findWeakestPlayerInList(PlayerPosition.FORWARD.toString(), team.getPlayers());
+        });
+        Assertions.assertTrue(error.getMessage().contains("found in List"));
+    }
+
+    @Test
+    public void findBestPlayerInListtTest() throws Exception {
+        ITradeOffer testOffer = new ExchangingPlayerTradeOffer(weakTeam, strongTeam, playersOffered, playersWanted);
+        testClassObject = new AiAiTrade(testOffer, ourGameConfig);
+        ITeam team = tradeMock.getTeamWithBadPlayer();
+
+        IPlayer player = testClassObject.findBestPlayerInList(PlayerPosition.DEFENSE.toString(), team.getPlayers());
+        Assertions.assertTrue(player.getPlayerName().contains("Weak"));
+
+        Exception error = Assertions.assertThrows(Exception.class, () -> {
+            testClassObject.findWeakestPlayerInList(PlayerPosition.FORWARD.toString(), team.getPlayers());
+        });
+        Assertions.assertTrue(error.getMessage().contains("found in List"));
     }
 
     @Test

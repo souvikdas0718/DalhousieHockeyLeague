@@ -65,20 +65,20 @@ public class AiAiTrade implements ITradeType {
         }
     }
 
-    public void updatePlayers(int availablePlayer, String playerPosition, int validCount, ITeam team, ILeagueObjectModel leagueObjectModel) throws Exception {
-        if (availablePlayer < validCount){
-            while (availablePlayer < validCount){
+    public void updatePlayers(int currentCount, String playerPosition, int validCount, ITeam team, ILeagueObjectModel leagueObjectModel) throws Exception {
+        if (currentCount < validCount){
+            while (currentCount < validCount){
                 IPlayer player = findBestPlayerInList(playerPosition, leagueObjectModel.getFreeAgents());
                 team.getPlayers().add(player);
                 leagueObjectModel.getFreeAgents().remove(player);
-                availablePlayer = availablePlayer + 1;
+                currentCount = currentCount + 1;
             }
-        }else if (availablePlayer > validCount) {
-            while (availablePlayer > validCount) {
+        }else if (currentCount > validCount) {
+            while (currentCount > validCount) {
                 IPlayer player = findWeakestPlayerInList(playerPosition, team.getPlayers());
                 team.getPlayers().remove(player);
                 leagueObjectModel.getFreeAgents().add(player);
-                availablePlayer = availablePlayer - 1;
+                currentCount = currentCount - 1;
             }
         }
     }
@@ -97,7 +97,7 @@ public class AiAiTrade implements ITradeType {
             }
         }
         if (weakPlayer == null) {
-            throw new Exception("No Skater found in List");
+            throw new Exception("No" + neededPosition +" found in List");
         }
         return weakPlayer;
     }
@@ -116,7 +116,7 @@ public class AiAiTrade implements ITradeType {
             }
         }
         if (bestPlayer == null) {
-            throw new Exception("No Skater found in List");
+            throw new Exception("No "+ playerPosition +" found in List");
         }
         return bestPlayer;
     }
