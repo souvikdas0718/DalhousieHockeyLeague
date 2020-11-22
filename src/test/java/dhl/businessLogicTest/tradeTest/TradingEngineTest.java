@@ -69,20 +69,21 @@ public class TradingEngineTest {
     @Test
     public void sendTradeToRecevingTeamTest() throws Exception {
         ITradeOffer tradeOffer = testClassObject.generateTradeOffer(badTeamMock, goodTeamMock);
+        badTeamMock.setRoster();
         double teamStrength = badTeamMock.calculateTeamStrength();
 
         ((MockUserInputOutput) ioObject).setMockOutput("2");
         testClassObject.sendTradeToRecevingTeam(tradeOffer, tradeOffer.getReceivingTeam());
-        Assertions.assertTrue(teamStrength == badTeamMock.calculateTeamStrength());
+        double noChangeInStrength = badTeamMock.calculateTeamStrength();
+        Assertions.assertTrue(teamStrength == noChangeInStrength);
 
         ((MockUserInputOutput) ioObject).setMockOutput("1");
         Exception error = Assertions.assertThrows(Exception.class, () -> {
             testClassObject.sendTradeToRecevingTeam(tradeOffer, tradeOffer.getReceivingTeam());
         });
-
-        // TODO: 21-11-2020 Update Test
-        //Assertions.assertTrue(teamStrength < badTeamMock.calculateTeamStrength());
-        //Assertions.assertFalse(teamStrength == badTeamMock.calculateTeamStrength());
+        badTeamMock.setRoster();
+        double increasedTeamStrength = badTeamMock.calculateTeamStrength();
+        Assertions.assertTrue(teamStrength < increasedTeamStrength );
     }
 
     @Test

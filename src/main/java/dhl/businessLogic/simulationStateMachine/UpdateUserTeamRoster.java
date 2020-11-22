@@ -11,7 +11,7 @@ import dhl.inputOutput.ui.PlayerListFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UpdateUserTeamRoster implements IUpdateUserTeamRoster {
+public class UpdateUserTeamRoster extends IUpdateUserTeamRoster {
 
     IUserInputOutput ioObject;
     IListFormat listDisplay;
