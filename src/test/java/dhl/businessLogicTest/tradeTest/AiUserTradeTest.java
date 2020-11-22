@@ -1,5 +1,6 @@
 package dhl.businessLogicTest.tradeTest;
 
+import dhl.businessLogic.leagueModel.PlayerPosition;
 import dhl.inputOutput.ui.IUserInputOutput;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.Mocks.MockUserInputOutput;
@@ -49,12 +50,15 @@ public class AiUserTradeTest {
 
     @Test
     public void validateTeamRosterAfterTrade() throws Exception {
+
         leagueObjectModel.freeAgents = tradeMock.get50FreeAgents();
         ITeam team = tradeMock.getTeamWithGoodPlayer();
 
         ((MockUserInputOutput) ioObjectMock).setMockOutput("1");
+
         testClassObject.validateTeamRosterAfterTrade(team, leagueObjectModel);
-        //Assertions.assertTrue(team.checkIfSkatersGoaliesValid());
+        team.setRoster();
+        Assertions.assertTrue(team.checkTeamPlayersCount());
 
         team.getPlayers().add(tradeMock.getWeakPlayer("randomPlayer1"));
         team.getPlayers().add(tradeMock.getWeakPlayer("randomPlayer2"));
@@ -66,8 +70,8 @@ public class AiUserTradeTest {
         team.getPlayers().add(player);
         ((MockUserInputOutput) ioObjectMock).setMockOutput("0");
         testClassObject.validateTeamRosterAfterTrade(team, leagueObjectModel);
-        // TODO: 21-11-2020 Update Test 
-        //Assertions.assertTrue(team.checkIfSkatersGoaliesValid());
+        team.setRoster();
+        Assertions.assertTrue(team.checkTeamPlayersCount());
     }
 
     @Test

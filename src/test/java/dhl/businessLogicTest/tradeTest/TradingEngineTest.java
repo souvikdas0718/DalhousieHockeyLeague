@@ -54,10 +54,9 @@ public class TradingEngineTest {
     @Test
     public void startEngine() {
         double badTeamStrengthBeforeTrade = badTeamMock.calculateTeamStrength();
+        badTeamMock.setRoster();
         testClassObject.startEngine();
-        // TODO: 21-11-2020 Update Test
-        //Assertions.assertTrue(badTeamStrengthBeforeTrade < badTeamMock.calculateTeamStrength());
-
+        Assertions.assertTrue(badTeamStrengthBeforeTrade < badTeamMock.calculateTeamStrength());
     }
 
     @Test

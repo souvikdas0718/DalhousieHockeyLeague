@@ -34,17 +34,22 @@ public class TradeMock {
         ICoach headCoach = new Coach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
         ITeam team = new Team("TeamWithBadPlayer", "Mock Manager A", headCoach, weakPlayers);
         team.setLossPoint(10);
+
         return team;
     }
 
     public IPlayer getStrongPlayer(String playerName) {
-        return new Player(playerName, "defense", false,
+        IPlayer player = new Player(playerName, "defense", false,
                 new PlayerStatistics(25, 10, 10, 10, 0));
+
+        return player;
     }
 
     public IPlayer getWeakPlayer(String playerName) {
-        return new Player(playerName, PlayerPosition.DEFENSE.toString(), false,
+        IPlayer player = new Player(playerName, PlayerPosition.DEFENSE.toString(), false,
                 new PlayerStatistics(25, 1, 1, 1, 0));
+
+        return player;
     }
 
     public ArrayList<IPlayer> get50FreeAgents() {
