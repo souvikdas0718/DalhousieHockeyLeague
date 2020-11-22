@@ -14,7 +14,7 @@ public class LeagueObjectModel implements ILeagueObjectModel {
     public List<IPlayer> freeAgents;
     public List<ICoach> coaches;
     public List<IGeneralManager> generalManagers;
-    public IGameConfig gameConfig;
+    public IGameConfig gameplayConfig;
 
     public LeagueObjectModel() {
         setDefault();
@@ -53,7 +53,7 @@ public class LeagueObjectModel implements ILeagueObjectModel {
     }
 
     public IGameConfig getGameConfig() {
-        return gameConfig;
+        return gameplayConfig;
     }
 
     public List<IGeneralManager> getGeneralManagers() {
@@ -81,7 +81,7 @@ public class LeagueObjectModel implements ILeagueObjectModel {
     }
 
     public void setGameConfig(IGameConfig gameConfig) {
-        this.gameConfig = gameConfig;
+        this.gameplayConfig = gameConfig;
     }
 
     public boolean checkIfLeagueModelValid(IValidation validation, ILeagueObjectModelValidation leagueObjectModelValidation) throws Exception {

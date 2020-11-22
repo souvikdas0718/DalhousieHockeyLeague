@@ -22,7 +22,7 @@ import java.util.List;
 public class SerializeLeagueObjectModel implements ISerializeLeagueObjectModel {
     Logger myLogger = LogManager.getLogger(CreateTeamStateLogic.class);
     String jsonFilePath;
-    final String playerFileName = "--RetiredPlayers.json";
+    final String playerFileName = "--RetiredPlayersInLeague.json";
     final String jsonExtension = ".json";
 
     public SerializeLeagueObjectModel(String inputJsonFilePath){

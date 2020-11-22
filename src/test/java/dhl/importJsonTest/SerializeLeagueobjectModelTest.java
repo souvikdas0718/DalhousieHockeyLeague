@@ -30,7 +30,7 @@ import java.util.List;
 class SerializeLeagueobjectModelTest {
     private static final String filepath = "src/test/java/dhl/Mocks/";
     private static final String extension = ".json";
-    private final String playerFileName = "--RetiredPlayer.json";
+    private final String playerFileName = "--RetiredPlayersInLeague.json";
 
     SerializeLeagueObjectModel serializeLeagueobjectModel;
     IDeserializeLeagueObjectModel deserializeLeagueobjectModel;
@@ -57,8 +57,6 @@ class SerializeLeagueobjectModelTest {
 
         leagueObjectModel = deserializeLeagueobjectModel.deserializeLeagueObjectJson("Dhl");
 
-        // TODO: 21-11-2020 Rajni Update this test 
-        //Assertions.assertEquals(serializedleagueModel, mockSerializedJson.serializedJson());
         Assertions.assertEquals("Dhl", leagueObjectModel.getLeagueName());
         Assertions.assertEquals(2, leagueObjectModel.getConferences().size());
         Assertions.assertEquals(2, leagueObjectModel.getFreeAgents().size());

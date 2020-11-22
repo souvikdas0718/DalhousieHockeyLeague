@@ -25,7 +25,7 @@ import java.util.List;
 
 public class DeSerializeLeagueObjectModelTest {
     private static final String filepath = "src/test/java/dhl/Mocks/";
-    final String playerFileName = "--RetiredPlayer.json";
+    final String playerFileName = "--RetiredPlayersInLeague.json";
     final String jsonExtension = ".json";
 
     DeserializeLeagueObjectModel deserializeleagueObjectModel;
