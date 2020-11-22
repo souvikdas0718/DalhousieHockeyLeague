@@ -3,6 +3,7 @@ package dhl.businessLogicTest.simulationStateMachineTest.states.seasonScheduler;
 import dhl.Mocks.LeagueObjectModel20TeamMocks;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.leagueModel.Team;
+import dhl.businessLogic.leagueModel.interfaceModel.IGeneralManager;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
@@ -242,10 +243,12 @@ public class SchedulerTest {
         scheduler.setPlayOffStartDate(playOffStarts);
         scheduler.playOffs(standings, league);
 
-        ITeam teamPlayOff1 = new Team("Bruins", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
-        ITeam teamPlayoff2 = new Team("Maple", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
-        ITeam teamPlayoff3 = new Team("Hurricanes", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
-        ITeam teamPlayoff4 = new Team("Flyers", league.getGeneralManagers().get(0).getGeneralManagerName(), league.getCoaches().get(0), statistics);
+        IGeneralManager manager = league.getGeneralManagers().get(0);
+
+        ITeam teamPlayOff1 = new Team("Bruins", manager, league.getCoaches().get(0), statistics);
+        ITeam teamPlayoff2 = new Team("Maple", manager, league.getCoaches().get(0), statistics);
+        ITeam teamPlayoff3 = new Team("Hurricanes", manager, league.getCoaches().get(0), statistics);
+        ITeam teamPlayoff4 = new Team("Flyers", manager, league.getCoaches().get(0), statistics);
 
         scheduler.gameWinner(teamPlayOff1);
         scheduler.gameWinner(teamPlayoff2);
