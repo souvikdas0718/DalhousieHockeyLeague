@@ -1,10 +1,16 @@
-package dhl.businessLogicTest.AgingTest;
+package dhl.businessLogicTest.agingTest;
 
 
-import dhl.Mocks.LeagueObjectModelMocks;
+
+import dhl.Mocks.factory.MockAbstractFactory;
 import dhl.businessLogic.aging.Aging;
+import dhl.businessLogic.aging.agingFactory.AgingAbstractFactory;
 import dhl.businessLogic.leagueModel.*;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
+import dhl.businessLogicTest.agingTest.factory.AgingTestAbstractFactory;
+import dhl.businessLogicTest.agingTest.mocks.AgingMock;
+import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
+import dhl.businessLogicTest.leagueModelTests.mocks.LeagueMock;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,16 +22,25 @@ import java.util.Map;
 import java.util.Random;
 
 public class AgingTest {
-
-    LeagueObjectModelMocks leagueMock;
     IGameConfig gameConfig;
     Aging aging;
+    AgingAbstractFactory agingFactory;
+    MockAbstractFactory mockFactory;
+    LeagueModelMockAbstractFactory leagueMockFactory;
+    LeagueMock leagueMock;
+    AgingMock agingMock;
+    ILeagueObjectModel leagueObjectModel;
 
     @BeforeEach()
     public void initObject() {
-        leagueMock = new LeagueObjectModelMocks();
-        gameConfig = leagueMock.getGameConfig();
-        aging = new Aging(gameConfig);
+        leagueMockFactory=LeagueModelMockAbstractFactory.instance();
+        leagueMock =  leagueMockFactory.createLeagueMock();
+        mockFactory= MockAbstractFactory.instance();
+        leagueObjectModel = leagueMock.getLeagueObjectModel();
+        agingMock = AgingTestAbstractFactory.instance().createAgingMock();
+        gameConfig = leagueMockFactory.createGameplayConfig().getAgingGameConfig();
+        agingFactory = AgingAbstractFactory.instance();
+        aging = (Aging) agingFactory.createAging(gameConfig);
 
     }
 
@@ -42,7 +57,7 @@ public class AgingTest {
 
     @Test
     public void ageAllPlayerTest() {
-        ILeagueObjectModel leagueObjectModel = leagueMock.getLeagueObjectMock();
+        ILeagueObjectModel leagueObjectModel = leagueMock.getLeagueObjectModel();
         for (IConference conference : leagueObjectModel.getConferences()) {
             for (IDivision division : conference.getDivisions()) {
                 for (ITeam team : division.getTeams()) {
@@ -50,7 +65,7 @@ public class AgingTest {
                     List<IPlayer> players = team.getPlayers();
                     IPlayer player = players.get(0);
                     IPlayerStatistics playerStatistics = player.getPlayerStats();
-                    Assertions.assertEquals(26, playerStatistics.getAge());
+                    Assertions.assertEquals(21, playerStatistics.getAge());
                 }
             }
         }
@@ -65,14 +80,7 @@ public class AgingTest {
     @Test
     public void selectPlayersToRetireMaxAgeTest() {
         Map<String, List<IPlayer>> playersSelectedToRetire;
-        List<IPlayer> players = new ArrayList<>();
-        IPlayerStatistics playerStatistics1 = new PlayerStatistics(50, 20, 20, 20, 20);
-        players.add(new Player("PlayerOne", "forward", true, playerStatistics1));
-
-        ICoach headCoach = new Coach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
-        ITeam team = new Team("Mock Team", "Mock Manager", headCoach, players);
-        List<ITeam> teams = new ArrayList<>();
-        teams.add(team);
+        ITeam team = agingMock.teamWithPlayersAtMaxAge();
         playersSelectedToRetire = aging.selectPlayersToRetire(team);
 
         Assertions.assertTrue(playersSelectedToRetire.containsKey("Mock Team"));
@@ -84,14 +92,8 @@ public class AgingTest {
         Random random = aging.getRandomGenerator();
         random.setSeed(1);
         Map<String, List<IPlayer>> playersSelectedToRetire ;
-        List<IPlayer> players = new ArrayList<>();
-        IPlayerStatistics playerStatistics2 = new PlayerStatistics(36, 20, 20, 20, 20);
-        players.add(new Player("PlayerTwo", "forward", true, playerStatistics2));
+        ITeam team = agingMock.teamWithPlayersMoreThanAvg();
 
-        ICoach headCoach = new Coach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
-        ITeam team = new Team("Mock Team", "Mock Manager", headCoach, players);
-        List<ITeam> teams = new ArrayList<>();
-        teams.add(team);
         playersSelectedToRetire = aging.selectPlayersToRetire(team);
 
         Assertions.assertTrue(playersSelectedToRetire.containsKey("Mock Team"));
@@ -103,14 +105,7 @@ public class AgingTest {
         Random random = aging.getRandomGenerator();
         random.setSeed(5000);
         Map<String, List<IPlayer>> playersSelectedToRetire;
-        List<IPlayer> players = new ArrayList<>();
-        IPlayerStatistics playerStatistics3 = new PlayerStatistics(34, 20, 20, 20, 20);
-        players.add(new Player("PlayerThree", "forward", true, playerStatistics3));
-
-        ICoach headCoach = new Coach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
-        ITeam team = new Team("Mock Team", "Mock Manager", headCoach, players);
-        List<ITeam> teams = new ArrayList<>();
-        teams.add(team);
+        ITeam team = agingMock.teamWithPlayersLessThanAvg();
         playersSelectedToRetire = aging.selectPlayersToRetire(team);
 
         Assertions.assertTrue(playersSelectedToRetire.containsKey("Mock Team"));
@@ -120,13 +115,7 @@ public class AgingTest {
     @Test
     public void selectFreeAgentsToRetireTest() {
         List<IPlayer> agentsSelectedToRetire ;
-        List<IPlayer> freeAgents = new ArrayList<>();
-        IPlayerStatistics playerStatistics1 = new PlayerStatistics(50, 20, 20, 20, 20);
-        freeAgents.add(new FreeAgent("PlayerOne", "forward", playerStatistics1));
-
-
-        ILeagueObjectModel leagueObjectModel = leagueMock.getLeagueObjectMock();
-        leagueObjectModel = new LeagueObjectModel(leagueObjectModel.getLeagueName(), leagueObjectModel.getConferences(), freeAgents, new ArrayList<>(), new ArrayList<>(), gameConfig);
+        leagueObjectModel = agingMock.getFreeAgentsInLeague();
         agentsSelectedToRetire = aging.selectFreeAgentsToRetire(leagueObjectModel.getFreeAgents());
 
         Assertions.assertEquals(1, agentsSelectedToRetire.size());

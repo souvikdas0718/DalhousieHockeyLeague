@@ -2,23 +2,32 @@ package dhl.businessLogicTest.leagueModelTests;
 
 import dhl.businessLogic.leagueModel.Coach;
 import dhl.businessLogic.leagueModel.CommonValidation;
+import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.ICoach;
 import dhl.businessLogic.leagueModel.interfaceModel.IValidation;
+import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
+import dhl.businessLogicTest.leagueModelTests.mocks.CoachMock;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class CoachTest {
+    LeagueModelMockAbstractFactory mockFactory;
+    LeagueModelAbstractFactory factory;
+    CoachMock coachMock;
+    IValidation validate;
     ICoach coachDefault;
     ICoach coach;
-    IValidation validate;
 
     @BeforeEach()
     public void initObject() {
-        validate = new CommonValidation();
-        coachDefault = new Coach();
-        coach = new Coach("Mary Smith", 0.1, 0.2, 0.5, 1.0);
+        mockFactory = LeagueModelMockAbstractFactory.instance();
+        coachMock = mockFactory.createCoachMock();
+        factory = LeagueModelAbstractFactory.instance();
+        validate = factory.createCommonValidation();
+        coachDefault = factory.createCoachDefault();
+        coach = coachMock.getCoach();
     }
 
     @Test
@@ -29,7 +38,7 @@ public class CoachTest {
 
     @Test
     void getCoachNameTest() {
-        Assertions.assertEquals("Mary Smith", coach.getCoachName());
+        Assertions.assertEquals("Todd McLellan", coach.getCoachName());
     }
 
     @Test
@@ -60,7 +69,7 @@ public class CoachTest {
 
     @Test
     void checkCoachStatisticsTest() throws Exception {
-        ICoach coach = new Coach("Mary Smith", 0.1, 0, 3, 1);
+        ICoach coach = coachMock.getCoachInvalidStat();
         Exception errorMsg = Assertions.assertThrows(Exception.class, () -> {
             coach.checkIfCoachValid(validate);
         });
@@ -68,7 +77,7 @@ public class CoachTest {
     }
 
     @Test
-    void checkCoachStatisticsValidTest() throws Exception {
+    void checkCoachStatisticsValidTest()  {
         Assertions.assertDoesNotThrow(() -> coach.checkIfCoachValid(validate));
     }
 

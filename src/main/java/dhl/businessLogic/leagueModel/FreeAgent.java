@@ -3,9 +3,6 @@ package dhl.businessLogic.leagueModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
 
 public class FreeAgent extends Player {
-    public FreeAgent() {
-        super();
-    }
 
     public FreeAgent(String playerName, String position, IPlayerStatistics playerStatistics) {
         super(playerName, position, playerStatistics);

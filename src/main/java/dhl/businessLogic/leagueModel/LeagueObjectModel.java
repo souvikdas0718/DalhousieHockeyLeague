@@ -119,7 +119,7 @@ public class LeagueObjectModel implements ILeagueObjectModel {
     }
 
     public ILeagueObjectModel loadLeagueObjectModel( IDeserializeLeagueObjectModel deserializeLeagueObjectModel, String leagueName, String teamName) throws Exception, ParseException {
-        ILeagueObjectModel leagueObjectModel = new LeagueObjectModel();
+        ILeagueObjectModel leagueObjectModel;
         leagueObjectModel =deserializeLeagueObjectModel.deserializeLeagueObjectJson(leagueName);
 
         return leagueObjectModel;
