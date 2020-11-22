@@ -4,7 +4,7 @@ import dhl.businessLogic.simulationStateMachine.UpdateUserTeamRoster;
 import dhl.businessLogic.trade.factory.TradeAbstractFactory;
 import dhl.businessLogic.trade.factory.TradeConcreteFactory;
 import dhl.inputOutput.ui.IUserInputOutput;
-import dhl.inputOutput.importJson.interfaces.IGameConfig;
+
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogic.simulationStateMachine.interfaces.IUpdateUserTeamRoster;
 import dhl.businessLogic.trade.interfaces.ITradeOffer;
@@ -30,8 +30,8 @@ public class TradingEngine extends ITradingEngine {
 
         // TODO: 20-11-2020 remove these new when team make factory
         this.ioObject = new UserInputOutput();
-        this.updateUserTeamRoster = new UpdateUserTeamRoster(ioObject);
 
+        this.updateUserTeamRoster =  IUpdateUserTeamRoster.instance(ioObject);
         this.gameConfig = gameConfig;
         this.leagueObjectModel = leagueObjectModel;
         this.userTeam = userTeam;

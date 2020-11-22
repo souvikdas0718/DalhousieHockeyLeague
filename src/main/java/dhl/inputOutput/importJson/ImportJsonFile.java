@@ -1,5 +1,6 @@
 package dhl.inputOutput.importJson;
 
+import dhl.inputOutput.importJson.interfaces.IImportJsonFile;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -8,7 +9,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class ImportJsonFile {
+public class ImportJsonFile implements IImportJsonFile {
     private String filePath = "";
 
     public ImportJsonFile(String filePath) {

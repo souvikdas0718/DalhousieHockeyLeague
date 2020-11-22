@@ -1,7 +1,6 @@
 package dhl.businessLogicTest.AgingTest;
 
 
-import dhl.inputOutput.importJson.interfaces.IGameConfig;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.aging.Aging;
 import dhl.businessLogic.leagueModel.*;
@@ -11,7 +10,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 public class AgingTest {
 
@@ -68,7 +70,8 @@ public class AgingTest {
         players.add(new Player("PlayerOne", "forward", true, playerStatistics1));
 
         ICoach headCoach = new Coach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
-        ITeam team = new Team("Mock Team", "Mock Manager", headCoach, players);
+        IGeneralManager manager = new GeneralManager("Mock Manager", "normal");
+        ITeam team = new Team("Mock Team", manager, headCoach, players);
         List<ITeam> teams = new ArrayList<>();
         teams.add(team);
         playersSelectedToRetire = aging.selectPlayersToRetire(team);
@@ -87,7 +90,8 @@ public class AgingTest {
         players.add(new Player("PlayerTwo", "forward", true, playerStatistics2));
 
         ICoach headCoach = new Coach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
-        ITeam team = new Team("Mock Team", "Mock Manager", headCoach, players);
+        IGeneralManager manager = new GeneralManager("Mock Manager", "normal");
+        ITeam team = new Team("Mock Team", manager, headCoach, players);
         List<ITeam> teams = new ArrayList<>();
         teams.add(team);
         playersSelectedToRetire = aging.selectPlayersToRetire(team);
@@ -106,7 +110,8 @@ public class AgingTest {
         players.add(new Player("PlayerThree", "forward", true, playerStatistics3));
 
         ICoach headCoach = new Coach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
-        ITeam team = new Team("Mock Team", "Mock Manager", headCoach, players);
+        IGeneralManager manager = new GeneralManager("Mock Manager", "normal");
+        ITeam team = new Team("Mock Team", manager, headCoach, players);
         List<ITeam> teams = new ArrayList<>();
         teams.add(team);
         playersSelectedToRetire = aging.selectPlayersToRetire(team);

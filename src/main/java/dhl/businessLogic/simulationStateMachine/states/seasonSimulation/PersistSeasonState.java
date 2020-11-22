@@ -1,8 +1,8 @@
 package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 
 
-import dhl.businessLogic.simulationStateMachine.interfaces.ISimulationSeasonState;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
+import dhl.businessLogic.simulationStateMachine.interfaces.ISimulationSeasonState;
 
 import java.time.LocalDate;
 

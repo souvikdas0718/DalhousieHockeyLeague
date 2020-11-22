@@ -1,9 +1,10 @@
 package dhl.businessLogic.trade.interfaces;
 
+import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.trade.TradingEngine;
-import dhl.inputOutput.importJson.interfaces.IGameConfig;
+
 
 public abstract class ITradingEngine {
     private static ITradingEngine uniqueInstance;

@@ -1,8 +1,8 @@
 package dhl;
 
+import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.inputOutput.ui.IUserInputOutput;
 import dhl.inputOutput.ui.UserInputOutput;
-import dhl.businessLogic.simulationStateMachine.GameContext;
 
 public class StartGame {
 

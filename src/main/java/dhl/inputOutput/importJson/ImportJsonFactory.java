@@ -1,8 +1,9 @@
 package dhl.inputOutput.importJson;
 
+import dhl.businessLogic.leagueModel.GameConfig;
+import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.inputOutput.importJson.interfaces.ICheckInputFileFormat;
 import dhl.inputOutput.importJson.interfaces.ICreateLeagueObjectModel;
-import dhl.inputOutput.importJson.interfaces.IGameConfig;
 import dhl.inputOutput.importJson.interfaces.IJsonFilePath;
 import org.json.simple.JSONObject;
 
@@ -11,8 +12,8 @@ public class ImportJsonFactory extends ImportJsonAbstractFactory {
         return new CheckInputFileFormat();
     }
 
-    public ICreateLeagueObjectModel createCreateLeagueObjectModel() {
-        return new CreateLeagueObjectModel();
+    public ICreateLeagueObjectModel createCreateLeagueObjectModel(JSONObject jsonLeagueObject) {
+        return new CreateLeagueObjectModel(jsonLeagueObject);
     }
 
     public IGameConfig createGameConfig(JSONObject jsonObject) {

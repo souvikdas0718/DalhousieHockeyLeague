@@ -1,7 +1,9 @@
 package dhl.Mocks;
 
+import dhl.businessLogic.leagueModel.GeneralManager;
 import dhl.businessLogic.leagueModel.Team;
 import dhl.businessLogic.leagueModel.interfaceModel.ICoach;
+import dhl.businessLogic.leagueModel.interfaceModel.IGeneralManager;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.simulationStateMachine.interfaces.IStandings;
@@ -15,13 +17,13 @@ public class RegularSeasonStandingListMocks {
     LeagueObjectModelMocks mockLeagueObjectModel;
     ICoach coach;
     List<IPlayer> players;
-    String manager;
+    IGeneralManager manager;
 
     public RegularSeasonStandingListMocks() {
         mockLeagueObjectModel = new LeagueObjectModelMocks();
         coach = mockLeagueObjectModel.getSingleCoach();
         players = mockLeagueObjectModel.get20FreeAgentArrayMock();
-        manager = "Harry";
+        manager = new GeneralManager( "Harry","normal");
     }
 
     public List<IStandings> generalSeasonStandings() {

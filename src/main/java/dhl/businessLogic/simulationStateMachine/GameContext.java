@@ -1,6 +1,6 @@
 package dhl.businessLogic.simulationStateMachine;
 
-import dhl.inputOutput.importJson.interfaces.IGameConfig;
+import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.simulationStateMachine.interfaces.IGameState;

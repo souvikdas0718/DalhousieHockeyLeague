@@ -1,8 +1,8 @@
 package dhl.businessLogic.traning;
 
-import dhl.inputOutput.importJson.interfaces.IGameConfig;
-import dhl.businessLogic.traning.interfaces.ITraining;
 import dhl.businessLogic.aging.interfaceAging.IInjury;
+import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
+import dhl.businessLogic.traning.interfaces.ITraining;
 
 public abstract class TrainingAbstractFactory {
     private static TrainingAbstractFactory uniqueInstance = null;

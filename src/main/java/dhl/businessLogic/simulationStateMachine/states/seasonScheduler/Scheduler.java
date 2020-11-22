@@ -1,8 +1,6 @@
 package dhl.businessLogic.simulationStateMachine.states.seasonScheduler;
 
 
-import dhl.inputOutput.ui.IUserInputOutput;
-import dhl.inputOutput.ui.UserInputOutput;
 import dhl.businessLogic.leagueModel.interfaceModel.IConference;
 import dhl.businessLogic.leagueModel.interfaceModel.IDivision;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
@@ -11,6 +9,8 @@ import dhl.businessLogic.simulationStateMachine.interfaces.ISchedule;
 import dhl.businessLogic.simulationStateMachine.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.interfaces.IStandings;
 import dhl.businessLogic.simulationStateMachine.states.standings.StandingSystem;
+import dhl.inputOutput.ui.IUserInputOutput;
+import dhl.inputOutput.ui.UserInputOutput;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;

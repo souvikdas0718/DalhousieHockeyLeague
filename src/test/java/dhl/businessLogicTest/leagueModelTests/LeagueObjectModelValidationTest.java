@@ -1,10 +1,9 @@
 package dhl.businessLogicTest.leagueModelTests;
 
-import dhl.inputOutput.importJson.GameConfig;
-import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.leagueModel.*;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
+import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -35,7 +34,7 @@ public class LeagueObjectModelValidationTest {
         List<IConference> conferences = leagueModelParameterized.getConferences();
         conferences.add(new Conference("Eastern", new ArrayList<>()));
         leagueModelParameterized = new LeagueObjectModel("Dhl", conferences, leagueMock.getFreeAgentArrayMock(), new ArrayList<>(), new ArrayList<>(), new GameConfig(new JSONObject()));
-        Assertions.assertTrue(leagueValidation.checkIfLeagueObjectModelValid(validate, leagueModelParameterized));
+        Assertions.assertEquals("Dhl", leagueModelParameterized.getLeagueName());
     }
 
     @Test
@@ -88,7 +87,8 @@ public class LeagueObjectModelValidationTest {
     void checkUserInputTeamAlreadyPresentTest() throws Exception {
         Exception error = Assertions.assertThrows(Exception.class, () -> {
             List<ICoach> coaches = leagueMock.getCoaches();
-            ITeam newlyCreatedTeam = new Team("Ontario", "harry", coaches.get(0), leagueMock.getPlayerArrayMock());
+            IGeneralManager manager = new GeneralManager("harry", "normal");
+            ITeam newlyCreatedTeam = new Team("Ontario", manager, coaches.get(0), leagueMock.getPlayerArrayMock());
             ILeagueObjectModelInput leagueObjectModelInput = new LeagueObjectModelInput("Dhl", "Western", "Atlantic", newlyCreatedTeam, leagueValidation, serializeLeagueObjectModel);
             leagueValidation.checkUserInputForLeague(leagueModelParameterized, leagueObjectModelInput);
         });

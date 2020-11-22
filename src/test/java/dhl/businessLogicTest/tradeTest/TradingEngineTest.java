@@ -1,20 +1,12 @@
 package dhl.businessLogicTest.tradeTest;
 
+import dhl.businessLogic.leagueModel.*;
+import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogic.trade.interfaces.ITradingEngine;
 import dhl.inputOutput.ui.IUserInputOutput;
-import dhl.inputOutput.importJson.interfaces.IGameConfig;
 import dhl.Mocks.GameConfigMock;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.Mocks.MockUserInputOutput;
-import dhl.businessLogic.leagueModel.Coach;
-import dhl.businessLogic.leagueModel.Player;
-import dhl.businessLogic.leagueModel.PlayerStatistics;
-import dhl.businessLogic.leagueModel.Team;
-import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
-import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
-import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.simulationStateMachine.interfaces.IUpdateUserTeamRoster;
-import dhl.businessLogic.simulationStateMachine.UpdateUserTeamRoster;
 import dhl.businessLogic.trade.interfaces.ITradeOffer;
 import dhl.businessLogic.trade.TradingEngine;
 import org.junit.jupiter.api.Assertions;
@@ -56,10 +48,9 @@ public class TradingEngineTest {
     @Test
     public void startEngine() {
         double badTeamStrengthBeforeTrade = badTeamMock.calculateTeamStrength();
+        badTeamMock.setRoster();
         testClassObject.startEngine();
-        // TODO: 21-11-2020 Update Test
-        //Assertions.assertTrue(badTeamStrengthBeforeTrade < badTeamMock.calculateTeamStrength());
-
+        Assertions.assertTrue(badTeamStrengthBeforeTrade < badTeamMock.calculateTeamStrength());
     }
 
     @Test
@@ -78,20 +69,21 @@ public class TradingEngineTest {
     @Test
     public void sendTradeToRecevingTeamTest() throws Exception {
         ITradeOffer tradeOffer = testClassObject.generateTradeOffer(badTeamMock, goodTeamMock);
+        badTeamMock.setRoster();
         double teamStrength = badTeamMock.calculateTeamStrength();
 
         ((MockUserInputOutput) ioObject).setMockOutput("2");
         testClassObject.sendTradeToRecevingTeam(tradeOffer, tradeOffer.getReceivingTeam());
-        Assertions.assertTrue(teamStrength == badTeamMock.calculateTeamStrength());
+        double noChangeInStrength = badTeamMock.calculateTeamStrength();
+        Assertions.assertTrue(teamStrength == noChangeInStrength);
 
         ((MockUserInputOutput) ioObject).setMockOutput("1");
         Exception error = Assertions.assertThrows(Exception.class, () -> {
             testClassObject.sendTradeToRecevingTeam(tradeOffer, tradeOffer.getReceivingTeam());
         });
-
-        // TODO: 21-11-2020 Update Test
-        //Assertions.assertTrue(teamStrength < badTeamMock.calculateTeamStrength());
-        //Assertions.assertFalse(teamStrength == badTeamMock.calculateTeamStrength());
+        badTeamMock.setRoster();
+        double increasedTeamStrength = badTeamMock.calculateTeamStrength();
+        Assertions.assertTrue(teamStrength < increasedTeamStrength );
     }
 
     @Test
@@ -149,8 +141,8 @@ public class TradingEngineTest {
         testClassObject.sortPlayerList(unsortedTeam);
         Assertions.assertTrue(unsortedTeam.getPlayers().get(0).getPlayerStrength() <= unsortedTeam.getPlayers().get(1).getPlayerStrength());
 
-
-        Team empytyPlayerTeam = new Team("EmptyPlayers", "Larry", new Coach(), new ArrayList<>());
+        IGeneralManager manager = new GeneralManager("Larry", "normal");
+        Team empytyPlayerTeam = new Team("EmptyPlayers", manager, new Coach(), new ArrayList<>());
 
         Exception error = Assertions.assertThrows(Exception.class, () -> {
             testClassObject.sortPlayerList(empytyPlayerTeam);
@@ -160,9 +152,10 @@ public class TradingEngineTest {
 
     @Test
     public void isTeamDifferentTest() {
-        Team newTeam = new Team("team1", "Larry", new Coach(), new ArrayList<>());
+        IGeneralManager manager = new GeneralManager("Larry", "normal");
+        Team newTeam = new Team("team1", manager, new Coach(), new ArrayList<>());
         Assertions.assertFalse(testClassObject.isTeamDifferent(newTeam, newTeam));
-        Team otherTeam = new Team("secondTeam", "Larry", new Coach(), new ArrayList<>());
+        Team otherTeam = new Team("secondTeam", manager, new Coach(), new ArrayList<>());
         Assertions.assertTrue(testClassObject.isTeamDifferent(newTeam, otherTeam));
     }
 
@@ -171,4 +164,5 @@ public class TradingEngineTest {
         Assertions.assertTrue(testClassObject.isTeamGoodForTrading(badTeamMock, goodTeamMock));
         Assertions.assertFalse(testClassObject.isTeamGoodForTrading(goodTeamMock, badTeamMock));
     }
+
 }

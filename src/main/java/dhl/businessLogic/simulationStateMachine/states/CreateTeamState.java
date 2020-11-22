@@ -1,13 +1,12 @@
 package dhl.businessLogic.simulationStateMachine.states;
 
-import dhl.businessLogic.leagueModel.Coach;
-import dhl.businessLogic.leagueModel.LeagueObjectModelValidation;
-import dhl.businessLogic.leagueModel.Player;
-import dhl.businessLogic.leagueModel.Team;
+import dhl.businessLogic.leagueModel.*;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.interfaces.IGameState;
 import dhl.businessLogic.simulationStateMachine.states.interfaces.ICreateTeamStateLogic;
+import dhl.inputOutput.importJson.serializeDeserialize.SerializeLeagueObjectModel;
+import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import dhl.inputOutput.ui.IUserInputOutput;
 import dhl.inputOutput.ui.UserInputOutput;
 
@@ -17,25 +16,27 @@ import java.util.Scanner;
 
 public class CreateTeamState implements IGameState {
     private final String jsonFilePath = "src/main/java/dhl/inputOutput/importJson/serializeDeserialize/serializedJsonFiles/";
-    ICreateTeamStateLogic createTeamStateLogic;
-    Scanner sc = new Scanner(System.in);
-    IUserInputOutput userInputPutput = new UserInputOutput();
     private GameContext ourGame;
     private ILeagueObjectModel inMemoryLeague;
     private IConference selectedConference;
     private IDivision selectedDivision;
     private String selectedTeamName;
-    private String selectedGeneralManager;
+    private IGeneralManager selectedGeneralManager;
     private String selectedHeadCoach;
     private ICoach selectedCoach;
     private List<IPlayer> selectedFreeAgents;
     private String selectedCaptain;
+    ICreateTeamStateLogic createTeamStateLogic;
+
+    Scanner sc = new Scanner(System.in);
+    IUserInputOutput userInputPutput = new UserInputOutput();
 
     public CreateTeamState(GameContext newGame) {
         ourGame = newGame;
         selectedConference = null;
         selectedDivision = null;
-        selectedTeamName = selectedGeneralManager = selectedHeadCoach = null;
+        selectedTeamName  = selectedHeadCoach = null;
+        selectedGeneralManager = new GeneralManager();
         selectedCoach = new Coach();
         createTeamStateLogic = new CreateTeamStateLogic();
     }
@@ -204,7 +205,7 @@ public class CreateTeamState implements IGameState {
         }
         userInputPutput.printMessage("-----------------------------------------------------------------------------------------------------------------");
 
-        userInputPutput.printMessage("Select 18 Skaters and 2 Goalies");
+        userInputPutput.printMessage("Select 16 forwards, 10 defense and 4 Goalies");
         String inputfreeAgents = userInputPutput.getUserInput();
 
         userInputPutput.printMessage("Choose a captain for this team from the selected players");
@@ -215,9 +216,9 @@ public class CreateTeamState implements IGameState {
                 selectedFreeAgents = createTeamStateLogic.validateInputFreeAgents(inputfreeAgents, freeAgentsArray);
 
                 ITeam team = new Team(selectedTeamName, selectedGeneralManager, selectedCoach, selectedFreeAgents);
-                if (team.checkIfSkatersGoaliesValid() == false) {
+                if (team.checkTeamPlayersCount() == false) {
                     selectedFreeAgents = null;
-                    throw new Exception("A team must have 18 Skaters and 2 Goalies");
+                    throw new Exception("A team must have 16 forwards, 10 defense and 4 Goalies");
                 }
             } catch (Exception ex) {
                 userInputPutput.printMessage(ex.getMessage());
@@ -238,10 +239,10 @@ public class CreateTeamState implements IGameState {
             ITeam teamWithoutPlayers = new Team(selectedTeamName, selectedGeneralManager, selectedCoach, new ArrayList<>());
             ITeam newlyCreatedTeam = createTeamStateLogic.createNewTeamObject(selectedFreeAgents, teamWithoutPlayers, selectedCaptain);
             ILeagueObjectModelValidation leagueObjectModelValidation = new LeagueObjectModelValidation();
-//            ISerializeLeagueObjectModel serializeLeagueObjectModel = new SerializeLeagueObjectModel(jsonFilePath);
+            ISerializeLeagueObjectModel serializeLeagueObjectModel = new SerializeLeagueObjectModel(jsonFilePath);
 
-//            ILeagueObjectModelInput leagueObjectModelInput = new LeagueObjectModelInput(inMemoryLeague.getLeagueName(), selectedConference.getConferenceName(), selectedDivision.getDivisionName(), newlyCreatedTeam, leagueObjectModelValidation, serializeLeagueObjectModel);
-//            createTeamStateLogic.saveleagueObject(ourGame, inMemoryLeague, leagueObjectModelInput);
+            ILeagueObjectModelInput leagueObjectModelInput = new LeagueObjectModelInput(inMemoryLeague.getLeagueName(), selectedConference.getConferenceName(), selectedDivision.getDivisionName(), newlyCreatedTeam, leagueObjectModelValidation, serializeLeagueObjectModel);
+            createTeamStateLogic.saveleagueObject(ourGame, inMemoryLeague, leagueObjectModelInput);
 
         } catch (Exception e) {
             userInputPutput.printMessage(e.getMessage())

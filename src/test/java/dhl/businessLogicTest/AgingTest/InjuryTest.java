@@ -1,15 +1,9 @@
 package dhl.businessLogicTest.AgingTest;
 
-import dhl.inputOutput.importJson.interfaces.IGameConfig;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.aging.Injury;
-import dhl.businessLogic.leagueModel.Coach;
-import dhl.businessLogic.leagueModel.Player;
-import dhl.businessLogic.leagueModel.PlayerStatistics;
-import dhl.businessLogic.leagueModel.Team;
-import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
-import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
-import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
+import dhl.businessLogic.leagueModel.*;
+import dhl.businessLogic.leagueModel.interfaceModel.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -77,7 +71,8 @@ public class InjuryTest {
     @Test
     public void swapInjuredPlayerTest(){
         List<IPlayer> playersInTeam = leagueMock.getTeamPlayers();
-        Team testTeam = new Team("Ontario", "Mathew", new Coach(),playersInTeam );
+        IGeneralManager manager = new GeneralManager("Mathew", "normal");
+        Team testTeam = new Team("Ontario", manager, new Coach(),playersInTeam );
         IPlayer player = playersInTeam.get(0);
         injury.swapInjuredPlayer(player,testTeam);
         Assertions.assertFalse(player.isActive());
@@ -86,7 +81,8 @@ public class InjuryTest {
     @Test
     public void swapRecoveredPlayerTest(){
         List<IPlayer> playersInTeam = leagueMock.getTeamPlayers();
-        Team testTeam = new Team("Ontario", "Mathew", new Coach(),playersInTeam );
+        IGeneralManager manager = new GeneralManager("Mathew", "normal");
+        Team testTeam = new Team("Ontario", manager, new Coach(),playersInTeam );
         IPlayerStatistics playerStatistics = new PlayerStatistics(21,20,20,20,20);
         IPlayer player = new Player("Rehab","forward",false,playerStatistics);
         injury.swapRecoveredPlayer(player,testTeam);
@@ -96,7 +92,8 @@ public class InjuryTest {
     @Test
     public void healInjuredPlayersInTeamTest() {
         List<IPlayer> playersInTeam = leagueMock.getTeamPlayers();
-        Team testTeam = new Team("Ontario", "Mathew", new Coach(),playersInTeam );
+        IGeneralManager manager = new GeneralManager("Mathew", "normal");
+        Team testTeam = new Team("Ontario", manager, new Coach(),playersInTeam );
         IPlayerStatistics playerStatistics = new PlayerStatistics(21,20,20,20,20);
         IPlayer player = new Player("Rehab","forward",false,playerStatistics);
         player.setPlayerInjuredDays(0);

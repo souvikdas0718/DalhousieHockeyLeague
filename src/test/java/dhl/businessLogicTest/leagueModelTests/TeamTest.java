@@ -19,6 +19,7 @@ public class TeamTest {
     List<IPlayer> playerArrayList;
     IPlayerStatistics playerStatistics;
     ICoach headCoach;
+    IGeneralManager manager;
     LeagueObjectModelMocks leagueMock;
 
     @BeforeEach()
@@ -29,7 +30,8 @@ public class TeamTest {
         playerStatistics = new PlayerStatistics(20, 10, 10, 10, 10);
         playerArrayList.add(new Player("Harry", "forward", false, playerStatistics));
         headCoach = new Coach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
-        team = new Team("Ontario", "Mathew", headCoach, playerArrayList);
+        manager = new GeneralManager("Mathew", "normal");
+        team = new Team("Ontario", manager, headCoach, playerArrayList);
         leagueMock = new LeagueObjectModelMocks();
     }
 
@@ -41,7 +43,7 @@ public class TeamTest {
         ICoach coach = team.getHeadCoach();
         String coachName = coach.getCoachName();
         Assertions.assertEquals(0,coachName.length() );
-        String generalManagerName = team.getGeneralManager();
+        String generalManagerName = team.getGeneralManager().getGeneralManagerName();
         Assertions.assertEquals(0,generalManagerName.length() );
         Assertions.assertEquals(0, team.getPlayers().size());
     }
@@ -59,7 +61,7 @@ public class TeamTest {
 
     @Test
     public void getGeneralManagerTest() {
-        Assertions.assertEquals("Mathew", team.getGeneralManager());
+        Assertions.assertEquals("Mathew", team.getGeneralManager().getGeneralManagerName());
     }
 
 
@@ -91,19 +93,19 @@ public class TeamTest {
     @Test
     public void setActiveRosterTest(){
         List<IPlayer> player =leagueMock.getTeamPlayers();
-        Team testTeam = new Team("Ontario", "Mathew", headCoach, player);
+        Team testTeam = new Team("Ontario", manager, headCoach, player);
         Assertions.assertEquals(20, testTeam.getActiveRoster().size());
     }
 
     @Test
     public void setInactiveRosterTest(){
-        Team testTeam = new Team("Ontario", "Mathew", headCoach, leagueMock.getTeamPlayers());
+        Team testTeam = new Team("Ontario", manager, headCoach, leagueMock.getTeamPlayers());
         Assertions.assertEquals(10, testTeam.getInactiveRoster().size());
     }
 
     @Test
     public void sortPlayersInTeamByStrengthTest(){
-        team = new Team("Ontario", "Mathew", headCoach, leagueMock.getTeamPlayers());
+        team = new Team("Ontario", manager, headCoach, leagueMock.getTeamPlayers());
         List<IPlayer> players = leagueMock.getTeamPlayers();
         team.sortPlayersInTeamByStrength(players);
         IPlayer firstPlayer=players.get(0);
@@ -115,7 +117,7 @@ public class TeamTest {
     public void checkIfOneCaptainPerTeamErrorTest() {
         List<IPlayer> playersList = leagueMock.getTeamPlayers();
         playersList.remove(0);
-        team = new Team("Ontario", "Mathew", headCoach, playersList);
+        team = new Team("Ontario", manager, headCoach, playersList);
         Exception errorMsg = Assertions.assertThrows(Exception.class, () -> {
             team.checkIfOneCaptainPerTeam(playersList);
         });
@@ -127,7 +129,7 @@ public class TeamTest {
         List<IPlayer> playersList = new ArrayList<>();
         playersList.add(new Player("Henry", "forward", true, playerStatistics));
         playersList.add(new Player("Max", "goalie", true, playerStatistics));
-        team = new Team("Ontario", "Mathew", headCoach, playersList);
+        team = new Team("Ontario", manager, headCoach, playersList);
         Exception errorMsg = Assertions.assertThrows(Exception.class, () -> {
             team.checkIfOneCaptainPerTeam(playersList);
         });
@@ -141,7 +143,7 @@ public class TeamTest {
 
     @Test
     public void checkIfTeamValidTest() throws Exception {
-        team = new Team("Ontario", "Mathew", headCoach, leagueMock.getTeamPlayers());
+        team = new Team("Ontario", manager, headCoach, leagueMock.getTeamPlayers());
         Assertions.assertTrue(team.checkIfTeamValid(validate));
     }
 
@@ -152,7 +154,7 @@ public class TeamTest {
         for (int i = 0; i < 30; i++) {
             playersList.add(new Player("Player" + i, "forward", false, playerStatistics));
         }
-        team = new Team("Ontario", "Mathew", headCoach, playersList);
+        team = new Team("Ontario", manager, headCoach, playersList);
         Exception error = Assertions.assertThrows(Exception.class, () -> {
             team.checkIfTeamValid(validate);
         });
@@ -162,23 +164,23 @@ public class TeamTest {
     @Test
     public void calculateTeamStrength() {
         playerArrayList.add(new Player("Jared", "defense", false, playerStatistics));
-        team = new Team("Ontario", "Mathew", headCoach, leagueMock.getTeamPlayers());
+        team = new Team("Ontario", manager, headCoach, leagueMock.getTeamPlayers());
         Assertions.assertTrue( team.calculateTeamStrength()>0);
     }
 
     @Test
-    public void checkIfSkatersGoaliesValid() {
-        team = new Team("Ontario", "Mathew", headCoach, leagueMock.getTeamPlayers());
-        Boolean isValid = team.checkIfSkatersGoaliesValid();
+    public void checkTeamPlayersCountValid() {
+        team = new Team("Ontario", manager, headCoach, leagueMock.getTeamPlayers());
+        Boolean isValid = team.checkTeamPlayersCount();
         Assertions.assertEquals(true, isValid);
     }
 
     @Test
-    public void checkIfSkatersGoaliesInValid() {
+    public void checkTeamPlayersCountInValid() {
         List<IPlayer> selectedPlayers = leagueMock.get20FreeAgentArrayMock();
         selectedPlayers.remove(19);
-        team = new Team("Ontario", "Mathew", headCoach, selectedPlayers);
-        Assertions.assertFalse(team.checkIfSkatersGoaliesValid());
+        team = new Team("Ontario", manager, headCoach, selectedPlayers);
+        Assertions.assertFalse(team.checkTeamPlayersCount());
     }
 
 

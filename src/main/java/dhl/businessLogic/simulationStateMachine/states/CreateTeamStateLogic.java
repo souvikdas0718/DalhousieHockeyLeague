@@ -6,7 +6,8 @@ import dhl.businessLogic.leagueModel.Team;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.states.interfaces.ICreateTeamStateLogic;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,11 +93,11 @@ public class CreateTeamStateLogic implements ICreateTeamStateLogic {
         return null;
     }
 
-    public String findGeneralManager(List<IGeneralManager> generalManagerArray, String generalManager) {
+    public IGeneralManager findGeneralManager(List<IGeneralManager> generalManagerArray, String generalManager) {
         for (IGeneralManager ourGeneralManager : generalManagerArray) {
             String ourGeneralManagerName = ourGeneralManager.getGeneralManagerName();
             if (ourGeneralManagerName.equals(generalManager)) {
-                return generalManager;
+                return ourGeneralManager;
             }
         }
         return null;

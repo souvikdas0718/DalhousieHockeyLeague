@@ -1,6 +1,6 @@
 package dhl.businessLogic.aging.interfaceAging;
 
-import dhl.inputOutput.importJson.interfaces.IGameConfig;
+import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 

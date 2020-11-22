@@ -1,13 +1,18 @@
 package dhl.businessLogic.simulationStateMachine;
 
+import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
+import dhl.inputOutput.ui.IUserInputOutput;
+import dhl.inputOutput.ui.UserInputOutput;
+
 import dhl.businessLogic.aging.Injury;
 import dhl.businessLogic.aging.interfaceAging.IInjury;
+
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.simulationStateMachine.interfaces.*;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.SimulationStateAbstractFactory;
+import dhl.businessLogic.trade.TradingEngine;
 import dhl.businessLogic.trade.interfaces.ITradingEngine;
-import dhl.inputOutput.importJson.interfaces.IGameConfig;
 import dhl.inputOutput.ui.IUserInputOutput;
 import dhl.inputOutput.ui.UserInputOutput;
 
@@ -80,18 +85,6 @@ public class SimulationContext implements ISimulationSeasonState {
         year = 2020;
         startOfSimulation = LocalDate.of(year, 9, 30);
 
-    }
-
-    public void seasonStateEntryProcess() {
-        currentSimulation.seasonStateEntryProcess();
-    }
-
-    public void seasonStateProcess() {
-        currentSimulation.seasonStateProcess();
-    }
-
-    public void seasonStateExitProcess() {
-        currentSimulation.seasonStateExitProcess();
     }
 
     public int getYear() {
@@ -213,6 +206,18 @@ public class SimulationContext implements ISimulationSeasonState {
 
     public void setSeasonGameState(ISimulationSeasonState newSeasonState) {
         this.currentSimulation = newSeasonState;
+    }
+
+    public void seasonStateEntryProcess() {
+        currentSimulation.seasonStateEntryProcess();
+    }
+
+    public void seasonStateProcess() {
+        currentSimulation.seasonStateProcess();
+    }
+
+    public void seasonStateExitProcess() {
+        currentSimulation.seasonStateExitProcess();
     }
 
     public ISimulationSeasonState getSeasonSimulationState() {
