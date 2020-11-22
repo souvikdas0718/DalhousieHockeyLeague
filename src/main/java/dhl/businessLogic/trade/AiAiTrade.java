@@ -2,10 +2,7 @@ package dhl.businessLogic.trade;
 
 import dhl.businessLogic.leagueModel.PlayerPosition;
 
-import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
-import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
-import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
-import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
+import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogic.trade.interfaces.ITradeOffer;
 import dhl.businessLogic.trade.interfaces.ITradeType;
 import java.util.ArrayList;
@@ -31,8 +28,12 @@ public class AiAiTrade implements ITradeType {
         double randomValue = Math.random();
         if (isTradeGoodForReceivingTeam(tradeOffer)) {
             return true;
-        } else if (randomValue > configRandomAcceptanceChance) {
-            return true;
+        } else{
+            ITeam receivingTeam = tradeOffer.getReceivingTeam();
+            IGeneralManager receivingManager = receivingTeam.getGeneralManager();
+            if (randomValue > configRandomAcceptanceChance) {
+                return true;
+            }
         }
         return false;
     }

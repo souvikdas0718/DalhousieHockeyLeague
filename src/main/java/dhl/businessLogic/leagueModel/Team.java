@@ -1,9 +1,6 @@
 package dhl.businessLogic.leagueModel;
 
-import dhl.businessLogic.leagueModel.interfaceModel.ICoach;
-import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
-import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.leagueModel.interfaceModel.IValidation;
+import dhl.businessLogic.leagueModel.interfaceModel.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +16,7 @@ public class Team implements ITeam {
     private static final int NOOFDEFENCE = 6;
     private static final int NOOFGOALIES = 2;
     private String teamName;
-    private String generalManager;
+    private IGeneralManager generalManager;
     private ICoach headCoach;
     private int lossPoint;
     private int teamPoint;
@@ -31,12 +28,12 @@ public class Team implements ITeam {
 
     public void setDefault() {
         teamName = "";
-        generalManager = "";
+        generalManager = new GeneralManager();
         headCoach = new Coach();
         players = new ArrayList<>();
     }
 
-    public Team(String teamName, String generalManager, ICoach headCoach, List<IPlayer> playersList) {
+    public Team(String teamName, IGeneralManager generalManager, ICoach headCoach, List<IPlayer> playersList) {
         setDefault();
         this.teamName = teamName;
         this.generalManager = generalManager;
@@ -51,7 +48,7 @@ public class Team implements ITeam {
         return teamName;
     }
 
-    public String getGeneralManager() {
+    public IGeneralManager getGeneralManager() {
         return generalManager;
     }
 
@@ -144,7 +141,7 @@ public class Team implements ITeam {
     public boolean checkIfTeamValid(IValidation validation) throws Exception {
         validation.isStringEmpty(teamName, "Team name");
         this.headCoach.checkIfCoachValid(validation);
-        validation.isStringEmpty(generalManager, "General manager name");
+        validation.isStringEmpty(generalManager.getGeneralManagerName(), "General manager name");
         checkIfOneCaptainPerTeam(players);
         if (this.checkIfSizeOfTeamValid(players) == false) {
             throw new Exception("Each team must have 30 players");

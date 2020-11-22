@@ -3,10 +3,7 @@ package dhl.businessLogicTest.leagueModelTests;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.factory.InitializeObjectFactory;
 import dhl.businessLogic.leagueModel.*;
-import dhl.businessLogic.leagueModel.interfaceModel.ICoach;
-import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
-import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
-import dhl.businessLogic.leagueModel.interfaceModel.IValidation;
+import dhl.businessLogic.leagueModel.interfaceModel.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,6 +19,7 @@ public class TeamTest {
     List<IPlayer> playerArrayList;
     IPlayerStatistics playerStatistics;
     ICoach headCoach;
+    IGeneralManager manager;
     LeagueObjectModelMocks leagueMock;
 
     @BeforeEach()
@@ -32,7 +30,8 @@ public class TeamTest {
         playerStatistics = new PlayerStatistics(20, 10, 10, 10, 10);
         playerArrayList.add(new Player("Harry", "forward", false, playerStatistics));
         headCoach = new Coach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
-        team = new Team("Ontario", "Mathew", headCoach, playerArrayList);
+        manager = new GeneralManager("Mathew", "normal");
+        team = new Team("Ontario", manager, headCoach, playerArrayList);
         leagueMock = new LeagueObjectModelMocks();
     }
 
@@ -44,7 +43,7 @@ public class TeamTest {
         ICoach coach = team.getHeadCoach();
         String coachName = coach.getCoachName();
         Assertions.assertEquals(0,coachName.length() );
-        String generalManagerName = team.getGeneralManager();
+        String generalManagerName = team.getGeneralManager().getGeneralManagerName();
         Assertions.assertEquals(0,generalManagerName.length() );
         Assertions.assertEquals(0, team.getPlayers().size());
     }
@@ -94,13 +93,13 @@ public class TeamTest {
     @Test
     public void setActiveRosterTest(){
         List<IPlayer> player =leagueMock.getTeamPlayers();
-        Team testTeam = new Team("Ontario", "Mathew", headCoach, player);
+        Team testTeam = new Team("Ontario", manager, headCoach, player);
         Assertions.assertEquals(20, testTeam.getActiveRoster().size());
     }
 
     @Test
     public void setInactiveRosterTest(){
-        Team testTeam = new Team("Ontario", "Mathew", headCoach, leagueMock.getTeamPlayers());
+        Team testTeam = new Team("Ontario", manager, headCoach, leagueMock.getTeamPlayers());
         Assertions.assertEquals(10, testTeam.getInactiveRoster().size());
     }
 
