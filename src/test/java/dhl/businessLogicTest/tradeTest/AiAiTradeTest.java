@@ -71,9 +71,6 @@ public class AiAiTradeTest {
         testClassObject = new AiAiTrade(acceptedTrade, ourGameConfig);
 
         testClassObject.validateTeamRosterAfterTrade(team, league);
-        for(IPlayer p: team.getPlayers()){
-            System.out.println(p.getPosition());
-        }
         team.setRoster();
         Assertions.assertTrue(team.checkIfSkatersGoaliesValid());
     }

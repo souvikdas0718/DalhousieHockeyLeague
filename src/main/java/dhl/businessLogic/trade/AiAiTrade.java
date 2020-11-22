@@ -102,7 +102,6 @@ public class AiAiTrade implements ITradeType {
         return weakPlayer;
     }
 
-
     public IPlayer findBestPlayerInList(String playerPosition, List playerList) throws Exception {
         IPlayer bestPlayer = null;
         double bestPlayerStrength = 0.0;
