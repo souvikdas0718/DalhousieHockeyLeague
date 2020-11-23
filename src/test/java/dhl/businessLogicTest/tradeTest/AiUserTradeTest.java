@@ -30,7 +30,6 @@ public class AiUserTradeTest {
     IUserInputOutput ioObjectMock;
     LeagueObjectModelMocks leagueObjectModelMocks;
     LeagueObjectModel leagueObjectModel;
-
     TradeAbstractFactory tradeFactory;
     LeagueModelAbstractFactory leagueFactory;
 
