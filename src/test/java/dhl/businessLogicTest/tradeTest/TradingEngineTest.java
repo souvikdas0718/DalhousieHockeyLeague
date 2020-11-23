@@ -1,7 +1,10 @@
 package dhl.businessLogicTest.tradeTest;
 
 import dhl.businessLogic.leagueModel.*;
+import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
+import dhl.businessLogic.trade.factory.TradeAbstractFactory;
+import dhl.businessLogic.trade.factory.TradeConcreteFactory;
 import dhl.businessLogic.trade.interfaces.ITradingEngine;
 import dhl.inputOutput.ui.IUserInputOutput;
 import dhl.Mocks.GameConfigMock;
@@ -16,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TradingEngineTest {
 
@@ -28,19 +32,31 @@ public class TradingEngineTest {
     IUserInputOutput ioObject;
     ITeam userTeam;
 
+    TradeAbstractFactory tradeFactory;
+    LeagueModelAbstractFactory leagueFactory;
+
     @BeforeEach
     public void initObject() {
+        tradeFactory = new TradeConcreteFactory();
+        leagueFactory = LeagueModelAbstractFactory.instance();
+
         ioObject = new MockUserInputOutput();
         tradeMock = new TradeMock();
         gameConfigMock = new GameConfigMock();
         leagueObjectModelMocks = new LeagueObjectModelMocks();
+
         goodTeamMock = tradeMock.getTeamWithGoodPlayer();
         badTeamMock = tradeMock.getTeamWithBadPlayer();
         leagueMock = leagueObjectModelMocks.getLeagueObjectMock();
         leagueMock.getConferences().get(0).getDivisions().get(0).getTeams().add(goodTeamMock);
         leagueMock.getConferences().get(0).getDivisions().get(0).getTeams().add(badTeamMock);
         IGameConfig ourGameConfig = gameConfigMock.getGameConfigMock();
-        userTeam = new Team();
+
+        IGeneralManager manager = leagueFactory.createGeneralManager("Manager" , "normal");
+        ICoach coach = leagueFactory.createCoach("coach", 10,10,10,10);
+        List<IPlayer> playersList = leagueMock.getFreeAgents();
+        userTeam = leagueFactory.createTeam("ABC" , manager, coach, playersList );
+
         testClassObject = (TradingEngine) ITradingEngine.instance(ourGameConfig, leagueMock, userTeam);
         testClassObject.setIoObject(ioObject);
     }
@@ -132,17 +148,20 @@ public class TradingEngineTest {
     @Test
     public void sortPlayerListTest() throws Exception {
         ITeam unsortedTeam = tradeMock.getTeamWithGoodPlayer();
-        IPlayer player = new Player("PlayerA", "defense", false,
-                new PlayerStatistics(25, 5, 3, 2, 1));
+        IPlayerStatistics statistics = leagueFactory.createPlayerStatistics(25, 5, 3, 2, 1);
+        IPlayer player = leagueFactory.createPlayer("PlayerA", "defense", false,statistics);
+
         unsortedTeam.getPlayers().add(player);
-        player = new Player("AnotherPlayer", "defense", false,
-                new PlayerStatistics(34, 7, 3, 9, 7));
+
+        statistics = leagueFactory.createPlayerStatistics(34, 7, 3, 9, 7);
+        player = leagueFactory.createPlayer("AnotherPlayer", "defense", false,statistics);
         unsortedTeam.getPlayers().add(player);
+
         testClassObject.sortPlayerList(unsortedTeam);
         Assertions.assertTrue(unsortedTeam.getPlayers().get(0).getPlayerStrength() <= unsortedTeam.getPlayers().get(1).getPlayerStrength());
 
-        IGeneralManager manager = new GeneralManager("Larry", "normal");
-        Team empytyPlayerTeam = new Team("EmptyPlayers", manager, new Coach(), new ArrayList<>());
+        IGeneralManager manager = leagueFactory.createGeneralManager("Larry", "normal");
+        Team empytyPlayerTeam = (Team) leagueFactory.createTeam("EmptyPlayers", manager, new Coach(), new ArrayList<>());
 
         Exception error = Assertions.assertThrows(Exception.class, () -> {
             testClassObject.sortPlayerList(empytyPlayerTeam);

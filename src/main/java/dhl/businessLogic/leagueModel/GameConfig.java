@@ -117,8 +117,4 @@ public class GameConfig implements IGameConfig {
         return valueToReturn;
 
     }
-
-    public String getGmTable() {
-        return gmTable;
-    }
 }

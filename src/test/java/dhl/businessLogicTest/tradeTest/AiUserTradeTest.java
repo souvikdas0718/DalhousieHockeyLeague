@@ -1,6 +1,9 @@
 package dhl.businessLogicTest.tradeTest;
 
 import dhl.businessLogic.leagueModel.PlayerPosition;
+import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
+import dhl.businessLogic.trade.factory.TradeAbstractFactory;
+import dhl.businessLogic.trade.factory.TradeConcreteFactory;
 import dhl.inputOutput.ui.IUserInputOutput;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.Mocks.MockUserInputOutput;
@@ -28,23 +31,28 @@ public class AiUserTradeTest {
     LeagueObjectModelMocks leagueObjectModelMocks;
     LeagueObjectModel leagueObjectModel;
 
+    TradeAbstractFactory tradeFactory;
+    LeagueModelAbstractFactory leagueFactory;
+
     @BeforeEach
     public void initObject() {
+        tradeFactory = new TradeConcreteFactory();
+        leagueFactory = LeagueModelAbstractFactory.instance();
+
         tradeMock = new TradeMock();
+        ArrayList<IPlayer> offeringPlayers = new ArrayList<>();
+        ArrayList<IPlayer> playersWanted = new ArrayList<>();
+        ioObjectMock = new MockUserInputOutput();
+        leagueObjectModelMocks = new LeagueObjectModelMocks();
+
         ITeam offeringTeam = tradeMock.getTeamWithBadPlayer();
         ITeam recevingTeam = tradeMock.getTeamWithGoodPlayer();
 
-        ArrayList<IPlayer> offeringPlayers = new ArrayList<>();
         offeringPlayers.add(offeringTeam.getPlayers().get(0));
-
-        ArrayList<IPlayer> playersWanted = new ArrayList<>();
         playersWanted.add(recevingTeam.getPlayers().get(0));
-
-        ITradeOffer tradeOffer = new ExchangingPlayerTradeOffer(offeringTeam, recevingTeam, offeringPlayers, playersWanted);
-        ioObjectMock = new MockUserInputOutput();
+        ITradeOffer tradeOffer = tradeFactory.createExchangingPlayerTradeOffer(offeringTeam, recevingTeam, offeringPlayers, playersWanted);
         IUpdateUserTeamRoster updateUserTeamRoster = new UpdateUserTeamRoster(ioObjectMock);
-        testClassObject = new AiUserTrade(tradeOffer, ioObjectMock, updateUserTeamRoster);
-        leagueObjectModelMocks = new LeagueObjectModelMocks();
+        testClassObject = (AiUserTrade) tradeFactory.createAiUserTrade(tradeOffer, ioObjectMock, updateUserTeamRoster);
         leagueObjectModel = (LeagueObjectModel) leagueObjectModelMocks.getLeagueObjectMock();
     }
 
@@ -62,11 +70,12 @@ public class AiUserTradeTest {
 
         team.getPlayers().add(tradeMock.getWeakPlayer("randomPlayer1"));
         team.getPlayers().add(tradeMock.getWeakPlayer("randomPlayer2"));
-        IPlayer player = new Player("player1", "goalie", false,
-                new PlayerStatistics(25, 10, 10, 10, 10));
+
+        IPlayer player = leagueFactory.createPlayer("player1", "goalie", false,
+                leagueFactory.createPlayerStatistics(25, 10, 10, 10, 10));
         team.getPlayers().add(player);
-        player = new Player("player2", "goalie", false,
-                new PlayerStatistics(25, 3, 1, 4, 5));
+        player = leagueFactory.createPlayer("player2", "goalie", false,
+                leagueFactory.createPlayerStatistics(25, 3, 1, 4, 5));
         team.getPlayers().add(player);
         ((MockUserInputOutput) ioObjectMock).setMockOutput("0");
         testClassObject.validateTeamRosterAfterTrade(team, leagueObjectModel);
@@ -82,18 +91,6 @@ public class AiUserTradeTest {
 
         ((MockUserInputOutput) ioObjectMock).setMockOutput("2");
         Assertions.assertFalse(testClassObject.isTradeAccepted());
-
-        ((MockUserInputOutput) ioObjectMock).setMockOutput("3");
-        Exception error = Assertions.assertThrows(Exception.class, () -> {
-            Assertions.assertFalse(testClassObject.isTradeAccepted());
-        });
-        Assertions.assertTrue(error.getMessage().contains("Wrong Input please give valid input"));
-
-        ((MockUserInputOutput) ioObjectMock).setMockOutput("sdasd");
-        Exception error2 = Assertions.assertThrows(Exception.class, () -> {
-            Assertions.assertFalse(testClassObject.isTradeAccepted());
-        });
-        Assertions.assertTrue(error.getMessage().contains("Wrong Input please give valid input"));
 
     }
 

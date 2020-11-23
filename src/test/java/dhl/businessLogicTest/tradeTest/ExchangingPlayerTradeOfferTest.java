@@ -1,8 +1,11 @@
 package dhl.businessLogicTest.tradeTest;
 
+import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.trade.ExchangingPlayerTradeOffer;
+import dhl.businessLogic.trade.factory.TradeAbstractFactory;
+import dhl.businessLogic.trade.factory.TradeConcreteFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,16 +17,24 @@ public class ExchangingPlayerTradeOfferTest {
     ExchangingPlayerTradeOffer testClassObject;
     TradeMock mockObject;
 
+    TradeAbstractFactory tradeFactory;
+    LeagueModelAbstractFactory leagueFactory;
+
     @BeforeEach
     public void initObject() {
         mockObject = new TradeMock();
+        ArrayList<IPlayer> playersOffered = new ArrayList<>();
+        ArrayList<IPlayer> playersWanted = new ArrayList<>();
+
+        tradeFactory = new TradeConcreteFactory();
+        leagueFactory = LeagueModelAbstractFactory.instance();
+
         ITeam strongTeam = mockObject.getTeamWithGoodPlayer();
         ITeam weakTeam = mockObject.getTeamWithBadPlayer();
-        ArrayList<IPlayer> playersOffered = new ArrayList<>();
         playersOffered.add(weakTeam.getPlayers().get(0));
-        ArrayList<IPlayer> playersWanted = new ArrayList<>();
         playersWanted.add(strongTeam.getPlayers().get(0));
-        testClassObject = new ExchangingPlayerTradeOffer(weakTeam, strongTeam, playersOffered, playersWanted);
+
+        testClassObject = (ExchangingPlayerTradeOffer) tradeFactory.createExchangingPlayerTradeOffer(weakTeam, strongTeam, playersOffered, playersWanted);
     }
 
     @Test
@@ -35,7 +46,6 @@ public class ExchangingPlayerTradeOfferTest {
 
         Assertions.assertTrue(testClassObject.getOfferingTeam().getPlayers().contains(playerNowInWeakTeam));
         Assertions.assertTrue(testClassObject.getReceivingTeam().getPlayers().contains(playerNowInStrongTeam));
-
     }
 
     @Test
