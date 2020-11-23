@@ -1,10 +1,9 @@
 package dhl.businessLogicTest.simulationStateMachineTest.states.seasonSimulationTest;
 
 import dhl.Mocks.LeagueObjectModel20TeamMocks;
-import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
-import dhl.businessLogic.simulationStateMachine.interfaces.IScheduler;
+import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.AgingState;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

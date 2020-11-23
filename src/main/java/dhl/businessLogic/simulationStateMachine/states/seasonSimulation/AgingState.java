@@ -9,9 +9,8 @@ import dhl.businessLogic.aging.interfaceAging.ILeagueSchedule;
 import dhl.businessLogic.aging.interfaceAging.IRetirement;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
-import dhl.businessLogic.simulationStateMachine.interfaces.IScheduler;
-import dhl.businessLogic.simulationStateMachine.interfaces.ISimulationSeasonState;
-
+import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
+import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
 import dhl.inputOutput.importJson.serializeDeserialize.SerializeLeagueObjectModel;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import org.apache.logging.log4j.LogManager;
@@ -29,7 +28,7 @@ public class AgingState implements ISimulationSeasonState {
 
     static void agingCalculation(SimulationContext simulationContext) {
         IAging aging = new Aging(simulationContext.getGameConfig());
-        ILeagueObjectModel leagueObjectModel= simulationContext.getInMemoryLeague();
+        ILeagueObjectModel leagueObjectModel = simulationContext.getInMemoryLeague();
         ISerializeLeagueObjectModel serializeModel = new SerializeLeagueObjectModel(leagueObjectModel.getLeagueName());
         IRetirement retirement = new Retirement(serializeModel, simulationContext.getInMemoryLeague());
         ILeagueSchedule leagueSchedule = new LeagueSchedule(aging, retirement, simulationContext.getInjurySystem(), simulationContext.getInMemoryLeague(), simulationContext.getNumberOfDays());

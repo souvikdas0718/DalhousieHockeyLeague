@@ -2,11 +2,11 @@ package dhl.businessLogicTest.simulationStateMachineTest.states.standings;
 
 import dhl.Mocks.LeagueObjectModel20TeamMocks;
 import dhl.Mocks.RegularSeasonStandingListMocks;
+import dhl.Mocks.factory.MockAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
-import dhl.businessLogic.simulationStateMachine.interfaces.IStandingSystem;
-import dhl.businessLogic.simulationStateMachine.interfaces.IStandings;
-import dhl.businessLogic.simulationStateMachine.states.standings.StandingSystem;
-import dhl.businessLogic.simulationStateMachine.states.standings.Standings;
+import dhl.businessLogic.simulationStateMachine.states.standings.factory.StandingsAbstractFactory;
+import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandingSystem;
+import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandings;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,15 +19,19 @@ public class StandingsTest {
     IStandings standings;
     IStandingSystem iStandingSystem;
     RegularSeasonStandingListMocks regularStandings;
+    MockAbstractFactory mockAbstractFactory;
+    StandingsAbstractFactory standingsAbstractFactory;
 
     @BeforeEach
     public void initObject() {
-        model20TeamMocks = new LeagueObjectModel20TeamMocks();
+        mockAbstractFactory = MockAbstractFactory.instance();
+        standingsAbstractFactory = StandingsAbstractFactory.instance();
+        model20TeamMocks = mockAbstractFactory.getLeagueObjectModel20TeamMock();
         model20TeamMocks.leagueModel20TeamGeneralStandings();
         league = model20TeamMocks.getLeagueData();
-        standings = new Standings();
-        regularStandings = new RegularSeasonStandingListMocks();
-        iStandingSystem = new StandingSystem();
+        standings = standingsAbstractFactory.getStandings();
+        regularStandings = mockAbstractFactory.getRegularSeasonStandingListMock();
+        iStandingSystem = standingsAbstractFactory.getStandingSystem();
         iStandingSystem.setStandingsList(regularStandings.generalSeasonStandings());
     }
 

@@ -1,4 +1,4 @@
-package dhl.businessLogic.simulationStateMachine.interfaces;
+package dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces;
 
 import dhl.businessLogic.leagueModel.interfaceModel.IConference;
 import dhl.businessLogic.leagueModel.interfaceModel.IDivision;
@@ -6,7 +6,7 @@ import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 
 import java.time.LocalDate;
 
-public interface ISchedule {
+public interface ISeasonSchedule {
     public IConference getTeamOneConference();
 
     public void setTeamOneConference(IConference teamOneConference);
@@ -26,7 +26,6 @@ public interface ISchedule {
     public ITeam getTeamOne();
 
     public void setTeamOne(ITeam teamOne);
-
 
     public ITeam getTeamTwo();
 

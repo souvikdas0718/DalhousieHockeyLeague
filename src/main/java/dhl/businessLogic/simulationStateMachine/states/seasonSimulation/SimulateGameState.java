@@ -4,10 +4,10 @@ package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
-import dhl.businessLogic.simulationStateMachine.interfaces.ISchedule;
-import dhl.businessLogic.simulationStateMachine.interfaces.IScheduler;
-import dhl.businessLogic.simulationStateMachine.interfaces.ISimulationSeasonState;
-import dhl.businessLogic.simulationStateMachine.interfaces.IStandingSystem;
+import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
+import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.ISeasonSchedule;
+import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
+import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandingSystem;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ public class SimulateGameState implements ISimulationSeasonState {
     private void winDecider(LocalDate currentDate, IScheduler scheduler) {
         ITeam winningTeam;
         ITeam losingTeam;
-        for (ISchedule schedule : scheduler.getFullSeasonSchedule()) {
+        for (ISeasonSchedule schedule : scheduler.getFullSeasonSchedule()) {
             if (schedule.getGameDate().equals(currentDate)) {
                 IGameConfig gameConfig = simulationContext.getGameConfig();
                 Double randomWinChance = Double.parseDouble(gameConfig.getValueFromOurObject(gameConfig.getGameResolver(), gameConfig.getRandomWinChance())) * 100;

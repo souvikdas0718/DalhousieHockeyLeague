@@ -2,8 +2,8 @@ package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 
 
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
-import dhl.businessLogic.simulationStateMachine.interfaces.IScheduler;
-import dhl.businessLogic.simulationStateMachine.interfaces.ISimulationSeasonState;
+import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
+import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;

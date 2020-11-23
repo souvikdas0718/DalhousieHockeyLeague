@@ -1,7 +1,7 @@
 package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
-import dhl.businessLogic.simulationStateMachine.interfaces.ISimulationSeasonState;
+import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
 
 import java.time.LocalDate;
 
@@ -24,7 +24,7 @@ public class AdvanceToNextSeasonState implements ISimulationSeasonState {
     @Override
     public void seasonStateEntryProcess() {
         simulationContext.setYear(simulationContext.getYear() + 1);
-        LocalDate endOfSeason = LocalDate.of(simulationContext.getYear() , 9, 29);
+        LocalDate endOfSeason = LocalDate.of(simulationContext.getYear(), 9, 29);
         simulationContext.setEndOfSimulation(endOfSeason);
         simulationContext.setNumberOfDays(365);
     }

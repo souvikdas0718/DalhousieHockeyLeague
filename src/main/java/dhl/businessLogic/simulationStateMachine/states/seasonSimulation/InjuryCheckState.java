@@ -3,16 +3,12 @@ package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 import dhl.businessLogic.aging.interfaceAging.IInjury;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
-import dhl.businessLogic.simulationStateMachine.interfaces.IScheduler;
-import dhl.businessLogic.simulationStateMachine.interfaces.ISimulationSeasonState;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.Scheduler;
+import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
+import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
-
-import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
-import static java.time.temporal.TemporalAdjusters.previousOrSame;
 
 public class InjuryCheckState implements ISimulationSeasonState {
     SimulationContext simulationContext;

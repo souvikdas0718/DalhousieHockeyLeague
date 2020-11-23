@@ -1,10 +1,9 @@
 package dhl.Mocks.factory;
 
 import dhl.Mocks.JsonFilePathMock;
-import dhl.Mocks.MockDeserializeLeagueObjectModel;
-import dhl.Mocks.MockSerializeLeagueObjectModel;
-import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockFactory;
-import dhl.businessLogicTest.leagueModelTests.mocks.*;
+import dhl.Mocks.LeagueObjectModel20TeamMocks;
+import dhl.Mocks.LeagueObjectModelMocks;
+import dhl.Mocks.RegularSeasonStandingListMocks;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.IDeserializeLeagueObjectModel;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 
@@ -17,8 +16,7 @@ public abstract class MockAbstractFactory {
     }
 
     public static MockAbstractFactory instance() {
-        if (null == uniqueInstance)
-        {
+        if (null == uniqueInstance) {
             uniqueInstance = new MockFactory();
         }
         return uniqueInstance;
@@ -33,4 +31,10 @@ public abstract class MockAbstractFactory {
     public abstract ISerializeLeagueObjectModel getMockSerialize();
 
     public abstract IDeserializeLeagueObjectModel getMockDeserialize();
+
+    public abstract LeagueObjectModelMocks getLeagueObjectModelMock();
+
+    public abstract LeagueObjectModel20TeamMocks getLeagueObjectModel20TeamMock();
+
+    public abstract RegularSeasonStandingListMocks getRegularSeasonStandingListMock();
 }

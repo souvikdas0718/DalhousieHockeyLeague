@@ -2,15 +2,16 @@ package dhl.businessLogicTest.simulationStateMachineTest.states.seasonScheduler;
 
 import dhl.Mocks.LeagueObjectModel20TeamMocks;
 import dhl.Mocks.LeagueObjectModelMocks;
+import dhl.Mocks.factory.MockAbstractFactory;
 import dhl.businessLogic.leagueModel.Team;
 import dhl.businessLogic.leagueModel.interfaceModel.IGeneralManager;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.simulationStateMachine.interfaces.ISchedule;
-import dhl.businessLogic.simulationStateMachine.interfaces.IScheduler;
-import dhl.businessLogic.simulationStateMachine.interfaces.IStandings;
-import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.Scheduler;
+import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.factory.SchedulerAbstractFactory;
+import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
+import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.ISeasonSchedule;
+import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandings;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,20 +28,24 @@ public class SchedulerTest {
     LeagueObjectModel20TeamMocks model20TeamMocks;
     IScheduler scheduler;
     List<IPlayer> statistics;
+    MockAbstractFactory mockAbstractFactory;
+    SchedulerAbstractFactory schedulerAbstractFactory;
 
     @BeforeEach
     public void initObject() {
-        mockLeagueObjectModel = new LeagueObjectModelMocks();
-        model20TeamMocks = new LeagueObjectModel20TeamMocks();
+        mockAbstractFactory = MockAbstractFactory.instance();
+        schedulerAbstractFactory = SchedulerAbstractFactory.instance();
+        mockLeagueObjectModel = mockAbstractFactory.getLeagueObjectModelMock();
+        model20TeamMocks = mockAbstractFactory.getLeagueObjectModel20TeamMock();
         model20TeamMocks.leagueModel20TeamGeneralStandings();
-        scheduler = new Scheduler();
+        scheduler = schedulerAbstractFactory.getScheduler();
         statistics = mockLeagueObjectModel.getPlayerArrayMock();
     }
 
     @Test
     public void getGameStandingsTest() {
         ArrayList<IStandings> standings = model20TeamMocks.getGeneralStandings();
-        IScheduler scheduler = new Scheduler();
+        IScheduler scheduler = schedulerAbstractFactory.getScheduler();
         scheduler.setGameStandings(standings);
         Assertions.assertEquals(scheduler.getGameStandings().size(), 20);
     }
@@ -136,7 +141,7 @@ public class SchedulerTest {
     @Test
     public void getFullSeasonScheduleTest() {
         ILeagueObjectModel league = model20TeamMocks.getLeagueData();
-        IScheduler scheduler = new Scheduler();
+        IScheduler scheduler = schedulerAbstractFactory.getScheduler();
         scheduler.generateTeamList(league);
         scheduler.generateTeamSchedule(league);
         Assertions.assertFalse(scheduler.getFullSeasonSchedule().isEmpty());
@@ -146,7 +151,7 @@ public class SchedulerTest {
     public void getPlayOffScheduleRound1Test() {
         ILeagueObjectModel league = model20TeamMocks.getLeagueData();
         ArrayList<IStandings> standings = model20TeamMocks.getGeneralStandings();
-        IScheduler scheduler = new Scheduler();
+        IScheduler scheduler = schedulerAbstractFactory.getScheduler();
 
         LocalDate playOffStartDate = LocalDate.of(2021, 04, 01);
         LocalDate playOffStarts = playOffStartDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.SATURDAY)).with(
@@ -160,7 +165,7 @@ public class SchedulerTest {
 
     @Test
     public void generateTeamListTest() {
-        Scheduler scheduler = new Scheduler();
+        IScheduler scheduler = schedulerAbstractFactory.getScheduler();
         ILeagueObjectModel leagueObjectModel = mockLeagueObjectModel.getLeagueObjectMock();
 
         scheduler.generateTeamList(leagueObjectModel);
@@ -172,11 +177,11 @@ public class SchedulerTest {
     @Test
     public void generateTeamScheduleTest() {
         ILeagueObjectModel league = model20TeamMocks.getLeagueData();
-        IScheduler scheduler = new Scheduler();
+        IScheduler scheduler = schedulerAbstractFactory.getScheduler();
         scheduler.generateTeamList(league);
         scheduler.generateTeamSchedule(league);
 
-        for (ISchedule schedules : scheduler.getFullSeasonSchedule()) {
+        for (ISeasonSchedule schedules : scheduler.getFullSeasonSchedule()) {
             Assertions.assertNotNull(schedules.getTeamOne());
             Assertions.assertNotNull(schedules.getTeamTwo());
         }
@@ -187,7 +192,7 @@ public class SchedulerTest {
     public void gameScheduleDatesTest() {
 
         ILeagueObjectModel league = model20TeamMocks.getLeagueData();
-        IScheduler scheduler = new Scheduler();
+        IScheduler scheduler = schedulerAbstractFactory.getScheduler();
         scheduler.generateTeamList(league);
         scheduler.generateTeamSchedule(league);
 
@@ -199,7 +204,7 @@ public class SchedulerTest {
         LocalDate localDate = LocalDate.of(2021, 04, 01);
         LocalDate regularSeasonEndDate = localDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.SATURDAY));
         scheduler.gameScheduleDates(regularSeasonStartDate, regularSeasonEndDate);
-        for (ISchedule schedules : scheduler.getFullSeasonSchedule()) {
+        for (ISeasonSchedule schedules : scheduler.getFullSeasonSchedule()) {
             Assertions.assertNotNull(schedules.getGameDate());
         }
         Assertions.assertTrue(scheduler.getFullSeasonSchedule().size() > 0);
@@ -210,7 +215,7 @@ public class SchedulerTest {
 
         ILeagueObjectModel league = model20TeamMocks.getLeagueData();
         ArrayList<IStandings> standings = model20TeamMocks.getGeneralStandings();
-        IScheduler scheduler = new Scheduler();
+        IScheduler scheduler = schedulerAbstractFactory.getScheduler();
 
         LocalDate playOffStartDate = LocalDate.of(2021, 04, 01);
         LocalDate playOffStarts = playOffStartDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.SATURDAY)).with(
@@ -218,7 +223,7 @@ public class SchedulerTest {
         scheduler.setPlayOffStartDate(playOffStarts);
         scheduler.playOffs(standings, league);
         int matchNumber = 1;
-        for (ISchedule schedules : scheduler.getPlayOffScheduleRound1()) {
+        for (ISeasonSchedule schedules : scheduler.getPlayOffScheduleRound1()) {
             if (matchNumber == 1) {
                 Assertions.assertTrue(schedules.getTeamOne().getTeamName().equals("Bruins"));
                 Assertions.assertTrue(schedules.getTeamTwo().getTeamName().equals("BlueJackets"));
@@ -235,7 +240,7 @@ public class SchedulerTest {
 
         ILeagueObjectModel league = model20TeamMocks.getLeagueData();
         ArrayList<IStandings> standings = model20TeamMocks.getGeneralStandings();
-        IScheduler scheduler = new Scheduler();
+        IScheduler scheduler = schedulerAbstractFactory.getScheduler();
 
         LocalDate playOffStartDate = LocalDate.of(2021, 04, 01);
         LocalDate playOffStarts = playOffStartDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.WEDNESDAY)).with(

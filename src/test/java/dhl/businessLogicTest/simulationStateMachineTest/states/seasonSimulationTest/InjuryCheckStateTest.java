@@ -9,7 +9,7 @@ import dhl.businessLogic.aging.interfaceAging.IInjury;
 import dhl.businessLogic.leagueModel.GameConfig;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
-import dhl.businessLogic.simulationStateMachine.interfaces.IScheduler;
+import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.InjuryCheckState;
 import dhl.businessLogic.traning.Training;
 import dhl.inputOutput.importJson.ImportJsonFile;

@@ -5,9 +5,8 @@ import dhl.Mocks.LeagueObjectModel20TeamMocks;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
-import dhl.businessLogic.simulationStateMachine.interfaces.IScheduler;
+import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.TrainingState;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -89,7 +88,8 @@ public class TrainingStateTest {
         simulationContext.setGameConfig(gameConfig);
         System.out.println(gameConfig.getTrading());
         System.out.println(gameConfig.getDaysUntilStatIncreaseCheck());
-        System.out.println(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getDaysUntilStatIncreaseCheck()));
+//        System.out.println(Integer.parseInt(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getDaysUntilStatIncreaseCheck())));
+
 //        simulationContext.setDaysSinceLastTraining(simulationContext.getDaysSinceLastTraining() + 1);
 //        IGameConfig gameConfig = simulationContext.getGameConfig();
 //        int daysUntilStatIncreaseCheck = Integer.parseInt(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getDaysUntilStatIncreaseCheck()));
@@ -123,7 +123,6 @@ public class TrainingStateTest {
         trainingState = new TrainingState(simulationContext);
         trainingState.seasonStateExitProcess();
         Assertions.assertTrue(trainingState.getSimulationContext().getCurrentSimulation() == trainingState.getSimulationContext().getSimulateGame());
-
 
         currentDate = playOffStartDate.plusDays(2);
         numberOfDays = DAYS.between(startOfSimulation, currentDate);

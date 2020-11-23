@@ -1,4 +1,4 @@
-package dhl.businessLogic.simulationStateMachine.interfaces;
+package dhl.businessLogic.simulationStateMachine.states.standings.interfaces;
 
 
 import dhl.businessLogic.leagueModel.interfaceModel.IConference;
