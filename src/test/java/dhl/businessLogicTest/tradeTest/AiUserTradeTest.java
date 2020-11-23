@@ -37,7 +37,6 @@ public class AiUserTradeTest {
     public void initObject() {
         tradeFactory = new TradeConcreteFactory();
         leagueFactory = LeagueModelAbstractFactory.instance();
-
         tradeMock = new TradeMock();
         ArrayList<IPlayer> offeringPlayers = new ArrayList<>();
         ArrayList<IPlayer> playersWanted = new ArrayList<>();
