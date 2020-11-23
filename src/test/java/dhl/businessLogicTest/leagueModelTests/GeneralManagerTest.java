@@ -1,7 +1,11 @@
 package dhl.businessLogicTest.leagueModelTests;
 
 import dhl.businessLogic.leagueModel.GeneralManager;
+import dhl.businessLogic.leagueModel.Player;
 import dhl.businessLogic.leagueModel.interfaceModel.IGeneralManager;
+import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
+import dhl.businessLogicTest.leagueModelTests.mocks.ManagerMock;
+import dhl.businessLogicTest.leagueModelTests.mocks.PlayerMock;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,21 +13,25 @@ import org.junit.jupiter.api.Test;
 
 public class GeneralManagerTest {
     IGeneralManager generalManager;
+    LeagueModelMockAbstractFactory factory;
+    ManagerMock managerMock;
 
     @BeforeEach()
     public void initObject() {
-        generalManager = new GeneralManager();
+        factory = LeagueModelMockAbstractFactory.instance();
+        managerMock = factory.createManagerMock();
+        generalManager = managerMock.getManager();
     }
 
     @Test
     public void ManagerTest() {
-        Assertions.assertEquals(generalManager.getGeneralManagerName(), "");
+        generalManager = managerMock.getManagerWithoutName();
+        Assertions.assertEquals("",generalManager.getGeneralManagerName());
     }
 
     @Test
     public void ManageParameterized() {
-        generalManager = new GeneralManager("Mathew John");
-        Assertions.assertEquals(generalManager.getGeneralManagerName(), "Mathew John");
+        Assertions.assertEquals("Mathew Jacob",generalManager.getGeneralManagerName());
     }
 
     @AfterEach()
