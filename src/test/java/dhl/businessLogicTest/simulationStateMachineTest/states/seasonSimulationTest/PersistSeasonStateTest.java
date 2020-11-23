@@ -51,7 +51,7 @@ public class PersistSeasonStateTest {
 
     @Test
     public void seasonStateProcessTest() {
-
+        //Store in DB
     }
 
     @Test
@@ -72,6 +72,6 @@ public class PersistSeasonStateTest {
         simulationContext.setNumberOfDays((int)numberOfDays);
         persistSeasonState = new PersistSeasonState(simulationContext);
         persistSeasonState.seasonStateExitProcess();
-        Assertions.assertTrue(persistSeasonState.getSimulationContext().getCurrentSimulation() == persistSeasonState.getSimulationContext().getInitializeSeason());
+        Assertions.assertFalse(persistSeasonState.getSimulationContext().isSeasonInProgress());
     }
 }

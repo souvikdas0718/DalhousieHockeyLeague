@@ -38,8 +38,7 @@ public class PersistSeasonState implements ISimulationSeasonState {
         if (currentDate.isBefore(LocalDate.of(simulationContext.getYear()+1, 9, 29))) {
             simulationContext.setCurrentSimulation(simulationContext.getAdvanceTime());
         } else {
-            //break the loop remarking an end of season
-            simulationContext.setCurrentSimulation(simulationContext.getInitializeSeason());
+            simulationContext.setSeasonInProgress(false);
         }
     }
 }
