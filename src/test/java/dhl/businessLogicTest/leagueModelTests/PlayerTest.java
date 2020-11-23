@@ -1,43 +1,29 @@
 package dhl.businessLogicTest.leagueModelTests;
 
-import dhl.Mocks.LeagueObjectModelMocks;
-import dhl.businessLogic.factory.InitializeObjectFactory;
 import dhl.businessLogic.leagueModel.Player;
-import dhl.businessLogic.leagueModel.PlayerStatistics;
-import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
+import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
+import dhl.businessLogicTest.leagueModelTests.mocks.PlayerMock;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
-    InitializeObjectFactory initObj;
+    LeagueModelMockAbstractFactory factory;
     Player player;
-    IPlayerStatistics playerStatistics;
-    IGameConfig gameConfig;
+    PlayerMock playerMock;
 
     @BeforeEach()
     public void initObject() {
-        initObj = new InitializeObjectFactory();
-        playerStatistics = new PlayerStatistics(20, 10, 10, 10, 10);
-        player = new Player("Harry", "forward", false, playerStatistics);
-        LeagueObjectModelMocks leagueMock = new LeagueObjectModelMocks();
-        gameConfig = leagueMock.getGameConfig();
-    }
-
-    @Test
-    public void PlayerDefaultConstructorTest() {
-        player = new Player();
-        String playerName = player.getPlayerName();
-        Assertions.assertTrue(playerName.length() == 0);
-        Assertions.assertEquals("", player.getPosition());
+        factory = LeagueModelMockAbstractFactory.instance();
+        playerMock = factory.createPlayerMock();
+        player = (Player) playerMock.getPlayer();
     }
 
     @Test
     public void PlayerTest() {
-        IPlayer player = new Player("Harry", "forward", false, playerStatistics);
         Assertions.assertEquals("forward", player.getPosition());
         Assertions.assertEquals("Harry", player.getPlayerName());
         Assertions.assertFalse(player.getCaptain());
@@ -47,7 +33,6 @@ public class PlayerTest {
     public void getPlayerNameTest() {
         Assertions.assertEquals("Harry", player.getPlayerName());
     }
-
 
     @Test
     public void getPositionTest() {
@@ -68,14 +53,8 @@ public class PlayerTest {
     }
 
     @Test
-    public void getPositionEmptyTest() {
-        player = new Player();
-        Assertions.assertEquals("", player.getPosition());
-    }
-
-    @Test
     public void getCaptainTest() {
-        player = new Player("Harry", "forward", true, playerStatistics);
+        player.setCaptain(true);
         Assertions.assertTrue(player.getCaptain());
     }
 
@@ -99,31 +78,30 @@ public class PlayerTest {
 
     @Test
     public void isPlayerNameEmpty() {
-        player = new Player();
+        player = (Player) playerMock.getPlayerWithoutName();
         Assertions.assertTrue(player.isPlayerNameEmpty());
     }
 
     @Test
     public void isPlayerPositionInvalidTest() {
-        player = new Player("Harry", "leg side", false, playerStatistics);
+        player = (Player) playerMock.getPlayerInvalidPosition();
         Assertions.assertTrue(player.isPlayerPositionInvalid());
     }
 
     @Test
     public void isPlayerPositionInvalidTes() {
-        player.setPosition("forward");
         Assertions.assertFalse(player.isPlayerPositionInvalid());
     }
 
     @Test
     public void isCaptainValueBooleanTest() {
-        player = new Player();
+        player= (Player) playerMock.getInvalidPlayerCaptain();
         Assertions.assertTrue(player.isCaptainValueBoolean());
     }
 
     @Test
     public void checkPlayerNameValidTest() {
-        player = new Player();
+        player = (Player) playerMock.getPlayerWithoutName();
         Exception error = Assertions.assertThrows(Exception.class, () -> {
             player.checkPlayerValid();
         });
@@ -132,7 +110,7 @@ public class PlayerTest {
 
     @Test
     public void checkPlayerPositionValidTest() {
-        player = new Player("Harry", "leg side", false, playerStatistics);
+        player = (Player) playerMock.getPlayerInvalidPosition();
         Exception errorMsg = Assertions.assertThrows(Exception.class, () -> {
             player.checkPlayerValid();
         });
@@ -141,8 +119,7 @@ public class PlayerTest {
 
     @Test
     public void checkPlayerCaptainValueValidTest() {
-        player = new Player("Noah", "forward", null, playerStatistics);
-        player.setPosition("forward");
+        player = (Player) playerMock.getInvalidPlayerCaptain();
         Exception error = Assertions.assertThrows(Exception.class, () -> {
             player.checkPlayerValid();
         });
@@ -151,7 +128,7 @@ public class PlayerTest {
 
     @Test
     public void checkPlayerValidTest() throws Exception {
-        IPlayer player = new Player("Noah", "forward", true, playerStatistics);
+        IPlayer player = playerMock.getPlayer();
         Assertions.assertTrue(player.checkPlayerValid());
     }
 
@@ -170,7 +147,6 @@ public class PlayerTest {
 
     @AfterEach()
     public void destroyObject() {
-        initObj = null;
         player = null;
     }
 

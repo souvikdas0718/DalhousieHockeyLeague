@@ -8,10 +8,6 @@ public class FreeAgent extends Player {
 
     private static final Logger logger = LogManager.getLogger(FreeAgent.class);
 
-    public FreeAgent() {
-        super();
-    }
-
     public FreeAgent(String playerName, String position, IPlayerStatistics playerStatistics) {
         super(playerName, position, playerStatistics);
 

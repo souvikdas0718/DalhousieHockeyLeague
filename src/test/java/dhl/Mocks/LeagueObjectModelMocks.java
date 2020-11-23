@@ -180,7 +180,7 @@ public class LeagueObjectModelMocks {
         return headCoach;
     }
 
-    public List getManagers() {
+    public List<IGeneralManager> getManagers() {
         List<IGeneralManager> managers = new ArrayList();
         managers.add(new GeneralManager("Karen Potam"));
         managers.add(new GeneralManager("Joseph Squidly"));

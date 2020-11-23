@@ -15,10 +15,6 @@ public class Player implements IPlayer {
     private int playerInjuredDays;
     private boolean active;
 
-    public Player() {
-        setDefaults();
-    }
-
     public void setDefaults() {
         playerName = "";
         position = null;

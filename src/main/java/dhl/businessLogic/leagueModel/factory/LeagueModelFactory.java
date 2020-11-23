@@ -58,4 +58,25 @@ public class LeagueModelFactory extends LeagueModelAbstractFactory {
         return new LeagueObjectModelInput(leagueName, conferenceName, divisionName, newlyCreatedTeam, leagueObjectModelValidation, serializeLeagueObjectModel);
     }
 
+
+    public IConference createConferenceDefault() {
+        return new Conference();
+    }
+
+    public IDivision createDivisionDefault() {
+        return new Division();
+    }
+
+    public ICoach createCoachDefault() {
+        return new Coach();
+    }
+
+    public IGeneralManager createGeneralManagerDefault() {
+        return new GeneralManager();
+    }
+
+    public ITeam createTeamDefault() {
+        return new Team();
+    }
+
 }

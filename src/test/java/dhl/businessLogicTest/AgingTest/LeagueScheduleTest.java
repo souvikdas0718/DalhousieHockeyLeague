@@ -1,16 +1,19 @@
 package dhl.businessLogicTest.AgingTest;
 
 import dhl.Mocks.LeagueObjectModelMocks;
+import dhl.Mocks.factory.MockAbstractFactory;
 import dhl.businessLogic.aging.Aging;
 import dhl.businessLogic.aging.Injury;
 import dhl.businessLogic.aging.LeagueSchedule;
 import dhl.businessLogic.aging.Retirement;
+import dhl.businessLogic.aging.agingFactory.AgingAbstractFactory;
 import dhl.businessLogic.aging.interfaceAging.IAging;
 import dhl.businessLogic.aging.interfaceAging.IInjury;
 import dhl.businessLogic.aging.interfaceAging.IRetirement;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 
-import dhl.businessLogicTest.leagueModelTests.MockSerializeLeagueObjectModel;
+import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
+import dhl.businessLogicTest.leagueModelTests.mocks.LeagueMock;
 import dhl.inputOutput.importJson.serializeDeserialize.SerializeLeagueObjectModel;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import org.junit.jupiter.api.AfterEach;
@@ -22,8 +25,11 @@ import java.util.List;
 
 
 public class LeagueScheduleTest {
+    LeagueModelMockAbstractFactory leagueMockFactory;
+    LeagueMock leagueMock;
+    MockAbstractFactory mockFactory;
+    AgingAbstractFactory agingFactory;
 
-    LeagueObjectModelMocks leagueMock;
     IGameConfig gameConfig;
     LeagueSchedule leagueSchedule;
     ILeagueObjectModel leagueObjectModel;
@@ -32,14 +38,18 @@ public class LeagueScheduleTest {
 
     @BeforeEach()
     public void initObject() {
-        leagueMock = new LeagueObjectModelMocks();
-        gameConfig = leagueMock.getGameConfig();
-        leagueObjectModel = leagueMock.getLeagueObjectMock();
-        ISerializeLeagueObjectModel serializeModel = new MockSerializeLeagueObjectModel();
-        IAging agingSystem = new Aging(gameConfig);
-        retirementSystem = new Retirement(serializeModel, leagueObjectModel);
-        injurySystem = new Injury();
-        leagueSchedule = new LeagueSchedule(agingSystem, retirementSystem, injurySystem, leagueMock.getLeagueObjectMock(), 365);
+        leagueMockFactory= LeagueModelMockAbstractFactory.instance();
+        leagueMock =  leagueMockFactory.createLeagueMock();
+        mockFactory = MockAbstractFactory.instance();
+        agingFactory=AgingAbstractFactory.instance();
+
+        gameConfig = leagueMock.getGameplayConfig();
+        leagueObjectModel = leagueMock.getLeagueObjectModel();
+
+        ISerializeLeagueObjectModel serializeModel = mockFactory.getMockSerialize();
+        retirementSystem = agingFactory.createRetirement(serializeModel, leagueObjectModel);
+        injurySystem = agingFactory.createInjury();
+        leagueSchedule = (LeagueSchedule) agingFactory.createLeagueSchedule(365,leagueMock.getLeagueObjectModel() );
 
     }
 
@@ -52,7 +62,7 @@ public class LeagueScheduleTest {
                     List<IPlayer> players = team.getPlayers();
                     IPlayer player = players.get(0);
                     IPlayerStatistics playerStatistics = player.getPlayerStats();
-                    Assertions.assertEquals(26, playerStatistics.getAge());
+                    Assertions.assertEquals(21, playerStatistics.getAge());
 
                 }
             }
