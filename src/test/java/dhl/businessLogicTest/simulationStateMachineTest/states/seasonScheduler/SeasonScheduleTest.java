@@ -2,11 +2,11 @@ package dhl.businessLogicTest.simulationStateMachineTest.states.seasonScheduler;
 
 import dhl.Mocks.LeagueObjectModel20TeamMocks;
 import dhl.Mocks.LeagueObjectModelMocks;
+import dhl.Mocks.factory.MockAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
-import dhl.businessLogic.simulationStateMachine.interfaces.ISchedule;
-import dhl.businessLogic.simulationStateMachine.interfaces.IScheduler;
-import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.Scheduler;
-import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.SeasonSchedule;
+import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.factory.SchedulerAbstractFactory;
+import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
+import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.ISeasonSchedule;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,17 +18,21 @@ public class SeasonScheduleTest {
     LeagueObjectModelMocks mockLeagueObjectModel;
     LeagueObjectModel20TeamMocks model20TeamMocks;
     ILeagueObjectModel league;
-    ISchedule seasonSchedule;
+    ISeasonSchedule seasonSchedule;
     IScheduler scheduler;
+    MockAbstractFactory mockAbstractFactory;
+    SchedulerAbstractFactory schedulerAbstractFactory;
 
     @BeforeEach
     public void initObject() {
-        mockLeagueObjectModel = new LeagueObjectModelMocks();
-        model20TeamMocks = new LeagueObjectModel20TeamMocks();
+        mockAbstractFactory = MockAbstractFactory.instance();
+        schedulerAbstractFactory = SchedulerAbstractFactory.instance();
+        mockLeagueObjectModel = mockAbstractFactory.getLeagueObjectModelMock();
+        model20TeamMocks = mockAbstractFactory.getLeagueObjectModel20TeamMock();
         model20TeamMocks.leagueModel20TeamGeneralStandings();
         league = model20TeamMocks.getLeagueData();
-        seasonSchedule = new SeasonSchedule();
-        scheduler = new Scheduler();
+        seasonSchedule = schedulerAbstractFactory.getSeasonSchedule();
+        scheduler = schedulerAbstractFactory.getScheduler();
     }
 
     @Test

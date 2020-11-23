@@ -1,4 +1,4 @@
-package dhl.inputOutput.importJson.serializeDeserialize;
+package dhl.inputOutput.importJson.SerializeDeserialize;
 
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.IDeserializeLeagueObjectModel;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;

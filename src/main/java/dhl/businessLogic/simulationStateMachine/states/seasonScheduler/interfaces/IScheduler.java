@@ -1,18 +1,19 @@
-package dhl.businessLogic.simulationStateMachine.interfaces;
+package dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces;
 
 
 import dhl.businessLogic.leagueModel.interfaceModel.IConference;
 import dhl.businessLogic.leagueModel.interfaceModel.IDivision;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
+import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandings;
 
 import java.time.LocalDate;
 import java.util.List;
 
 public interface IScheduler {
-    public List<ISchedule> getFullSeasonSchedule();
+    public List<ISeasonSchedule> getFullSeasonSchedule();
 
-    public List<ISchedule> getPlayOffScheduleRound1();
+    public List<ISeasonSchedule> getPlayOffScheduleRound1();
 
     public LocalDate getSeasonStartDate();
 
@@ -50,9 +51,9 @@ public interface IScheduler {
 
     public void gameScheduleDates(LocalDate seasonStartDate, LocalDate seasonEndDate);
 
-//    public List<ISchedule> getFinals();
+//    public List<ISeasonSchedule> getFinals();
 //
-//    public void setFinals(List<ISchedule> finals);
+//    public void setFinals(List<ISeasonSchedule> finals);
 
     public LocalDate getCurrentDate();
 

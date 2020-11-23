@@ -21,12 +21,12 @@ public class UpdateUserTeamRoster extends IUpdateUserTeamRoster {
         listDisplay = PlayerListFormat.getInstance();
     }
 
-    public void addPlayer(String playerPosition, ITeam team, ILeagueObjectModel league){
+    public void addPlayer(String playerPosition, ITeam team, ILeagueObjectModel league) {
         ioObject.printMessage("Enter ID of " + playerPosition + " you want to add");
         ArrayList<IPlayer> players = new ArrayList<>();
         for (IPlayer player : league.getFreeAgents()) {
             String position = player.getPosition();
-            if (position.equals(playerPosition)){
+            if (position.equals(playerPosition)) {
                 players.add(player);
             }
         }

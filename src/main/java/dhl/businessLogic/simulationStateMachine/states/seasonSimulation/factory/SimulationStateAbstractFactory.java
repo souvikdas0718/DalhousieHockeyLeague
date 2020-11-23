@@ -1,7 +1,7 @@
-package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
+package dhl.businessLogic.simulationStateMachine.states.seasonSimulation.factory;
 
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
-import dhl.businessLogic.simulationStateMachine.interfaces.ISimulationSeasonState;
+import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
 
 public abstract class SimulationStateAbstractFactory {
 

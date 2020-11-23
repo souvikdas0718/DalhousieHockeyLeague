@@ -1,19 +1,18 @@
 package dhl.importJsonTest;
 
-import dhl.businessLogic.leagueModel.Player;
-import dhl.businessLogic.leagueModel.PlayerStatistics;
-import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
-import dhl.inputOutput.importJson.serializeDeserialize.DeserializeLeagueObjectModel;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.Mocks.SerializedJsonMock;
 import dhl.businessLogic.leagueModel.LeagueObjectModel;
+import dhl.businessLogic.leagueModel.Player;
+import dhl.businessLogic.leagueModel.PlayerStatistics;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
-import dhl.inputOutput.importJson.serializeDeserialize.SerializeLeagueObjectModel;
+import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
+import dhl.inputOutput.importJson.SerializeDeserialize.DeserializeLeagueObjectModel;
+import dhl.inputOutput.importJson.SerializeDeserialize.SerializeLeagueObjectModel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -80,7 +79,7 @@ public class DeSerializeLeagueObjectModelTest {
     void deleteFile(String path) throws IOException {
         File objFile = new File(path);
 
-        if(objFile.exists()) {
+        if (objFile.exists()) {
             objFile.delete();
         }
     }
