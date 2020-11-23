@@ -5,7 +5,7 @@ import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.interfaces.IGameState;
 import dhl.businessLogic.simulationStateMachine.states.interfaces.ICreateTeamStateLogic;
-import dhl.inputOutput.importJson.serializeDeserialize.SerializeLeagueObjectModel;
+import dhl.inputOutput.importJson.SerializeDeserialize.SerializeLeagueObjectModel;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import dhl.inputOutput.ui.IUserInputOutput;
 import dhl.inputOutput.ui.UserInputOutput;
@@ -16,6 +16,9 @@ import java.util.Scanner;
 
 public class CreateTeamState implements IGameState {
     private final String jsonFilePath = "src/main/java/dhl/inputOutput/importJson/serializeDeserialize/serializedJsonFiles/";
+    ICreateTeamStateLogic createTeamStateLogic;
+    Scanner sc = new Scanner(System.in);
+    IUserInputOutput userInputPutput = new UserInputOutput();
     private GameContext ourGame;
     private ILeagueObjectModel inMemoryLeague;
     private IConference selectedConference;
@@ -26,16 +29,12 @@ public class CreateTeamState implements IGameState {
     private ICoach selectedCoach;
     private List<IPlayer> selectedFreeAgents;
     private String selectedCaptain;
-    ICreateTeamStateLogic createTeamStateLogic;
-
-    Scanner sc = new Scanner(System.in);
-    IUserInputOutput userInputPutput = new UserInputOutput();
 
     public CreateTeamState(GameContext newGame) {
         ourGame = newGame;
         selectedConference = null;
         selectedDivision = null;
-        selectedTeamName  = selectedHeadCoach = null;
+        selectedTeamName = selectedHeadCoach = null;
         selectedGeneralManager = new GeneralManager();
         selectedCoach = new Coach();
         createTeamStateLogic = new CreateTeamStateLogic();

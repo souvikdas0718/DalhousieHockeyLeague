@@ -10,7 +10,7 @@ import dhl.businessLogic.aging.interfaceAging.ILeagueSchedule;
 import dhl.businessLogic.aging.interfaceAging.IRetirement;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
-import dhl.inputOutput.importJson.serializeDeserialize.SerializeDeserializeAbstractFactory;
+import dhl.inputOutput.importJson.SerializeDeserialize.SerializeDeserializeAbstractFactory;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 
 

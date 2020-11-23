@@ -1,4 +1,4 @@
-package dhl.inputOutput.importJson.serializeDeserialize;
+package dhl.inputOutput.importJson.SerializeDeserialize;
 
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.IDeserializeLeagueObjectModel;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
@@ -6,19 +6,22 @@ import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeag
 public abstract class SerializeDeserializeAbstractFactory {
     private static SerializeDeserializeAbstractFactory uniqueInstance = null;
 
-    protected SerializeDeserializeAbstractFactory(){
+    protected SerializeDeserializeAbstractFactory() {
 
     }
 
-    public static SerializeDeserializeAbstractFactory instance(){
-        if (null == uniqueInstance){
+    public static SerializeDeserializeAbstractFactory instance() {
+        if (null == uniqueInstance) {
             uniqueInstance = new SerializeDeserializeFactory();
         }
         return uniqueInstance;
     }
 
-    public static void setFactory(SerializeDeserializeAbstractFactory f) { uniqueInstance = f; }
+    public static void setFactory(SerializeDeserializeAbstractFactory f) {
+        uniqueInstance = f;
+    }
 
     public abstract ISerializeLeagueObjectModel createSerializeLeagueObjectModel(String leagueName);
+
     public abstract IDeserializeLeagueObjectModel createDeserializeLeagueObjectModel(String leagueName);
 }
