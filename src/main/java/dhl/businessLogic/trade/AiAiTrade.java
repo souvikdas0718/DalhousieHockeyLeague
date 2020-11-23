@@ -5,7 +5,10 @@ import dhl.businessLogic.leagueModel.PlayerPosition;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogic.trade.interfaces.ITradeOffer;
 import dhl.businessLogic.trade.interfaces.ITradeType;
+import dhl.inputOutput.importJson.interfaces.IGeneralManagerPersonalityList;
+
 import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.List;
 
 public class AiAiTrade implements ITradeType {
@@ -17,10 +20,13 @@ public class AiAiTrade implements ITradeType {
 
     ITradeOffer tradeOffer;
     IGameConfig gameConfig;
+    Dictionary managerPersonalityList;
 
     public AiAiTrade(ITradeOffer tradeOffer, IGameConfig gameConfig) {
         this.tradeOffer = tradeOffer;
         this.gameConfig = gameConfig;
+        IGeneralManagerPersonalityList managerPersonalityObject = IGeneralManagerPersonalityList.instance(gameConfig);
+        managerPersonalityList = managerPersonalityObject.getGeneralManagerPersonalityList();
     }
 
     public boolean isTradeAccepted() {
@@ -31,6 +37,10 @@ public class AiAiTrade implements ITradeType {
         } else{
             ITeam receivingTeam = tradeOffer.getReceivingTeam();
             IGeneralManager receivingManager = receivingTeam.getGeneralManager();
+            String ourManagerPersonality = receivingManager.getGeneralManagerPersonality();
+            double managerModifier = (double) managerPersonalityList.get(ourManagerPersonality);
+            System.out.println(configRandomAcceptanceChance + " will add" + managerModifier);
+            configRandomAcceptanceChance = configRandomAcceptanceChance + managerModifier;
             if (randomValue > configRandomAcceptanceChance) {
                 return true;
             }

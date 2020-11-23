@@ -4,6 +4,7 @@ import dhl.Mocks.GameConfigMock;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.inputOutput.importJson.GeneralManagerPersonalityList;
 
+import dhl.inputOutput.importJson.interfaces.IGeneralManagerPersonalityList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,13 +15,13 @@ import java.util.List;
 public class GeneralManagerPersonalityListTest {
 
     GameConfigMock gameConfigMock;
-    GeneralManagerPersonalityList testClassObject;
+    IGeneralManagerPersonalityList testClassObject;
 
     @BeforeEach
     public void initObject() {
         gameConfigMock = new GameConfigMock();
         IGameConfig ourGameConfig = gameConfigMock.getGameConfigMock();
-        testClassObject = new GeneralManagerPersonalityList(ourGameConfig);
+        testClassObject = IGeneralManagerPersonalityList.instance(ourGameConfig);
     }
 
     @Test
