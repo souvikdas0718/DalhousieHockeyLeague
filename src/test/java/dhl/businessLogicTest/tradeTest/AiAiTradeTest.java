@@ -1,11 +1,8 @@
 package dhl.businessLogicTest.tradeTest;
 
-import dhl.businessLogic.leagueModel.PlayerPosition;
+import dhl.businessLogic.leagueModel.*;
 import dhl.Mocks.GameConfigMock;
 import dhl.Mocks.LeagueObjectModelMocks;
-import dhl.businessLogic.leagueModel.LeagueObjectModel;
-import dhl.businessLogic.leagueModel.Player;
-import dhl.businessLogic.leagueModel.PlayerStatistics;
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
