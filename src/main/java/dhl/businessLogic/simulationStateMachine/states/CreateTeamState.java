@@ -16,6 +16,9 @@ import java.util.Scanner;
 
 public class CreateTeamState implements IGameState {
     private final String jsonFilePath = "src/main/java/dhl/inputOutput/importJson/serializeDeserialize/serializedJsonFiles/";
+    ICreateTeamStateLogic createTeamStateLogic;
+    Scanner sc = new Scanner(System.in);
+    IUserInputOutput userInputPutput = new UserInputOutput();
     private GameContext ourGame;
     private ILeagueObjectModel inMemoryLeague;
     private IConference selectedConference;
@@ -26,16 +29,12 @@ public class CreateTeamState implements IGameState {
     private ICoach selectedCoach;
     private List<IPlayer> selectedFreeAgents;
     private String selectedCaptain;
-    ICreateTeamStateLogic createTeamStateLogic;
-
-    Scanner sc = new Scanner(System.in);
-    IUserInputOutput userInputPutput = new UserInputOutput();
 
     public CreateTeamState(GameContext newGame) {
         ourGame = newGame;
         selectedConference = null;
         selectedDivision = null;
-        selectedTeamName  = selectedHeadCoach = null;
+        selectedTeamName = selectedHeadCoach = null;
         selectedGeneralManager = new GeneralManager();
         selectedCoach = new Coach();
         createTeamStateLogic = new CreateTeamStateLogic();

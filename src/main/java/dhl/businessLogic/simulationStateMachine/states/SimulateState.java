@@ -46,9 +46,12 @@ public class SimulateState implements IGameState {
         simulationContextObject.setInMemoryLeague(ourGame.getInMemoryLeague());
 
         for (int i = 0; i < simulationSeasonsCount; i++) {
-            simulationContextObject.seasonStateEntryProcess();
-            simulationContextObject.seasonStateProcess();
-            simulationContextObject.seasonStateExitProcess();
+            while(simulationContextObject.isSeasonInProgress()) {
+                simulationContextObject.seasonStateEntryProcess();
+                simulationContextObject.seasonStateProcess();
+                simulationContextObject.seasonStateExitProcess();
+            }
+            userInputPutput.printMessage("Season "+ i+1 + ": is completed");
         }
     }
 

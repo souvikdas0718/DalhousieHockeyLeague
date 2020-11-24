@@ -1,18 +1,15 @@
 package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 
 
-import dhl.businessLogic.aging.Aging;
-import dhl.businessLogic.aging.LeagueSchedule;
-import dhl.businessLogic.aging.Retirement;
+import dhl.businessLogic.aging.agingFactory.AgingAbstractFactory;
 import dhl.businessLogic.aging.interfaceAging.IAging;
 import dhl.businessLogic.aging.interfaceAging.ILeagueSchedule;
 import dhl.businessLogic.aging.interfaceAging.IRetirement;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
-import dhl.businessLogic.simulationStateMachine.interfaces.IScheduler;
-import dhl.businessLogic.simulationStateMachine.interfaces.ISimulationSeasonState;
-
-import dhl.inputOutput.importJson.serializeDeserialize.SerializeLeagueObjectModel;
+import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
+import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
+import dhl.inputOutput.importJson.serializeDeserialize.SerializeDeserializeAbstractFactory;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,6 +18,8 @@ import java.time.LocalDate;
 
 public class AgingState implements ISimulationSeasonState {
     public static Logger log = LogManager.getLogger(AgingState.class);
+    static AgingAbstractFactory agingFactory;
+    static SerializeDeserializeAbstractFactory serializeDeserializeAbstractFactory;
     SimulationContext simulationContext;
 
     public AgingState(SimulationContext simulationContext) {
@@ -28,11 +27,18 @@ public class AgingState implements ISimulationSeasonState {
     }
 
     static void agingCalculation(SimulationContext simulationContext) {
-        IAging aging = new Aging(simulationContext.getGameConfig());
-        ILeagueObjectModel leagueObjectModel= simulationContext.getInMemoryLeague();
-        ISerializeLeagueObjectModel serializeModel = new SerializeLeagueObjectModel(leagueObjectModel.getLeagueName());
-        IRetirement retirement = new Retirement(serializeModel, simulationContext.getInMemoryLeague());
-        ILeagueSchedule leagueSchedule = new LeagueSchedule(aging, retirement, simulationContext.getInjurySystem(), simulationContext.getInMemoryLeague());
+        agingFactory = AgingAbstractFactory.instance();
+        serializeDeserializeAbstractFactory = SerializeDeserializeAbstractFactory.instance();
+        IAging aging = agingFactory.createAging(simulationContext.getGameConfig());
+//        IAging aging = new Aging(simulationContext.getGameConfig());
+        ILeagueObjectModel leagueObjectModel = simulationContext.getInMemoryLeague();
+        ISerializeLeagueObjectModel serializeModel = serializeDeserializeAbstractFactory.createSerializeLeagueObjectModel(leagueObjectModel.getLeagueName());
+//        ISerializeLeagueObjectModel serializeModel = new SerializeLeagueObjectModel(leagueObjectModel.getLeagueName());
+        IRetirement retirement = agingFactory.createRetirement(serializeModel, simulationContext.getInMemoryLeague());
+//        IRetirement retirement = new Retirement(serializeModel, simulationContext.getInMemoryLeague());
+        ILeagueSchedule leagueSchedule = agingFactory.createLeagueSchedule(simulationContext.getInMemoryLeague());
+//        ILeagueSchedule leagueSchedule = new LeagueSchedule(aging, retirement, simulationContext.getInjurySystem(), simulationContext.getInMemoryLeague(), simulationContext.getNumberOfDays());
+
         LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
         LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());
         leagueSchedule.initiateAging(simulationContext.getNumberOfDays(),currentDate);

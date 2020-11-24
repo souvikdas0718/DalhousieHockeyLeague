@@ -1,17 +1,16 @@
 package dhl.businessLogic.simulationStateMachine;
 
-import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
-import dhl.inputOutput.ui.IUserInputOutput;
-import dhl.inputOutput.ui.UserInputOutput;
-
 import dhl.businessLogic.aging.Injury;
 import dhl.businessLogic.aging.interfaceAging.IInjury;
-
+import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.simulationStateMachine.interfaces.*;
-import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.SimulationStateAbstractFactory;
-import dhl.businessLogic.trade.TradingEngine;
+import dhl.businessLogic.simulationStateMachine.interfaces.IUpdateUserTeamRoster;
+import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
+import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.factory.SimulationStateAbstractFactory;
+import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
+import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandingSystem;
+import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandings;
 import dhl.businessLogic.trade.interfaces.ITradingEngine;
 import dhl.inputOutput.ui.IUserInputOutput;
 import dhl.inputOutput.ui.UserInputOutput;
@@ -44,7 +43,7 @@ public class SimulationContext implements ISimulationSeasonState {
 
     IStandingSystem standingSystem;
 
-    boolean gameInProgress;
+    boolean seasonInProgress;
     IGameConfig gameConfig;
 
     ILeagueObjectModel inMemoryLeague;
@@ -75,7 +74,7 @@ public class SimulationContext implements ISimulationSeasonState {
 
         userTeam = gameState.getSelectedTeam();
         currentSimulation = initializeSeason;
-        gameInProgress = true;
+        seasonInProgress = true;
         ioObject = new UserInputOutput();
         updateUserTeamRoster = new UpdateUserTeamRoster(ioObject);
         tradeEngine = ITradingEngine.instance(gameConfig, inMemoryLeague, userTeam);
@@ -308,12 +307,12 @@ public class SimulationContext implements ISimulationSeasonState {
         this.training = training;
     }
 
-    public boolean isGameInProgress() {
-        return gameInProgress;
+    public boolean isSeasonInProgress() {
+        return seasonInProgress;
     }
 
-    public void setGameInProgress(boolean gameInProgress) {
-        this.gameInProgress = gameInProgress;
+    public void setSeasonInProgress(boolean seasonInProgress) {
+        this.seasonInProgress = seasonInProgress;
     }
 
     public ILeagueObjectModel getInMemoryLeague() {

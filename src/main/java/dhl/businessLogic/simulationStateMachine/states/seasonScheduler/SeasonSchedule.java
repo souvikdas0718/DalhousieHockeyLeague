@@ -1,17 +1,16 @@
 package dhl.businessLogic.simulationStateMachine.states.seasonScheduler;
 
-import dhl.businessLogic.leagueModel.Conference;
-import dhl.businessLogic.leagueModel.Division;
-import dhl.businessLogic.leagueModel.Team;
+import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.IConference;
 import dhl.businessLogic.leagueModel.interfaceModel.IDivision;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.simulationStateMachine.interfaces.ISchedule;
+import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.ISeasonSchedule;
 
 import java.time.LocalDate;
 
-public class SeasonSchedule implements ISchedule {
+public class SeasonSchedule implements ISeasonSchedule {
 
+    LeagueModelAbstractFactory factory;
     private IConference teamOneConference;
     private IConference teamTwoConference;
     private IDivision teamOneDivision;
@@ -21,12 +20,13 @@ public class SeasonSchedule implements ISchedule {
     private LocalDate gameDate;
 
     public SeasonSchedule() {
-        teamOneConference = new Conference();
-        teamTwoConference = new Conference();
-        teamOneDivision = new Division();
-        teamTwoDivision = new Division();
-        teamOne = new Team();
-        teamTwo = new Team();
+        factory = LeagueModelAbstractFactory.instance();
+        teamOneConference = factory.createConferenceDefault();
+        teamTwoConference = factory.createConferenceDefault();
+        teamOneDivision = factory.createDivisionDefault();
+        teamTwoDivision = factory.createDivisionDefault();
+        teamOne = factory.createTeamDefault();
+        teamTwo = factory.createTeamDefault();
     }
 
     public IConference getTeamOneConference() {

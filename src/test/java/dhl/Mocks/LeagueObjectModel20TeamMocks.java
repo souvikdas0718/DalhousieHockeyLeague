@@ -2,11 +2,14 @@ package dhl.Mocks;
 
 import dhl.businessLogic.leagueModel.*;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
-import dhl.businessLogic.simulationStateMachine.interfaces.IScheduler;
-import dhl.businessLogic.simulationStateMachine.interfaces.IStandings;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.Scheduler;
+import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.states.standings.Standings;
+import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandings;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -339,13 +342,17 @@ public class LeagueObjectModel20TeamMocks {
 
         ITeam teamPlayOff1 = new Team("Bruins", manager, league.getCoaches().get(0), statistics);
         ITeam teamPlayoff2 = new Team("Maple", manager, league.getCoaches().get(0), statistics);
-        ITeam teamPlayoff3 = new Team("Hurricanes",manager, league.getCoaches().get(0), statistics);
+        ITeam teamPlayoff3 = new Team("Hurricanes", manager, league.getCoaches().get(0), statistics);
         ITeam teamPlayoff4 = new Team("Flyers", manager, league.getCoaches().get(0), statistics);
         ITeam teamPlayoff5 = new Team("Blues", manager, league.getCoaches().get(0), statistics);
         ITeam teamPlayoff6 = new Team("Avalanche", manager, league.getCoaches().get(0), statistics);
         ITeam teamPlayoff7 = new Team("Cancuks", manager, league.getCoaches().get(0), statistics);
         ITeam teamPlayoff8 = new Team("Flames", manager, league.getCoaches().get(0), statistics);
 
+        LocalDate playOffStartDate = LocalDate.of(2021, 04, 01);
+        LocalDate playOffStarts = playOffStartDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.WEDNESDAY)).with(
+                TemporalAdjusters.next(DayOfWeek.WEDNESDAY));
+        scheduler.setPlayOffStartDate(playOffStarts);
 
         scheduler.playOffs(standings, league);
 

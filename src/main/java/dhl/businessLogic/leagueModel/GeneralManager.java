@@ -5,7 +5,7 @@ import dhl.businessLogic.leagueModel.interfaceModel.IGeneralManager;
 public class GeneralManager implements IGeneralManager {
 
     private String generalManagerName;
-    private String generalManagerPersonality;
+    public String generalManagerPersonality;
 
     public GeneralManager() {
         this.generalManagerName = "";

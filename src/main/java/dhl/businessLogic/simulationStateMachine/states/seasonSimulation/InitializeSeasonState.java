@@ -2,9 +2,9 @@ package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 
 
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
-import dhl.businessLogic.simulationStateMachine.interfaces.IScheduler;
-import dhl.businessLogic.simulationStateMachine.interfaces.ISimulationSeasonState;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.Scheduler;
+import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
+import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -14,11 +14,20 @@ import static java.time.temporal.TemporalAdjusters.nextOrSame;
 
 public class InitializeSeasonState implements ISimulationSeasonState {
 
-    SimulationContext ourSeasonGame;
-    IScheduler scheduler = new Scheduler();
+    SimulationContext simulationContext;
+    IScheduler scheduler;
 
     public InitializeSeasonState(SimulationContext simulationContext) {
-        ourSeasonGame = simulationContext;
+        this.simulationContext = simulationContext;
+        scheduler = new Scheduler();
+    }
+
+    public SimulationContext getSimulationContext() {
+        return simulationContext;
+    }
+
+    public void setSimulationContext(SimulationContext simulationContext) {
+        this.simulationContext = simulationContext;
     }
 
     @Override
@@ -28,19 +37,19 @@ public class InitializeSeasonState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateProcess() {
-        LocalDate simulationStartDate = LocalDate.of(ourSeasonGame.getYear(), 9, 30);
-        ourSeasonGame.setStartOfSimulation(simulationStartDate);
-        scheduler.generateTeamList(ourSeasonGame.getInMemoryLeague());
-        scheduler.generateTeamSchedule(ourSeasonGame.getInMemoryLeague());
-        LocalDate localDate = LocalDate.of(ourSeasonGame.getYear() + 1, 03, 01);
-        LocalDate reguarSeasonEndDate = localDate.with(firstDayOfNextMonth())
+        LocalDate simulationStartDate = LocalDate.of(simulationContext.getYear(), 9, 30);
+        simulationContext.setStartOfSimulation(simulationStartDate);
+        scheduler.generateTeamList(simulationContext.getInMemoryLeague());
+        scheduler.generateTeamSchedule(simulationContext.getInMemoryLeague());
+        LocalDate localDate = LocalDate.of(simulationContext.getYear() + 1, 03, 01);
+        LocalDate regularSeasonEndDate = localDate.with(firstDayOfNextMonth())
                 .with(nextOrSame(DayOfWeek.SATURDAY));
-        scheduler.gameScheduleDates(ourSeasonGame.getStartOfSimulation(), reguarSeasonEndDate);
-        ourSeasonGame.setRegularScheduler(scheduler);
+        scheduler.gameScheduleDates(simulationContext.getStartOfSimulation().plusDays(1), regularSeasonEndDate);
+        simulationContext.setRegularScheduler(scheduler);
     }
 
     @Override
     public void seasonStateExitProcess() {
-        ourSeasonGame.setCurrentSimulation(ourSeasonGame.getAdvanceTime());
+        simulationContext.setCurrentSimulation(simulationContext.getAdvanceTime());
     }
 }

@@ -2,15 +2,23 @@ package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 
 
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
-import dhl.businessLogic.simulationStateMachine.interfaces.ISimulationSeasonState;
+import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
 
 import java.time.LocalDate;
 
 public class PersistSeasonState implements ISimulationSeasonState {
-    SimulationContext ourSeasonGame;
+    SimulationContext simulationContext;
 
     public PersistSeasonState(SimulationContext simulationContext) {
-        ourSeasonGame = simulationContext;
+        this.simulationContext = simulationContext;
+    }
+
+    public SimulationContext getSimulationContext() {
+        return simulationContext;
+    }
+
+    public void setSimulationContext(SimulationContext simulationContext) {
+        this.simulationContext = simulationContext;
     }
 
     @Override
@@ -20,17 +28,17 @@ public class PersistSeasonState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateProcess() {
-
+        // save the data in the db
     }
 
     @Override
     public void seasonStateExitProcess() {
-        LocalDate startOfSimulation = ourSeasonGame.getStartOfSimulation();
-        LocalDate currentDate = startOfSimulation.plusDays(ourSeasonGame.getNumberOfDays());
-        if (currentDate.equals(LocalDate.of(ourSeasonGame.getYear(), 9, 29))) {
-
+        LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
+        LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());
+        if (currentDate.isBefore(LocalDate.of(simulationContext.getYear() + 1, 9, 29))) {
+            simulationContext.setCurrentSimulation(simulationContext.getAdvanceTime());
         } else {
-            ourSeasonGame.setCurrentSimulation(ourSeasonGame.getAdvanceTime());
+            simulationContext.setSeasonInProgress(false);
         }
     }
 }

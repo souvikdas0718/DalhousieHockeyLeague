@@ -4,7 +4,7 @@ package dhl.businessLogic.simulationStateMachine.states.standings;
 import dhl.businessLogic.leagueModel.interfaceModel.IConference;
 import dhl.businessLogic.leagueModel.interfaceModel.IDivision;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.simulationStateMachine.interfaces.IStandings;
+import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandings;
 
 public class Standings implements IStandings {
 

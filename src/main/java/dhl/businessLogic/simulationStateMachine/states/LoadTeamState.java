@@ -5,8 +5,6 @@ import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.interfaces.IGameState;
 import dhl.businessLogic.simulationStateMachine.states.interfaces.ILoadTeamStateLogic;
-import dhl.inputOutput.importJson.serializeDeserialize.DeserializeLeagueObjectModel;
-import dhl.inputOutput.importJson.serializeDeserialize.interfaces.IDeserializeLeagueObjectModel;
 import dhl.inputOutput.ui.IUserInputOutput;
 import dhl.inputOutput.ui.UserInputOutput;
 
@@ -42,9 +40,9 @@ public class LoadTeamState implements IGameState {
 
         try {
             ILoadTeamStateLogic objLoadTeamStateLogic = new LoadTeamStateLogic(leagueName, team);
-            IDeserializeLeagueObjectModel deserializeLeagueObjectModel = new DeserializeLeagueObjectModel(leagueName);
+//            IDeserializeLeagueObjectModel deserializeLeagueObjectModel = new DeserializeLeagueObjectModel(leagueName);
 
-            objLoadTeamStateLogic.findTeamOfLeagueInDatabase(newInMemoryLeague, ourGame, deserializeLeagueObjectModel);
+//            objLoadTeamStateLogic.findTeamOfLeagueInDatabase(newInMemoryLeague, ourGame, deserializeLeagueObjectModel);
         } catch (Exception e) {
             userInputPutput.printMessage(e.getMessage());
             ourGame.setGameInProgress(false);
