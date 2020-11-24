@@ -8,8 +8,8 @@ import dhl.businessLogic.leagueModel.PlayerStatistics;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
-import dhl.inputOutput.importJson.SerializeDeserialize.DeserializeLeagueObjectModel;
-import dhl.inputOutput.importJson.SerializeDeserialize.SerializeLeagueObjectModel;
+import dhl.inputOutput.importJson.serializeDeserialize.DeserializeLeagueObjectModel;
+import dhl.inputOutput.importJson.serializeDeserialize.SerializeLeagueObjectModel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DeSerializeLeagueObjectModelTest {
+public class DeserializeLeagueObjectModelTest {
     private static final String filepath = "src/test/java/dhl/Mocks/";
     final String playerFileName = "--RetiredPlayersInLeague.json";
     final String jsonExtension = ".json";

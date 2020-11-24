@@ -1,4 +1,4 @@
-package dhl.businessLogic.gameSimulation;
+package dhl.businessLogic.GameSimulation;
 
 import dhl.businessLogic.leagueModel.LeagueObjectModel;
 import dhl.businessLogic.leagueModel.Player;

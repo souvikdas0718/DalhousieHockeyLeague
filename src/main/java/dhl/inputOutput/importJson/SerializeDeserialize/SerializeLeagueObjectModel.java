@@ -1,4 +1,4 @@
-package dhl.inputOutput.importJson.SerializeDeserialize;
+package dhl.inputOutput.importJson.serializeDeserialize;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
