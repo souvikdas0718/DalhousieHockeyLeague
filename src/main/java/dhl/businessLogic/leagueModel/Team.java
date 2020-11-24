@@ -1,6 +1,8 @@
 package dhl.businessLogic.leagueModel;
 
 import dhl.businessLogic.leagueModel.interfaceModel.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +10,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class Team implements ITeam {
+    private static final Logger logger = LogManager.getLogger(Team.class);
     private static final int TOTALTEAMSIZE = 30;
     private static final int TOTALGOALIES = 4;
     private static final int TOTALFORWARDS = 16;
@@ -34,6 +37,7 @@ public class Team implements ITeam {
     }
 
     public Team(String teamName, IGeneralManager generalManager, ICoach headCoach, List<IPlayer> playersList) {
+        logger.info("Creating team with name "+teamName);
         setDefault();
         this.teamName = teamName;
         this.generalManager = generalManager;
@@ -85,6 +89,7 @@ public class Team implements ITeam {
     }
 
     public void setRoster() {
+        logger.debug("Setting Team Roster"+teamName);
         sortPlayersInTeamByStrength(this.players);
         addPlayersToTeamRoster(PlayerPosition.FORWARD.toString(),NOOFFORWARDS);
         addPlayersToTeamRoster(PlayerPosition.DEFENSE.toString(),NOOFDEFENCE);
@@ -92,6 +97,7 @@ public class Team implements ITeam {
     }
 
     public void addPlayersToTeamRoster( String position,int playerCount){
+        logger.debug("Adding Players to active roster"+teamName);
         int counter = 0;
         for(IPlayer player:players){
             if(player.getPosition().equals(position)){
@@ -106,18 +112,18 @@ public class Team implements ITeam {
         }
     }
 
-    public void checkIfOneCaptainPerTeam(List<IPlayer> playerList) throws Exception {
+    public boolean checkIfOneCaptainPerTeam(List<IPlayer> playerList)  {
         Predicate<IPlayer> playerPredicate = player -> player.getCaptain();
         List<IPlayer> captainList = playerList.stream().filter(playerPredicate).collect(Collectors.toList());
-        if ( playerList.size() > 0 && captainList.size() == 0) {
-            throw new Exception("Please select captain for the team");
+        if ( (playerList.size() > 0 && captainList.size() == 0) || (captainList.size() > 1)) {
+            logger.debug("More than 1 captain for team:"+teamName);
+            return false;
         }
-        if (captainList.size() > 1) {
-            throw new Exception("There can be only one captain per team");
-        }
+        return true;
     }
 
     public boolean checkIfSizeOfTeamValid(List<IPlayer> playerList) {
+        logger.info("Checking total size of team"+teamName);
         return playerList.size() == TOTALTEAMSIZE;
     }
 
@@ -133,35 +139,30 @@ public class Team implements ITeam {
 
         if(goaliesInTeam.size() == TOTALGOALIES && forwardsInTeam.size() == TOTALFORWARDS && defenseInTeam.size() == TOTALDEFENSE
          && goaliesInActiveRoster.size()==NOOFGOALIES && (forwardsInActiveRoster.size()+defenseInActiveRoster.size()==NOOFFORWARDS + NOOFDEFENCE)){
+            logger.info("Size of team:"+teamName+"is valid");
             return true;
         }
+        logger.debug("Size of the team is incorrect"+teamName);
         return false;
     }
 
-    public boolean checkIfTeamValid(IValidation validation) throws Exception {
-        validation.isStringEmpty(teamName, "Team name");
-        this.headCoach.checkIfCoachValid(validation);
-        validation.isStringEmpty(generalManager.getGeneralManagerName(), "General manager name");
-        checkIfOneCaptainPerTeam(players);
-        if (this.checkIfSizeOfTeamValid(players) == false) {
-            throw new Exception("Each team must have 30 players");
-        }
-        return true;
-    }
 
     public double calculateTeamStrength() {
         double teamStrength = 0;
         for (IPlayer player : getActiveRoster()) {
             teamStrength = teamStrength + player.getPlayerStrength();
         }
+        logger.debug("Team strength calculated for team"+teamName+"is:"+teamStrength);
         return teamStrength;
     }
 
     public void sortPlayersInTeamByStrength(List<IPlayer> playersList) {
+        logger.info("Sorting players by strength:"+teamName);
         playersList.sort((player1, player2) -> Double.compare(player2.getPlayerStrength(), player1.getPlayerStrength()));
     }
 
     public List<IPlayer> filterPlayersInTeam(String position,List<IPlayer> teamPlayers){
+        logger.info("Filtering team for players with position:" +position);
         return teamPlayers.stream().filter((IPlayer player) -> player.getPosition().equals(position)).collect(Collectors.toList());
     }
 }

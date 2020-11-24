@@ -1,4 +1,4 @@
-package dhl.businessLogicTest.AgingTest;
+package dhl.businessLogicTest.agingTest;
 
 import dhl.Mocks.factory.MockAbstractFactory;
 import dhl.businessLogic.aging.Aging;
@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -58,11 +59,30 @@ public class AgingTest {
         for (IConference conference : leagueObjectModel.getConferences()) {
             for (IDivision division : conference.getDivisions()) {
                 for (ITeam team : division.getTeams()) {
-                    aging.ageAllPlayers(team.getPlayers());
+                    aging.agePlayers(team.getPlayers(), LocalDate.of(2020,11,14));
                     List<IPlayer> players = team.getPlayers();
                     IPlayer player = players.get(0);
                     IPlayerStatistics playerStatistics = player.getPlayerStats();
-                    Assertions.assertEquals(21, playerStatistics.getAge());
+                    Assertions.assertEquals(25, playerStatistics.getAge());
+                }
+            }
+        }
+    }
+
+    @Test
+    public void checkPlayerStatDecayTest() {
+        ILeagueObjectModel leagueObjectModel = leagueMock.getLeagueObjectModel();
+        for (IConference conference : leagueObjectModel.getConferences()) {
+            for (IDivision division : conference.getDivisions()) {
+                for (ITeam team : division.getTeams()) {
+                    List<IPlayer> players = team.getPlayers();
+                    IPlayer player = players.get(0);
+                    IPlayerStatistics playerStatistics = player.getPlayerStats();
+                    int checkingBefore = playerStatistics.getChecking();
+                    aging.agePlayers(team.getPlayers(), LocalDate.of(2020,11,14));
+                    int checkingAfterAging = playerStatistics.getChecking();
+
+                    Assertions.assertTrue(checkingAfterAging<checkingBefore);
                 }
             }
         }

@@ -26,6 +26,8 @@ public class Division implements IDivision {
     }
 
     public Division(String divisionName, List<ITeam> teamsList) {
+        setDefault();
+        logger.info("Creating division with name"+divisionName);
         this.divisionName = divisionName;
         this.teams = teamsList;
     }
@@ -38,16 +40,14 @@ public class Division implements IDivision {
         return teams;
     }
 
-    public boolean checkIfDivisionValid(IValidation validation) throws Exception {
-        validation.isStringEmpty(divisionName, "Division name");
+    public boolean checkIfDivisionValid() {
         List<String> teamNames = new ArrayList<>();
         teams.stream().map(team -> team.getTeamName()).forEach(name -> teamNames.add(name));
         Set<String> teamsSet = new HashSet<>(teamNames);
         if (teamsSet.size() < teamNames.size()) {
-            logger.error("Invalid division: "+ divisionName);
-            throw new Exception("The names of teams inside a division must be unique");
+            logger.error("Invalid division with duplicate division names: "+ divisionName);
+            return false;
         }
-
         return true;
     }
 

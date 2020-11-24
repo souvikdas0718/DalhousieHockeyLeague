@@ -22,8 +22,13 @@ public class Player implements IPlayer {
         this.active = false;
     }
 
-    public Player(String playerName, String position, IPlayerStatistics playerStats) {
+    public Player(){
         setDefaults();
+    }
+
+    public Player(String playerName, String position, IPlayerStatistics playerStats) {
+        this();
+        logger.info("Creating player with name "+playerName);
         this.playerName = playerName;
         this.setPosition(position);
         this.playerStats = playerStats;
@@ -39,9 +44,10 @@ public class Player implements IPlayer {
     }
 
     public void setPosition(String playerPosition) {
-        this.position = null;
+        logger.info("Setting player position"+playerName);
         for(PlayerPosition position:  PlayerPosition.values()){
             if(playerPosition.equals(position.toString())){
+                logger.debug("Player Position set as"+position);
                 this.position = position;
                 break;
             }
@@ -89,27 +95,13 @@ public class Player implements IPlayer {
     }
 
     public boolean isPlayerPositionInvalid() {
+        logger.debug("Player position incorrect for player" +playerName);
         return this.position == null;
     }
 
     public boolean isCaptainValueBoolean() {
+        logger.debug("Captain value incorrect for player" +playerName);
         return this.captain == null;
-    }
-
-    public boolean checkPlayerValid() throws Exception {
-        logger.info("Checking player object created");
-        if (this.isPlayerNameEmpty()) {
-            throw new Exception("Player name cannot be empty");
-        }
-        if (this.isPlayerPositionInvalid()) {
-            throw new Exception("Player position must be goalie or forward or defense");
-        }
-        if (this.isCaptainValueBoolean()) {
-            throw new Exception("Captain value must be true or false for player"+playerName);
-        }
-        playerStats.checkPlayerStatistics();
-        logger.info("Player created is valid:" + playerName);
-        return true;
     }
 
     public double getPlayerStrength() {
@@ -125,6 +117,7 @@ public class Player implements IPlayer {
         if (playerInjuredDays > 0) {
             playerStrength = playerStrength / 2.0;
         }
+        logger.debug("Strength of player"+playerName+"is"+playerStrength);
         return playerStrength;
     }
 }

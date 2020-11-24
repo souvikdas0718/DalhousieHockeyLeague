@@ -88,9 +88,15 @@ public class LeagueObjectModel implements ILeagueObjectModel {
         return leagueObjectModelValidation.checkIfLeagueObjectModelValid(validation, this);
     }
 
-    public ILeagueObjectModel saveLeagueObjectModel(ISerializeLeagueObjectModel serializeLeagueObjectModel, ILeagueObjectModelInput saveLeagueInput) throws Exception {
+    public ILeagueObjectModel saveLeagueObjectModel(ISerializeLeagueObjectModel serializeLeagueObjectModel, ILeagueObjectModelInput saveLeagueInput) {
         ILeagueObjectModelValidation leagueObjectModelValidation = saveLeagueInput.getLeagueObjectModelValidation();
-        leagueObjectModelValidation.checkUserInputForLeague(this, saveLeagueInput);
+        try{
+            leagueObjectModelValidation.checkUserInputForLeague(this, saveLeagueInput);
+        }
+        catch (Exception e){
+            // TODO: 23-11-2020 update!
+        }
+       
         List<IConference> conferenceArrayList = this.getConferences();
         boolean newTeamAddedToLeague = false;
         for (int i = 0; i < conferenceArrayList.size(); i++) {
@@ -118,14 +124,14 @@ public class LeagueObjectModel implements ILeagueObjectModel {
         return this;
     }
 
-    public ILeagueObjectModel loadLeagueObjectModel( IDeserializeLeagueObjectModel deserializeLeagueObjectModel, String leagueName, String teamName) throws Exception, ParseException {
+    public ILeagueObjectModel loadLeagueObjectModel( IDeserializeLeagueObjectModel deserializeLeagueObjectModel, String leagueName, String teamName)  {
         ILeagueObjectModel leagueObjectModel;
         leagueObjectModel =deserializeLeagueObjectModel.deserializeLeagueObjectJson(leagueName);
 
         return leagueObjectModel;
     }
 
-    public ILeagueObjectModel updateLeagueObjectModel(ISerializeLeagueObjectModel serializeLeagueObjectModel) throws Exception {
+    public ILeagueObjectModel updateLeagueObjectModel(ISerializeLeagueObjectModel serializeLeagueObjectModel)  {
         serializeLeagueObjectModel.updateSerializedLeagueObjectToJsonFile(this);
         return this;
     }

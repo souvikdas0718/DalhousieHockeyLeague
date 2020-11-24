@@ -36,7 +36,7 @@ public class ConferenceMock {
     public IConference getConferenceWithTwoDivisions(){
         List<IDivision> divisionsList = new ArrayList<>();
         divisionsList.add(divisionMock.getDivision());
-        divisionsList.add(divisionMock.getDivisionWithName("Pacific"));
+        divisionsList.add(divisionMock.getDivisionWithName("Pacifica"));
         return factory.createConference("Western", divisionsList);
     }
 
@@ -54,5 +54,15 @@ public class ConferenceMock {
         conferences.add(getConferenceWithName("Eastern"));
         return conferences;
     }
+
+    public IConference getConferenceOddDivision(){
+        List<IDivision> divisionsList = new ArrayList<>();
+        for(int i=0;i<3;i++){
+            divisionsList.add(divisionMock.getDivisionWithName("Pacific"+i));
+        }
+        return factory.createConference("Western", divisionsList);
+    }
+
+
 
 }

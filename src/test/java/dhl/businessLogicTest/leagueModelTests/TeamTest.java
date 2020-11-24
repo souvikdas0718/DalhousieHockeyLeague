@@ -109,10 +109,13 @@ public class TeamTest {
     public void checkIfOneCaptainPerTeamErrorTest() {
         List<IPlayer> playersList = teamMock.getTeamPlayers();
         playersList.remove(0);
-        Exception errorMsg = Assertions.assertThrows(Exception.class, () -> {
-            team.checkIfOneCaptainPerTeam(playersList);
-        });
-        Assertions.assertTrue(errorMsg.getMessage().contains("Please select captain for the team"));
+        Assertions.assertFalse( team.checkIfOneCaptainPerTeam(playersList));
+    }
+
+    @Test
+    public void checkIfOneCaptainPerTeamValidTest() {
+        List<IPlayer> playersList = teamMock.getTeamPlayers();
+        Assertions.assertTrue( team.checkIfOneCaptainPerTeam(playersList));
     }
 
     @Test
@@ -123,10 +126,7 @@ public class TeamTest {
             playersList.add(playerMock.getPlayerCaptain());
         }
 
-        Exception errorMsg = Assertions.assertThrows(Exception.class, () -> {
-            team.checkIfOneCaptainPerTeam(playersList);
-        });
-        Assertions.assertTrue(errorMsg.getMessage().contains("There can be only one captain per team"));
+        Assertions.assertFalse(team.checkIfOneCaptainPerTeam(playersList));
     }
 
     @Test
@@ -135,17 +135,14 @@ public class TeamTest {
     }
 
     @Test
-    public void checkIfTeamValidTest() throws Exception {
-        Assertions.assertTrue(team.checkIfTeamValid(validate));
+    public void checkIfTeamValidTest() {
+        Assertions.assertTrue(team.checkIfSizeOfTeamValid(team.getPlayers()));
     }
 
     @Test
-    public void checkIfTeamPlayerMoreThan30Test() throws Exception {
+    public void checkIfTeamPlayerMoreThan30Test() {
        team = (Team) teamMock.getInvalidSizeTeam();
-        Exception error = Assertions.assertThrows(Exception.class, () -> {
-            team.checkIfTeamValid(validate);
-        });
-        Assertions.assertTrue(error.getMessage().contains("Each team must have 30 players"));
+        Assertions.assertFalse(team.checkIfSizeOfTeamValid(team.getPlayers()));
     }
 
     @Test

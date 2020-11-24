@@ -1,6 +1,8 @@
 package dhl.inputOutput.importJson.serializeDeserialize;
 
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
+import dhl.businessLogic.simulationStateMachine.states.CreateTeamStateLogic;
+import dhl.inputOutput.importJson.ImportJsonAbstractFactory;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.IDeserializeLeagueObjectModel;
 import dhl.businessLogic.leagueModel.Player;
 import dhl.businessLogic.leagueModel.PlayerStatistics;
@@ -9,6 +11,9 @@ import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
 import dhl.inputOutput.importJson.interfaces.ICreateLeagueObjectModel;
 import dhl.inputOutput.importJson.CreateLeagueObjectModel;
+import dhl.inputOutput.ui.IUserInputOutput;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -22,18 +27,27 @@ import java.util.Iterator;
 import java.util.List;
 
 public class DeserializeLeagueObjectModel implements IDeserializeLeagueObjectModel {
+    Logger logger = LogManager.getLogger(DeserializeLeagueObjectModel.class);
     String jsonFilePath;
     final String playerFileName = "--RetiredPlayersInLeague.json";
     final String jsonExtension = ".json";
+    IUserInputOutput userInputOutput;
 
     public DeserializeLeagueObjectModel(String inputJsonFilePath){
         jsonFilePath = inputJsonFilePath;
+        ImportJsonAbstractFactory importFactory = ImportJsonAbstractFactory.instance();
+        userInputOutput = importFactory.createUserInputOutput();
     }
 
-    public ILeagueObjectModel deserializeLeagueObjectJson(String leagueName) throws Exception {
+    public ILeagueObjectModel deserializeLeagueObjectJson(String leagueName) {
         String leagueObjectModelJsonPath = jsonFilePath + leagueName + jsonExtension;
-        FileReader reader = new FileReader(leagueObjectModelJsonPath);
-        ICreateLeagueObjectModel createLeagueObjectModel;
+        FileReader reader = null;
+        try {
+            reader = new FileReader(leagueObjectModelJsonPath);
+        } catch (FileNotFoundException e) {
+            logger.error("JSON File not found");
+        }
+        ICreateLeagueObjectModel createLeagueObjectModel = null;
 
         try {
 
@@ -43,29 +57,47 @@ public class DeserializeLeagueObjectModel implements IDeserializeLeagueObjectMod
             IGameConfig gameConfig = null;
             JSONObject jsonLeagueObjectModel = updateLeagueObjectModelJson(jsonLeagueObject);
             createLeagueObjectModel = new CreateLeagueObjectModel(jsonLeagueObjectModel);
-        }
-        finally {
-            reader.close();
+        } catch (ParseException e) {
+            logger.error("Exception occured while parsing JSON");
+        } catch (IOException exception) {
+            logger.error("IO Exception occured while deserializing League Object Model from path"+leagueObjectModelJsonPath);
+        } finally {
+            try {
+                reader.close();
+            } catch (IOException exception) {
+                logger.error("Exception occured while closing file");
+            }
         }
         return createLeagueObjectModel.getLeagueObjectModel();
     }
 
-    public List<IPlayer> deserializePlayers(String leagueName) throws ParseException, IOException {
+    public List<IPlayer> deserializePlayers(String leagueName) {
         String playersJsonPath = jsonFilePath + leagueName + playerFileName;
         List<IPlayer> playerList = new ArrayList<>();
-        FileReader reader = new FileReader(playersJsonPath);
+        FileReader reader = null;
+        try {
+            reader = new FileReader(playersJsonPath);
+        } catch (FileNotFoundException e) {
+            logger.error("File is not found at location"+playersJsonPath);
+        }
         JSONParser jsonParser = new JSONParser();
 
         try{
-            JSONArray arrPlayers = (JSONArray) jsonParser.parse(reader);
+            JSONArray arrPlayers = null;
+            try {
+                arrPlayers = (JSONArray) jsonParser.parse(reader);
+            } catch (IOException exception) {
+                logger.error("IO Exception occurred in deserializing");
+            } catch (ParseException e) {
+                logger.error("Parse Exception occurred in deserializing at :"+jsonFilePath);
+            }
 
             Iterator<?> arrPlayersIterator = (arrPlayers).iterator();
             while (arrPlayersIterator.hasNext()) {
                 JSONObject existingPlayersJsonObject = (JSONObject) arrPlayersIterator.next();
                 JSONObject playerStatsJsonobject = (JSONObject) existingPlayersJsonObject.get("playerStats");
                 IPlayerStatistics playerStatistics = new PlayerStatistics
-                        ((int) (long) playerStatsJsonobject.get("age"),
-                                (int) (long) playerStatsJsonobject.get("skating") ,
+                        ((int) (long) playerStatsJsonobject.get("skating") ,
                                 (int) (long) playerStatsJsonobject.get("shooting"),
                                 (int) (long) playerStatsJsonobject.get("checking"),
                                 (int) (long) playerStatsJsonobject.get("saving"));
@@ -78,7 +110,11 @@ public class DeserializeLeagueObjectModel implements IDeserializeLeagueObjectMod
             }
         }
         finally {
-            reader.close();
+            try {
+                reader.close();
+            } catch (IOException exception) {
+                userInputOutput.printMessage("Error occurred while closing file");
+            }
         }
         return playerList;
     }

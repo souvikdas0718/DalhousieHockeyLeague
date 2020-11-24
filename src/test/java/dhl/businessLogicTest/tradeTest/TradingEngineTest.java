@@ -133,10 +133,10 @@ public class TradingEngineTest {
     public void sortPlayerListTest() throws Exception {
         ITeam unsortedTeam = tradeMock.getTeamWithGoodPlayer();
         IPlayer player = new Player("PlayerA", "defense", false,
-                new PlayerStatistics(25, 5, 3, 2, 1));
+                new PlayerStatistics( 5, 3, 2, 1));
         unsortedTeam.getPlayers().add(player);
         player = new Player("AnotherPlayer", "defense", false,
-                new PlayerStatistics(34, 7, 3, 9, 7));
+                new PlayerStatistics(7, 3, 9, 7));
         unsortedTeam.getPlayers().add(player);
         testClassObject.sortPlayerList(unsortedTeam);
         Assertions.assertTrue(unsortedTeam.getPlayers().get(0).getPlayerStrength() <= unsortedTeam.getPlayers().get(1).getPlayerStrength());

@@ -1,4 +1,4 @@
-package dhl.businessLogicTest.AgingTest;
+package dhl.businessLogicTest.agingTest;
 
 import dhl.Mocks.factory.MockAbstractFactory;
 import dhl.businessLogic.aging.Retirement;
@@ -55,7 +55,8 @@ public class RetirementTest {
     public void initiateRetirementTest() throws Exception {
         Map<String, List<IPlayer>> playersSelectedToRetire = new HashMap<>();
         List<IPlayer> players = new ArrayList<>();
-        IPlayerStatistics playerStatistics1 = leagueFactory.createPlayerStatistics(50, 5, 5, 5, 5);
+        IPlayerStatistics playerStatistics1 = leagueFactory.createPlayerStatistics(5, 5, 5, 5);
+        playerStatistics1.setAge(50);
         players.add(leagueFactory.createPlayer("Henry", "forward", false, playerStatistics1));
         playersSelectedToRetire.put("Ontario", players);
         List<IPlayer> freeAgentsToRetire = new ArrayList<>();
@@ -73,7 +74,8 @@ public class RetirementTest {
         playersSelectedToRetire.put("Ontario", players);
 
         List<IPlayer> freeAgents = new ArrayList<>();
-        IPlayerStatistics playerStatistics1 = leagueFactory.createPlayerStatistics(50, 5, 5, 5, 5);
+        IPlayerStatistics playerStatistics1 = leagueFactory.createPlayerStatistics( 5, 5, 5, 5);
+        playerStatistics1.setAge(50);
         freeAgents.add(leagueFactory.createFreeAgent("Jack", "forward", playerStatistics1));
 
         retirement.initiateRetirement(playersSelectedToRetire, freeAgents);
@@ -103,7 +105,8 @@ public class RetirementTest {
     public void removeSelectedAgentFromFreeAgentsTest() {
         List<IPlayer> freeAgents = agingMock.getFreeAgents();
         int initialSize = freeAgents.size();
-        IPlayerStatistics playerStatistics = leagueFactory.createPlayerStatistics(26, 12, 12, 12, 12);
+        IPlayerStatistics playerStatistics = leagueFactory.createPlayerStatistics( 12, 12, 12, 12);
+        playerStatistics.setAge(26);
         retirement.removeSelectedAgentFromFreeAgents(freeAgents, leagueFactory.createFreeAgent("F2", "forward",playerStatistics));
         Assertions.assertTrue(freeAgents.size()<initialSize);
     }

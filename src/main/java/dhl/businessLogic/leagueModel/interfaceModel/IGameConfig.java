@@ -20,6 +20,8 @@ public interface IGameConfig {
 
     String getMaximumAge();
 
+    String getStatDecayChance();
+
     String getInjuries();
 
     String getRandomInjuryChance();

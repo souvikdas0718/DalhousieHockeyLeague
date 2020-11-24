@@ -23,7 +23,7 @@ public class MockDeserializeLeagueObjectModel implements IDeserializeLeagueObjec
         return leagueMock.getLeagueObjectModel();
     }
 
-    public List<IPlayer> deserializePlayers(String leagueName) throws ParseException {
+    public List<IPlayer> deserializePlayers(String leagueName)  {
         return null;
     }
 }

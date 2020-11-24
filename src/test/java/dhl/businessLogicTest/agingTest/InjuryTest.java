@@ -1,11 +1,7 @@
-package dhl.businessLogicTest.AgingTest;
+package dhl.businessLogicTest.agingTest;
 
-import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.aging.Injury;
 import dhl.businessLogic.aging.agingFactory.AgingAbstractFactory;
-import dhl.businessLogic.leagueModel.Coach;
-import dhl.businessLogic.leagueModel.Player;
-import dhl.businessLogic.leagueModel.PlayerStatistics;
 import dhl.businessLogic.leagueModel.Team;
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
@@ -52,7 +48,8 @@ public class InjuryTest {
 
     @Test
     public void checkIfPlayerInjuredTest() {
-        IPlayerStatistics playerStatistics = leagueFactory.createPlayerStatistics(20, 10, 10, 10, 10);
+        IPlayerStatistics playerStatistics = leagueFactory.createPlayerStatistics( 10, 10, 10, 10);
+        playerStatistics.setAge(20);
         IPlayer player = leagueFactory.createPlayer("Harry", "forward", false, playerStatistics);
         ITeam team = teamMock.getTeam();
         injury.checkIfPlayerInjured(gameConfig, player,team);
@@ -61,7 +58,7 @@ public class InjuryTest {
 
     @Test
     public void isPlayerAlreadyInjuredTest() {
-        IPlayerStatistics playerStatistics = leagueFactory.createPlayerStatistics(20, 10, 10, 10, 10);
+        IPlayerStatistics playerStatistics = leagueFactory.createPlayerStatistics( 10, 10, 10, 10);
         IPlayer player = leagueFactory.createPlayer("Harry", "forward", false, playerStatistics);
         player.setPlayerInjuredDays(10);
         injury.checkIfPlayerInjured(gameConfig, player,team);
@@ -70,7 +67,7 @@ public class InjuryTest {
 
     @Test
     public void healInjuredPlayersTest() {
-        IPlayerStatistics playerStatistics = leagueFactory.createPlayerStatistics(20, 10, 10, 10, 10);
+        IPlayerStatistics playerStatistics = leagueFactory.createPlayerStatistics(10, 10, 10, 10);
         IPlayer player = leagueFactory.createPlayer("Harry", "forward", false, playerStatistics);
         player.setPlayerInjuredDays(10);
         injury.healInjuredPlayers(player);
@@ -79,7 +76,7 @@ public class InjuryTest {
 
     @Test
     public void InjuryHealedPlayersTest() {
-        IPlayerStatistics playerStatistics = leagueFactory.createPlayerStatistics(20, 10, 10, 10, 10);
+        IPlayerStatistics playerStatistics = leagueFactory.createPlayerStatistics( 10, 10, 10, 10);
         IPlayer player = leagueFactory.createPlayer("Harry", "forward", false, playerStatistics);
         player.setPlayerInjuredDays(0);
         injury.healInjuredPlayers(player);
@@ -101,7 +98,7 @@ public class InjuryTest {
         List<IPlayer> playersInTeam = teamMock.getTeamPlayers();
         IGeneralManager manager = leagueFactory.createGeneralManager("Mathew", "normal");
         Team testTeam = (Team) leagueFactory.createTeam("Ontario", manager, leagueFactory.createCoachDefault(),playersInTeam );
-        IPlayerStatistics playerStatistics = leagueFactory.createPlayerStatistics(21,20,20,20,20);
+        IPlayerStatistics playerStatistics = leagueFactory.createPlayerStatistics(20,20,20,20);
         IPlayer player = leagueFactory.createPlayer("Rehab","forward",false,playerStatistics);
         injury.swapRecoveredPlayer(player,testTeam);
         Assertions.assertTrue(player.isActive());
@@ -112,7 +109,7 @@ public class InjuryTest {
         List<IPlayer> playersInTeam = teamMock.getTeamPlayers();
         IGeneralManager manager = leagueFactory.createGeneralManager("Mathew", "normal");
         Team testTeam = (Team) leagueFactory.createTeam("Ontario", manager, leagueFactory.createCoachDefault(),playersInTeam );
-        IPlayerStatistics playerStatistics =leagueFactory.createPlayerStatistics(21,20,20,20,20);
+        IPlayerStatistics playerStatistics =leagueFactory.createPlayerStatistics(20,20,20,20);
         IPlayer player = leagueFactory.createPlayer("Rehab","forward",false,playerStatistics);
         player.setPlayerInjuredDays(0);
         player.setActive(false);

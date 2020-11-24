@@ -12,15 +12,12 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.apache.logging.log4j.*;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Iterator;
 import java.util.List;
 
 public class SerializeLeagueObjectModel implements ISerializeLeagueObjectModel {
-    Logger myLogger = LogManager.getLogger(CreateTeamStateLogic.class);
+    Logger myLogger = LogManager.getLogger(SerializeLeagueObjectModel.class);
     String jsonFilePath;
     final String playerFileName = "--RetiredPlayersInLeague.json";
     final String jsonExtension = ".json";
@@ -29,24 +26,29 @@ public class SerializeLeagueObjectModel implements ISerializeLeagueObjectModel {
         jsonFilePath = inputJsonFilePath;
     }
 
-    public String serializeData(Object objLeagueObjectModel) throws Exception {
+    public String serializeData(Object objLeagueObjectModel)  {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String jsonString = gson.toJson(objLeagueObjectModel);
         return jsonString;
     }
 
-    public void writeJsonToFile(String filePath, String serializedData) throws IOException {
+    public void writeJsonToFile(String filePath, String serializedData)  {
         FileWriter fileWriter = null;
         try{
             fileWriter = new FileWriter(filePath);
             fileWriter.write(serializedData);
-        }
-        finally {
-            fileWriter.close();
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        } finally {
+            try {
+                fileWriter.close();
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
         }
     }
 
-    public void writeSerializedLeagueObjectToJsonFile(ILeagueObjectModel objLeagueObjectModel) throws IOException, Exception {
+    public void writeSerializedLeagueObjectToJsonFile(ILeagueObjectModel objLeagueObjectModel) {
         String serializedLeagueObjectModel = serializeData(objLeagueObjectModel);
         String leagueObjectModelJsonPath = jsonFilePath + objLeagueObjectModel.getLeagueName() + jsonExtension;
 
@@ -55,16 +57,25 @@ public class SerializeLeagueObjectModel implements ISerializeLeagueObjectModel {
         if (objFile.exists()){
             myLogger.log(myLogger.getLevel(),"League Already exists");
         }else {
-            if (objFile.createNewFile()) {
-                writeJsonToFile(leagueObjectModelJsonPath, serializedLeagueObjectModel);
-            } else {
-                myLogger.log(myLogger.getLevel(),"Error saving league object data to json");
+            try {
+                if (objFile.createNewFile()) {
+                    writeJsonToFile(leagueObjectModelJsonPath, serializedLeagueObjectModel);
+                } else {
+                    myLogger.log(myLogger.getLevel(),"Error saving league object data to json");
+                }
+            } catch (IOException exception) {
+                exception.printStackTrace();
             }
         }
     }
 
-    public void updateSerializedLeagueObjectToJsonFile(ILeagueObjectModel objLeagueObjectModel) throws IOException, Exception {
-        String serializedLeagueObjectModel = serializeData(objLeagueObjectModel);
+    public void updateSerializedLeagueObjectToJsonFile(ILeagueObjectModel objLeagueObjectModel)  {
+        String serializedLeagueObjectModel = null;
+        try {
+            serializedLeagueObjectModel = serializeData(objLeagueObjectModel);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
         String leagueObjectModelJsonPath = jsonFilePath + objLeagueObjectModel.getLeagueName() + jsonExtension;
 
         File objFile = new File(leagueObjectModelJsonPath);
@@ -75,7 +86,7 @@ public class SerializeLeagueObjectModel implements ISerializeLeagueObjectModel {
         }
     }
 
-    public void updateSerializedPlayerListToJsonFile(List<IPlayer> playersToRetire, String leagueName) throws IOException, Exception {
+    public void updateSerializedPlayerListToJsonFile(List<IPlayer> playersToRetire, String leagueName)  {
         String playersJsonPath = jsonFilePath + leagueName + playerFileName;
 
         String serializedplayers = serializeData(playersToRetire);
@@ -83,13 +94,22 @@ public class SerializeLeagueObjectModel implements ISerializeLeagueObjectModel {
         if (objFile.exists()){
             updateJsonFile(serializedplayers, playersJsonPath);
         }else {
-            objFile.createNewFile();
+            try {
+                objFile.createNewFile();
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
             writeJsonToFile(playersJsonPath, serializedplayers);
         }
     }
 
-    public void updateJsonFile(String newPlayers, String playersJsonPath) throws IOException, ParseException {
-        FileReader existingPlayers = new FileReader(playersJsonPath);
+    public void updateJsonFile(String newPlayers, String playersJsonPath)  {
+        FileReader existingPlayers = null;
+        try {
+            existingPlayers = new FileReader(playersJsonPath);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         try {
             JSONParser jsonParser = new JSONParser();
             JSONArray arrExistingPlayers = (JSONArray) jsonParser.parse(existingPlayers);
@@ -109,9 +129,16 @@ public class SerializeLeagueObjectModel implements ISerializeLeagueObjectModel {
             }
 
             writeJsonToFile(playersJsonPath, String.valueOf(arrCombined));
-        }
-        finally {
-            existingPlayers.close();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        } finally {
+            try {
+                existingPlayers.close();
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
         }
     }
 }

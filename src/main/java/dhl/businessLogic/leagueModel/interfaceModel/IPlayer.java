@@ -18,8 +18,13 @@ public interface IPlayer {
 
     void setActive(boolean active);
 
-    boolean checkPlayerValid() throws Exception;
-
     double getPlayerStrength();
+
+    boolean isPlayerNameEmpty();
+
+    boolean isPlayerPositionInvalid();
+
+    boolean isCaptainValueBoolean();
+
 
 }

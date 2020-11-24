@@ -67,7 +67,8 @@ public class DeSerializeLeagueObjectModelTest {
         JSONArray jsonPlayerObject = (JSONArray) jsonParser.parse(jsonMock.serializedPlayerList());
         String jsonFilePath = filepath + "Dhl" + playerFileName;
         List<IPlayer> players = new ArrayList<>();
-        IPlayerStatistics playerStatistics1 = new PlayerStatistics(50, 5, 5, 5, 5);
+        IPlayerStatistics playerStatistics1 = new PlayerStatistics( 5, 5, 5, 5);
+        playerStatistics1.setAge(50);
         players.add(new Player("Henry", "forward", false, playerStatistics1));
 
         serializeLeagueobjectModel.updateSerializedPlayerListToJsonFile(players, "Dhl");

@@ -63,10 +63,10 @@ public class AiUserTradeTest {
         team.getPlayers().add(tradeMock.getWeakPlayer("randomPlayer1"));
         team.getPlayers().add(tradeMock.getWeakPlayer("randomPlayer2"));
         IPlayer player = new Player("player1", "goalie", false,
-                new PlayerStatistics(25, 10, 10, 10, 10));
+                new PlayerStatistics( 10, 10, 10, 10));
         team.getPlayers().add(player);
         player = new Player("player2", "goalie", false,
-                new PlayerStatistics(25, 3, 1, 4, 5));
+                new PlayerStatistics( 3, 1, 4, 5));
         team.getPlayers().add(player);
         ((MockUserInputOutput) ioObjectMock).setMockOutput("0");
         testClassObject.validateTeamRosterAfterTrade(team, leagueObjectModel);

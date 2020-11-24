@@ -66,7 +66,7 @@ public class AiAiTradeTest {
         league.freeAgents = freeAgents;
         ITeam team = tradeMock.getTeamWithGoodPlayer();
         IPlayer player = new Player("player1", "goalie", false,
-                new PlayerStatistics(25, 10, 10, 10, 10));
+                new PlayerStatistics( 10, 10, 10, 10));
         team.getPlayers().add(player);
         ITradeOffer acceptedTrade = new ExchangingPlayerTradeOffer(strongTeam, weakTeam, playersWanted, playersOffered);
         testClassObject = new AiAiTrade(acceptedTrade, ourGameConfig);

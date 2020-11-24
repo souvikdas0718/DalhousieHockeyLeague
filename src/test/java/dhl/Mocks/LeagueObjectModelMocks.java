@@ -11,7 +11,8 @@ import java.util.Random;
 public class LeagueObjectModelMocks {
 
     public IPlayerStatistics getPlayerStatistics() {
-        IPlayerStatistics playerStatistics = new PlayerStatistics(25, 10, 10, 10, 10);
+        IPlayerStatistics playerStatistics = new PlayerStatistics(10, 10, 10, 10);
+        playerStatistics.setAge(25);
         return playerStatistics;
     }
 
@@ -76,7 +77,8 @@ public class LeagueObjectModelMocks {
 
 
     public IPlayerStatistics getPlayerStatisticsMock() {
-        IPlayerStatistics playerStatistics = new PlayerStatistics(20, 10, 10, 10, 10);
+        IPlayerStatistics playerStatistics = new PlayerStatistics( 10, 10, 10, 10);
+        playerStatistics.setAge(20);
         return playerStatistics;
     }
 
@@ -120,7 +122,8 @@ public class LeagueObjectModelMocks {
 
     public IConference getConferenceTestMock() {
         List<IPlayer> playersList = new ArrayList<>();
-        IPlayerStatistics playerStatistics = new PlayerStatistics(20, 10, 10, 10, 10);
+        IPlayerStatistics playerStatistics = new PlayerStatistics( 10, 10, 10, 10);
+        playerStatistics.setAge(20);
         playersList.add(new Player("Henry", "forward", false, playerStatistics));
         playersList.add(new Player("Max", "goalie", true, playerStatistics));
         ICoach headCoach = new Coach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
@@ -157,7 +160,8 @@ public class LeagueObjectModelMocks {
         List<IPlayer> freeAgentsList = new ArrayList<>();
         IPlayer freeAgent = new FreeAgent("Matt", "forward", getPlayerStatistics());
         freeAgentsList.add(freeAgent);
-        IPlayerStatistics playerStatistics2 = new PlayerStatistics(20, 11, 20, 15, 16);
+        IPlayerStatistics playerStatistics2 = new PlayerStatistics(11, 20, 15, 16);
+        playerStatistics2.setAge(20);
         IPlayer freeAgent2 = new FreeAgent("Jack", "forward", playerStatistics2);
         freeAgentsList.add(freeAgent2);
         List<ICoach> coachList = new ArrayList<>();
@@ -190,7 +194,8 @@ public class LeagueObjectModelMocks {
 
     public ILeagueObjectModel leagueModelMock() {
         List<IPlayer> playersList = new ArrayList<>();
-        IPlayerStatistics playerStatistics = new PlayerStatistics(16, 5, 5, 5, 5);
+        IPlayerStatistics playerStatistics = new PlayerStatistics( 5, 5, 5, 5);
+        playerStatistics.setAge(16);
         playersList.add(new Player("Henry", "forward", true, playerStatistics));
         playersList.add(new Player("MaxG1", "goalie", false, playerStatistics));
         playersList.add(new Player("MaxG2", "goalie", false, playerStatistics));
@@ -217,7 +222,8 @@ public class LeagueObjectModelMocks {
         conferences.add(conference2);
 
         ArrayList<IPlayer> freeAgentsList = new ArrayList<>();
-        IPlayerStatistics freeAgentStatistics = new PlayerStatistics(20, 10, 10, 10, 5);
+        IPlayerStatistics freeAgentStatistics = new PlayerStatistics( 10, 10, 10, 5);
+        freeAgentStatistics.setAge(20);
         freeAgentsList.add(new FreeAgent("Henry", "forward", freeAgentStatistics));
         freeAgentsList.add(new FreeAgent("Max", "goalie", freeAgentStatistics));
 
@@ -239,7 +245,8 @@ public class LeagueObjectModelMocks {
 
     public ILeagueObjectModel leagueModelMockWith30Players() {
         List<IPlayer> playersList = new ArrayList<>();
-        IPlayerStatistics playerStatistics = new PlayerStatistics(16, 5, 5, 5, 5);
+        IPlayerStatistics playerStatistics = new PlayerStatistics( 5, 5, 5, 5);
+        playerStatistics.setAge(16);
         playersList.add(new Player("Henry", "forward", true, playerStatistics));
         playersList.add(new Player("MaxG1", "goalie", false, playerStatistics));
         playersList.add(new Player("MaxG2", "goalie", false, playerStatistics));
@@ -266,7 +273,8 @@ public class LeagueObjectModelMocks {
         conferences.add(conference2);
 
         ArrayList<IPlayer> freeAgentsList = new ArrayList<>();
-        IPlayerStatistics freeAgentStatistics = new PlayerStatistics(20, 10, 10, 10, 5);
+        IPlayerStatistics freeAgentStatistics = new PlayerStatistics( 10, 10, 10, 5);
+        freeAgentStatistics.setAge(20);
         freeAgentsList.add(new FreeAgent("Henry", "forward", freeAgentStatistics));
         freeAgentsList.add(new FreeAgent("Max", "goalie", freeAgentStatistics));
 
@@ -302,7 +310,8 @@ public class LeagueObjectModelMocks {
         Random rand = new Random();
 
         for(int i=0;i<30;i++){
-            IPlayerStatistics playerStatistics= new PlayerStatistics(20,rand.nextInt((20 - 1) + 1) + 1,rand.nextInt((20 - 1) + 1) + 1,rand.nextInt((20 - 1) + 1) + 1,rand.nextInt((20 - 1) + 1) + 1);
+            IPlayerStatistics playerStatistics= new PlayerStatistics(rand.nextInt((20 - 1) + 1) + 1,rand.nextInt((20 - 1) + 1) + 1,rand.nextInt((20 - 1) + 1) + 1,rand.nextInt((20 - 1) + 1) + 1);
+            playerStatistics.setAge(20);
             IPlayer player;
             if(i==0){
                 player= new Player("Player"+i, PlayerPosition.FORWARD.toString(),true,playerStatistics);

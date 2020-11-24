@@ -32,13 +32,11 @@ public class AgingState implements ISimulationSeasonState {
         ILeagueObjectModel leagueObjectModel= simulationContext.getInMemoryLeague();
         ISerializeLeagueObjectModel serializeModel = new SerializeLeagueObjectModel(leagueObjectModel.getLeagueName());
         IRetirement retirement = new Retirement(serializeModel, simulationContext.getInMemoryLeague());
-        ILeagueSchedule leagueSchedule = new LeagueSchedule(aging, retirement, simulationContext.getInjurySystem(), simulationContext.getInMemoryLeague(), simulationContext.getNumberOfDays());
-        try {
-            leagueSchedule.initiateAging();
-        } catch (Exception e) {
-            log.error("Error occured while aging" + e.getMessage());
-            e.printStackTrace();
-        }
+        ILeagueSchedule leagueSchedule = new LeagueSchedule(aging, retirement, simulationContext.getInjurySystem(), simulationContext.getInMemoryLeague());
+        LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
+        LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());
+        leagueSchedule.initiateAging(simulationContext.getNumberOfDays(),currentDate);
+
     }
 
     public SimulationContext getSimulationContext() {
