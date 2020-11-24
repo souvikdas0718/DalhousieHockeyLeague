@@ -19,7 +19,7 @@ public interface ICreateTeamStateLogic {
 
     IPlayer findFreeAgent(List<IPlayer> freeAgentArrayList, String freeAgentName);
 
-    String findGeneralManager(List<IGeneralManager> generalManagerArray, String generalManager);
+    IGeneralManager findGeneralManager(List<IGeneralManager> generalManagerArray, String generalManager);
 
     String findCoach(List<ICoach> coachArray, String coachName);
 

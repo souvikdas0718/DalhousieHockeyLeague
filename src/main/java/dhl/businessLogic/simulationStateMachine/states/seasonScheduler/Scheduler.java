@@ -1,16 +1,17 @@
 package dhl.businessLogic.simulationStateMachine.states.seasonScheduler;
 
 
-import dhl.inputOutput.ui.IUserInputOutput;
-import dhl.inputOutput.ui.UserInputOutput;
 import dhl.businessLogic.leagueModel.interfaceModel.IConference;
 import dhl.businessLogic.leagueModel.interfaceModel.IDivision;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.simulationStateMachine.interfaces.ISchedule;
-import dhl.businessLogic.simulationStateMachine.interfaces.IScheduler;
-import dhl.businessLogic.simulationStateMachine.interfaces.IStandings;
+import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
+import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.ISeasonSchedule;
 import dhl.businessLogic.simulationStateMachine.states.standings.StandingSystem;
+import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandingSystem;
+import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandings;
+import dhl.inputOutput.ui.IUserInputOutput;
+import dhl.inputOutput.ui.UserInputOutput;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -20,9 +21,9 @@ import java.util.List;
 import java.util.Map;
 
 public class Scheduler implements IScheduler {
-    private List<ISchedule> fullSeasonSchedule;
-    private List<ISchedule> playOffScheduleRound1;
-//    private List<ISchedule> finals;
+    private List<ISeasonSchedule> fullSeasonSchedule;
+    private List<ISeasonSchedule> playOffScheduleRound1;
+    //    private List<ISeasonSchedule> finals;
     private LocalDate seasonStartDate;
     private LocalDate seasonEndDate;
     private LocalDate playOffStartDate;
@@ -36,19 +37,21 @@ public class Scheduler implements IScheduler {
     public Scheduler() {
         fullSeasonSchedule = new ArrayList<>();
         playOffScheduleRound1 = new ArrayList<>();
-        playOffStartDate = LocalDate.of(2021, 03, 01);
-        currentDate = playOffStartDate;
+        //Set Date to dynamic date for every 2nd wednesday of april
+//        playOffStartDate = LocalDate.of(2021, 03, 01);
+//        playOffStartDate = LocalDate.of(2021, 03, 01);
+//        currentDate = playOffStartDate;
         teamList = new ArrayList<>();
         conferences = new ArrayList<>();
         divisions = new ArrayList<>();
         gameStandings = new ArrayList<>();
     }
 
-    public List<ISchedule> getFullSeasonSchedule() {
+    public List<ISeasonSchedule> getFullSeasonSchedule() {
         return fullSeasonSchedule;
     }
 
-    public List<ISchedule> getPlayOffScheduleRound1() {
+    public List<ISeasonSchedule> getPlayOffScheduleRound1() {
         return playOffScheduleRound1;
     }
 
@@ -109,11 +112,11 @@ public class Scheduler implements IScheduler {
 //    }
 
 
-//    public List<ISchedule> getFinals() {
+//    public List<ISeasonSchedule> getFinals() {
 //        return finals;
 //    }
 //
-//    public void setFinals(List<ISchedule> finals) {
+//    public void setFinals(List<ISeasonSchedule> finals) {
 //        this.finals = finals;
 //    }
 
@@ -150,7 +153,7 @@ public class Scheduler implements IScheduler {
 
         for (int i = 0; i < teamList.size(); i++) {
             for (int j = i + 1; j < teamList.size(); j++) {
-                ISchedule match = new SeasonSchedule();
+                ISeasonSchedule match = new SeasonSchedule();
                 match.setTeamOneConference(conferences.get(i));
                 match.setTeamTwoConference(conferences.get(j));
                 match.setTeamOneDivision(divisions.get(i));
@@ -179,6 +182,7 @@ public class Scheduler implements IScheduler {
             if (remainingGames > 0) {
                 fullSeasonSchedule.get(startingIndex).setGameDate(dateIndex);
                 remainingGames = remainingGames - 1;
+                startingIndex = startingIndex + 1;
             }
             dateIndex = dateIndex.plusDays(1);
         }
@@ -187,7 +191,7 @@ public class Scheduler implements IScheduler {
     public void playOffs(List<IStandings> regularGamesStandings, ILeagueObjectModel leagueObjectModel) {
 
         gameStandings = regularGamesStandings;
-        StandingSystem standingSystem = new StandingSystem();
+        IStandingSystem standingSystem = new StandingSystem();
 
         IConference conference1 = leagueObjectModel.getConferences().get(0);
         IConference conference2 = leagueObjectModel.getConferences().get(1);
@@ -225,10 +229,10 @@ public class Scheduler implements IScheduler {
         conferenceWildCardListMap.get(2).remove(2);
         conferenceWildCardListMap.get(2).remove(2);
 
+        currentDate = playOffStartDate;
 
-        ISchedule match1 = setMatchConferenceAndDivision(conference1, conference1StandingList.get(0).getTeamDivision(), conferenceWildCardListMap.get(1).get(1).getTeamDivision());
+        ISeasonSchedule match1 = setMatchConferenceAndDivision(conference1, conference1StandingList.get(0).getTeamDivision(), conferenceWildCardListMap.get(1).get(1).getTeamDivision());
         setTeams(match1, conference1StandingList.get(0).getTeam(), conferenceWildCardListMap.get(1).get(1).getTeam());
-        currentDate = currentDate.plusDays(1);
         match1.setGameDate(currentDate);
         playOffScheduleRound1.add(match1);
 
@@ -238,13 +242,13 @@ public class Scheduler implements IScheduler {
             anotherDivision = divisionList.get(1);
         }
 
-        ISchedule match2 = setMatchConferenceAndDivision(conference1, divisionList.get(0), divisionList.get(0));
+        ISeasonSchedule match2 = setMatchConferenceAndDivision(conference1, divisionList.get(0), divisionList.get(0));
         setTeams(match2, divisionStandingMap.get(1).get(1).getTeam(), divisionStandingMap.get(1).get(2).getTeam());
         currentDate = currentDate.plusDays(1);
         match2.setGameDate(currentDate);
         playOffScheduleRound1.add(match2);
 
-        ISchedule match3 = setMatchConferenceAndDivision(conference1, anotherDivision, conferenceWildCardListMap.get(1).get(0).getTeamDivision());
+        ISeasonSchedule match3 = setMatchConferenceAndDivision(conference1, anotherDivision, conferenceWildCardListMap.get(1).get(0).getTeamDivision());
         if (anotherDivision == divisionList.get(0)) {
             setTeams(match3, divisionStandingMap.get(1).get(0).getTeam(), conferenceWildCardListMap.get(1).get(0).getTeam());
         } else if (anotherDivision == divisionList.get(1)) {
@@ -254,13 +258,13 @@ public class Scheduler implements IScheduler {
         match3.setGameDate(currentDate);
         playOffScheduleRound1.add(match3);
 
-        ISchedule match4 = setMatchConferenceAndDivision(conference1, divisionList.get(1), divisionList.get(1));
+        ISeasonSchedule match4 = setMatchConferenceAndDivision(conference1, divisionList.get(1), divisionList.get(1));
         setTeams(match4, divisionStandingMap.get(2).get(1).getTeam(), divisionStandingMap.get(2).get(2).getTeam());
         currentDate = currentDate.plusDays(1);
         match4.setGameDate(currentDate);
         playOffScheduleRound1.add(match4);
 
-        ISchedule match5 = setMatchConferenceAndDivision(conference2, conference2StandingList.get(0).getTeamDivision(), conferenceWildCardListMap.get(2).get(1).getTeamDivision());
+        ISeasonSchedule match5 = setMatchConferenceAndDivision(conference2, conference2StandingList.get(0).getTeamDivision(), conferenceWildCardListMap.get(2).get(1).getTeamDivision());
         setTeams(match5, conference2StandingList.get(0).getTeam(), conferenceWildCardListMap.get(2).get(1).getTeam());
         currentDate = currentDate.plusDays(1);
         match5.setGameDate(currentDate);
@@ -272,13 +276,13 @@ public class Scheduler implements IScheduler {
             anotherDivision2 = divisionList.get(3);
         }
 
-        ISchedule match6 = setMatchConferenceAndDivision(conference2, divisionList.get(2), divisionList.get(2));
+        ISeasonSchedule match6 = setMatchConferenceAndDivision(conference2, divisionList.get(2), divisionList.get(2));
         setTeams(match6, divisionStandingMap.get(3).get(1).getTeam(), divisionStandingMap.get(3).get(2).getTeam());
         currentDate = currentDate.plusDays(1);
         match6.setGameDate(currentDate);
         playOffScheduleRound1.add(match6);
 
-        ISchedule match7 = setMatchConferenceAndDivision(conference2, anotherDivision2, conferenceWildCardListMap.get(2).get(0).getTeamDivision());
+        ISeasonSchedule match7 = setMatchConferenceAndDivision(conference2, anotherDivision2, conferenceWildCardListMap.get(2).get(0).getTeamDivision());
         if (anotherDivision2 == divisionList.get(2)) {
             setTeams(match7, divisionStandingMap.get(3).get(0).getTeam(), conferenceWildCardListMap.get(2).get(0).getTeam());
         } else if (anotherDivision2 == divisionList.get(3)) {
@@ -288,15 +292,15 @@ public class Scheduler implements IScheduler {
         match7.setGameDate(currentDate);
         playOffScheduleRound1.add(match7);
 
-        ISchedule match8 = setMatchConferenceAndDivision(conference2, divisionList.get(3), divisionList.get(3));
+        ISeasonSchedule match8 = setMatchConferenceAndDivision(conference2, divisionList.get(3), divisionList.get(3));
         setTeams(match8, divisionStandingMap.get(4).get(1).getTeam(), divisionStandingMap.get(4).get(2).getTeam());
         currentDate = currentDate.plusDays(1);
         match8.setGameDate(currentDate);
         playOffScheduleRound1.add(match8);
     }
 
-    private ISchedule setMatchConferenceAndDivision(IConference conference, IDivision division1, IDivision division2) {
-        ISchedule match = new SeasonSchedule();
+    private ISeasonSchedule setMatchConferenceAndDivision(IConference conference, IDivision division1, IDivision division2) {
+        ISeasonSchedule match = new SeasonSchedule();
         match.setTeamOneConference(conference);
         match.setTeamTwoConference(conference);
         match.setTeamOneDivision(division1);
@@ -304,12 +308,12 @@ public class Scheduler implements IScheduler {
         return match;
     }
 
-    private void setTeams(ISchedule match, ITeam team1, ITeam team2) {
+    private void setTeams(ISeasonSchedule match, ITeam team1, ITeam team2) {
         match.setTeamOne(team1);
         match.setTeamTwo(team2);
     }
 
-    private void generateRanks(StandingSystem standingSystem, List<IStandings> conference1StandingList, List<IStandings> conference2StandingList, HashMap<Integer, List<IStandings>> divisionStandingMap) {
+    private void generateRanks(IStandingSystem standingSystem, List<IStandings> conference1StandingList, List<IStandings> conference2StandingList, HashMap<Integer, List<IStandings>> divisionStandingMap) {
         standingSystem.rankGenerator(conference1StandingList);
         standingSystem.rankGenerator(conference2StandingList);
 
@@ -353,7 +357,7 @@ public class Scheduler implements IScheduler {
 
     public void gameWinner(ITeam team) {
 
-        ISchedule lastSchedule = playOffScheduleRound1.get(playOffScheduleRound1.size() - 1);
+        ISeasonSchedule lastSchedule = playOffScheduleRound1.get(playOffScheduleRound1.size() - 1);
         IStandings standing = getTeamIndexFromStanding(team);
 
         if (standing != null) {
@@ -364,14 +368,14 @@ public class Scheduler implements IScheduler {
                     lastSchedule.setTeamTwo(team);
                 }
             } else {
-                ISchedule match = new SeasonSchedule();
+                ISeasonSchedule match = new SeasonSchedule();
                 match.setTeamOneConference(standing.getTeamConference());
                 match.setTeamOneDivision(standing.getTeamDivision());
                 match.setTeamOne(team);
                 currentDate = currentDate.plusDays(1);
                 match.setGameDate(currentDate);
                 playOffScheduleRound1.add(match);
-                if(playOffScheduleRound1.size() == 15) {
+                if (playOffScheduleRound1.size() == 15) {
                     setFinalDay(playOffScheduleRound1.get(14).getGameDate());
                 }
             }

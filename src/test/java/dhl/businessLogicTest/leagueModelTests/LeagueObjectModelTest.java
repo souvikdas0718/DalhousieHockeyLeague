@@ -1,12 +1,18 @@
 package dhl.businessLogicTest.leagueModelTests;
 
-import dhl.inputOutput.importJson.GameConfig;
+import dhl.Mocks.factory.MockAbstractFactory;
+import dhl.businessLogic.leagueModel.*;
+import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
+import dhl.businessLogic.leagueModel.factory.LeagueObjectModelBuilder;
+import dhl.businessLogic.leagueModel.factory.interfaceFactory.ILeagueObjectModelBuilder;
+import dhl.businessLogic.leagueModel.interfaceModel.*;
+import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
+import dhl.businessLogicTest.leagueModelTests.mocks.LeagueMock;
+import dhl.Mocks.MockDeserializeLeagueObjectModel;
+import dhl.Mocks.MockSerializeLeagueObjectModel;
+import dhl.businessLogicTest.leagueModelTests.mocks.TeamMock;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.IDeserializeLeagueObjectModel;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
-import dhl.Mocks.LeagueObjectModelMocks;
-import dhl.businessLogic.leagueModel.*;
-import dhl.businessLogic.leagueModel.interfaceModel.*;
-import org.json.simple.JSONObject;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,15 +26,24 @@ public class LeagueObjectModelTest {
     IValidation validate;
     ILeagueObjectModelValidation leagueValidation;
     ILeagueObjectModel leagueModelParameterized;
-    LeagueObjectModelMocks leagueMock;
+    LeagueModelAbstractFactory leagueFactory;
+    LeagueModelMockAbstractFactory leagueMockFactory;
+    LeagueMock leagueMock;
+    MockAbstractFactory mockFactory;
 
     @BeforeEach
-    public void initialize() {
-        leagueModel = new LeagueObjectModel();
-        validate = new CommonValidation();
-        leagueValidation = new LeagueObjectModelValidation();
-        leagueMock = new LeagueObjectModelMocks();
-        leagueModelParameterized = leagueMock.getLeagueObjectMock();
+    public void initialize()  {
+        leagueFactory= LeagueModelAbstractFactory.instance();
+        ILeagueObjectModelBuilder leagueBuilder = new LeagueObjectModelBuilder();
+        leagueModel = (LeagueObjectModel) leagueBuilder.getResult();
+
+        validate = leagueFactory.createCommonValidation();
+        leagueValidation = leagueFactory.createLeagueObjectModelValidation();
+
+        leagueMockFactory=LeagueModelMockAbstractFactory.instance();
+        leagueMock =  leagueMockFactory.createLeagueMock();
+        mockFactory= MockAbstractFactory.instance();
+        leagueModelParameterized = leagueMock.getLeagueObjectModel();
     }
 
     @Test
@@ -38,62 +53,64 @@ public class LeagueObjectModelTest {
         Assertions.assertEquals("Dhl", leagueModelParameterized.getLeagueName());
         Assertions.assertTrue(leagueModel.conferences.size() == 0);
         List<IGeneralManager> managers = leagueModelParameterized.getGeneralManagers();
-        Assertions.assertEquals(3, managers.size());
+        Assertions.assertTrue( managers.size()>0);
         Assertions.assertNotNull(leagueModelParameterized.getGameConfig());
     }
 
     @Test
-    public void getFreeAgentsTest() {
-        List<IPlayer> freeAgentsList = new ArrayList<>();
-        IPlayerStatistics playerStatistics = new PlayerStatistics(20, 10, 10, 10, 10);
-        freeAgentsList.add(new FreeAgent("Henry", "forward", playerStatistics));
-        freeAgentsList.add(new FreeAgent("Max", "goalie", playerStatistics));
-        leagueModel = new LeagueObjectModel("Dhl", leagueMock.getConferenceArrayMock(), freeAgentsList, new ArrayList<>(), new ArrayList<>(), new GameConfig(new JSONObject()));
-        Assertions.assertEquals(leagueModel.getFreeAgents().size(), freeAgentsList.size());
+    public void setFreeAgentsTest() {
+        List<IPlayer> freeAgentsList = leagueMock.getFreeAgents();
+        leagueModel.setFreeAgents(leagueMock.getFreeAgents());
+        Assertions.assertEquals(freeAgentsList.size(),leagueModel.getFreeAgents().size());
     }
 
     @Test
     public void getCoachesTest() {
-        leagueModel.setCoaches(leagueMock.getCoaches());
-        Assertions.assertEquals(2, leagueModel.getCoaches().size());
+        List<ICoach> coaches = leagueMock.getCoaches();
+        leagueModel.setCoaches(coaches);
+        Assertions.assertEquals(coaches.size(), leagueModel.getCoaches().size());
     }
 
     @Test
     public void setManagersTest() {
-        Assertions.assertEquals(3, leagueMock.getManagers().size());
+        List<IGeneralManager> generalManagers = leagueMock.getManagers();
+        leagueModel.setManagers(generalManagers);
+        Assertions.assertEquals(generalManagers.size(), leagueMock.getManagers().size());
+    }
+
+    @Test
+    public void setLeagueNameTest() {
+        leagueModelParameterized.setLeagueName("National Hockey League");
+        Assertions.assertEquals("National Hockey League", leagueModelParameterized.getLeagueName());
     }
 
     @Test
     public void checkIfLeagueModelValidTest() throws Exception {
-        List<IConference> conferences = leagueModelParameterized.getConferences();
-        conferences.add(new Conference("Eastern", new ArrayList<>()));
-        leagueModelParameterized = new LeagueObjectModel("Dhl", conferences, leagueMock.getFreeAgentArrayMock(), new ArrayList<>(), new ArrayList<>(), new GameConfig(new JSONObject()));
-        Assertions.assertTrue(leagueModelParameterized.checkIfLeagueModelValid(validate, leagueValidation));
+        leagueModelParameterized.checkIfLeagueModelValid(validate,leagueValidation);
+        Assertions.assertEquals("Dhl", leagueModelParameterized.getLeagueName());
     }
 
     @Test
     public void saveLeagueObjectModelTest() throws Exception {
-        ISerializeLeagueObjectModel mockSerializeLeagueObjectModel = new MockSerializeLeagueObjectModel();
-        List<IPlayer> players = new ArrayList<>();
-        ICoach headCoach = new Coach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
-        ITeam newlyCreatedTeam = new Team("Nova Scotia", "Mathew", headCoach, players);
+        ISerializeLeagueObjectModel mockSerialize = mockFactory.getMockSerialize();
+        TeamMock teamMock =leagueMockFactory.createTeamMock();
+        ITeam newlyCreatedTeam = teamMock.getTeamByName("Halifax");
 
-        ILeagueObjectModelInput leagueInput = new LeagueObjectModelInput("Dhl", "Western", "Atlantic", newlyCreatedTeam, leagueValidation, mockSerializeLeagueObjectModel);
-        leagueModelParameterized = leagueModelParameterized.saveLeagueObjectModel(mockSerializeLeagueObjectModel, leagueInput);
+        ILeagueObjectModelInput leagueInput =leagueFactory.createLeagueObjectModelInput("Dhl", "Western", "Atlantic", newlyCreatedTeam, mockSerialize);
+        leagueModelParameterized = leagueModelParameterized.saveLeagueObjectModel(mockSerialize, leagueInput);
         Assertions.assertEquals("Dhl", leagueModelParameterized.getLeagueName());
     }
 
     @Test
     public void loadLeagueObjectModelTest() throws Exception {
-        IDeserializeLeagueObjectModel mockDeserializeLeagueObjectModel = new MockDeserializeLeagueObjectModel();
-        // TODO: 18-11-2020 Rajni Update This  
-        //Assertions.assertEquals("Dhl", leagueModelParameterized.loadLeagueObjectModel(mockDeserializeLeagueObjectModel, "Dhl", "Nova Scotia").getLeagueName());
+        IDeserializeLeagueObjectModel mockDeserialize = mockFactory.getMockDeserialize();
+        Assertions.assertEquals("Dhl", leagueModelParameterized.loadLeagueObjectModel(mockDeserialize, "Dhl", "Nova Scotia").getLeagueName());
     }
 
     @Test
     public void updateLeagueObjectModel() throws Exception {
-        ISerializeLeagueObjectModel mock = new MockSerializeLeagueObjectModel();
-        Assertions.assertEquals("Dhl", leagueModelParameterized.updateLeagueObjectModel(mock).getLeagueName());
+        ISerializeLeagueObjectModel serializeMock = new MockSerializeLeagueObjectModel();
+        Assertions.assertEquals("Dhl", leagueModelParameterized.updateLeagueObjectModel(serializeMock).getLeagueName());
     }
 
     @AfterEach

@@ -1,10 +1,10 @@
 package dhl.businessLogic.simulationStateMachine.states;
 
+import dhl.businessLogic.simulationStateMachine.GameContext;
+import dhl.businessLogic.simulationStateMachine.SimulationContext;
+import dhl.businessLogic.simulationStateMachine.interfaces.IGameState;
 import dhl.inputOutput.ui.IUserInputOutput;
 import dhl.inputOutput.ui.UserInputOutput;
-import dhl.businessLogic.simulationStateMachine.GameContext;
-import dhl.businessLogic.simulationStateMachine.interfaces.IGameState;
-import dhl.businessLogic.simulationStateMachine.SimulationContext;
 
 public class SimulateState implements IGameState {
 
@@ -46,9 +46,12 @@ public class SimulateState implements IGameState {
         simulationContextObject.setInMemoryLeague(ourGame.getInMemoryLeague());
 
         for (int i = 0; i < simulationSeasonsCount; i++) {
-            simulationContextObject.seasonStateEntryProcess();
-            simulationContextObject.seasonStateProcess();
-            simulationContextObject.seasonStateExitProcess();
+            while(simulationContextObject.isSeasonInProgress()) {
+                simulationContextObject.seasonStateEntryProcess();
+                simulationContextObject.seasonStateProcess();
+                simulationContextObject.seasonStateExitProcess();
+            }
+            userInputPutput.printMessage("Season "+ i+1 + ": is completed");
         }
     }
 

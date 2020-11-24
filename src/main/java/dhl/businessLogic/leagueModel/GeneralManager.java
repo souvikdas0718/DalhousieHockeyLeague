@@ -5,16 +5,16 @@ import dhl.businessLogic.leagueModel.interfaceModel.IGeneralManager;
 public class GeneralManager implements IGeneralManager {
 
     private String generalManagerName;
-    private String generalManagerPersonality;
+    public String generalManagerPersonality;
 
     public GeneralManager() {
         this.generalManagerName = "";
         this.generalManagerPersonality = "";
     }
 
-    // TODO: 20-11-2020 Remove this when rashmi is done with CP
     public GeneralManager(String generalManagerName) {
         this.generalManagerName = generalManagerName;
+        this.generalManagerPersonality = "";
     }
 
     public GeneralManager(String generalManagerName, String personality) {

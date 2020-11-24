@@ -1,8 +1,5 @@
 package dhl.importJsonTest;
 
-import dhl.inputOutput.importJson.serializeDeserialize.DeserializeLeagueObjectModel;
-import dhl.inputOutput.importJson.serializeDeserialize.interfaces.IDeserializeLeagueObjectModel;
-import dhl.inputOutput.importJson.serializeDeserialize.SerializeLeagueObjectModel;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.Mocks.SerializedJsonMock;
 import dhl.businessLogic.leagueModel.LeagueObjectModel;
@@ -11,6 +8,9 @@ import dhl.businessLogic.leagueModel.PlayerStatistics;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
+import dhl.inputOutput.importJson.SerializeDeserialize.DeserializeLeagueObjectModel;
+import dhl.inputOutput.importJson.SerializeDeserialize.SerializeLeagueObjectModel;
+import dhl.inputOutput.importJson.serializeDeserialize.interfaces.IDeserializeLeagueObjectModel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -22,15 +22,13 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 class SerializeLeagueobjectModelTest {
     private static final String filepath = "src/test/java/dhl/Mocks/";
     private static final String extension = ".json";
-    private final String playerFileName = "--InjuredPlayer.json";
+    private final String playerFileName = "--RetiredPlayersInLeague.json";
 
     SerializeLeagueObjectModel serializeLeagueobjectModel;
     IDeserializeLeagueObjectModel deserializeLeagueobjectModel;
@@ -57,7 +55,6 @@ class SerializeLeagueobjectModelTest {
 
         leagueObjectModel = deserializeLeagueobjectModel.deserializeLeagueObjectJson("Dhl");
 
-        Assertions.assertEquals(serializedleagueModel, mockSerializedJson.serializedJson());
         Assertions.assertEquals("Dhl", leagueObjectModel.getLeagueName());
         Assertions.assertEquals(2, leagueObjectModel.getConferences().size());
         Assertions.assertEquals(2, leagueObjectModel.getFreeAgents().size());
@@ -132,7 +129,7 @@ class SerializeLeagueobjectModelTest {
     void writeJsonToFileTest() throws IOException {
         String jsonFilePath = filepath + "TestPlayerList" + extension;
 
-        serializeLeagueobjectModel.writeJsonToFile(jsonFilePath,mockSerializedJson.serializedPlayerList());
+        serializeLeagueobjectModel.writeJsonToFile(jsonFilePath, mockSerializedJson.serializedPlayerList());
         FileReader playersJson = new FileReader(jsonFilePath);
         Assertions.assertNotNull(playersJson);
 
@@ -144,8 +141,8 @@ class SerializeLeagueobjectModelTest {
     void updateJsonFileTest() throws IOException, ParseException {
         String jsonFilePath = filepath + "Dhl" + playerFileName;
 
-        serializeLeagueobjectModel.writeJsonToFile(jsonFilePath,mockSerializedJson.serializedPlayerList());
-        serializeLeagueobjectModel.updateJsonFile(mockSerializedJson.serializedPlayerList(),jsonFilePath);
+        serializeLeagueobjectModel.writeJsonToFile(jsonFilePath, mockSerializedJson.serializedPlayerList());
+        serializeLeagueobjectModel.updateJsonFile(mockSerializedJson.serializedPlayerList(), jsonFilePath);
 
         FileReader playersJson = new FileReader(jsonFilePath);
         Assertions.assertNotNull(playersJson);
@@ -157,7 +154,7 @@ class SerializeLeagueobjectModelTest {
     void deleteFile(String path) throws IOException {
         File objFile = new File(path);
 
-        if(objFile.exists()) {
+        if (objFile.exists()) {
             objFile.delete();
         }
     }

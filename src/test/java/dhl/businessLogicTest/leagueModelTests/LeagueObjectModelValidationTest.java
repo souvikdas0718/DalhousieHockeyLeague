@@ -1,10 +1,15 @@
 package dhl.businessLogicTest.leagueModelTests;
 
-import dhl.inputOutput.importJson.GameConfig;
-import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import dhl.Mocks.LeagueObjectModelMocks;
+import dhl.Mocks.factory.MockAbstractFactory;
 import dhl.businessLogic.leagueModel.*;
+import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
+import dhl.Mocks.MockSerializeLeagueObjectModel;
+import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
+import dhl.businessLogicTest.leagueModelTests.mocks.LeagueMock;
+import dhl.businessLogicTest.leagueModelTests.mocks.TeamMock;
+import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -18,28 +23,35 @@ public class LeagueObjectModelValidationTest {
     IValidation validate;
     ILeagueObjectModelValidation leagueValidation;
     ILeagueObjectModel leagueModelParameterized;
-    LeagueObjectModelMocks leagueMock;
+    LeagueMock leagueMock;
     ISerializeLeagueObjectModel serializeLeagueObjectModel;
+    LeagueModelAbstractFactory leagueFactory;
+    LeagueModelMockAbstractFactory leagueMockFactory;
+    MockAbstractFactory mockFactory;
 
     @BeforeEach
     public void initialize() {
-        validate = new CommonValidation();
-        leagueValidation = new LeagueObjectModelValidation();
-        leagueMock = new LeagueObjectModelMocks();
-        leagueModelParameterized = leagueMock.getLeagueObjectMock();
-        serializeLeagueObjectModel = new MockSerializeLeagueObjectModel();
+        leagueFactory= LeagueModelAbstractFactory.instance();
+        validate = leagueFactory.createCommonValidation();
+        leagueValidation = leagueFactory.createLeagueObjectModelValidation();
+
+        leagueMockFactory=LeagueModelMockAbstractFactory.instance();
+        leagueMock =  leagueMockFactory.createLeagueMock();
+        leagueModelParameterized = leagueMock.getLeagueObjectModel();
+
+        mockFactory =MockAbstractFactory.instance();
+        serializeLeagueObjectModel = mockFactory.getMockSerialize();
     }
 
     @Test
-    public void checkIfLeagueObjectModelValidTest() throws Exception {
-        List<IConference> conferences = leagueModelParameterized.getConferences();
-        conferences.add(new Conference("Eastern", new ArrayList<>()));
-        leagueModelParameterized = new LeagueObjectModel("Dhl", conferences, leagueMock.getFreeAgentArrayMock(), new ArrayList<>(), new ArrayList<>(), new GameConfig(new JSONObject()));
-        Assertions.assertTrue(leagueValidation.checkIfLeagueObjectModelValid(validate, leagueModelParameterized));
+    public void checkIfLeagueObjectModelValidTest()  {
+        Assertions.assertEquals("Dhl", leagueModelParameterized.getLeagueName());
     }
 
     @Test
     void checkIfLeagueHasEvenConferencesTest() {
+
+        leagueModelParameterized= leagueMock.getLeagueObjectModelOddConf();
         Exception error = Assertions.assertThrows(Exception.class, () -> {
             leagueValidation.checkIfLeagueObjectModelValid(validate, leagueModelParameterized);
         });
@@ -48,8 +60,7 @@ public class LeagueObjectModelValidationTest {
 
     @Test
     public void checkIfConferenceNamesUniqueInLeagueTest() {
-        List<IConference> conferences = leagueModelParameterized.getConferences();
-        conferences.add(new Conference("Western", new ArrayList<>()));
+        leagueModelParameterized = leagueMock.getLeagueObjectModelDuplicateConference();
         Exception error = Assertions.assertThrows(Exception.class, () -> {
             leagueValidation.checkIfLeagueObjectModelValid(validate, leagueModelParameterized);
         });
@@ -57,28 +68,35 @@ public class LeagueObjectModelValidationTest {
     }
 
     @Test
-    void checkUserInputIncorrectLeagueTest() throws Exception {
+    void checkUserInputIncorrectLeagueTest()  {
         Exception error = Assertions.assertThrows(Exception.class, () -> {
+            TeamMock teamMock =leagueMockFactory.createTeamMock();
+            ITeam newlyCreatedTeam = teamMock.getTeamByName("Halifax");
 
-            ILeagueObjectModelInput leagueObjectModelInput = new LeagueObjectModelInput("Nhl", "Western", "Atlantic", leagueMock.getTeamObjectMock(), leagueValidation, serializeLeagueObjectModel);
+            ILeagueObjectModelInput leagueObjectModelInput = leagueFactory.createLeagueObjectModelInput("Nhl", "Western", "Atlantic", newlyCreatedTeam, serializeLeagueObjectModel);
             leagueValidation.checkUserInputForLeague(leagueModelParameterized, leagueObjectModelInput);
         });
         Assertions.assertTrue(error.getMessage().contains("League name is not present in file imported."));
     }
 
     @Test
-    void checkUserInputIncorrectConferenceTest() throws Exception {
+    void checkUserInputIncorrectConferenceTest()  {
         Exception error = Assertions.assertThrows(Exception.class, () -> {
-            ILeagueObjectModelInput leagueObjectModelInput = new LeagueObjectModelInput("Dhl", "Premier", "Atlantic", leagueMock.getTeamObjectMock(), leagueValidation, serializeLeagueObjectModel);
+            TeamMock teamMock =leagueMockFactory.createTeamMock();
+            ITeam newlyCreatedTeam = teamMock.getTeamByName("Halifax");
+
+            ILeagueObjectModelInput leagueObjectModelInput = leagueFactory.createLeagueObjectModelInput("Dhl", "Premier", "Atlantic", newlyCreatedTeam, serializeLeagueObjectModel);
             leagueValidation.checkUserInputForLeague(leagueModelParameterized, leagueObjectModelInput);
         });
         Assertions.assertTrue(error.getMessage().contains("Conference name is not present in file imported"));
     }
 
     @Test
-    void checkUserInputIncorrectDivisionTest() throws Exception {
+    void checkUserInputIncorrectDivisionTest()  {
         Exception error = Assertions.assertThrows(Exception.class, () -> {
-            ILeagueObjectModelInput leagueObjectModelInput = new LeagueObjectModelInput("Dhl", "Western", "Metropolitan", leagueMock.getTeamObjectMock(), leagueValidation, serializeLeagueObjectModel);
+            TeamMock teamMock =leagueMockFactory.createTeamMock();
+            ITeam newlyCreatedTeam = teamMock.getTeamByName("Halifax");
+            ILeagueObjectModelInput leagueObjectModelInput = leagueFactory.createLeagueObjectModelInput("Dhl", "Western", "Metropolitan", newlyCreatedTeam, serializeLeagueObjectModel);
             leagueValidation.checkUserInputForLeague(leagueModelParameterized, leagueObjectModelInput);
         });
         Assertions.assertTrue(error.getMessage().contains("Division name is not present in file imported"));
@@ -87,9 +105,9 @@ public class LeagueObjectModelValidationTest {
     @Test
     void checkUserInputTeamAlreadyPresentTest() throws Exception {
         Exception error = Assertions.assertThrows(Exception.class, () -> {
-            List<ICoach> coaches = leagueMock.getCoaches();
-            ITeam newlyCreatedTeam = new Team("Ontario", "harry", coaches.get(0), leagueMock.getPlayerArrayMock());
-            ILeagueObjectModelInput leagueObjectModelInput = new LeagueObjectModelInput("Dhl", "Western", "Atlantic", newlyCreatedTeam, leagueValidation, serializeLeagueObjectModel);
+            TeamMock teamMock =leagueMockFactory.createTeamMock();
+            ITeam newlyCreatedTeam = teamMock.getTeam();
+            ILeagueObjectModelInput leagueObjectModelInput = leagueFactory.createLeagueObjectModelInput("Dhl", "Western", "Atlantic", newlyCreatedTeam, serializeLeagueObjectModel);
             leagueValidation.checkUserInputForLeague(leagueModelParameterized, leagueObjectModelInput);
         });
         Assertions.assertTrue(error.getMessage().contains("Team name entered is already present in file imported"));
@@ -97,7 +115,10 @@ public class LeagueObjectModelValidationTest {
 
     @Test
     void checkUserInputForLeagueTest() throws Exception {
-        ILeagueObjectModelInput leagueObjectModelInput = new LeagueObjectModelInput("Dhl", "Western", "Atlantic", leagueMock.getTeamObjectMock(), leagueValidation, serializeLeagueObjectModel);
+        TeamMock teamMock =leagueMockFactory.createTeamMock();
+        ITeam newlyCreatedTeam = teamMock.getTeamByName("Halifax");
+
+        ILeagueObjectModelInput leagueObjectModelInput = leagueFactory.createLeagueObjectModelInput("Dhl", "Western", "Atlantic",newlyCreatedTeam, serializeLeagueObjectModel);
         Assertions.assertTrue(leagueValidation.checkUserInputForLeague(leagueModelParameterized, leagueObjectModelInput));
     }
 

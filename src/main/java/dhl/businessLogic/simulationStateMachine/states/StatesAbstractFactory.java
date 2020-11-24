@@ -5,8 +5,6 @@ import dhl.businessLogic.simulationStateMachine.interfaces.IGameState;
 import dhl.businessLogic.simulationStateMachine.states.interfaces.ICreateTeamStateLogic;
 import dhl.businessLogic.simulationStateMachine.states.interfaces.IImportStateLogic;
 import dhl.businessLogic.simulationStateMachine.states.interfaces.ILoadTeamStateLogic;
-import dhl.inputOutput.importJson.ImportJsonAbstractFactory;
-import dhl.inputOutput.importJson.ImportJsonFactory;
 
 public abstract class StatesAbstractFactory {
     private static StatesAbstractFactory uniqueInstance = null;

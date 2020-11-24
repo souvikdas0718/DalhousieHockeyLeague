@@ -1,7 +1,7 @@
 package dhl.inputOutput.importJson.interfaces;
 
-import dhl.businessLogic.leagueModel.factory.LeagueModelFactory;
-import dhl.businessLogic.leagueModel.factory.LomAbstractFactory;
+
+import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.inputOutput.importJson.GeneralManagerPersonalityList;
 
 import java.util.Dictionary;

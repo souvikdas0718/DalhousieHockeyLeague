@@ -14,7 +14,6 @@ public class AdvanceToNextSeasonStateTest {
 
     SimulationContext simulationContext;
     AdvanceToNextSeasonState advanceToNextSeasonState;
-    AgingState agingState;
     GameContext gameState;
 
     @BeforeEach
@@ -53,7 +52,7 @@ public class AdvanceToNextSeasonStateTest {
         advanceToNextSeasonState = new AdvanceToNextSeasonState(simulationContext);
         advanceToNextSeasonState.seasonStateEntryProcess();
         Assertions.assertTrue(advanceToNextSeasonState.getSimulationContext().getNumberOfDays() == 365);
-        Assertions.assertTrue(advanceToNextSeasonState.getSimulationContext().getEndOfSimulation().equals(LocalDate.of(simulationContext.getYear() , 9, 29)));
+        Assertions.assertTrue(advanceToNextSeasonState.getSimulationContext().getEndOfSimulation().equals(LocalDate.of(simulationContext.getYear(), 9, 29)));
     }
 
 //    @Test

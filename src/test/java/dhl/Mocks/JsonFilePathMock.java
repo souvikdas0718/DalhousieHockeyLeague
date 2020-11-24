@@ -4,11 +4,16 @@ import dhl.inputOutput.importJson.interfaces.IJsonFilePath;
 
 public class JsonFilePathMock implements IJsonFilePath {
 
-    String filePath = "src/test/java/dhl/Mocks/MockData2.json";
+    private static final String FILEPATH = "src/test/java/dhl/Mocks/MockData2.json";
+    public static final String INCORRECTJSONFILEPATH = "src/test/java/dhl/Mocks/IncorrectMockData.json";
 
-    @Override
+
     public String getFilePath() {
-        return filePath;
+        return FILEPATH;
+    }
+
+    public String getIncorrectJsonfilepath() {
+        return INCORRECTJSONFILEPATH;
     }
 
     public String getLeagueArrayKey() {

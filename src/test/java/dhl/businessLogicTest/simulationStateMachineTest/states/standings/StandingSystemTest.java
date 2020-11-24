@@ -4,12 +4,12 @@ package dhl.businessLogicTest.simulationStateMachineTest.states.standings;
 import dhl.Mocks.LeagueObjectModel20TeamMocks;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.Mocks.RegularSeasonStandingListMocks;
+import dhl.Mocks.factory.MockAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.ICoach;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
-import dhl.businessLogic.simulationStateMachine.interfaces.IStandingSystem;
-import dhl.businessLogic.simulationStateMachine.interfaces.IStandings;
-import dhl.businessLogic.simulationStateMachine.states.standings.StandingSystem;
-import dhl.businessLogic.simulationStateMachine.states.standings.Standings;
+import dhl.businessLogic.simulationStateMachine.states.standings.factory.StandingsAbstractFactory;
+import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandingSystem;
+import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandings;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,26 +22,31 @@ public class StandingSystemTest {
 
     LeagueObjectModelMocks mockLeagueObjectModel;
     LeagueObjectModel20TeamMocks model20TeamMocks;
-    RegularSeasonStandingListMocks standings;
+    RegularSeasonStandingListMocks regularSeasonStanding;
     ICoach coach;
     List<IPlayer> players;
     String manager;
+    MockAbstractFactory mockAbstractFactory;
+    StandingsAbstractFactory standingsAbstractFactory;
+    IStandingSystem standingSystem;
 
     @BeforeEach
     public void initObject() {
-        mockLeagueObjectModel = new LeagueObjectModelMocks();
-        standings = new RegularSeasonStandingListMocks();
+        mockAbstractFactory = MockAbstractFactory.instance();
+        standingsAbstractFactory = StandingsAbstractFactory.instance();
+        mockLeagueObjectModel = mockAbstractFactory.getLeagueObjectModelMock();
+        regularSeasonStanding = mockAbstractFactory.getRegularSeasonStandingListMock();
         coach = mockLeagueObjectModel.getSingleCoach();
         players = mockLeagueObjectModel.get20FreeAgentArrayMock();
         manager = "Harry";
-        model20TeamMocks = new LeagueObjectModel20TeamMocks();
+        model20TeamMocks = mockAbstractFactory.getLeagueObjectModel20TeamMock();
         model20TeamMocks.leagueModel20TeamGeneralStandings();
+        standingSystem = standingsAbstractFactory.getStandingSystem();
     }
 
     @Test
     public void getStandingsListTest() {
         List<IStandings> standingsList = model20TeamMocks.getGeneralStandings();
-        IStandingSystem standingSystem = new StandingSystem();
         standingSystem.setStandingsList(standingsList);
         Assertions.assertTrue(standingSystem.getStandingsList().size() == 20);
     }
@@ -49,7 +54,6 @@ public class StandingSystemTest {
     @Test
     public void setStandingsListTest() {
         List<IStandings> standingsList = model20TeamMocks.getGeneralStandings();
-        IStandingSystem standingSystem = new StandingSystem();
         standingSystem.setStandingsList(standingsList);
         Assertions.assertTrue(standingSystem.getStandingsList().size() == 20);
     }
@@ -62,13 +66,11 @@ public class StandingSystemTest {
 
     @Test
     public void updateWinningStandingsTest() {
+        standingSystem.setStandingsList(regularSeasonStanding.generalSeasonStandings());
+        standingSystem.updateWinningStandings(standingSystem.getStandingsList().get(0).getTeam());
 
-        IStandingSystem iStandingSystem = new StandingSystem();
-        iStandingSystem.setStandingsList(standings.generalSeasonStandings());
-        iStandingSystem.updateWinningStandings(iStandingSystem.getStandingsList().get(0).getTeam());
-
-        for (IStandings standing : iStandingSystem.getStandingsList()) {
-            if (standing.getTeam().getTeamName().equals(iStandingSystem.getStandingsList().get(0).getTeam().getTeamName())) {
+        for (IStandings standing : standingSystem.getStandingsList()) {
+            if (standing.getTeam().getTeamName().equals(standingSystem.getStandingsList().get(0).getTeam().getTeamName())) {
                 Assert.assertEquals(standing.getPoints(), 12);
                 Assert.assertEquals(standing.getWins(), 6);
                 Assert.assertEquals(standing.getGamesPlayed(), 10);
@@ -79,12 +81,11 @@ public class StandingSystemTest {
     @Test
     public void updateLosingStandingsTest() {
 
-        IStandingSystem iStandingSystem = new StandingSystem();
-        iStandingSystem.setStandingsList(standings.generalSeasonStandings());
-        iStandingSystem.updateLosingStandings(iStandingSystem.getStandingsList().get(0).getTeam());
+        standingSystem.setStandingsList(regularSeasonStanding.generalSeasonStandings());
+        standingSystem.updateLosingStandings(standingSystem.getStandingsList().get(0).getTeam());
 
-        for (IStandings standing : iStandingSystem.getStandingsList()) {
-            if (standing.getTeam().getTeamName().equals(iStandingSystem.getStandingsList().get(0).getTeam().getTeamName())) {
+        for (IStandings standing : standingSystem.getStandingsList()) {
+            if (standing.getTeam().getTeamName().equals(standingSystem.getStandingsList().get(0).getTeam().getTeamName())) {
                 Assert.assertEquals(standing.getPoints(), 10);
                 Assert.assertEquals(standing.getLoss(), 5);
                 Assert.assertEquals(standing.getGamesPlayed(), 10);
@@ -96,15 +97,14 @@ public class StandingSystemTest {
 
     @Test
     public void rankGeneratorSamePointsTest() {
-        IStandingSystem standingSystem = new StandingSystem();
         List<IStandings> standings = new ArrayList<>();
 
-        IStandings standings1 = new Standings();
+        IStandings standings1 = standingsAbstractFactory.getStandings();
         standings1.setPoints(10);
         standings1.setWins(4);
         standings1.setLoss(4);
 
-        IStandings standings2 = new Standings();
+        IStandings standings2 = standingsAbstractFactory.getStandings();
         standings2.setPoints(10);
         standings2.setWins(5);
         standings2.setLoss(5);
@@ -120,15 +120,14 @@ public class StandingSystemTest {
 
     @Test
     public void rankGeneratorDifferentPointsTest() {
-        IStandingSystem standingSystem = new StandingSystem();
         List<IStandings> standings = new ArrayList<>();
 
-        IStandings standings1 = new Standings();
+        IStandings standings1 = standingsAbstractFactory.getStandings();
         standings1.setPoints(8);
         standings1.setWins(5);
         standings1.setLoss(5);
 
-        IStandings standings2 = new Standings();
+        IStandings standings2 = standingsAbstractFactory.getStandings();
         standings2.setPoints(10);
         standings2.setWins(4);
         standings2.setLoss(4);
@@ -144,15 +143,14 @@ public class StandingSystemTest {
 
     @Test
     public void rankGeneratorSameWinsTest() {
-        IStandingSystem standingSystem = new StandingSystem();
         List<IStandings> standings = new ArrayList<>();
 
-        IStandings standings1 = new Standings();
+        IStandings standings1 = standingsAbstractFactory.getStandings();
         standings1.setPoints(10);
         standings1.setWins(5);
         standings1.setLoss(4);
 
-        IStandings standings2 = new Standings();
+        IStandings standings2 = standingsAbstractFactory.getStandings();
         standings2.setPoints(10);
         standings2.setWins(5);
         standings2.setLoss(5);
@@ -169,7 +167,6 @@ public class StandingSystemTest {
     @Test
     public void leagueRankingTest() {
         List<IStandings> standingsList = model20TeamMocks.getGeneralStandings();
-        IStandingSystem standingSystem = new StandingSystem();
 
         standingSystem.setStandingsList(standingsList);
         standingsList = standingSystem.leagueRanking();
@@ -184,8 +181,6 @@ public class StandingSystemTest {
     @Test
     public void conferenceRankingTest() {
         List<IStandings> standingsList = model20TeamMocks.getGeneralStandings();
-        IStandingSystem standingSystem = new StandingSystem();
-
         List<IStandings> conferenceTeamList = standingSystem.conferenceRanking(standingsList.get(0).getTeamConference(), standingsList);
 
         Assert.assertEquals(conferenceTeamList.get(0).getTeam().getTeamName(), "Bruins");
@@ -198,8 +193,6 @@ public class StandingSystemTest {
     @Test
     public void divisionRankingTest() {
         List<IStandings> standingsList = model20TeamMocks.getGeneralStandings();
-        IStandingSystem standingSystem = new StandingSystem();
-
         List<IStandings> divisionTeamList = standingSystem.divisionRanking(standingsList.get(0).getTeamDivision(), standingsList);
 
         Assert.assertEquals(divisionTeamList.get(0).getTeam().getTeamName(), "Bruins");

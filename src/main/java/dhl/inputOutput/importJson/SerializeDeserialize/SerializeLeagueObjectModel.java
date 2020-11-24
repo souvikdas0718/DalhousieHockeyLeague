@@ -1,16 +1,17 @@
-package dhl.inputOutput.importJson.serializeDeserialize;
+package dhl.inputOutput.importJson.SerializeDeserialize;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.simulationStateMachine.states.CreateTeamStateLogic;
+import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.apache.logging.log4j.*;
 
 import java.io.File;
 import java.io.FileReader;
@@ -20,12 +21,12 @@ import java.util.Iterator;
 import java.util.List;
 
 public class SerializeLeagueObjectModel implements ISerializeLeagueObjectModel {
+    final String playerFileName = "--RetiredPlayersInLeague.json";
+    final String jsonExtension = ".json";
     Logger myLogger = LogManager.getLogger(CreateTeamStateLogic.class);
     String jsonFilePath;
-    final String playerFileName = "--InjuredPlayer.json";
-    final String jsonExtension = ".json";
 
-    public SerializeLeagueObjectModel(String inputJsonFilePath){
+    public SerializeLeagueObjectModel(String inputJsonFilePath) {
         jsonFilePath = inputJsonFilePath;
     }
 
@@ -37,11 +38,10 @@ public class SerializeLeagueObjectModel implements ISerializeLeagueObjectModel {
 
     public void writeJsonToFile(String filePath, String serializedData) throws IOException {
         FileWriter fileWriter = null;
-        try{
+        try {
             fileWriter = new FileWriter(filePath);
             fileWriter.write(serializedData);
-        }
-        finally {
+        } finally {
             fileWriter.close();
         }
     }
@@ -52,13 +52,13 @@ public class SerializeLeagueObjectModel implements ISerializeLeagueObjectModel {
 
         File objFile = new File(leagueObjectModelJsonPath);
 
-        if (objFile.exists()){
-            myLogger.log(myLogger.getLevel(),"League Already exists");
-        }else {
+        if (objFile.exists()) {
+            myLogger.log(myLogger.getLevel(), "League Already exists");
+        } else {
             if (objFile.createNewFile()) {
                 writeJsonToFile(leagueObjectModelJsonPath, serializedLeagueObjectModel);
             } else {
-                myLogger.log(myLogger.getLevel(),"Error saving league object data to json");
+                myLogger.log(myLogger.getLevel(), "Error saving league object data to json");
             }
         }
     }
@@ -68,10 +68,10 @@ public class SerializeLeagueObjectModel implements ISerializeLeagueObjectModel {
         String leagueObjectModelJsonPath = jsonFilePath + objLeagueObjectModel.getLeagueName() + jsonExtension;
 
         File objFile = new File(leagueObjectModelJsonPath);
-        if (objFile.exists()){
+        if (objFile.exists()) {
             writeJsonToFile(leagueObjectModelJsonPath, serializedLeagueObjectModel);
-        }else {
-            myLogger.log(myLogger.getLevel(),"This league doesn't exist");
+        } else {
+            myLogger.log(myLogger.getLevel(), "This league doesn't exist");
         }
     }
 
@@ -80,9 +80,9 @@ public class SerializeLeagueObjectModel implements ISerializeLeagueObjectModel {
 
         String serializedplayers = serializeData(playersToRetire);
         File objFile = new File(playersJsonPath);
-        if (objFile.exists()){
+        if (objFile.exists()) {
             updateJsonFile(serializedplayers, playersJsonPath);
-        }else {
+        } else {
             objFile.createNewFile();
             writeJsonToFile(playersJsonPath, serializedplayers);
         }
@@ -109,8 +109,7 @@ public class SerializeLeagueObjectModel implements ISerializeLeagueObjectModel {
             }
 
             writeJsonToFile(playersJsonPath, String.valueOf(arrCombined));
-        }
-        finally {
+        } finally {
             existingPlayers.close();
         }
     }

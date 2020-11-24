@@ -1,19 +1,17 @@
 package dhl.businessLogicTest.training;
 
-import dhl.inputOutput.importJson.GameConfig;
-import dhl.inputOutput.importJson.ImportJsonFile;
 import dhl.Mocks.JsonFilePathMock;
 import dhl.Mocks.LeagueObjectModelMocks;
-import dhl.businessLogic.leagueModel.Team;
-import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogicTest.leagueModelTests.MockDatabase;
-import dhl.database.interfaceDB.ILeagueObjectModelDB;
 import dhl.businessLogic.aging.Injury;
-import dhl.businessLogic.leagueModel.LeagueObjectModel;
-import dhl.businessLogic.traning.Training;
 import dhl.businessLogic.aging.interfaceAging.IInjury;
-import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
+import dhl.businessLogic.leagueModel.GameConfig;
+import dhl.businessLogic.leagueModel.GeneralManager;
+import dhl.businessLogic.leagueModel.Team;
+import dhl.businessLogic.leagueModel.interfaceModel.IGeneralManager;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
+import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
+import dhl.businessLogic.traning.Training;
+import dhl.inputOutput.importJson.ImportJsonFile;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,21 +36,23 @@ public class TrainingTest {
         trainingParameterized = new Training(injurySystem, gameConfig);
         leagueObjectModelMocks = new LeagueObjectModelMocks();
     }
+// TODO: 21-11-2020 REMOVE DB METHOD CALL!
 
-    @Test
-    public void updatePlayerStatsTest() throws Exception {
-        ILeagueObjectModelDB mockLeagueObject = new MockDatabase();
-        ILeagueObjectModel newLeagueObject = new LeagueObjectModel();
-        newLeagueObject = trainingParameterized.updatePlayerStats(mockLeagueObject.loadLeagueModel("Dhl", "Ontario"));
-
-        Assertions.assertNotNull("Dhl", newLeagueObject.getLeagueName());
-    }
+//    @Test
+//    public void updatePlayerStatsTest() throws Exception {
+//        ILeagueObjectModelDB mockLeagueObject = new MockDatabase();
+//        ILeagueObjectModel newLeagueObject = new LeagueObjectModel();
+//        newLeagueObject = trainingParameterized.updatePlayerStats(mockLeagueObject.loadLeagueModel("Dhl", "Ontario"));
+//
+//        Assertions.assertNotNull("Dhl", newLeagueObject.getLeagueName());
+//    }
 
     @Test
     public void playerStatLessThanHeadCoachStatTest() throws Exception {
         List<IPlayer> updatedPlayersList = new ArrayList<>();
         Double[] randomValues = {0.01, 0.2, 0.3, 0.1};
-        ITeam team = new Team("Ontario","Sam",leagueObjectModelMocks.getSingleCoach(),updatedPlayersList);
+        IGeneralManager manager = new GeneralManager("Sam", "normal");
+        ITeam team = new Team("Ontario",manager,leagueObjectModelMocks.getSingleCoach(),updatedPlayersList);
 
         updatedPlayersList = trainingParameterized.playerStatLessThanHeadCoachStat(
                 leagueObjectModelMocks.getPlayerArrayMock(),
@@ -71,7 +71,9 @@ public class TrainingTest {
     public void playerStatMoreThanHeadCoachStatTest() throws Exception {
         List<IPlayer> updatedPlayersList = new ArrayList<>();
         Double[] randomValues = {0.1, 0.2, 0.3, 0.4};
-        ITeam team = new Team("Ontario","Sam",leagueObjectModelMocks.getSingleCoach(),updatedPlayersList);
+
+        IGeneralManager manager = new GeneralManager("Sam", "normal");
+        ITeam team = new Team("Ontario",manager,leagueObjectModelMocks.getSingleCoach(),updatedPlayersList);
 
         trainingParameterized.gameConfig = new GameConfig(importJsonFile.getJsonObject());
         trainingParameterized.playerStatMoreThanHeadCoachStat(leagueObjectModelMocks.getPlayerArrayMock()

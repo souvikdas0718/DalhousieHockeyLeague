@@ -1,12 +1,9 @@
 package dhl.inputOutput.importJson;
 
-import dhl.businessLogic.aging.interfaceAging.IInjury;
-import dhl.businessLogic.traning.TrainingAbstractFactory;
-import dhl.businessLogic.traning.TrainingFactory;
-import dhl.businessLogic.traning.interfaces.ITraining;
+import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.inputOutput.importJson.interfaces.ICheckInputFileFormat;
 import dhl.inputOutput.importJson.interfaces.ICreateLeagueObjectModel;
-import dhl.inputOutput.importJson.interfaces.IGameConfig;
+import dhl.inputOutput.importJson.interfaces.IImportJsonFile;
 import dhl.inputOutput.importJson.interfaces.IJsonFilePath;
 import org.json.simple.JSONObject;
 
@@ -25,8 +22,7 @@ public abstract class ImportJsonAbstractFactory {
     }
 
     public abstract ICheckInputFileFormat createCheckInputFileFormat();
-    public abstract ICreateLeagueObjectModel createCreateLeagueObjectModel();
-    public abstract IGameConfig createGameConfig(JSONObject jsonObject);
-    public abstract void createImportJsonFile(String filePath);
+    public abstract ICreateLeagueObjectModel createCreateLeagueObjectModel(JSONObject sonLeagueObject);
+    public abstract IImportJsonFile createImportJsonFile(String filePath);
     public abstract IJsonFilePath createJsonFilePath();
 }

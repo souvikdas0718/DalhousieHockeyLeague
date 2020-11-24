@@ -3,9 +3,13 @@ package dhl.businessLogicTest.leagueModelTests;
 import dhl.businessLogic.leagueModel.CommonValidation;
 import dhl.businessLogic.leagueModel.Player;
 import dhl.businessLogic.leagueModel.PlayerStatistics;
+import dhl.businessLogic.leagueModel.Team;
+import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
 import dhl.businessLogic.leagueModel.interfaceModel.IValidation;
+import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
+import dhl.businessLogicTest.leagueModelTests.mocks.TeamMock;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,10 +20,15 @@ import java.util.List;
 
 public class CommonValidationTest {
     IValidation commonValidation;
+    TeamMock teamMock;
+    LeagueModelMockAbstractFactory mockFactory;
 
     @BeforeEach()
     public void initObject() {
-        commonValidation = new CommonValidation();
+        LeagueModelAbstractFactory leagueFactory= LeagueModelAbstractFactory.instance();
+        commonValidation = leagueFactory.createCommonValidation();
+        mockFactory = LeagueModelMockAbstractFactory.instance();
+        teamMock = mockFactory.createTeamMock();
     }
 
     @Test
@@ -41,14 +50,9 @@ public class CommonValidationTest {
 
     @Test
     public void isListNotEmptyTest() throws Exception {
-        List<IPlayer> players = new ArrayList<>();
-        IPlayerStatistics playerStatistics = new PlayerStatistics(20, 10, 10, 10, 10);
-        IPlayer player1 = new Player("Rhea", "forward", false, playerStatistics);
-        players.add(player1);
-        IPlayer player2 = new Player("Noah", "defense", true, playerStatistics);
-        players.add(player2);
-        commonValidation.isListEmpty(players, "players");
-        Assertions.assertTrue(players.size() != 0);
+
+        commonValidation.isListEmpty(teamMock.getTeamPlayers(), "players");
+        Assertions.assertTrue(teamMock.getTeamPlayers().size() > 0);
     }
 
     @AfterEach()

@@ -1,15 +1,34 @@
 package dhl.businessLogic.simulationStateMachine.interfaces;
 
+import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
+import dhl.businessLogic.leagueModel.factory.LeagueModelFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
+import dhl.businessLogic.simulationStateMachine.UpdateUserTeamRoster;
+import dhl.inputOutput.ui.IUserInputOutput;
+import dhl.inputOutput.ui.UserInputOutput;
 
-public interface IUpdateUserTeamRoster {
+public abstract class IUpdateUserTeamRoster {
 
-    void dropSkater(ITeam team, ILeagueObjectModel leagueObjectModel);
+    private static IUpdateUserTeamRoster uniqueInstance = null;
 
-    void dropGoalie(ITeam team, ILeagueObjectModel leagueObjectModel);
+    protected IUpdateUserTeamRoster() {
 
-    void addGoalie(ITeam team, ILeagueObjectModel leagueObjectModel);
+    }
 
-    void addSkater(ITeam team, ILeagueObjectModel leagueObjectModel);
+    public static IUpdateUserTeamRoster instance(IUserInputOutput ioObject) {
+        if (null == uniqueInstance)
+        {
+            uniqueInstance = new UpdateUserTeamRoster(ioObject);
+        }
+        return uniqueInstance;
+    }
+
+    public static void setFactory(IUpdateUserTeamRoster factory) {
+        uniqueInstance = factory;
+    }
+
+    public abstract void dropPlayer(String playerPosition, ITeam team, ILeagueObjectModel league);
+
+    public abstract void addPlayer(String playerPosition, ITeam team, ILeagueObjectModel league);
 }

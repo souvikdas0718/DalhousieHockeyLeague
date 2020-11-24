@@ -1828,7 +1828,7 @@ public class SerializedJsonMock {
                 "      \"generalManagerName\": \"Todd McLellan1\"\n" +
                 "    }\n" +
                 "  ],\n" +
-                "  \"gameConfig\": {\n" +
+                "  \"gameplayConfig\": {\n" +
                 "    \"ourJsonObject\": {\n" +
                 "      \"gameResolver\": {\n" +
                 "        \"randomWinChance\": 0.1\n" +
@@ -1857,7 +1857,7 @@ public class SerializedJsonMock {
                 "    \"randomTradeOfferChance\": \"randomTradeOfferChance\",\n" +
                 "    \"maxPlayersPerTrade\": \"maxPlayersPerTrade\",\n" +
                 "    \"randomAcceptanceChance\": \"randomAcceptanceChance\",\n" +
-                "    \"gmTable\": \"gmTable\",\n" +
+                "    \"gmTable\": \"gmTable\"," +
                 "    \"aging\": \"aging\",\n" +
                 "    \"averageRetirementAge\": \"averageRetirementAge\",\n" +
                 "    \"maximumAge\": \"maximumAge\",\n" +

@@ -1,15 +1,18 @@
 package dhl.businessLogicTest.simulationStateMachineTest.states.seasonSimulationTest;
 
 import dhl.Mocks.GameConfigMock;
-import dhl.Mocks.LeagueObjectModel20TeamMocks;
 import dhl.Mocks.LeagueObjectModelMocks;
+import dhl.businessLogic.leagueModel.Team;
+import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
+import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
-import dhl.businessLogic.simulationStateMachine.interfaces.IScheduler;
+import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.ExecuteTradesState;
+import dhl.businessLogic.trade.TradingEngine;
+import dhl.businessLogic.trade.interfaces.ITradingEngine;
 import dhl.businessLogicTest.tradeTest.TradeMock;
-import dhl.inputOutput.importJson.interfaces.IGameConfig;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,30 +23,33 @@ public class ExecuteTradesStateTest {
     ExecuteTradesState executeTradesState;
     GameContext gameState;
     LeagueObjectModelMocks mockLeagueObjectModel;
-    LeagueObjectModel20TeamMocks model20TeamMocks;
+    ILeagueObjectModel leagueMock;
     GameConfigMock gameConfig;
     IGameConfig iGameConfig;
     IScheduler scheduler;
     ITeam goodTeamMock;
     ITeam badTeamMock;
+    ITeam userTeam;
     TradeMock tradeMock;
+    ITradingEngine tradeEngine;
+
 
     @BeforeEach
     public void initObject() {
         gameState = new GameContext();
-        simulationContext = new SimulationContext(gameState);
-//        simulationContext.setInMemoryLeague(mockLeagueObjectModel.getLeagueObjectMock());
-        executeTradesState = new ExecuteTradesState(simulationContext);
         mockLeagueObjectModel = new LeagueObjectModelMocks();
-        model20TeamMocks = new LeagueObjectModel20TeamMocks();
-        model20TeamMocks.leagueModel20TeamGeneralStandings();
         gameConfig = new GameConfigMock();
         iGameConfig = gameConfig.getGameConfigMock();
-        scheduler = model20TeamMocks.leagueModel20TeamPlayoffsSchedules();
         tradeMock = new TradeMock();
+        goodTeamMock = tradeMock.getTeamWithGoodPlayer();
         badTeamMock = tradeMock.getTeamWithBadPlayer();
-
-
+        userTeam = new Team();
+        leagueMock = mockLeagueObjectModel.getLeagueObjectMock();
+        leagueMock.getConferences().get(0).getDivisions().get(0).getTeams().add(goodTeamMock);
+        leagueMock.getConferences().get(0).getDivisions().get(0).getTeams().add(badTeamMock);
+        leagueMock.setGameConfig(iGameConfig);
+        tradeEngine = new TradingEngine(iGameConfig, leagueMock, userTeam);
+        simulationContext = new SimulationContext(gameState);
     }
 
     @Test
@@ -68,51 +74,21 @@ public class ExecuteTradesStateTest {
 
     @Test
     public void seasonStateProcessTest() {
-//        simulationContext = new SimulationContext(gameState);
-////        System.out.println("Hello: "+iGameConfig.getTrading());
-////        System.out.println("Hello: "+iGameConfig.getLossPoint());
-////        System.out.println(Long.parseLong(iGameConfig.getValueFromOurObject(iGameConfig.getTrading(), iGameConfig.getLossPoint())));
-////        System.out.println(Double.parseDouble(iGameConfig.getValueFromOurObject(iGameConfig.getTrading(), iGameConfig.getRandomTradeOfferChance())));
-//        double badTeamStrengthBeforeTrade = badTeamMock.calculateTeamStrength();
-//        executeTradesState = new ExecuteTradesState(simulationContext);
-////        testClassObject.startEngine();
-//        executeTradesState.seasonStateProcess();
-//        Assertions.assertTrue(badTeamStrengthBeforeTrade < badTeamMock.calculateTeamStrength());
+        double badTeamStrengthBeforeTrade = badTeamMock.calculateTeamStrength();
+        badTeamMock.setRoster();
+        simulationContext.setGameConfig(iGameConfig);
+        simulationContext.setInMemoryLeague(leagueMock);
+        simulationContext.setTradeEngine(tradeEngine);
 
-//        long configLossPoint = Long.parseLong(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getLossPoint()));
-//        double configRandomTradeChance = Double.parseDouble(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getRandomTradeOfferChance()));
-//        try {
-//            for (IConference conference : leagueObjectModel.getConferences()) {
-//                for (IDivision division : conference.getDivisions()) {
-//                    for (ITeam team : division.getTeams()) {
-//                        if (findLossPointOfTheTeam(team) > configLossPoint) {
-//                            double randomNumber = Math.random();
-//                            if (randomNumber > configRandomTradeChance) {
-//                                tradeEngine.startEngine();
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        } catch (Exception e) {
-//            log.error("Error occured while trading"+ e.getMessage());
-//            e.printStackTrace();
-//        }
-
+        executeTradesState = new ExecuteTradesState(simulationContext);
+        executeTradesState.seasonStateProcess();
+        Assertions.assertTrue(badTeamStrengthBeforeTrade < badTeamMock.calculateTeamStrength());
     }
 
     @Test
     public void seasonStateExitProcessTest() {
+        executeTradesState = new ExecuteTradesState(simulationContext);
         executeTradesState.seasonStateExitProcess();
         Assertions.assertTrue(executeTradesState.getSimulationContext().getCurrentSimulation() == executeTradesState.getSimulationContext().getAging());
     }
-
-//    public ITeam getUserTeam() {
-//        return userTeam;
-//    }
-//
-//    public int findLossPointOfTheTeam(ITeam team) {
-//        int teamLossPoint = team.getLossPoint();
-//        return teamLossPoint;
-//    }
 }

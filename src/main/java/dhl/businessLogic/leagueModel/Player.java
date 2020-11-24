@@ -2,19 +2,18 @@ package dhl.businessLogic.leagueModel;
 
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Player implements IPlayer {
     private static final int INJUREDDAYSDEFAULTVALUE=-1;
+    private static final Logger logger = LogManager.getLogger(Player.class);
     private String playerName;
     private PlayerPosition position;
     private Boolean captain;
     private IPlayerStatistics playerStats;
     private int playerInjuredDays;
     private boolean active;
-
-    public Player() {
-        setDefaults();
-    }
 
     public void setDefaults() {
         playerName = "";
@@ -98,6 +97,7 @@ public class Player implements IPlayer {
     }
 
     public boolean checkPlayerValid() throws Exception {
+        logger.info("Checking player object created");
         if (this.isPlayerNameEmpty()) {
             throw new Exception("Player name cannot be empty");
         }
@@ -105,13 +105,15 @@ public class Player implements IPlayer {
             throw new Exception("Player position must be goalie or forward or defense");
         }
         if (this.isCaptainValueBoolean()) {
-            throw new Exception("Captain value must be true or false");
+            throw new Exception("Captain value must be true or false for player"+playerName);
         }
         playerStats.checkPlayerStatistics();
+        logger.info("Player created is valid:" + playerName);
         return true;
     }
 
     public double getPlayerStrength() {
+        logger.info("Calculating strength of player"+playerName);
         double playerStrength = 0;
         if (position == PlayerPosition.FORWARD) {
             playerStrength = playerStats.getSkating() + playerStats.getShooting() + (playerStats.getChecking() / 2.0);

@@ -1,29 +1,39 @@
 package dhl.businessLogicTest.leagueModelTests;
 
-import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import dhl.Mocks.LeagueObjectModelMocks;
+import dhl.Mocks.factory.MockAbstractFactory;
 import dhl.businessLogic.leagueModel.LeagueObjectModelInput;
 import dhl.businessLogic.leagueModel.LeagueObjectModelValidation;
+import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModelInput;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModelValidation;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
+import dhl.Mocks.MockSerializeLeagueObjectModel;
+import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
+import dhl.businessLogicTest.leagueModelTests.mocks.TeamMock;
+import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class LeagueObjectModelInputTest {
-    ILeagueObjectModelValidation leagueValidation;
-    LeagueObjectModelMocks leagueMock;
     ILeagueObjectModelInput leagueObjectModelInput;
     ISerializeLeagueObjectModel serializeLeagueObjectModel;
+    LeagueModelAbstractFactory leagueFactory;
+    LeagueModelMockAbstractFactory leagueMockFactory;
+    MockAbstractFactory mockFactory;
 
     @BeforeEach
     public void initialize() {
-        leagueValidation = new LeagueObjectModelValidation();
-        leagueMock = new LeagueObjectModelMocks();
-        serializeLeagueObjectModel = new MockSerializeLeagueObjectModel();
-        leagueObjectModelInput = new LeagueObjectModelInput("Dhl", "Western", "Atlantic", leagueMock.getTeamObjectMock(), leagueValidation, serializeLeagueObjectModel);
+        leagueFactory= LeagueModelAbstractFactory.instance();
+        mockFactory= MockAbstractFactory.instance();
+        serializeLeagueObjectModel = mockFactory.getMockSerialize();
+
+        LeagueModelMockAbstractFactory leagueMockFactory= LeagueModelMockAbstractFactory.instance();
+        TeamMock teamMock =  leagueMockFactory.createTeamMock();
+        ITeam newlyCreatedTeam = teamMock.getTeamByName("Halifax");
+        leagueObjectModelInput =leagueFactory.createLeagueObjectModelInput("Dhl", "Western", "Atlantic", newlyCreatedTeam, serializeLeagueObjectModel);
     }
 
     @Test
@@ -32,16 +42,14 @@ public class LeagueObjectModelInputTest {
         Assertions.assertEquals(leagueObjectModelInput.getConferenceName(), "Western");
         Assertions.assertEquals(leagueObjectModelInput.getDivisionName(), "Atlantic");
         ITeam team = leagueObjectModelInput.getNewlyCreatedTeam();
-        Assertions.assertEquals(team.getTeamName(), "Mock Team");
+        Assertions.assertEquals(team.getTeamName(), "Halifax");
         Assertions.assertNotNull(leagueObjectModelInput.getLeagueObjectModelValidation());
         Assertions.assertNotNull(leagueObjectModelInput.getserializeLeagueObjectModel());
     }
 
     @AfterEach
     public void destroyObject() {
-        leagueMock = null;
         leagueObjectModelInput = null;
-        leagueValidation = null;
     }
 
 

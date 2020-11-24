@@ -1,13 +1,13 @@
 package dhl.businessLogic.trade;
 
 import dhl.businessLogic.leagueModel.PlayerPosition;
-import dhl.inputOutput.ui.IUserInputOutput;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.simulationStateMachine.interfaces.IUpdateUserTeamRoster;
 import dhl.businessLogic.trade.interfaces.ITradeOffer;
 import dhl.businessLogic.trade.interfaces.ITradeType;
+import dhl.inputOutput.ui.IUserInputOutput;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,49 +33,56 @@ public class AiUserTrade implements ITradeType {
         int inputFromUser = Integer.parseInt(ioObject.getUserInput());
 
         if (inputFromUser == 1) {
+            ioObject.printMessage("Trade Accepted, Thankyou");
             return true;
         } else if (inputFromUser == 2) {
+            ioObject.printMessage("Trade Rejected, Thankyou");
             return false;
-        } else {
-            throw new Exception("Wrong Input please give valid input");
         }
+        return false;
     }
 
     public void validateTeamRosterAfterTrade(ITeam team, ILeagueObjectModel leagueObjectModel) throws Exception {
-        int totalSkaters = 0;
+
+        int totalForwards = 0;
+        int totalDefense = 0;
         int totalGoalies = 0;
         ArrayList<IPlayer> players = (ArrayList<IPlayer>) team.getPlayers();
 
         for (IPlayer player : players) {
             String position = player.getPosition();
-            if (position.equals(PlayerPosition.FORWARD.toString()) || position.equals(PlayerPosition.DEFENSE.toString())) {
-                totalSkaters = totalSkaters + 1;
+            if (position.equals(PlayerPosition.FORWARD.toString())){
+                totalForwards = totalForwards + 1;
             }
-            if (position.equals(PlayerPosition.GOALIE.toString())) {
+            else if (position.equals(PlayerPosition.DEFENSE.toString())){
+                totalDefense = totalDefense + 1;
+            }
+            else if (position.equals(PlayerPosition.GOALIE.toString())) {
                 totalGoalies = totalGoalies + 1;
             }
         }
-        if (totalSkaters > 18) {
-            while (totalSkaters > 18) {
-                updateUserTeamRoster.dropSkater(team, leagueObjectModel);
-                totalSkaters = totalSkaters - 1;
-            }
-        } else if (totalSkaters < 18) {
-            while (totalSkaters < 18) {
-                updateUserTeamRoster.addSkater(team, leagueObjectModel);
-                totalSkaters = totalSkaters + 1;
-            }
+        if(totalDefense > TOTAL_DEFENSE || totalDefense < TOTAL_DEFENSE){
+            updatePlayer(totalDefense, PlayerPosition.DEFENSE.toString(), TOTAL_DEFENSE, team, leagueObjectModel);
         }
-        if (totalGoalies > 2) {
-            while (totalGoalies > 2) {
-                updateUserTeamRoster.dropGoalie(team, leagueObjectModel);
-                totalGoalies = totalGoalies - 1;
-            }
+        if(totalForwards > TOTAL_FORWARDS || totalForwards < TOTAL_FORWARDS){
+            updatePlayer(totalForwards, PlayerPosition.FORWARD.toString(), TOTAL_FORWARDS, team, leagueObjectModel);
+        }
+        if(totalGoalies > TOTAL_GOALIES || totalGoalies < TOTAL_GOALIES){
+            updatePlayer(totalGoalies, PlayerPosition.GOALIE.toString(), TOTAL_GOALIES, team, leagueObjectModel);
+        }
+    }
 
-        } else if (totalGoalies < 2) {
-            while (totalGoalies < 2) {
-                updateUserTeamRoster.addGoalie(team, leagueObjectModel);
-                totalGoalies = totalGoalies + 1;
+    public void updatePlayer(int currentCount, String playerPosition, int requierdCount, ITeam team, ILeagueObjectModel league){
+        if(currentCount > requierdCount){
+            while (currentCount > requierdCount){
+                updateUserTeamRoster.dropPlayer(playerPosition, team, league);
+                currentCount = currentCount - 1;
+            }
+        }
+        else if(currentCount < requierdCount){
+            while (currentCount < requierdCount){
+                updateUserTeamRoster.addPlayer(playerPosition, team, league);
+                currentCount = currentCount + 1;
             }
         }
     }

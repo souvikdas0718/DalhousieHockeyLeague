@@ -1,18 +1,25 @@
 package dhl.businessLogicTest.leagueModelTests;
 
+import dhl.businessLogic.leagueModel.Player;
 import dhl.businessLogic.leagueModel.PlayerStatistics;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
+import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
+import dhl.businessLogicTest.leagueModelTests.mocks.PlayerMock;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class PlayerStatisticsTest {
+    LeagueModelMockAbstractFactory factory;
+    PlayerMock playerMock;
     IPlayerStatistics playerStatistics;
 
     @BeforeEach()
     public void initObject() {
-        playerStatistics = new PlayerStatistics(20, 10, 10, 10, 10);
+        factory = LeagueModelMockAbstractFactory.instance();
+        playerMock = factory.createPlayerMock();
+        playerStatistics = playerMock.getPlayerStats();
     }
 
     @Test
@@ -47,7 +54,7 @@ public class PlayerStatisticsTest {
 
     @Test
     void checkPlayerStatisticsTest() throws Exception {
-        IPlayerStatistics playerStat = new PlayerStatistics(20, 10, 19, 0, 10);
+        IPlayerStatistics playerStat = playerMock.getInvalidPlayerStats();
         Exception errorMsg = Assertions.assertThrows(Exception.class, () -> {
             playerStat.checkPlayerStatistics();
         });

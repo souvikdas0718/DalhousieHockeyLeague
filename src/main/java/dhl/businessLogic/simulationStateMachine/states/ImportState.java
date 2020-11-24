@@ -1,14 +1,13 @@
 package dhl.businessLogic.simulationStateMachine.states;
 
-import dhl.inputOutput.ui.IUserInputOutput;
-import dhl.inputOutput.ui.UserInputOutput;
-import dhl.inputOutput.importJson.interfaces.IGameConfig;
-import dhl.inputOutput.importJson.JsonFilePath;
 import dhl.businessLogic.leagueModel.LeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.interfaces.IGameState;
 import dhl.businessLogic.simulationStateMachine.states.interfaces.IImportStateLogic;
+import dhl.inputOutput.importJson.JsonFilePath;
+import dhl.inputOutput.ui.IUserInputOutput;
+import dhl.inputOutput.ui.UserInputOutput;
 
 public class ImportState implements IGameState {
 
@@ -16,7 +15,6 @@ public class ImportState implements IGameState {
     ILeagueObjectModel newInMemoryLeague;
     int option = -1;
     GameContext ourGame;
-    IGameConfig gameConfig;
     IUserInputOutput userInputPutput = new UserInputOutput();
 
     public ImportState(GameContext newGame) {
@@ -54,11 +52,11 @@ public class ImportState implements IGameState {
     }
 
     @Override
-    public void stateProcess() throws Exception {
+    public void stateProcess() {
         if (validFilePath != null) {
             try {
                 IImportStateLogic objImportStateLogic = new ImportStateLogic();
-                newInMemoryLeague = objImportStateLogic.importAndGetLeagueObject(validFilePath, gameConfig, newInMemoryLeague);
+                newInMemoryLeague = objImportStateLogic.importAndGetLeagueObject(validFilePath);
 
                 userInputPutput.printMessage(newInMemoryLeague.getLeagueName() + "  Imported from the Json");
             } catch (Exception e) {
@@ -72,7 +70,7 @@ public class ImportState implements IGameState {
     public void stateExitProcess() {
         if (ourGame.isGameInProgress()) {
             ourGame.setInMemoryLeague(newInMemoryLeague);
-            ourGame.setGameConfig(gameConfig);
+            ourGame.setGameConfig(newInMemoryLeague.getGameConfig());
             if (option == 1) {
                 ourGame.setGameState(ourGame.getCreateTeamState());
             } else if (option == 2) {

@@ -1,15 +1,17 @@
 package dhl.businessLogicTest.AgingTest;
 
-import dhl.inputOutput.importJson.interfaces.IGameConfig;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.aging.Injury;
+import dhl.businessLogic.aging.agingFactory.AgingAbstractFactory;
 import dhl.businessLogic.leagueModel.Coach;
 import dhl.businessLogic.leagueModel.Player;
 import dhl.businessLogic.leagueModel.PlayerStatistics;
 import dhl.businessLogic.leagueModel.Team;
-import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
-import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
-import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
+import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
+import dhl.businessLogic.leagueModel.interfaceModel.*;
+import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
+import dhl.businessLogicTest.leagueModelTests.mocks.GameplayConfigMock;
+import dhl.businessLogicTest.leagueModelTests.mocks.TeamMock;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,21 +23,27 @@ import java.util.List;
 public class InjuryTest {
     IGameConfig gameConfig;
     Injury injury;
-    LeagueObjectModelMocks leagueMock;
     ITeam team;
+    LeagueModelAbstractFactory leagueFactory;
+    AgingAbstractFactory agingFactory;
+    LeagueModelMockAbstractFactory leagueMockFactory;
+    TeamMock teamMock;
 
     @BeforeEach()
     public void initObject() {
-        leagueMock = new LeagueObjectModelMocks();
-        gameConfig = leagueMock.getGameConfig();
-        injury = new Injury();
-        team = leagueMock.getTeamObjectMock();
+        leagueFactory = LeagueModelAbstractFactory.instance();
+        leagueMockFactory = LeagueModelMockAbstractFactory.instance();
+        teamMock = leagueMockFactory.createTeamMock();
+
+        GameplayConfigMock gameplayConfigMock = leagueMockFactory.createGameplayConfig();
+        gameConfig = gameplayConfigMock.getAgingGameConfig();
+        agingFactory= AgingAbstractFactory.instance();
+        injury = (Injury) agingFactory.createInjury();
+        team = teamMock.getTeam();
     }
 
     @Test
     public void checkTeamInjuryTest() {
-        LeagueObjectModelMocks leagueMock = new LeagueObjectModelMocks();
-        IGameConfig gameConfig = leagueMock.getGameConfig();
         injury.checkTeamInjury(gameConfig, team);
         List<IPlayer> playerList = team.getPlayers();
         IPlayer player = playerList.get(0);
@@ -44,15 +52,17 @@ public class InjuryTest {
 
     @Test
     public void checkIfPlayerInjuredTest() {
-        IPlayer player = new Player();
-        ITeam team = leagueMock.getTeamObjectMock();
+        IPlayerStatistics playerStatistics = leagueFactory.createPlayerStatistics(20, 10, 10, 10, 10);
+        IPlayer player = leagueFactory.createPlayer("Harry", "forward", false, playerStatistics);
+        ITeam team = teamMock.getTeam();
         injury.checkIfPlayerInjured(gameConfig, player,team);
         Assertions.assertEquals(-1, player.getPlayerInjuredDays());
     }
 
     @Test
     public void isPlayerAlreadyInjuredTest() {
-        IPlayer player = new Player();
+        IPlayerStatistics playerStatistics = leagueFactory.createPlayerStatistics(20, 10, 10, 10, 10);
+        IPlayer player = leagueFactory.createPlayer("Harry", "forward", false, playerStatistics);
         player.setPlayerInjuredDays(10);
         injury.checkIfPlayerInjured(gameConfig, player,team);
         Assertions.assertTrue(injury.checkIfPlayerInjured(gameConfig, player,team));
@@ -60,7 +70,8 @@ public class InjuryTest {
 
     @Test
     public void healInjuredPlayersTest() {
-        IPlayer player = new Player();
+        IPlayerStatistics playerStatistics = leagueFactory.createPlayerStatistics(20, 10, 10, 10, 10);
+        IPlayer player = leagueFactory.createPlayer("Harry", "forward", false, playerStatistics);
         player.setPlayerInjuredDays(10);
         injury.healInjuredPlayers(player);
         Assertions.assertEquals(9, player.getPlayerInjuredDays());
@@ -68,7 +79,8 @@ public class InjuryTest {
 
     @Test
     public void InjuryHealedPlayersTest() {
-        IPlayer player = new Player();
+        IPlayerStatistics playerStatistics = leagueFactory.createPlayerStatistics(20, 10, 10, 10, 10);
+        IPlayer player = leagueFactory.createPlayer("Harry", "forward", false, playerStatistics);
         player.setPlayerInjuredDays(0);
         injury.healInjuredPlayers(player);
         Assertions.assertEquals(-1, player.getPlayerInjuredDays());
@@ -76,8 +88,9 @@ public class InjuryTest {
 
     @Test
     public void swapInjuredPlayerTest(){
-        List<IPlayer> playersInTeam = leagueMock.getTeamPlayers();
-        Team testTeam = new Team("Ontario", "Mathew", new Coach(),playersInTeam );
+        List<IPlayer> playersInTeam = teamMock.getTeamPlayers();
+        IGeneralManager manager = leagueFactory.createGeneralManager("Mathew", "normal");
+        Team testTeam = (Team) leagueFactory.createTeam("Ontario", manager, leagueFactory.createCoachDefault(),playersInTeam );
         IPlayer player = playersInTeam.get(0);
         injury.swapInjuredPlayer(player,testTeam);
         Assertions.assertFalse(player.isActive());
@@ -85,20 +98,22 @@ public class InjuryTest {
 
     @Test
     public void swapRecoveredPlayerTest(){
-        List<IPlayer> playersInTeam = leagueMock.getTeamPlayers();
-        Team testTeam = new Team("Ontario", "Mathew", new Coach(),playersInTeam );
-        IPlayerStatistics playerStatistics = new PlayerStatistics(21,20,20,20,20);
-        IPlayer player = new Player("Rehab","forward",false,playerStatistics);
+        List<IPlayer> playersInTeam = teamMock.getTeamPlayers();
+        IGeneralManager manager = leagueFactory.createGeneralManager("Mathew", "normal");
+        Team testTeam = (Team) leagueFactory.createTeam("Ontario", manager, leagueFactory.createCoachDefault(),playersInTeam );
+        IPlayerStatistics playerStatistics = leagueFactory.createPlayerStatistics(21,20,20,20,20);
+        IPlayer player = leagueFactory.createPlayer("Rehab","forward",false,playerStatistics);
         injury.swapRecoveredPlayer(player,testTeam);
         Assertions.assertTrue(player.isActive());
     }
 
     @Test
     public void healInjuredPlayersInTeamTest() {
-        List<IPlayer> playersInTeam = leagueMock.getTeamPlayers();
-        Team testTeam = new Team("Ontario", "Mathew", new Coach(),playersInTeam );
-        IPlayerStatistics playerStatistics = new PlayerStatistics(21,20,20,20,20);
-        IPlayer player = new Player("Rehab","forward",false,playerStatistics);
+        List<IPlayer> playersInTeam = teamMock.getTeamPlayers();
+        IGeneralManager manager = leagueFactory.createGeneralManager("Mathew", "normal");
+        Team testTeam = (Team) leagueFactory.createTeam("Ontario", manager, leagueFactory.createCoachDefault(),playersInTeam );
+        IPlayerStatistics playerStatistics =leagueFactory.createPlayerStatistics(21,20,20,20,20);
+        IPlayer player = leagueFactory.createPlayer("Rehab","forward",false,playerStatistics);
         player.setPlayerInjuredDays(0);
         player.setActive(false);
         injury.healInjuredPlayersInTeam(player,testTeam);
@@ -109,7 +124,6 @@ public class InjuryTest {
     public void destroyObject() {
         injury = null;
         gameConfig = null;
-        leagueMock = null;
     }
 
 

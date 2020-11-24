@@ -1,14 +1,13 @@
 package dhl.businessLogicTest.simulationStateMachineTest.states.seasonSimulationTest;
 
 import dhl.Mocks.LeagueObjectModel20TeamMocks;
-import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
-import dhl.businessLogic.simulationStateMachine.interfaces.IScheduler;
-import dhl.businessLogic.simulationStateMachine.interfaces.IStandings;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.Scheduler;
+import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.GeneratePlayOffScheduleState;
+import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandings;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,14 +19,12 @@ public class GeneratePlayOffScheduleStateTest {
     SimulationContext simulationContext;
     GeneratePlayOffScheduleState generatePlayOffScheduleState;
     GameContext gameState;
-    LeagueObjectModelMocks mockLeagueObjectModel;
     LeagueObjectModel20TeamMocks model20TeamMocks;
     IScheduler scheduler;
 
 
     @BeforeEach
     public void initObject() {
-        mockLeagueObjectModel = new LeagueObjectModelMocks();
         model20TeamMocks = new LeagueObjectModel20TeamMocks();
         model20TeamMocks.leagueModel20TeamGeneralStandings();
         scheduler = new Scheduler();
@@ -58,7 +55,12 @@ public class GeneratePlayOffScheduleStateTest {
     }
 
     @Test
-    public void seasonStateProcess() {
+    public void seasonStateEntryProcessTest() {
+
+    }
+
+    @Test
+    public void seasonStateProcessTest() {
         ILeagueObjectModel league = model20TeamMocks.getLeagueData();
         ArrayList<IStandings> standings = model20TeamMocks.getGeneralStandings();
         IScheduler scheduler = new Scheduler();
