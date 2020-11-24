@@ -45,15 +45,15 @@ public class DeSerializeLeagueObjectModelTest {
         leagueObjectModelMocks = new LeagueObjectModelMocks();
     }
 
-    @Test
-    public void deserializeLeagueObjectJsonTest() throws Exception {
-        String leagueObjectModelJsonPath = filepath + "Dhl" + jsonExtension;
-        serializeLeagueobjectModel.writeSerializedLeagueObjectToJsonFile(leagueObjectModelMocks.leagueModelMockWith30Players());
-        leagueObjectModel = deserializeleagueObjectModel.deserializeLeagueObjectJson("Dhl");
-        Assertions.assertEquals("Dhl", leagueObjectModel.getLeagueName());
-
-        deleteFile(leagueObjectModelJsonPath);
-    }
+//    @Test
+//    public void deserializeLeagueObjectJsonTest() throws Exception {
+//        String leagueObjectModelJsonPath = filepath + "Dhl" + jsonExtension;
+//        serializeLeagueobjectModel.writeSerializedLeagueObjectToJsonFile(leagueObjectModelMocks.leagueModelMockWith30Players());
+//        leagueObjectModel = deserializeleagueObjectModel.deserializeLeagueObjectJson("Dhl");
+//        Assertions.assertEquals("Dhl", leagueObjectModel.getLeagueName());
+//
+//        deleteFile(leagueObjectModelJsonPath);
+//    }
 
     @Test
     public void updateLeagueObjectModelJsonTest() throws Exception {
