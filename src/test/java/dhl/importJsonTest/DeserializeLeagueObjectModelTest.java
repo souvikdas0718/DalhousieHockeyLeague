@@ -48,14 +48,14 @@ public class DeserializeLeagueObjectModelTest {
     @Test
     public void deserializeLeagueObjectJsonTest() throws Exception {
         leagueObjectModel = deserializeleagueObjectModel.deserializeLeagueObjectJson("DhlMockLeagueObjectModel");
-        Assertions.assertEquals("Dalhousie Hockey League", leagueObjectModel.getLeagueName());
+        Assertions.assertEquals("DhlMockLeagueObjectModel", leagueObjectModel.getLeagueName());
     }
 
     @Test
     public void updateLeagueObjectModelJsonTest() throws Exception {
         JSONObject jsonLeagueObject = (JSONObject) jsonParser.parse(jsonMock.serializedJson());
         JSONObject updatedJsonLeagueObject = deserializeleagueObjectModel.updateLeagueObjectModelJson(jsonLeagueObject);
-        Assertions.assertEquals("Dhl", updatedJsonLeagueObject.get("leagueName"));
+        Assertions.assertEquals("DhlMockLeagueObjectModel", updatedJsonLeagueObject.get("leagueName"));
     }
 
     @Test
