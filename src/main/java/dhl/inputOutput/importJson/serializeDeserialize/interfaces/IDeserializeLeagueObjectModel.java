@@ -8,6 +8,6 @@ import java.io.IOException;
 import java.util.List;
 
 public interface IDeserializeLeagueObjectModel {
-    ILeagueObjectModel deserializeLeagueObjectJson(String leagueName) throws Exception;
-    List<IPlayer> deserializePlayers(String leagueName) throws ParseException, IOException;
+    ILeagueObjectModel deserializeLeagueObjectJson(String leagueName);
+    List<IPlayer> deserializePlayers(String leagueName) ;
 }

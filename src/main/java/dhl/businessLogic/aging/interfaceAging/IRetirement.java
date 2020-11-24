@@ -10,6 +10,6 @@ import java.util.Map;
 public interface IRetirement {
     ILeagueObjectModel getLeagueObjectModel();
 
-    void initiateRetirement(Map<String, List<IPlayer>> playersToRetire, List<IPlayer> freeAgentsToRetire) throws Exception;
+    void initiateRetirement(Map<String, List<IPlayer>> playersToRetire, List<IPlayer> freeAgentsToRetire) ;
 
 }

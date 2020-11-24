@@ -105,19 +105,21 @@ class SerializeLeagueobjectModelTest {
 
     @Test
     void updateSerializedPlayerListToJsonFile() throws Exception {
+        String leagueName = "DhlTest";
         List<IPlayer> playersList = new ArrayList<>();
-        String jsonFilePath = filepath + "Dhl" + playerFileName;
+        String jsonFilePath = filepath + leagueName + playerFileName;
 
         List<IPlayer> players = new ArrayList<>();
-        IPlayerStatistics playerStatistics1 = new PlayerStatistics(50, 5, 5, 5, 5);
+        IPlayerStatistics playerStatistics1 = new PlayerStatistics( 5, 5, 5, 5);
+        playerStatistics1.setAge(50);
         players.add(new Player("Henry", "forward", false, playerStatistics1));
 
-        serializeLeagueobjectModel.updateSerializedPlayerListToJsonFile(players, "Dhl");
+        serializeLeagueobjectModel.updateSerializedPlayerListToJsonFile(players, leagueName);
 
         FileReader playersJsonReader = new FileReader(jsonFilePath);
         JSONParser jsonParser = new JSONParser();
         JSONArray objPlayersObject = (JSONArray) jsonParser.parse(playersJsonReader);
-        playersList = deserializeLeagueobjectModel.deserializePlayers("Dhl");
+        playersList = deserializeLeagueobjectModel.deserializePlayers(leagueName);
         Assertions.assertNotNull(playersList);
         Assertions.assertEquals(1, playersList.size());
 

@@ -1,6 +1,7 @@
 package dhl.businessLogicTest.leagueModelTests;
 
 import dhl.businessLogic.leagueModel.Player;
+import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
@@ -21,6 +22,16 @@ public class PlayerTest {
         playerMock = factory.createPlayerMock();
         player = (Player) playerMock.getPlayer();
     }
+
+    @Test
+    public void PlayerDefaultConstructorTest() {
+        LeagueModelAbstractFactory leagueFactory = LeagueModelAbstractFactory.instance();
+        player = (Player) leagueFactory.createPlayerDefault();
+        String playerName = player.getPlayerName();
+        Assertions.assertTrue(playerName.length() == 0);
+        Assertions.assertEquals("", player.getPosition());
+    }
+
 
     @Test
     public void PlayerTest() {
@@ -102,34 +113,26 @@ public class PlayerTest {
     @Test
     public void checkPlayerNameValidTest() {
         player = (Player) playerMock.getPlayerWithoutName();
-        Exception error = Assertions.assertThrows(Exception.class, () -> {
-            player.checkPlayerValid();
-        });
-        Assertions.assertTrue(error.getMessage().contains("Player name cannot be empty"));
+        Assertions.assertTrue(player.isPlayerNameEmpty());
     }
 
     @Test
     public void checkPlayerPositionValidTest() {
         player = (Player) playerMock.getPlayerInvalidPosition();
-        Exception errorMsg = Assertions.assertThrows(Exception.class, () -> {
-            player.checkPlayerValid();
-        });
-        Assertions.assertTrue(errorMsg.getMessage().contains("Player position must be goalie or forward or defense"));
+        Assertions.assertTrue(player.isPlayerPositionInvalid());
+    }
+
+    @Test
+    public void checkPlayerPositionInValidTest() {
+        LeagueModelAbstractFactory leagueFactory = LeagueModelAbstractFactory.instance();
+        player = (Player) leagueFactory.createPlayerDefault();
+        Assertions.assertEquals("",player.getPosition());
     }
 
     @Test
     public void checkPlayerCaptainValueValidTest() {
         player = (Player) playerMock.getInvalidPlayerCaptain();
-        Exception error = Assertions.assertThrows(Exception.class, () -> {
-            player.checkPlayerValid();
-        });
-        Assertions.assertTrue(error.getMessage().contains("Captain value must be true or false"));
-    }
-
-    @Test
-    public void checkPlayerValidTest() throws Exception {
-        IPlayer player = playerMock.getPlayer();
-        Assertions.assertTrue(player.checkPlayerValid());
+        Assertions.assertTrue(player.isCaptainValueBoolean());
     }
 
     @Test

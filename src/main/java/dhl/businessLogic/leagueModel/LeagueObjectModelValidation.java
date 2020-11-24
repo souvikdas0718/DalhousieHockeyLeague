@@ -13,7 +13,6 @@ public class LeagueObjectModelValidation implements ILeagueObjectModelValidation
     public boolean checkIfLeagueObjectModelValid(IValidation validation, ILeagueObjectModel leagueObjectModel) throws Exception {
         validation.isStringEmpty(leagueObjectModel.getLeagueName(), "League");
         this.checkIfLeagueDetailsValid(leagueObjectModel.getConferences());
-        this.validateLeagueObjectModel(leagueObjectModel,validation);
         return true;
     }
 
@@ -73,30 +72,5 @@ public class LeagueObjectModelValidation implements ILeagueObjectModelValidation
         return true;
     }
 
-    public void validateLeagueObjectModel(ILeagueObjectModel leagueObjectModel,IValidation validation) throws Exception {
-        for(IConference conference:leagueObjectModel.getConferences()){
-            conference.checkIfConferenceValid(validation);
-            for(IDivision division:conference.getDivisions()){
-                division.checkIfDivisionValid(validation);
-                for(ITeam team:division.getTeams()){
-                    team.checkIfTeamValid(validation);
-                    ICoach coach = team.getHeadCoach();
-                    coach.checkIfCoachValid(validation);
-                    validatePlayers(team.getPlayers());
-                    validatePlayers(leagueObjectModel.getFreeAgents());
-                }
-            }
-        }
 
-
-
-    }
-
-    public void validatePlayers(List<IPlayer> players) throws Exception {
-        for(IPlayer player:players){
-            player.checkPlayerValid();
-            IPlayerStatistics playerStatistics = player.getPlayerStats();
-            playerStatistics.checkPlayerStatistics();
-        }
-    }
 }

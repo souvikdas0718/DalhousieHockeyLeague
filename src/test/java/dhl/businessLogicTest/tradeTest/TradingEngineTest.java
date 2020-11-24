@@ -155,12 +155,14 @@ public class TradingEngineTest {
     @Test
     public void sortPlayerListTest() throws Exception {
         ITeam unsortedTeam = tradeMock.getTeamWithGoodPlayer();
-        IPlayerStatistics statistics = leagueFactory.createPlayerStatistics(25, 5, 3, 2, 1);
+        IPlayerStatistics statistics = leagueFactory.createPlayerStatistics( 5, 3, 2, 1);
+        statistics.setAge(25);
         IPlayer player = leagueFactory.createPlayer("PlayerA", "defense", false,statistics);
 
         unsortedTeam.getPlayers().add(player);
 
-        statistics = leagueFactory.createPlayerStatistics(34, 7, 3, 9, 7);
+        statistics = leagueFactory.createPlayerStatistics( 7, 3, 9, 7);
+        statistics.setAge(34);
         player = leagueFactory.createPlayer("AnotherPlayer", "defense", false,statistics);
         unsortedTeam.getPlayers().add(player);
 

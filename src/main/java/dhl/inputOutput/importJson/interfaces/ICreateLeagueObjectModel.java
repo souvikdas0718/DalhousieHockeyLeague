@@ -4,5 +4,5 @@ import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 
 public interface ICreateLeagueObjectModel {
 
-    ILeagueObjectModel getLeagueObjectModel() throws Exception;
+    ILeagueObjectModel getLeagueObjectModel() ;
 }

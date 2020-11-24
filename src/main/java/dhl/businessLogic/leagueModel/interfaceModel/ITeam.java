@@ -26,8 +26,6 @@ public interface ITeam {
 
     List<IPlayer> getInactiveRoster();
 
-    boolean checkIfTeamValid(IValidation validation) throws Exception;
-
     boolean checkTeamPlayersCount();
 
     double calculateTeamStrength();
@@ -35,6 +33,10 @@ public interface ITeam {
     void sortPlayersInTeamByStrength(List<IPlayer> playersList);
 
     List<IPlayer> filterPlayersInTeam(String position,List<IPlayer> teamPlayers);
+
+    boolean checkIfOneCaptainPerTeam(List<IPlayer> playerList);
+
+    boolean checkIfSizeOfTeamValid(List<IPlayer> playerList);
 
 
 }

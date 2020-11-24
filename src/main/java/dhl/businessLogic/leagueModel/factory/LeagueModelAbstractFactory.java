@@ -1,5 +1,6 @@
 package dhl.businessLogic.leagueModel.factory;
 
+import dhl.businessLogic.leagueModel.Player;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import org.json.simple.JSONObject;
@@ -15,8 +16,7 @@ public abstract class LeagueModelAbstractFactory {
     }
 
     public static LeagueModelAbstractFactory instance() {
-        if (null == uniqueInstance)
-        {
+        if (null == uniqueInstance) {
             uniqueInstance = new LeagueModelFactory();
         }
         return uniqueInstance;
@@ -42,7 +42,7 @@ public abstract class LeagueModelAbstractFactory {
 
     public abstract IPlayer createPlayer(String playerName, String position, Boolean captain, IPlayerStatistics playerStats);
 
-    public abstract IPlayerStatistics createPlayerStatistics(int age, int skating, int shooting, int checking, int saving);
+    public abstract IPlayerStatistics createPlayerStatistics( int skating, int shooting, int checking, int saving);
 
     public abstract IGameConfig createGameConfig(JSONObject leagueJson);
 
@@ -60,4 +60,8 @@ public abstract class LeagueModelAbstractFactory {
     public abstract IGeneralManager createGeneralManagerDefault();
 
     public abstract ITeam createTeamDefault();
+
+    public abstract IPlayer createPlayerDefault();
+
+    public abstract IPlayer createFreeAgentDefault();
 }

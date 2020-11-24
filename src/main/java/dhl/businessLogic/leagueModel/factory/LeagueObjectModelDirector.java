@@ -125,7 +125,9 @@ public class LeagueObjectModelDirector implements ILeagueObjectModelDirector {
     }
 
     public IPlayerStatistics getPlayerStatistics(JSONObject playerJson) {
-        return factory.createPlayerStatistics(23, (int) (long) playerJson.get("skating"), (int) (long) playerJson.get("shooting"), (int) (long) playerJson.get("checking"), (int) (long) playerJson.get("saving"));
+        IPlayerStatistics playerStatistics = factory.createPlayerStatistics((int) (long) playerJson.get("skating"), (int) (long) playerJson.get("shooting"), (int) (long) playerJson.get("checking"), (int) (long) playerJson.get("saving"));
+        playerStatistics.setDateOfBirth((int) (long) playerJson.get("birthDay"),(int) (long) playerJson.get("birthMonth"),(int) (long) playerJson.get("birthYear"));
+        return playerStatistics;
     }
 
     public List<IPlayer> getFreeAgents(JSONArray freeAgentsJsonArray) {

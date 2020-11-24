@@ -8,6 +8,8 @@ public interface IConference {
 
     List<IDivision> getDivisions();
 
-    boolean checkIfConferenceValid(IValidation validation) throws Exception;
+    boolean checkIfConferenceHasUniqueDivisions();
+
+    boolean checkIfConferenceHasEvenDivisions();
 
 }

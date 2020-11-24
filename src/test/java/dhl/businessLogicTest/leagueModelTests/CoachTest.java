@@ -61,25 +61,20 @@ public class CoachTest {
         Assertions.assertEquals(1.0, coach.getSaving());
     }
 
-    @Test
-    void checkIfCoachValidTest() throws Exception {
 
-        Assertions.assertTrue(coach.checkIfCoachValid(validate));
-    }
 
     @Test
-    void checkCoachStatisticsTest() throws Exception {
+    void checkCoachStatisticsTest()  {
         ICoach coach = coachMock.getCoachInvalidStat();
-        Exception errorMsg = Assertions.assertThrows(Exception.class, () -> {
-            coach.checkIfCoachValid(validate);
-        });
-        Assertions.assertTrue(errorMsg.getMessage().contains("Coach statistics must be between 0 and 1"));
+        Assertions.assertTrue(coach.isCoachStatInvalid(2));
     }
 
     @Test
-    void checkCoachStatisticsValidTest()  {
-        Assertions.assertDoesNotThrow(() -> coach.checkIfCoachValid(validate));
+    void checkCoachStatisticsValidTest() {
+        ICoach coach = coachMock.getCoachInvalidStat();
+        Assertions.assertFalse(coach.isCoachStatInvalid(0.2));
     }
+
 
     @AfterEach()
     public void destroyObject() {

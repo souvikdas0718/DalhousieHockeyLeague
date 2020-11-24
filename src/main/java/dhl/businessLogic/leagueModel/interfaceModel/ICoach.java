@@ -11,5 +11,6 @@ public interface ICoach {
 
     double getSaving();
 
-    boolean checkIfCoachValid(IValidation validation) throws Exception;
+    boolean isCoachStatInvalid(double statValue);
+
 }

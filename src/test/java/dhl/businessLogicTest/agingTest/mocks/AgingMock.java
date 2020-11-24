@@ -43,7 +43,8 @@ public class AgingMock {
 
     public ITeam varyByAge(int age){
         List<IPlayer> players = new ArrayList<>();
-        IPlayerStatistics playerStatistics = leagueFactory.createPlayerStatistics(age, 20, 20, 20, 20);
+        IPlayerStatistics playerStatistics = leagueFactory.createPlayerStatistics(20, 20, 20, 20);
+        playerStatistics.setAge(age);
         players.add(leagueFactory.createPlayer("PlayerOne", "forward", true, playerStatistics));
         ICoach headCoach = leagueFactory.createCoach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
         IGeneralManager manager = leagueFactory.createGeneralManager("Mathew", "normal");
@@ -51,13 +52,15 @@ public class AgingMock {
     }
 
     public IPlayer getPlayerAtMaxAge(){
-        IPlayerStatistics playerStatistics = leagueFactory.createPlayerStatistics(50, 2, 2, 2, 2);
+        IPlayerStatistics playerStatistics = leagueFactory.createPlayerStatistics( 2, 2, 2, 2);
+        playerStatistics.setAge(50);
         return leagueFactory.createPlayer("PlayerOne", "forward", true, playerStatistics);
     }
 
     public ILeagueObjectModel getFreeAgentsInLeague(){
         List<IPlayer> freeAgents =new ArrayList<>();
-        IPlayerStatistics playerStatistics1 = leagueFactory.createPlayerStatistics(50, 20, 20, 20, 20);
+        IPlayerStatistics playerStatistics1 = leagueFactory.createPlayerStatistics( 20, 20, 20, 20);
+        playerStatistics1.setAge(50);
         freeAgents.add(leagueFactory.createFreeAgent("PlayerOne", "forward", playerStatistics1));
 
         LeagueMock leagueMock = mockFactory.createLeagueMock();
@@ -67,11 +70,16 @@ public class AgingMock {
 
     public List<IPlayer> getFreeAgents(){
         List<IPlayer> freeAgentsList = new ArrayList<>();
-        IPlayerStatistics freeAgentStatistics1 = leagueFactory.createPlayerStatistics(20, 20, 20, 15, 15);
-        IPlayerStatistics freeAgentStatistics2 = leagueFactory.createPlayerStatistics(35, 13, 14, 12, 11);
-        IPlayerStatistics freeAgentStatistics3 = leagueFactory.createPlayerStatistics(20, 1, 3, 3, 3);
-        IPlayerStatistics freeAgentStatistics4 = leagueFactory.createPlayerStatistics(25, 6, 3, 3, 5);
-        IPlayerStatistics freeAgentStatistics5 = leagueFactory.createPlayerStatistics(25, 1, 2, 15, 13);
+        IPlayerStatistics freeAgentStatistics1 = leagueFactory.createPlayerStatistics(20, 20, 15, 15);
+        freeAgentStatistics1.setAge(20);
+        IPlayerStatistics freeAgentStatistics2 = leagueFactory.createPlayerStatistics( 13, 14, 12, 11);
+        freeAgentStatistics2.setAge(35);
+        IPlayerStatistics freeAgentStatistics3 = leagueFactory.createPlayerStatistics( 1, 3, 3, 3);
+        freeAgentStatistics3.setAge(20);
+        IPlayerStatistics freeAgentStatistics4 = leagueFactory.createPlayerStatistics( 6, 3, 3, 5);
+        freeAgentStatistics4.setAge(25);
+        IPlayerStatistics freeAgentStatistics5 = leagueFactory.createPlayerStatistics( 1, 2, 15, 13);
+        freeAgentStatistics5.setAge(25);
 
         freeAgentsList.add(leagueFactory.createFreeAgent("F2", "goalie", freeAgentStatistics2));
         freeAgentsList.add(leagueFactory.createFreeAgent("F3", "goalie", freeAgentStatistics3));
@@ -107,7 +115,8 @@ public class AgingMock {
         List<IPlayer> freeAgentsList = new ArrayList<>();
         IPlayer freeAgent = leagueFactory.createFreeAgent("Matt", "forward", playerMock.getPlayerStats());
         freeAgentsList.add(freeAgent);
-        IPlayerStatistics playerStatistics2 =leagueFactory.createPlayerStatistics(20, 11, 20, 15, 16);
+        IPlayerStatistics playerStatistics2 =leagueFactory.createPlayerStatistics( 11, 20, 15, 16);
+        playerStatistics2.setAge(20);
         IPlayer freeAgent2 = new FreeAgent("Jack", "forward", playerStatistics2);
         freeAgentsList.add(freeAgent2);
         List<ICoach> coachList = new ArrayList<>();

@@ -42,14 +42,14 @@ public class TradeMock {
 
     public IPlayer getStrongPlayer(String playerName) {
         IPlayer player = new Player(playerName, "defense", false,
-                new PlayerStatistics(25, 10, 10, 10, 0));
+                new PlayerStatistics( 10, 10, 10, 0));
 
         return player;
     }
 
     public IPlayer getWeakPlayer(String playerName) {
         IPlayer player = new Player(playerName, PlayerPosition.DEFENSE.toString(), false,
-                new PlayerStatistics(25, 1, 1, 1, 0));
+                new PlayerStatistics( 1, 1, 1, 0));
 
         return player;
     }
@@ -60,15 +60,15 @@ public class TradeMock {
         for (int i = 0; i < 250; i++) {
             if (i % 2 == 0) {
                 freeAgents.add(new FreeAgent("Henry" + i, PlayerPosition.GOALIE.toString(),
-                        new PlayerStatistics(r.nextInt(45), r.nextInt(10), r.nextInt(10), r.nextInt(10), r.nextInt(10))));
+                        new PlayerStatistics( r.nextInt(10), r.nextInt(10), r.nextInt(10), r.nextInt(10))));
             }
             else if(i % 3 == 0){
                 freeAgents.add(new FreeAgent("Henry" + i, PlayerPosition.FORWARD.toString(),
-                        new PlayerStatistics(r.nextInt(45), r.nextInt(10), r.nextInt(10), r.nextInt(10), 0)));
+                        new PlayerStatistics( r.nextInt(10), r.nextInt(10), r.nextInt(10), 0)));
             }
             else {
                 freeAgents.add(new FreeAgent("Henry" + i, PlayerPosition.DEFENSE.toString(),
-                        new PlayerStatistics(r.nextInt(45), r.nextInt(10), r.nextInt(10), r.nextInt(10), 0)));
+                        new PlayerStatistics( r.nextInt(10), r.nextInt(10), r.nextInt(10), 0)));
             }
         }
         return (ArrayList<IPlayer>) freeAgents;

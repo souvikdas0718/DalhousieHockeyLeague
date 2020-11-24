@@ -20,6 +20,10 @@ public class CoachMock {
         return factory.createCoach("Todd McLellan", 0.1, 0.2, 0.5, 1.0);
     }
 
+    public ICoach getCoachWithoutName(){
+        return factory.createCoach("", 0.1, 0.2, 0.5, 1.0);
+    }
+
     public ICoach getCoachInvalidStat(){
         return factory.createCoach("Todd McLellan", 0.1, 0.2, 3, 1.0);
     }

@@ -3,6 +3,7 @@ package dhl.businessLogicTest.leagueModelTests;
 import dhl.businessLogic.leagueModel.FreeAgent;
 import dhl.businessLogic.leagueModel.Player;
 import dhl.businessLogic.leagueModel.PlayerStatistics;
+import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
@@ -25,6 +26,13 @@ public class FreeAgentTest {
     }
 
     @Test
+    public void FreeAgentDefaultTest() {
+        LeagueModelAbstractFactory leagueFactory = LeagueModelAbstractFactory.instance();
+        freeAgent = leagueFactory.createFreeAgentDefault();
+        Assertions.assertEquals("", freeAgent.getPlayerName());
+    }
+
+    @Test
     public void FreeAgentTest() {
         Assertions.assertEquals("forward", freeAgent.getPosition());
         Assertions.assertEquals("Noah", freeAgent.getPlayerName());
@@ -33,24 +41,18 @@ public class FreeAgentTest {
     @Test
     public void checkPlayerNameValidTest() {
         freeAgent = freeAgentMock.getPlayerWithoutName();
-        Exception error = Assertions.assertThrows(Exception.class, () -> {
-            freeAgent.checkPlayerValid();
-        });
-        Assertions.assertTrue(error.getMessage().contains("Player name cannot be empty"));
+        Assertions.assertTrue(freeAgent.isPlayerNameEmpty());
     }
 
     @Test
     public void checkPlayerPositionValidTest() {
         IPlayer freeAgent = freeAgentMock.getPlayerInvalidPosition();
-        Exception errorMsg = Assertions.assertThrows(Exception.class, () -> {
-            freeAgent.checkPlayerValid();
-        });
-        Assertions.assertTrue(errorMsg.getMessage().contains("Player position must be goalie or forward or defense"));
+        Assertions.assertTrue( freeAgent.isCaptainValueBoolean());
     }
 
     @Test
     public void checkPlayerValidTest() throws Exception {
-        Assertions.assertTrue(freeAgent.checkPlayerValid());
+        Assertions.assertFalse(freeAgent.isPlayerNameEmpty());
     }
 
 }

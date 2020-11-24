@@ -4,6 +4,8 @@ import dhl.businessLogic.aging.interfaceAging.IRetirement;
 import dhl.businessLogic.leagueModel.Player;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,8 +16,11 @@ import java.util.stream.Collectors;
 public class Retirement implements IRetirement {
     private ILeagueObjectModel leagueObjectModel;
     private ISerializeLeagueObjectModel serializeModel;
+    private static final Logger logger = LogManager.getLogger(Retirement.class);
 
     public Retirement(ISerializeLeagueObjectModel serializeModel, ILeagueObjectModel leagueObjectModel) {
+        logger.info("Retirement Constructor Object created");
+        logger.debug("Creating a Retirement Constructor");
         this.leagueObjectModel = leagueObjectModel;
         this.serializeModel = serializeModel;
     }
@@ -28,7 +33,8 @@ public class Retirement implements IRetirement {
         this.leagueObjectModel = leagueObjectModel;
     }
 
-    public void initiateRetirement(Map<String, List<IPlayer>> playersToRetire, List<IPlayer> freeAgentsToRetire) throws Exception {
+    public void initiateRetirement(Map<String, List<IPlayer>> playersToRetire, List<IPlayer> freeAgentsToRetire) {
+        logger.debug("Executing retirement algorithm for players");
         retireFreeAgents(freeAgentsToRetire, leagueObjectModel.getFreeAgents());
         for (IConference conference : leagueObjectModel.getConferences()) {
             for (IDivision division : conference.getDivisions()) {
@@ -45,6 +51,7 @@ public class Retirement implements IRetirement {
     }
 
     public void retireFreeAgents(List<IPlayer> agentsSelectedToRetire, List<IPlayer> freeAgents) {
+        logger.debug("Executing retirement algorithm for free agents");
         if (agentsSelectedToRetire.size() > 0) {
             List<String> retiringPlayerNames = new ArrayList<>();
             for (IPlayer retiringAgent : agentsSelectedToRetire) {
@@ -82,6 +89,7 @@ public class Retirement implements IRetirement {
     }
 
     public IPlayer selectPlayerFromFreeAgent(IPlayer player, List<IPlayer> freeAgents) {
+        logger.debug("Select players to replace from free agent");
         IPlayer selectedAgent;
         String playerPosition = player.getPosition();
         List<IPlayer> freeAgentsOfSamePosition = freeAgents.stream().filter((IPlayer agent) -> { return agent.getPosition() == playerPosition; }).collect(Collectors.toList());
@@ -95,21 +103,25 @@ public class Retirement implements IRetirement {
     }
 
     public void sortFreeAgentsByStrength(List<IPlayer> freeAgents) {
+        logger.debug("Sort players by free agent by player strength");
         Collections.sort(freeAgents, (player1, player2) -> (int) Math.round(player2.getPlayerStrength()) - (int) Math.round(player1.getPlayerStrength()));
     }
 
     public void removeSelectedAgentFromFreeAgents(List<IPlayer> freeAgents, IPlayer selectedAgent) {
+        logger.debug("Remove selected free agent"+selectedAgent.getPlayerName());
         freeAgents.removeIf(agent -> (agent.getPlayerName() == selectedAgent.getPlayerName()));
 
     }
 
     public void removeRetiredPlayersFromTeam(List<String> playerNames, ITeam team) {
+        logger.debug("Remove retired players");
         List<IPlayer> playersInTeam = team.getPlayers();
         playersInTeam.removeIf(player -> (playerNames.contains(player.getPlayerName())));
 
     }
 
-    public void insertVeterans(Map<String, List<IPlayer>> playersToRetire, List<IPlayer> freeAgentsToRetire) throws Exception {
+    public void insertVeterans(Map<String, List<IPlayer>> playersToRetire, List<IPlayer> freeAgentsToRetire) {
+        logger.debug("Inserting retired players");
         List<IPlayer> retiredPlayers= new ArrayList<>();
         retiredPlayers.addAll(freeAgentsToRetire);
         for (String teamName : playersToRetire.keySet()) {

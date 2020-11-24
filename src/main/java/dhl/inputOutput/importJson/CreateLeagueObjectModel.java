@@ -5,25 +5,28 @@ import dhl.businessLogic.leagueModel.factory.LeagueObjectModelBuilder;
 import dhl.businessLogic.leagueModel.factory.LeagueObjectModelDirector;
 import dhl.businessLogic.leagueModel.factory.interfaceFactory.ILeagueObjectModelBuilder;
 import dhl.businessLogic.leagueModel.factory.interfaceFactory.ILeagueObjectModelDirector;
-import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
-import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModelValidation;
-import dhl.businessLogic.leagueModel.interfaceModel.IValidation;
+import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.inputOutput.importJson.interfaces.ICreateLeagueObjectModel;
+import dhl.inputOutput.importJson.interfaces.ICreatedLeagueValidation;
 import dhl.inputOutput.ui.UserInputOutput;
 import org.json.simple.JSONObject;
 
+
 public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
     JSONObject jsonLeague;
-    IValidation validationObject;
+    IValidation validation;
     ILeagueObjectModel leagueObjectModel;
     ILeagueObjectModelValidation leagueObjectModelValidation;
     UserInputOutput userInputOutput;
+    ICreatedLeagueValidation createdLeagueValidation;
 
     public CreateLeagueObjectModel(JSONObject jsonLeagueObject) {
         this.jsonLeague = jsonLeagueObject;
         LeagueModelAbstractFactory factory = LeagueModelAbstractFactory.instance();
-        this.validationObject = factory.createCommonValidation();
+        this.validation = factory.createCommonValidation();
         this.leagueObjectModelValidation = factory.createLeagueObjectModelValidation();
+        ImportJsonAbstractFactory importFactory = ImportJsonAbstractFactory.instance();
+        createdLeagueValidation = importFactory.createdLeagueValidation(validation);
         this.leagueObjectModel = null;
         userInputOutput= new UserInputOutput();
     }
@@ -34,7 +37,8 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
         this.leagueObjectModel=leagueDirector.constructFromJson(jsonLeague);
 
         try {
-            leagueObjectModel.checkIfLeagueModelValid(validationObject, leagueObjectModelValidation);
+            createdLeagueValidation.checkCreatedLeagueObjectModel(leagueObjectModel);
+            leagueObjectModel.checkIfLeagueModelValid(validation, leagueObjectModelValidation);
         } catch (Exception e) {
             userInputOutput.printMessage(e.getMessage());
         }

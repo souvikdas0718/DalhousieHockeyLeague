@@ -74,7 +74,8 @@ public class AiAiTradeTest {
         league.freeAgents = freeAgents;
         ITeam team = tradeMock.getTeamWithGoodPlayer();
 
-        IPlayerStatistics playerStatistics = leagueFactory.createPlayerStatistics(25, 10, 10, 10, 10);
+        IPlayerStatistics playerStatistics = leagueFactory.createPlayerStatistics( 10, 10, 10, 10);
+        playerStatistics.setAge(25);
         IPlayer player = leagueFactory.createPlayer("player1", "goalie", false, playerStatistics);
         team.getPlayers().add(player);
 

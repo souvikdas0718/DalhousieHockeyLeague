@@ -37,8 +37,8 @@ public class LeagueModelFactory extends LeagueModelAbstractFactory {
         return new Team(teamName, generalManager, headCoach, playersList);
     }
 
-    public IPlayerStatistics createPlayerStatistics(int age, int skating, int shooting, int checking, int saving) {
-        return new PlayerStatistics(age, skating, shooting, checking, saving);
+    public IPlayerStatistics createPlayerStatistics(int skating, int shooting, int checking, int saving) {
+        return new PlayerStatistics(skating, shooting, checking, saving);
     }
 
     public IPlayer createPlayer(String playerName, String position, Boolean captain, IPlayerStatistics playerStats) {
@@ -77,6 +77,14 @@ public class LeagueModelFactory extends LeagueModelAbstractFactory {
 
     public ITeam createTeamDefault() {
         return new Team();
+    }
+
+    public IPlayer createPlayerDefault() {
+        return new Player();
+    }
+
+    public IPlayer createFreeAgentDefault() {
+        return new FreeAgent();
     }
 
 }
