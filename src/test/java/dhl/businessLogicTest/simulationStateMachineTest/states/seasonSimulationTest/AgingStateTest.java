@@ -1,10 +1,14 @@
 package dhl.businessLogicTest.simulationStateMachineTest.states.seasonSimulationTest;
 
 import dhl.Mocks.LeagueObjectModel20TeamMocks;
+import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
+import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.AgingState;
+import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
+import dhl.businessLogicTest.leagueModelTests.mocks.LeagueMock;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,16 +18,24 @@ import java.time.LocalDate;
 public class AgingStateTest {
 
     LeagueObjectModel20TeamMocks model20TeamMocks;
+    LeagueModelMockAbstractFactory leagueMockFactory;
+    LeagueMock leagueMock;
     IScheduler scheduler;
     SimulationContext simulationContext;
     AgingState agingState;
     GameContext gameState;
+    ILeagueObjectModel leagueObjectModel;
+    IGameConfig gameConfig;
 
     @BeforeEach
     public void initObject() {
         model20TeamMocks = new LeagueObjectModel20TeamMocks();
         model20TeamMocks.leagueModel20TeamGeneralStandings();
         scheduler = model20TeamMocks.leagueModel20TeamPlayoffsSchedules();
+        leagueMockFactory = LeagueModelMockAbstractFactory.instance();
+        leagueMock = leagueMockFactory.createLeagueMock();
+        leagueObjectModel = leagueMock.getLeagueObjectModel();
+        gameConfig = leagueMock.getGameplayConfig();
         gameState = new GameContext();
         simulationContext = new SimulationContext(gameState);
     }
@@ -56,7 +68,19 @@ public class AgingStateTest {
 
     @Test
     public void seasonStateProcessTest() {
-        //agingCalculation(simulationContext);
+        simulationContext.setGameConfig(gameConfig);
+        simulationContext.setInMemoryLeague(leagueObjectModel);
+        simulationContext.setNumberOfDays(365);
+        agingState = new AgingState(simulationContext);
+        agingState.seasonStateProcess();
+//        Assertions.assertTrue(agingState.getSimulationContext().getInMemoryLeague().getConferences().get(0).getDivisions().get(0).getTeams().get(0).getPlayers().get(0).getPlayerName().equals("Player12"));
+//        Assertions.assertTrue(agingState.getSimulationContext().getInMemoryLeague().getConferences().get(0).getDivisions().get(0).getTeams().get(0).getPlayers().get(0).getPlayerStats().getAge() == 21);
+        Assertions.assertTrue(agingState.getSimulationContext().getInMemoryLeague().getFreeAgents().get(0).getPlayerName().equals("Player0"));
+        Assertions.assertTrue(agingState.getSimulationContext().getInMemoryLeague().getFreeAgents().get(0).getPlayerStats().getAge() == 21);
+//        System.out.println(agingState.getSimulationContext().getInMemoryLeague().getConferences().get(0).getDivisions().get(0).getTeams().get(0).getPlayers().get(0).getPlayerName());
+//        System.out.println(agingState.getSimulationContext().getInMemoryLeague().getConferences().get(0).getDivisions().get(0).getTeams().get(0).getPlayers().get(0).getPlayerStats().getAge());
+//        System.out.println(agingState.getSimulationContext().getInMemoryLeague().getFreeAgents().get(0).getPlayerName());
+//        System.out.println(agingState.getSimulationContext().getInMemoryLeague().getFreeAgents().get(0).getPlayerStats().getAge());
     }
 
     @Test

@@ -2,11 +2,16 @@ package dhl.businessLogicTest.simulationStateMachineTest.states.seasonSimulation
 
 import dhl.Mocks.GameConfigMock;
 import dhl.Mocks.LeagueObjectModel20TeamMocks;
+import dhl.businessLogic.aging.Injury;
+import dhl.businessLogic.aging.agingFactory.AgingAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
+import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.TrainingState;
+import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
+import dhl.businessLogicTest.leagueModelTests.mocks.LeagueMock;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,6 +32,11 @@ public class TrainingStateTest {
     IScheduler scheduler;
     IGameConfig gameConfig;
     GameConfigMock gameConfigMock;
+    AgingAbstractFactory agingFactory;
+    Injury injury;
+    LeagueModelMockAbstractFactory leagueMockFactory;
+    LeagueMock leagueMock;
+    ILeagueObjectModel leagueObjectModel;
 
 //    LeagueObjectModelMocks mockLeagueObjectModel;
 //    GameConfigMock gameConfigMock;
@@ -45,7 +55,11 @@ public class TrainingStateTest {
         scheduler = model20TeamMocks.leagueModel20TeamPlayoffsSchedules();
         gameConfigMock = new GameConfigMock();
         gameConfig = gameConfigMock.getGameConfigMock();
-
+        agingFactory= AgingAbstractFactory.instance();
+        injury = (Injury) agingFactory.createInjury();
+        leagueMockFactory = LeagueModelMockAbstractFactory.instance();
+        leagueMock = leagueMockFactory.createLeagueMock();
+        leagueObjectModel = leagueMock.getLeagueObjectModel();
 //        mockLeagueObjectModel = new LeagueObjectModelMocks();
 //        gameConfigMock = new GameConfigMock();
 //        IInjury injurySystem = new Injury();
@@ -84,11 +98,17 @@ public class TrainingStateTest {
     @Test
     public void seasonStateProcessTest() {
 
-        simulationContext.setDaysSinceLastTraining(10);
+        simulationContext.setDaysSinceLastTraining(192);
         simulationContext.setGameConfig(gameConfig);
-        System.out.println(gameConfig.getTrading());
-        System.out.println(gameConfig.getDaysUntilStatIncreaseCheck());
+//        System.out.println(gameConfig.getTrading());
+//        System.out.println(gameConfig.getDaysUntilStatIncreaseCheck());
 //        System.out.println(Integer.parseInt(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getDaysUntilStatIncreaseCheck())));
+        simulationContext.setInjurySystem(injury);
+        simulationContext.setInMemoryLeague(leagueObjectModel);
+        trainingState = new TrainingState(simulationContext);
+//        trainingState.seasonStateProcess();
+
+
 
 //        simulationContext.setDaysSinceLastTraining(simulationContext.getDaysSinceLastTraining() + 1);
 //        IGameConfig gameConfig = simulationContext.getGameConfig();
