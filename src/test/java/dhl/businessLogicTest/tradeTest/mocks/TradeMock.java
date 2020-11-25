@@ -1,4 +1,4 @@
-package dhl.businessLogicTest.tradeTest;
+package dhl.businessLogicTest.tradeTest.mocks;
 
 import dhl.businessLogic.leagueModel.*;
 import dhl.businessLogic.leagueModel.interfaceModel.ICoach;

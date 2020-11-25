@@ -13,6 +13,10 @@ import dhl.businessLogic.trade.ExchangingPlayerTradeOffer;
 import dhl.businessLogic.trade.factory.TradeAbstractFactory;
 import dhl.businessLogic.trade.factory.TradeConcreteFactory;
 import dhl.businessLogic.trade.interfaces.ITradeOffer;
+import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
+import dhl.businessLogicTest.tradeTest.mocks.GameConfigMockForTrading;
+import dhl.businessLogicTest.tradeTest.mocks.TradeMock;
+import dhl.businessLogicTest.tradeTest.mocks.factory.TradeMockAbstractFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,29 +25,31 @@ import java.util.ArrayList;
 public class AiAiTradeTest {
 
     AiAiTrade testClassObject;
-    TradeMock tradeMock;
-    GameConfigMock gameConfigMock;
+    GameConfigMockForTrading gameConfigMock;
     IGameConfig ourGameConfig;
     ArrayList<IPlayer> playersOffered, playersWanted;
     ITeam strongTeam, weakTeam;
-    LeagueObjectModelMocks leagueObjectModelMocks;
+
     TradeAbstractFactory tradeFactory;
     LeagueModelAbstractFactory leagueFactory;
+    LeagueModelMockAbstractFactory leagueMockFactory;
+
+    TradeMockAbstractFactory tradeMockFactory;
 
     @BeforeEach
     public void initObject() {
         playersOffered = new ArrayList<>();
         playersWanted = new ArrayList<>();
-        tradeMock = new TradeMock();
-        gameConfigMock = new GameConfigMock();
-        leagueObjectModelMocks = new LeagueObjectModelMocks();
+        tradeMockFactory = TradeMockAbstractFactory.instance();
+        gameConfigMock = tradeMockFactory.createGameConfigMockForTrading();
+        leagueMockFactory = LeagueModelMockAbstractFactory.instance();
 
         tradeFactory = new TradeConcreteFactory();
         leagueFactory = LeagueModelAbstractFactory.instance();
 
         ourGameConfig = gameConfigMock.getGameConfigMock();
-        strongTeam = tradeMock.getTeamWithGoodPlayer();
-        weakTeam = tradeMock.getTeamWithBadPlayer();
+        strongTeam = tradeMockFactory.createTeamMockForTrade().getTeamWithGoodPlayer();
+        weakTeam = tradeMockFactory.createTeamMockForTrade().getTeamWithBadPlayer();
         playersOffered.add(weakTeam.getPlayers().get(0));
         playersWanted.add(strongTeam.getPlayers().get(0));
     }
@@ -69,10 +75,10 @@ public class AiAiTradeTest {
 
     @Test
     public void validateTeamRosterAfterTradeTest() throws Exception {
-        ArrayList<IPlayer> freeAgents = tradeMock.get50FreeAgents();
-        LeagueObjectModel league = (LeagueObjectModel) leagueObjectModelMocks.getLeagueObjectMock();
+        ArrayList<IPlayer> freeAgents = tradeMockFactory.createFreeAgentMockForTrade().getListOfFreeAgents();
+        LeagueObjectModel league = (LeagueObjectModel) leagueMockFactory.createLeagueMock().getLeagueObjectModel();
         league.freeAgents = freeAgents;
-        ITeam team = tradeMock.getTeamWithGoodPlayer();
+        ITeam team = tradeMockFactory.createTeamMockForTrade().getTeamWithGoodPlayer();
 
         IPlayerStatistics playerStatistics = leagueFactory.createPlayerStatistics( 10, 10, 10, 10);
         playerStatistics.setAge(25);
@@ -90,10 +96,10 @@ public class AiAiTradeTest {
     @Test
     public void updatePlayersTest() throws Exception {
 
-        ArrayList<IPlayer> freeAgents = tradeMock.get50FreeAgents();
-        LeagueObjectModel league = (LeagueObjectModel) leagueObjectModelMocks.getLeagueObjectMock();
+        ArrayList<IPlayer> freeAgents = tradeMockFactory.createFreeAgentMockForTrade().getListOfFreeAgents();
+        LeagueObjectModel league = (LeagueObjectModel) leagueMockFactory.createLeagueMock().getLeagueObjectModel();
         league.freeAgents = freeAgents;
-        ITeam team = tradeMock.getTeamWithGoodPlayer();
+        ITeam team = tradeMockFactory.createTeamMockForTrade().getTeamWithGoodPlayer();
 
         ITradeOffer testOffer = tradeFactory.createExchangingPlayerTradeOffer(weakTeam, strongTeam, playersOffered, playersWanted);
         testClassObject = (AiAiTrade) tradeFactory.createAiAiTrade(testOffer, ourGameConfig);
@@ -129,7 +135,7 @@ public class AiAiTradeTest {
     public void findWeakestPlayerInListTest() throws Exception {
         ITradeOffer testOffer = tradeFactory.createExchangingPlayerTradeOffer(weakTeam, strongTeam, playersOffered, playersWanted);
         testClassObject = (AiAiTrade) tradeFactory.createAiAiTrade(testOffer, ourGameConfig);
-        ITeam team = tradeMock.getTeamWithBadPlayer();
+        ITeam team = tradeMockFactory.createTeamMockForTrade().getTeamWithBadPlayer();
 
         IPlayer player = testClassObject.findBestPlayerInList(PlayerPosition.DEFENSE.toString(), team.getPlayers());
         Assertions.assertTrue(player.getPlayerName().contains("Weak"));
@@ -144,7 +150,7 @@ public class AiAiTradeTest {
     public void findBestPlayerInListtTest() throws Exception {
         ITradeOffer testOffer = tradeFactory.createExchangingPlayerTradeOffer(weakTeam, strongTeam, playersOffered, playersWanted);
         testClassObject = (AiAiTrade) tradeFactory.createAiAiTrade(testOffer, ourGameConfig);
-        ITeam team = tradeMock.getTeamWithBadPlayer();
+        ITeam team = tradeMockFactory.createTeamMockForTrade().getTeamWithBadPlayer();
 
         IPlayer player = testClassObject.findBestPlayerInList(PlayerPosition.DEFENSE.toString(), team.getPlayers());
         Assertions.assertTrue(player.getPlayerName().contains("Weak"));
@@ -161,8 +167,8 @@ public class AiAiTradeTest {
         testClassObject = (AiAiTrade) tradeFactory.createAiAiTrade(testOffer, ourGameConfig);
         Assertions.assertFalse(testClassObject.isTradeGoodForReceivingTeam(testOffer));
 
-        ITeam goodTeam = tradeMock.getTeamWithGoodPlayer();
-        ITeam badTeam = tradeMock.getTeamWithBadPlayer();
+        ITeam goodTeam = tradeMockFactory.createTeamMockForTrade().getTeamWithGoodPlayer();
+        ITeam badTeam = tradeMockFactory.createTeamMockForTrade().getTeamWithBadPlayer();
 
         ArrayList<IPlayer> offeringPlayers = new ArrayList<>();
         offeringPlayers.add(goodTeam.getPlayers().get(0));
@@ -178,8 +184,8 @@ public class AiAiTradeTest {
     @Test
     public void getPlayerCombinedStrengthTest() {
         ArrayList<IPlayer> players = new ArrayList<>();
-        players.add(tradeMock.getStrongPlayer("player1"));
-        players.add(tradeMock.getStrongPlayer("player2"));
+        players.add(tradeMockFactory.createPlayerMockForTrade().getStrongPlayer("player1", PlayerPosition.DEFENSE.toString()));
+        players.add(tradeMockFactory.createPlayerMockForTrade().getStrongPlayer("player2", PlayerPosition.DEFENSE.toString()));
 
         ITradeOffer testOffer = tradeFactory.createExchangingPlayerTradeOffer(weakTeam, strongTeam, playersOffered, playersWanted);
         testClassObject = (AiAiTrade) tradeFactory.createAiAiTrade(testOffer, ourGameConfig);
