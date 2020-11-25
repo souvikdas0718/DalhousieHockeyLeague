@@ -25,11 +25,6 @@ public class PersistSeasonState implements ISimulationSeasonState {
     }
 
     @Override
-    public void seasonStateEntryProcess() {
-
-    }
-
-    @Override
     public void seasonStateProcess() {
         // save the data in the db
 //        SerializeDeserializeAbstractFactory factorySerialize = SerializeDeserializeAbstractFactory.instance();

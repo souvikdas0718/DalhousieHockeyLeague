@@ -94,11 +94,6 @@ public class TrainingStateTest {
     }
 
     @Test
-    public void seasonStateEntryProcessTest() {
-
-    }
-
-    @Test
     public void seasonStateProcessTest() {
         simulationContext.setDaysSinceLastTraining(192);
         simulationContext.setGameConfig(gameConfig);

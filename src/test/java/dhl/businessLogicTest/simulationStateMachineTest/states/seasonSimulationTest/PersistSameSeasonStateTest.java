@@ -39,12 +39,6 @@ public class PersistSameSeasonStateTest {
         Assertions.assertTrue(persistSameSeasonState.getSimulationContext().getYear() == 2022);
     }
 
-
-    @Test
-    public void seasonStateEntryProcessTest() {
-
-    }
-
     @Test
     public void seasonStateProcessTest() {
 

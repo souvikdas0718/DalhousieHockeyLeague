@@ -207,10 +207,6 @@ public class SimulationContext implements ISimulationSeasonState {
         this.currentSimulation = newSeasonState;
     }
 
-    public void seasonStateEntryProcess() {
-        currentSimulation.seasonStateEntryProcess();
-    }
-
     public void seasonStateProcess() {
         currentSimulation.seasonStateProcess();
     }

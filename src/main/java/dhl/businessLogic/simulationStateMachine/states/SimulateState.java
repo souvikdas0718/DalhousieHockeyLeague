@@ -47,7 +47,6 @@ public class SimulateState implements IGameState {
 
         for (int i = 0; i < simulationSeasonsCount; i++) {
             while(simulationContextObject.isSeasonInProgress()) {
-                simulationContextObject.seasonStateEntryProcess();
                 simulationContextObject.seasonStateProcess();
                 simulationContextObject.seasonStateExitProcess();
             }

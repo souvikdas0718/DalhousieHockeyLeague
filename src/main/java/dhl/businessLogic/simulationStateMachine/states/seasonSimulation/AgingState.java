@@ -54,11 +54,6 @@ public class AgingState implements ISimulationSeasonState {
     }
 
     @Override
-    public void seasonStateEntryProcess() {
-
-    }
-
-    @Override
     public void seasonStateProcess() {
         agingCalculation(simulationContext);
     }

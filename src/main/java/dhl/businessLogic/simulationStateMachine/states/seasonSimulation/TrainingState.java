@@ -51,11 +51,6 @@ public class TrainingState implements ISimulationSeasonState {
     }
 
     @Override
-    public void seasonStateEntryProcess() {
-
-    }
-
-    @Override
     public void seasonStateProcess() {
         simulationContext.setDaysSinceLastTraining(simulationContext.getDaysSinceLastTraining() + 1);
         IGameConfig gameConfig = simulationContext.getGameConfig();

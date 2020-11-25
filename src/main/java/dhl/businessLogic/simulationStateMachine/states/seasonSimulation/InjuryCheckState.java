@@ -28,11 +28,6 @@ public class InjuryCheckState implements ISimulationSeasonState {
     }
 
     @Override
-    public void seasonStateEntryProcess() {
-
-    }
-
-    @Override
     public void seasonStateProcess() {
         for (ITeam team : simulationContext.getTeamsPlayingInGame()) {
             IInjury injury = simulationContext.getInjurySystem();

@@ -31,11 +31,6 @@ public class InitializeSeasonState implements ISimulationSeasonState {
     }
 
     @Override
-    public void seasonStateEntryProcess() {
-
-    }
-
-    @Override
     public void seasonStateProcess() {
         LocalDate simulationStartDate = LocalDate.of(simulationContext.getYear(), 9, 30);
         simulationContext.setStartOfSimulation(simulationStartDate);

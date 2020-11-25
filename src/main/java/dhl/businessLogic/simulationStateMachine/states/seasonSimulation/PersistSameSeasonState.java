@@ -19,11 +19,6 @@ public class PersistSameSeasonState implements ISimulationSeasonState {
     }
 
     @Override
-    public void seasonStateEntryProcess() {
-
-    }
-
-    @Override
     public void seasonStateProcess() {
         // save the data in the db
     }

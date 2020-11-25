@@ -94,12 +94,6 @@ public class InjuryCheckStateTest {
         Assertions.assertTrue(injuryCheckState.getSimulationContext().getYear() == 2022);
     }
 
-
-    @Test
-    public void seasonStateEntryProcessTest() {
-
-    }
-
     @Test
     public void seasonStateProcessTest() {
         simulationContext.setDaysSinceLastTraining(192);

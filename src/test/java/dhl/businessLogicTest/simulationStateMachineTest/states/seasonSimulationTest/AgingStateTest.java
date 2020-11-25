@@ -62,11 +62,6 @@ public class AgingStateTest {
     }
 
     @Test
-    public void seasonStateEntryProcessTest() {
-
-    }
-
-    @Test
     public void seasonStateProcessTest() {
         simulationContext.setGameConfig(gameConfig);
         simulationContext.setInMemoryLeague(leagueObjectModel);

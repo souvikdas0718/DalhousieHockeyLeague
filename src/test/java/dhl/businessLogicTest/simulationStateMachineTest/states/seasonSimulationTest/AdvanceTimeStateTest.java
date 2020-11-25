@@ -42,12 +42,6 @@ public class AdvanceTimeStateTest {
         Assertions.assertTrue(advanceTimeState.getSimulationContext().getYear() == 2013);
     }
 
-
-    @Test
-    public void seasonStateEntryProcessTest() {
-
-    }
-
     @Test
     public void seasonStateProcessTest() {
         simulationContext = new SimulationContext(gameState);

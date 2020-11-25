@@ -72,12 +72,6 @@ public class SimulateGameStateTest {
         Assertions.assertTrue(simulateGameState.getSimulationContext().getYear() == 2021);
     }
 
-
-    @Test
-    public void seasonStateEntryProcessTest() {
-
-    }
-
     @Test
     public void seasonStateProcessTest() {
         LocalDate startOfSimulation = LocalDate.of(2020, 10, 1);

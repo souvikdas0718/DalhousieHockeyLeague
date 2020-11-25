@@ -25,11 +25,6 @@ public class AdvanceTimeState implements ISimulationSeasonState {
     }
 
     @Override
-    public void seasonStateEntryProcess() {
-
-    }
-
-    @Override
     public void seasonStateProcess() {
         simulationContext.setNumberOfDays(simulationContext.getNumberOfDays() + 1);
     }

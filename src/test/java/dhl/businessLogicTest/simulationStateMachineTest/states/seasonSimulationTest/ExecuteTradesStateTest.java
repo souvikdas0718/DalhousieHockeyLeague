@@ -71,11 +71,6 @@ public class ExecuteTradesStateTest {
     }
 
     @Test
-    public void seasonStateEntryProcessTest() {
-
-    }
-
-    @Test
     public void seasonStateProcessTest() {
         double badTeamStrengthBeforeTrade = badTeamMock.calculateTeamStrength();
         badTeamMock.setRoster();

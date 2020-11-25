@@ -45,11 +45,6 @@ public class InitializeSeasonStateTest {
     }
 
     @Test
-    public void seasonStateEntryProcessTest() {
-
-    }
-
-    @Test
     public void seasonStateProcessTest() {
         ILeagueObjectModel league = model20TeamMocks.getLeagueData();
         simulationContext.setYear(2021);
