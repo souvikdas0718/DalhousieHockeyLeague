@@ -247,6 +247,7 @@ public class LeagueObjectModelMocks {
         List<IPlayer> playersList = new ArrayList<>();
         IPlayerStatistics playerStatistics = new PlayerStatistics( 5, 5, 5, 5);
         playerStatistics.setAge(16);
+        playerStatistics.setDateOfBirth(1,1,1988);
         playersList.add(new Player("Henry", "forward", true, playerStatistics));
         playersList.add(new Player("MaxG1", "goalie", false, playerStatistics));
         playersList.add(new Player("MaxG2", "goalie", false, playerStatistics));
@@ -275,6 +276,7 @@ public class LeagueObjectModelMocks {
         ArrayList<IPlayer> freeAgentsList = new ArrayList<>();
         IPlayerStatistics freeAgentStatistics = new PlayerStatistics( 10, 10, 10, 5);
         freeAgentStatistics.setAge(20);
+        freeAgentStatistics.setDateOfBirth(1,1,1988);
         freeAgentsList.add(new FreeAgent("Henry", "forward", freeAgentStatistics));
         freeAgentsList.add(new FreeAgent("Max", "goalie", freeAgentStatistics));
 

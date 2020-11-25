@@ -44,81 +44,82 @@ class SerializeLeagueobjectModelTest {
         mockSerializedJson = new SerializedJsonMock();
     }
 
-//    @Test
-//    void serializeLeagueObjectModelTest() throws Exception {
-//        ILeagueObjectModel leagueObjectModel = new LeagueObjectModel();
-//
-//        String serializedleagueModel = serializeLeagueobjectModel.serializeData(mockLeagueObjectModel.leagueModelMockWith30Players());
-//
-//        String jsonFilePath = filepath + "Dhl" + extension;
-//        serializeLeagueobjectModel.writeSerializedLeagueObjectToJsonFile(mockLeagueObjectModel.leagueModelMockWith30Players());
-//
-//        leagueObjectModel = deserializeLeagueobjectModel.deserializeLeagueObjectJson("Dhl");
-//
-//        Assertions.assertEquals("Dhl", leagueObjectModel.getLeagueName());
-//        Assertions.assertEquals(2, leagueObjectModel.getConferences().size());
-//        Assertions.assertEquals(2, leagueObjectModel.getFreeAgents().size());
-//        Assertions.assertEquals(2, leagueObjectModel.getCoaches().size());
-//        Assertions.assertEquals(2, leagueObjectModel.getGeneralManagers().size());
-//
-//        deleteFile(jsonFilePath);
-//    }
+    @Test
+    void serializeLeagueObjectModelTest() throws Exception {
+        ILeagueObjectModel leagueObjectModel = new LeagueObjectModel();
 
-//    @Test
-//    void WriteSerializedLeagueObjectToFileTest() throws Exception {
-//        ILeagueObjectModel leagueObjectModel = new LeagueObjectModel();
-//        String jsonFilePath = filepath + "Dhl" + extension;
-//
-//        serializeLeagueobjectModel.writeSerializedLeagueObjectToJsonFile(mockLeagueObjectModel.leagueModelMockWith30Players());
-//
-//        FileReader leagueObjectJsonReader = new FileReader(jsonFilePath);
-//        JSONParser jsonParser = new JSONParser();
-//        JSONObject objLeagueObject = (JSONObject) jsonParser.parse(leagueObjectJsonReader);
-//        leagueObjectModel = deserializeLeagueobjectModel.deserializeLeagueObjectJson("Dhl");
-//        Assertions.assertNotNull(leagueObjectModel);
-//        Assertions.assertEquals("Dhl", leagueObjectModel.getLeagueName());
-//
-//        leagueObjectJsonReader.close();
-//        deleteFile(jsonFilePath);
-//    }
+        String serializedleagueModel = serializeLeagueobjectModel.serializeData(mockLeagueObjectModel.leagueModelMockWith30Players());
 
-//    @Test
-//    void UpdateSerializedLeagueObjectToJsonFileTest() throws Exception {
-//        ILeagueObjectModel leagueObjectModel = new LeagueObjectModel();
-//        String jsonFilePath = filepath + "Dhl" + extension;
-//
-//        serializeLeagueobjectModel.writeSerializedLeagueObjectToJsonFile(mockLeagueObjectModel.leagueModelMockWith30Players());
-//        serializeLeagueobjectModel.updateSerializedLeagueObjectToJsonFile(mockLeagueObjectModel.leagueModelMockWith30Players());
-//
-//        FileReader leagueObjectJsonReader = new FileReader(jsonFilePath);
-//        JSONParser jsonParser = new JSONParser();
-//        JSONObject objLeagueObject = (JSONObject) jsonParser.parse(leagueObjectJsonReader);
-//
-//        leagueObjectModel = deserializeLeagueobjectModel.deserializeLeagueObjectJson("Dhl");
-//
-//        Assertions.assertNotNull(leagueObjectModel);
-//        Assertions.assertEquals("Dhl", leagueObjectModel.getLeagueName());
-//
-//        leagueObjectJsonReader.close();
-//        deleteFile(jsonFilePath);
-//    }
+        String jsonFilePath = filepath + "Dhl" + extension;
+        serializeLeagueobjectModel.writeSerializedLeagueObjectToJsonFile(mockLeagueObjectModel.leagueModelMockWith30Players());
+
+        leagueObjectModel = deserializeLeagueobjectModel.deserializeLeagueObjectJson("Dhl");
+
+        Assertions.assertEquals("Dhl", leagueObjectModel.getLeagueName());
+        Assertions.assertEquals(2, leagueObjectModel.getConferences().size());
+        Assertions.assertEquals(2, leagueObjectModel.getFreeAgents().size());
+        Assertions.assertEquals(2, leagueObjectModel.getCoaches().size());
+        Assertions.assertEquals(2, leagueObjectModel.getGeneralManagers().size());
+
+        deleteFile(jsonFilePath);
+    }
+
+    @Test
+    void WriteSerializedLeagueObjectToFileTest() throws Exception {
+        ILeagueObjectModel leagueObjectModel = new LeagueObjectModel();
+        String jsonFilePath = filepath + "Dhl" + extension;
+
+        serializeLeagueobjectModel.writeSerializedLeagueObjectToJsonFile(mockLeagueObjectModel.leagueModelMockWith30Players());
+
+        FileReader leagueObjectJsonReader = new FileReader(jsonFilePath);
+        JSONParser jsonParser = new JSONParser();
+        JSONObject objLeagueObject = (JSONObject) jsonParser.parse(leagueObjectJsonReader);
+        leagueObjectModel = deserializeLeagueobjectModel.deserializeLeagueObjectJson("Dhl");
+        Assertions.assertNotNull(leagueObjectModel);
+        Assertions.assertEquals("Dhl", leagueObjectModel.getLeagueName());
+
+        leagueObjectJsonReader.close();
+        deleteFile(jsonFilePath);
+    }
+
+    @Test
+    void UpdateSerializedLeagueObjectToJsonFileTest() throws Exception {
+        ILeagueObjectModel leagueObjectModel = new LeagueObjectModel();
+        String jsonFilePath = filepath + "Dhl" + extension;
+
+        serializeLeagueobjectModel.writeSerializedLeagueObjectToJsonFile(mockLeagueObjectModel.leagueModelMockWith30Players());
+        serializeLeagueobjectModel.updateSerializedLeagueObjectToJsonFile(mockLeagueObjectModel.leagueModelMockWith30Players());
+
+        FileReader leagueObjectJsonReader = new FileReader(jsonFilePath);
+        JSONParser jsonParser = new JSONParser();
+        JSONObject objLeagueObject = (JSONObject) jsonParser.parse(leagueObjectJsonReader);
+
+        leagueObjectModel = deserializeLeagueobjectModel.deserializeLeagueObjectJson("Dhl");
+
+        Assertions.assertNotNull(leagueObjectModel);
+        Assertions.assertEquals("Dhl", leagueObjectModel.getLeagueName());
+
+        leagueObjectJsonReader.close();
+        deleteFile(jsonFilePath);
+    }
 
     @Test
     void updateSerializedPlayerListToJsonFile() throws Exception {
+        String leagueName = "DhlTest";
         List<IPlayer> playersList = new ArrayList<>();
-        String jsonFilePath = filepath + "Dhl" + playerFileName;
+        String jsonFilePath = filepath + leagueName + playerFileName;
 
         List<IPlayer> players = new ArrayList<>();
         IPlayerStatistics playerStatistics1 = new PlayerStatistics( 5, 5, 5, 5);
         playerStatistics1.setAge(50);
         players.add(new Player("Henry", "forward", false, playerStatistics1));
 
-        serializeLeagueobjectModel.updateSerializedPlayerListToJsonFile(players, "Dhl");
+        serializeLeagueobjectModel.updateSerializedPlayerListToJsonFile(players, leagueName);
 
         FileReader playersJsonReader = new FileReader(jsonFilePath);
         JSONParser jsonParser = new JSONParser();
         JSONArray objPlayersObject = (JSONArray) jsonParser.parse(playersJsonReader);
-        playersList = deserializeLeagueobjectModel.deserializePlayers("Dhl");
+        playersList = deserializeLeagueobjectModel.deserializePlayers(leagueName);
         Assertions.assertNotNull(playersList);
         Assertions.assertEquals(1, playersList.size());
 
