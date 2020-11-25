@@ -5,13 +5,19 @@ import dhl.Mocks.JsonFilePathMock;
 import dhl.Mocks.LeagueObjectModel20TeamMocks;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.aging.Injury;
+import dhl.businessLogic.aging.agingFactory.AgingAbstractFactory;
 import dhl.businessLogic.aging.interfaceAging.IInjury;
 import dhl.businessLogic.leagueModel.GameConfig;
+import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
+import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.InjuryCheckState;
 import dhl.businessLogic.traning.Training;
+import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
+import dhl.businessLogicTest.leagueModelTests.mocks.GameplayConfigMock;
+import dhl.businessLogicTest.leagueModelTests.mocks.LeagueMock;
 import dhl.inputOutput.importJson.ImportJsonFile;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,10 +38,16 @@ public class InjuryCheckStateTest {
     LeagueObjectModel20TeamMocks model20TeamMocks;
     IScheduler scheduler;
     GameConfigMock gameConfigMock;
-    GameConfig gameConfig;
+//    GameConfig gameConfig;
+    IGameConfig gameConfig;
     Training trainingParameterized;
     JsonFilePathMock filePathMock;
     ImportJsonFile importJsonFile;
+    LeagueModelMockAbstractFactory leagueMockFactory;
+    LeagueMock leagueMock;
+    ILeagueObjectModel leagueObjectModel;
+    AgingAbstractFactory agingFactory;
+    Injury injury;
 
     @BeforeEach
     public void initObject() throws Exception {
@@ -52,6 +64,13 @@ public class InjuryCheckStateTest {
         importJsonFile = new ImportJsonFile(filePathMock.getFilePath());
         gameConfig = new GameConfig(importJsonFile.getJsonObject());
         trainingParameterized = new Training(injurySystem, gameConfig);
+        agingFactory= AgingAbstractFactory.instance();
+        injury = (Injury) agingFactory.createInjury();
+        leagueMockFactory = LeagueModelMockAbstractFactory.instance();
+        leagueMock = leagueMockFactory.createLeagueMock();
+        leagueObjectModel = leagueMock.getLeagueObjectModel();
+        GameplayConfigMock gameplayConfigMock = leagueMockFactory.createGameplayConfig();
+        gameConfig = gameplayConfigMock.getAgingGameConfig();
     }
 
     @Test
@@ -82,43 +101,15 @@ public class InjuryCheckStateTest {
     }
 
     @Test
-    public void seasonStateProcessTest() throws Exception {
-//        ILeagueObjectModelDB mockLeagueObject = new MockDatabase();
-//        ILeagueObjectModel newLeagueObject = trainingParameterized.updatePlayerStats(mockLeagueObject.loadLeagueModel("Dhl", "Mock Team2"));
-//        simulationContext.setInMemoryLeague(newLeagueObject);
-//        simulationContext.setTeamsPlayingInGame(mockLeagueObjectModel.getTeamArrayMock());
-//        simulationContext.setGameConfig(gameConfigMock.getGameConfigMock());
-////        simulationContext.getTeamsPlayingInGame().get(0).getPlayers().get(0).getPlayerStats();
-////        for (ITeam team :simulationContext.getTeamsPlayingInGame()) {
-////            if(team.getTeamName() == simulationContext.getTeamsPlayingInGame().get(0).getTeamName()) {
-////                team.getPlayers().get(0).setPlayerStats(newLeagueObject.);
-////            }
-////        }
-////        simulationContext.getTeamsPlayingInGame().get(0).getPlayers().get(0).getPlayerStats();
-////        simulationContext.setTeamsPlayingInGame(simulationContext.getTeamsPlayingInGame().get(0).getPlayers().get(0).getPlayerStats());
-//        System.out.println(simulationContext.getTeamsPlayingInGame().get(0).getTeamName());
-//        System.out.println(simulationContext.getTeamsPlayingInGame().get(0).getPlayers().size());
-//        System.out.println(simulationContext.getTeamsPlayingInGame().get(1).getTeamName());
-//        System.out.println(simulationContext.getTeamsPlayingInGame().get(1).getPlayers().size());
-//        System.out.println(simulationContext.getInjurySystem());
-//        System.out.println(simulationContext.getGameConfig());
-//
-////        for (ITeam team : simulationContext.getTeamsPlayingInGame()) {
-////            IInjury injury = simulationContext.getInjurySystem();
-////            injury.checkTeamInjury(simulationContext.getGameConfig(), team);
-////            simulationContext.setTeamsPlayingInGame(new ArrayList<>());
-////        }
-//
-//        injuryCheckState = new InjuryCheckState(simulationContext);
-//        injuryCheckState.seasonStateProcess();
-//        System.out.println(injuryCheckState.getSimulationContext().getTeamsPlayingInGame());
-//
-//
-////        for (ITeam team : simulationContext.getTeamsPlayingInGame()) {
-////            IInjury injury = simulationContext.getInjurySystem();
-////            injury.checkTeamInjury(simulationContext.getGameConfig(), team);
-////            simulationContext.setTeamsPlayingInGame(new ArrayList<>());
-////        }
+    public void seasonStateProcessTest() {
+        simulationContext.setDaysSinceLastTraining(192);
+        simulationContext.setGameConfig(gameConfig);
+        simulationContext.setInjurySystem(injury);
+        simulationContext.setInMemoryLeague(leagueObjectModel);
+        injuryCheckState = new InjuryCheckState(simulationContext);
+        injuryCheckState.seasonStateProcess();
+        Assertions.assertEquals(-1, injuryCheckState.getSimulationContext().getInMemoryLeague().getConferences().get(0).getDivisions().get(0).getTeams().get(0).getPlayers().get(0).getPlayerInjuredDays());
+
     }
 
     @Test

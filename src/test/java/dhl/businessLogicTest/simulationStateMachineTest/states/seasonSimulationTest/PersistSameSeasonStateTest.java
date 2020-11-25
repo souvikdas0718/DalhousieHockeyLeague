@@ -48,6 +48,13 @@ public class PersistSameSeasonStateTest {
     @Test
     public void seasonStateProcessTest() {
 
+        //        SerializeDeserializeAbstractFactory factorySerialize = SerializeDeserializeAbstractFactory.instance();
+//        ISerializeLeagueObjectModel serializeLeagueObjectModel = factorySerialize.createSerializeLeagueObjectModel("src/SerializedJsonFiles/");
+//        LeagueObjectModel leagueObjectModel = new LeagueObjectModel();
+//        leagueObjectModel.updateLeagueObjectModel(serializeLeagueObjectModel, simulationContext.getInMemoryLeague());
+//                call this method
+//        inMemoryLeague.updateLeagueObjectModel(serializeLeagueObjectModel, inMemoryLeague)
+
     }
 
     @Test
