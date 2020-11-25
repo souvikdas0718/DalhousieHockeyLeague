@@ -3,12 +3,16 @@ package dhl.businessLogic.trade;
 import dhl.businessLogic.trade.factory.TradeAbstractFactory;
 import dhl.businessLogic.trade.factory.TradeConcreteFactory;
 import dhl.businessLogic.trade.interfaces.IScout;
+import dhl.businessLogic.trade.interfaces.ITradeType;
 import dhl.inputOutput.ui.IUserInputOutput;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogic.simulationStateMachine.interfaces.IUpdateUserTeamRoster;
 import dhl.businessLogic.trade.interfaces.ITradeOffer;
 import dhl.businessLogic.trade.interfaces.ITradingEngine;
 import dhl.inputOutput.ui.UserInputOutput;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TradingEngine extends ITradingEngine {
 
@@ -31,37 +35,6 @@ public class TradingEngine extends ITradingEngine {
         this.leagueObjectModel = leagueObjectModel;
         this.userTeam = userTeam;
     }
-    @Override
-    public void startEngine() {
-        for (IConference conference : leagueObjectModel.getConferences()) {
-            for (IDivision division : conference.getDivisions()) {
-                for (ITeam team : division.getTeams()) {
-                    if( isTeamEligibleForTrade( team ) ) {
-                        performTrade(team);
-                    }
-                }
-            }
-        }
-    }
-
-    public void performTrade(ITeam team){
-        IScout teamScout= factory.createScout(team, leagueObjectModel, gameConfig);
-
-        teamScout.findTrade();
-    }
-    public boolean isTeamEligibleForTrade(ITeam team){
-        long configLossPoint = Long.parseLong(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getLossPoint()));
-        double configRandomTradeChance = Double.parseDouble(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getRandomTradeOfferChance()));
-        if(team.getLossPoint() > configLossPoint){
-            double randomNumber = Math.random();
-            if (randomNumber > configRandomTradeChance) {
-                return true;
-            }
-        }
-        return false;
-    }
-    /*
-
 
     public void startEngine() {
         try {
@@ -229,5 +202,5 @@ public class TradingEngine extends ITradingEngine {
         this.ioObject = ioObject;
     }
 
-     */
+
 }
