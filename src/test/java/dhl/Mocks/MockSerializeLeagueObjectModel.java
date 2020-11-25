@@ -9,15 +9,15 @@ import java.util.List;
 
 public class MockSerializeLeagueObjectModel implements ISerializeLeagueObjectModel {
 
-    public void writeSerializedLeagueObjectToJsonFile(ILeagueObjectModel objLeagueObjectModel) throws IOException, Exception {
+    public void writeSerializedLeagueObjectToJsonFile(ILeagueObjectModel objLeagueObjectModel)  {
 
     }
 
-    public void updateSerializedLeagueObjectToJsonFile(ILeagueObjectModel objLeagueObjectModel) throws IOException, Exception {
+    public void updateSerializedLeagueObjectToJsonFile(ILeagueObjectModel objLeagueObjectModel)  {
 
     }
 
-    public void updateSerializedPlayerListToJsonFile(List<IPlayer> playersToRetire, String leagueName) throws IOException, Exception {
+    public void updateSerializedPlayerListToJsonFile(List<IPlayer> playersToRetire, String leagueName)  {
 
     }
 }

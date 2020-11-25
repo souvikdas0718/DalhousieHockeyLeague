@@ -2,6 +2,7 @@ package dhl.businessLogic.simulationStateMachine.states.seasonSimulation.factory
 
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.*;
+import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.IGenerateDraftPlayers;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
 
 public class SeasonSimulationStateFactory extends SimulationStateAbstractFactory {
@@ -48,5 +49,9 @@ public class SeasonSimulationStateFactory extends SimulationStateAbstractFactory
 
     public ISimulationSeasonState getTrainingState(SimulationContext simulationContext) {
         return new TrainingState(simulationContext);
+    }
+
+    public IGenerateDraftPlayers getGeneratePlayers(){
+        return new GenerateDraftPlayers();
     }
 }

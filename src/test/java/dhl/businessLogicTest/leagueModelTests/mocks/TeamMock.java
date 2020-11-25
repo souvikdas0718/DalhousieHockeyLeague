@@ -46,7 +46,8 @@ public class TeamMock {
         Random rand = new Random();
 
         for(int i=0;i<30;i++){
-            IPlayerStatistics playerStatistics= new PlayerStatistics(20,rand.nextInt((20 - 1) + 1) + 1,rand.nextInt((20 - 1) + 1) + 1,rand.nextInt((20 - 1) + 1) + 1,rand.nextInt((20 - 1) + 1) + 1);
+            IPlayerStatistics playerStatistics= new PlayerStatistics(rand.nextInt((20 - 1) + 1) + 1,rand.nextInt((20 - 1) + 1) + 1,rand.nextInt((20 - 1) + 1) + 1,rand.nextInt((20 - 1) + 1) + 1);
+            playerStatistics.setDateOfBirth(14,11,1995);
             IPlayer player;
             if(i==0){
                 player= factory.createPlayer("Player"+i, PlayerPosition.FORWARD.toString(),true,playerStatistics);
@@ -65,6 +66,12 @@ public class TeamMock {
         return playerList;
     }
 
-
+    public ITeam getTeamWithTwoCaptains(){
+        List<IPlayer> playersList = getTeamPlayers();
+        playersList.remove(0);
+        ICoach coach = factory.createCoach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
+        IGeneralManager manager = factory.createGeneralManager("Mathew", "normal");
+        return factory.createTeam("Ontario", manager, coach,playersList );
+    }
 
 }

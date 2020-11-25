@@ -53,18 +53,17 @@ public class DivisionTest {
         Assertions.assertEquals(0, teams.size());
     }
 
+
     @Test
-    public void checkIfDivisionValidTest() throws Exception {
-        Assertions.assertTrue(divisionParameterized.checkIfDivisionValid(validate));
+    public void checkIfTeamNamesUniqueInDivisionTest()  {
+        divisionParameterized = divisionMock.getDivisionWithSameTeamName();
+        Assertions.assertFalse( divisionParameterized.checkIfDivisionValid());
     }
 
     @Test
-    public void checkIfTeamNamesUniqueInDivisionTest() throws Exception {
-        divisionParameterized = divisionMock.getDivisionWithSameTeamName();
-        Exception error = Assertions.assertThrows(Exception.class, () -> {
-            divisionParameterized.checkIfDivisionValid(validate);
-        });
-        Assertions.assertTrue(error.getMessage().contains("The names of teams inside a division must be unique"));
+    public void checkIfTeamNamesUniqueInDivisionValidTest()  {
+        divisionParameterized = divisionMock.getDivision();
+        Assertions.assertTrue( divisionParameterized.checkIfDivisionValid());
     }
 
     @AfterEach()

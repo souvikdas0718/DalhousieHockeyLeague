@@ -33,23 +33,18 @@ public class CommonValidationTest {
 
     @Test
     public void isStringEmptyTest() {
-        Exception error = Assertions.assertThrows(Exception.class, () -> {
-            commonValidation.isStringEmpty("", "Team");
-        });
-        Assertions.assertTrue(error.getMessage().contains("Team name cannot be empty"));
+        Assertions.assertTrue(commonValidation.isStringEmpty("", "Team"));
     }
 
     @Test
     public void isListEmptyTest() {
-        Exception error = Assertions.assertThrows(Exception.class, () -> {
-            List<IPlayer> players = new ArrayList<>();
-            commonValidation.isListEmpty(players, "players");
-        });
-        Assertions.assertTrue(error.getMessage().contains("Please add players"));
+
+        List<IPlayer> players = new ArrayList<>();
+        Assertions.assertTrue(commonValidation.isListEmpty(players, "players"));
     }
 
     @Test
-    public void isListNotEmptyTest() throws Exception {
+    public void isListNotEmptyTest()  {
 
         commonValidation.isListEmpty(teamMock.getTeamPlayers(), "players");
         Assertions.assertTrue(teamMock.getTeamPlayers().size() > 0);

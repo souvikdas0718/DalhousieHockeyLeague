@@ -1,14 +1,13 @@
 package dhl.businessLogic.trade;
 
-import dhl.businessLogic.simulationStateMachine.UpdateUserTeamRoster;
 import dhl.businessLogic.trade.factory.TradeAbstractFactory;
 import dhl.businessLogic.trade.factory.TradeConcreteFactory;
+import dhl.businessLogic.trade.interfaces.IScout;
+import dhl.businessLogic.trade.interfaces.ITradeType;
 import dhl.inputOutput.ui.IUserInputOutput;
-
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogic.simulationStateMachine.interfaces.IUpdateUserTeamRoster;
 import dhl.businessLogic.trade.interfaces.ITradeOffer;
-import dhl.businessLogic.trade.interfaces.ITradeType;
 import dhl.businessLogic.trade.interfaces.ITradingEngine;
 import dhl.inputOutput.ui.UserInputOutput;
 
@@ -38,19 +37,23 @@ public class TradingEngine extends ITradingEngine {
     }
 
     public void startEngine() {
-        long configLossPoint = Long.parseLong(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getLossPoint()));
-        double configRandomTradeChance = Double.parseDouble(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getRandomTradeOfferChance()));
-        for (IConference conference : leagueObjectModel.getConferences()) {
-            for (IDivision division : conference.getDivisions()) {
-                for (ITeam team : division.getTeams()) {
-                    if (findLossPointOfTheTeam(team) > configLossPoint) {
-                        double randomNumber = Math.random();
-                        if (randomNumber > configRandomTradeChance) {
-                            performTrade(team);
+        try {
+            long configLossPoint = Long.parseLong(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getLossPoint()));
+            double configRandomTradeChance = Double.parseDouble(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getRandomTradeOfferChance()));
+            for (IConference conference : leagueObjectModel.getConferences()) {
+                for (IDivision division : conference.getDivisions()) {
+                    for (ITeam team : division.getTeams()) {
+                        if (findLossPointOfTheTeam(team) > configLossPoint) {
+                            double randomNumber = Math.random();
+                            if (randomNumber > configRandomTradeChance) {
+                                performTrade(team);
+                            }
                         }
                     }
                 }
             }
+        }catch (Exception e){
+            ioObject.printMessage(e.getMessage());
         }
     }
 
@@ -58,15 +61,16 @@ public class TradingEngine extends ITradingEngine {
         return currentTrade;
     }
 
-    public void performTrade(ITeam tradingTeam){
-        try{
+    public void performTrade(ITeam tradingTeam) throws Exception {
+
             ITeam teamToTradeWith = findTeamToTradeWith(tradingTeam);
-            currentTrade = generateTradeOffer(tradingTeam, teamToTradeWith);
-            tradingTeam.setLossPoint(0);
-            sendTradeToRecevingTeam(currentTrade, userTeam);
-        } catch (Exception e) {
-            ioObject.printMessage(e.getMessage());
-        }
+            if(teamToTradeWith == null){
+                // TODO: 23-11-2020 logInfo
+            }else{
+                currentTrade = generateTradeOffer(tradingTeam, teamToTradeWith);
+                tradingTeam.setLossPoint(0);
+                sendTradeToRecevingTeam(currentTrade, userTeam);
+            }
     }
 
     public void sendTradeToRecevingTeam(ITradeOffer currentTrade, ITeam userTeam) throws Exception {
@@ -95,7 +99,7 @@ public class TradingEngine extends ITradingEngine {
                 }
             }
         }
-        throw new Exception(" No Good Player availabe to swap for Team: " + tradingTeam.getTeamName());
+        return null;
     }
 
     public int findLossPointOfTheTeam(ITeam team) {
@@ -197,4 +201,6 @@ public class TradingEngine extends ITradingEngine {
     public void setIoObject(IUserInputOutput ioObject) {
         this.ioObject = ioObject;
     }
+
+
 }

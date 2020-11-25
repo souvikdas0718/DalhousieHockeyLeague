@@ -9,7 +9,7 @@ import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
-import dhl.inputOutput.importJson.SerializeDeserialize.SerializeDeserializeAbstractFactory;
+import dhl.inputOutput.importJson.serializeDeserialize.SerializeDeserializeAbstractFactory;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -36,14 +36,13 @@ public class AgingState implements ISimulationSeasonState {
 //        ISerializeLeagueObjectModel serializeModel = new SerializeLeagueObjectModel(leagueObjectModel.getLeagueName());
         IRetirement retirement = agingFactory.createRetirement(serializeModel, simulationContext.getInMemoryLeague());
 //        IRetirement retirement = new Retirement(serializeModel, simulationContext.getInMemoryLeague());
-        ILeagueSchedule leagueSchedule = agingFactory.createLeagueSchedule(simulationContext.getNumberOfDays(), simulationContext.getInMemoryLeague());
+        ILeagueSchedule leagueSchedule = agingFactory.createLeagueSchedule(simulationContext.getInMemoryLeague());
 //        ILeagueSchedule leagueSchedule = new LeagueSchedule(aging, retirement, simulationContext.getInjurySystem(), simulationContext.getInMemoryLeague(), simulationContext.getNumberOfDays());
-        try {
-            leagueSchedule.initiateAging();
-        } catch (Exception e) {
-            log.error("Error occured while aging" + e.getMessage());
-            e.printStackTrace();
-        }
+
+        LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
+        LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());
+        leagueSchedule.initiateAging(simulationContext.getNumberOfDays(),currentDate);
+
     }
 
     public SimulationContext getSimulationContext() {

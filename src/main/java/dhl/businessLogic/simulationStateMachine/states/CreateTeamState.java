@@ -5,7 +5,7 @@ import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.interfaces.IGameState;
 import dhl.businessLogic.simulationStateMachine.states.interfaces.ICreateTeamStateLogic;
-import dhl.inputOutput.importJson.SerializeDeserialize.SerializeLeagueObjectModel;
+import dhl.inputOutput.importJson.serializeDeserialize.SerializeLeagueObjectModel;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import dhl.inputOutput.ui.IUserInputOutput;
 import dhl.inputOutput.ui.UserInputOutput;

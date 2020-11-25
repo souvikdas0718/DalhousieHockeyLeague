@@ -12,7 +12,7 @@ import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interface
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.ExecuteTradesState;
 import dhl.businessLogic.trade.TradingEngine;
 import dhl.businessLogic.trade.interfaces.ITradingEngine;
-import dhl.businessLogicTest.tradeTest.TradeMock;
+import dhl.businessLogicTest.tradeTest.mocks.TradeMock;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

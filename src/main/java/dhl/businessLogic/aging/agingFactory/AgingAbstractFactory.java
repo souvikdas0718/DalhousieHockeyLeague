@@ -40,6 +40,6 @@ public abstract class AgingAbstractFactory{
 
     public abstract IAging createAging(IGameConfig gameConfig);
 
-    public abstract ILeagueSchedule createLeagueSchedule(int daysSinceStartOfSimulation, ILeagueObjectModel leagueObjectModel);
+    public abstract ILeagueSchedule createLeagueSchedule(ILeagueObjectModel leagueObjectModel);
 
 }

@@ -27,6 +27,7 @@ public class Conference implements IConference {
     }
 
     public Conference(String conferenceName, List<IDivision> divisions) {
+        logger.info( "Creating conference object");
         this.conferenceName = conferenceName;
         this.divisions = divisions;
     }
@@ -39,30 +40,25 @@ public class Conference implements IConference {
         return divisions;
     }
 
-    public boolean checkIfConferenceValid(IValidation validation) throws Exception {
-        validation.isStringEmpty(conferenceName, "Conference name");
-        checkIfConferenceHasEvenDivisions();
-        return true;
-    }
-
-    public boolean isDivisionSizeOdd(){
+    public boolean checkIfConferenceHasEvenDivisions(){
         if(divisions.size() % 2 == 0){
-            return false;
+            logger.debug( "Conference: " + conferenceName + " has even divisions names" );
+            return true;
         }
-        return true;
+        logger.debug( "Conference: " + conferenceName + " has odd divisions names" );
+        return false;
     }
 
-    public void checkIfConferenceHasEvenDivisions() throws Exception {
-        if (isDivisionSizeOdd()) {
-            logger.error( "Conference: " + conferenceName + " have odd divisions" );
-            throw new Exception("A conference must contain even number of divisions");
-        }
+    public boolean checkIfConferenceHasUniqueDivisions()  {
         List<String> divisionNames = new ArrayList<>();
         divisions.stream().map(division -> division.getDivisionName()).forEach(divName -> divisionNames.add(divName));
         Set<String> divisionsSet = new HashSet<>(divisionNames);
         if (divisionsSet.size() < divisions.size()) {
-            throw new Exception("The names of divisions inside a conference must be unique");
+            logger.debug( "Conference: " + conferenceName + " has duplicate names" );
+            return false;
         }
+        logger.debug( "Conference: " + conferenceName + " has unique names" );
+        return true;
     }
 
 }

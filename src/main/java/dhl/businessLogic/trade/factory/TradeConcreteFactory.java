@@ -1,12 +1,15 @@
 package dhl.businessLogic.trade.factory;
 
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
+import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.simulationStateMachine.interfaces.IUpdateUserTeamRoster;
 import dhl.businessLogic.trade.AiAiTrade;
 import dhl.businessLogic.trade.AiUserTrade;
 import dhl.businessLogic.trade.ExchangingPlayerTradeOffer;
+import dhl.businessLogic.trade.Scout;
+import dhl.businessLogic.trade.interfaces.IScout;
 import dhl.businessLogic.trade.interfaces.ITradeOffer;
 import dhl.businessLogic.trade.interfaces.ITradeType;
 import dhl.inputOutput.ui.IUserInputOutput;
@@ -26,4 +29,10 @@ public class TradeConcreteFactory implements TradeAbstractFactory{
     public ITradeOffer createExchangingPlayerTradeOffer(ITeam offeringTeam, ITeam receivingTeam, ArrayList<IPlayer> playersOffered, ArrayList<IPlayer> playersWantedInExchange) {
         return new ExchangingPlayerTradeOffer(offeringTeam, receivingTeam, playersOffered, playersWantedInExchange);
     }
+
+    public IScout createScout(ITeam myTeam, ILeagueObjectModel myLeague, IGameConfig gameConfig){
+        IScout scout = new Scout(myTeam, myLeague, gameConfig);
+        return scout;
+    }
+
 }

@@ -33,12 +33,13 @@ public class AiUserTrade implements ITradeType {
         int inputFromUser = Integer.parseInt(ioObject.getUserInput());
 
         if (inputFromUser == 1) {
+            ioObject.printMessage("Trade Accepted, Thankyou");
             return true;
         } else if (inputFromUser == 2) {
+            ioObject.printMessage("Trade Rejected, Thankyou");
             return false;
-        } else {
-            throw new Exception("Wrong Input please give valid input");
         }
+        return false;
     }
 
     public void validateTeamRosterAfterTrade(ITeam team, ILeagueObjectModel leagueObjectModel) throws Exception {

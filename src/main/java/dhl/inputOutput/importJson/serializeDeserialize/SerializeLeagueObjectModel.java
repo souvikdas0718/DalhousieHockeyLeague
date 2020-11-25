@@ -1,10 +1,9 @@
-package dhl.inputOutput.importJson.SerializeDeserialize;
+package dhl.inputOutput.importJson.serializeDeserialize;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
-import dhl.businessLogic.simulationStateMachine.states.CreateTeamStateLogic;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,33 +22,39 @@ import java.util.List;
 public class SerializeLeagueObjectModel implements ISerializeLeagueObjectModel {
     final String playerFileName = "--RetiredPlayersInLeague.json";
     final String jsonExtension = ".json";
-    Logger myLogger = LogManager.getLogger(CreateTeamStateLogic.class);
+    Logger myLogger = LogManager.getLogger(SerializeLeagueObjectModel.class);
     String jsonFilePath;
 
     public SerializeLeagueObjectModel(String inputJsonFilePath) {
         jsonFilePath = inputJsonFilePath;
     }
 
-    public String serializeData(Object objLeagueObjectModel) throws Exception {
+    public String serializeData(Object objLeagueObjectModel)  {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String jsonString = gson.toJson(objLeagueObjectModel);
         return jsonString;
     }
 
-    public void writeJsonToFile(String filePath, String serializedData) throws IOException {
+    public void writeJsonToFile(String filePath, String serializedData)  {
         FileWriter fileWriter = null;
         try {
             fileWriter = new FileWriter(filePath);
             fileWriter.write(serializedData);
+        } catch (IOException ioException) {
+            myLogger.error("Write Json to file while serializing file");
         } finally {
-            fileWriter.close();
+            try {
+                fileWriter.close();
+            } catch (IOException ioException) {
+                myLogger.error("IO Exception while writing JSON to file");
+            }
         }
     }
 
-    public void writeSerializedLeagueObjectToJsonFile(ILeagueObjectModel objLeagueObjectModel) throws IOException, Exception {
+    public void writeSerializedLeagueObjectToJsonFile(ILeagueObjectModel objLeagueObjectModel)  {
         String serializedLeagueObjectModel = serializeData(objLeagueObjectModel);
         String leagueObjectModelJsonPath = jsonFilePath + objLeagueObjectModel.getLeagueName() + jsonExtension;
-
+        try {
         File objFile = new File(leagueObjectModelJsonPath);
 
         if (objFile.exists()) {
@@ -59,11 +64,15 @@ public class SerializeLeagueObjectModel implements ISerializeLeagueObjectModel {
                 writeJsonToFile(leagueObjectModelJsonPath, serializedLeagueObjectModel);
             } else {
                 myLogger.log(myLogger.getLevel(), "Error saving league object data to json");
+
             }
+        }
+        } catch (IOException ioException) {
+            myLogger.error("IO Exception while writing to file"+leagueObjectModelJsonPath);
         }
     }
 
-    public void updateSerializedLeagueObjectToJsonFile(ILeagueObjectModel objLeagueObjectModel) throws IOException, Exception {
+    public void updateSerializedLeagueObjectToJsonFile(ILeagueObjectModel objLeagueObjectModel)  {
         String serializedLeagueObjectModel = serializeData(objLeagueObjectModel);
         String leagueObjectModelJsonPath = jsonFilePath + objLeagueObjectModel.getLeagueName() + jsonExtension;
 
@@ -75,22 +84,28 @@ public class SerializeLeagueObjectModel implements ISerializeLeagueObjectModel {
         }
     }
 
-    public void updateSerializedPlayerListToJsonFile(List<IPlayer> playersToRetire, String leagueName) throws IOException, Exception {
+    public void updateSerializedPlayerListToJsonFile(List<IPlayer> playersToRetire, String leagueName)  {
         String playersJsonPath = jsonFilePath + leagueName + playerFileName;
 
-        String serializedplayers = serializeData(playersToRetire);
-        File objFile = new File(playersJsonPath);
-        if (objFile.exists()) {
-            updateJsonFile(serializedplayers, playersJsonPath);
-        } else {
-            objFile.createNewFile();
-            writeJsonToFile(playersJsonPath, serializedplayers);
+        String serializedplayers = null;
+        try {
+            serializedplayers = serializeData(playersToRetire);
+            File objFile = new File(playersJsonPath);
+            if (objFile.exists()) {
+                updateJsonFile(serializedplayers, playersJsonPath);
+            } else {
+                objFile.createNewFile();
+                writeJsonToFile(playersJsonPath, serializedplayers);
+            }
+        } catch (Exception exception) {
+            myLogger.error(" Exception while serializing players file");
         }
     }
 
-    public void updateJsonFile(String newPlayers, String playersJsonPath) throws IOException, ParseException {
-        FileReader existingPlayers = new FileReader(playersJsonPath);
+    public void updateJsonFile(String newPlayers, String playersJsonPath) {
+        FileReader existingPlayers = null;
         try {
+            existingPlayers = new FileReader(playersJsonPath);
             JSONParser jsonParser = new JSONParser();
             JSONArray arrExistingPlayers = (JSONArray) jsonParser.parse(existingPlayers);
             JSONArray arrNewPlayers = (JSONArray) jsonParser.parse(newPlayers);
@@ -109,8 +124,17 @@ public class SerializeLeagueObjectModel implements ISerializeLeagueObjectModel {
             }
 
             writeJsonToFile(playersJsonPath, String.valueOf(arrCombined));
+        } catch (IOException ioException){
+            myLogger.error("IO Exception while serializing file");
+        } catch (ParseException parseException){
+            myLogger.error("Parse Exception while serializing file");
         } finally {
-            existingPlayers.close();
+            try {
+                existingPlayers.close();
+            }catch (IOException e){
+                myLogger.error("IO Exception while closing file");
+            }
+
         }
     }
 }

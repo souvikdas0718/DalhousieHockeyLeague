@@ -1,25 +1,35 @@
 package dhl.businessLogic.leagueModel.interfaceModel;
 
+import java.time.LocalDate;
+
 public interface IPlayerStatistics {
-    public int getAge();
+    int getAge();
 
-    public void setAge(int age);
+    void setAge(int age);
 
-    public int getSkating();
+    int getSkating();
 
-    public void setSkating(int skating);
+    void setSkating(int skating);
 
-    public int getShooting();
+    int getShooting();
 
-    public void setShooting(int shooting);
+    void setShooting(int shooting);
 
-    public int getChecking();
+    int getChecking();
 
-    public void setChecking(int checking);
+    void setChecking(int checking);
 
-    public int getSaving();
+    int getSaving();
 
-    public void setSaving(int saving);
+    void setSaving(int saving);
 
-    public void checkPlayerStatistics() throws Exception;
+    boolean isStatValueInvalid(double statValue);
+
+    void setDateOfBirth(int birthDay,int birthMonth,int birthYear);
+
+    LocalDate getDateOfBirth();
+
+    void calculateCurrentAge(LocalDate date);
+
+    void checkStatDecayChance(IGameConfig gameConfig);
 }

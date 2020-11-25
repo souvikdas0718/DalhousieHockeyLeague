@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface IValidation {
 
-    public void isStringEmpty(String value, String fieldName) throws Exception;
+    boolean isStringEmpty(String value, String fieldName) ;
 
-    public void isListEmpty(List value, String fieldName) throws Exception;
+    boolean isListEmpty(List value, String fieldName) ;
 }

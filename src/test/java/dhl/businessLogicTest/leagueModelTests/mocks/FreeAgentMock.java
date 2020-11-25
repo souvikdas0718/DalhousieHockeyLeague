@@ -34,7 +34,9 @@ public class FreeAgentMock {
     }
 
     public IPlayerStatistics getPlayerStats(){
-        return factory.createPlayerStatistics(20, 10, 10, 10, 10);
+        IPlayerStatistics playerStats= factory.createPlayerStatistics( 10, 10, 10, 10);
+        playerStats.setAge(20);
+        return playerStats;
     }
 
     public List<IPlayer> getFreeAgents(){
@@ -42,7 +44,8 @@ public class FreeAgentMock {
         Random rand = new Random();
 
         for(int i=0;i<30;i++){
-            IPlayerStatistics playerStatistics= new PlayerStatistics(20,rand.nextInt((20 - 1) + 1) + 1,rand.nextInt((20 - 1) + 1) + 1,rand.nextInt((20 - 1) + 1) + 1,rand.nextInt((20 - 1) + 1) + 1);
+            IPlayerStatistics playerStatistics= new PlayerStatistics(rand.nextInt((20 - 1) + 1) + 1,rand.nextInt((20 - 1) + 1) + 1,rand.nextInt((20 - 1) + 1) + 1,rand.nextInt((20 - 1) + 1) + 1);
+            playerStatistics.setDateOfBirth(14,11,1995);
             IPlayer freeAgent;
             if(i==0){
                 freeAgent= factory.createFreeAgent("Player"+i, PlayerPosition.FORWARD.toString(),playerStatistics);

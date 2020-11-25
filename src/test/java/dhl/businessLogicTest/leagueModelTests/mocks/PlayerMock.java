@@ -5,6 +5,8 @@ import dhl.businessLogic.leagueModel.factory.LeagueModelFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
 
+import java.time.LocalDate;
+
 
 public class PlayerMock {
     LeagueModelAbstractFactory factory;
@@ -40,11 +42,21 @@ public class PlayerMock {
     }
 
     public IPlayerStatistics getPlayerStats(){
-        return factory.createPlayerStatistics(20, 10, 10, 10, 10);
+        IPlayerStatistics playerStatistics = factory.createPlayerStatistics( 10, 10, 10, 10);
+        playerStatistics.setDateOfBirth(11,11,2000);
+        playerStatistics.calculateCurrentAge(LocalDate.of(2020,11,14));
+        return playerStatistics;
     }
 
     public IPlayerStatistics getInvalidPlayerStats(){
-        return factory.createPlayerStatistics(20, 23, 10, 10, 10);
+        IPlayerStatistics playerStatistics = factory.createPlayerStatistics(23, 10, 10, 10);
+        playerStatistics.setAge(20);
+        return playerStatistics;
+    }
+
+    public IPlayer getPlayerWithInvalidStats(){
+        IPlayerStatistics playerStatistics = getInvalidPlayerStats();
+        return factory.createPlayer("Harry", "forward", false, playerStatistics);
     }
 
 

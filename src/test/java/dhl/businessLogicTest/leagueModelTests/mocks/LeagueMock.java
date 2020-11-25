@@ -2,6 +2,7 @@ package dhl.businessLogicTest.leagueModelTests.mocks;
 
 import dhl.Mocks.JsonFilePathMock;
 import dhl.Mocks.factory.MockAbstractFactory;
+import dhl.businessLogic.leagueModel.FreeAgent;
 import dhl.businessLogic.leagueModel.GameConfig;
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.factory.LeagueObjectModelBuilder;
@@ -97,6 +98,43 @@ public class LeagueMock {
         IGameConfig gameConfig = getGameplayConfig();
 
         return leagueDirector.construct("Dhl",conferences,freeAgents,coaches,managers,gameConfig);
+    }
+
+    public ILeagueObjectModel getLeagueObjectModelSameDivision()  {
+        PlayerMock playerMock = mockFactory.createPlayerMock();
+        LeagueMock leagueMock = mockFactory.createLeagueMock();
+        GameplayConfigMock gameplayConfigMock = mockFactory.createGameplayConfig();
+        ILeagueObjectModel leagueObjectMock = null;
+
+        List<IPlayer> playersList = new ArrayList<>();
+        playersList.add(factory.createPlayer( "Henry", "forward", false, playerMock.getPlayerStats()));
+        playersList.add(factory.createPlayer("Max", "goalie", true, playerMock.getPlayerStats()));
+        ICoach headCoach = factory.createCoach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
+        IGeneralManager manager = factory.createGeneralManager("Mathew", "normal");
+        ITeam team = factory.createTeam("Ontario", manager, headCoach, playersList);
+        List<ITeam> teamArrayList = new ArrayList<>();
+        teamArrayList.add(team);
+
+        IDivision division1 = factory.createDivision("Atlantic", teamArrayList);
+        IDivision division2 = factory.createDivision("Pacific", teamArrayList);
+        List<IDivision> divisionsList = new ArrayList<>();
+        divisionsList.add(division1);
+        divisionsList.add(division2);
+
+        IConference conference = factory.createConference("Western", divisionsList);
+        List<IConference> conferences = new ArrayList<>();
+        conferences.add(conference);
+
+        List<IPlayer> freeAgentsList = new ArrayList<>();
+        IPlayer freeAgent = factory.createFreeAgent("Matt", "forward", playerMock.getPlayerStats());
+        freeAgentsList.add(freeAgent);
+        IPlayerStatistics playerStatistics2 =factory.createPlayerStatistics(11, 20, 15, 16);
+        playerStatistics2.setAge(20);
+        IPlayer freeAgent2 = new FreeAgent("Jack", "forward", playerStatistics2);
+        freeAgentsList.add(freeAgent2);
+        List<ICoach> coachList = new ArrayList<>();
+        leagueObjectMock = leagueDirector.construct("Dhl", conferences, freeAgentsList, coachList, leagueMock.getManagers(), gameplayConfigMock.getAgingGameConfig());
+        return leagueObjectMock;
     }
 
 

@@ -1,8 +1,13 @@
 package dhl.businessLogicTest.tradeTest;
 
+import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.trade.ExchangingPlayerTradeOffer;
+import dhl.businessLogic.trade.factory.TradeAbstractFactory;
+import dhl.businessLogic.trade.factory.TradeConcreteFactory;
+import dhl.businessLogicTest.tradeTest.mocks.TradeMock;
+import dhl.businessLogicTest.tradeTest.mocks.factory.TradeMockAbstractFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,18 +17,26 @@ import java.util.ArrayList;
 public class ExchangingPlayerTradeOfferTest {
 
     ExchangingPlayerTradeOffer testClassObject;
-    TradeMock mockObject;
+
+    TradeAbstractFactory tradeFactory;
+    LeagueModelAbstractFactory leagueFactory;
+    TradeMockAbstractFactory tradeMockFactory;
 
     @BeforeEach
     public void initObject() {
-        mockObject = new TradeMock();
-        ITeam strongTeam = mockObject.getTeamWithGoodPlayer();
-        ITeam weakTeam = mockObject.getTeamWithBadPlayer();
         ArrayList<IPlayer> playersOffered = new ArrayList<>();
-        playersOffered.add(weakTeam.getPlayers().get(0));
         ArrayList<IPlayer> playersWanted = new ArrayList<>();
+
+        tradeFactory = new TradeConcreteFactory();
+        leagueFactory = LeagueModelAbstractFactory.instance();
+        tradeMockFactory = TradeMockAbstractFactory.instance();
+
+        ITeam strongTeam = tradeMockFactory.createTeamMockForTrade().getTeamWithGoodPlayer();
+        ITeam weakTeam = tradeMockFactory.createTeamMockForTrade().getTeamWithBadPlayer();
+        playersOffered.add(weakTeam.getPlayers().get(0));
         playersWanted.add(strongTeam.getPlayers().get(0));
-        testClassObject = new ExchangingPlayerTradeOffer(weakTeam, strongTeam, playersOffered, playersWanted);
+
+        testClassObject = (ExchangingPlayerTradeOffer) tradeFactory.createExchangingPlayerTradeOffer(weakTeam, strongTeam, playersOffered, playersWanted);
     }
 
     @Test
@@ -35,7 +48,6 @@ public class ExchangingPlayerTradeOfferTest {
 
         Assertions.assertTrue(testClassObject.getOfferingTeam().getPlayers().contains(playerNowInWeakTeam));
         Assertions.assertTrue(testClassObject.getReceivingTeam().getPlayers().contains(playerNowInStrongTeam));
-
     }
 
     @Test
