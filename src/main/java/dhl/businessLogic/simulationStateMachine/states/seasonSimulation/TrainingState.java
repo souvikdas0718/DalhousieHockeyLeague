@@ -59,9 +59,11 @@ public class TrainingState implements ISimulationSeasonState {
     public void seasonStateProcess() {
         simulationContext.setDaysSinceLastTraining(simulationContext.getDaysSinceLastTraining() + 1);
         IGameConfig gameConfig = simulationContext.getGameConfig();
-        int daysUntilStatIncreaseCheck = Integer.parseInt(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getDaysUntilStatIncreaseCheck()));
+        int DAYS_UNTIL_STAT_INCREASE_CHECK = 193;
+        //commenting as it is not available in m3
+//        int daysUntilStatIncreaseCheck = Integer.parseInt(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getDaysUntilStatIncreaseCheck()));
         try {
-            if (daysUntilStatIncreaseCheck == simulationContext.getDaysSinceLastTraining()) {
+            if (DAYS_UNTIL_STAT_INCREASE_CHECK == simulationContext.getDaysSinceLastTraining()) {
                 ITraining training = new Training(simulationContext.getInjurySystem(), simulationContext.getGameConfig());
                 training.updatePlayerStats(simulationContext.getInMemoryLeague());
                 simulationContext.setDaysSinceLastTraining(0);
