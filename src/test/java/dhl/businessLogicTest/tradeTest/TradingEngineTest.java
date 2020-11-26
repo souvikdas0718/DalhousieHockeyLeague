@@ -106,7 +106,8 @@ public class TradingEngineTest {
 
     @Test
     public void getCurrentTradeTest(){
-        testClassObject = new TradingEngine(ourGameConfig, leagueMock, userTeam);
+        ITradingEngine.setFactory(new TradingEngine(ourGameConfig, leagueMock, userTeam));
+        testClassObject = (TradingEngine) ITradingEngine.instance(ourGameConfig, leagueMock, userTeam);
         badTeamMock = tradeMockFactory.createTeamMockForTrade().getTeamWithBadPlayer();
         testClassObject.performTrade(badTeamMock);
         ITradeOffer tradeOffer = testClassObject.getCurrentTrade();
