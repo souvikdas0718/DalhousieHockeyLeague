@@ -12,7 +12,7 @@ public class SeasonSimulationStateFactory extends SimulationStateAbstractFactory
     }
 
     public ISimulationSeasonState getAdvanceToNextSeasonState(SimulationContext simulationContext) {
-        return null;
+        return new AdvanceToNextSeasonState(simulationContext);
     }
 
     public ISimulationSeasonState getAgingState(SimulationContext simulationContext) {
