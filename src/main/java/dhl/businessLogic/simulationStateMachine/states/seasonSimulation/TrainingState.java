@@ -4,9 +4,11 @@ package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.Scheduler;
+import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.factory.SchedulerAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
 import dhl.businessLogic.traning.Training;
+import dhl.businessLogic.traning.TrainingAbstractFactory;
 import dhl.businessLogic.traning.interfaces.ITraining;
 
 import java.time.DayOfWeek;
@@ -19,10 +21,15 @@ public class TrainingState implements ISimulationSeasonState {
 
     SimulationContext simulationContext;
     IScheduler scheduler;
+    SchedulerAbstractFactory schedulerAbstractFactory;
+    TrainingAbstractFactory trainingAbstractFactory;
 
     public TrainingState(SimulationContext simulationContext) {
         this.simulationContext = simulationContext;
-        scheduler = new Scheduler();
+        schedulerAbstractFactory = SchedulerAbstractFactory.instance();
+        scheduler = schedulerAbstractFactory.getScheduler();
+        trainingAbstractFactory = TrainingAbstractFactory.instance();
+//        scheduler = new Scheduler();
     }
 
     static void unPlayedGameAndTradingDeadline(LocalDate currentDate, IScheduler scheduler, SimulationContext simulationContext) {
@@ -59,7 +66,8 @@ public class TrainingState implements ISimulationSeasonState {
 //        int daysUntilStatIncreaseCheck = Integer.parseInt(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getDaysUntilStatIncreaseCheck()));
         try {
             if (DAYS_UNTIL_STAT_INCREASE_CHECK == simulationContext.getDaysSinceLastTraining()) {
-                ITraining training = new Training(simulationContext.getInjurySystem(), simulationContext.getGameConfig());
+                ITraining training = trainingAbstractFactory.createTraining(simulationContext.getInjurySystem(), simulationContext.getGameConfig());
+//                ITraining training = new Training(simulationContext.getInjurySystem(), simulationContext.getGameConfig());
                 training.updatePlayerStats(simulationContext.getInMemoryLeague());
                 simulationContext.setDaysSinceLastTraining(0);
             }
