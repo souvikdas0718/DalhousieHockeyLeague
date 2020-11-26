@@ -129,27 +129,6 @@ public class AiAiTradeTest {
     }
 
     @Test
-    public void findWeakestPlayerInListTest() throws Exception {
-        ITradeOffer testOffer = tradeFactory.createExchangingPlayerTradeOffer(weakTeam, strongTeam, playersOffered, playersWanted);
-        testClassObject = (AiAiTrade) tradeFactory.createAiAiTrade(testOffer, ourGameConfig);
-        ITeam team = tradeMockFactory.createTeamMockForTrade().getTeamWithBadPlayer();
-
-        IPlayer player = testClassObject.findBestPlayerInList(PlayerPosition.DEFENSE.toString(), team.getPlayers());
-        Assertions.assertTrue(player.getPlayerName().contains("Weak"));
-
-    }
-
-    @Test
-    public void findBestPlayerInListTest() throws Exception {
-        ITradeOffer testOffer = tradeFactory.createExchangingPlayerTradeOffer(weakTeam, strongTeam, playersOffered, playersWanted);
-        testClassObject = (AiAiTrade) tradeFactory.createAiAiTrade(testOffer, ourGameConfig);
-        ITeam team = tradeMockFactory.createTeamMockForTrade().getTeamWithBadPlayer();
-
-        IPlayer player = testClassObject.findBestPlayerInList(PlayerPosition.DEFENSE.toString(), team.getPlayers());
-        Assertions.assertTrue(player.getPlayerName().contains("Weak"));
-    }
-
-    @Test
     public void isTradeGoodForReceivingTeamTest() {
         ITradeOffer testOffer = tradeFactory.createExchangingPlayerTradeOffer(weakTeam, strongTeam, playersOffered, playersWanted);
         testClassObject = (AiAiTrade) tradeFactory.createAiAiTrade(testOffer, ourGameConfig);

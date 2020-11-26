@@ -4,7 +4,7 @@ import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.simulationStateMachine.interfaces.IUpdateUserTeamRoster;
+import dhl.businessLogic.simulationStateMachine.interfaces.ITeamRosterUpdater;
 import dhl.businessLogic.trade.AiAiTrade;
 import dhl.businessLogic.trade.AiUserTrade;
 import dhl.businessLogic.trade.ExchangingPlayerTradeOffer;
@@ -22,7 +22,7 @@ public class TradeConcreteFactory implements TradeAbstractFactory{
         return new AiAiTrade(tradeOffer, gameConfig);
     }
 
-    public ITradeType createAiUserTrade(ITradeOffer tradeOffer, IUserInputOutput ioObject, IUpdateUserTeamRoster updateUserTeamRoster) {
+    public ITradeType createAiUserTrade(ITradeOffer tradeOffer, IUserInputOutput ioObject, ITeamRosterUpdater updateUserTeamRoster) {
         return new AiUserTrade(tradeOffer, ioObject, updateUserTeamRoster);
     }
 

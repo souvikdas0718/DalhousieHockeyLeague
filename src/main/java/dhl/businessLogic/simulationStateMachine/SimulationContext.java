@@ -5,7 +5,7 @@ import dhl.businessLogic.aging.interfaceAging.IInjury;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.simulationStateMachine.interfaces.IUpdateUserTeamRoster;
+import dhl.businessLogic.simulationStateMachine.interfaces.ITeamRosterUpdater;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.factory.SimulationStateAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
@@ -37,7 +37,7 @@ public class SimulationContext implements ISimulationSeasonState {
 
     IScheduler regularScheduler;
     IScheduler playOffScheduleRound1;
-    IUpdateUserTeamRoster updateUserTeamRoster;
+    ITeamRosterUpdater updateUserTeamRoster;
 
     List<IStandings> standings;
 
