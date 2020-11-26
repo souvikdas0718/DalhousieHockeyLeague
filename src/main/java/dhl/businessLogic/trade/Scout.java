@@ -2,7 +2,10 @@ package dhl.businessLogic.trade;
 
 import dhl.businessLogic.leagueModel.PlayerPosition;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
+import dhl.businessLogic.trade.factory.TradeAbstractFactory;
+import dhl.businessLogic.trade.factory.TradeConcreteFactory;
 import dhl.businessLogic.trade.interfaces.IScout;
+import dhl.businessLogic.trade.interfaces.ITradeOffer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,57 +15,132 @@ public class Scout implements IScout {
     private static final int TOTAL_GOALIES = 4;
     private static final int TOTAL_FORWARDS = 16;
     private static final int TOTAL_DEFENSE = 10;
+    private double PLAYER_WANTED_STRENGTH_MULTIPLIER = 1.25;
 
     private ITeam myTeam;
     private ILeagueObjectModel myLeague;
     private IGameConfig gameConfig;
+    TradeAbstractFactory factory;
 
     public Scout(ITeam myTeam, ILeagueObjectModel myLeague, IGameConfig gameConfig) {
         this.myTeam = myTeam;
         this.myLeague = myLeague;
         this.gameConfig = gameConfig;
+
+        factory = new TradeConcreteFactory();
     }
 
-    public void findTrade() {
+    public ITradeOffer findTrade(int congifMaxPlayerPerTrade) {
 
-        int congifMaxPlayerPerTrade = Integer.parseInt(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getMaxPlayersPerTrade()));
         int maxPlayersInTrade = 0;
-        IPlayer playerToGive, playerToGive2 = null;
-        IPlayer playerWeWillGet, playerWeWillGet2 = null;
+        ArrayList<IPlayer> listOfPlayersToGive = new ArrayList<>();
+        ArrayList<IPlayer> listOfPlayerWeWillGet = new ArrayList<>();
+        int playerToGiveIndex,playerWeWillGetIndex;
+        playerToGiveIndex = -1;
+        playerWeWillGetIndex = -1;
+        ITeam teamToTrade = null;
 
-        String positionWanted= findWeakPartOfTeam(myTeam);
-        playerToGive = getWeakPlayer(myTeam,"");
-        ITeam teamToTrade = findTeamToTradeWith(myLeague, positionWanted, playerToGive);
+        while(maxPlayersInTrade < congifMaxPlayerPerTrade){
+            if (congifMaxPlayerPerTrade > 1){
+                if (maxPlayersInTrade == 0){
+                    String positionWanted= findWeakPartOfTeam(myTeam);
+                    listOfPlayersToGive.add(getWeakPlayer(myTeam,""));
+                    playerToGiveIndex = playerToGiveIndex + 1;
+                    teamToTrade = findTeamToTradeWith(myLeague, positionWanted, listOfPlayersToGive.get(playerToGiveIndex));
 
-        if ( teamFound(teamToTrade) ){
-            playerWeWillGet = findPlayerToTrade(teamToTrade, positionWanted, playerToGive.getPlayerStrength()*1.25);
-            maxPlayersInTrade = maxPlayersInTrade + 2;
-            if ( congifMaxPlayerPerTrade > maxPlayersInTrade){
-                if (congifMaxPlayerPerTrade % 2  == 0){
-                    myTeam.getPlayers().remove(playerToGive);
-                    myTeam.getPlayers().add(playerWeWillGet);
-                    teamToTrade.getPlayers().remove(playerWeWillGet);
+                    if (teamFound(teamToTrade)){
+                        double playerStrengthNeeded = listOfPlayersToGive.get(playerToGiveIndex).getPlayerStrength()*PLAYER_WANTED_STRENGTH_MULTIPLIER;
+                        listOfPlayerWeWillGet.add(findPlayerToTrade(teamToTrade, positionWanted, playerStrengthNeeded));
+                        playerWeWillGetIndex = playerWeWillGetIndex + 1;
+                        maxPlayersInTrade = maxPlayersInTrade + 2;
+                    }
+                    else{
+                        if(PLAYER_WANTED_STRENGTH_MULTIPLIER > 1) {
+                            PLAYER_WANTED_STRENGTH_MULTIPLIER = PLAYER_WANTED_STRENGTH_MULTIPLIER - 0.1;
+                        }
+                        else{
+                            break;
+                        }
+                    }
+                }
+                else if (congifMaxPlayerPerTrade % 2 == 1){
+                    myTeam.getPlayers().remove(listOfPlayersToGive.get(playerToGiveIndex));
+                    myTeam.getPlayers().add(listOfPlayerWeWillGet.get(playerWeWillGetIndex));
+                    teamToTrade.getPlayers().remove(listOfPlayerWeWillGet.get(playerWeWillGetIndex));
 
-                    positionWanted= findWeakPartOfTeam(myTeam);
-                    playerToGive2 = getWeakPlayer(myTeam,"");
-                    playerWeWillGet2 = findPlayerToTrade(teamToTrade, positionWanted, playerToGive.getPlayerStrength()*1.25);
+                    String positionWanted= findWeakPartOfTeam(myTeam);
+                    double playerStrengthNeeded = listOfPlayersToGive.get(playerToGiveIndex).getPlayerStrength()*PLAYER_WANTED_STRENGTH_MULTIPLIER-0.1;
+                    IPlayer tempPlayerWeWillGet = getPlayerToTradeFromTeam(teamToTrade, positionWanted, playerStrengthNeeded);
 
-                    myTeam.getPlayers().remove(playerWeWillGet);
-                    myTeam.getPlayers().add(playerToGive);
-                    teamToTrade.getPlayers().add(playerWeWillGet);
-                    maxPlayersInTrade = maxPlayersInTrade + 2;
+                    myTeam.getPlayers().add(listOfPlayersToGive.get(playerToGiveIndex));
+                    myTeam.getPlayers().remove(listOfPlayerWeWillGet.get(playerWeWillGetIndex));
+                    teamToTrade.getPlayers().add(listOfPlayerWeWillGet.get(playerWeWillGetIndex));
 
-                }else{
-                    teamToTrade.getPlayers().remove(playerWeWillGet);
-                    playerWeWillGet2 = findPlayerToTrade(teamToTrade, positionWanted, playerToGive.getPlayerStrength()*1.15);
-                    maxPlayersInTrade = maxPlayersInTrade + 1;
+                    if (playerFound(tempPlayerWeWillGet)){
+                        listOfPlayerWeWillGet.add(tempPlayerWeWillGet);
+                        playerWeWillGetIndex = playerWeWillGetIndex + 1;
+                        maxPlayersInTrade = maxPlayersInTrade + 1;
+                    }
+                    else {
+                        break;
+                    }
+
+                }
+                else if (congifMaxPlayerPerTrade % 2 == 0){
+                    myTeam.getPlayers().remove(listOfPlayersToGive.get(playerToGiveIndex));
+                    myTeam.getPlayers().add(listOfPlayerWeWillGet.get(playerWeWillGetIndex));
+                    teamToTrade.getPlayers().remove(listOfPlayerWeWillGet.get(playerWeWillGetIndex));
+
+                    String positionWanted = findWeakPartOfTeam(myTeam);
+                    IPlayer tempPlayerToGive = getWeakPlayer(myTeam,"");
+
+                    double playerStrengthNeeded = tempPlayerToGive.getPlayerStrength()*PLAYER_WANTED_STRENGTH_MULTIPLIER;
+                    IPlayer tempPlayerWeWillGet = getPlayerToTradeFromTeam(teamToTrade, positionWanted, playerStrengthNeeded);
+
+                    myTeam.getPlayers().add(listOfPlayersToGive.get(playerToGiveIndex));
+                    myTeam.getPlayers().remove(listOfPlayerWeWillGet.get(playerWeWillGetIndex));
+                    teamToTrade.getPlayers().add(listOfPlayerWeWillGet.get(playerWeWillGetIndex));
+
+                    if (playerFound(tempPlayerWeWillGet)) {
+                        listOfPlayersToGive.add(tempPlayerToGive);
+                        listOfPlayerWeWillGet.add(tempPlayerWeWillGet);
+                        playerToGiveIndex = playerToGiveIndex + 1;
+                        playerWeWillGetIndex = playerWeWillGetIndex + 1;
+                        maxPlayersInTrade = maxPlayersInTrade + 2;
+                    }
+                    else {
+                        break;
+                    }
+                }
+            }
+            else{
+                break;
+            }
+        }
+
+        if (teamFound(teamToTrade)){
+            ITradeOffer newOffer = factory.createExchangingPlayerTradeOffer(myTeam, teamToTrade, listOfPlayersToGive, listOfPlayerWeWillGet);
+            return newOffer;
+        }
+        else{
+            return null;
+        }
+    }
+
+    public IPlayer getPlayerToTradeFromTeam(ITeam teamToTrade, String  positionWanted, Double playerStrengthNeeded){
+        IPlayer playerToSend = null;
+        double playerToSendStrength = 1000;
+
+        for (IPlayer player: teamToTrade.getPlayers()){
+            if(player.getPosition().equals(positionWanted)){
+                if(playerToSendStrength > player.getPlayerStrength() && playerStrengthNeeded <= player.getPlayerStrength()){
+                    playerToSend = player;
+                    playerToSendStrength = player.getPlayerStrength();
                 }
             }
         }
-        // TODO: 26-11-2020  make this as loop
-        // TODO: 26-11-2020 Create offer and return it to engine
+        return playerToSend;
     }
-
     public String findWeakPartOfTeam(ITeam team){
         double defenceAvg = 0;
         double forwardAvg = 0;
@@ -113,7 +191,6 @@ public class Scout implements IScout {
     }
 
     public ITeam findTeamToTradeWith(ILeagueObjectModel myLeague,String positionWanted,IPlayer playerToGive){
-        double PLAYER_WANTED_STRENGTH_MULTIPLIER = 1.25;
         for (IConference conference : myLeague.getConferences()) {
             for (IDivision division : conference.getDivisions()) {
                 for (ITeam team : division.getTeams()) {

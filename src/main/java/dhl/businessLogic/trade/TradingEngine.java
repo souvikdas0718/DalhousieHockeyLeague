@@ -62,6 +62,18 @@ public class TradingEngine extends ITradingEngine {
     }
 
     public void performTrade(ITeam tradingTeam) throws Exception {
+/*
+        IScout teamScout = factory.createScout(tradingTeam, leagueObjectModel, gameConfig);
+        currentTrade = teamScout.findTrade();
+        if (currentTrade == null){
+            // TODO: 26-11-2020 log trade not possible
+        }
+        else{
+            tradingTeam.setLossPoint(0);
+            sendTradeToRecevingTeam(currentTrade, userTeam);
+        }
+
+ */
 
             ITeam teamToTradeWith = findTeamToTradeWith(tradingTeam);
             if(teamToTradeWith == null){
