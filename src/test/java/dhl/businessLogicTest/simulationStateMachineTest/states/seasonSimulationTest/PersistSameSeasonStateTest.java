@@ -1,21 +1,32 @@
 package dhl.businessLogicTest.simulationStateMachineTest.states.seasonSimulationTest;
 
+import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.PersistSameSeasonState;
+import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
+import dhl.businessLogicTest.leagueModelTests.mocks.LeagueMock;
+import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class PersistSameSeasonStateTest {
+    final static String LEAGUENAME="Dhl";
     SimulationContext simulationContext;
     PersistSameSeasonState persistSameSeasonState;
     GameContext gameState;
+    LeagueModelMockAbstractFactory leagueMockFactory;
+    LeagueMock leagueMock;
+    ILeagueObjectModel leagueObjectModel;
 
     @BeforeEach
     public void initObject() {
         gameState = new GameContext();
         simulationContext = new SimulationContext(gameState);
+        leagueMockFactory = LeagueModelMockAbstractFactory.instance();
+        leagueMock = leagueMockFactory.createLeagueMock();
+        leagueObjectModel = leagueMock.getLeagueObjectModel();
     }
 
     @Test
@@ -41,14 +52,10 @@ public class PersistSameSeasonStateTest {
 
     @Test
     public void seasonStateProcessTest() {
-
-        //        SerializeDeserializeAbstractFactory factorySerialize = SerializeDeserializeAbstractFactory.instance();
-//        ISerializeLeagueObjectModel serializeLeagueObjectModel = factorySerialize.createSerializeLeagueObjectModel("src/SerializedJsonFiles/");
-//        LeagueObjectModel leagueObjectModel = new LeagueObjectModel();
-//        leagueObjectModel.updateLeagueObjectModel(serializeLeagueObjectModel, simulationContext.getInMemoryLeague());
-//                call this method
-//        inMemoryLeague.updateLeagueObjectModel(serializeLeagueObjectModel, inMemoryLeague)
-
+        simulationContext.setInMemoryLeague(leagueObjectModel);
+        persistSameSeasonState = new PersistSameSeasonState(simulationContext);
+        persistSameSeasonState.seasonStateProcess();
+        Assertions.assertTrue(persistSameSeasonState.getSimulationContext().getInMemoryLeague().getLeagueName().equals(LEAGUENAME));
     }
 
     @Test

@@ -4,8 +4,9 @@ import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
+import dhl.businessLogic.simulationStateMachine.factory.ContextAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.AdvanceToNextSeasonState;
-import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.AgingState;
+import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.factory.SeasonSimulationStateFactory;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
 import dhl.businessLogicTest.leagueModelTests.mocks.LeagueMock;
 import org.junit.jupiter.api.Assertions;
@@ -19,17 +20,20 @@ public class AdvanceToNextSeasonStateTest {
     SimulationContext simulationContext;
     AdvanceToNextSeasonState advanceToNextSeasonState;
     GameContext gameState;
-    AgingState agingState;
     ILeagueObjectModel leagueObjectModel;
     LeagueModelMockAbstractFactory leagueMockFactory;
     LeagueMock leagueMock;
     IGameConfig gameConfig;
+    ContextAbstractFactory contextAbstractFactory;
+    SeasonSimulationStateFactory seasonSimulationStateFactory;
 
     @BeforeEach
     public void initObject() {
-        gameState = new GameContext();
-        simulationContext = new SimulationContext(gameState);
-        advanceToNextSeasonState = new AdvanceToNextSeasonState(simulationContext);
+        contextAbstractFactory = ContextAbstractFactory.instance();
+        gameState = contextAbstractFactory.createGameContext();
+        simulationContext = contextAbstractFactory.createSimulationContext();
+        seasonSimulationStateFactory = (SeasonSimulationStateFactory) SeasonSimulationStateFactory.instance();
+        advanceToNextSeasonState = (AdvanceToNextSeasonState) seasonSimulationStateFactory.getAdvanceToNextSeasonState(simulationContext);
         leagueMockFactory = LeagueModelMockAbstractFactory.instance();
         leagueMock = leagueMockFactory.createLeagueMock();
         leagueObjectModel = leagueMock.getLeagueObjectModel();
@@ -38,21 +42,18 @@ public class AdvanceToNextSeasonStateTest {
 
     @Test
     public void AdvanceToNextSeasonStateTest() {
-        advanceToNextSeasonState = new AdvanceToNextSeasonState(simulationContext);
         Assertions.assertNotNull(advanceToNextSeasonState.getSimulationContext());
     }
 
     @Test
     public void getSimulationContextTest() {
-        advanceToNextSeasonState = new AdvanceToNextSeasonState(simulationContext);
         Assertions.assertNotNull(advanceToNextSeasonState.getSimulationContext());
     }
 
     @Test
     public void setSimulationContextTest() {
-        advanceToNextSeasonState = new AdvanceToNextSeasonState(simulationContext);
-        simulationContext = new SimulationContext(gameState);
         simulationContext.setYear(2014);
+        advanceToNextSeasonState = (AdvanceToNextSeasonState) seasonSimulationStateFactory.getAdvanceToNextSeasonState(simulationContext);
         advanceToNextSeasonState.setSimulationContext(simulationContext);
         Assertions.assertTrue(advanceToNextSeasonState.getSimulationContext().getYear() == 2014);
     }
@@ -63,20 +64,12 @@ public class AdvanceToNextSeasonStateTest {
         simulationContext.setGameConfig(gameConfig);
         simulationContext.setInMemoryLeague(leagueObjectModel);
         simulationContext.setNumberOfDays(365);
-        advanceToNextSeasonState = new AdvanceToNextSeasonState(simulationContext);
-//        advanceToNextSeasonState.seasonStateEntryProcess();
-        advanceToNextSeasonState = new AdvanceToNextSeasonState(simulationContext);
+        advanceToNextSeasonState = (AdvanceToNextSeasonState) seasonSimulationStateFactory.getAdvanceToNextSeasonState(simulationContext);
         advanceToNextSeasonState.seasonStateProcess();
         Assertions.assertTrue(advanceToNextSeasonState.getSimulationContext().getNumberOfDays() == 365);
         Assertions.assertTrue(advanceToNextSeasonState.getSimulationContext().getEndOfSimulation().equals(LocalDate.of(simulationContext.getYear(), 9, 29)));
         Assertions.assertTrue(advanceToNextSeasonState.getSimulationContext().getInMemoryLeague().getFreeAgents().get(0).getPlayerName().equals("Player0"));
         Assertions.assertTrue(advanceToNextSeasonState.getSimulationContext().getInMemoryLeague().getFreeAgents().get(0).getPlayerStats().getAge() == 25);
-
-//        simulationContext.setNumberOfDays(365);
-//        agingState = new AgingState(simulationContext);
-//
-//        advanceToNextSeasonState.seasonStateProcess();
-//        AgingState.agingCalculation(simulationContext);
     }
 
     @Test
