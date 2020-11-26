@@ -40,48 +40,37 @@ public class SimulateGameState implements ISimulationSeasonState {
         double RANDOM_WIN_CHANCE = 0.9;
         ITeam winningTeam;
         ITeam losingTeam;
-        for (ISeasonSchedule schedule : scheduler.getFullSeasonSchedule()) {
-            if (schedule.getGameDate().equals(currentDate)) {
-//                IGameConfig gameConfig = simulationContext.getGameConfig();
-//                System.out.println(Double.parseDouble(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getRandomWinChance())));
-//                Double randomWinChance = Double.parseDouble(gameConfig.getValueFromOurObject(gameConfig.getGameResolver(), gameConfig.getRandomWinChance())) * 100;
-                Double randomNumber = Math.random() * 100;
-                injuryCheckTeams.add(schedule.getTeamOne());
-                injuryCheckTeams.add(schedule.getTeamTwo());
-                if (schedule.getTeamOne().calculateTeamStrength() > schedule.getTeamTwo().calculateTeamStrength()) {
-                    winningTeam = schedule.getTeamOne();
-                    losingTeam = schedule.getTeamTwo();
-                    if (randomNumber < RANDOM_WIN_CHANCE) {
-                        winningTeam = schedule.getTeamTwo();
-                        losingTeam = schedule.getTeamOne();
-                    }
-                } else {
-                    winningTeam = schedule.getTeamTwo();
-                    losingTeam = schedule.getTeamOne();
-                    if (randomNumber < RANDOM_WIN_CHANCE) {
+        if (currentDate.isAfter(scheduler.getSeasonStartDate()) && currentDate.isBefore(scheduler.getSeasonEndDate())) {
+            for (ISeasonSchedule schedule : scheduler.getFullSeasonSchedule()) {
+                if (schedule.getGameDate().equals(currentDate)) {
+                    Double randomNumber = Math.random() * 100;
+                    injuryCheckTeams.add(schedule.getTeamOne());
+                    injuryCheckTeams.add(schedule.getTeamTwo());
+                    if (schedule.getTeamOne().calculateTeamStrength() > schedule.getTeamTwo().calculateTeamStrength()) {
                         winningTeam = schedule.getTeamOne();
                         losingTeam = schedule.getTeamTwo();
+                        if (randomNumber < RANDOM_WIN_CHANCE) {
+                            winningTeam = schedule.getTeamTwo();
+                            losingTeam = schedule.getTeamOne();
+                        }
+                    } else {
+                        winningTeam = schedule.getTeamTwo();
+                        losingTeam = schedule.getTeamOne();
+                        if (randomNumber < RANDOM_WIN_CHANCE) {
+                            winningTeam = schedule.getTeamOne();
+                            losingTeam = schedule.getTeamTwo();
+                        }
                     }
-                }
-
-                standingSystem.setStandingsList(scheduler.getGameStandings());
-
-//                standingSystem= simulationContext.getStandingSystem();
-//                System.out.println(standingSystem);
-                if (currentDate.isAfter(scheduler.getSeasonStartDate()) && currentDate.isBefore(scheduler.getSeasonEndDate())) {
+                    standingSystem.setStandingsList(scheduler.getGameStandings());
                     standingSystem.updateWinningStandings(winningTeam);
                     standingSystem.updateLosingStandings(losingTeam);
                 }
-//                } else if (currentDate.isAfter(scheduler.getPlayOffStartDate()) && currentDate.isBefore(scheduler.getFinalDay())) {
-//                    scheduler.gameWinner(winningTeam);
-//                }
             }
-        }
+        } else if (currentDate.isAfter(scheduler.getPlayOffStartDate().minusDays(1)) && currentDate.isBefore(scheduler.getFinalDay().plusDays(1))) {
+            ArrayList<ISeasonSchedule> schedules = new ArrayList<>(scheduler.getPlayOffScheduleRound1());
+            for (ISeasonSchedule playOffSchedule : schedules) {
+                if (playOffSchedule.getGameDate().equals(currentDate)) {
 
-        //// new code
-        for (ISeasonSchedule playOffSchedule : scheduler.getPlayOffScheduleRound1()) {
-            if (playOffSchedule.getGameDate().equals(currentDate)) {
-                if (currentDate.isAfter(scheduler.getPlayOffStartDate()) && currentDate.isBefore(scheduler.getFinalDay())) {
                     Double randomNumber = Math.random() * 100;
                     injuryCheckTeams.add(playOffSchedule.getTeamOne());
                     injuryCheckTeams.add(playOffSchedule.getTeamTwo());

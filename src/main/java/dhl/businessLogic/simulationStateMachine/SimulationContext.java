@@ -81,7 +81,8 @@ public class SimulationContext implements ISimulationSeasonState {
         daysSinceLastTraining = 0;
         teamsPlayingInGame = new ArrayList<>();
         injury = new Injury();
-        year = 2020;
+//        year = 2020;
+        year = LocalDate.now().getYear();
         startOfSimulation = LocalDate.of(year, 9, 30);
 
     }
