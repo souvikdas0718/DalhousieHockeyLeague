@@ -4,11 +4,12 @@ import dhl.businessLogic.leagueModel.PlayerPosition;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.simulationStateMachine.interfaces.IUpdateUserTeamRoster;
+import dhl.businessLogic.simulationStateMachine.interfaces.ITeamRosterUpdater;
 import dhl.businessLogic.trade.interfaces.ITradeOffer;
 import dhl.businessLogic.trade.interfaces.ITradeType;
 import dhl.inputOutput.ui.IUserInputOutput;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,12 +21,15 @@ public class AiUserTrade implements ITradeType {
 
     IUserInputOutput ioObject;
     ITradeOffer tradeOffer;
-    IUpdateUserTeamRoster updateUserTeamRoster;
+    ITeamRosterUpdater updateUserTeamRoster;
 
-    public AiUserTrade(ITradeOffer tradeOffer, IUserInputOutput ioObject, IUpdateUserTeamRoster updateUserTeamRoster) {
+    private static final Logger logger = LogManager.getLogger(AiUserTrade.class);
+
+    public AiUserTrade(ITradeOffer tradeOffer, IUserInputOutput ioObject, ITeamRosterUpdater updateUserTeamRoster) {
         this.tradeOffer = tradeOffer;
         this.ioObject = ioObject;
         this.updateUserTeamRoster = updateUserTeamRoster;
+        logger.info("Trade made for User by "+tradeOffer.getOfferingTeam().getTeamName());
     }
 
     public boolean isTradeAccepted(){
@@ -33,9 +37,11 @@ public class AiUserTrade implements ITradeType {
         int inputFromUser = Integer.parseInt(ioObject.getUserInput());
 
         if (inputFromUser == 1) {
+            logger.info("Trade Accepted by "+ tradeOffer.getReceivingTeam().getTeamName());
             ioObject.printMessage("Trade Accepted, Thankyou");
             return true;
         } else if (inputFromUser == 2) {
+            logger.info("Trade Rejected by "+ tradeOffer.getReceivingTeam().getTeamName());
             ioObject.printMessage("Trade Rejected, Thankyou");
             return false;
         }

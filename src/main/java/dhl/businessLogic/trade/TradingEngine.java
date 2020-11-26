@@ -1,15 +1,19 @@
 package dhl.businessLogic.trade;
 
+import dhl.businessLogic.simulationStateMachine.RosterUpdaterAbstractFactory;
+import dhl.businessLogic.simulationStateMachine.UpdateUserTeamRoster;
 import dhl.businessLogic.trade.factory.TradeAbstractFactory;
 import dhl.businessLogic.trade.factory.TradeConcreteFactory;
 import dhl.businessLogic.trade.interfaces.IScout;
 import dhl.businessLogic.trade.interfaces.ITradeType;
 import dhl.inputOutput.ui.IUserInputOutput;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
-import dhl.businessLogic.simulationStateMachine.interfaces.IUpdateUserTeamRoster;
+import dhl.businessLogic.simulationStateMachine.interfaces.ITeamRosterUpdater;
 import dhl.businessLogic.trade.interfaces.ITradeOffer;
 import dhl.businessLogic.trade.interfaces.ITradingEngine;
 import dhl.inputOutput.ui.UserInputOutput;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class TradingEngine extends ITradingEngine {
 
@@ -18,8 +22,10 @@ public class TradingEngine extends ITradingEngine {
     private ILeagueObjectModel leagueObjectModel;
     IUserInputOutput ioObject;
     ITeam userTeam;
-    IUpdateUserTeamRoster updateUserTeamRoster;
+    ITeamRosterUpdater updateUserTeamRoster;
     TradeAbstractFactory factory;
+
+    private static final Logger logger = LogManager.getLogger(TradingEngine.class);
 
     public TradingEngine(IGameConfig gameConfig, ILeagueObjectModel leagueObjectModel, ITeam userTeam) {
         factory = new TradeConcreteFactory();
@@ -27,7 +33,7 @@ public class TradingEngine extends ITradingEngine {
         // TODO: 20-11-2020 remove these new when team make factory
         this.ioObject = new UserInputOutput();
 
-        this.updateUserTeamRoster =  IUpdateUserTeamRoster.instance(ioObject);
+        this.updateUserTeamRoster = RosterUpdaterAbstractFactory.instance().createUpdateUserTeamRoster(ioObject);
         this.gameConfig = gameConfig;
         this.leagueObjectModel = leagueObjectModel;
         this.userTeam = userTeam;
@@ -59,7 +65,7 @@ public class TradingEngine extends ITradingEngine {
         int congifMaxPlayerPerTrade = Integer.parseInt(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getMaxPlayersPerTrade()));
         currentTrade = teamScout.findTrade(congifMaxPlayerPerTrade);
         if (currentTrade == null){
-            // TODO: 26-11-2020 log trade not possible
+            logger.warn("Trade not possible for Team:"+ tradingTeam.getTeamName());
         }
         else{
             tradingTeam.setLossPoint(0);
@@ -68,6 +74,7 @@ public class TradingEngine extends ITradingEngine {
     }
 
     public void sendTradeToRecevingTeam(ITradeOffer currentTrade, ITeam userTeam) {
+        logger.warn("Sending trade offer to team:"+ currentTrade.getReceivingTeam().getTeamName());
         ITradeType tradeType;
         if(currentTrade.getReceivingTeam() == userTeam){
             tradeType = factory.createAiUserTrade(currentTrade, ioObject, updateUserTeamRoster);

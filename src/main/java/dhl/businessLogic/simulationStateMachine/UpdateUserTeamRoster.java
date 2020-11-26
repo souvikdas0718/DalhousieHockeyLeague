@@ -3,7 +3,7 @@ package dhl.businessLogic.simulationStateMachine;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.simulationStateMachine.interfaces.IUpdateUserTeamRoster;
+import dhl.businessLogic.simulationStateMachine.interfaces.ITeamRosterUpdater;
 import dhl.inputOutput.ui.IListFormat;
 import dhl.inputOutput.ui.IUserInputOutput;
 import dhl.inputOutput.ui.PlayerListFormat;
@@ -11,7 +11,7 @@ import dhl.inputOutput.ui.PlayerListFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UpdateUserTeamRoster extends IUpdateUserTeamRoster {
+public class UpdateUserTeamRoster implements ITeamRosterUpdater {
 
     IUserInputOutput ioObject;
     IListFormat listDisplay;

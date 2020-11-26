@@ -1,18 +1,19 @@
 package dhl.businessLogic.trade;
 
 import dhl.businessLogic.leagueModel.PlayerPosition;
-
 import dhl.businessLogic.leagueModel.interfaceModel.*;
+import dhl.businessLogic.simulationStateMachine.RosterUpdaterAbstractFactory;
+import dhl.businessLogic.simulationStateMachine.interfaces.ITeamRosterUpdater;
 import dhl.businessLogic.trade.interfaces.ITradeOffer;
 import dhl.businessLogic.trade.interfaces.ITradeType;
 import dhl.inputOutput.importJson.interfaces.IGeneralManagerPersonalityList;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
 
 public class AiAiTrade implements ITradeType {
-
 
     private static final int TOTAL_GOALIES = 4;
     private static final int TOTAL_FORWARDS = 16;
@@ -21,10 +22,15 @@ public class AiAiTrade implements ITradeType {
     ITradeOffer tradeOffer;
     IGameConfig gameConfig;
     Dictionary managerPersonalityList;
+    ITeamRosterUpdater rosterUpdater;
+
+    private static final Logger logger = LogManager.getLogger(AiAiTrade.class);
 
     public AiAiTrade(ITradeOffer tradeOffer, IGameConfig gameConfig) {
         this.tradeOffer = tradeOffer;
         this.gameConfig = gameConfig;
+
+        rosterUpdater = RosterUpdaterAbstractFactory.instance().createAiTeamRosterUpdater();
         IGeneralManagerPersonalityList managerPersonalityObject = IGeneralManagerPersonalityList.instance(gameConfig);
         managerPersonalityList = managerPersonalityObject.getGeneralManagerPersonalityList();
     }
@@ -41,9 +47,11 @@ public class AiAiTrade implements ITradeType {
             double managerModifier = (double) managerPersonalityList.get(ourManagerPersonality);
             configRandomAcceptanceChance = configRandomAcceptanceChance + managerModifier;
             if (randomValue > configRandomAcceptanceChance) {
+                logger.info("Trade Accepted by "+ tradeOffer.getReceivingTeam().getTeamName());
                 return true;
             }
         }
+        logger.info("Trade Rejected by "+ tradeOffer.getReceivingTeam().getTeamName());
         return false;
     }
 
@@ -79,51 +87,15 @@ public class AiAiTrade implements ITradeType {
     public void updatePlayers(int currentCount, String playerPosition, int validCount, ITeam team, ILeagueObjectModel leagueObjectModel) {
         if (currentCount < validCount){
             while (currentCount < validCount){
-                IPlayer player = findBestPlayerInList(playerPosition, leagueObjectModel.getFreeAgents());
-                team.getPlayers().add(player);
-                leagueObjectModel.getFreeAgents().remove(player);
+                rosterUpdater.addPlayer(playerPosition, team, leagueObjectModel);
                 currentCount = currentCount + 1;
             }
         }else if (currentCount > validCount) {
             while (currentCount > validCount) {
-                IPlayer player = findWeakestPlayerInList(playerPosition, team.getPlayers());
-                team.getPlayers().remove(player);
-                leagueObjectModel.getFreeAgents().add(player);
+                rosterUpdater.dropPlayer(playerPosition, team, leagueObjectModel);
                 currentCount = currentCount - 1;
             }
         }
-    }
-
-    public IPlayer findWeakestPlayerInList(String neededPosition, List playerList){
-        IPlayer weakPlayer = null;
-        double skaterStrength = 10000.0;
-        for (Object ob : playerList) {
-            IPlayer player = (IPlayer) ob;
-            String position = player.getPosition();
-            if (position.equals(neededPosition)) {
-                if (player.getPlayerStrength() < skaterStrength) {
-                    weakPlayer = player;
-                    skaterStrength = player.getPlayerStrength();
-                }
-            }
-        }
-        return weakPlayer;
-    }
-
-    public IPlayer findBestPlayerInList(String playerPosition, List playerList) {
-        IPlayer bestPlayer = null;
-        double bestPlayerStrength = 0.0;
-        for (Object ob : playerList) {
-            IPlayer player = (IPlayer) ob;
-            String position = player.getPosition();
-            if ( position.equals(playerPosition) ) {
-                if (player.getPlayerStrength() > bestPlayerStrength) {
-                    bestPlayer = player;
-                    bestPlayerStrength = player.getPlayerStrength();
-                }
-            }
-        }
-        return bestPlayer;
     }
 
     public boolean isTradeGoodForReceivingTeam(ITradeOffer tradeOffer) {
@@ -140,5 +112,4 @@ public class AiAiTrade implements ITradeType {
         }
         return totalStrength;
     }
-
 }
