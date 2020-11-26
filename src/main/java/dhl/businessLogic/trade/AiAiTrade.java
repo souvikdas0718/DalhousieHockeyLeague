@@ -39,7 +39,6 @@ public class AiAiTrade implements ITradeType {
             IGeneralManager receivingManager = receivingTeam.getGeneralManager();
             String ourManagerPersonality = receivingManager.getGeneralManagerPersonality();
             double managerModifier = (double) managerPersonalityList.get(ourManagerPersonality);
-            System.out.println(configRandomAcceptanceChance + " will add" + managerModifier);
             configRandomAcceptanceChance = configRandomAcceptanceChance + managerModifier;
             if (randomValue > configRandomAcceptanceChance) {
                 return true;
@@ -48,7 +47,7 @@ public class AiAiTrade implements ITradeType {
         return false;
     }
 
-    public void validateTeamRosterAfterTrade(ITeam team, ILeagueObjectModel leagueObjectModel) throws Exception {
+    public void validateTeamRosterAfterTrade(ITeam team, ILeagueObjectModel leagueObjectModel) {
         int totalForwards = 0;
         int totalDefense = 0;
         int totalGoalies = 0;
@@ -77,7 +76,7 @@ public class AiAiTrade implements ITradeType {
         }
     }
 
-    public void updatePlayers(int currentCount, String playerPosition, int validCount, ITeam team, ILeagueObjectModel leagueObjectModel) throws Exception {
+    public void updatePlayers(int currentCount, String playerPosition, int validCount, ITeam team, ILeagueObjectModel leagueObjectModel) {
         if (currentCount < validCount){
             while (currentCount < validCount){
                 IPlayer player = findBestPlayerInList(playerPosition, leagueObjectModel.getFreeAgents());
@@ -95,7 +94,7 @@ public class AiAiTrade implements ITradeType {
         }
     }
 
-    public IPlayer findWeakestPlayerInList(String neededPosition, List playerList) throws Exception {
+    public IPlayer findWeakestPlayerInList(String neededPosition, List playerList){
         IPlayer weakPlayer = null;
         double skaterStrength = 10000.0;
         for (Object ob : playerList) {
@@ -108,13 +107,10 @@ public class AiAiTrade implements ITradeType {
                 }
             }
         }
-        if (weakPlayer == null) {
-            throw new Exception("No" + neededPosition +" found in List");
-        }
         return weakPlayer;
     }
 
-    public IPlayer findBestPlayerInList(String playerPosition, List playerList) throws Exception {
+    public IPlayer findBestPlayerInList(String playerPosition, List playerList) {
         IPlayer bestPlayer = null;
         double bestPlayerStrength = 0.0;
         for (Object ob : playerList) {
@@ -126,9 +122,6 @@ public class AiAiTrade implements ITradeType {
                     bestPlayerStrength = player.getPlayerStrength();
                 }
             }
-        }
-        if (bestPlayer == null) {
-            throw new Exception("No "+ playerPosition +" found in List");
         }
         return bestPlayer;
     }

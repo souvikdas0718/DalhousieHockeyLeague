@@ -137,25 +137,16 @@ public class AiAiTradeTest {
         IPlayer player = testClassObject.findBestPlayerInList(PlayerPosition.DEFENSE.toString(), team.getPlayers());
         Assertions.assertTrue(player.getPlayerName().contains("Weak"));
 
-        Exception error = Assertions.assertThrows(Exception.class, () -> {
-            testClassObject.findWeakestPlayerInList(PlayerPosition.FORWARD.toString(), team.getPlayers());
-        });
-        Assertions.assertTrue(error.getMessage().contains("found in List"));
     }
 
     @Test
-    public void findBestPlayerInListtTest() throws Exception {
+    public void findBestPlayerInListTest() throws Exception {
         ITradeOffer testOffer = tradeFactory.createExchangingPlayerTradeOffer(weakTeam, strongTeam, playersOffered, playersWanted);
         testClassObject = (AiAiTrade) tradeFactory.createAiAiTrade(testOffer, ourGameConfig);
         ITeam team = tradeMockFactory.createTeamMockForTrade().getTeamWithBadPlayer();
 
         IPlayer player = testClassObject.findBestPlayerInList(PlayerPosition.DEFENSE.toString(), team.getPlayers());
         Assertions.assertTrue(player.getPlayerName().contains("Weak"));
-
-        Exception error = Assertions.assertThrows(Exception.class, () -> {
-            testClassObject.findWeakestPlayerInList(PlayerPosition.FORWARD.toString(), team.getPlayers());
-        });
-        Assertions.assertTrue(error.getMessage().contains("found in List"));
     }
 
     @Test

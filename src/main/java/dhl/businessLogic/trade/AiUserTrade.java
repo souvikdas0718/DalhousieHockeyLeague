@@ -28,7 +28,7 @@ public class AiUserTrade implements ITradeType {
         this.updateUserTeamRoster = updateUserTeamRoster;
     }
 
-    public boolean isTradeAccepted() throws Exception {
+    public boolean isTradeAccepted(){
         DisplayTradeOfferToUser(tradeOffer.getOfferingPlayers());
         int inputFromUser = Integer.parseInt(ioObject.getUserInput());
 
@@ -42,7 +42,7 @@ public class AiUserTrade implements ITradeType {
         return false;
     }
 
-    public void validateTeamRosterAfterTrade(ITeam team, ILeagueObjectModel leagueObjectModel) throws Exception {
+    public void validateTeamRosterAfterTrade(ITeam team, ILeagueObjectModel leagueObjectModel) {
 
         int totalForwards = 0;
         int totalDefense = 0;
