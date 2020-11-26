@@ -22,15 +22,11 @@ public class AdvanceToNextSeasonState implements ISimulationSeasonState {
     }
 
     @Override
-    public void seasonStateEntryProcess() {
+    public void seasonStateProcess() {
         simulationContext.setYear(simulationContext.getYear() + 1);
         LocalDate endOfSeason = LocalDate.of(simulationContext.getYear(), 9, 29);
         simulationContext.setEndOfSimulation(endOfSeason);
         simulationContext.setNumberOfDays(365);
-    }
-
-    @Override
-    public void seasonStateProcess() {
         AgingState.agingCalculation(simulationContext);
     }
 

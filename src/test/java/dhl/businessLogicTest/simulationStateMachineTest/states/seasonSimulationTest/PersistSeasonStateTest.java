@@ -43,12 +43,6 @@ public class PersistSeasonStateTest {
         Assertions.assertTrue(persistSeasonState.getSimulationContext().getYear() == 2021);
     }
 
-
-    @Test
-    public void seasonStateEntryProcessTest() {
-
-    }
-
     @Test
     public void seasonStateProcessTest() {
         //Store in DB

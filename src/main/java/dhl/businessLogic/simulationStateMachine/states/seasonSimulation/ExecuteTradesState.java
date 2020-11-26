@@ -37,11 +37,6 @@ public class ExecuteTradesState implements ISimulationSeasonState {
     }
 
     @Override
-    public void seasonStateEntryProcess() {
-
-    }
-
-    @Override
     public void seasonStateProcess() {
         tradeEngine.startEngine();
     }

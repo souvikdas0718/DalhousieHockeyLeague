@@ -28,11 +28,6 @@ public class GeneratePlayOffScheduleState implements ISimulationSeasonState {
     }
 
     @Override
-    public void seasonStateEntryProcess() {
-
-    }
-
-    @Override
     public void seasonStateProcess() {
         scheduler = simulationContext.getRegularScheduler();
         LocalDate playOffStartDate = LocalDate.of(simulationContext.getYear(), 04, 01);

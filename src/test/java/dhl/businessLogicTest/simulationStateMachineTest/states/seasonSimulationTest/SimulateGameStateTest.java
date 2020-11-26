@@ -72,12 +72,6 @@ public class SimulateGameStateTest {
         Assertions.assertTrue(simulateGameState.getSimulationContext().getYear() == 2021);
     }
 
-
-    @Test
-    public void seasonStateEntryProcessTest() {
-
-    }
-
     @Test
     public void seasonStateProcessTest() {
         LocalDate startOfSimulation = LocalDate.of(2020, 10, 1);
@@ -96,7 +90,6 @@ public class SimulateGameStateTest {
         scheduler.setSeasonEndDate(regularSeasonEndDate);
         scheduler.setFinalDay(LocalDate.of(2021, 06, 01));
         scheduler.gameScheduleDates(regularSeasonStartDate, regularSeasonEndDate);
-//        System.out.println(scheduler.getFullSeasonSchedule());
         LocalDate playOffStartDate = LocalDate.of(2021, 04, 01);
         LocalDate playOffStarts = playOffStartDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.WEDNESDAY)).with(
                 TemporalAdjusters.next(DayOfWeek.WEDNESDAY));
@@ -112,41 +105,24 @@ public class SimulateGameStateTest {
         Assertions.assertTrue(scheduler.getGameStandings().get(16).getWins() == 44);
         Assertions.assertTrue(scheduler.getGameStandings().get(16).getPoints() == 88);
 
-//        simulationContext.setNumberOfDays(195);
-//        simulateGameState = new SimulateGameState(simulationContext);
-//        simulateGameState.seasonStateProcess();
+        simulationContext.setNumberOfDays(195);
+        simulateGameState = new SimulateGameState(simulationContext);
+        simulateGameState.seasonStateProcess();
 
-//        simulationContext.setNumberOfDays(196);
-//        simulateGameState = new SimulateGameState(simulationContext);
-//        simulateGameState.seasonStateProcess();
-//        System.out.println(simulateGameState.getSimulationContext().getPlayOffScheduleRound1().getPlayOffScheduleRound1().size());
+        simulationContext.setNumberOfDays(196);
+        simulateGameState = new SimulateGameState(simulationContext);
+        simulateGameState.seasonStateProcess();
+        int lengthOfPlayOffList = scheduler.getPlayOffScheduleRound1().size();
 
-//        simulationContext.set
-
-//        simulationContext.setRegularScheduler(scheduler.getFullSeasonSchedule());
-//        simulateGameState = new SimulateGameState(simulationContext);
-
-//        LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
-//        LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());
-//        winDecider(currentDate, scheduler);
+        Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(lengthOfPlayOffList-1).getTeamOne().getTeamName().equals("BlueJackets"));
+        Assertions.assertTrue(scheduler.getPlayOffScheduleRound1().get(lengthOfPlayOffList-1).getTeamTwo().getTeamName().equals("Maple"));
     }
 
     @Test
     public void seasonStateExitProcessTest() {
-//        LocalDate startOfSimulation = LocalDate.of(2020, 9, 30);
-//        LocalDate currentDate = LocalDate.now();
-//        long numberOfDays = DAYS.between(startOfSimulation, currentDate);
-//        simulationContext.setStartOfSimulation(startOfSimulation);
-//        simulationContext.setNumberOfDays((int)numberOfDays);
-//        simulationContext.setYear(2020);
-//        simulationContext.setTeamsPlayingInGame(injuryCheckTeams);
         simulateGameState = new SimulateGameState(simulationContext);
         simulateGameState.seasonStateExitProcess();
         Assertions.assertNotNull(simulateGameState.getSimulationContext().getTeamsPlayingInGame());
         Assertions.assertTrue(simulateGameState.getSimulationContext().getCurrentSimulation() == simulateGameState.getSimulationContext().getInjuryCheck());
-
-//        this.simulationContext.setTeamsPlayingInGame(injuryCheckTeams);
-//        simulationContext.setCurrentSimulation(simulationContext.getInjuryCheck());
-
     }
 }

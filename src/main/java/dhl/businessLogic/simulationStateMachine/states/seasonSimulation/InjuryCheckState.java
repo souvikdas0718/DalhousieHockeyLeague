@@ -3,7 +3,7 @@ package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 import dhl.businessLogic.aging.interfaceAging.IInjury;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
-import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.Scheduler;
+import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.factory.SchedulerAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
 
@@ -13,10 +13,12 @@ import java.util.ArrayList;
 public class InjuryCheckState implements ISimulationSeasonState {
     SimulationContext simulationContext;
     IScheduler scheduler;
+    SchedulerAbstractFactory schedulerAbstractFactory;
 
     public InjuryCheckState(SimulationContext simulationContext) {
         this.simulationContext = simulationContext;
-        scheduler = new Scheduler();
+        schedulerAbstractFactory = SchedulerAbstractFactory.instance();
+        scheduler = schedulerAbstractFactory.getScheduler();
     }
 
     public SimulationContext getSimulationContext() {
@@ -25,11 +27,6 @@ public class InjuryCheckState implements ISimulationSeasonState {
 
     public void setSimulationContext(SimulationContext simulationContext) {
         this.simulationContext = simulationContext;
-    }
-
-    @Override
-    public void seasonStateEntryProcess() {
-
     }
 
     @Override

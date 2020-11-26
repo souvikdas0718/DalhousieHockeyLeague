@@ -1,6 +1,5 @@
 package dhl.businessLogicTest.simulationStateMachineTest.states.seasonSimulationTest;
 
-import dhl.Mocks.GameConfigMock;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.leagueModel.Team;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
@@ -12,7 +11,8 @@ import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interface
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.ExecuteTradesState;
 import dhl.businessLogic.trade.TradingEngine;
 import dhl.businessLogic.trade.interfaces.ITradingEngine;
-import dhl.businessLogicTest.tradeTest.mocks.TradeMock;
+import dhl.businessLogicTest.tradeTest.mocks.GameConfigMockForTrading;
+import dhl.businessLogicTest.tradeTest.mocks.factory.TradeMockAbstractFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,13 +24,15 @@ public class ExecuteTradesStateTest {
     GameContext gameState;
     LeagueObjectModelMocks mockLeagueObjectModel;
     ILeagueObjectModel leagueMock;
-    GameConfigMock gameConfig;
+    GameConfigMockForTrading gameConfigMock;
+    TradeMockAbstractFactory tradeMockFactory;
+    //    GameConfigMock gameConfig;
     IGameConfig iGameConfig;
     IScheduler scheduler;
     ITeam goodTeamMock;
     ITeam badTeamMock;
     ITeam userTeam;
-    TradeMock tradeMock;
+    TradeMockAbstractFactory tradeMockAbstractFactory;
     ITradingEngine tradeEngine;
 
 
@@ -38,11 +40,12 @@ public class ExecuteTradesStateTest {
     public void initObject() {
         gameState = new GameContext();
         mockLeagueObjectModel = new LeagueObjectModelMocks();
-        gameConfig = new GameConfigMock();
-        iGameConfig = gameConfig.getGameConfigMock();
-        tradeMock = new TradeMock();
-        goodTeamMock = tradeMock.getTeamWithGoodPlayer();
-        badTeamMock = tradeMock.getTeamWithBadPlayer();
+        tradeMockFactory = TradeMockAbstractFactory.instance();
+        gameConfigMock = tradeMockFactory.createGameConfigMockForTrading();
+        iGameConfig = gameConfigMock.getGameConfigMock();
+        tradeMockAbstractFactory = TradeMockAbstractFactory.instance();
+        goodTeamMock = tradeMockAbstractFactory.createTeamMockForTrade().getTeamWithGoodPlayer();
+        badTeamMock = tradeMockAbstractFactory.createTeamMockForTrade().getTeamWithBadPlayer();
         userTeam = new Team();
         leagueMock = mockLeagueObjectModel.getLeagueObjectMock();
         leagueMock.getConferences().get(0).getDivisions().get(0).getTeams().add(goodTeamMock);
@@ -65,11 +68,6 @@ public class ExecuteTradesStateTest {
         simulationContext.setYear(2014);
         executeTradesState.setSimulationContext(simulationContext);
         Assertions.assertTrue(executeTradesState.getSimulationContext().getYear() == 2014);
-    }
-
-    @Test
-    public void seasonStateEntryProcessTest() {
-
     }
 
     @Test

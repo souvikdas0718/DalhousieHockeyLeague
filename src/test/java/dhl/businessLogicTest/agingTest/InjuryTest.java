@@ -1,4 +1,4 @@
-package dhl.businessLogicTest.agingTest;
+package dhl.businessLogicTest.AgingTest;
 
 import dhl.businessLogic.aging.Injury;
 import dhl.businessLogic.aging.agingFactory.AgingAbstractFactory;

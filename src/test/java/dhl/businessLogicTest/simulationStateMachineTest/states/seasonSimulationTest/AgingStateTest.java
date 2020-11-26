@@ -62,25 +62,20 @@ public class AgingStateTest {
     }
 
     @Test
-    public void seasonStateEntryProcessTest() {
-
-    }
-
-    @Test
     public void seasonStateProcessTest() {
         simulationContext.setGameConfig(gameConfig);
         simulationContext.setInMemoryLeague(leagueObjectModel);
         simulationContext.setNumberOfDays(365);
         agingState = new AgingState(simulationContext);
-//        agingState.seasonStateProcess();
-//        Assertions.assertTrue(agingState.getSimulationContext().getInMemoryLeague().getConferences().get(0).getDivisions().get(0).getTeams().get(0).getPlayers().get(0).getPlayerName().equals("Player12"));
-//        Assertions.assertTrue(agingState.getSimulationContext().getInMemoryLeague().getConferences().get(0).getDivisions().get(0).getTeams().get(0).getPlayers().get(0).getPlayerStats().getAge() == 21);
-//        Assertions.assertTrue(agingState.getSimulationContext().getInMemoryLeague().getFreeAgents().get(0).getPlayerName().equals("Player0"));
-//        Assertions.assertTrue(agingState.getSimulationContext().getInMemoryLeague().getFreeAgents().get(0).getPlayerStats().getAge() == 21);
-//        System.out.println(agingState.getSimulationContext().getInMemoryLeague().getConferences().get(0).getDivisions().get(0).getTeams().get(0).getPlayers().get(0).getPlayerName());
-//        System.out.println(agingState.getSimulationContext().getInMemoryLeague().getConferences().get(0).getDivisions().get(0).getTeams().get(0).getPlayers().get(0).getPlayerStats().getAge());
-//        System.out.println(agingState.getSimulationContext().getInMemoryLeague().getFreeAgents().get(0).getPlayerName());
-//        System.out.println(agingState.getSimulationContext().getInMemoryLeague().getFreeAgents().get(0).getPlayerStats().getAge());
+        agingState.seasonStateProcess();
+        Assertions.assertTrue(agingState.getSimulationContext().getInMemoryLeague().getFreeAgents().get(0).getPlayerName().equals("Player0"));
+        Assertions.assertTrue(agingState.getSimulationContext().getInMemoryLeague().getFreeAgents().get(0).getPlayerStats().getAge() == 25);
+
+        simulationContext.setNumberOfDays(365*2);
+        agingState = new AgingState(simulationContext);
+        agingState.seasonStateProcess();
+        Assertions.assertTrue(agingState.getSimulationContext().getInMemoryLeague().getFreeAgents().get(0).getPlayerName().equals("Player0"));
+        Assertions.assertTrue(agingState.getSimulationContext().getInMemoryLeague().getFreeAgents().get(0).getPlayerStats().getAge() == 26);
     }
 
     @Test
