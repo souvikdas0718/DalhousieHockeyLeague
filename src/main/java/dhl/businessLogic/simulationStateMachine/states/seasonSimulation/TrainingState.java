@@ -3,11 +3,9 @@ package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
-import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.Scheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.factory.SchedulerAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
-import dhl.businessLogic.traning.Training;
 import dhl.businessLogic.traning.TrainingAbstractFactory;
 import dhl.businessLogic.traning.interfaces.ITraining;
 

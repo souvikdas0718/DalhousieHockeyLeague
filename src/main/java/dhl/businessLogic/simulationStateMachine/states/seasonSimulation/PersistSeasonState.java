@@ -2,6 +2,7 @@ package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 
 
 import dhl.businessLogic.leagueModel.LeagueObjectModel;
+import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
 import dhl.inputOutput.importJson.serializeDeserialize.SerializeDeserializeAbstractFactory;
@@ -27,10 +28,10 @@ public class PersistSeasonState implements ISimulationSeasonState {
     @Override
     public void seasonStateProcess() {
         // save the data in the db
-//        SerializeDeserializeAbstractFactory factorySerialize = SerializeDeserializeAbstractFactory.instance();
-//        ISerializeLeagueObjectModel serializeLeagueObjectModel = factorySerialize.createSerializeLeagueObjectModel("src/SerializedJsonFiles/");
-//        LeagueObjectModel leagueObjectModel = new LeagueObjectModel();
-//        leagueObjectModel.updateLeagueObjectModel(serializeLeagueObjectModel, simulationContext.getInMemoryLeague());
+        SerializeDeserializeAbstractFactory factorySerialize = SerializeDeserializeAbstractFactory.instance();
+        ISerializeLeagueObjectModel serializeLeagueObjectModel = factorySerialize.createSerializeLeagueObjectModel("src/SerializedJsonFiles/");
+        ILeagueObjectModel leagueObjectModel = simulationContext.getInMemoryLeague();
+        leagueObjectModel.updateLeagueObjectModel(serializeLeagueObjectModel);
 //                call this method
 //        inMemoryLeague.updateLeagueObjectModel(serializeLeagueObjectModel, inMemoryLeague)
     }
