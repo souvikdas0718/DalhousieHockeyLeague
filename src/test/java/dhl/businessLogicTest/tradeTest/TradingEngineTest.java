@@ -10,17 +10,12 @@ import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFac
 import dhl.businessLogicTest.tradeTest.mocks.GameConfigMockForTrading;
 import dhl.businessLogicTest.tradeTest.mocks.factory.TradeMockAbstractFactory;
 import dhl.inputOutput.ui.IUserInputOutput;
-import dhl.Mocks.GameConfigMock;
-import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.Mocks.MockUserInputOutput;
 import dhl.businessLogic.trade.interfaces.ITradeOffer;
 import dhl.businessLogic.trade.TradingEngine;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 

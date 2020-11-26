@@ -36,6 +36,11 @@ public class ScoutTest {
     }
 
     @Test
+    public void findTradeTest(){
+        // TODO: 26-11-2020 write this test
+    }
+    
+    @Test
     public void findWeakPartOfTeamTest(){
         ITeam weakGoalieTeam = tradeMockFactory.createTeamMockForTrade().getTeamWithBadPosition(PlayerPosition.GOALIE.toString());
         ITeam weakDefenceTeam = tradeMockFactory.createTeamMockForTrade().getTeamWithBadPosition(PlayerPosition.DEFENSE.toString());
@@ -63,18 +68,59 @@ public class ScoutTest {
 
         testPlayer = testClassObject.getWeakPlayer(weakGoalieTeam, PlayerPosition.FORWARD.toString());
         Assertions.assertEquals(testPlayer.getPosition(), PlayerPosition.FORWARD.toString());
-
-
     }
 
     @Test
-    public void isTeamGoodForTradingTest() throws Exception {
-        ITeam badTeamMock = tradeMockFactory.createTeamMockForTrade().getTeamWithBadPlayer();
-        ITeam goodTeamMock = tradeMockFactory.createTeamMockForTrade().getTeamWithGoodPlayer();
+    public void findTeamToTradeWithTest(){
+        ITeam weakGoalieTeam = tradeMockFactory.createTeamMockForTrade().getTeamWithBadPosition(PlayerPosition.GOALIE.toString());
         ILeagueObjectModel league = leagueFactory.createLeagueMock().getLeagueObjectModel();
-        testClassObject = (Scout) tradeFactory.createScout(badTeamMock, league, ourGameConfig);
+        testClassObject = (Scout) tradeFactory.createScout(weakGoalieTeam, league,ourGameConfig);
 
-        Assertions.assertTrue(testClassObject.isTeamGoodForTrading(badTeamMock, goodTeamMock));
-        Assertions.assertFalse(testClassObject.isTeamGoodForTrading(goodTeamMock, badTeamMock));
+        IPlayer player = tradeMockFactory.createPlayerMockForTrade().getWeakPlayer("weak", PlayerPosition.DEFENSE.toString() );
+        ITeam team = testClassObject.findTeamToTradeWith(league, PlayerPosition.GOALIE.toString(), player);
+        Assertions.assertFalse(team == null);
+
+        player = tradeMockFactory.createPlayerMockForTrade().getStrongPlayer("strong", PlayerPosition.DEFENSE.toString() );
+        team = testClassObject.findTeamToTradeWith(league, PlayerPosition.GOALIE.toString(), player);
+        Assertions.assertTrue(team == null);
+    }
+
+    @Test
+    public void playerFoundTest(){
+        ITeam weakGoalieTeam = tradeMockFactory.createTeamMockForTrade().getTeamWithBadPosition(PlayerPosition.GOALIE.toString());
+        ILeagueObjectModel league = leagueFactory.createLeagueMock().getLeagueObjectModel();
+        testClassObject = (Scout) tradeFactory.createScout(weakGoalieTeam, league,ourGameConfig);
+
+        Assertions.assertFalse(testClassObject.playerFound(null));
+        Assertions.assertTrue( testClassObject.playerFound(weakGoalieTeam.getPlayers().get(0)));
+    }
+
+    @Test
+    public void teamFoundTest(){
+        ITeam weakGoalieTeam = tradeMockFactory.createTeamMockForTrade().getTeamWithBadPosition(PlayerPosition.GOALIE.toString());
+        ILeagueObjectModel league = leagueFactory.createLeagueMock().getLeagueObjectModel();
+        testClassObject = (Scout) tradeFactory.createScout(weakGoalieTeam, league,ourGameConfig);
+
+        Assertions.assertFalse(testClassObject.teamFound(null));
+        Assertions.assertTrue( testClassObject.teamFound(weakGoalieTeam));
+    }
+
+    @Test
+    public void findPlayerToTrade() {
+        ITeam weakGoalieTeam = tradeMockFactory.createTeamMockForTrade().getTeamWithBadPosition(PlayerPosition.GOALIE.toString());
+        ILeagueObjectModel league = leagueFactory.createLeagueMock().getLeagueObjectModel();
+        testClassObject = (Scout) tradeFactory.createScout(weakGoalieTeam, league, ourGameConfig);
+
+        IPlayer player = testClassObject.findPlayerToTrade(weakGoalieTeam, PlayerPosition.DEFENSE.toString(), 1);
+        Assertions.assertEquals(player.getPosition(), PlayerPosition.DEFENSE.toString());
+
+        player = testClassObject.findPlayerToTrade(weakGoalieTeam, PlayerPosition.FORWARD.toString(), 1);
+        Assertions.assertEquals(player.getPosition(), PlayerPosition.FORWARD.toString());
+
+        player = testClassObject.findPlayerToTrade(weakGoalieTeam, PlayerPosition.GOALIE.toString(), 1);
+        Assertions.assertEquals(player.getPosition(), PlayerPosition.GOALIE.toString());
+
+        player = testClassObject.findPlayerToTrade(weakGoalieTeam, PlayerPosition.GOALIE.toString(), 100);
+        Assertions.assertEquals(player, null);
     }
 }
