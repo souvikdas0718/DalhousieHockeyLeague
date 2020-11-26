@@ -6,7 +6,7 @@ import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.ISeasonSchedule;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
-import dhl.businessLogic.simulationStateMachine.states.standings.StandingSystem;
+import dhl.businessLogic.simulationStateMachine.states.standings.factory.StandingsAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandingSystem;
 
 import java.time.LocalDate;
@@ -19,12 +19,14 @@ public class SimulateGameState implements ISimulationSeasonState {
     List<ITeam> injuryCheckTeams;
     IScheduler scheduler;
     IStandingSystem standingSystem;
+    StandingsAbstractFactory standingsAbstractFactory;
 
     public SimulateGameState(SimulationContext simulationContext) {
         this.simulationContext = simulationContext;
         scheduler = this.simulationContext.getRegularScheduler();
         injuryCheckTeams = new ArrayList<>();
-        standingSystem = new StandingSystem();
+        standingsAbstractFactory = StandingsAbstractFactory.instance();
+        standingSystem = standingsAbstractFactory.getStandingSystem();
     }
 
     public SimulationContext getSimulationContext() {
