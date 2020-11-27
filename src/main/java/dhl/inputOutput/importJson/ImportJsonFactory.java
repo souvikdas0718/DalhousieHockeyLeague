@@ -4,7 +4,7 @@ import dhl.businessLogic.leagueModel.GameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.IValidation;
 import dhl.inputOutput.importJson.interfaces.*;
-import dhl.inputOutput.ui.IUserInputOutput;
+import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import dhl.inputOutput.ui.UserInputOutput;
 import org.json.simple.JSONObject;
 

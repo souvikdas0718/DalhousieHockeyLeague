@@ -12,7 +12,7 @@ import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfac
 import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandingSystem;
 import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandings;
 import dhl.businessLogic.trade.interfaces.ITradingEngine;
-import dhl.inputOutput.ui.IUserInputOutput;
+import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import dhl.inputOutput.ui.UserInputOutput;
 
 import java.time.LocalDate;
@@ -75,7 +75,7 @@ public class SimulationContext implements ISimulationSeasonState {
         userTeam = gameState.getSelectedTeam();
         currentSimulation = initializeSeason;
         seasonInProgress = true;
-        ioObject = new UserInputOutput();
+        ioObject = IUserInputOutput.getInstance();
         updateUserTeamRoster = new UpdateUserTeamRoster(ioObject);
         tradeEngine = ITradingEngine.instance(gameConfig, inMemoryLeague, userTeam);
         daysSinceLastTraining = 0;

@@ -2,7 +2,7 @@ package dhl;
 
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.trade.Scout;
-import dhl.inputOutput.ui.IUserInputOutput;
+import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import dhl.inputOutput.ui.UserInputOutput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,7 +12,7 @@ public class StartGame {
     private static final Logger logger = LogManager.getLogger(StartGame.class);
 
     public static void main(String[] args) throws Exception {
-        IUserInputOutput ioObject = new UserInputOutput();
+        IUserInputOutput ioObject = IUserInputOutput.getInstance();
         ioObject.printMessage(" Welcome to Dynasty Mode ");
         GameContext ourGame = new GameContext();
 

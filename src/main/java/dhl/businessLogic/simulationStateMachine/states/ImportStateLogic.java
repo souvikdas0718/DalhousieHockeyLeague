@@ -7,7 +7,7 @@ import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.simulationStateMachine.states.interfaces.IImportStateLogic;
 import dhl.inputOutput.importJson.CreateLeagueObjectModel;
 import dhl.inputOutput.importJson.ImportJsonFile;
-import dhl.inputOutput.ui.IUserInputOutput;
+import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import dhl.inputOutput.ui.UserInputOutput;
 import org.everit.json.schema.Schema;
 import org.everit.json.schema.ValidationException;
@@ -19,7 +19,7 @@ import org.json.simple.JSONObject;
 public class ImportStateLogic implements IImportStateLogic {
     private static final String SCHEMAFILEPATH ="src/main/java/dhl/inputOutput/importJson/jsonSchema/schema.json";
 
-    IUserInputOutput userInputPutput = new UserInputOutput();
+    IUserInputOutput userInputPutput = IUserInputOutput.getInstance();
 
     public ILeagueObjectModel importAndGetLeagueObject(String validFilePath) throws Exception {
         JSONObject leagueJsonObject = new ImportJsonFile(validFilePath).getJsonObject();

@@ -10,7 +10,7 @@ import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interface
 import dhl.businessLogic.simulationStateMachine.states.standings.StandingSystem;
 import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandingSystem;
 import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandings;
-import dhl.inputOutput.ui.IUserInputOutput;
+import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import dhl.inputOutput.ui.UserInputOutput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -402,7 +402,7 @@ public class Scheduler implements IScheduler {
     }
 
     public boolean stanleyCupWinner(LocalDate date) {
-        IUserInputOutput output = new UserInputOutput();
+        IUserInputOutput output = IUserInputOutput.getInstance();
         output.printMessage("Today's date: " + date);
         output.printMessage("Final Game date: " + playOffScheduleRound1.get(14).getGameDate());
         if (playOffScheduleRound1.get(14).getGameDate().isBefore(date) || playOffScheduleRound1.get(14).getGameDate().isEqual(date)) {

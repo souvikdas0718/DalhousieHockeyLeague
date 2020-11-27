@@ -10,7 +10,7 @@ import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
 import dhl.inputOutput.importJson.interfaces.ICreateLeagueObjectModel;
 import dhl.inputOutput.importJson.CreateLeagueObjectModel;
-import dhl.inputOutput.ui.IUserInputOutput;
+import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONArray;

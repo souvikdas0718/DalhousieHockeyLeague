@@ -3,7 +3,7 @@ package dhl.businessLogic.simulationStateMachine.states;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.interfaces.IGameState;
-import dhl.inputOutput.ui.IUserInputOutput;
+import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import dhl.inputOutput.ui.UserInputOutput;
 
 public class SimulateState implements IGameState {
@@ -17,7 +17,7 @@ public class SimulateState implements IGameState {
     public SimulateState(GameContext newGame) {
         ourGame = newGame;
         simulationSeasonsCount = 0;
-        userInputPutput = new UserInputOutput();
+        userInputPutput = IUserInputOutput.getInstance();
     }
 
     @Override
