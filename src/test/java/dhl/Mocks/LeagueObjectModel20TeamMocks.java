@@ -1,10 +1,16 @@
 package dhl.Mocks;
 
-import dhl.businessLogic.leagueModel.*;
+import dhl.Mocks.factory.MockAbstractFactory;
+import dhl.businessLogic.leagueModel.LeagueObjectModel;
+import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
+import dhl.businessLogic.leagueModel.factory.LeagueObjectModelBuilder;
+import dhl.businessLogic.leagueModel.factory.LeagueObjectModelDirector;
+import dhl.businessLogic.leagueModel.factory.interfaceFactory.ILeagueObjectModelBuilder;
+import dhl.businessLogic.leagueModel.factory.interfaceFactory.ILeagueObjectModelDirector;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
-import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.Scheduler;
+import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.factory.SchedulerAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
-import dhl.businessLogic.simulationStateMachine.states.standings.Standings;
+import dhl.businessLogic.simulationStateMachine.states.standings.factory.StandingsAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandings;
 
 import java.time.DayOfWeek;
@@ -20,13 +26,26 @@ public class LeagueObjectModel20TeamMocks {
     LeagueObjectModelMocks mockLeagueObjectModel;
     IScheduler scheduler;
     List<IPlayer> statistics;
+    MockAbstractFactory mockAbstractFactory;
+    SchedulerAbstractFactory schedulerAbstractFactory;
+    StandingsAbstractFactory standingsAbstractFactory;
+    LeagueModelAbstractFactory leagueModelAbstractFactory;
+    ILeagueObjectModelBuilder leagueBuilder;
+    ILeagueObjectModelDirector leagueDirector;
+
 
     public LeagueObjectModel20TeamMocks() {
         this.leagueData = new LeagueObjectModel();
         this.generalStandings = new ArrayList<>();
-        mockLeagueObjectModel = new LeagueObjectModelMocks();
-        scheduler = new Scheduler();
+        mockAbstractFactory = MockAbstractFactory.instance();
+        mockLeagueObjectModel = mockAbstractFactory.getLeagueObjectModelMock();
+        schedulerAbstractFactory = SchedulerAbstractFactory.instance();
+        scheduler = schedulerAbstractFactory.getScheduler();
+        standingsAbstractFactory = StandingsAbstractFactory.instance();
         statistics = mockLeagueObjectModel.getPlayerArrayMock();
+        leagueModelAbstractFactory = LeagueModelAbstractFactory.instance();
+        leagueBuilder = new LeagueObjectModelBuilder();
+        leagueDirector = new LeagueObjectModelDirector(leagueBuilder);
     }
 
     public ILeagueObjectModel getLeagueData() {
@@ -48,44 +67,45 @@ public class LeagueObjectModel20TeamMocks {
     public void leagueModel20TeamGeneralStandings() {
         ArrayList<IStandings> standings = new ArrayList<>();
 
-        IGeneralManager generalManager = new GeneralManager("generalManager", "normal");
+        IGeneralManager generalManager = leagueModelAbstractFactory.createGeneralManager("generalManager", "normal");
+//        IGeneralManager generalManager = leagueModelAbstractFactory.createGeneralManager("generalManager", "normal");
 
-        ICoach headCoach = new Coach("Coach", 0.1, 0.2, .5, .9);
-        ICoach headCoach2 = new Coach("Coach2", 0.1, 0.2, .5, .8);
+        ICoach headCoach = leagueModelAbstractFactory.createCoach("Coach", 0.1, 0.2, .5, .9);
+        ICoach headCoach2 = leagueModelAbstractFactory.createCoach("Coach2", 0.1, 0.2, .5, .8);
         List<ICoach> coaches = new ArrayList<>();
         coaches.add(headCoach);
         coaches.add(headCoach2);
-        IPlayerStatistics playerStats = new PlayerStatistics(5, 5, 8, 9);
+        IPlayerStatistics playerStats = leagueModelAbstractFactory.createPlayerStatistics(5, 5, 8, 9);
         playerStats.setAge(20);
-        IPlayer playersList1 = new Player("playerName", "position", playerStats);
-        IPlayer playersList2 = new Player("playerName", "position", playerStats);
+        IPlayer playersList1 = leagueModelAbstractFactory.createPlayer("playerName", "position", false, playerStats);
+        IPlayer playersList2 = leagueModelAbstractFactory.createPlayer("playerName", "position", false, playerStats);
         List<IPlayer> playersList = new ArrayList<>();
         playersList.add(playersList1);
         playersList.add(playersList2);
 
-        ITeam team1 = new Team("Bruins", generalManager, headCoach, playersList);
-        ITeam team2 = new Team("Lightning", generalManager, headCoach, playersList);
-        ITeam team3 = new Team("Maple", generalManager, headCoach, playersList);
-        ITeam team4 = new Team("Panthers", generalManager, headCoach, playersList);
-        ITeam team5 = new Team("Canadiens", generalManager, headCoach, playersList);
+        ITeam team1 = leagueModelAbstractFactory.createTeam("Bruins", generalManager, headCoach, playersList);
+        ITeam team2 = leagueModelAbstractFactory.createTeam("Lightning", generalManager, headCoach, playersList);
+        ITeam team3 = leagueModelAbstractFactory.createTeam("Maple", generalManager, headCoach, playersList);
+        ITeam team4 = leagueModelAbstractFactory.createTeam("Panthers", generalManager, headCoach, playersList);
+        ITeam team5 = leagueModelAbstractFactory.createTeam("Canadiens", generalManager, headCoach, playersList);
 
-        ITeam team6 = new Team("Capitals", generalManager, headCoach, playersList);
-        ITeam team7 = new Team("Flyers", generalManager, headCoach, playersList);
-        ITeam team8 = new Team("Penguins", generalManager, headCoach, playersList);
-        ITeam team9 = new Team("Hurricanes", generalManager, headCoach, playersList);
-        ITeam team10 = new Team("BlueJackets", generalManager, headCoach, playersList);
+        ITeam team6 = leagueModelAbstractFactory.createTeam("Capitals", generalManager, headCoach, playersList);
+        ITeam team7 = leagueModelAbstractFactory.createTeam("Flyers", generalManager, headCoach, playersList);
+        ITeam team8 = leagueModelAbstractFactory.createTeam("Penguins", generalManager, headCoach, playersList);
+        ITeam team9 = leagueModelAbstractFactory.createTeam("Hurricanes", generalManager, headCoach, playersList);
+        ITeam team10 = leagueModelAbstractFactory.createTeam("BlueJackets", generalManager, headCoach, playersList);
 
-        ITeam team11 = new Team("Blues", generalManager, headCoach, playersList);
-        ITeam team12 = new Team("Avalanche", generalManager, headCoach, playersList);
-        ITeam team13 = new Team("Stars", generalManager, headCoach, playersList);
-        ITeam team14 = new Team("Jets", generalManager, headCoach, playersList);
-        ITeam team15 = new Team("Predators", generalManager, headCoach, playersList);
+        ITeam team11 = leagueModelAbstractFactory.createTeam("Blues", generalManager, headCoach, playersList);
+        ITeam team12 = leagueModelAbstractFactory.createTeam("Avalanche", generalManager, headCoach, playersList);
+        ITeam team13 = leagueModelAbstractFactory.createTeam("Stars", generalManager, headCoach, playersList);
+        ITeam team14 = leagueModelAbstractFactory.createTeam("Jets", generalManager, headCoach, playersList);
+        ITeam team15 = leagueModelAbstractFactory.createTeam("Predators", generalManager, headCoach, playersList);
 
-        ITeam team16 = new Team("Golden", generalManager, headCoach, playersList);
-        ITeam team17 = new Team("Oilers", generalManager, headCoach, playersList);
-        ITeam team18 = new Team("Flames", generalManager, headCoach, playersList);
-        ITeam team19 = new Team("Cancuks", generalManager, headCoach, playersList);
-        ITeam team20 = new Team("Coyotes", generalManager, headCoach, playersList);
+        ITeam team16 = leagueModelAbstractFactory.createTeam("Golden", generalManager, headCoach, playersList);
+        ITeam team17 = leagueModelAbstractFactory.createTeam("Oilers", generalManager, headCoach, playersList);
+        ITeam team18 = leagueModelAbstractFactory.createTeam("Flames", generalManager, headCoach, playersList);
+        ITeam team19 = leagueModelAbstractFactory.createTeam("Cancuks", generalManager, headCoach, playersList);
+        ITeam team20 = leagueModelAbstractFactory.createTeam("Coyotes", generalManager, headCoach, playersList);
 
 
         ArrayList<ITeam> teamsListDivision1 = new ArrayList<>();
@@ -117,10 +137,10 @@ public class LeagueObjectModel20TeamMocks {
         teamsListDivision4.add(team19);
         teamsListDivision4.add(team20);
 
-        IDivision division1 = new Division("Atlantic Division", teamsListDivision1);
-        IDivision division2 = new Division("Metropolitan Division", teamsListDivision2);
-        IDivision division3 = new Division("Central Division", teamsListDivision3);
-        IDivision division4 = new Division("Pacific Division", teamsListDivision4);
+        IDivision division1 = leagueModelAbstractFactory.createDivision("Atlantic Division", teamsListDivision1);
+        IDivision division2 = leagueModelAbstractFactory.createDivision("Metropolitan Division", teamsListDivision2);
+        IDivision division3 = leagueModelAbstractFactory.createDivision("Central Division", teamsListDivision3);
+        IDivision division4 = leagueModelAbstractFactory.createDivision("Pacific Division", teamsListDivision4);
 
         ArrayList<IDivision> conference1Divisions = new ArrayList<>();
         ArrayList<IDivision> conference2Divisions = new ArrayList<>();
@@ -130,8 +150,8 @@ public class LeagueObjectModel20TeamMocks {
         conference2Divisions.add(division3);
         conference2Divisions.add(division4);
 
-        IConference conference1 = new Conference("Eastern Conference", conference1Divisions);
-        IConference conference2 = new Conference("Western Conference", conference2Divisions);
+        IConference conference1 = leagueModelAbstractFactory.createConference("Eastern Conference", conference1Divisions);
+        IConference conference2 = leagueModelAbstractFactory.createConference("Western Conference", conference2Divisions);
 
         List<IConference> conferences = new ArrayList<>();
         conferences.add(conference1);
@@ -139,35 +159,35 @@ public class LeagueObjectModel20TeamMocks {
 
         GameConfigMock gameConfig = new GameConfigMock();
 
-        IGeneralManager iGeneralManager = new GeneralManager("manager1");
-        IGeneralManager iGeneralManager2 = new GeneralManager("manager2");
+        IGeneralManager iGeneralManager = leagueModelAbstractFactory.createGeneralManager("manager1", "normal");
+        IGeneralManager iGeneralManager2 = leagueModelAbstractFactory.createGeneralManager("manager2", "normal");
         List<IGeneralManager> iGeneralManagers = new ArrayList<>();
         iGeneralManagers.add(iGeneralManager);
         iGeneralManagers.add(iGeneralManager2);
 
-        ILeagueObjectModel league = new LeagueObjectModel("Dalhousie Hockey League", conferences, playersList, coaches, iGeneralManagers, gameConfig.getGameConfigMock());
+        ILeagueObjectModel league = leagueDirector.construct("Dalhousie Hockey League", conferences, playersList, coaches, iGeneralManagers, gameConfig.getGameConfigMock());
         setLeagueData(league);
 
-        IStandings standings1 = new Standings();
-        IStandings standings2 = new Standings();
-        IStandings standings3 = new Standings();
-        IStandings standings4 = new Standings();
-        IStandings standings5 = new Standings();
-        IStandings standings6 = new Standings();
-        IStandings standings7 = new Standings();
-        IStandings standings8 = new Standings();
-        IStandings standings9 = new Standings();
-        IStandings standings10 = new Standings();
-        IStandings standings11 = new Standings();
-        IStandings standings12 = new Standings();
-        IStandings standings13 = new Standings();
-        IStandings standings14 = new Standings();
-        IStandings standings15 = new Standings();
-        IStandings standings16 = new Standings();
-        IStandings standings17 = new Standings();
-        IStandings standings18 = new Standings();
-        IStandings standings19 = new Standings();
-        IStandings standings20 = new Standings();
+        IStandings standings1 = standingsAbstractFactory.getStandings();
+        IStandings standings2 = standingsAbstractFactory.getStandings();
+        IStandings standings3 = standingsAbstractFactory.getStandings();
+        IStandings standings4 = standingsAbstractFactory.getStandings();
+        IStandings standings5 = standingsAbstractFactory.getStandings();
+        IStandings standings6 = standingsAbstractFactory.getStandings();
+        IStandings standings7 = standingsAbstractFactory.getStandings();
+        IStandings standings8 = standingsAbstractFactory.getStandings();
+        IStandings standings9 = standingsAbstractFactory.getStandings();
+        IStandings standings10 = standingsAbstractFactory.getStandings();
+        IStandings standings11 = standingsAbstractFactory.getStandings();
+        IStandings standings12 = standingsAbstractFactory.getStandings();
+        IStandings standings13 = standingsAbstractFactory.getStandings();
+        IStandings standings14 = standingsAbstractFactory.getStandings();
+        IStandings standings15 = standingsAbstractFactory.getStandings();
+        IStandings standings16 = standingsAbstractFactory.getStandings();
+        IStandings standings17 = standingsAbstractFactory.getStandings();
+        IStandings standings18 = standingsAbstractFactory.getStandings();
+        IStandings standings19 = standingsAbstractFactory.getStandings();
+        IStandings standings20 = standingsAbstractFactory.getStandings();
 
         standings1.setTeamConference(conference1);
         standings1.setTeamDivision(division1);
@@ -340,14 +360,14 @@ public class LeagueObjectModel20TeamMocks {
 
         IGeneralManager manager = league.getGeneralManagers().get(0);
 
-        ITeam teamPlayOff1 = new Team("Bruins", manager, league.getCoaches().get(0), statistics);
-        ITeam teamPlayoff2 = new Team("Maple", manager, league.getCoaches().get(0), statistics);
-        ITeam teamPlayoff3 = new Team("Hurricanes", manager, league.getCoaches().get(0), statistics);
-        ITeam teamPlayoff4 = new Team("Flyers", manager, league.getCoaches().get(0), statistics);
-        ITeam teamPlayoff5 = new Team("Blues", manager, league.getCoaches().get(0), statistics);
-        ITeam teamPlayoff6 = new Team("Avalanche", manager, league.getCoaches().get(0), statistics);
-        ITeam teamPlayoff7 = new Team("Cancuks", manager, league.getCoaches().get(0), statistics);
-        ITeam teamPlayoff8 = new Team("Flames", manager, league.getCoaches().get(0), statistics);
+        ITeam teamPlayOff1 = leagueModelAbstractFactory.createTeam("Bruins", manager, league.getCoaches().get(0), statistics);
+        ITeam teamPlayoff2 = leagueModelAbstractFactory.createTeam("Maple", manager, league.getCoaches().get(0), statistics);
+        ITeam teamPlayoff3 = leagueModelAbstractFactory.createTeam("Hurricanes", manager, league.getCoaches().get(0), statistics);
+        ITeam teamPlayoff4 = leagueModelAbstractFactory.createTeam("Flyers", manager, league.getCoaches().get(0), statistics);
+        ITeam teamPlayoff5 = leagueModelAbstractFactory.createTeam("Blues", manager, league.getCoaches().get(0), statistics);
+        ITeam teamPlayoff6 = leagueModelAbstractFactory.createTeam("Avalanche", manager, league.getCoaches().get(0), statistics);
+        ITeam teamPlayoff7 = leagueModelAbstractFactory.createTeam("Cancuks", manager, league.getCoaches().get(0), statistics);
+        ITeam teamPlayoff8 = leagueModelAbstractFactory.createTeam("Flames", manager, league.getCoaches().get(0), statistics);
 
         LocalDate playOffStartDate = LocalDate.of(2021, 04, 01);
         LocalDate playOffStarts = playOffStartDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.WEDNESDAY)).with(
@@ -365,18 +385,18 @@ public class LeagueObjectModel20TeamMocks {
         scheduler.gameWinner(teamPlayoff7);
         scheduler.gameWinner(teamPlayoff8);
 
-        ITeam teamPlayOffRoundThree1 = new Team("Maple", manager, league.getCoaches().get(0), statistics);
-        ITeam teamPlayOffRoundThree2 = new Team("Flyers", manager, league.getCoaches().get(0), statistics);
-        ITeam teamPlayOffRoundThree3 = new Team("Avalanche", manager, league.getCoaches().get(0), statistics);
-        ITeam teamPlayOffRoundThree4 = new Team("Cancuks", manager, league.getCoaches().get(0), statistics);
+        ITeam teamPlayOffRoundThree1 = leagueModelAbstractFactory.createTeam("Maple", manager, league.getCoaches().get(0), statistics);
+        ITeam teamPlayOffRoundThree2 = leagueModelAbstractFactory.createTeam("Flyers", manager, league.getCoaches().get(0), statistics);
+        ITeam teamPlayOffRoundThree3 = leagueModelAbstractFactory.createTeam("Avalanche", manager, league.getCoaches().get(0), statistics);
+        ITeam teamPlayOffRoundThree4 = leagueModelAbstractFactory.createTeam("Cancuks", manager, league.getCoaches().get(0), statistics);
 
         scheduler.gameWinner(teamPlayOffRoundThree1);
         scheduler.gameWinner(teamPlayOffRoundThree2);
         scheduler.gameWinner(teamPlayOffRoundThree3);
         scheduler.gameWinner(teamPlayOffRoundThree4);
 
-        ITeam teamPlayOffRoundFour1 = new Team("Maple", manager, league.getCoaches().get(0), statistics);
-        ITeam teamPlayOffRoundFour2 = new Team("Avalanche", manager, league.getCoaches().get(0), statistics);
+        ITeam teamPlayOffRoundFour1 = leagueModelAbstractFactory.createTeam("Maple", manager, league.getCoaches().get(0), statistics);
+        ITeam teamPlayOffRoundFour2 = leagueModelAbstractFactory.createTeam("Avalanche", manager, league.getCoaches().get(0), statistics);
 
         scheduler.gameWinner(teamPlayOffRoundFour1);
         scheduler.gameWinner(teamPlayOffRoundFour2);
