@@ -117,7 +117,7 @@ public class CreateTeamStateLogic implements ICreateTeamStateLogic {
         String[] arrFreeAgents = inputfreeAgents.split(",");
         ArrayList<IPlayer> selectedFreeAgents = new ArrayList<>();
 
-        if (arrFreeAgents.length == 20) {
+        if (arrFreeAgents.length == 30) {
             for (int i = 0; i < arrFreeAgents.length; i++) {
 
                 String freeAgentName = arrFreeAgents[i].trim();
@@ -131,7 +131,7 @@ public class CreateTeamStateLogic implements ICreateTeamStateLogic {
                 }
             }
         } else {
-            myLogger.log(myLogger.getLevel(),"Enter 20 Free Agents or enter Exit to Quit game");
+            myLogger.log(myLogger.getLevel(),"Enter 30 Free Agents or enter Exit to Quit game");
 
         }
         return selectedFreeAgents;
