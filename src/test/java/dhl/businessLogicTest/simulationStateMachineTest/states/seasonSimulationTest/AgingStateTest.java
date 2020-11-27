@@ -62,8 +62,9 @@ public class AgingStateTest {
 
     @Test
     public void setSimulationContextTest() {
-        simulationContext.setYear(2015);
         agingState = (AgingState) seasonSimulationStateFactory.getAgingState(simulationContext);
+        simulationContext.setYear(2015);
+        agingState.setSimulationContext(simulationContext);
         Assertions.assertTrue(agingState.getSimulationContext().getYear() == 2015);
     }
 

@@ -1,8 +1,6 @@
 package dhl.businessLogicTest.tradeTest;
 
 import dhl.businessLogic.leagueModel.*;
-import dhl.Mocks.GameConfigMock;
-import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
@@ -15,7 +13,6 @@ import dhl.businessLogic.trade.factory.TradeConcreteFactory;
 import dhl.businessLogic.trade.interfaces.ITradeOffer;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
 import dhl.businessLogicTest.tradeTest.mocks.GameConfigMockForTrading;
-import dhl.businessLogicTest.tradeTest.mocks.TradeMock;
 import dhl.businessLogicTest.tradeTest.mocks.factory.TradeMockAbstractFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -129,36 +126,6 @@ public class AiAiTradeTest {
         }
         Assertions.assertEquals(countDefence, 5);
 
-    }
-
-    @Test
-    public void findWeakestPlayerInListTest() throws Exception {
-        ITradeOffer testOffer = tradeFactory.createExchangingPlayerTradeOffer(weakTeam, strongTeam, playersOffered, playersWanted);
-        testClassObject = (AiAiTrade) tradeFactory.createAiAiTrade(testOffer, ourGameConfig);
-        ITeam team = tradeMockFactory.createTeamMockForTrade().getTeamWithBadPlayer();
-
-        IPlayer player = testClassObject.findBestPlayerInList(PlayerPosition.DEFENSE.toString(), team.getPlayers());
-        Assertions.assertTrue(player.getPlayerName().contains("Weak"));
-
-        Exception error = Assertions.assertThrows(Exception.class, () -> {
-            testClassObject.findWeakestPlayerInList(PlayerPosition.FORWARD.toString(), team.getPlayers());
-        });
-        Assertions.assertTrue(error.getMessage().contains("found in List"));
-    }
-
-    @Test
-    public void findBestPlayerInListtTest() throws Exception {
-        ITradeOffer testOffer = tradeFactory.createExchangingPlayerTradeOffer(weakTeam, strongTeam, playersOffered, playersWanted);
-        testClassObject = (AiAiTrade) tradeFactory.createAiAiTrade(testOffer, ourGameConfig);
-        ITeam team = tradeMockFactory.createTeamMockForTrade().getTeamWithBadPlayer();
-
-        IPlayer player = testClassObject.findBestPlayerInList(PlayerPosition.DEFENSE.toString(), team.getPlayers());
-        Assertions.assertTrue(player.getPlayerName().contains("Weak"));
-
-        Exception error = Assertions.assertThrows(Exception.class, () -> {
-            testClassObject.findWeakestPlayerInList(PlayerPosition.FORWARD.toString(), team.getPlayers());
-        });
-        Assertions.assertTrue(error.getMessage().contains("found in List"));
     }
 
     @Test

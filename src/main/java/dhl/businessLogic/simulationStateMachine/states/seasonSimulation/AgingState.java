@@ -30,14 +30,10 @@ public class AgingState implements ISimulationSeasonState {
         agingFactory = AgingAbstractFactory.instance();
         serializeDeserializeAbstractFactory = SerializeDeserializeAbstractFactory.instance();
         IAging aging = agingFactory.createAging(simulationContext.getGameConfig());
-//        IAging aging = new Aging(simulationContext.getGameConfig());
         ILeagueObjectModel leagueObjectModel = simulationContext.getInMemoryLeague();
         ISerializeLeagueObjectModel serializeModel = serializeDeserializeAbstractFactory.createSerializeLeagueObjectModel(leagueObjectModel.getLeagueName());
-//        ISerializeLeagueObjectModel serializeModel = new SerializeLeagueObjectModel(leagueObjectModel.getLeagueName());
         IRetirement retirement = agingFactory.createRetirement(serializeModel, simulationContext.getInMemoryLeague());
-//        IRetirement retirement = new Retirement(serializeModel, simulationContext.getInMemoryLeague());
         ILeagueSchedule leagueSchedule = agingFactory.createLeagueSchedule(simulationContext.getInMemoryLeague());
-//        ILeagueSchedule leagueSchedule = new LeagueSchedule(aging, retirement, simulationContext.getInjurySystem(), simulationContext.getInMemoryLeague(), simulationContext.getNumberOfDays());
 
         LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
         LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());
@@ -60,10 +56,7 @@ public class AgingState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateExitProcess() {
-//        IScheduler scheduler = simulationContext.getRegularScheduler();
         IScheduler scheduler = simulationContext.getPlayOffScheduleRound1();
-//        LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
-//        LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());
         LocalDate currentDate = LocalDate.now();
         if (scheduler.stanleyCupWinner(currentDate)) {
             simulationContext.setCurrentSimulation(simulationContext.getAdvanceToNextSeason());

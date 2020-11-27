@@ -1,4 +1,4 @@
-package dhl.businessLogic.GameSimulation;
+package dhl.businessLogic.gameSimulation;
 
 import dhl.businessLogic.leagueModel.LeagueObjectModel;
 import dhl.businessLogic.leagueModel.Player;
@@ -11,6 +11,7 @@ import dhl.inputOutput.importJson.serializeDeserialize.interfaces.IDeserializeLe
 import org.apache.logging.log4j.core.util.ArrayUtils;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class GameSimulation {
@@ -26,6 +27,12 @@ public class GameSimulation {
     static int[] defenceTeamA = new int[]{};
     static int[] defenceTeamB = new int[]{};
     static Integer gRandomNumber = 0;
+    static Integer penalty = 0;
+    static List<Integer> allForwardPlayersTeamAMap = new ArrayList<>();
+    static List<Integer> allDefensePlayersTeamAMap = new ArrayList<>();
+    static List<Integer> allForwardPlayersTeamBMap = new ArrayList<>();
+    static List<Integer> allDefensePlayersTeamBMap = new ArrayList<>();
+    static String teamSelected = "A";
 
     public static void main(String[] args) {
         test();
@@ -37,16 +44,17 @@ public class GameSimulation {
         System.out.println("savesB: " + savesB);
     }
 
-    public static void createTeam(){
-        List<IPlayer> listPlayerTeamA = generateListOfPlayersForTeamAFromJson();
+    public static void createTeam(List<IPlayer> listPlayerTeamA, List<IPlayer> listPlayerTeamB){
         List<IPlayer> listForwardPlayerA = getPlayers("forward", listPlayerTeamA, forwardTeamA);
         List<IPlayer> listDefensePlayerA = getPlayers("defense", listPlayerTeamA, defenceTeamA);
         Optional<IPlayer> listgoaliePlayerA = listPlayerTeamA.stream().filter(c->c.getPosition()=="goalie").findFirst();
 
-        List<IPlayer> listPlayerTeamB = generateListOfPlayersForTeamBFromJson();
+        teamSelected = "B";
         List<IPlayer> listForwardPlayerB = getPlayers("forward", listPlayerTeamB, forwardTeamB);
         List<IPlayer> listDefensePlayerB = getPlayers("defense", listPlayerTeamB, defenceTeamB);
         Optional<IPlayer> listgoaliePlayerB = listPlayerTeamB.stream().filter(c->c.getPosition()=="goalie").findFirst();
+
+        teamSelected = "A";
 
         Optional<IPlayer> maxSkatingFwdPlayerTeamA = getMaxStat(listForwardPlayerA, "skating");
         Optional<IPlayer> maxSkatingFwdPlayerTeamB = getMaxStat(listForwardPlayerB, "skating");
@@ -57,7 +65,7 @@ public class GameSimulation {
         Integer forwardTeamBSkating = maxSkatingFwdPlayerTeamB.get().getPlayerStats().getSkating();
         Integer forwardSkatTeamAChecking = maxSkatingFwdPlayerTeamA.get().getPlayerStats().getChecking();
         Integer defenseTeamBChecking = maxCheckingDefPlayerTeamB.get().getPlayerStats().getChecking();
-        
+
         if(forwardTeamASkating > forwardTeamBSkating){
             shotsA = shotsA + 1;
             if(forwardSkatTeamAChecking > defenseTeamBChecking){
@@ -70,7 +78,7 @@ public class GameSimulation {
             }
             else {
                 savesB = savesB + 1;
-                //TODO: penalty
+                penalty = 1;
             }
         }
         else if(maxSkatingFwdPlayerTeamB.get().getPlayerStats().getSkating() > maxSkatingFwdPlayerTeamA.get().getPlayerStats().getSkating()){
@@ -86,7 +94,7 @@ public class GameSimulation {
             }
             else {
                 savesA = savesA + 1;
-                //TODO: penalty
+                penalty = 1;
             }
         }
     }
@@ -145,13 +153,22 @@ public class GameSimulation {
             playerCount = 3;
         }
         else if(type =="defense"){
-            playerCount = 2;
+            if (penalty == 1){
+                playerCount = 1;
+                penalty = 0;
+                System.out.println("playerCount " + playerCount);
+            }
+            else {
+                playerCount = 2;
+            }
         }
 
-        arrNewRandomNumbers = getRandomNumbers(oldPlayer, playerCount);
+        arrNewRandomNumbers = getRandomNumbers(oldPlayer, playerCount, type);
 
         StringBuilder stringOldRandomNumbers = new StringBuilder();
         List<IPlayer> listFilteredPlayer = new ArrayList<>();
+
+        stringOldRandomNumbers.append(checkIf18MinutesPlayed(type));
 
         for(int i=0; i<arrNewRandomNumbers.size();i++) {
             stringOldRandomNumbers.append(arrNewRandomNumbers.get(i)+ ",");
@@ -162,6 +179,7 @@ public class GameSimulation {
         stringOldRandomNumbers.deleteCharAt(stringOldRandomNumbers.length()-1);
         String[] oldNumberArr = stringOldRandomNumbers.toString().split(",");
         int [] newNumberarr = new int [oldNumberArr.length];
+
         for(int i=0; i<oldNumberArr.length; i++) {
             newNumberarr[i] = Integer.parseInt(oldNumberArr[i]);
         }
@@ -184,7 +202,35 @@ public class GameSimulation {
         return listFilteredPlayer;
     }
 
-    public static List<Integer> getRandomNumbers(int[] arrOldRandomNumbers, int playerCount ){
+    public static StringBuilder checkIf18MinutesPlayed(String type){
+        Map<Integer, Long> result = null;
+        StringBuilder strPlayerNumber = new StringBuilder();
+
+        if (teamSelected == "A"){
+            if (type.toLowerCase() == "forward"){
+                result = allForwardPlayersTeamAMap.stream().collect(Collectors.groupingBy(Function.identity(),Collectors.counting()));
+            }
+            else{
+                result = allDefensePlayersTeamAMap.stream().collect(Collectors.groupingBy(Function.identity(),Collectors.counting()));
+            }
+        }
+        else{
+            if (type.toLowerCase() == "forward"){
+                result = allForwardPlayersTeamBMap.stream().collect(Collectors.groupingBy(Function.identity(),Collectors.counting()));
+            }
+            else{
+                result = allDefensePlayersTeamBMap.stream().collect(Collectors.groupingBy(Function.identity(),Collectors.counting()));
+            }
+        }
+        for (Map.Entry<Integer, Long> entry : result.entrySet()) {
+            if (entry.getValue() > 12) {
+                strPlayerNumber.append(entry.getKey() + ",");
+            }
+        }
+        return strPlayerNumber;
+    }
+
+    public static List<Integer> getRandomNumbers(int[] arrOldRandomNumbers, int playerCount, String type){
         if (arrOldRandomNumbers.length == 0){
             arrOldRandomNumbers = new int[]{1, 2, 3};
         }
@@ -214,6 +260,23 @@ public class GameSimulation {
             randomNumber = gRandomNumber;
             arrNewRandomNumbers.add(randomNumber);
             existingNumbers.append(randomNumber + ",");
+
+            if (teamSelected == "A"){
+                if (type.toLowerCase() == "forward"){
+                    allForwardPlayersTeamAMap.add(randomNumber);
+                }
+                else{
+                    allDefensePlayersTeamAMap.add(randomNumber);
+                }
+            }
+            else{
+                if (type.toLowerCase() == "forward"){
+                    allForwardPlayersTeamBMap.add(randomNumber);
+                }
+                else{
+                    allDefensePlayersTeamBMap.add(randomNumber);
+                }
+            }
         }
         return arrNewRandomNumbers;
     }
@@ -231,23 +294,24 @@ public class GameSimulation {
 
     public static void test(){
         int shifts = 40;
-
+        List<IPlayer> listPlayerTeamA = generateListOfPlayersForTeamAFromJson();
+        List<IPlayer> listPlayerTeamB = generateListOfPlayersForTeamBFromJson();
         for (int i=0; i<shifts; i++){
             int shotsInAShift =1;
             if(i%2==0){
                 shotsInAShift =2;
             }
             for (int j=0; j<shotsInAShift;j++){
-                createTeam();
+                createTeam(listPlayerTeamA, listPlayerTeamB);
             }
         }
     }
 
     public static List<IPlayer> generateListOfPlayersForTeamBFromJson(){
         List<IPlayer> playersList = new ArrayList<>();
-        IDeserializeLeagueObjectModel deserializeleagueObjectModel = new DeserializeLeagueObjectModel("src/test/java/dhl/Mocks/");
+        IDeserializeLeagueObjectModel deserializeleagueObjectModel = new DeserializeLeagueObjectModel("src/SerializedJsonFiles/");
         try {
-            ILeagueObjectModel leagueObjectModel = deserializeleagueObjectModel.deserializeLeagueObjectJson("jsonMock3");
+            ILeagueObjectModel leagueObjectModel = deserializeleagueObjectModel.deserializeLeagueObjectJson("Dalhousie");
             playersList = leagueObjectModel.getConferences().get(0).getDivisions().get(0).getTeams().get(0).getPlayers();
         } catch (Exception e) {
 
@@ -257,9 +321,9 @@ public class GameSimulation {
 
     public static List<IPlayer> generateListOfPlayersForTeamAFromJson(){
         List<IPlayer> playersList = new ArrayList<>();
-        IDeserializeLeagueObjectModel deserializeleagueObjectModel = new DeserializeLeagueObjectModel("src/test/java/dhl/Mocks/");
+        IDeserializeLeagueObjectModel deserializeleagueObjectModel = new DeserializeLeagueObjectModel("src/SerializedJsonFiles/");
         try {
-            ILeagueObjectModel leagueObjectModel = deserializeleagueObjectModel.deserializeLeagueObjectJson("jsonMock3");
+            ILeagueObjectModel leagueObjectModel = deserializeleagueObjectModel.deserializeLeagueObjectJson("Dalhousie");
             playersList = leagueObjectModel.getConferences().get(0).getDivisions().get(0).getTeams().get(1).getPlayers();
         } catch (Exception e) {
 
@@ -267,5 +331,4 @@ public class GameSimulation {
         return playersList;
     }
 }
-
 

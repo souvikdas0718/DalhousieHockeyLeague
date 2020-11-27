@@ -27,13 +27,10 @@ public class PersistSeasonState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateProcess() {
-        // save the data in the db
         SerializeDeserializeAbstractFactory factorySerialize = SerializeDeserializeAbstractFactory.instance();
         ISerializeLeagueObjectModel serializeLeagueObjectModel = factorySerialize.createSerializeLeagueObjectModel("src/SerializedJsonFiles/");
         ILeagueObjectModel leagueObjectModel = simulationContext.getInMemoryLeague();
         leagueObjectModel.updateLeagueObjectModel(serializeLeagueObjectModel);
-//                call this method
-//        inMemoryLeague.updateLeagueObjectModel(serializeLeagueObjectModel, inMemoryLeague)
     }
 
     @Override

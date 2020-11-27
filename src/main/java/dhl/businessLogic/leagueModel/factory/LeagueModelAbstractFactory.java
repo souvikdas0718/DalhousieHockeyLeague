@@ -1,6 +1,5 @@
 package dhl.businessLogic.leagueModel.factory;
 
-import dhl.businessLogic.leagueModel.Player;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import org.json.simple.JSONObject;
@@ -42,7 +41,7 @@ public abstract class LeagueModelAbstractFactory {
 
     public abstract IPlayer createPlayer(String playerName, String position, Boolean captain, IPlayerStatistics playerStats);
 
-    public abstract IPlayerStatistics createPlayerStatistics( int skating, int shooting, int checking, int saving);
+    public abstract IPlayerStatistics createPlayerStatistics(int skating, int shooting, int checking, int saving);
 
     public abstract IGameConfig createGameConfig(JSONObject leagueJson);
 
@@ -50,6 +49,7 @@ public abstract class LeagueModelAbstractFactory {
 
     public abstract ILeagueObjectModelInput createLeagueObjectModelInput(String leagueName, String conferenceName, String divisionName, ITeam newlyCreatedTeam, ISerializeLeagueObjectModel serializeLeagueObjectModel);
 
+    public abstract ILeagueObjectModel createDefaultLeagueObjectModel();
 
     public abstract IConference createConferenceDefault();
 

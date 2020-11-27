@@ -107,6 +107,18 @@ public class LeagueObjectModelMocks {
         return freeAgents;
     }
 
+    public List<IPlayer> get30FreeAgentArrayMock() {
+        List<IPlayer> freeAgents = new ArrayList<>();
+        for (int i = 0; i < 30; i++) {
+            if (i < 2) {
+                freeAgents.add(new FreeAgent("Henry" + i, "goalie", getPlayerStatistics()));
+            } else {
+                freeAgents.add(new FreeAgent("Henry" + i, "forward", getPlayerStatistics()));
+            }
+        }
+        return freeAgents;
+    }
+
     public IConference getConferenceObjectMock() {
         return new Conference("Mock Conference", getDivisionArrayMock());
     }

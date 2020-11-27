@@ -3,11 +3,10 @@ package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
-import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
 import dhl.businessLogic.trade.interfaces.ITradingEngine;
-import dhl.inputOutput.ui.IUserInputOutput;
+import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 
 public class ExecuteTradesState implements ISimulationSeasonState {
 
@@ -16,14 +15,14 @@ public class ExecuteTradesState implements ISimulationSeasonState {
     ILeagueObjectModel leagueObjectModel;
     IUserInputOutput ioObject;
     ITradingEngine tradeEngine;
-    private ITeam userTeam;
+//    private ITeam userTeam;
 
     public ExecuteTradesState(SimulationContext simulationContext) {
 
         this.simulationContext = simulationContext;
         leagueObjectModel = simulationContext.getInMemoryLeague();
         gameConfig = simulationContext.getGameConfig();
-        userTeam = simulationContext.getUserTeam();
+//        userTeam = simulationContext.getUserTeam();
         ioObject = simulationContext.getIoObject();
         tradeEngine = simulationContext.getTradeEngine();
     }

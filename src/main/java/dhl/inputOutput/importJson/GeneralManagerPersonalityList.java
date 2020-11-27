@@ -2,7 +2,7 @@ package dhl.inputOutput.importJson;
 
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.inputOutput.importJson.interfaces.IGeneralManagerPersonalityList;
-import dhl.inputOutput.ui.IUserInputOutput;
+import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import dhl.inputOutput.ui.UserInputOutput;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -19,7 +19,7 @@ public class GeneralManagerPersonalityList extends IGeneralManagerPersonalityLis
 
     public GeneralManagerPersonalityList(IGameConfig gameConfig){
         // TODO: 21-11-2020 creational pattern for ioObject
-        ioObject = new UserInputOutput();
+        ioObject = IUserInputOutput.getInstance();
         generalManagerPersonalityDictionary = new Hashtable();
         this.ourGameConfig = gameConfig;
     }

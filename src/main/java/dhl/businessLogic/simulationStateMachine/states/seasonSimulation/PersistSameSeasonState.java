@@ -23,7 +23,6 @@ public class PersistSameSeasonState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateProcess() {
-        // save the data in the db
         SerializeDeserializeAbstractFactory factorySerialize = SerializeDeserializeAbstractFactory.instance();
         ISerializeLeagueObjectModel serializeLeagueObjectModel = factorySerialize.createSerializeLeagueObjectModel("src/SerializedJsonFiles/");
         ILeagueObjectModel leagueObjectModel = simulationContext.getInMemoryLeague();
@@ -32,7 +31,6 @@ public class PersistSameSeasonState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateExitProcess() {
-        // call advanced time class
         simulationContext.setCurrentSimulation(simulationContext.getAdvanceTime());
     }
 }

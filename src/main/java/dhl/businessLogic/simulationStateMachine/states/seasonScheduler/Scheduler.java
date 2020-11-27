@@ -10,8 +10,10 @@ import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interface
 import dhl.businessLogic.simulationStateMachine.states.standings.StandingSystem;
 import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandingSystem;
 import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandings;
-import dhl.inputOutput.ui.IUserInputOutput;
+import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import dhl.inputOutput.ui.UserInputOutput;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -21,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Scheduler implements IScheduler {
+    private static final Logger logger = LogManager.getLogger(Scheduler.class);
     private List<ISeasonSchedule> fullSeasonSchedule;
     private List<ISeasonSchedule> playOffScheduleRound1;
     //    private List<ISeasonSchedule> finals;
@@ -137,6 +140,11 @@ public class Scheduler implements IScheduler {
     }
 
     public void generateTeamList(ILeagueObjectModel inMemoryLeague) {
+        logger.info("Entered generate Team List");
+        if (inMemoryLeague == null) {
+            return;
+        }
+
 
         for (IConference conference : inMemoryLeague.getConferences()) {
             for (IDivision division : conference.getDivisions()) {
@@ -150,6 +158,7 @@ public class Scheduler implements IScheduler {
     }
 
     public void generateTeamSchedule(ILeagueObjectModel inMemoryLeague) {
+        logger.debug("Entered generate Team Schedule");
 
         for (int i = 0; i < teamList.size(); i++) {
             for (int j = i + 1; j < teamList.size(); j++) {
@@ -166,6 +175,7 @@ public class Scheduler implements IScheduler {
     }
 
     public void gameScheduleDates(LocalDate seasonStartDate, LocalDate seasonEndDate) {
+        logger.debug("Entered game schedule Dates: season start date "+ seasonStartDate.toString() + " season end date " + seasonEndDate.toString());
         long noOfDaysInRegularSeason = ChronoUnit.DAYS.between(seasonStartDate, seasonEndDate) + 1;
         int totalNoOfGamesInRegularSeason = fullSeasonSchedule.size();
 
@@ -392,7 +402,7 @@ public class Scheduler implements IScheduler {
     }
 
     public boolean stanleyCupWinner(LocalDate date) {
-        IUserInputOutput output = new UserInputOutput();
+        IUserInputOutput output = IUserInputOutput.getInstance();
         output.printMessage("Today's date: " + date);
         output.printMessage("Final Game date: " + playOffScheduleRound1.get(14).getGameDate());
         if (playOffScheduleRound1.get(14).getGameDate().isBefore(date) || playOffScheduleRound1.get(14).getGameDate().isEqual(date)) {

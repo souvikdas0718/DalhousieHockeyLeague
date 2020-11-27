@@ -16,7 +16,7 @@ import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
 import static java.time.temporal.TemporalAdjusters.previousOrSame;
 
 public class TrainingState implements ISimulationSeasonState {
-
+    private static final double DAYSUNTILSTATINCREASECHECK = 193;
     SimulationContext simulationContext;
     IScheduler scheduler;
     SchedulerAbstractFactory schedulerAbstractFactory;
@@ -27,7 +27,6 @@ public class TrainingState implements ISimulationSeasonState {
         schedulerAbstractFactory = SchedulerAbstractFactory.instance();
         scheduler = schedulerAbstractFactory.getScheduler();
         trainingAbstractFactory = TrainingAbstractFactory.instance();
-//        scheduler = new Scheduler();
     }
 
     static void unPlayedGameAndTradingDeadline(LocalDate currentDate, IScheduler scheduler, SimulationContext simulationContext) {
@@ -59,11 +58,10 @@ public class TrainingState implements ISimulationSeasonState {
     public void seasonStateProcess() {
         simulationContext.setDaysSinceLastTraining(simulationContext.getDaysSinceLastTraining() + 1);
         IGameConfig gameConfig = simulationContext.getGameConfig();
-        int DAYS_UNTIL_STAT_INCREASE_CHECK = 193;
         //commenting as it is not available in m3
 //        int daysUntilStatIncreaseCheck = Integer.parseInt(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getDaysUntilStatIncreaseCheck()));
         try {
-            if (DAYS_UNTIL_STAT_INCREASE_CHECK == simulationContext.getDaysSinceLastTraining()) {
+            if (DAYSUNTILSTATINCREASECHECK == simulationContext.getDaysSinceLastTraining()) {
                 ITraining training = trainingAbstractFactory.createTraining(simulationContext.getInjurySystem(), simulationContext.getGameConfig());
 //                ITraining training = new Training(simulationContext.getInjurySystem(), simulationContext.getGameConfig());
                 training.updatePlayerStats(simulationContext.getInMemoryLeague());

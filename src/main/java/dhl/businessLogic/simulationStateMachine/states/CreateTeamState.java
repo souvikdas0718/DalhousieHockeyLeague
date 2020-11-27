@@ -7,7 +7,7 @@ import dhl.businessLogic.simulationStateMachine.interfaces.IGameState;
 import dhl.businessLogic.simulationStateMachine.states.interfaces.ICreateTeamStateLogic;
 import dhl.inputOutput.importJson.serializeDeserialize.SerializeLeagueObjectModel;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
-import dhl.inputOutput.ui.IUserInputOutput;
+import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import dhl.inputOutput.ui.UserInputOutput;
 
 import java.util.ArrayList;
@@ -15,10 +15,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CreateTeamState implements IGameState {
-    private final String jsonFilePath = "src/main/java/dhl/inputOutput/importJson/serializeDeserialize/serializedJsonFiles/";
+    private final String jsonFilePath = "src/serializedJsonFiles/";
     ICreateTeamStateLogic createTeamStateLogic;
     Scanner sc = new Scanner(System.in);
-    IUserInputOutput userInputPutput = new UserInputOutput();
+    IUserInputOutput userInputPutput = IUserInputOutput.getInstance();
     private GameContext ourGame;
     private ILeagueObjectModel inMemoryLeague;
     private IConference selectedConference;

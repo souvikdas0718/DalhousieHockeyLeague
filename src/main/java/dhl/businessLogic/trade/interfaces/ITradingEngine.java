@@ -21,4 +21,6 @@ public abstract class ITradingEngine {
     }
 
     public abstract void startEngine();
+    public abstract void sendTradeToRecevingTeam(ITradeOffer currentTrade, ITeam userTeam);
+    public abstract void performTrade(ITeam tradingTeam);
 }

@@ -2,18 +2,17 @@ package dhl.businessLogicTest.tradeTest;
 
 import dhl.businessLogic.leagueModel.PlayerPosition;
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
+import dhl.businessLogic.simulationStateMachine.RosterUpdaterAbstractFactory;
 import dhl.businessLogic.trade.factory.TradeAbstractFactory;
 import dhl.businessLogic.trade.factory.TradeConcreteFactory;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
-import dhl.businessLogicTest.tradeTest.mocks.TradeMock;
 import dhl.businessLogicTest.tradeTest.mocks.factory.TradeMockAbstractFactory;
-import dhl.inputOutput.ui.IUserInputOutput;
-import dhl.Mocks.LeagueObjectModelMocks;
+import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import dhl.Mocks.MockUserInputOutput;
 import dhl.businessLogic.leagueModel.LeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.simulationStateMachine.interfaces.IUpdateUserTeamRoster;
+import dhl.businessLogic.simulationStateMachine.interfaces.ITeamRosterUpdater;
 import dhl.businessLogic.simulationStateMachine.UpdateUserTeamRoster;
 import dhl.businessLogic.trade.AiUserTrade;
 import dhl.businessLogic.trade.interfaces.ITradeOffer;
@@ -52,7 +51,7 @@ public class AiUserTradeTest {
         offeringPlayers.add(offeringTeam.getPlayers().get(0));
         playersWanted.add(recevingTeam.getPlayers().get(0));
         ITradeOffer tradeOffer = tradeFactory.createExchangingPlayerTradeOffer(offeringTeam, recevingTeam, offeringPlayers, playersWanted);
-        IUpdateUserTeamRoster updateUserTeamRoster = new UpdateUserTeamRoster(ioObjectMock);
+        ITeamRosterUpdater updateUserTeamRoster = RosterUpdaterAbstractFactory.instance().createUpdateUserTeamRoster(ioObjectMock);
         testClassObject = (AiUserTrade) tradeFactory.createAiUserTrade(tradeOffer, ioObjectMock, updateUserTeamRoster);
         leagueObjectModel = (LeagueObjectModel) leagueMockFactory.createLeagueMock().getLeagueObjectModel();
     }
