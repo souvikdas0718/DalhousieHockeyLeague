@@ -1,7 +1,6 @@
 package dhl.Mocks;
 
 import dhl.Mocks.factory.MockAbstractFactory;
-import dhl.businessLogic.leagueModel.LeagueObjectModel;
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.factory.LeagueObjectModelBuilder;
 import dhl.businessLogic.leagueModel.factory.LeagueObjectModelDirector;
@@ -35,7 +34,6 @@ public class LeagueObjectModel20TeamMocks {
 
 
     public LeagueObjectModel20TeamMocks() {
-        this.leagueData = new LeagueObjectModel();
         this.generalStandings = new ArrayList<>();
         mockAbstractFactory = MockAbstractFactory.instance();
         mockLeagueObjectModel = mockAbstractFactory.getLeagueObjectModelMock();
@@ -46,6 +44,7 @@ public class LeagueObjectModel20TeamMocks {
         leagueModelAbstractFactory = LeagueModelAbstractFactory.instance();
         leagueBuilder = new LeagueObjectModelBuilder();
         leagueDirector = new LeagueObjectModelDirector(leagueBuilder);
+        this.leagueData = leagueModelAbstractFactory.createDefaultLeagueObjectModel();
     }
 
     public ILeagueObjectModel getLeagueData() {
@@ -68,8 +67,6 @@ public class LeagueObjectModel20TeamMocks {
         ArrayList<IStandings> standings = new ArrayList<>();
 
         IGeneralManager generalManager = leagueModelAbstractFactory.createGeneralManager("generalManager", "normal");
-//        IGeneralManager generalManager = leagueModelAbstractFactory.createGeneralManager("generalManager", "normal");
-
         ICoach headCoach = leagueModelAbstractFactory.createCoach("Coach", 0.1, 0.2, .5, .9);
         ICoach headCoach2 = leagueModelAbstractFactory.createCoach("Coach2", 0.1, 0.2, .5, .8);
         List<ICoach> coaches = new ArrayList<>();
