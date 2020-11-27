@@ -11,8 +11,6 @@ import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.factory.ContextAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.ExecuteTradesState;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.factory.SeasonSimulationStateFactory;
-import dhl.businessLogic.trade.factory.TradeAbstractFactory;
-import dhl.businessLogic.trade.factory.TradeConcreteFactory;
 import dhl.businessLogic.trade.interfaces.ITradingEngine;
 import dhl.businessLogicTest.tradeTest.mocks.GameConfigMockForTrading;
 import dhl.businessLogicTest.tradeTest.mocks.factory.TradeMockAbstractFactory;
@@ -38,7 +36,6 @@ public class ExecuteTradesStateTest {
     ContextAbstractFactory contextAbstractFactory;
     SeasonSimulationStateFactory seasonSimulationStateFactory;
     MockAbstractFactory mockAbstractFactory;
-    TradeAbstractFactory tradeAbstractFactory;
 
     @BeforeEach
     public void initObject() {
@@ -59,22 +56,20 @@ public class ExecuteTradesStateTest {
         leagueMock.getConferences().get(0).getDivisions().get(0).getTeams().add(goodTeamMock);
         leagueMock.getConferences().get(0).getDivisions().get(0).getTeams().add(badTeamMock);
         leagueMock.setGameConfig(iGameConfig);
-        tradeAbstractFactory = new TradeConcreteFactory();
         tradeEngine = ITradingEngine.instance(iGameConfig, leagueMock, userTeam);
         seasonSimulationStateFactory = (SeasonSimulationStateFactory) SeasonSimulationStateFactory.instance();
+        executeTradesState = (ExecuteTradesState) seasonSimulationStateFactory.getExecuteTradesState(simulationContext);
     }
 
     @Test
     public void getSimulationContextTest() {
-        executeTradesState = (ExecuteTradesState) seasonSimulationStateFactory.getExecuteTradesState(simulationContext);
-        executeTradesState = new ExecuteTradesState(simulationContext);
         Assertions.assertNotNull(executeTradesState.getSimulationContext());
     }
 
     @Test
     public void setSimulationContextTest() {
         simulationContext.setYear(2014);
-        executeTradesState = (ExecuteTradesState) seasonSimulationStateFactory.getExecuteTradesState(simulationContext);
+        executeTradesState.setSimulationContext(simulationContext);
         Assertions.assertTrue(executeTradesState.getSimulationContext().getYear() == 2014);
     }
 
@@ -92,7 +87,6 @@ public class ExecuteTradesStateTest {
 
     @Test
     public void seasonStateExitProcessTest() {
-        executeTradesState = (ExecuteTradesState) seasonSimulationStateFactory.getExecuteTradesState(simulationContext);
         executeTradesState.seasonStateExitProcess();
         Assertions.assertTrue(executeTradesState.getSimulationContext().getCurrentSimulation() == executeTradesState.getSimulationContext().getAging());
     }

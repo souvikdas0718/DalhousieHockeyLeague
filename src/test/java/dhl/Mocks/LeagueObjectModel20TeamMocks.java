@@ -55,7 +55,7 @@ public class LeagueObjectModel20TeamMocks {
         List<ICoach> coaches = new ArrayList<>();
         coaches.add(headCoach);
         coaches.add(headCoach2);
-        IPlayerStatistics playerStats = new PlayerStatistics( 5, 5, 8, 9);
+        IPlayerStatistics playerStats = new PlayerStatistics(5, 5, 8, 9);
         playerStats.setAge(20);
         IPlayer playersList1 = new Player("playerName", "position", playerStats);
         IPlayer playersList2 = new Player("playerName", "position", playerStats);

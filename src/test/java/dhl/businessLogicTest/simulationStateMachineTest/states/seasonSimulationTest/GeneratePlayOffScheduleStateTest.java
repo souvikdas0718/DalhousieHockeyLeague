@@ -1,12 +1,15 @@
 package dhl.businessLogicTest.simulationStateMachineTest.states.seasonSimulationTest;
 
 import dhl.Mocks.LeagueObjectModel20TeamMocks;
+import dhl.Mocks.factory.MockAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
-import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.Scheduler;
+import dhl.businessLogic.simulationStateMachine.factory.ContextAbstractFactory;
+import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.factory.SchedulerAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.GeneratePlayOffScheduleState;
+import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.factory.SeasonSimulationStateFactory;
 import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandings;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,35 +23,39 @@ public class GeneratePlayOffScheduleStateTest {
     GeneratePlayOffScheduleState generatePlayOffScheduleState;
     GameContext gameState;
     LeagueObjectModel20TeamMocks model20TeamMocks;
+    MockAbstractFactory mockAbstractFactory;
     IScheduler scheduler;
+    SchedulerAbstractFactory schedulerAbstractFactory;
+    ContextAbstractFactory contextAbstractFactory;
+    SeasonSimulationStateFactory seasonSimulationStateFactory;
 
 
     @BeforeEach
     public void initObject() {
-        model20TeamMocks = new LeagueObjectModel20TeamMocks();
+        mockAbstractFactory = MockAbstractFactory.instance();
+        model20TeamMocks = mockAbstractFactory.getLeagueObjectModel20TeamMock();
         model20TeamMocks.leagueModel20TeamGeneralStandings();
-        scheduler = new Scheduler();
-        gameState = new GameContext();
-        simulationContext = new SimulationContext(gameState);
-        generatePlayOffScheduleState = new GeneratePlayOffScheduleState(simulationContext);
+        schedulerAbstractFactory = SchedulerAbstractFactory.instance();
+        scheduler = schedulerAbstractFactory.getScheduler();
+        contextAbstractFactory = ContextAbstractFactory.instance();
+        gameState = contextAbstractFactory.createGameContext();
+        simulationContext = contextAbstractFactory.createSimulationContext();
+        seasonSimulationStateFactory = (SeasonSimulationStateFactory) SeasonSimulationStateFactory.instance();
+        generatePlayOffScheduleState = (GeneratePlayOffScheduleState) seasonSimulationStateFactory.getGeneratePlayoffScheduleState(simulationContext);
     }
 
     @Test
     public void GeneratePlayOffScheduleStateTest() {
-        generatePlayOffScheduleState = new GeneratePlayOffScheduleState(simulationContext);
         Assertions.assertNotNull(generatePlayOffScheduleState.getSimulationContext());
     }
 
     @Test
     public void getSimulationContextTest() {
-        generatePlayOffScheduleState = new GeneratePlayOffScheduleState(simulationContext);
         Assertions.assertNotNull(generatePlayOffScheduleState.getSimulationContext());
     }
 
     @Test
     public void setSimulationContextTest() {
-        generatePlayOffScheduleState = new GeneratePlayOffScheduleState(simulationContext);
-        simulationContext = new SimulationContext(gameState);
         simulationContext.setYear(2020);
         generatePlayOffScheduleState.setSimulationContext(simulationContext);
         Assertions.assertTrue(generatePlayOffScheduleState.getSimulationContext().getYear() == 2020);
@@ -58,7 +65,6 @@ public class GeneratePlayOffScheduleStateTest {
     public void seasonStateProcessTest() {
         ILeagueObjectModel league = model20TeamMocks.getLeagueData();
         ArrayList<IStandings> standings = model20TeamMocks.getGeneralStandings();
-        IScheduler scheduler = new Scheduler();
         scheduler.setGameStandings(standings);
         simulationContext.setRegularScheduler(scheduler);
         simulationContext.setInMemoryLeague(league);

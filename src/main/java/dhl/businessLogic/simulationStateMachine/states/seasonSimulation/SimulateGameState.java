@@ -15,6 +15,7 @@ import java.util.List;
 
 
 public class SimulateGameState implements ISimulationSeasonState {
+    private static final double RANDOMWINCHANCE = 0.9;
     SimulationContext simulationContext;
     List<ITeam> injuryCheckTeams;
     IScheduler scheduler;
@@ -38,8 +39,6 @@ public class SimulateGameState implements ISimulationSeasonState {
     }
 
     private void winDecider(LocalDate currentDate, IScheduler scheduler) {
-
-        double RANDOM_WIN_CHANCE = 0.9;
         ITeam winningTeam;
         ITeam losingTeam;
         if (currentDate.isAfter(scheduler.getSeasonStartDate()) && currentDate.isBefore(scheduler.getSeasonEndDate())) {
@@ -51,14 +50,14 @@ public class SimulateGameState implements ISimulationSeasonState {
                     if (schedule.getTeamOne().calculateTeamStrength() > schedule.getTeamTwo().calculateTeamStrength()) {
                         winningTeam = schedule.getTeamOne();
                         losingTeam = schedule.getTeamTwo();
-                        if (randomNumber < RANDOM_WIN_CHANCE) {
+                        if (randomNumber < RANDOMWINCHANCE) {
                             winningTeam = schedule.getTeamTwo();
                             losingTeam = schedule.getTeamOne();
                         }
                     } else {
                         winningTeam = schedule.getTeamTwo();
                         losingTeam = schedule.getTeamOne();
-                        if (randomNumber < RANDOM_WIN_CHANCE) {
+                        if (randomNumber < RANDOMWINCHANCE) {
                             winningTeam = schedule.getTeamOne();
                             losingTeam = schedule.getTeamTwo();
                         }
@@ -78,12 +77,12 @@ public class SimulateGameState implements ISimulationSeasonState {
                     injuryCheckTeams.add(playOffSchedule.getTeamTwo());
                     if (playOffSchedule.getTeamOne().calculateTeamStrength() > playOffSchedule.getTeamTwo().calculateTeamStrength()) {
                         winningTeam = playOffSchedule.getTeamOne();
-                        if (randomNumber < RANDOM_WIN_CHANCE) {
+                        if (randomNumber < RANDOMWINCHANCE) {
                             winningTeam = playOffSchedule.getTeamTwo();
                         }
                     } else {
                         winningTeam = playOffSchedule.getTeamTwo();
-                        if (randomNumber < RANDOM_WIN_CHANCE) {
+                        if (randomNumber < RANDOMWINCHANCE) {
                             winningTeam = playOffSchedule.getTeamOne();
                         }
                     }
