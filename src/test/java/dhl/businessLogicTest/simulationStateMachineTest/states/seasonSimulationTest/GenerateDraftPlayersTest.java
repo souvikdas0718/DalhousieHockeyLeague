@@ -22,8 +22,7 @@ public class GenerateDraftPlayersTest {
     @Test
     public void generateDraftPlayersTest(){
         generateDraftPlayers.generateDraftPlayers();
-        System.out.println(generateDraftPlayers.getDraftPlayers().size());
-        Assertions.assertTrue(generateDraftPlayers.getDraftPlayers().size()==224);
+        Assertions.assertEquals(224,generateDraftPlayers.getDraftPlayers().size());
     }
 
     @Test

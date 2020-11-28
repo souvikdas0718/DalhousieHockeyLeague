@@ -43,4 +43,7 @@ public abstract class SimulationStateAbstractFactory {
     public abstract ISimulationSeasonState getTrainingState(SimulationContext simulationContext);
 
     public abstract IGenerateDraftPlayers getGeneratePlayers();
+
+    public abstract ISimulationSeasonState getPlayerDraftState(SimulationContext simulationContext);
+
 }

@@ -1,9 +1,11 @@
 package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 
 import dhl.businessLogic.leagueModel.PlayerPosition;
+import dhl.businessLogic.leagueModel.Team;
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
+import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.IGenerateDraftPlayers;
 
 import java.util.*;
@@ -68,6 +70,7 @@ public class GenerateDraftPlayers implements IGenerateDraftPlayers {
         generatePlayers(PlayerPosition.FORWARD.toString(),PERCENTAGEOFFORWARDS);
         generatePlayers(PlayerPosition.DEFENSE.toString(),PERCENTAGEOFDEFENSE);
         generatePlayers(PlayerPosition.GOALIE.toString(),PERCENTAGEOFGOALIES);
+        sortBestPlayerOrder(draftPlayers);
         return draftPlayers;
     }
 
@@ -120,5 +123,10 @@ public class GenerateDraftPlayers implements IGenerateDraftPlayers {
         int saving = (int) (Math.random() * (stat[SAVINGINDEX][MAXRANGEINDEX] - skewedSavingMinValue + 1) + skewedSavingMinValue);
 
         return this.factory.createPlayerStatistics(skating,shooting,checking,saving);
+    }
+
+    public void sortBestPlayerOrder(List<IPlayer> players){
+        ITeam team = factory.createTeamDefault();
+        team.sortPlayersInTeamByStrength(players);
     }
 }

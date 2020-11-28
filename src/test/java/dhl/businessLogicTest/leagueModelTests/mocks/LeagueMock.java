@@ -14,6 +14,7 @@ import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFac
 import dhl.inputOutput.importJson.ImportJsonAbstractFactory;
 import dhl.inputOutput.importJson.ImportJsonFile;
 import dhl.inputOutput.importJson.interfaces.IImportJsonFile;
+import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -135,6 +136,15 @@ public class LeagueMock {
         List<ICoach> coachList = new ArrayList<>();
         leagueObjectMock = leagueDirector.construct("Dhl", conferences, freeAgentsList, coachList, leagueMock.getManagers(), gameplayConfigMock.getAgingGameConfig());
         return leagueObjectMock;
+    }
+
+    public ILeagueObjectModel getLeagueObjectModelFromJson() throws Exception {
+
+        JsonFilePathMock filePathMock = new JsonFilePathMock();
+        IImportJsonFile importJsonFile = new ImportJsonFile(filePathMock.getFilePath());
+        JSONObject leagueObject = importJsonFile.getJsonObject();
+        ILeagueObjectModel leagueObjectModel =  leagueDirector.constructFromJson(leagueObject);
+        return leagueObjectModel;
     }
 
 

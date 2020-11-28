@@ -54,4 +54,8 @@ public class SeasonSimulationStateFactory extends SimulationStateAbstractFactory
     public IGenerateDraftPlayers getGeneratePlayers(){
         return new GenerateDraftPlayers();
     }
+
+    public ISimulationSeasonState getPlayerDraftState(SimulationContext simulationContext){
+        return new PlayerDraftState(simulationContext);
+    }
 }
