@@ -43,7 +43,7 @@ public class ExecuteTradesState implements ISimulationSeasonState {
     public void seasonStateProcess() {
         tradeEngine =(TradingEngine) ITradingEngine.instance(simulationContext.getGameConfig(), simulationContext.getInMemoryLeague(), simulationContext.getUserTeam());
         userInputOutput.printMessage("Into the state process of Execute Trade season");
-        tradeEngine.startEngine();
+//        tradeEngine.startEngine();
     }
 
     @Override

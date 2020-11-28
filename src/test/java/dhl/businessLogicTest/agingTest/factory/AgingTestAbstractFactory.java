@@ -1,6 +1,7 @@
-package dhl.businessLogicTest.agingTest.factory;
+package dhl.businessLogicTest.AgingTest.factory;
 
-import dhl.businessLogicTest.agingTest.mocks.AgingMock;
+import dhl.businessLogicTest.AgingTest.mocks.AgingMock;
+
 
 public abstract class AgingTestAbstractFactory {
 
@@ -11,8 +12,7 @@ public abstract class AgingTestAbstractFactory {
     }
 
     public static AgingTestAbstractFactory instance() {
-        if (null == uniqueInstance)
-        {
+        if (null == uniqueInstance) {
             uniqueInstance = new AgingTestMockFactory();
         }
         return uniqueInstance;
@@ -23,7 +23,6 @@ public abstract class AgingTestAbstractFactory {
     }
 
     public abstract AgingMock createAgingMock();
-
 
 
 }

@@ -3,10 +3,9 @@ package dhl.businessLogicTest.AgingTest;
 import dhl.Mocks.factory.MockAbstractFactory;
 import dhl.businessLogic.aging.Aging;
 import dhl.businessLogic.aging.agingFactory.AgingAbstractFactory;
-
 import dhl.businessLogic.leagueModel.interfaceModel.*;
-import dhl.businessLogicTest.agingTest.factory.AgingTestAbstractFactory;
-import dhl.businessLogicTest.agingTest.mocks.AgingMock;
+import dhl.businessLogicTest.AgingTest.factory.AgingTestAbstractFactory;
+import dhl.businessLogicTest.AgingTest.mocks.AgingMock;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
 import dhl.businessLogicTest.leagueModelTests.mocks.LeagueMock;
 import org.junit.jupiter.api.AfterEach;
@@ -31,9 +30,9 @@ public class AgingTest {
 
     @BeforeEach()
     public void initObject() {
-        leagueMockFactory=LeagueModelMockAbstractFactory.instance();
-        leagueMock =  leagueMockFactory.createLeagueMock();
-        mockFactory= MockAbstractFactory.instance();
+        leagueMockFactory = LeagueModelMockAbstractFactory.instance();
+        leagueMock = leagueMockFactory.createLeagueMock();
+        mockFactory = MockAbstractFactory.instance();
         leagueObjectModel = leagueMock.getLeagueObjectModel();
         agingMock = AgingTestAbstractFactory.instance().createAgingMock();
         gameConfig = leagueMockFactory.createGameplayConfig().getAgingGameConfig();
@@ -59,7 +58,7 @@ public class AgingTest {
         for (IConference conference : leagueObjectModel.getConferences()) {
             for (IDivision division : conference.getDivisions()) {
                 for (ITeam team : division.getTeams()) {
-                    aging.agePlayers(team.getPlayers(), LocalDate.of(2020,11,14));
+                    aging.agePlayers(team.getPlayers(), LocalDate.of(2020, 11, 14));
                     List<IPlayer> players = team.getPlayers();
                     IPlayer player = players.get(0);
                     IPlayerStatistics playerStatistics = player.getPlayerStats();
@@ -79,10 +78,10 @@ public class AgingTest {
                     IPlayer player = players.get(0);
                     IPlayerStatistics playerStatistics = player.getPlayerStats();
                     int checkingBefore = playerStatistics.getChecking();
-                    aging.agePlayers(team.getPlayers(), LocalDate.of(2020,11,14));
+                    aging.agePlayers(team.getPlayers(), LocalDate.of(2020, 11, 14));
                     int checkingAfterAging = playerStatistics.getChecking();
 
-                    Assertions.assertTrue(checkingAfterAging<checkingBefore);
+                    Assertions.assertTrue(checkingAfterAging < checkingBefore);
                 }
             }
         }
@@ -108,7 +107,7 @@ public class AgingTest {
     public void selectPlayersToRetireGreaterThanAvgTest() {
         Random random = aging.getRandomGenerator();
         random.setSeed(1);
-        Map<String, List<IPlayer>> playersSelectedToRetire ;
+        Map<String, List<IPlayer>> playersSelectedToRetire;
         ITeam team = agingMock.teamWithPlayersMoreThanAvg();
 
         playersSelectedToRetire = aging.selectPlayersToRetire(team);
@@ -131,7 +130,7 @@ public class AgingTest {
 
     @Test
     public void selectFreeAgentsToRetireTest() {
-        List<IPlayer> agentsSelectedToRetire ;
+        List<IPlayer> agentsSelectedToRetire;
         leagueObjectModel = agingMock.getFreeAgentsInLeague();
         agentsSelectedToRetire = aging.selectFreeAgentsToRetire(leagueObjectModel.getFreeAgents());
 

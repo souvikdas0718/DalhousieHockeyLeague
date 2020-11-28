@@ -8,9 +8,8 @@ import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-
-import dhl.businessLogicTest.agingTest.factory.AgingTestAbstractFactory;
-import dhl.businessLogicTest.agingTest.mocks.AgingMock;
+import dhl.businessLogicTest.AgingTest.factory.AgingTestAbstractFactory;
+import dhl.businessLogicTest.AgingTest.mocks.AgingMock;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
 import dhl.businessLogicTest.leagueModelTests.mocks.TeamMock;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
@@ -74,7 +73,7 @@ public class RetirementTest {
         playersSelectedToRetire.put("Ontario", players);
 
         List<IPlayer> freeAgents = new ArrayList<>();
-        IPlayerStatistics playerStatistics1 = leagueFactory.createPlayerStatistics( 5, 5, 5, 5);
+        IPlayerStatistics playerStatistics1 = leagueFactory.createPlayerStatistics(5, 5, 5, 5);
         playerStatistics1.setAge(50);
         freeAgents.add(leagueFactory.createFreeAgent("Jack", "forward", playerStatistics1));
 
@@ -105,10 +104,10 @@ public class RetirementTest {
     public void removeSelectedAgentFromFreeAgentsTest() {
         List<IPlayer> freeAgents = agingMock.getFreeAgents();
         int initialSize = freeAgents.size();
-        IPlayerStatistics playerStatistics = leagueFactory.createPlayerStatistics( 12, 12, 12, 12);
+        IPlayerStatistics playerStatistics = leagueFactory.createPlayerStatistics(12, 12, 12, 12);
         playerStatistics.setAge(26);
-        retirement.removeSelectedAgentFromFreeAgents(freeAgents, leagueFactory.createFreeAgent("F2", "forward",playerStatistics));
-        Assertions.assertTrue(freeAgents.size()<initialSize);
+        retirement.removeSelectedAgentFromFreeAgents(freeAgents, leagueFactory.createFreeAgent("F2", "forward", playerStatistics));
+        Assertions.assertTrue(freeAgents.size() < initialSize);
     }
 
     @Test
@@ -123,7 +122,7 @@ public class RetirementTest {
 
         retirement.removeRetiredPlayersFromTeam(playerNames, team);
         List<IPlayer> players = team.getPlayers();
-        Assertions.assertTrue(players.size() <initialSize);
+        Assertions.assertTrue(players.size() < initialSize);
     }
 
     @AfterEach()

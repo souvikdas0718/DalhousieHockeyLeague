@@ -1,6 +1,6 @@
-package dhl.businessLogicTest.agingTest.mocks;
+package dhl.businessLogicTest.AgingTest.mocks;
 
-import dhl.businessLogic.leagueModel.*;
+import dhl.businessLogic.leagueModel.FreeAgent;
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.factory.LeagueObjectModelBuilder;
 import dhl.businessLogic.leagueModel.factory.LeagueObjectModelDirector;
@@ -11,7 +11,6 @@ import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFac
 import dhl.businessLogicTest.leagueModelTests.mocks.GameplayConfigMock;
 import dhl.businessLogicTest.leagueModelTests.mocks.LeagueMock;
 import dhl.businessLogicTest.leagueModelTests.mocks.PlayerMock;
-import dhl.businessLogicTest.leagueModelTests.mocks.TeamMock;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,29 +18,29 @@ import java.util.List;
 public class AgingMock {
     LeagueModelAbstractFactory leagueFactory;
     LeagueModelMockAbstractFactory mockFactory;
-    ILeagueObjectModelBuilder leagueBuilder ;
+    ILeagueObjectModelBuilder leagueBuilder;
     ILeagueObjectModelDirector leagueDirector;
 
-    public AgingMock(){
+    public AgingMock() {
         leagueFactory = LeagueModelAbstractFactory.instance();
         mockFactory = LeagueModelMockAbstractFactory.instance();
         leagueBuilder = new LeagueObjectModelBuilder();
         leagueDirector = new LeagueObjectModelDirector(leagueBuilder);
     }
 
-    public ITeam teamWithPlayersAtMaxAge(){
+    public ITeam teamWithPlayersAtMaxAge() {
         return varyByAge(50);
     }
 
-    public ITeam teamWithPlayersMoreThanAvg(){
+    public ITeam teamWithPlayersMoreThanAvg() {
         return varyByAge(36);
     }
 
-    public ITeam teamWithPlayersLessThanAvg(){
+    public ITeam teamWithPlayersLessThanAvg() {
         return varyByAge(34);
     }
 
-    public ITeam varyByAge(int age){
+    public ITeam varyByAge(int age) {
         List<IPlayer> players = new ArrayList<>();
         IPlayerStatistics playerStatistics = leagueFactory.createPlayerStatistics(20, 20, 20, 20);
         playerStatistics.setAge(age);
@@ -51,34 +50,34 @@ public class AgingMock {
         return leagueFactory.createTeam("Mock Team", manager, headCoach, players);
     }
 
-    public IPlayer getPlayerAtMaxAge(){
-        IPlayerStatistics playerStatistics = leagueFactory.createPlayerStatistics( 2, 2, 2, 2);
+    public IPlayer getPlayerAtMaxAge() {
+        IPlayerStatistics playerStatistics = leagueFactory.createPlayerStatistics(2, 2, 2, 2);
         playerStatistics.setAge(50);
         return leagueFactory.createPlayer("PlayerOne", "forward", true, playerStatistics);
     }
 
-    public ILeagueObjectModel getFreeAgentsInLeague(){
-        List<IPlayer> freeAgents =new ArrayList<>();
-        IPlayerStatistics playerStatistics1 = leagueFactory.createPlayerStatistics( 20, 20, 20, 20);
+    public ILeagueObjectModel getFreeAgentsInLeague() {
+        List<IPlayer> freeAgents = new ArrayList<>();
+        IPlayerStatistics playerStatistics1 = leagueFactory.createPlayerStatistics(20, 20, 20, 20);
         playerStatistics1.setAge(50);
         freeAgents.add(leagueFactory.createFreeAgent("PlayerOne", "forward", playerStatistics1));
 
         LeagueMock leagueMock = mockFactory.createLeagueMock();
         ILeagueObjectModel leagueObjectModel = leagueMock.getLeagueObjectModel();
-        return leagueDirector.construct(leagueObjectModel.getLeagueName(),leagueObjectModel.getConferences(),freeAgents,leagueMock.getCoaches(),leagueMock.getManagers(),leagueMock.getGameplayConfig());
+        return leagueDirector.construct(leagueObjectModel.getLeagueName(), leagueObjectModel.getConferences(), freeAgents, leagueMock.getCoaches(), leagueMock.getManagers(), leagueMock.getGameplayConfig());
     }
 
-    public List<IPlayer> getFreeAgents(){
+    public List<IPlayer> getFreeAgents() {
         List<IPlayer> freeAgentsList = new ArrayList<>();
         IPlayerStatistics freeAgentStatistics1 = leagueFactory.createPlayerStatistics(20, 20, 15, 15);
         freeAgentStatistics1.setAge(20);
-        IPlayerStatistics freeAgentStatistics2 = leagueFactory.createPlayerStatistics( 13, 14, 12, 11);
+        IPlayerStatistics freeAgentStatistics2 = leagueFactory.createPlayerStatistics(13, 14, 12, 11);
         freeAgentStatistics2.setAge(35);
-        IPlayerStatistics freeAgentStatistics3 = leagueFactory.createPlayerStatistics( 1, 3, 3, 3);
+        IPlayerStatistics freeAgentStatistics3 = leagueFactory.createPlayerStatistics(1, 3, 3, 3);
         freeAgentStatistics3.setAge(20);
-        IPlayerStatistics freeAgentStatistics4 = leagueFactory.createPlayerStatistics( 6, 3, 3, 5);
+        IPlayerStatistics freeAgentStatistics4 = leagueFactory.createPlayerStatistics(6, 3, 3, 5);
         freeAgentStatistics4.setAge(25);
-        IPlayerStatistics freeAgentStatistics5 = leagueFactory.createPlayerStatistics( 1, 2, 15, 13);
+        IPlayerStatistics freeAgentStatistics5 = leagueFactory.createPlayerStatistics(1, 2, 15, 13);
         freeAgentStatistics5.setAge(25);
 
         freeAgentsList.add(leagueFactory.createFreeAgent("F2", "goalie", freeAgentStatistics2));
@@ -89,14 +88,14 @@ public class AgingMock {
         return freeAgentsList;
     }
 
-    public ILeagueObjectModel retirementLeagueMock(){
+    public ILeagueObjectModel retirementLeagueMock() {
         PlayerMock playerMock = mockFactory.createPlayerMock();
         LeagueMock leagueMock = mockFactory.createLeagueMock();
         GameplayConfigMock gameplayConfigMock = mockFactory.createGameplayConfig();
         ILeagueObjectModel leagueObjectMock = null;
 
         List<IPlayer> playersList = new ArrayList<>();
-        playersList.add(leagueFactory.createPlayer( "Henry", "forward", false, playerMock.getPlayerStats()));
+        playersList.add(leagueFactory.createPlayer("Henry", "forward", false, playerMock.getPlayerStats()));
         playersList.add(leagueFactory.createPlayer("Max", "goalie", true, playerMock.getPlayerStats()));
         ICoach headCoach = leagueFactory.createCoach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
         IGeneralManager manager = leagueFactory.createGeneralManager("Mathew", "normal");
@@ -115,7 +114,7 @@ public class AgingMock {
         List<IPlayer> freeAgentsList = new ArrayList<>();
         IPlayer freeAgent = leagueFactory.createFreeAgent("Matt", "forward", playerMock.getPlayerStats());
         freeAgentsList.add(freeAgent);
-        IPlayerStatistics playerStatistics2 =leagueFactory.createPlayerStatistics( 11, 20, 15, 16);
+        IPlayerStatistics playerStatistics2 = leagueFactory.createPlayerStatistics(11, 20, 15, 16);
         playerStatistics2.setAge(20);
         IPlayer freeAgent2 = new FreeAgent("Jack", "forward", playerStatistics2);
         freeAgentsList.add(freeAgent2);
