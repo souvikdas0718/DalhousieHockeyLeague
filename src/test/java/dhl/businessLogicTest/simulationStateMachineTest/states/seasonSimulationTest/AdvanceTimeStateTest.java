@@ -5,6 +5,7 @@ import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.factory.ContextAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.AdvanceTimeState;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.factory.SeasonSimulationStateFactory;
+import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

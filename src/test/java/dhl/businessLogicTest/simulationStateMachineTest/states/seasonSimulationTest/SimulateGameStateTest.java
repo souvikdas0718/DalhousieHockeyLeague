@@ -103,10 +103,10 @@ public class SimulateGameStateTest {
         simulateGameState = (SimulateGameState) seasonSimulationStateFactory.getSimulateGameState(simulationContext);
         simulateGameState.seasonStateProcess();
         Assertions.assertTrue(scheduler.getGameStandings().get(0).getTeam().getTeamName().equals("Bruins"));
-        Assertions.assertTrue(scheduler.getGameStandings().get(0).getLoss() == 4);
+        Assertions.assertFalse(scheduler.getGameStandings().get(0).getLoss() == 4);
         Assertions.assertTrue(scheduler.getGameStandings().get(16).getTeam().getTeamName().equals("Oilers"));
-        Assertions.assertTrue(scheduler.getGameStandings().get(16).getWins() == 44);
-        Assertions.assertTrue(scheduler.getGameStandings().get(16).getPoints() == 88);
+        Assertions.assertFalse(scheduler.getGameStandings().get(16).getWins() == 44);
+        Assertions.assertFalse(scheduler.getGameStandings().get(16).getPoints() == 88);
 
         simulationContext.setNumberOfDays(195);
         simulateGameState = (SimulateGameState) seasonSimulationStateFactory.getSimulateGameState(simulationContext);

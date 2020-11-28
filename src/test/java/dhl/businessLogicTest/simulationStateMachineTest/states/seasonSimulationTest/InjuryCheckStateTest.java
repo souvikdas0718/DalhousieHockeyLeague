@@ -5,6 +5,7 @@ import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.Mocks.factory.MockAbstractFactory;
 import dhl.businessLogic.aging.Injury;
 import dhl.businessLogic.aging.agingFactory.AgingAbstractFactory;
+import dhl.businessLogic.aging.interfaceAging.IInjury;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.simulationStateMachine.GameContext;
@@ -42,7 +43,7 @@ public class InjuryCheckStateTest {
     LeagueMock leagueMock;
     ILeagueObjectModel leagueObjectModel;
     AgingAbstractFactory agingFactory;
-    Injury injury;
+    IInjury injury;
 
     @BeforeEach
     public void initObject() throws Exception {

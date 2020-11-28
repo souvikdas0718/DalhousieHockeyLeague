@@ -5,18 +5,20 @@ import dhl.businessLogic.leagueModel.interfaceModel.IConference;
 import dhl.businessLogic.leagueModel.interfaceModel.IDivision;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
+import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.ISeasonSchedule;
 import dhl.businessLogic.simulationStateMachine.states.standings.StandingSystem;
 import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandingSystem;
 import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandings;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
-import dhl.inputOutput.ui.UserInputOutput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,11 +46,24 @@ public class Scheduler implements IScheduler {
 //        playOffStartDate = LocalDate.of(2021, 03, 01);
 //        playOffStartDate = LocalDate.of(2021, 03, 01);
 //        currentDate = playOffStartDate;
+
+//        seasonStartDate = LocalDate.of(simulationContext.getYear(), 10, 01);
+//        LocalDate seasonEndMonth = LocalDate.of(simulationContext.getYear() + 1, 04, 01);
+//        LocalDate regularSeasonEndDate = seasonEndMonth.with(TemporalAdjusters.firstInMonth(DayOfWeek.SATURDAY));
+//        seasonEndDate = regularSeasonEndDate;
+//        LocalDate playOffStartMonth = LocalDate.of(simulationContext.getYear() + 1, 04, 01);
+//        LocalDate playOffStartsDate = playOffStartMonth.with(TemporalAdjusters.firstInMonth(DayOfWeek.WEDNESDAY)).with(TemporalAdjusters.next(DayOfWeek.WEDNESDAY));
+//        playOffStartDate = playOffStartsDate;
+//        finalDay = LocalDate.of(simulationContext.getYear() + 1, 06, 01);
+
+//        currentDate;
+//        LocalDate finalDay;
         teamList = new ArrayList<>();
         conferences = new ArrayList<>();
         divisions = new ArrayList<>();
         gameStandings = new ArrayList<>();
     }
+
 
     public List<ISeasonSchedule> getFullSeasonSchedule() {
         return fullSeasonSchedule;
@@ -175,7 +190,7 @@ public class Scheduler implements IScheduler {
     }
 
     public void gameScheduleDates(LocalDate seasonStartDate, LocalDate seasonEndDate) {
-        logger.debug("Entered game schedule Dates: season start date "+ seasonStartDate.toString() + " season end date " + seasonEndDate.toString());
+        logger.debug("Entered game schedule Dates: season start date " + seasonStartDate.toString() + " season end date " + seasonEndDate.toString());
         long noOfDaysInRegularSeason = ChronoUnit.DAYS.between(seasonStartDate, seasonEndDate) + 1;
         int totalNoOfGamesInRegularSeason = fullSeasonSchedule.size();
 

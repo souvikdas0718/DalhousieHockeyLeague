@@ -6,6 +6,7 @@ import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.simulationStateMachine.interfaces.ITeamRosterUpdater;
+import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.Scheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.factory.SimulationStateAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
@@ -15,7 +16,9 @@ import dhl.businessLogic.trade.interfaces.ITradingEngine;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import dhl.inputOutput.ui.UserInputOutput;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,13 +38,14 @@ public class SimulationContext implements ISimulationSeasonState {
     ISimulationSeasonState simulateGame;
     ISimulationSeasonState training;
 
+    IScheduler scheduler;
     IScheduler regularScheduler;
     IScheduler playOffScheduleRound1;
     ITeamRosterUpdater updateUserTeamRoster;
 
     List<IStandings> standings;
 
-    IStandingSystem standingSystem;
+//    IStandingSystem standingSystem;
 
     boolean seasonInProgress;
     IGameConfig gameConfig;
@@ -53,6 +57,11 @@ public class SimulationContext implements ISimulationSeasonState {
     int year;
     LocalDate startOfSimulation;
     LocalDate endOfSimulation;
+    LocalDate seasonStartDate;
+    LocalDate seasonEndDate;
+    LocalDate playOffStartDate;
+//    LocalDate currentDate;
+    LocalDate finalDay;
     int daysSinceLastTraining;
     List<ITeam> teamsPlayingInGame;
     IInjury injury;
@@ -77,14 +86,59 @@ public class SimulationContext implements ISimulationSeasonState {
         seasonInProgress = true;
         ioObject = IUserInputOutput.getInstance();
         updateUserTeamRoster = new UpdateUserTeamRoster(ioObject);
-        tradeEngine = ITradingEngine.instance(gameConfig, inMemoryLeague, userTeam);
+//        tradeEngine = ITradingEngine.instance(gameConfig, inMemoryLeague, userTeam);
         daysSinceLastTraining = 0;
         teamsPlayingInGame = new ArrayList<>();
         injury = new Injury();
-//        year = 2020;
-        year = LocalDate.now().getYear();
+        year = gameState.getYear();
+        seasonStartDate = LocalDate.of(this.getYear(), 10, 01);
+        LocalDate seasonEndMonth = LocalDate.of(gameState.getYear() + 1, 04, 01);
+        LocalDate regularSeasonEndDate = seasonEndMonth.with(TemporalAdjusters.firstInMonth(DayOfWeek.SATURDAY));
+        seasonEndDate = regularSeasonEndDate;
+        LocalDate playOffStartMonth = LocalDate.of(gameState.getYear() + 1, 04, 01);
+        LocalDate playOffStartsDay = playOffStartMonth.with(TemporalAdjusters.firstInMonth(DayOfWeek.WEDNESDAY)).with(TemporalAdjusters.next(DayOfWeek.WEDNESDAY));
+        playOffStartDate = playOffStartsDay;
+        finalDay = LocalDate.of(gameState.getYear() + 1, 06, 01);
+        scheduler = new Scheduler();
+        scheduler.setFinalDay(finalDay);
+        scheduler.setSeasonEndDate(seasonEndDate);
+        scheduler.setSeasonStartDate(seasonStartDate);
+        scheduler.setPlayOffStartDate(playOffStartDate);
+//        year = LocalDate.now().getYear();
         startOfSimulation = LocalDate.of(year, 9, 30);
 
+    }
+
+    public LocalDate getSeasonStartDate() {
+        return seasonStartDate;
+    }
+
+    public LocalDate getSeasonEndDate() {
+        return seasonEndDate;
+    }
+
+    public LocalDate getPlayOffStartDate() {
+        return playOffStartDate;
+    }
+
+    public LocalDate getFinalDay() {
+        return finalDay;
+    }
+
+    public void setSeasonStartDate(LocalDate seasonStartDate) {
+        this.seasonStartDate = seasonStartDate;
+    }
+
+    public void setSeasonEndDate(LocalDate seasonEndDate) {
+        this.seasonEndDate = seasonEndDate;
+    }
+
+    public void setPlayOffStartDate(LocalDate playOffStartDate) {
+        this.playOffStartDate = playOffStartDate;
+    }
+
+    public void setFinalDay(LocalDate finalDay) {
+        this.finalDay = finalDay;
     }
 
     public int getYear() {
@@ -95,13 +149,13 @@ public class SimulationContext implements ISimulationSeasonState {
         this.year = year;
     }
 
-    public IStandingSystem getStandingSystem() {
-        return standingSystem;
-    }
-
-    public void setStandingSystem(IStandingSystem standingSystem) {
-        this.standingSystem = standingSystem;
-    }
+//    public IStandingSystem getStandingSystem() {
+//        return standingSystem;
+//    }
+//
+//    public void setStandingSystem(IStandingSystem standingSystem) {
+//        this.standingSystem = standingSystem;
+//    }
 
 
     public List<IStandings> getStandings() {
@@ -286,6 +340,14 @@ public class SimulationContext implements ISimulationSeasonState {
 
     public void setPersistsSeason(ISimulationSeasonState persistsSeason) {
         this.persistsSeason = persistsSeason;
+    }
+
+    public ISimulationSeasonState getPersistsSameSeason() {
+        return persistsSameSeason;
+    }
+
+    public void setPersistsSameSeason(ISimulationSeasonState persistsSameSeason) {
+        this.persistsSameSeason = persistsSameSeason;
     }
 
     public ISimulationSeasonState getSimulateGame() {
