@@ -86,8 +86,8 @@ public class LeagueModelFactory extends LeagueModelAbstractFactory {
         return new FreeAgent();
     }
 
-    public IPlayerDraft createPlayerDraft(ILeagueObjectModel leagueObjectModel) {
-        return new PlayerDraft(leagueObjectModel);
+    public IPlayerDraft createPlayerDraft(ILeagueObjectModel leagueObjectModel, ITeam[][] draftPickSequence) {
+        return new PlayerDraft(leagueObjectModel, draftPickSequence);
     }
 
 }

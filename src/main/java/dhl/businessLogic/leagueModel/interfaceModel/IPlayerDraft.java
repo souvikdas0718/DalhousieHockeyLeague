@@ -6,6 +6,5 @@ public interface IPlayerDraft {
 
     public void swapDraftPick(int round, ITeam teamGettingDraft, ITeam teamGivingDraft);
 
-    public ArrayList<ArrayList<ITeam>> getDraftPickSequence();
-
+    public ITeam[][] getDraftPickSequence();
 }

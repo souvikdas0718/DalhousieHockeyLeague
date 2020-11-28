@@ -1,48 +1,31 @@
 package dhl.businessLogic.leagueModel;
 
-import dhl.businessLogic.leagueModel.interfaceModel.*;
+import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
+import dhl.businessLogic.leagueModel.interfaceModel.IPlayerDraft;
+import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 
-import java.util.ArrayList;
 
-public class PlayerDraft implements IPlayerDraft{
-
-    int NUMBEROFROUNDS = 7;
+public class PlayerDraft implements IPlayerDraft {
 
     ILeagueObjectModel league;
     int numberOfTeams;
-    ArrayList<ArrayList<ITeam>> draftPickSequence = null;
+    ITeam[][] draftPickSequence ;
 
-    public PlayerDraft(ILeagueObjectModel league){
+    public PlayerDraft(ILeagueObjectModel league, ITeam[][] draftPickSequence){
         this.numberOfTeams = 0;
         this.league = league;
-        draftPickSequence = new ArrayList<>();
-        initDraftSequence(league);
-    }
-
-    public void initDraftSequence(ILeagueObjectModel league){
-        for(int i = 0; i < NUMBEROFROUNDS; i++){
-            ArrayList<ITeam> draftRound = new ArrayList<>();
-            for(IConference conference: league.getConferences()){
-                for (IDivision division: conference.getDivisions()){
-                    for (ITeam team : division.getTeams()){
-                        draftRound.add(team);
-                    }
-                }
-            }
-            draftPickSequence.add(draftRound);
-        }
+        this.draftPickSequence = draftPickSequence;
     }
 
     public void swapDraftPick(int round, ITeam teamGettingDraft, ITeam teamGivingDraft){
-        ArrayList<ITeam> draftRound = draftPickSequence.get(round);
-        for (int i = 0; i < draftRound.size(); i++){
-            if (draftRound.get(i) == teamGivingDraft){
-                (draftPickSequence.get(round)).set(i , teamGettingDraft);
+        for (int i = 0; i < draftPickSequence.length; i++){
+            if (draftPickSequence[i][round] == teamGivingDraft){
+                draftPickSequence[i][round] = teamGettingDraft;
             }
         }
     }
 
-    public ArrayList<ArrayList<ITeam>> getDraftPickSequence() {
+    public ITeam[][] getDraftPickSequence() {
         return draftPickSequence;
     }
 }

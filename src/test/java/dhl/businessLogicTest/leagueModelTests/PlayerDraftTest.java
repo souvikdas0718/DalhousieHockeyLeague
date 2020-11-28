@@ -2,9 +2,7 @@ package dhl.businessLogicTest.leagueModelTests;
 
 import dhl.businessLogic.leagueModel.PlayerDraft;
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
-import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
-import dhl.businessLogic.leagueModel.interfaceModel.IPlayerDraft;
-import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
+import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,38 +10,53 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+
 public class PlayerDraftTest {
 
     IPlayerDraft testClassObject;
     ILeagueObjectModel league;
     LeagueModelAbstractFactory leagueFactory;
     LeagueModelMockAbstractFactory leagueMockFactory;
-
+    ITeam[][] draftPickSequenceMock;
     @BeforeEach
     public void initObject(){
         leagueFactory = LeagueModelAbstractFactory.instance();
         leagueMockFactory = LeagueModelMockAbstractFactory.instance();
         league = leagueMockFactory.createLeagueMock().getLeagueObjectModel();
-
-        testClassObject = leagueFactory.createPlayerDraft(league);
+        initDraft(league);
+        testClassObject = leagueFactory.createPlayerDraft(league, draftPickSequenceMock);
     }
 
-    @Test
-    public void initDraftSequenceTest(){
-        ((PlayerDraft)testClassObject).initDraftSequence(league);
-        ArrayList<ArrayList<ITeam>> draftPickSequence = testClassObject.getDraftPickSequence();
-        Assertions.assertTrue(draftPickSequence.size() > 0);
+    // TODO: 28-11-2020 mock for this
+    public void initDraft(ILeagueObjectModel league){
+        int totalRound = 7;
+        ArrayList<ITeam> list = new ArrayList<>();
+        for(IConference c: league.getConferences()){
+            for (IDivision d: c.getDivisions()){
+                for (ITeam t: d.getTeams()){
+                    list.add(t);
+                }
+            }
+        }
+        draftPickSequenceMock = new ITeam[list.size()][totalRound];
+        for (int i = 0; i < list.size(); i++){
+            for (int j = 0; j < totalRound; j++ ){
+                draftPickSequenceMock[i][j] = list.get(i);
+            }
+        }
     }
 
     @Test
     public void swapDraftPickTest(){
-        ArrayList<ArrayList<ITeam>> draftPickSequence = testClassObject.getDraftPickSequence();
-        ITeam teamGivingDraftPick = draftPickSequence.get(1).get(0);
-        ITeam teamGettingDraftPick = draftPickSequence.get(1).get(1);
+
+        ITeam teamGivingDraftPick = draftPickSequenceMock[0][1];
+        ITeam teamGettingDraftPick = draftPickSequenceMock[1][1];
 
         testClassObject.swapDraftPick(1,teamGettingDraftPick,teamGivingDraftPick);
-        draftPickSequence = testClassObject.getDraftPickSequence();
-        ITeam testTeam = draftPickSequence.get(1).get(0);
+        draftPickSequenceMock = testClassObject.getDraftPickSequence();
+        ITeam testTeam = draftPickSequenceMock[1][0];
         Assertions.assertEquals(testTeam,teamGettingDraftPick);
     }
+
+
 }
