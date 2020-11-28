@@ -41,7 +41,7 @@ public abstract class LeagueModelAbstractFactory {
 
     public abstract IPlayer createPlayer(String playerName, String position, Boolean captain, IPlayerStatistics playerStats);
 
-    public abstract IPlayerStatistics createPlayerStatistics(int skating, int shooting, int checking, int saving);
+    public abstract IPlayerStatistics createPlayerStatistics( int skating, int shooting, int checking, int saving);
 
     public abstract IGameConfig createGameConfig(JSONObject leagueJson);
 
@@ -64,4 +64,6 @@ public abstract class LeagueModelAbstractFactory {
     public abstract IPlayer createPlayerDefault();
 
     public abstract IPlayer createFreeAgentDefault();
+
+    public abstract IPlayerDraft createPlayerDraft(ILeagueObjectModel leagueObjectModel, ITeam[][] draftPickSequence);
 }

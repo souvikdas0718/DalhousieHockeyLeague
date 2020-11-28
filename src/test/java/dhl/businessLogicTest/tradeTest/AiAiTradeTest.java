@@ -29,8 +29,8 @@ public class AiAiTradeTest {
 
     TradeAbstractFactory tradeFactory;
     LeagueModelAbstractFactory leagueFactory;
-    LeagueModelMockAbstractFactory leagueMockFactory;
 
+    LeagueModelMockAbstractFactory leagueMockFactory;
     TradeMockAbstractFactory tradeMockFactory;
 
     @BeforeEach
@@ -71,7 +71,7 @@ public class AiAiTradeTest {
     }
 
     @Test
-    public void validateTeamRosterAfterTradeTest() throws Exception {
+    public void validateTeamRosterAfterTradeTest() {
         ArrayList<IPlayer> freeAgents = tradeMockFactory.createFreeAgentMockForTrade().getListOfFreeAgents();
         LeagueObjectModel league = (LeagueObjectModel) leagueMockFactory.createLeagueMock().getLeagueObjectModel();
         league.freeAgents = freeAgents;
@@ -88,44 +88,6 @@ public class AiAiTradeTest {
         testClassObject.validateTeamRosterAfterTrade(team, league);
         team.setRoster();
         Assertions.assertTrue(team.checkTeamPlayersCount());
-    }
-
-    @Test
-    public void updatePlayersTest() throws Exception {
-
-        ArrayList<IPlayer> freeAgents = tradeMockFactory.createFreeAgentMockForTrade().getListOfFreeAgents();
-        LeagueObjectModel league = (LeagueObjectModel) leagueMockFactory.createLeagueMock().getLeagueObjectModel();
-        league.freeAgents = freeAgents;
-        ITeam team = tradeMockFactory.createTeamMockForTrade().getTeamWithGoodPlayer();
-
-        ITradeOffer testOffer = tradeFactory.createExchangingPlayerTradeOffer(weakTeam, strongTeam, playersOffered, playersWanted);
-        testClassObject = (AiAiTrade) tradeFactory.createAiAiTrade(testOffer, ourGameConfig);
-
-        int countDefence = 0;
-        for(IPlayer p : team.getPlayers()){
-            if (p.getPosition().equals(PlayerPosition.DEFENSE.toString())){
-                countDefence = countDefence + 1;
-            }
-        }
-        testClassObject.updatePlayers(countDefence, PlayerPosition.DEFENSE.toString(),10, team, league);
-
-        countDefence = 0;
-        for(IPlayer p : team.getPlayers()){
-            if (p.getPosition().equals(PlayerPosition.DEFENSE.toString())){
-                countDefence = countDefence + 1;
-            }
-        }
-        Assertions.assertEquals(countDefence, 10);
-
-        testClassObject.updatePlayers(countDefence, PlayerPosition.DEFENSE.toString(),5, team, league);
-        countDefence = 0;
-        for(IPlayer p : team.getPlayers()){
-            if (p.getPosition().equals(PlayerPosition.DEFENSE.toString())){
-                countDefence = countDefence + 1;
-            }
-        }
-        Assertions.assertEquals(countDefence, 5);
-
     }
 
     @Test
