@@ -134,6 +134,12 @@ public class DeserializeLeagueObjectModel implements IDeserializeLeagueObjectMod
             freeAgentsJsonObject.put("checking", playerStatsJsonobject.get("checking"));
             freeAgentsJsonObject.put("shooting", playerStatsJsonobject.get("shooting"));
             freeAgentsJsonObject.put("saving", playerStatsJsonobject.get("saving"));
+
+            JSONObject freeAgentsDateOfBirthJsonobject = (JSONObject) playerStatsJsonobject.get("dateOfBirth");
+            freeAgentsJsonObject.put("birthDay", freeAgentsDateOfBirthJsonobject.get("day"));
+            freeAgentsJsonObject.put("birthMonth", freeAgentsDateOfBirthJsonobject.get("month"));
+            freeAgentsJsonObject.put("birthYear", freeAgentsDateOfBirthJsonobject.get("year"));
+
             freeAgentsJsonObject.remove("playerStats");
             String position = (String) freeAgentsJsonObject.get("position");
             freeAgentsJsonObject.remove("position");
@@ -174,6 +180,12 @@ public class DeserializeLeagueObjectModel implements IDeserializeLeagueObjectMod
                         playerJsonObject.put("checking", playerStatsJsonobject.get("checking"));
                         playerJsonObject.put("shooting", playerStatsJsonobject.get("shooting"));
                         playerJsonObject.put("saving", playerStatsJsonobject.get("saving"));
+
+                        JSONObject playerDateOfBirthJsonobject = (JSONObject) playerStatsJsonobject.get("dateOfBirth");
+                        playerJsonObject.put("birthDay", playerDateOfBirthJsonobject.get("day"));
+                        playerJsonObject.put("birthMonth", playerDateOfBirthJsonobject.get("month"));
+                        playerJsonObject.put("birthYear", playerDateOfBirthJsonobject.get("year"));
+
                         playerJsonObject.remove("playerStats");
                         String position = (String) playerJsonObject.get("position");
                         playerJsonObject.remove("position");
