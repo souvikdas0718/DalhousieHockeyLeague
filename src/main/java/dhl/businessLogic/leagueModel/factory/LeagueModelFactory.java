@@ -58,7 +58,6 @@ public class LeagueModelFactory extends LeagueModelAbstractFactory {
         return new LeagueObjectModelInput(leagueName, conferenceName, divisionName, newlyCreatedTeam, leagueObjectModelValidation, serializeLeagueObjectModel);
     }
 
-
     public IConference createConferenceDefault() {
         return new Conference();
     }
@@ -85,6 +84,10 @@ public class LeagueModelFactory extends LeagueModelAbstractFactory {
 
     public IPlayer createFreeAgentDefault() {
         return new FreeAgent();
+    }
+
+    public IPlayerDraft createPlayerDraft(ILeagueObjectModel leagueObjectModel) {
+        return new PlayerDraft(leagueObjectModel);
     }
 
 }

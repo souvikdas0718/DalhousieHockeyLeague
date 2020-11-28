@@ -50,7 +50,6 @@ public abstract class LeagueModelAbstractFactory {
 
     public abstract ILeagueObjectModelInput createLeagueObjectModelInput(String leagueName, String conferenceName, String divisionName, ITeam newlyCreatedTeam, ISerializeLeagueObjectModel serializeLeagueObjectModel);
 
-
     public abstract IConference createConferenceDefault();
 
     public abstract IDivision createDivisionDefault();
@@ -64,4 +63,6 @@ public abstract class LeagueModelAbstractFactory {
     public abstract IPlayer createPlayerDefault();
 
     public abstract IPlayer createFreeAgentDefault();
+
+    public abstract IPlayerDraft createPlayerDraft(ILeagueObjectModel leagueObjectModel);
 }

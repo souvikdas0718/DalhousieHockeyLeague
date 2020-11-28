@@ -50,47 +50,8 @@ public class AiUserTrade implements ITradeType {
 
     public void validateTeamRosterAfterTrade(ITeam team, ILeagueObjectModel leagueObjectModel) {
 
-        int totalForwards = 0;
-        int totalDefense = 0;
-        int totalGoalies = 0;
-        ArrayList<IPlayer> players = (ArrayList<IPlayer>) team.getPlayers();
+        updateUserTeamRoster.validateTeamRoster(team, leagueObjectModel);
 
-        for (IPlayer player : players) {
-            String position = player.getPosition();
-            if (position.equals(PlayerPosition.FORWARD.toString())){
-                totalForwards = totalForwards + 1;
-            }
-            else if (position.equals(PlayerPosition.DEFENSE.toString())){
-                totalDefense = totalDefense + 1;
-            }
-            else if (position.equals(PlayerPosition.GOALIE.toString())) {
-                totalGoalies = totalGoalies + 1;
-            }
-        }
-        if(totalDefense > TOTAL_DEFENSE || totalDefense < TOTAL_DEFENSE){
-            updatePlayer(totalDefense, PlayerPosition.DEFENSE.toString(), TOTAL_DEFENSE, team, leagueObjectModel);
-        }
-        if(totalForwards > TOTAL_FORWARDS || totalForwards < TOTAL_FORWARDS){
-            updatePlayer(totalForwards, PlayerPosition.FORWARD.toString(), TOTAL_FORWARDS, team, leagueObjectModel);
-        }
-        if(totalGoalies > TOTAL_GOALIES || totalGoalies < TOTAL_GOALIES){
-            updatePlayer(totalGoalies, PlayerPosition.GOALIE.toString(), TOTAL_GOALIES, team, leagueObjectModel);
-        }
-    }
-
-    public void updatePlayer(int currentCount, String playerPosition, int requierdCount, ITeam team, ILeagueObjectModel league){
-        if(currentCount > requierdCount){
-            while (currentCount > requierdCount){
-                updateUserTeamRoster.dropPlayer(playerPosition, team, league);
-                currentCount = currentCount - 1;
-            }
-        }
-        else if(currentCount < requierdCount){
-            while (currentCount < requierdCount){
-                updateUserTeamRoster.addPlayer(playerPosition, team, league);
-                currentCount = currentCount + 1;
-            }
-        }
     }
 
     public void DisplayTradeOfferToUser(List<IPlayer> playerList) {
