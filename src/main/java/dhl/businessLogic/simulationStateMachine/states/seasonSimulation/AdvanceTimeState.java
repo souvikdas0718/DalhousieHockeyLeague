@@ -40,7 +40,9 @@ public class AdvanceTimeState implements ISimulationSeasonState {
         LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());
         if (currentDate.getMonth() == Month.APRIL) {
             LocalDate endOfRegularSeasonDate = currentDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.SATURDAY));
-            if (currentDate.equals(endOfRegularSeasonDate)) {
+            System.out.println("Hellllooo "+ endOfRegularSeasonDate);
+            System.out.println("Hellloooooooo current date "+ currentDate);
+            if (currentDate.minusDays(1).equals(endOfRegularSeasonDate.plusDays(1))) {
                 simulationContext.setCurrentSimulation(simulationContext.getPlayoffSchedule());
             } else {
                 simulationContext.setCurrentSimulation(simulationContext.getTraining());

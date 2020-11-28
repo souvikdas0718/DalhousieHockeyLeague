@@ -8,7 +8,9 @@ import dhl.businessLogic.aging.interfaceAging.ILeagueSchedule;
 import dhl.businessLogic.aging.interfaceAging.IRetirement;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
+import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.SeasonSchedule;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
+import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.ISeasonSchedule;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
 import dhl.inputOutput.importJson.serializeDeserialize.SerializeDeserializeAbstractFactory;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
@@ -64,8 +66,12 @@ public class AgingState implements ISimulationSeasonState {
     @Override
     public void seasonStateExitProcess() {
         userInputOutput.printMessage("Into the exit process of Aging State season");
-        IScheduler scheduler = simulationContext.getPlayOffScheduleRound1();
-        LocalDate currentDate = LocalDate.now();
+//        changed recently
+//        IScheduler scheduler = simulationContext.getPlayOffScheduleRound1();
+        IScheduler scheduler = simulationContext.getRegularScheduler();
+//        ISeasonSchedule playoffSchedule = (SeasonSchedule) simulationContext.getRegularScheduler().getPlayOffScheduleRound1();
+        LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
+        LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());
         if(null == scheduler) {
             userInputOutput.printMessage("No current Schedule");
             simulationContext.setCurrentSimulation(simulationContext.getPersistsSameSeason());

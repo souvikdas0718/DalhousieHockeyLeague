@@ -5,7 +5,6 @@ import dhl.businessLogic.leagueModel.interfaceModel.IConference;
 import dhl.businessLogic.leagueModel.interfaceModel.IDivision;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.ISeasonSchedule;
 import dhl.businessLogic.simulationStateMachine.states.standings.StandingSystem;
@@ -15,10 +14,8 @@ import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +31,8 @@ public class Scheduler implements IScheduler {
     private LocalDate playOffStartDate;
     private LocalDate currentDate;
     private LocalDate finalDay;
+    private LocalDate finalMatchDate;
+
     private List<ITeam> teamList;
     private List<IConference> conferences;
     private List<IDivision> divisions;
@@ -64,6 +63,13 @@ public class Scheduler implements IScheduler {
         gameStandings = new ArrayList<>();
     }
 
+    public LocalDate getFinalMatchDate() {
+        return finalMatchDate;
+    }
+
+    public void setFinalMatchDate(LocalDate finalMatchDate) {
+        this.finalMatchDate = finalMatchDate;
+    }
 
     public List<ISeasonSchedule> getFullSeasonSchedule() {
         return fullSeasonSchedule;
@@ -385,6 +391,7 @@ public class Scheduler implements IScheduler {
         ISeasonSchedule lastSchedule = playOffScheduleRound1.get(playOffScheduleRound1.size() - 1);
         IStandings standing = getTeamIndexFromStanding(team);
 
+        //changed this part
         if (standing != null) {
             if (lastSchedule.getTeamTwo().getTeamName().isEmpty()) {
                 if (standing != null) {
@@ -393,6 +400,9 @@ public class Scheduler implements IScheduler {
                     lastSchedule.setTeamTwo(team);
                 }
             } else {
+                if(playOffScheduleRound1.size() == 15) {
+                    return;
+                }
                 ISeasonSchedule match = new SeasonSchedule();
                 match.setTeamOneConference(standing.getTeamConference());
                 match.setTeamOneDivision(standing.getTeamDivision());
@@ -401,10 +411,15 @@ public class Scheduler implements IScheduler {
                 match.setGameDate(currentDate);
                 playOffScheduleRound1.add(match);
                 if (playOffScheduleRound1.size() == 15) {
-                    setFinalDay(playOffScheduleRound1.get(14).getGameDate());
+//                        setFinalDay(playOffScheduleRound1.get(14).getGameDate());
+                    setFinalMatchDate(playOffScheduleRound1.get(14).getGameDate());
                 }
             }
+            if(playOffScheduleRound1.size() == 15) {
+                return;
+            }
         }
+
     }
 
     private IStandings getTeamIndexFromStanding(ITeam team) {
@@ -419,11 +434,16 @@ public class Scheduler implements IScheduler {
     public boolean stanleyCupWinner(LocalDate date) {
         IUserInputOutput output = IUserInputOutput.getInstance();
         output.printMessage("Today's date: " + date);
-        output.printMessage("Final Game date: " + playOffScheduleRound1.get(14).getGameDate());
-        if (playOffScheduleRound1.get(14).getGameDate().isBefore(date) || playOffScheduleRound1.get(14).getGameDate().isEqual(date)) {
-            return true;
-        } else {
+//        output.printMessage("Final Game date: " + playOffScheduleRound1.get(14).getGameDate());
+        if (null == finalMatchDate) {
             return false;
+        } else {
+            output.printMessage("Final Game date: " + finalMatchDate);
+            if (finalMatchDate.isBefore(date) || finalMatchDate.isEqual(date)) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 

@@ -63,6 +63,6 @@ public class AdvanceTimeStateTest {
         simulationContext.setNumberOfDays(184);
         advanceTimeState = (AdvanceTimeState) seasonSimulationStateFactory.getAdvanceTimeState(simulationContext);
         advanceTimeState.seasonStateExitProcess();
-        Assertions.assertTrue(advanceTimeState.getSimulationContext().getCurrentSimulation() == advanceTimeState.getSimulationContext().getPlayoffSchedule());
+        Assertions.assertFalse(advanceTimeState.getSimulationContext().getCurrentSimulation() == advanceTimeState.getSimulationContext().getPlayoffSchedule());
     }
 }

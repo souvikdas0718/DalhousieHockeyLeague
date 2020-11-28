@@ -41,6 +41,8 @@ public class SimulationContext implements ISimulationSeasonState {
     IScheduler scheduler;
     IScheduler regularScheduler;
     IScheduler playOffScheduleRound1;
+    IScheduler finalSchedule;
+
     ITeamRosterUpdater updateUserTeamRoster;
 
     List<IStandings> standings;
@@ -157,6 +159,14 @@ public class SimulationContext implements ISimulationSeasonState {
 //        this.standingSystem = standingSystem;
 //    }
 
+
+    public IScheduler getFinalSchedule() {
+        return finalSchedule;
+    }
+
+    public void setFinalSchedule(IScheduler finalSchedule) {
+        this.finalSchedule = finalSchedule;
+    }
 
     public List<IStandings> getStandings() {
         return standings;

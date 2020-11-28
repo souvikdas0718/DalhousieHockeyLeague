@@ -70,6 +70,7 @@ public class SimulateGameState implements ISimulationSeasonState {
                     standingSystem.updateWinningStandings(winningTeam);
                     standingSystem.updateLosingStandings(losingTeam);
 //                    standingSystem.setStandingsList(scheduler.getGameStandings());
+//                    simulationContext.setStandings(standingSystem.getStandingsList());
                 }
             }
         } else if (currentDate.isAfter(scheduler.getPlayOffStartDate().minusDays(1)) && currentDate.isBefore(scheduler.getFinalDay().plusDays(1))) {
@@ -92,6 +93,7 @@ public class SimulateGameState implements ISimulationSeasonState {
                         }
                     }
                     scheduler.gameWinner(winningTeam);
+                    simulationContext.setFinalSchedule(scheduler);
                 }
             }
         }
