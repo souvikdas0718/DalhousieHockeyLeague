@@ -21,4 +21,6 @@ public abstract class IPlayerDraft {
     public abstract void swapDraftPick(int round, ITeam teamGettingDraft, ITeam teamGivingDraft);
 
     public abstract ITeam[][] getDraftPickSequence();
+
+    public abstract void setDraftPickSequence(ITeam[][] draftPickSequence);
 }

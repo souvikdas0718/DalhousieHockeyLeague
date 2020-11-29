@@ -146,7 +146,4 @@ public class LeagueMock {
         ILeagueObjectModel leagueObjectModel =  leagueDirector.constructFromJson(leagueObject);
         return leagueObjectModel;
     }
-
-
-
 }
