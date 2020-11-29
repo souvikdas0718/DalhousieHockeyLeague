@@ -5,15 +5,17 @@ import dhl.businessLogic.leagueModel.interfaceModel.IPlayerDraft;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 
 
-public class PlayerDraft implements IPlayerDraft {
+public class PlayerDraft extends IPlayerDraft {
 
-    ILeagueObjectModel league;
+
     int numberOfTeams;
     ITeam[][] draftPickSequence ;
 
-    public PlayerDraft(ILeagueObjectModel league, ITeam[][] draftPickSequence){
+    public PlayerDraft(){
+    }
+
+    public PlayerDraft(ITeam[][] draftPickSequence){
         this.numberOfTeams = 0;
-        this.league = league;
         this.draftPickSequence = draftPickSequence;
     }
 
@@ -29,3 +31,4 @@ public class PlayerDraft implements IPlayerDraft {
         return draftPickSequence;
     }
 }
+

@@ -1,11 +1,10 @@
 package dhl.businessLogic.trade;
 
-import dhl.businessLogic.leagueModel.PlayerPosition;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
+import dhl.businessLogic.simulationStateMachine.RosterUpdaterAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.interfaces.ITeamRosterUpdater;
-import dhl.businessLogic.trade.interfaces.ITradeOffer;
 import dhl.businessLogic.trade.interfaces.ITradeType;
 import dhl.inputOutput.ui.IUserInputOutput;
 import org.apache.logging.log4j.LogManager;
@@ -15,43 +14,36 @@ import java.util.List;
 
 public class AiUserTrade implements ITradeType {
 
-    private static final int TOTAL_GOALIES = 4;
-    private static final int TOTAL_FORWARDS = 16;
-    private static final int TOTAL_DEFENSE = 10;
-
-    IUserInputOutput ioObject;
-    ITradeOffer tradeOffer;
     ITeamRosterUpdater updateUserTeamRoster;
-
+    RosterUpdaterAbstractFactory rosterUpdater;
+    IUserInputOutput ioObject;
+    ILeagueObjectModel league;
     private static final Logger logger = LogManager.getLogger(AiUserTrade.class);
 
-    public AiUserTrade(ITradeOffer tradeOffer, IUserInputOutput ioObject, ITeamRosterUpdater updateUserTeamRoster) {
-        this.tradeOffer = tradeOffer;
+    public AiUserTrade(IUserInputOutput ioObject, ILeagueObjectModel league) {
+        this.rosterUpdater = RosterUpdaterAbstractFactory.instance();
         this.ioObject = ioObject;
-        this.updateUserTeamRoster = updateUserTeamRoster;
-        logger.info("Trade made for User by "+tradeOffer.getOfferingTeam().getTeamName());
+        this.updateUserTeamRoster = rosterUpdater.createUpdateUserTeamRoster(ioObject);
+        this.league = league;
     }
 
-    public boolean isTradeAccepted(){
-        DisplayTradeOfferToUser(tradeOffer.getOfferingPlayers());
+    public boolean isTradeAccepted(ArrayList<IPlayer> playersOffered, ArrayList<IPlayer> playerswanted, ITeam receivingTeam){
+        DisplayTradeOfferToUser(playersOffered);
         int inputFromUser = Integer.parseInt(ioObject.getUserInput());
-
         if (inputFromUser == 1) {
-            logger.info("Trade Accepted by "+ tradeOffer.getReceivingTeam().getTeamName());
+            logger.info("Trade Accepted by "+ receivingTeam.getTeamName());
             ioObject.printMessage("Trade Accepted, Thankyou");
             return true;
         } else if (inputFromUser == 2) {
-            logger.info("Trade Rejected by "+ tradeOffer.getReceivingTeam().getTeamName());
+            logger.info("Trade Rejected by "+ receivingTeam.getTeamName());
             ioObject.printMessage("Trade Rejected, Thankyou");
             return false;
         }
         return false;
     }
 
-    public void validateTeamRosterAfterTrade(ITeam team, ILeagueObjectModel leagueObjectModel) {
-
-        updateUserTeamRoster.validateTeamRoster(team, leagueObjectModel);
-
+    public void validateTeamRosterAfterTrade(ITeam team) {
+        updateUserTeamRoster.validateTeamRoster(team, league);
     }
 
     public void DisplayTradeOfferToUser(List<IPlayer> playerList) {
@@ -67,5 +59,4 @@ public class AiUserTrade implements ITradeType {
         }
         ioObject.printMessage("Enter 1 to Accept Trade, 2 to Reject");
     }
-
 }

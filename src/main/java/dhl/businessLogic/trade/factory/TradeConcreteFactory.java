@@ -18,20 +18,20 @@ import java.util.ArrayList;
 
 public class TradeConcreteFactory implements TradeAbstractFactory{
 
-    public ITradeType createAiAiTrade(ITradeOffer tradeOffer, IGameConfig gameConfig) {
-        return new AiAiTrade(tradeOffer, gameConfig);
+    public ITradeType createAiAiTrade(ILeagueObjectModel league, IGameConfig gameConfig) {
+        return new AiAiTrade(league, gameConfig);
     }
 
-    public ITradeType createAiUserTrade(ITradeOffer tradeOffer, IUserInputOutput ioObject, ITeamRosterUpdater updateUserTeamRoster) {
-        return new AiUserTrade(tradeOffer, ioObject, updateUserTeamRoster);
+    public ITradeType createAiUserTrade(IUserInputOutput ioObject, ILeagueObjectModel league) {
+        return new AiUserTrade(ioObject, league);
     }
 
-    public ITradeOffer createExchangingPlayerTradeOffer(ITeam offeringTeam, ITeam receivingTeam, ArrayList<IPlayer> playersOffered, ArrayList<IPlayer> playersWantedInExchange) {
-        return new ExchangingPlayerTradeOffer(offeringTeam, receivingTeam, playersOffered, playersWantedInExchange);
+    public ITradeOffer createExchangingPlayerTradeOffer(ITeam offeringTeam, ITeam receivingTeam, ArrayList<IPlayer> playersOffered, ArrayList<IPlayer> playersWantedInExchange, ITradeType tradeType) {
+        return new ExchangingPlayerTradeOffer(offeringTeam, receivingTeam, playersOffered, playersWantedInExchange, tradeType);
     }
 
-    public IScout createScout(ITeam myTeam, ILeagueObjectModel myLeague, IGameConfig gameConfig){
-        IScout scout = new Scout(myTeam, myLeague, gameConfig);
+    public IScout createScout(ITeam myTeam, ILeagueObjectModel myLeague, IGameConfig gameConfig, ITeam userTeam){
+        IScout scout = new Scout(myTeam, myLeague, gameConfig, userTeam);
         return scout;
     }
 

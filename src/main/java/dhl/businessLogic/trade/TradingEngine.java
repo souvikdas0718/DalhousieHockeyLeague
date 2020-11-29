@@ -40,28 +40,24 @@ public class TradingEngine extends ITradingEngine {
     }
 
     public void startEngine() {
-        try {
-            long configLossPoint = Long.parseLong(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getLossPoint()));
-            double configRandomTradeChance = Double.parseDouble(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getRandomTradeOfferChance()));
-            for (IConference conference : leagueObjectModel.getConferences()) {
-                for (IDivision division : conference.getDivisions()) {
-                    for (ITeam team : division.getTeams()) {
-                        if (findLossPointOfTheTeam(team) > configLossPoint) {
-                            double randomNumber = Math.random();
-                            if (randomNumber > configRandomTradeChance) {
-                                performTrade(team);
-                            }
+        long configLossPoint = Long.parseLong(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getLossPoint()));
+        double configRandomTradeChance = Double.parseDouble(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getRandomTradeOfferChance()));
+        for (IConference conference : leagueObjectModel.getConferences()) {
+            for (IDivision division : conference.getDivisions()) {
+                for (ITeam team : division.getTeams()) {
+                    if (findLossPointOfTheTeam(team) > configLossPoint) {
+                        double randomNumber = Math.random();
+                        if (randomNumber > configRandomTradeChance) {
+                            //performTrade(team);
                         }
                     }
                 }
             }
-        }catch (Exception e){
-            ioObject.printMessage(e.getMessage());
         }
     }
 
     public void performTrade(ITeam tradingTeam){
-        IScout teamScout = factory.createScout(tradingTeam, leagueObjectModel, gameConfig);
+        IScout teamScout = factory.createScout(tradingTeam, leagueObjectModel, gameConfig, userTeam);
         int congifMaxPlayerPerTrade = Integer.parseInt(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getMaxPlayersPerTrade()));
         currentTrade = teamScout.findTrade(congifMaxPlayerPerTrade);
         if (currentTrade == null){
@@ -69,22 +65,7 @@ public class TradingEngine extends ITradingEngine {
         }
         else{
             tradingTeam.setLossPoint(0);
-            sendTradeToRecevingTeam(currentTrade, userTeam);
-        }
-    }
-
-    public void sendTradeToRecevingTeam(ITradeOffer currentTrade, ITeam userTeam) {
-        logger.warn("Sending trade offer to team:"+ currentTrade.getReceivingTeam().getTeamName());
-        ITradeType tradeType;
-        if(currentTrade.getReceivingTeam() == userTeam){
-            tradeType = factory.createAiUserTrade(currentTrade, ioObject, updateUserTeamRoster);
-        }else{
-            tradeType = factory.createAiAiTrade(currentTrade, gameConfig);
-        }
-        if (tradeType.isTradeAccepted()) {
-            ioObject.printMessage("Trade done between: " + currentTrade.getOfferingTeam().getTeamName() + " And " + currentTrade.getReceivingTeam().getTeamName());
             currentTrade.implementTrade();
-            tradeType.validateTeamRosterAfterTrade(currentTrade.getReceivingTeam(), leagueObjectModel);
         }
     }
 
