@@ -89,12 +89,15 @@ public class PlayerDraftState implements ISimulationSeasonState {
     public void initializePlayerDraftPick(){
         logger.info("Initialize player draft pick");
         getTeams();
-        for (int i = 0; i < NOOFTEAMS; i++) {
-            for (int j = 0; j < DRAFTROUNDS; j++) {
-                logger.debug("Initialize player draft pick for team"+teamsInLeague.get(i));
-                draftPickSequence[i][j]=teamsInLeague.get(i);
+        if(teamsInLeague.size()>0){
+            for (int i = 0; i < NOOFTEAMS; i++) {
+                for (int j = 0; j < DRAFTROUNDS; j++) {
+                    logger.debug("Initialize player draft pick for team");
+                    draftPickSequence[i][j]=teamsInLeague.get(i);
+                }
             }
         }
+
     }
 
     public ITeam[][] getDraftPickSequence() {
@@ -143,15 +146,24 @@ public class PlayerDraftState implements ISimulationSeasonState {
         logger.info("Fetching all teams in league");
         logger.debug("Fetching teams in league to initialize player draft pick 2D array");
         leagueObjectModel = simulationContext.getInMemoryLeague();
-        for(IConference conference:leagueObjectModel.getConferences()){
-            for(IDivision division:conference.getDivisions()){
-                for(ITeam team:division.getTeams()){
-                    if(checkIfUserTeam(team.getTeamName())){
-                        teamsInLeague.add(team);
+        if(isLeagueNotNull()){
+            for(IConference conference:leagueObjectModel.getConferences()){
+                for(IDivision division:conference.getDivisions()){
+                    for(ITeam team:division.getTeams()){
+                        if(checkIfUserTeam(team.getTeamName())){
+                            teamsInLeague.add(team);
+                        }
                     }
                 }
             }
         }
+    }
+
+    public boolean isLeagueNotNull(){
+        if(leagueObjectModel == null){
+            return false;
+        }
+        return true;
     }
 
     public boolean checkIfUserTeam(String teamName){
