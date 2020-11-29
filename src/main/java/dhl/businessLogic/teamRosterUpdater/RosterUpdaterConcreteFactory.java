@@ -3,7 +3,7 @@ package dhl.businessLogic.teamRosterUpdater;
 import dhl.businessLogic.teamRosterUpdater.interfaces.ITeamRosterUpdater;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 
-public class RosterUpdater extends RosterUpdaterAbstractFactory {
+public class RosterUpdaterConcreteFactory extends RosterUpdaterAbstractFactory {
 
     public ITeamRosterUpdater createAiTeamRosterUpdater() {
         return new AiTeamRosterUpdater();

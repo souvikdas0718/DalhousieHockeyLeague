@@ -13,7 +13,7 @@ public abstract class RosterUpdaterAbstractFactory {
 
     public static RosterUpdaterAbstractFactory instance() {
         if (null == uniqueInstance) {
-            uniqueInstance = new RosterUpdater();
+            uniqueInstance = new RosterUpdaterConcreteFactory();
         }
         return uniqueInstance;
     }
