@@ -1,4 +1,4 @@
-package dhl.businessLogic.simulationStateMachine.interfaces;
+package dhl.businessLogic.teamRosterUpdater.interfaces;
 
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;

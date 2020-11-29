@@ -158,8 +158,7 @@ public class Scout implements IScout {
             else{
                 // TODO: 29-11-2020 add log for new trade offer
                 IPlayerDraft playerDraft = IPlayerDraft.instance();
-                // TODO: 29-11-2020 creational for this
-                ITradeOffer newOffer = new DraftPickTradeOffer(myTeam, teamToTrade, listOfPlayerWeWillGet, playerDraft);
+                ITradeOffer newOffer = factory.createDraftPickTradeOffer(myTeam, teamToTrade, listOfPlayerWeWillGet, playerDraft);
                 return newOffer;
             }
 
@@ -239,7 +238,6 @@ public class Scout implements IScout {
                 }
             }
         }
-
         return weakPlayer;
     }
 
