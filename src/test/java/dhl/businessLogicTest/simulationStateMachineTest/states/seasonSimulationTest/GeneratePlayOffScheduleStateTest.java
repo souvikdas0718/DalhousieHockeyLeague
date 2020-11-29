@@ -71,6 +71,7 @@ public class GeneratePlayOffScheduleStateTest {
         simulationContext.setStandings(standings);
         generatePlayOffScheduleState.setSimulationContext(simulationContext);
 //        generatePlayOffScheduleState.seasonStateProcess();
+        //commented
         Assertions.assertNotNull(scheduler.getPlayOffScheduleRound1());
     }
 

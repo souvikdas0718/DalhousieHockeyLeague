@@ -141,6 +141,24 @@ public class SchedulerTest {
     }
 
     @Test
+    public void getFinalMatchDayTest() {
+        LocalDate endDate = LocalDate.of(2021, 04, 01);
+        LocalDate finalsDate = endDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.WEDNESDAY));
+        finalsDate = finalsDate.plusDays(14);
+        scheduler.setFinalMatchDate(finalsDate);
+        Assertions.assertTrue(scheduler.getFinalMatchDate().equals(finalsDate));
+    }
+
+    @Test
+    public void setFinalMatchDayTest() {
+        LocalDate endDate = LocalDate.of(2021, 04, 01);
+        LocalDate finalsDate = endDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.WEDNESDAY));
+        finalsDate = finalsDate.plusDays(14);
+        scheduler.setFinalMatchDate(finalsDate);
+        Assertions.assertTrue(scheduler.getFinalMatchDate().equals(finalsDate));
+    }
+
+    @Test
     public void getFullSeasonScheduleTest() {
         ILeagueObjectModel league = model20TeamMocks.getLeagueData();
         IScheduler scheduler = schedulerAbstractFactory.getScheduler();
