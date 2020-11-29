@@ -15,6 +15,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -78,11 +79,13 @@ public class AgingTest {
                     List<IPlayer> players = team.getPlayers();
                     IPlayer player = players.get(0);
                     IPlayerStatistics playerStatistics = player.getPlayerStats();
+                    LocalDate dateOfBirthday = playerStatistics.getDateOfBirth();
                     int checkingBefore = playerStatistics.getChecking();
-                    aging.agePlayers(team.getPlayers(), LocalDate.of(2020,11,14));
-                    int checkingAfterAging = playerStatistics.getChecking();
-
-                    Assertions.assertTrue(checkingAfterAging<checkingBefore);
+                    if(dateOfBirthday.getMonth()== Month.NOVEMBER && dateOfBirthday.getDayOfMonth() == 14){
+                        aging.agePlayers(team.getPlayers(), LocalDate.of(2020,11,14));
+                        int checkingAfterAging = playerStatistics.getChecking();
+                        Assertions.assertTrue(checkingAfterAging<checkingBefore);
+                    }
                 }
             }
         }

@@ -16,7 +16,6 @@ public class StartGame {
         StatesAbstractFactory statesFactory = StatesAbstractFactory.instance();
         IGameContext ourGame = statesFactory.createGameContext();
 
-
         logger.info("Starting Game");
 
         while (ourGame.isGameInProgress()) {
