@@ -9,7 +9,6 @@ import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.states.CreateTeamStateLogic;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
-import dhl.businessLogicTest.leagueModelTests.mocks.ManagerMock;
 import dhl.inputOutput.importJson.serializeDeserialize.SerializeDeserializeAbstractFactory;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import org.junit.jupiter.api.Assertions;
@@ -18,7 +17,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CreateTeamStateLogicTest {
@@ -125,5 +123,20 @@ public class CreateTeamStateLogicTest {
 
         String wrongcoach = testClassObject.findCoach(leagueObjectModelMocks.getCoaches(), "Wrong coach");
         assertTrue(wrongcoach == null);
+    }
+
+    @Test
+    public void validateWrongInputFreeAgents() throws Exception {
+        String wrongInputFreeAgents = "Henry101,Henry1,Henry2,Henry3,Henry4,Henry5,Henry6,Henry7,Henry8,Henry9,Henry10,Henry11,Henry12,Henry13,Henry14,Henry15,Henry16,Henry17,Henry18,Henry19,Henry21,Henry22,Henry23,Henry24,Henry25,Henry26,Henry27,Henry28,Henry29,Henry30";
+
+        ArrayList<IPlayer> players = testClassObject.validateInputFreeAgents(wrongInputFreeAgents, leagueObjectModelMocks.get20FreeAgentArrayMock());
+        Assertions.assertNull(players);
+    }
+
+    @Test
+    public void validate30InputFreeAgents() throws Exception {
+        String inputFreeAgents = "Henry5,Henry6,Henry7,Henry8,Henry9,Henry10,Henry11,Henry12,Henry13,Henry14,Henry15,Henry16,Henry17,Henry18,Henry19";
+        ArrayList<IPlayer> players = testClassObject.validateInputFreeAgents(inputFreeAgents, leagueObjectModelMocks.get30FreeAgentArrayMock());
+        Assertions.assertEquals(players.size(), 0);
     }
 }

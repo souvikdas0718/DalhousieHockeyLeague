@@ -74,4 +74,16 @@ public class TeamMock {
         return factory.createTeam("Ontario", manager, coach,playersList );
     }
 
+    public ITeam getTeamOneForGameSimulation(){
+        ICoach coach = factory.createCoach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
+        IGeneralManager manager = factory.createGeneralManager("Mathew", "normal");
+        return factory.createTeam("TeamOne", manager, coach, getTeamPlayers());
+    }
+
+    public ITeam getTeamTwoForGameSimulation(){
+        ICoach coach = factory.createCoach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
+        IGeneralManager manager = factory.createGeneralManager("Mathew", "normal");
+        return factory.createTeam("TeamTwo", manager, coach, getTeamPlayers());
+    }
+
 }

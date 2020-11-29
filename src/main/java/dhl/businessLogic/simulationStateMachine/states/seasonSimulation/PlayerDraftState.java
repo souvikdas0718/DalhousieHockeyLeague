@@ -42,7 +42,8 @@ public class PlayerDraftState implements ISimulationSeasonState {
         userTeam = this.simulationContext.getUserTeam();
         initializePlayerDraftPick();
         leagueFactory = LeagueModelAbstractFactory.instance();
-        playerDraft = leagueFactory.createPlayerDraft(simulationContext.getInMemoryLeague(),draftPickSequence);
+        playerDraft = leagueFactory.createPlayerDraft();
+        playerDraft.setDraftPickSequence(draftPickSequence);
     }
 
     public void seasonStateProcess() {

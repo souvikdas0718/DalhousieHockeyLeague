@@ -1,4 +1,4 @@
-package dhl.businessLogicTest.AgingTest;
+package dhl.businessLogicTest.agingTest;
 
 import dhl.Mocks.factory.MockAbstractFactory;
 import dhl.businessLogic.aging.Retirement;
@@ -8,8 +8,8 @@ import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogicTest.AgingTest.factory.AgingTestAbstractFactory;
-import dhl.businessLogicTest.AgingTest.mocks.AgingMock;
+import dhl.businessLogicTest.agingTest.factory.AgingTestAbstractFactory;
+import dhl.businessLogicTest.agingTest.mocks.AgingMock;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
 import dhl.businessLogicTest.leagueModelTests.mocks.TeamMock;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;

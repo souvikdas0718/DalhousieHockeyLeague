@@ -8,7 +8,6 @@ import dhl.businessLogic.simulationStateMachine.states.interfaces.IImportStateLo
 import dhl.inputOutput.importJson.CreateLeagueObjectModel;
 import dhl.inputOutput.importJson.ImportJsonFile;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
-import dhl.inputOutput.ui.UserInputOutput;
 import org.everit.json.schema.Schema;
 import org.everit.json.schema.ValidationException;
 import org.everit.json.schema.loader.SchemaLoader;
@@ -53,8 +52,9 @@ public class ImportStateLogic implements IImportStateLogic {
 
     public boolean jsonSchemaValidation(String leagueModel,String schemaJson) {
         boolean status = false;
-        org.json.JSONObject jsonObject = new org.json.JSONObject(schemaJson);
+
         try {
+            org.json.JSONObject jsonObject = new org.json.JSONObject(schemaJson);
             Schema schema = SchemaLoader.load(jsonObject);
             schema.validate(new org.json.JSONObject(leagueModel));
             status = true;

@@ -6,6 +6,9 @@ import dhl.businessLogic.trade.factory.TradeAbstractFactory;
 import dhl.businessLogic.trade.factory.TradeConcreteFactory;
 import dhl.businessLogic.trade.interfaces.IScout;
 import dhl.businessLogic.trade.interfaces.ITradeOffer;
+import dhl.businessLogic.trade.interfaces.ITradeType;
+import dhl.inputOutput.ui.UserInputOutput;
+import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
@@ -17,22 +20,30 @@ public class Scout implements IScout {
     private static final int TOTAL_DEFENSE = 10;
     private double PLAYER_WANTED_STRENGTH_MULTIPLIER = 1.25;
 
+    ITeam userTeam;
     private ITeam myTeam;
     private ILeagueObjectModel myLeague;
     private IGameConfig gameConfig;
     TradeAbstractFactory factory;
+    IUserInputOutput ioObject;
 
     private static final Logger logger = LogManager.getLogger(Scout.class);
 
-    public Scout(ITeam myTeam, ILeagueObjectModel myLeague, IGameConfig gameConfig) {
+    public Scout(ITeam myTeam, ILeagueObjectModel myLeague, IGameConfig gameConfig, ITeam userTeam) {
+        this.userTeam = userTeam;
         this.myTeam = myTeam;
         this.myLeague = myLeague;
         this.gameConfig = gameConfig;
         factory = new TradeConcreteFactory();
+
+        // TODO: 20-11-2020 remove these new when team make factory
+        this.ioObject = new UserInputOutput();
+
         logger.info("Scout made for Team: "+ myTeam.getTeamName());
     }
 
     public ITradeOffer findTrade(int congifMaxPlayerPerTrade) {
+
         int maxPlayersInTrade = 0;
         ArrayList<IPlayer> listOfPlayersToGive = new ArrayList<>();
         ArrayList<IPlayer> listOfPlayerWeWillGet = new ArrayList<>();
@@ -47,6 +58,7 @@ public class Scout implements IScout {
                     String positionWanted= findWeakPartOfTeam(myTeam);
                     listOfPlayersToGive.add(getWeakPlayer(myTeam,""));
                     playerToGiveIndex = playerToGiveIndex + 1;
+
                     teamToTrade = findTeamToTradeWith(myLeague, positionWanted, listOfPlayersToGive.get(playerToGiveIndex));
 
                     if (teamFound(teamToTrade)){
@@ -60,6 +72,8 @@ public class Scout implements IScout {
                         logger.info(myTeam.getTeamName()+"'s Scout found Player to Trade:"+player.getPlayerName());
                     }
                     else{
+                        listOfPlayersToGive.remove(playerToGiveIndex);
+                        playerToGiveIndex = playerToGiveIndex - 1;
                         if(PLAYER_WANTED_STRENGTH_MULTIPLIER > 1) {
                             PLAYER_WANTED_STRENGTH_MULTIPLIER = PLAYER_WANTED_STRENGTH_MULTIPLIER - 0.1;
                         }
@@ -76,7 +90,6 @@ public class Scout implements IScout {
                     String positionWanted= findWeakPartOfTeam(myTeam);
                     double playerStrengthNeeded = listOfPlayersToGive.get(playerToGiveIndex).getPlayerStrength()*PLAYER_WANTED_STRENGTH_MULTIPLIER-0.1;
                     IPlayer tempPlayerWeWillGet = getPlayerToTradeFromTeam(teamToTrade, positionWanted, playerStrengthNeeded);
-                    logger.info(myTeam.getTeamName()+"'s Scout found Player to Trade:"+ tempPlayerWeWillGet.getPlayerName());
 
                     myTeam.getPlayers().add(listOfPlayersToGive.get(playerToGiveIndex));
                     myTeam.getPlayers().remove(listOfPlayerWeWillGet.get(playerWeWillGetIndex));
@@ -121,17 +134,49 @@ public class Scout implements IScout {
                 }
             }
             else{
-                break;
+                String positionWanted= findWeakPartOfTeam(myTeam);
+                listOfPlayersToGive.add(getWeakPlayer(myTeam,""));
+                playerToGiveIndex = playerToGiveIndex + 1;
+                teamToTrade = findTeamToTradeWith(myLeague, positionWanted, listOfPlayersToGive.get(playerToGiveIndex));
+                if (teamFound(teamToTrade)){
+                    double playerStrengthNeeded = listOfPlayersToGive.get(playerToGiveIndex).getPlayerStrength()*PLAYER_WANTED_STRENGTH_MULTIPLIER;
+                    IPlayer player = findPlayerToTrade(teamToTrade, positionWanted, playerStrengthNeeded);
+                    listOfPlayerWeWillGet.add(player);
+                    playerWeWillGetIndex = playerWeWillGetIndex + 1;
+                    maxPlayersInTrade = maxPlayersInTrade + 1;
+                }
             }
         }
 
         if (teamFound(teamToTrade)){
-            ITradeOffer newOffer = factory.createExchangingPlayerTradeOffer(myTeam, teamToTrade, listOfPlayersToGive, listOfPlayerWeWillGet);
-            return newOffer;
+            ITradeType tradeType = getTradeTypeObject(teamToTrade);
+            if (congifMaxPlayerPerTrade > 1){
+                // TODO: 29-11-2020 add log for new trade offer
+                ITradeOffer newOffer = factory.createExchangingPlayerTradeOffer(myTeam, teamToTrade, listOfPlayersToGive, listOfPlayerWeWillGet,tradeType);
+                return newOffer;
+            }
+            else{
+                // TODO: 29-11-2020 add log for new trade offer
+                IPlayerDraft playerDraft = IPlayerDraft.instance();
+                // TODO: 29-11-2020 creational for this
+                ITradeOffer newOffer = new DraftPickTradeOffer(myTeam, teamToTrade, listOfPlayerWeWillGet, playerDraft);
+                return newOffer;
+            }
+
         }
         else{
             return null;
         }
+    }
+
+    public ITradeType getTradeTypeObject(ITeam teamToTrade){
+        ITradeType tradeType = null;
+        if(teamToTrade == userTeam){
+            tradeType = factory.createAiUserTrade(ioObject, myLeague);
+        }else{
+            tradeType = factory.createAiAiTrade(myLeague, gameConfig);
+        }
+        return tradeType;
     }
 
     public IPlayer getPlayerToTradeFromTeam(ITeam teamToTrade, String  positionWanted, Double playerStrengthNeeded){
@@ -198,7 +243,7 @@ public class Scout implements IScout {
         return weakPlayer;
     }
 
-    public ITeam findTeamToTradeWith(ILeagueObjectModel myLeague,String positionWanted,IPlayer playerToGive){
+    public ITeam findTeamToTradeWith(ILeagueObjectModel myLeague, String positionWanted, IPlayer playerToGive){
         for (IConference conference : myLeague.getConferences()) {
             for (IDivision division : conference.getDivisions()) {
                 for (ITeam team : division.getTeams()) {
@@ -231,8 +276,10 @@ public class Scout implements IScout {
 
     public IPlayer findPlayerToTrade(ITeam team, String positionWanted, double playerStrengthShouldBeMoreThan){
         IPlayer player = getWeakPlayer(team , positionWanted);
-        if (player.getPlayerStrength()>playerStrengthShouldBeMoreThan){
-            return player;
+        if(playerFound(player)){
+            if (player.getPlayerStrength()>playerStrengthShouldBeMoreThan){
+                return player;
+            }
         }
         return null;
     }

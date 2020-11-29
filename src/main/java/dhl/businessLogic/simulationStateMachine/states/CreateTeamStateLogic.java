@@ -125,7 +125,8 @@ public class CreateTeamStateLogic implements ICreateTeamStateLogic {
 
                 if (foundFreeAgent == null) {
                     selectedFreeAgents = null;
-                    throw new Exception("Free agent " + freeAgentName + " Doesn't Exist");
+                    myLogger.log(myLogger.getLevel(),"Free agent " + freeAgentName + " Doesn't Exist");
+                    break;
                 } else {
                     selectedFreeAgents.add(foundFreeAgent);
                 }

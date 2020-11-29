@@ -1,4 +1,4 @@
-package dhl.businessLogicTest.AgingTest;
+package dhl.businessLogicTest.agingTest;
 
 import dhl.Mocks.factory.MockAbstractFactory;
 import dhl.businessLogic.aging.LeagueSchedule;

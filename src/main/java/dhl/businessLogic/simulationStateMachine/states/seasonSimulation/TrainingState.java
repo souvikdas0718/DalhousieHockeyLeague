@@ -6,8 +6,8 @@ import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.factory.SchedulerAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
+import dhl.businessLogic.traning.ITraining;
 import dhl.businessLogic.traning.TrainingAbstractFactory;
-import dhl.businessLogic.traning.interfaces.ITraining;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 
 import java.time.DayOfWeek;

@@ -1,12 +1,9 @@
 package dhl.businessLogicTest.tradeTest;
 
-import dhl.businessLogic.leagueModel.*;
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
-import dhl.businessLogic.trade.Scout;
 import dhl.businessLogic.trade.factory.TradeAbstractFactory;
 import dhl.businessLogic.trade.factory.TradeConcreteFactory;
-import dhl.businessLogic.trade.interfaces.IScout;
 import dhl.businessLogic.trade.interfaces.ITradingEngine;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
 import dhl.businessLogicTest.tradeTest.mocks.GameConfigMockForTrading;
@@ -18,7 +15,6 @@ import dhl.businessLogic.trade.TradingEngine;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.util.ArrayList;
 import java.util.List;
 
 public class TradingEngineTest {
@@ -49,7 +45,6 @@ public class TradingEngineTest {
         gameConfigMock = tradeMockFactory.createGameConfigMockForTrading();
         ourGameConfig = gameConfigMock.getGameConfigMock();
 
-
         goodTeamMock = tradeMockFactory.createTeamMockForTrade().getTeamWithGoodPlayer();
         badTeamMock = tradeMockFactory.createTeamMockForTrade().getTeamWithBadPlayer();
         leagueMock = leagueMockFactory.createLeagueMock().getLeagueObjectModel();
@@ -68,8 +63,8 @@ public class TradingEngineTest {
     @Test
     public void startEngine() {
         double badTeamStrengthBeforeTrade = badTeamMock.calculateTeamStrength();
-        badTeamMock.setRoster();
         testClassObject.startEngine();
+        badTeamMock.setRoster();
         Assertions.assertTrue(badTeamStrengthBeforeTrade < badTeamMock.calculateTeamStrength());
     }
 
@@ -77,31 +72,6 @@ public class TradingEngineTest {
     public void performTradeTest(){
         testClassObject.performTrade(badTeamMock);
         Assertions.assertTrue(badTeamMock.getLossPoint() == 0);
-    }
-
-    @Test
-    public void sendTradeToRecevingTeamTest() {
-        ILeagueObjectModel leagueObjectModel = leagueMockFactory.createLeagueMock().getLeagueObjectModel();
-        IScout teamScout = tradeFactory.createScout(badTeamMock, leagueObjectModel, ourGameConfig);
-        int congifMaxPlayerPerTrade = Integer.parseInt(ourGameConfig.getValueFromOurObject(ourGameConfig.getTrading(), ourGameConfig.getMaxPlayersPerTrade()));
-
-        ITradeOffer tradeOffer = teamScout.findTrade(congifMaxPlayerPerTrade);
-
-        badTeamMock.setRoster();
-        double teamStrength = badTeamMock.calculateTeamStrength();
-
-        ((MockUserInputOutput) ioObject).setMockOutput("2");
-        testClassObject.sendTradeToRecevingTeam(tradeOffer, tradeOffer.getReceivingTeam());
-        double noChangeInStrength = badTeamMock.calculateTeamStrength();
-        Assertions.assertTrue(teamStrength == noChangeInStrength);
-
-        ((MockUserInputOutput) ioObject).setMockOutput("1");
-        Exception error = Assertions.assertThrows(Exception.class, () -> {
-            testClassObject.sendTradeToRecevingTeam(tradeOffer, tradeOffer.getReceivingTeam());
-        });
-        badTeamMock.setRoster();
-        double increasedTeamStrength = badTeamMock.calculateTeamStrength();
-        Assertions.assertTrue(teamStrength < increasedTeamStrength );
     }
 
     @Test

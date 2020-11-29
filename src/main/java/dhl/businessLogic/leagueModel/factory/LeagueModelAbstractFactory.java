@@ -63,5 +63,5 @@ public abstract class LeagueModelAbstractFactory {
 
     public abstract IPlayer createFreeAgentDefault();
 
-    public abstract IPlayerDraft createPlayerDraft(ILeagueObjectModel leagueObjectModel, ITeam[][] draftPickSequence);
+    public abstract IPlayerDraft createPlayerDraft();
 }
