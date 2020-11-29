@@ -1,4 +1,4 @@
-package dhl.businessLogicTest.training;
+package dhl.businessLogicTest.trainingTest;
 
 import dhl.Mocks.JsonFilePathMock;
 import dhl.Mocks.LeagueObjectModelMocks;

@@ -40,15 +40,11 @@ public class DeserializeLeagueObjectModel implements IDeserializeLeagueObjectMod
 
     public ILeagueObjectModel deserializeLeagueObjectJson(String leagueName) {
         String leagueObjectModelJsonPath = jsonFilePath + leagueName + jsonExtension;
+        ICreateLeagueObjectModel createLeagueObjectModel = null;
         FileReader reader = null;
         try {
-            reader = new FileReader(leagueObjectModelJsonPath);
-        } catch (FileNotFoundException e) {
-            logger.error("JSON File not found");
-        }
-        ICreateLeagueObjectModel createLeagueObjectModel = null;
 
-        try {
+            reader = new FileReader(leagueObjectModelJsonPath);
 
             JSONParser jsonParser = new JSONParser();
             JSONObject jsonLeagueObject = (JSONObject) jsonParser.parse(reader);
@@ -56,10 +52,12 @@ public class DeserializeLeagueObjectModel implements IDeserializeLeagueObjectMod
             IGameConfig gameConfig = null;
             JSONObject jsonLeagueObjectModel = updateLeagueObjectModelJson(jsonLeagueObject);
             createLeagueObjectModel = new CreateLeagueObjectModel(jsonLeagueObjectModel);
-        } catch (ParseException e) {
-            logger.error("Exception occured while parsing JSON");
+        } catch (FileNotFoundException e) {
+            logger.error("JSON File not found");
         } catch (IOException exception) {
             logger.error("IO Exception occured while deserializing League Object Model from path"+leagueObjectModelJsonPath);
+        } catch (ParseException e) {
+            e.printStackTrace();
         } finally {
             try {
                 reader.close();

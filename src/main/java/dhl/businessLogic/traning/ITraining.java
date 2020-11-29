@@ -1,4 +1,4 @@
-package dhl.businessLogic.traning.interfaces;
+package dhl.businessLogic.traning;
 
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 
