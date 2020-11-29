@@ -14,7 +14,7 @@ import dhl.businessLogic.simulationStateMachine.UpdateUserTeamRoster;
 import dhl.businessLogic.simulationStateMachine.interfaces.ITeamRosterUpdater;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
 import dhl.businessLogicTest.tradeTest.mocks.factory.TradeMockAbstractFactory;
-import dhl.inputOutput.ui.IUserInputOutput;
+import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -85,7 +85,7 @@ public class UpdateUserTeamRosterTest {
                 countDefence = countDefence + 1;
             }
         }
-        Assertions.assertEquals(countDefence, 10);
+        Assertions.assertEquals(10,countDefence );
 
         ((UpdateUserTeamRoster)testClassObject).updatePlayers(countDefence, PlayerPosition.DEFENSE.toString(),5, team, league);
         countDefence = 0;
@@ -94,7 +94,7 @@ public class UpdateUserTeamRosterTest {
                 countDefence = countDefence + 1;
             }
         }
-        Assertions.assertEquals(countDefence, 5);
+        Assertions.assertEquals(5,countDefence);
 
     }
 
