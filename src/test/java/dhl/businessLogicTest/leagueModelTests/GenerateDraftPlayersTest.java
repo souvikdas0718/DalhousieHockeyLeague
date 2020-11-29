@@ -30,7 +30,8 @@ public class GenerateDraftPlayersTest {
         IPlayerStatistics playerStatistics = generateDraftPlayers.generateStatForPlayer("forward");
         playerStatistics.calculateCurrentAge(LocalDate.of(2020,12,1));
         int age = playerStatistics.getAge();
-        Assertions.assertTrue(age >=18 && age<=21);
+        Assertions.assertTrue(age >=18);
+        Assertions.assertTrue(age<=21);
     }
 
     @Test
