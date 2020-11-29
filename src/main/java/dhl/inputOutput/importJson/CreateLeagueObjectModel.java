@@ -46,5 +46,4 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
         }
         return leagueObjectModel;
     }
-
 }

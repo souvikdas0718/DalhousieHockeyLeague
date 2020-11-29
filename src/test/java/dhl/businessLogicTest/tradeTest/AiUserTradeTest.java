@@ -35,6 +35,7 @@ public class AiUserTradeTest {
 
     @BeforeEach
     public void initObject() {
+        // TODO: 28-11-2020 creational pattern for this
         ioObjectMock = new MockUserInputOutput();
 
         tradeFactory = new TradeConcreteFactory();
@@ -57,7 +58,7 @@ public class AiUserTradeTest {
     }
 
     @Test
-    public void validateTeamRosterAfterTrade() throws Exception {
+    public void validateTeamRosterAfterTrade(){
 
         leagueObjectModel.freeAgents = tradeMockFactory.createFreeAgentMockForTrade().getListOfFreeAgents();
         ITeam team = tradeMockFactory.createTeamMockForTrade().getTeamWithGoodPlayer();
@@ -65,7 +66,6 @@ public class AiUserTradeTest {
         ((MockUserInputOutput) ioObjectMock).setMockOutput("1");
 
         testClassObject.validateTeamRosterAfterTrade(team, leagueObjectModel);
-        team.setRoster();
         Assertions.assertTrue(team.checkTeamPlayersCount());
 
         team.getPlayers().add(tradeMockFactory.createPlayerMockForTrade().getWeakPlayer("randomPlayer1", PlayerPosition.DEFENSE.toString()));
@@ -84,7 +84,7 @@ public class AiUserTradeTest {
     }
 
     @Test
-    public void isTradeAcceptedTest() throws Exception {
+    public void isTradeAcceptedTest() {
 
         ((MockUserInputOutput) ioObjectMock).setMockOutput("1");
         Assertions.assertTrue(testClassObject.isTradeAccepted());

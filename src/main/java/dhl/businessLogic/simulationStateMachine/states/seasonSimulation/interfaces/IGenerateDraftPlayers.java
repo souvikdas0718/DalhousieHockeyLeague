@@ -8,5 +8,5 @@ public interface IGenerateDraftPlayers {
 
     List<IPlayer> generateDraftPlayers();
 
-    public List<IPlayer> getDraftPlayers();
+    List<IPlayer> getDraftPlayers();
 }

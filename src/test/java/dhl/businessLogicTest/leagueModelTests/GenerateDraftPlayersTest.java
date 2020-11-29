@@ -1,7 +1,7 @@
-package dhl.businessLogicTest.simulationStateMachineTest.states.seasonSimulationTest;
+package dhl.businessLogicTest.leagueModelTests;
 
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
-import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.GenerateDraftPlayers;
+import dhl.businessLogic.leagueModel.GenerateDraftPlayers;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.factory.SimulationStateAbstractFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,8 +22,7 @@ public class GenerateDraftPlayersTest {
     @Test
     public void generateDraftPlayersTest(){
         generateDraftPlayers.generateDraftPlayers();
-        System.out.println(generateDraftPlayers.getDraftPlayers().size());
-        Assertions.assertTrue(generateDraftPlayers.getDraftPlayers().size()==224);
+        Assertions.assertEquals(224,generateDraftPlayers.getDraftPlayers().size());
     }
 
     @Test

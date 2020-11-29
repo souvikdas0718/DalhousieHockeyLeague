@@ -29,6 +29,4 @@ public class ManagerMock {
         return managers;
     }
 
-
-
 }

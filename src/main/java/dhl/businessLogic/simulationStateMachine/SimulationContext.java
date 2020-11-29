@@ -37,6 +37,7 @@ public class SimulationContext implements ISimulationSeasonState {
     ISimulationSeasonState persistsSameSeason;
     ISimulationSeasonState simulateGame;
     ISimulationSeasonState training;
+    ISimulationSeasonState playerDraft;
 
     IScheduler scheduler;
     IScheduler regularScheduler;
@@ -82,6 +83,7 @@ public class SimulationContext implements ISimulationSeasonState {
         persistsSameSeason = factory.getPersistSameSeasonState(this);
         simulateGame = factory.getSimulateGameState(this);
         training = factory.getTrainingState(this);
+        playerDraft = factory.getPlayerDraftState(this);
 
         userTeam = gameState.getSelectedTeam();
         currentSimulation = initializeSeason;
@@ -374,6 +376,14 @@ public class SimulationContext implements ISimulationSeasonState {
 
     public void setTraining(ISimulationSeasonState training) {
         this.training = training;
+    }
+
+    public ISimulationSeasonState getPlayerDraft() {
+        return playerDraft;
+    }
+
+    public void setPlayerDraft(ISimulationSeasonState playerDraft) {
+        this.playerDraft = playerDraft;
     }
 
     public boolean isSeasonInProgress() {

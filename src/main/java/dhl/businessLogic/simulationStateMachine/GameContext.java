@@ -3,6 +3,7 @@ package dhl.businessLogic.simulationStateMachine;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
+import dhl.businessLogic.simulationStateMachine.interfaces.IGameContext;
 import dhl.businessLogic.simulationStateMachine.interfaces.IGameState;
 import dhl.businessLogic.simulationStateMachine.states.CreateTeamState;
 import dhl.businessLogic.simulationStateMachine.states.ImportState;
@@ -12,7 +13,7 @@ import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 
 import java.time.LocalDate;
 
-public class GameContext {
+public class GameContext implements IGameContext {
     IGameState importState;
     IGameState loadTeamState;
     IGameState simulateState;
