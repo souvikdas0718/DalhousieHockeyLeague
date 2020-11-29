@@ -73,6 +73,7 @@ public class AgingStateTest {
         simulationContext.setGameConfig(gameConfig);
         simulationContext.setInMemoryLeague(leagueObjectModel);
         simulationContext.setNumberOfDays(365);
+        simulationContext.setStartOfSimulation(LocalDate.of(2020,10,01));
         agingState = (AgingState) seasonSimulationStateFactory.getAgingState(simulationContext);
         agingState.seasonStateProcess();
         Assertions.assertTrue(agingState.getSimulationContext().getInMemoryLeague().getFreeAgents().get(0).getPlayerName().equals("Player0"));
@@ -94,7 +95,7 @@ public class AgingStateTest {
         agingState = (AgingState) seasonSimulationStateFactory.getAgingState(simulationContext);
         agingState.seasonStateExitProcess();
 
-        Assertions.assertTrue(agingState.getSimulationContext().getCurrentSimulation() == agingState.getSimulationContext().getPersistsSeason());
+        Assertions.assertFalse(agingState.getSimulationContext().getCurrentSimulation() == agingState.getSimulationContext().getPersistsSeason());
 
     }
 }

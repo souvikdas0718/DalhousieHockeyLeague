@@ -3,6 +3,7 @@ package dhl.businessLogic.simulationStateMachine.states.standings;
 
 import dhl.businessLogic.leagueModel.interfaceModel.IConference;
 import dhl.businessLogic.leagueModel.interfaceModel.IDivision;
+import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandingSystem;
 import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandings;
@@ -88,6 +89,24 @@ public class StandingSystem implements IStandingSystem {
                 return Integer.compare(objectTwo.getPoints(), objectOne.getPoints());
             }
         });
+    }
+
+    public void createStandings(ILeagueObjectModel leagueObjectModel) {
+        for (IConference conference : leagueObjectModel.getConferences()) {
+            for (IDivision division : conference.getDivisions()) {
+                for (ITeam team : division.getTeams()) {
+                    IStandings standings = new Standings();
+                    standings.setTeamConference(conference);
+                    standings.setTeamDivision(division);
+                    standings.setTeam(team);
+                    standings.setPoints(0);
+                    standings.setWins(0);
+                    standings.setLoss(0);
+                    standings.setGamesPlayed(0);
+                    standingsList.add(standings);
+                }
+            }
+        }
     }
 
 }

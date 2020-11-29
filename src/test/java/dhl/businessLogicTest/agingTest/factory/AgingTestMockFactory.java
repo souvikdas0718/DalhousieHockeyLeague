@@ -1,9 +1,9 @@
-package dhl.businessLogicTest.agingTest.factory;
+package dhl.businessLogicTest.AgingTest.factory;
 
-import dhl.businessLogicTest.agingTest.mocks.AgingMock;
+import dhl.businessLogicTest.AgingTest.mocks.AgingMock;
 
 public class AgingTestMockFactory extends AgingTestAbstractFactory {
-    public AgingMock createAgingMock(){
+    public AgingMock createAgingMock() {
         return new AgingMock();
     }
 

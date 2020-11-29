@@ -3,7 +3,9 @@ package dhl.businessLogic.simulationStateMachine.states.standings.interfaces;
 
 import dhl.businessLogic.leagueModel.interfaceModel.IConference;
 import dhl.businessLogic.leagueModel.interfaceModel.IDivision;
+import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
+import dhl.businessLogic.simulationStateMachine.states.standings.Standings;
 
 import java.util.List;
 
@@ -24,4 +26,6 @@ public interface IStandingSystem {
     public List<IStandings> leagueRanking();
 
     public void rankGenerator(List<IStandings> rankList);
+
+    public void createStandings(ILeagueObjectModel leagueObjectModel);
 }

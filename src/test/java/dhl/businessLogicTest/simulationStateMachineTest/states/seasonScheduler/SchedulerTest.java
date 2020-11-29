@@ -220,8 +220,8 @@ public class SchedulerTest {
         IScheduler scheduler = schedulerAbstractFactory.getScheduler();
 
         LocalDate playOffStartDate = LocalDate.of(2021, 04, 01);
-        LocalDate playOffStarts = playOffStartDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.SATURDAY)).with(
-                TemporalAdjusters.next(DayOfWeek.SATURDAY));
+        LocalDate playOffStarts = playOffStartDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.WEDNESDAY)).with(
+                TemporalAdjusters.next(DayOfWeek.WEDNESDAY));
         scheduler.setPlayOffStartDate(playOffStarts);
         scheduler.playOffs(standings, league);
         int matchNumber = 1;

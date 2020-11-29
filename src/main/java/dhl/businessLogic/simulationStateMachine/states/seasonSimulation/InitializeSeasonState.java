@@ -5,6 +5,11 @@ import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.factory.SchedulerAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
+import dhl.businessLogic.simulationStateMachine.states.standings.Standings;
+import dhl.businessLogic.simulationStateMachine.states.standings.factory.StandingsAbstractFactory;
+import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandingSystem;
+import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandings;
+import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -17,11 +22,18 @@ public class InitializeSeasonState implements ISimulationSeasonState {
     SimulationContext simulationContext;
     IScheduler scheduler;
     SchedulerAbstractFactory schedulerAbstractFactory;
+    StandingsAbstractFactory standingsAbstractFactory;
+    IUserInputOutput userInputOutput;
+    IStandings standings;
+    IStandingSystem standingSystem;
 
     public InitializeSeasonState(SimulationContext simulationContext) {
         this.simulationContext = simulationContext;
         schedulerAbstractFactory = SchedulerAbstractFactory.instance();
         scheduler = schedulerAbstractFactory.getScheduler();
+        standingsAbstractFactory = StandingsAbstractFactory.instance();
+        standingSystem = standingsAbstractFactory.getStandingSystem();
+        userInputOutput = IUserInputOutput.getInstance();
     }
 
     public SimulationContext getSimulationContext() {
@@ -34,6 +46,7 @@ public class InitializeSeasonState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateProcess() {
+        userInputOutput.printMessage("Into the state process of Initialize season");
         LocalDate simulationStartDate = LocalDate.of(simulationContext.getYear(), 9, 30);
         simulationContext.setStartOfSimulation(simulationStartDate);
         scheduler.generateTeamList(simulationContext.getInMemoryLeague());
@@ -43,10 +56,13 @@ public class InitializeSeasonState implements ISimulationSeasonState {
                 .with(nextOrSame(DayOfWeek.SATURDAY));
         scheduler.gameScheduleDates(simulationContext.getStartOfSimulation().plusDays(1), regularSeasonEndDate);
         simulationContext.setRegularScheduler(scheduler);
+        standingSystem.createStandings(simulationContext.getInMemoryLeague());
+
     }
 
     @Override
     public void seasonStateExitProcess() {
+        userInputOutput.printMessage("Into the exit process of Initialize season");
         simulationContext.setCurrentSimulation(simulationContext.getAdvanceTime());
     }
 }
