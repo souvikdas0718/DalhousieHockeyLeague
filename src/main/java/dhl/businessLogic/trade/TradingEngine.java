@@ -48,7 +48,7 @@ public class TradingEngine extends ITradingEngine {
                     if (findLossPointOfTheTeam(team) > configLossPoint) {
                         double randomNumber = Math.random();
                         if (randomNumber > configRandomTradeChance) {
-                            //performTrade(team);
+                            performTrade(team);
                         }
                     }
                 }

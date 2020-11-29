@@ -2,7 +2,7 @@ package dhl.businessLogicTest.tradeTest;
 
 import dhl.businessLogic.leagueModel.PlayerPosition;
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
-import dhl.businessLogic.simulationStateMachine.RosterUpdaterAbstractFactory;
+import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.trade.factory.TradeAbstractFactory;
 import dhl.businessLogic.trade.factory.TradeConcreteFactory;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
@@ -12,10 +12,7 @@ import dhl.Mocks.MockUserInputOutput;
 import dhl.businessLogic.leagueModel.LeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.simulationStateMachine.interfaces.ITeamRosterUpdater;
-import dhl.businessLogic.simulationStateMachine.UpdateUserTeamRoster;
 import dhl.businessLogic.trade.AiUserTrade;
-import dhl.businessLogic.trade.interfaces.ITradeOffer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,11 +21,15 @@ import java.util.ArrayList;
 
 public class AiUserTradeTest {
 
-    /*
     AiUserTrade testClassObject;
     IUserInputOutput ioObjectMock;
     LeagueModelMockAbstractFactory leagueMockFactory;
     LeagueObjectModel leagueObjectModel;
+    IGameConfig ourGameConfig;
+
+    ArrayList<IPlayer> offeringPlayers = new ArrayList<>();
+    ArrayList<IPlayer> playersWanted = new ArrayList<>();
+    ITeam offeringTeam,recevingTeam;
 
     TradeAbstractFactory tradeFactory;
     LeagueModelAbstractFactory leagueFactory;
@@ -43,19 +44,17 @@ public class AiUserTradeTest {
         leagueFactory = LeagueModelAbstractFactory.instance();
         tradeMockFactory = TradeMockAbstractFactory.instance();
 
-        ArrayList<IPlayer> offeringPlayers = new ArrayList<>();
-        ArrayList<IPlayer> playersWanted = new ArrayList<>();
         leagueMockFactory = LeagueModelMockAbstractFactory.instance();
 
-        ITeam offeringTeam = tradeMockFactory.createTeamMockForTrade().getTeamWithBadPlayer();
-        ITeam recevingTeam = tradeMockFactory.createTeamMockForTrade().getTeamWithGoodPlayer();
+        offeringTeam = tradeMockFactory.createTeamMockForTrade().getTeamWithBadPlayer();
+        recevingTeam = tradeMockFactory.createTeamMockForTrade().getTeamWithGoodPlayer();
 
         offeringPlayers.add(offeringTeam.getPlayers().get(0));
         playersWanted.add(recevingTeam.getPlayers().get(0));
-        ITradeOffer tradeOffer = tradeFactory.createExchangingPlayerTradeOffer(offeringTeam, recevingTeam, offeringPlayers, playersWanted);
-        ITeamRosterUpdater updateUserTeamRoster = RosterUpdaterAbstractFactory.instance().createUpdateUserTeamRoster(ioObjectMock);
-        testClassObject = (AiUserTrade) tradeFactory.createAiUserTrade(tradeOffer, ioObjectMock, updateUserTeamRoster);
+
+        ourGameConfig = tradeMockFactory.createGameConfigMockForTrading().getGameConfigMock();
         leagueObjectModel = (LeagueObjectModel) leagueMockFactory.createLeagueMock().getLeagueObjectModel();
+        testClassObject = (AiUserTrade) tradeFactory.createAiUserTrade(ioObjectMock, leagueObjectModel);
     }
 
     @Test
@@ -66,7 +65,7 @@ public class AiUserTradeTest {
 
         ((MockUserInputOutput) ioObjectMock).setMockOutput("1");
 
-        testClassObject.validateTeamRosterAfterTrade(team, leagueObjectModel);
+        testClassObject.validateTeamRosterAfterTrade(team);
         Assertions.assertTrue(team.checkTeamPlayersCount());
 
         team.getPlayers().add(tradeMockFactory.createPlayerMockForTrade().getWeakPlayer("randomPlayer1", PlayerPosition.DEFENSE.toString()));
@@ -79,7 +78,7 @@ public class AiUserTradeTest {
                 leagueFactory.createPlayerStatistics( 3, 1, 4, 5));
         team.getPlayers().add(player);
         ((MockUserInputOutput) ioObjectMock).setMockOutput("0");
-        testClassObject.validateTeamRosterAfterTrade(team, leagueObjectModel);
+        testClassObject.validateTeamRosterAfterTrade(team);
         team.setRoster();
         Assertions.assertTrue(team.checkTeamPlayersCount());
     }
@@ -88,13 +87,10 @@ public class AiUserTradeTest {
     public void isTradeAcceptedTest() {
 
         ((MockUserInputOutput) ioObjectMock).setMockOutput("1");
-        Assertions.assertTrue(testClassObject.isTradeAccepted());
+        Assertions.assertTrue(testClassObject.isTradeAccepted(offeringPlayers, playersWanted,recevingTeam ));
 
         ((MockUserInputOutput) ioObjectMock).setMockOutput("2");
-        Assertions.assertFalse(testClassObject.isTradeAccepted());
+        Assertions.assertFalse(testClassObject.isTradeAccepted(offeringPlayers, playersWanted,recevingTeam));
 
     }
-
-     */
-
 }

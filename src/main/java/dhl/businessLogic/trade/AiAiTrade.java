@@ -1,17 +1,14 @@
 package dhl.businessLogic.trade;
 
-import dhl.businessLogic.leagueModel.PlayerPosition;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogic.simulationStateMachine.RosterUpdaterAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.interfaces.ITeamRosterUpdater;
-import dhl.businessLogic.trade.interfaces.ITradeOffer;
 import dhl.businessLogic.trade.interfaces.ITradeType;
 import dhl.inputOutput.importJson.interfaces.IGeneralManagerPersonalityList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.Dictionary;
-
 
 public class AiAiTrade implements ITradeType {
 
@@ -31,6 +28,7 @@ public class AiAiTrade implements ITradeType {
         managerPersonalityList = managerPersonalityObject.getGeneralManagerPersonalityList();
 
     }
+
     public boolean isTradeAccepted(ArrayList<IPlayer> playersOffered, ArrayList<IPlayer> playerswanted, ITeam receivingTeam) {
         double configRandomAcceptanceChance = Double.parseDouble(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getRandomAcceptanceChance()));
         double randomValue = Math.random();
@@ -52,7 +50,7 @@ public class AiAiTrade implements ITradeType {
     }
 
     public void validateTeamRosterAfterTrade(ITeam team) {
-        System.out.println("fixed");
+        rosterUpdater.validateTeamRoster(team, league);
     }
 
     public boolean isTradeGoodForReceivingTeam(ArrayList<IPlayer> playersOffered, ArrayList<IPlayer> playerswanted) {

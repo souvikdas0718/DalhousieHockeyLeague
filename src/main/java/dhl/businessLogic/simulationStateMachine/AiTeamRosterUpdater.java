@@ -5,7 +5,6 @@ import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.simulationStateMachine.interfaces.ITeamRosterUpdater;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,6 +65,7 @@ public class AiTeamRosterUpdater implements ITeamRosterUpdater {
     }
 
     public void addPlayer(String playerPosition, ITeam team, ILeagueObjectModel league) {
+
         IPlayer player = findBestPlayerInList(playerPosition, league.getFreeAgents());
         team.getPlayers().add(player);
         league.getFreeAgents().remove(player);

@@ -45,7 +45,6 @@ public class TradingEngineTest {
         gameConfigMock = tradeMockFactory.createGameConfigMockForTrading();
         ourGameConfig = gameConfigMock.getGameConfigMock();
 
-
         goodTeamMock = tradeMockFactory.createTeamMockForTrade().getTeamWithGoodPlayer();
         badTeamMock = tradeMockFactory.createTeamMockForTrade().getTeamWithBadPlayer();
         leagueMock = leagueMockFactory.createLeagueMock().getLeagueObjectModel();
@@ -63,44 +62,17 @@ public class TradingEngineTest {
 
     @Test
     public void startEngine() {
-        badTeamMock.setRoster();
         double badTeamStrengthBeforeTrade = badTeamMock.calculateTeamStrength();
         testClassObject.startEngine();
-        //Assertions.assertTrue(badTeamStrengthBeforeTrade < badTeamMock.calculateTeamStrength());
+        badTeamMock.setRoster();
+        Assertions.assertTrue(badTeamStrengthBeforeTrade < badTeamMock.calculateTeamStrength());
     }
-
 
     @Test
     public void performTradeTest(){
         testClassObject.performTrade(badTeamMock);
         Assertions.assertTrue(badTeamMock.getLossPoint() == 0);
     }
-
-    /*
-    @Test
-    public void sendTradeToRecevingTeamTest() {
-        ILeagueObjectModel leagueObjectModel = leagueMockFactory.createLeagueMock().getLeagueObjectModel();
-        IScout teamScout = tradeFactory.createScout(badTeamMock, leagueObjectModel, ourGameConfig);
-        int congifMaxPlayerPerTrade = Integer.parseInt(ourGameConfig.getValueFromOurObject(ourGameConfig.getTrading(), ourGameConfig.getMaxPlayersPerTrade()));
-
-        ITradeOffer tradeOffer = teamScout.findTrade(congifMaxPlayerPerTrade);
-
-        badTeamMock.setRoster();
-        double teamStrength = badTeamMock.calculateTeamStrength();
-
-        ((MockUserInputOutput) ioObject).setMockOutput("2");
-        testClassObject.sendTradeToRecevingTeam(tradeOffer, tradeOffer.getReceivingTeam());
-        double noChangeInStrength = badTeamMock.calculateTeamStrength();
-        Assertions.assertTrue(teamStrength == noChangeInStrength);
-
-        ((MockUserInputOutput) ioObject).setMockOutput("1");
-        Exception error = Assertions.assertThrows(Exception.class, () -> {
-            testClassObject.sendTradeToRecevingTeam(tradeOffer, tradeOffer.getReceivingTeam());
-        });
-        badTeamMock.setRoster();
-        double increasedTeamStrength = badTeamMock.calculateTeamStrength();
-        Assertions.assertTrue(teamStrength < increasedTeamStrength );
-    }*/
 
     @Test
     public void getCurrentTradeTest(){
