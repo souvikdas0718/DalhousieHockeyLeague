@@ -1,9 +1,8 @@
 package dhl;
 
-import dhl.businessLogic.simulationStateMachine.GameContext;
-import dhl.businessLogic.trade.Scout;
+import dhl.businessLogic.simulationStateMachine.interfaces.IGameContext;
+import dhl.businessLogic.simulationStateMachine.states.StatesAbstractFactory;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
-import dhl.inputOutput.ui.UserInputOutput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,7 +13,9 @@ public class StartGame {
     public static void main(String[] args) throws Exception {
         IUserInputOutput ioObject = IUserInputOutput.getInstance();
         ioObject.printMessage(" Welcome to Dynasty Mode ");
-        GameContext ourGame = new GameContext();
+        StatesAbstractFactory statesFactory = StatesAbstractFactory.instance();
+        IGameContext ourGame = statesFactory.createGameContext();
+
 
         logger.info("Starting Game");
 
