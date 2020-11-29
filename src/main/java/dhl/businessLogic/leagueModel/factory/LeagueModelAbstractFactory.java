@@ -57,8 +57,6 @@ public abstract class LeagueModelAbstractFactory {
 
     public abstract ICoach createCoachDefault();
 
-    public abstract IGeneralManager createGeneralManagerDefault();
-
     public abstract ITeam createTeamDefault();
 
     public abstract IPlayer createPlayerDefault();

@@ -59,8 +59,4 @@ public class PlayerMock {
         return factory.createPlayer("Harry", "forward", false, playerStatistics);
     }
 
-
-
-
-
 }

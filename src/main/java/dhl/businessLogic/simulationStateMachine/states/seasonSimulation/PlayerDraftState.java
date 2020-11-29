@@ -1,9 +1,11 @@
 package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 
-import dhl.businessLogic.aging.Aging;
 import dhl.businessLogic.leagueModel.Team;
+import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
+import dhl.businessLogic.simulationStateMachine.RosterUpdaterAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
+import dhl.businessLogic.simulationStateMachine.interfaces.ITeamRosterUpdater;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.factory.SimulationStateAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.IGenerateDraftPlayers;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
@@ -24,9 +26,12 @@ public class PlayerDraftState implements ISimulationSeasonState {
     IGenerateDraftPlayers generateDraftPlayers;
     SimulationContext simulationContext;
     SimulationStateAbstractFactory simulationFactory;
+    LeagueModelAbstractFactory leagueFactory;
     List<ITeam> teamsInLeague;
     ITeam userTeam;
     ITeam [][] draftPickSequence = new Team[NOOFTEAMS][DRAFTROUNDS];
+    ILeagueObjectModel leagueObjectModel;
+    IPlayerDraft playerDraft;
 
     public PlayerDraftState(SimulationContext simulationContext){
         logger.info("Player draft Constructor initialized");
@@ -36,33 +41,13 @@ public class PlayerDraftState implements ISimulationSeasonState {
         teamsInLeague = new ArrayList<>();
         userTeam = this.simulationContext.getUserTeam();
         initializePlayerDraftPick();
-    }
-
-    public void initializePlayerDraftPick(){
-        logger.info("Initialize player draft pick");
-        getTeams();
-        for (int i = 0; i < NOOFTEAMS; i++) {
-            for (int j = 0; j < DRAFTROUNDS; j++) {
-                logger.debug("Initialize player draft pick for team"+teamsInLeague.get(i));
-                draftPickSequence[i][j]=teamsInLeague.get(i);
-            }
-        }
-    }
-
-    public ITeam[][] getDraftPickSequence() {
-        return draftPickSequence;
-    }
-
-    public void setDraftPickSequence(ITeam[][] draftPickSequence) {
-        this.draftPickSequence = draftPickSequence;
-    }
-
-    public List<ITeam> getTeamsInLeague() {
-        return teamsInLeague;
+        leagueFactory = LeagueModelAbstractFactory.instance();
+        playerDraft = leagueFactory.createPlayerDraft(simulationContext.getInMemoryLeague(),draftPickSequence);
     }
 
     public void seasonStateProcess() {
         logger.info("Player Draft season state process");
+        draftPickSequence = playerDraft.getDraftPickSequence();
         List<IStandings> standings= simulationContext.getStandings();
         List<ITeam> reversedStandings = reverseStandingOrder(standings);
         int lastUpdatedIndex = 0;
@@ -84,6 +69,40 @@ public class PlayerDraftState implements ISimulationSeasonState {
                 }
             }
         }
+    }
+
+    public void seasonStateExitProcess() {
+        logger.info("Player Draft Season State Exit process");
+        addDraftPlayersToTeam();
+        RosterUpdaterAbstractFactory rosterFactory = RosterUpdaterAbstractFactory.instance();
+        ITeamRosterUpdater rosterUpdater = rosterFactory.createAiTeamRosterUpdater();
+        for(IConference conference:leagueObjectModel.getConferences()){
+            for(IDivision division:conference.getDivisions()){
+                for(ITeam team:division.getTeams()){
+                    rosterUpdater.validateTeamRoster(team,leagueObjectModel);
+                }
+            }
+        }
+    }
+
+
+    public void initializePlayerDraftPick(){
+        logger.info("Initialize player draft pick");
+        getTeams();
+        for (int i = 0; i < NOOFTEAMS; i++) {
+            for (int j = 0; j < DRAFTROUNDS; j++) {
+                logger.debug("Initialize player draft pick for team"+teamsInLeague.get(i));
+                draftPickSequence[i][j]=teamsInLeague.get(i);
+            }
+        }
+    }
+
+    public ITeam[][] getDraftPickSequence() {
+        return draftPickSequence;
+    }
+
+    public List<ITeam> getTeamsInLeague() {
+        return teamsInLeague;
     }
 
     public Map<Integer,ITeam> fetchTeamsInDraftRound(int draftRoundNo){
@@ -123,7 +142,7 @@ public class PlayerDraftState implements ISimulationSeasonState {
     public void getTeams(){
         logger.info("Fetching all teams in league");
         logger.debug("Fetching teams in league to initialize player draft pick 2D array");
-        ILeagueObjectModel leagueObjectModel = simulationContext.getInMemoryLeague();
+        leagueObjectModel = simulationContext.getInMemoryLeague();
         for(IConference conference:leagueObjectModel.getConferences()){
             for(IDivision division:conference.getDivisions()){
                 for(ITeam team:division.getTeams()){
@@ -139,10 +158,6 @@ public class PlayerDraftState implements ISimulationSeasonState {
         return !teamName.equals(userTeam.getTeamName());
     }
 
-    public void seasonStateExitProcess() {
-        addDraftPlayersToTeam();
-    }
-
     public void addDraftPlayersToTeam(){
         List<IPlayer> draftPlayers = generateDraftPlayers.generateDraftPlayers();
         int counter =0;
@@ -154,6 +169,6 @@ public class PlayerDraftState implements ISimulationSeasonState {
                counter=counter+1;
             }
         }
-
     }
+
 }

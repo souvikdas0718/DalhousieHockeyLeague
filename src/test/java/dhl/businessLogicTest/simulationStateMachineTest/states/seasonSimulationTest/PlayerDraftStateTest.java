@@ -1,5 +1,6 @@
 package dhl.businessLogicTest.simulationStateMachineTest.states.seasonSimulationTest;
 
+import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
@@ -52,12 +53,12 @@ public class PlayerDraftStateTest {
         standings.add(standing2);
         simulationContext.setStandings(standings);
         playerDraftState =  (PlayerDraftState) simulationFactory.getPlayerDraftState(simulationContext) ;
+        LeagueModelAbstractFactory leagueFactory = LeagueModelAbstractFactory.instance();
+        leagueFactory.createPlayerDraft(simulationContext.getInMemoryLeague(),playerDraftState.getDraftPickSequence());
     }
 
     @Test
     public void setDraftPickSequenceTest() {
-        ITeam [][] draftPickSequence={{teamMock.getTeam()}};
-        playerDraftState.setDraftPickSequence(draftPickSequence);
         Assertions.assertTrue(playerDraftState.getDraftPickSequence().length>0);
     }
 
@@ -75,6 +76,21 @@ public class PlayerDraftStateTest {
     }
 
     @Test
+    public void addDraftPlayersToTeamTest(){
+        List<IPlayer> players = new ArrayList<>();
+        ILeagueObjectModel leagueObjectModel = simulationContext.getInMemoryLeague();
+        playerDraftState.addDraftPlayersToTeam();
+        for(IConference conference:leagueObjectModel.getConferences()){
+            for(IDivision division:conference.getDivisions()){
+                for(ITeam team : division.getTeams()){
+                    players = team.getPlayers();
+                }
+            }
+        }
+        Assertions.assertTrue(players.size()>30);
+    }
+
+    @Test
     public void seasonStateExitProcessTest(){
         List<IPlayer> players = new ArrayList<>();
         ILeagueObjectModel leagueObjectModel = simulationContext.getInMemoryLeague();
@@ -86,6 +102,6 @@ public class PlayerDraftStateTest {
                 }
             }
         }
-        Assertions.assertTrue(players.size()>30);
+        Assertions.assertTrue(players.size()==30);
     }
 }

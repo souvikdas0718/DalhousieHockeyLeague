@@ -74,10 +74,6 @@ public class LeagueModelFactory extends LeagueModelAbstractFactory {
         return new Coach();
     }
 
-    public IGeneralManager createGeneralManagerDefault() {
-        return new GeneralManager();
-    }
-
     public ITeam createTeamDefault() {
         return new Team();
     }

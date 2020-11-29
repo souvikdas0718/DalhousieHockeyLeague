@@ -1,5 +1,6 @@
 package dhl.businessLogic.simulationStateMachine.states.seasonSimulation.factory;
 
+import dhl.businessLogic.leagueModel.GenerateDraftPlayers;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.*;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.IGenerateDraftPlayers;

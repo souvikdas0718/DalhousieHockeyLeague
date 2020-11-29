@@ -1,7 +1,5 @@
-package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
+package dhl.businessLogic.leagueModel;
 
-import dhl.businessLogic.leagueModel.PlayerPosition;
-import dhl.businessLogic.leagueModel.Team;
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
