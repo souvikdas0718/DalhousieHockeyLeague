@@ -9,6 +9,9 @@ import java.time.Month;
 import java.time.temporal.TemporalAdjusters;
 
 public class AdvanceTimeState implements ISimulationSeasonState {
+    private static final Month PLAYERDRAFTMONTH=Month.JULY;
+    private static final int PLAYERDRAFTDATE=15;
+    private static final Month APRILMONTH = Month.APRIL;
 
     SimulationContext simulationContext;
 
@@ -33,14 +36,17 @@ public class AdvanceTimeState implements ISimulationSeasonState {
     public void seasonStateExitProcess() {
         LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
         LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());
-        if (currentDate.getMonth() == Month.APRIL) {
+        if (currentDate.getMonth() == APRILMONTH) {
             LocalDate endOfRegularSeasonDate = currentDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.SATURDAY));
             if (currentDate.equals(endOfRegularSeasonDate)) {
                 simulationContext.setCurrentSimulation(simulationContext.getPlayoffSchedule());
             } else {
                 simulationContext.setCurrentSimulation(simulationContext.getTraining());
             }
-        } else {
+        }else if(currentDate.getMonth() == PLAYERDRAFTMONTH && currentDate.getDayOfMonth() == PLAYERDRAFTDATE){
+            simulationContext.setCurrentSimulation(simulationContext.getPlayerDraft());
+        }
+        else {
             simulationContext.setCurrentSimulation(simulationContext.getTraining());
         }
     }
