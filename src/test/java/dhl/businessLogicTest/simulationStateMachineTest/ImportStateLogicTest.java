@@ -15,6 +15,7 @@ import java.io.IOException;
 
 public class ImportStateLogicTest {
     private static final String SCHEMAFILEPATH = "src/main/java/dhl/inputOutput/importJson/jsonSchema/schema.json";
+    private static final String SCHEMAFILEPATHINCORRECT = "src/test/java/dhl/Mocks/schemaIncorrect.json";
     ImportStateLogic testClassObject;
     GameContext ourGame;
     LeagueObjectModelMocks leagueObjectModelMock;
@@ -50,6 +51,8 @@ public class ImportStateLogicTest {
         String leagueJson = importJsonFile.getJsonIntoString(filePathMock.getFilePath());
         String schemaJson = importJsonFile.getJsonIntoString(SCHEMAFILEPATH);
         Assertions.assertTrue(testClassObject.jsonSchemaValidation(leagueJson,schemaJson));
+
+        Assertions.assertFalse(testClassObject.jsonSchemaValidation(leagueJson,SCHEMAFILEPATHINCORRECT));
     }
 
     @Test

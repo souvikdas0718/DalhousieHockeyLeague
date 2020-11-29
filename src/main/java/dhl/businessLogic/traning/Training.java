@@ -2,7 +2,6 @@ package dhl.businessLogic.traning;
 
 import dhl.businessLogic.aging.interfaceAging.IInjury;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
-import dhl.businessLogic.traning.interfaces.ITraining;
 
 import java.util.List;
 

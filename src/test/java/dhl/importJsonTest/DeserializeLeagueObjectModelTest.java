@@ -3,24 +3,16 @@ package dhl.importJsonTest;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.Mocks.SerializedJsonMock;
 import dhl.businessLogic.leagueModel.LeagueObjectModel;
-import dhl.businessLogic.leagueModel.Player;
-import dhl.businessLogic.leagueModel.PlayerStatistics;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
-import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
-
 import dhl.inputOutput.importJson.serializeDeserialize.DeserializeLeagueObjectModel;
 import dhl.inputOutput.importJson.serializeDeserialize.SerializeLeagueObjectModel;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class DeserializeLeagueObjectModelTest {
@@ -49,6 +41,9 @@ public class DeserializeLeagueObjectModelTest {
     public void deserializeLeagueObjectJsonTest() throws Exception {
         leagueObjectModel = deserializeleagueObjectModel.deserializeLeagueObjectJson("DhlMockLeagueObjectModel");
         Assertions.assertEquals("DhlMockLeagueObjectModel", leagueObjectModel.getLeagueName());
+
+        leagueObjectModel = deserializeleagueObjectModel.deserializeLeagueObjectJson("DhlMockLeagueObjectModel100");
+        Assertions.assertNull(leagueObjectModel);
     }
 
     @Test
