@@ -1,24 +1,22 @@
 package dhl.businessLogicTest.simulationStateMachineTest.states.seasonSimulationTest;
 
-import dhl.Mocks.GameConfigMock;
-import dhl.Mocks.JsonFilePathMock;
 import dhl.Mocks.LeagueObjectModel20TeamMocks;
 import dhl.Mocks.LeagueObjectModelMocks;
+import dhl.Mocks.factory.MockAbstractFactory;
 import dhl.businessLogic.aging.Injury;
 import dhl.businessLogic.aging.agingFactory.AgingAbstractFactory;
 import dhl.businessLogic.aging.interfaceAging.IInjury;
-import dhl.businessLogic.leagueModel.GameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
+import dhl.businessLogic.simulationStateMachine.factory.ContextAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.InjuryCheckState;
-import dhl.businessLogic.traning.Training;
+import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.factory.SeasonSimulationStateFactory;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
 import dhl.businessLogicTest.leagueModelTests.mocks.GameplayConfigMock;
 import dhl.businessLogicTest.leagueModelTests.mocks.LeagueMock;
-import dhl.inputOutput.importJson.ImportJsonFile;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,35 +34,30 @@ public class InjuryCheckStateTest {
     GameContext gameState;
     LeagueObjectModelMocks mockLeagueObjectModel;
     LeagueObjectModel20TeamMocks model20TeamMocks;
+    ContextAbstractFactory contextAbstractFactory;
+    MockAbstractFactory mockAbstractFactory;
+    SeasonSimulationStateFactory seasonSimulationStateFactory;
     IScheduler scheduler;
-    GameConfigMock gameConfigMock;
-//    GameConfig gameConfig;
     IGameConfig gameConfig;
-    Training trainingParameterized;
-    JsonFilePathMock filePathMock;
-    ImportJsonFile importJsonFile;
     LeagueModelMockAbstractFactory leagueMockFactory;
     LeagueMock leagueMock;
     ILeagueObjectModel leagueObjectModel;
     AgingAbstractFactory agingFactory;
-    Injury injury;
+    IInjury injury;
 
     @BeforeEach
     public void initObject() throws Exception {
-        gameState = new GameContext();
-        simulationContext = new SimulationContext(gameState);
-        injuryCheckState = new InjuryCheckState(simulationContext);
-        mockLeagueObjectModel = new LeagueObjectModelMocks();
-        model20TeamMocks = new LeagueObjectModel20TeamMocks();
+        contextAbstractFactory = ContextAbstractFactory.instance();
+        gameState = contextAbstractFactory.createGameContext();
+        simulationContext = contextAbstractFactory.createSimulationContext();
+        seasonSimulationStateFactory = (SeasonSimulationStateFactory) SeasonSimulationStateFactory.instance();
+        injuryCheckState = (InjuryCheckState) seasonSimulationStateFactory.getInjuryCheckState(simulationContext);
+        mockAbstractFactory = MockAbstractFactory.instance();
+        mockLeagueObjectModel = mockAbstractFactory.getLeagueObjectModelMock();
+        model20TeamMocks = mockAbstractFactory.getLeagueObjectModel20TeamMock();
         model20TeamMocks.leagueModel20TeamGeneralStandings();
         scheduler = model20TeamMocks.leagueModel20TeamPlayoffsSchedules();
-        gameConfigMock = new GameConfigMock();
-        IInjury injurySystem = new Injury();
-        filePathMock = new JsonFilePathMock();
-        importJsonFile = new ImportJsonFile(filePathMock.getFilePath());
-        gameConfig = new GameConfig(importJsonFile.getJsonObject());
-        trainingParameterized = new Training(injurySystem, gameConfig);
-        agingFactory= AgingAbstractFactory.instance();
+        agingFactory = AgingAbstractFactory.instance();
         injury = (Injury) agingFactory.createInjury();
         leagueMockFactory = LeagueModelMockAbstractFactory.instance();
         leagueMock = leagueMockFactory.createLeagueMock();
@@ -75,20 +68,16 @@ public class InjuryCheckStateTest {
 
     @Test
     public void InjuryCheckStateTest() {
-        injuryCheckState = new InjuryCheckState(simulationContext);
         Assertions.assertNotNull(injuryCheckState.getSimulationContext());
     }
 
     @Test
     public void getSimulationContextTest() {
-        injuryCheckState = new InjuryCheckState(simulationContext);
         Assertions.assertNotNull(injuryCheckState.getSimulationContext());
     }
 
     @Test
     public void setSimulationContextTest() {
-        injuryCheckState = new InjuryCheckState(simulationContext);
-        simulationContext = new SimulationContext(gameState);
         simulationContext.setYear(2022);
         injuryCheckState.setSimulationContext(simulationContext);
         Assertions.assertTrue(injuryCheckState.getSimulationContext().getYear() == 2022);
@@ -100,7 +89,7 @@ public class InjuryCheckStateTest {
         simulationContext.setGameConfig(gameConfig);
         simulationContext.setInjurySystem(injury);
         simulationContext.setInMemoryLeague(leagueObjectModel);
-        injuryCheckState = new InjuryCheckState(simulationContext);
+        injuryCheckState = (InjuryCheckState) seasonSimulationStateFactory.getInjuryCheckState(simulationContext);
         injuryCheckState.seasonStateProcess();
         Assertions.assertEquals(-1, injuryCheckState.getSimulationContext().getInMemoryLeague().getConferences().get(0).getDivisions().get(0).getTeams().get(0).getPlayers().get(0).getPlayerInjuredDays());
 
@@ -122,7 +111,7 @@ public class InjuryCheckStateTest {
         simulationContext.setNumberOfDays((int) numberOfDays);
         simulationContext.setYear(2020);
 
-        injuryCheckState = new InjuryCheckState(simulationContext);
+        injuryCheckState = (InjuryCheckState) seasonSimulationStateFactory.getInjuryCheckState(simulationContext);
         injuryCheckState.seasonStateExitProcess();
         Assertions.assertTrue(injuryCheckState.getSimulationContext().getCurrentSimulation() == injuryCheckState.getSimulationContext().getSimulateGame());
 
@@ -130,7 +119,7 @@ public class InjuryCheckStateTest {
         currentDate = playOffStartDate.plusDays(2);
         numberOfDays = DAYS.between(startOfSimulation, currentDate);
         simulationContext.setNumberOfDays((int) numberOfDays);
-        injuryCheckState = new InjuryCheckState(simulationContext);
+        injuryCheckState = (InjuryCheckState) seasonSimulationStateFactory.getInjuryCheckState(simulationContext);
         injuryCheckState.seasonStateExitProcess();
         Assertions.assertTrue(injuryCheckState.getSimulationContext().getCurrentSimulation() == injuryCheckState.getSimulationContext().getAging());
 
@@ -138,7 +127,7 @@ public class InjuryCheckStateTest {
         LocalDate tradeDeadline = localDate.with(lastDayOfMonth()).with(previousOrSame(DayOfWeek.MONDAY));
         numberOfDays = DAYS.between(startOfSimulation, tradeDeadline) - 1;
         simulationContext.setNumberOfDays((int) numberOfDays);
-        injuryCheckState = new InjuryCheckState(simulationContext);
+        injuryCheckState = (InjuryCheckState) seasonSimulationStateFactory.getInjuryCheckState(simulationContext);
         injuryCheckState.seasonStateExitProcess();
         Assertions.assertTrue(injuryCheckState.getSimulationContext().getCurrentSimulation() == injuryCheckState.getSimulationContext().getSimulateGame());
     }

@@ -3,7 +3,7 @@ package dhl.inputOutput.importJson;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.IValidation;
 import dhl.inputOutput.importJson.interfaces.*;
-import dhl.inputOutput.ui.IUserInputOutput;
+import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import org.json.simple.JSONObject;
 
 public abstract class ImportJsonAbstractFactory {

@@ -7,11 +7,18 @@ import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.ISta
 
 public class StandingsFactory extends StandingsAbstractFactory {
 
+    private IStandingSystem standingSystem;
+
+
     public IStandings getStandings() {
         return new Standings();
     }
 
     public IStandingSystem getStandingSystem() {
-        return new StandingSystem();
+        if (null == standingSystem) {
+            standingSystem = new StandingSystem();
+        }
+        return standingSystem;
+//        return new StandingSystem();
     }
 }

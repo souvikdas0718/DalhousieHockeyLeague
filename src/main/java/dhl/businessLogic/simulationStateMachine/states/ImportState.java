@@ -6,7 +6,7 @@ import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.interfaces.IGameState;
 import dhl.businessLogic.simulationStateMachine.states.interfaces.IImportStateLogic;
 import dhl.inputOutput.importJson.JsonFilePath;
-import dhl.inputOutput.ui.IUserInputOutput;
+import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import dhl.inputOutput.ui.UserInputOutput;
 
 public class ImportState implements IGameState {
@@ -15,7 +15,7 @@ public class ImportState implements IGameState {
     ILeagueObjectModel newInMemoryLeague;
     int option = -1;
     GameContext ourGame;
-    IUserInputOutput userInputPutput = new UserInputOutput();
+    IUserInputOutput userInputPutput = IUserInputOutput.getInstance();
 
     public ImportState(GameContext newGame) {
         ourGame = newGame;

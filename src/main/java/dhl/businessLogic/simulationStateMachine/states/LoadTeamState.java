@@ -5,7 +5,7 @@ import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.interfaces.IGameState;
 import dhl.businessLogic.simulationStateMachine.states.interfaces.ILoadTeamStateLogic;
-import dhl.inputOutput.ui.IUserInputOutput;
+import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import dhl.inputOutput.ui.UserInputOutput;
 
 public class LoadTeamState implements IGameState {
@@ -16,7 +16,7 @@ public class LoadTeamState implements IGameState {
 
     public LoadTeamState(GameContext newGame) {
         newInMemoryLeague = new LeagueObjectModel();
-        userInputPutput = new UserInputOutput();
+        userInputPutput = IUserInputOutput.getInstance();
         ourGame = newGame;
     }
 

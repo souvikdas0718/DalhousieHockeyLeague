@@ -1,5 +1,6 @@
 package dhl.businessLogic.simulationStateMachine.states.seasonSimulation.factory;
 
+import dhl.businessLogic.leagueModel.GenerateDraftPlayers;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.*;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.IGenerateDraftPlayers;
@@ -12,7 +13,7 @@ public class SeasonSimulationStateFactory extends SimulationStateAbstractFactory
     }
 
     public ISimulationSeasonState getAdvanceToNextSeasonState(SimulationContext simulationContext) {
-        return null;
+        return new AdvanceToNextSeasonState(simulationContext);
     }
 
     public ISimulationSeasonState getAgingState(SimulationContext simulationContext) {
@@ -53,5 +54,9 @@ public class SeasonSimulationStateFactory extends SimulationStateAbstractFactory
 
     public IGenerateDraftPlayers getGeneratePlayers(){
         return new GenerateDraftPlayers();
+    }
+
+    public ISimulationSeasonState getPlayerDraftState(SimulationContext simulationContext){
+        return new PlayerDraftState(simulationContext);
     }
 }

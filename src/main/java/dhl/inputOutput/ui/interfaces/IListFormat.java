@@ -1,4 +1,4 @@
-package dhl.inputOutput.ui;
+package dhl.inputOutput.ui.interfaces;
 
 import java.util.List;
 

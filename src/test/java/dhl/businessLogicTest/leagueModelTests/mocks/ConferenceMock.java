@@ -63,6 +63,4 @@ public class ConferenceMock {
         return factory.createConference("Western", divisionsList);
     }
 
-
-
 }

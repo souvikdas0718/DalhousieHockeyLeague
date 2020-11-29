@@ -39,6 +39,7 @@ public class Retirement implements IRetirement {
         for (IConference conference : leagueObjectModel.getConferences()) {
             for (IDivision division : conference.getDivisions()) {
                 for (ITeam team : division.getTeams()) {
+                    System.out.println("team name "+playersToRetire.get(team.getTeamName()));
                     if (playersToRetire.get(team.getTeamName()).size() > 0) {
                         retirePLayers(playersToRetire.get(team.getTeamName()), team, leagueObjectModel.getFreeAgents());
                     }

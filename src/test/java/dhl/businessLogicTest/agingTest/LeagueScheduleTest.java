@@ -1,4 +1,4 @@
-package dhl.businessLogicTest.agingTest;
+package dhl.businessLogicTest.AgingTest;
 
 import dhl.Mocks.factory.MockAbstractFactory;
 import dhl.businessLogic.aging.LeagueSchedule;
@@ -6,7 +6,6 @@ import dhl.businessLogic.aging.agingFactory.AgingAbstractFactory;
 import dhl.businessLogic.aging.interfaceAging.IInjury;
 import dhl.businessLogic.aging.interfaceAging.IRetirement;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
-
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
 import dhl.businessLogicTest.leagueModelTests.mocks.LeagueMock;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
@@ -33,10 +32,10 @@ public class LeagueScheduleTest {
 
     @BeforeEach()
     public void initObject() {
-        leagueMockFactory= LeagueModelMockAbstractFactory.instance();
-        leagueMock =  leagueMockFactory.createLeagueMock();
+        leagueMockFactory = LeagueModelMockAbstractFactory.instance();
+        leagueMock = leagueMockFactory.createLeagueMock();
         mockFactory = MockAbstractFactory.instance();
-        agingFactory=AgingAbstractFactory.instance();
+        agingFactory = AgingAbstractFactory.instance();
 
         gameConfig = leagueMock.getGameplayConfig();
         leagueObjectModel = leagueMock.getLeagueObjectModel();
@@ -44,12 +43,12 @@ public class LeagueScheduleTest {
         ISerializeLeagueObjectModel serializeModel = mockFactory.getMockSerialize();
         retirementSystem = agingFactory.createRetirement(serializeModel, leagueObjectModel);
         injurySystem = agingFactory.createInjury();
-        leagueSchedule = (LeagueSchedule) agingFactory.createLeagueSchedule(leagueMock.getLeagueObjectModel() );
+        leagueSchedule = (LeagueSchedule) agingFactory.createLeagueSchedule(leagueMock.getLeagueObjectModel());
 
     }
 
     @Test
-    public void ageAllPlayerTest()  {
+    public void ageAllPlayerTest() {
         leagueObjectModel = leagueSchedule.initiateAging(365, LocalDate.of(2020, 11, 14));
         for (IConference conference : leagueObjectModel.getConferences()) {
             for (IDivision division : conference.getDivisions()) {

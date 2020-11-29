@@ -3,13 +3,17 @@ package dhl.businessLogic.simulationStateMachine;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
+import dhl.businessLogic.simulationStateMachine.interfaces.IGameContext;
 import dhl.businessLogic.simulationStateMachine.interfaces.IGameState;
 import dhl.businessLogic.simulationStateMachine.states.CreateTeamState;
 import dhl.businessLogic.simulationStateMachine.states.ImportState;
 import dhl.businessLogic.simulationStateMachine.states.LoadTeamState;
 import dhl.businessLogic.simulationStateMachine.states.SimulateState;
+import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 
-public class GameContext {
+import java.time.LocalDate;
+
+public class GameContext implements IGameContext {
     IGameState importState;
     IGameState loadTeamState;
     IGameState simulateState;
@@ -19,6 +23,8 @@ public class GameContext {
     ILeagueObjectModel inMemoryLeague;
     ITeam selectedTeam;
     IGameConfig gameConfig;
+    IUserInputOutput userInputOutput;
+    int year;
 
     public GameContext() {
         importState = new ImportState(this);
@@ -27,6 +33,8 @@ public class GameContext {
         createTeamState = new CreateTeamState(this);
         currentState = importState;
         gameInProgress = true;
+        userInputOutput = IUserInputOutput.getInstance();
+        year = LocalDate.now().getYear();
     }
 
     public void setGameState(IGameState newState) {
@@ -38,11 +46,21 @@ public class GameContext {
     }
 
     public void stateProcess() throws Exception {
+        userInputOutput.printMessage("Into the state process of game context");
         currentState.stateProcess();
     }
 
     public void stateExitProcess() {
+        userInputOutput.printMessage("Into the state process exit of game context");
         currentState.stateExitProcess();
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public int getYear() {
+        return year;
     }
 
     public ILeagueObjectModel getInMemoryLeague() {

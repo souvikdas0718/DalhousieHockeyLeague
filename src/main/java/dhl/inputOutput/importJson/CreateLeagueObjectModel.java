@@ -9,6 +9,8 @@ import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.inputOutput.importJson.interfaces.ICreateLeagueObjectModel;
 import dhl.inputOutput.importJson.interfaces.ICreatedLeagueValidation;
 import dhl.inputOutput.ui.UserInputOutput;
+import dhl.inputOutput.ui.interfaces.IUserInputOutput;
+import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import org.json.simple.JSONObject;
 
 
@@ -17,7 +19,7 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
     IValidation validation;
     ILeagueObjectModel leagueObjectModel;
     ILeagueObjectModelValidation leagueObjectModelValidation;
-    UserInputOutput userInputOutput;
+    IUserInputOutput userInputOutput;
     ICreatedLeagueValidation createdLeagueValidation;
 
     public CreateLeagueObjectModel(JSONObject jsonLeagueObject) {
@@ -28,7 +30,7 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
         ImportJsonAbstractFactory importFactory = ImportJsonAbstractFactory.instance();
         createdLeagueValidation = importFactory.createdLeagueValidation(validation);
         this.leagueObjectModel = null;
-        userInputOutput= new UserInputOutput();
+        userInputOutput= IUserInputOutput.getInstance();
     }
 
     public ILeagueObjectModel getLeagueObjectModel() {

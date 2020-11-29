@@ -1,10 +1,13 @@
 package dhl.businessLogic.simulationStateMachine.states;
 
 import dhl.businessLogic.simulationStateMachine.GameContext;
+import dhl.businessLogic.simulationStateMachine.SimulationContext;
+import dhl.businessLogic.simulationStateMachine.interfaces.IGameContext;
 import dhl.businessLogic.simulationStateMachine.interfaces.IGameState;
 import dhl.businessLogic.simulationStateMachine.states.interfaces.ICreateTeamStateLogic;
 import dhl.businessLogic.simulationStateMachine.states.interfaces.IImportStateLogic;
 import dhl.businessLogic.simulationStateMachine.states.interfaces.ILoadTeamStateLogic;
+import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
 
 public abstract class StatesAbstractFactory {
     private static StatesAbstractFactory uniqueInstance = null;
@@ -27,5 +30,7 @@ public abstract class StatesAbstractFactory {
     public abstract IGameState createLoadTeamState(GameContext newGame);
     public abstract ILoadTeamStateLogic createLoadTeamStateLogic();
     public abstract IGameState createSimulateState(GameContext newGame);
+    public abstract IGameContext createGameContext();
+    public abstract SimulationContext createSimulationContext(GameContext newGame);
 }
 

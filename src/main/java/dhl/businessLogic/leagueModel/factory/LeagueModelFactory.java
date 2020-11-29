@@ -30,7 +30,7 @@ public class LeagueModelFactory extends LeagueModelAbstractFactory {
     }
 
     public IGeneralManager createGeneralManager(String managerName, String personality) {
-        return new GeneralManager(managerName , personality);
+        return new GeneralManager(managerName, personality);
     }
 
     public ITeam createTeam(String teamName, IGeneralManager generalManager, ICoach headCoach, List<IPlayer> playersList) {
@@ -58,6 +58,10 @@ public class LeagueModelFactory extends LeagueModelAbstractFactory {
         return new LeagueObjectModelInput(leagueName, conferenceName, divisionName, newlyCreatedTeam, leagueObjectModelValidation, serializeLeagueObjectModel);
     }
 
+    public ILeagueObjectModel createDefaultLeagueObjectModel() {
+        return new LeagueObjectModel();
+    }
+
     public IConference createConferenceDefault() {
         return new Conference();
     }
@@ -68,10 +72,6 @@ public class LeagueModelFactory extends LeagueModelAbstractFactory {
 
     public ICoach createCoachDefault() {
         return new Coach();
-    }
-
-    public IGeneralManager createGeneralManagerDefault() {
-        return new GeneralManager();
     }
 
     public ITeam createTeamDefault() {

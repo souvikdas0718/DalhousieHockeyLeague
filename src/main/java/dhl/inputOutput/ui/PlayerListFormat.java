@@ -1,6 +1,8 @@
 package dhl.inputOutput.ui;
 
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
+import dhl.inputOutput.ui.interfaces.IListFormat;
+import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 
 import java.util.List;
 
@@ -10,7 +12,7 @@ public class PlayerListFormat implements IListFormat {
     private static IListFormat singletonObject = null;
 
     private PlayerListFormat(){
-        ioObject = new UserInputOutput();
+        ioObject = IUserInputOutput.getInstance();
     }
 
     public static IListFormat getInstance(){

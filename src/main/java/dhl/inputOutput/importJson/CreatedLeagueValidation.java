@@ -2,7 +2,7 @@ package dhl.inputOutput.importJson;
 
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.inputOutput.importJson.interfaces.ICreatedLeagueValidation;
-import dhl.inputOutput.ui.IUserInputOutput;
+import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

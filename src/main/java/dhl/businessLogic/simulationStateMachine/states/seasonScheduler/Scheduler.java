@@ -10,8 +10,9 @@ import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interface
 import dhl.businessLogic.simulationStateMachine.states.standings.StandingSystem;
 import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandingSystem;
 import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandings;
-import dhl.inputOutput.ui.IUserInputOutput;
-import dhl.inputOutput.ui.UserInputOutput;
+import dhl.inputOutput.ui.interfaces.IUserInputOutput;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Scheduler implements IScheduler {
+    private static final Logger logger = LogManager.getLogger(Scheduler.class);
     private List<ISeasonSchedule> fullSeasonSchedule;
     private List<ISeasonSchedule> playOffScheduleRound1;
     //    private List<ISeasonSchedule> finals;
@@ -29,6 +31,8 @@ public class Scheduler implements IScheduler {
     private LocalDate playOffStartDate;
     private LocalDate currentDate;
     private LocalDate finalDay;
+    private LocalDate finalMatchDate;
+
     private List<ITeam> teamList;
     private List<IConference> conferences;
     private List<IDivision> divisions;
@@ -41,10 +45,30 @@ public class Scheduler implements IScheduler {
 //        playOffStartDate = LocalDate.of(2021, 03, 01);
 //        playOffStartDate = LocalDate.of(2021, 03, 01);
 //        currentDate = playOffStartDate;
+
+//        seasonStartDate = LocalDate.of(simulationContext.getYear(), 10, 01);
+//        LocalDate seasonEndMonth = LocalDate.of(simulationContext.getYear() + 1, 04, 01);
+//        LocalDate regularSeasonEndDate = seasonEndMonth.with(TemporalAdjusters.firstInMonth(DayOfWeek.SATURDAY));
+//        seasonEndDate = regularSeasonEndDate;
+//        LocalDate playOffStartMonth = LocalDate.of(simulationContext.getYear() + 1, 04, 01);
+//        LocalDate playOffStartsDate = playOffStartMonth.with(TemporalAdjusters.firstInMonth(DayOfWeek.WEDNESDAY)).with(TemporalAdjusters.next(DayOfWeek.WEDNESDAY));
+//        playOffStartDate = playOffStartsDate;
+//        finalDay = LocalDate.of(simulationContext.getYear() + 1, 06, 01);
+
+//        currentDate;
+//        LocalDate finalDay;
         teamList = new ArrayList<>();
         conferences = new ArrayList<>();
         divisions = new ArrayList<>();
         gameStandings = new ArrayList<>();
+    }
+
+    public LocalDate getFinalMatchDate() {
+        return finalMatchDate;
+    }
+
+    public void setFinalMatchDate(LocalDate finalMatchDate) {
+        this.finalMatchDate = finalMatchDate;
     }
 
     public List<ISeasonSchedule> getFullSeasonSchedule() {
@@ -137,6 +161,11 @@ public class Scheduler implements IScheduler {
     }
 
     public void generateTeamList(ILeagueObjectModel inMemoryLeague) {
+        logger.info("Entered generate Team List");
+        if (inMemoryLeague == null) {
+            return;
+        }
+
 
         for (IConference conference : inMemoryLeague.getConferences()) {
             for (IDivision division : conference.getDivisions()) {
@@ -150,6 +179,7 @@ public class Scheduler implements IScheduler {
     }
 
     public void generateTeamSchedule(ILeagueObjectModel inMemoryLeague) {
+        logger.debug("Entered generate Team Schedule");
 
         for (int i = 0; i < teamList.size(); i++) {
             for (int j = i + 1; j < teamList.size(); j++) {
@@ -166,6 +196,7 @@ public class Scheduler implements IScheduler {
     }
 
     public void gameScheduleDates(LocalDate seasonStartDate, LocalDate seasonEndDate) {
+        logger.debug("Entered game schedule Dates: season start date " + seasonStartDate.toString() + " season end date " + seasonEndDate.toString());
         long noOfDaysInRegularSeason = ChronoUnit.DAYS.between(seasonStartDate, seasonEndDate) + 1;
         int totalNoOfGamesInRegularSeason = fullSeasonSchedule.size();
 
@@ -360,6 +391,7 @@ public class Scheduler implements IScheduler {
         ISeasonSchedule lastSchedule = playOffScheduleRound1.get(playOffScheduleRound1.size() - 1);
         IStandings standing = getTeamIndexFromStanding(team);
 
+        //changed this part
         if (standing != null) {
             if (lastSchedule.getTeamTwo().getTeamName().isEmpty()) {
                 if (standing != null) {
@@ -368,6 +400,9 @@ public class Scheduler implements IScheduler {
                     lastSchedule.setTeamTwo(team);
                 }
             } else {
+                if(playOffScheduleRound1.size() == 15) {
+                    return;
+                }
                 ISeasonSchedule match = new SeasonSchedule();
                 match.setTeamOneConference(standing.getTeamConference());
                 match.setTeamOneDivision(standing.getTeamDivision());
@@ -376,10 +411,15 @@ public class Scheduler implements IScheduler {
                 match.setGameDate(currentDate);
                 playOffScheduleRound1.add(match);
                 if (playOffScheduleRound1.size() == 15) {
-                    setFinalDay(playOffScheduleRound1.get(14).getGameDate());
+//                        setFinalDay(playOffScheduleRound1.get(14).getGameDate());
+                    setFinalMatchDate(playOffScheduleRound1.get(14).getGameDate());
                 }
             }
+            if(playOffScheduleRound1.size() == 15) {
+                return;
+            }
         }
+
     }
 
     private IStandings getTeamIndexFromStanding(ITeam team) {
@@ -392,13 +432,18 @@ public class Scheduler implements IScheduler {
     }
 
     public boolean stanleyCupWinner(LocalDate date) {
-        IUserInputOutput output = new UserInputOutput();
+        IUserInputOutput output = IUserInputOutput.getInstance();
         output.printMessage("Today's date: " + date);
-        output.printMessage("Final Game date: " + playOffScheduleRound1.get(14).getGameDate());
-        if (playOffScheduleRound1.get(14).getGameDate().isBefore(date) || playOffScheduleRound1.get(14).getGameDate().isEqual(date)) {
-            return true;
-        } else {
+//        output.printMessage("Final Game date: " + playOffScheduleRound1.get(14).getGameDate());
+        if (null == finalMatchDate) {
             return false;
+        } else {
+            output.printMessage("Final Game date: " + finalMatchDate);
+            if (finalMatchDate.isBefore(date) || finalMatchDate.isEqual(date)) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 

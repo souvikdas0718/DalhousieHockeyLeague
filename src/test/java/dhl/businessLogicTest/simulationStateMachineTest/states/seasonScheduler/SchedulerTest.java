@@ -3,7 +3,7 @@ package dhl.businessLogicTest.simulationStateMachineTest.states.seasonScheduler;
 import dhl.Mocks.LeagueObjectModel20TeamMocks;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.Mocks.factory.MockAbstractFactory;
-import dhl.businessLogic.leagueModel.Team;
+import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.IGeneralManager;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
@@ -30,6 +30,7 @@ public class SchedulerTest {
     List<IPlayer> statistics;
     MockAbstractFactory mockAbstractFactory;
     SchedulerAbstractFactory schedulerAbstractFactory;
+    LeagueModelAbstractFactory leagueModelAbstractFactory;
 
     @BeforeEach
     public void initObject() {
@@ -40,6 +41,7 @@ public class SchedulerTest {
         model20TeamMocks.leagueModel20TeamGeneralStandings();
         scheduler = schedulerAbstractFactory.getScheduler();
         statistics = mockLeagueObjectModel.getPlayerArrayMock();
+        leagueModelAbstractFactory = LeagueModelAbstractFactory.instance();
     }
 
     @Test
@@ -218,8 +220,8 @@ public class SchedulerTest {
         IScheduler scheduler = schedulerAbstractFactory.getScheduler();
 
         LocalDate playOffStartDate = LocalDate.of(2021, 04, 01);
-        LocalDate playOffStarts = playOffStartDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.SATURDAY)).with(
-                TemporalAdjusters.next(DayOfWeek.SATURDAY));
+        LocalDate playOffStarts = playOffStartDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.WEDNESDAY)).with(
+                TemporalAdjusters.next(DayOfWeek.WEDNESDAY));
         scheduler.setPlayOffStartDate(playOffStarts);
         scheduler.playOffs(standings, league);
         int matchNumber = 1;
@@ -250,10 +252,10 @@ public class SchedulerTest {
 
         IGeneralManager manager = league.getGeneralManagers().get(0);
 
-        ITeam teamPlayOff1 = new Team("Bruins", manager, league.getCoaches().get(0), statistics);
-        ITeam teamPlayoff2 = new Team("Maple", manager, league.getCoaches().get(0), statistics);
-        ITeam teamPlayoff3 = new Team("Hurricanes", manager, league.getCoaches().get(0), statistics);
-        ITeam teamPlayoff4 = new Team("Flyers", manager, league.getCoaches().get(0), statistics);
+        ITeam teamPlayOff1 = leagueModelAbstractFactory.createTeam("Bruins", manager, league.getCoaches().get(0), statistics);
+        ITeam teamPlayoff2 = leagueModelAbstractFactory.createTeam("Maple", manager, league.getCoaches().get(0), statistics);
+        ITeam teamPlayoff3 = leagueModelAbstractFactory.createTeam("Hurricanes", manager, league.getCoaches().get(0), statistics);
+        ITeam teamPlayoff4 = leagueModelAbstractFactory.createTeam("Flyers", manager, league.getCoaches().get(0), statistics);
 
         scheduler.gameWinner(teamPlayOff1);
         scheduler.gameWinner(teamPlayoff2);

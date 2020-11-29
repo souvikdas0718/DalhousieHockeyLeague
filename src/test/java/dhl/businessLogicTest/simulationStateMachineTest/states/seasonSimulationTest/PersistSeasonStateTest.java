@@ -1,8 +1,13 @@
 package dhl.businessLogicTest.simulationStateMachineTest.states.seasonSimulationTest;
 
+import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
+import dhl.businessLogic.simulationStateMachine.factory.ContextAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.PersistSeasonState;
+import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.factory.SeasonSimulationStateFactory;
+import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
+import dhl.businessLogicTest.leagueModelTests.mocks.LeagueMock;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,32 +17,40 @@ import java.time.LocalDate;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 public class PersistSeasonStateTest {
+    final static String LEAGUENAME = "Dhl";
     SimulationContext simulationContext;
     PersistSeasonState persistSeasonState;
     GameContext gameState;
+    LeagueModelMockAbstractFactory leagueMockFactory;
+    LeagueMock leagueMock;
+    ILeagueObjectModel leagueObjectModel;
+    ContextAbstractFactory contextAbstractFactory;
+    SeasonSimulationStateFactory seasonSimulationStateFactory;
 
     @BeforeEach
     public void initObject() {
-        gameState = new GameContext();
-        simulationContext = new SimulationContext(gameState);
+        contextAbstractFactory = ContextAbstractFactory.instance();
+        gameState = contextAbstractFactory.createGameContext();
+        simulationContext = contextAbstractFactory.createSimulationContext();
+        leagueMockFactory = LeagueModelMockAbstractFactory.instance();
+        leagueMock = leagueMockFactory.createLeagueMock();
+        leagueObjectModel = leagueMock.getLeagueObjectModel();
+        seasonSimulationStateFactory = (SeasonSimulationStateFactory) SeasonSimulationStateFactory.instance();
+        persistSeasonState = (PersistSeasonState) seasonSimulationStateFactory.getPersistSeasonState(simulationContext);
     }
 
     @Test
     public void PersistSeasonStateTest() {
-        persistSeasonState = new PersistSeasonState(simulationContext);
         Assertions.assertNotNull(persistSeasonState.getSimulationContext());
     }
 
     @Test
     public void getSimulationContextTest() {
-        persistSeasonState = new PersistSeasonState(simulationContext);
         Assertions.assertNotNull(persistSeasonState.getSimulationContext());
     }
 
     @Test
     public void setSimulationContextTest() {
-        persistSeasonState = new PersistSeasonState(simulationContext);
-        simulationContext = new SimulationContext(gameState);
         simulationContext.setYear(2021);
         persistSeasonState.setSimulationContext(simulationContext);
         Assertions.assertTrue(persistSeasonState.getSimulationContext().getYear() == 2021);
@@ -45,7 +58,10 @@ public class PersistSeasonStateTest {
 
     @Test
     public void seasonStateProcessTest() {
-        //Store in DB
+        simulationContext.setInMemoryLeague(leagueObjectModel);
+        persistSeasonState = new PersistSeasonState(simulationContext);
+        persistSeasonState.seasonStateProcess();
+        Assertions.assertTrue(persistSeasonState.getSimulationContext().getInMemoryLeague().getLeagueName().equals(LEAGUENAME));
     }
 
     @Test
@@ -54,17 +70,17 @@ public class PersistSeasonStateTest {
         LocalDate currentDate = LocalDate.now();
         long numberOfDays = DAYS.between(startOfSimulation, currentDate);
         simulationContext.setStartOfSimulation(startOfSimulation);
-        simulationContext.setNumberOfDays((int)numberOfDays);
+        simulationContext.setNumberOfDays((int) numberOfDays);
         simulationContext.setYear(2020);
-        persistSeasonState = new PersistSeasonState(simulationContext);
+        persistSeasonState = (PersistSeasonState) seasonSimulationStateFactory.getPersistSeasonState(simulationContext);
         persistSeasonState.seasonStateExitProcess();
         Assertions.assertTrue(persistSeasonState.getSimulationContext().getCurrentSimulation() == persistSeasonState.getSimulationContext().getAdvanceTime());
 
         currentDate = startOfSimulation.plusYears(1);
         currentDate = currentDate.minusDays(1);
         numberOfDays = DAYS.between(startOfSimulation, currentDate);
-        simulationContext.setNumberOfDays((int)numberOfDays);
-        persistSeasonState = new PersistSeasonState(simulationContext);
+        simulationContext.setNumberOfDays((int) numberOfDays);
+        persistSeasonState = (PersistSeasonState) seasonSimulationStateFactory.getPersistSeasonState(simulationContext);
         persistSeasonState.seasonStateExitProcess();
         Assertions.assertFalse(persistSeasonState.getSimulationContext().isSeasonInProgress());
     }

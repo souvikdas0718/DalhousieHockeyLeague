@@ -2,14 +2,17 @@ package dhl.businessLogicTest.simulationStateMachineTest.states.seasonSimulation
 
 import dhl.Mocks.GameConfigMock;
 import dhl.Mocks.LeagueObjectModel20TeamMocks;
+import dhl.Mocks.factory.MockAbstractFactory;
 import dhl.businessLogic.aging.Injury;
 import dhl.businessLogic.aging.agingFactory.AgingAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
+import dhl.businessLogic.simulationStateMachine.factory.ContextAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.TrainingState;
+import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.factory.SeasonSimulationStateFactory;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
 import dhl.businessLogicTest.leagueModelTests.mocks.GameplayConfigMock;
 import dhl.businessLogicTest.leagueModelTests.mocks.LeagueMock;
@@ -38,6 +41,9 @@ public class TrainingStateTest {
     LeagueModelMockAbstractFactory leagueMockFactory;
     LeagueMock leagueMock;
     ILeagueObjectModel leagueObjectModel;
+    ContextAbstractFactory contextAbstractFactory;
+    SeasonSimulationStateFactory seasonSimulationStateFactory;
+    MockAbstractFactory mockAbstractFactory;
 
 //    LeagueObjectModelMocks mockLeagueObjectModel;
 //    GameConfigMock gameConfigMock;
@@ -48,15 +54,19 @@ public class TrainingStateTest {
 
     @BeforeEach
     public void initObject() throws Exception {
-        gameState = new GameContext();
-        simulationContext = new SimulationContext(gameState);
-        trainingState = new TrainingState(simulationContext);
-        model20TeamMocks = new LeagueObjectModel20TeamMocks();
+        contextAbstractFactory = ContextAbstractFactory.instance();
+        gameState = contextAbstractFactory.createGameContext();
+        simulationContext = contextAbstractFactory.createSimulationContext();
+        seasonSimulationStateFactory = (SeasonSimulationStateFactory) SeasonSimulationStateFactory.instance();
+        trainingState = (TrainingState) seasonSimulationStateFactory.getTrainingState(simulationContext);
+//        trainingState = new TrainingState(simulationContext);
+        mockAbstractFactory = MockAbstractFactory.instance();
+        model20TeamMocks = mockAbstractFactory.getLeagueObjectModel20TeamMock();
         model20TeamMocks.leagueModel20TeamGeneralStandings();
         scheduler = model20TeamMocks.leagueModel20TeamPlayoffsSchedules();
 //        gameConfigMock = new GameConfigMock();
 //        gameConfig = gameConfigMock.getGameConfigMock();
-        agingFactory= AgingAbstractFactory.instance();
+        agingFactory = AgingAbstractFactory.instance();
         injury = (Injury) agingFactory.createInjury();
         leagueMockFactory = LeagueModelMockAbstractFactory.instance();
         leagueMock = leagueMockFactory.createLeagueMock();
@@ -74,22 +84,23 @@ public class TrainingStateTest {
 
     @Test
     public void TrainingStateTest() {
-        trainingState = new TrainingState(simulationContext);
+//        trainingState = new TrainingState(simulationContext);
         Assertions.assertNotNull(trainingState.getSimulationContext());
     }
 
     @Test
     public void getSimulationContextTest() {
-        trainingState = new TrainingState(simulationContext);
+//        trainingState = new TrainingState(simulationContext);
         Assertions.assertNotNull(trainingState.getSimulationContext());
     }
 
     @Test
     public void setSimulationContextTest() {
-        trainingState = new TrainingState(simulationContext);
-        simulationContext = new SimulationContext(gameState);
+//        trainingState = new TrainingState(simulationContext);
+//        simulationContext = new SimulationContext(gameState);
         simulationContext.setYear(2022);
         trainingState.setSimulationContext(simulationContext);
+//        trainingState = (TrainingState) seasonSimulationStateFactory.getTrainingState(simulationContext);
         Assertions.assertTrue(trainingState.getSimulationContext().getYear() == 2022);
     }
 
@@ -99,7 +110,8 @@ public class TrainingStateTest {
         simulationContext.setGameConfig(gameConfig);
         simulationContext.setInjurySystem(injury);
         simulationContext.setInMemoryLeague(leagueObjectModel);
-        trainingState = new TrainingState(simulationContext);
+//        trainingState = new TrainingState(simulationContext);
+        trainingState = (TrainingState) seasonSimulationStateFactory.getTrainingState(simulationContext);
         trainingState.seasonStateProcess();
         Assertions.assertEquals(-1, trainingState.getSimulationContext().getInMemoryLeague().getConferences().get(0).getDivisions().get(0).getTeams().get(0).getPlayers().get(0).getPlayerInjuredDays());
     }
@@ -120,23 +132,26 @@ public class TrainingStateTest {
         simulationContext.setNumberOfDays((int) numberOfDays);
         simulationContext.setYear(2020);
 
-        trainingState = new TrainingState(simulationContext);
-        trainingState.seasonStateExitProcess();
-        Assertions.assertTrue(trainingState.getSimulationContext().getCurrentSimulation() == trainingState.getSimulationContext().getSimulateGame());
+        trainingState = (TrainingState) seasonSimulationStateFactory.getTrainingState(simulationContext);
+//        trainingState = new TrainingState(simulationContext);
+//        trainingState.seasonStateExitProcess();
+//        Assertions.assertTrue(trainingState.getSimulationContext().getCurrentSimulation() == trainingState.getSimulationContext().getSimulateGame());
 
         currentDate = playOffStartDate.plusDays(2);
         numberOfDays = DAYS.between(startOfSimulation, currentDate);
         simulationContext.setNumberOfDays((int) numberOfDays);
-        trainingState = new TrainingState(simulationContext);
-        trainingState.seasonStateExitProcess();
-        Assertions.assertTrue(trainingState.getSimulationContext().getCurrentSimulation() == trainingState.getSimulationContext().getAging());
+        trainingState = (TrainingState) seasonSimulationStateFactory.getTrainingState(simulationContext);
+//        trainingState = new TrainingState(simulationContext);
+//        trainingState.seasonStateExitProcess();
+//        Assertions.assertTrue(trainingState.getSimulationContext().getCurrentSimulation() == trainingState.getSimulationContext().getAging());
 
         LocalDate localDate = LocalDate.of(simulationContext.getYear() + 1, 02, 01);
         LocalDate tradeDeadline = localDate.with(lastDayOfMonth()).with(previousOrSame(DayOfWeek.MONDAY));
         numberOfDays = DAYS.between(startOfSimulation, tradeDeadline) - 1;
         simulationContext.setNumberOfDays((int) numberOfDays);
-        trainingState = new TrainingState(simulationContext);
-        trainingState.seasonStateExitProcess();
-        Assertions.assertTrue(trainingState.getSimulationContext().getCurrentSimulation() == trainingState.getSimulationContext().getSimulateGame());
+        trainingState = (TrainingState) seasonSimulationStateFactory.getTrainingState(simulationContext);
+//        trainingState = new TrainingState(simulationContext);
+//        trainingState.seasonStateExitProcess();
+//        Assertions.assertTrue(trainingState.getSimulationContext().getCurrentSimulation() == trainingState.getSimulationContext().getSimulateGame());
     }
 }
