@@ -24,6 +24,9 @@ public class GameConfig implements IGameConfig {
     private static final String gameResolver = "gameResolver";
     private static final String randomWinChance = "randomWinChance";
     private static final String statDecayChance = "statDecayChance";
+    private static final String simulation = "simulation";
+    private static final String penaltyChance = "penaltyChance";
+    private static final String goalChance = "goalChance";
     JSONObject ourJsonObject;
 
     public GameConfig(JSONObject jsonObject) {
@@ -97,6 +100,18 @@ public class GameConfig implements IGameConfig {
 
     public String getRandomWinChance() {
         return randomWinChance;
+    }
+
+    public String getsimulation() {
+        return simulation;
+    }
+
+    public String getpenaltyChance() {
+        return penaltyChance;
+    }
+
+    public String getgoalChance() {
+        return goalChance;
     }
 
     @Override

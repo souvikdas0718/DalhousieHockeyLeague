@@ -49,8 +49,7 @@ public class LeagueObjectModelDirector implements ILeagueObjectModelDirector {
     }
 
     public IGameConfig getGameConfig(JSONObject jsonLeague){
-        JSONObject gameConfigJson = (JSONObject) jsonLeague.get("gameplayConfig");
-        return factory.createGameConfig(gameConfigJson);
+        return factory.createGameConfig(jsonLeague);
     }
 
     public List<IConference> getConferences(JSONArray conferenceJsonArray)  {
