@@ -1,18 +1,14 @@
 package dhl.businessLogic.simulationStateMachine.states;
 
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
-import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.interfaces.IGameState;
 import dhl.inputOutput.importJson.ImportJsonAbstractFactory;
-import dhl.inputOutput.importJson.interfaces.IImportJsonFile;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 
-import java.time.LocalDate;
-
 public class SimulateState implements IGameState {
-    private static final String AGINGCONFIGPATH ="src/test/java/dhl/Mocks/MockData2.json";
+    private static final String AGINGCONFIGPATH = "src/test/java/dhl/Mocks/MockData2.json";
     final int maxSeasons = 10;
     final int minSeasons = 1;
     GameContext ourGame;
@@ -51,22 +47,11 @@ public class SimulateState implements IGameState {
     @Override
     public void stateProcess() {
         SimulationContext simulationContextObject = new SimulationContext(ourGame);
-//        simulationContextObject.setGameConfig(ourGame.getGameConfig());
         simulationContextObject.setInMemoryLeague(ourGame.getInMemoryLeague());
+        System.out.println(ourGame.getInMemoryLeague().getGameConfig());
         simulationContextObject.setYear(ourGame.getYear());
-        IGameConfig gameConfig =null;
-        try{
-            IImportJsonFile importJsonFile = importJsonFactory.createImportJsonFile(AGINGCONFIGPATH);
-            gameConfig = leagueFactory.createGameConfig(importJsonFile.getJsonObject());
-        }
-        catch (Exception exception) {
-            userInputOutput.printMessage("Error found in reading Json");
-        }
-        simulationContextObject.setGameConfig(gameConfig);
-        ourGame.getInMemoryLeague().setGameConfig(gameConfig);
+        simulationContextObject.setGameConfig(ourGame.getInMemoryLeague().getGameConfig());
         simulationContextObject.setInMemoryLeague(ourGame.getInMemoryLeague());
-//        simulationContextObject.setInjurySystem();
-//        simulationContextObject.setInjurySystem(ourGame.getInMemoryLeague().get);
         userInputOutput.printMessage("Total simulation season count: " + simulationSeasonsCount);
         for (int i = 1; i <= simulationSeasonsCount; i++) {
 
@@ -77,14 +62,8 @@ public class SimulateState implements IGameState {
                 simulationContextObject.seasonStateExitProcess();
                 userInputOutput.printMessage("Season " + i + ": exit process done");
             }
-//            simulationContextObject.setYear(LocalDate.now().getYear()+1);
-            ourGame.setYear(ourGame.getYear()+1);
-            simulationContextObject.setYear(ourGame.getYear()+1);
-//            userInputOutput.printMessage("Season " + i + ": is completed");
-//            if (simulationContextObject.isSeasonInProgress() == false) {
-//                break;
-//            }
-
+            ourGame.setYear(ourGame.getYear() + 1);
+            simulationContextObject.setYear(ourGame.getYear() + 1);
         }
     }
 
