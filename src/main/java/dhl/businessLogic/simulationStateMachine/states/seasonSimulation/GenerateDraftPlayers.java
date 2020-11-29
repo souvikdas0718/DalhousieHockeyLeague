@@ -7,6 +7,8 @@ import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.IGenerateDraftPlayers;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 
@@ -33,6 +35,8 @@ public class GenerateDraftPlayers implements IGenerateDraftPlayers {
     private static final int MAXDATE = 28;
     private static final int MAXMONTH = 12;
     private static final int MINVALUE = 1;
+    private static final int ROWSIZE = 4;
+    private static final int COLUMNSIZE = 2;
 
     private static final String[] FIRSTNAMES = {"Jared","Gordan","Walter", "John", "Harry", "Mary", "Fred", "Mohammed", "Bonnie",
             "Tami", "Chris", "Pat", "Sammy", "Abraham", "Tina", "Nancy", "Roger", "Mike", "Rob", "Zongming", "Wen", "Don", "Sai",
@@ -48,6 +52,7 @@ public class GenerateDraftPlayers implements IGenerateDraftPlayers {
             "Marshall", "Lawson", "Desmond","Winston","Nehemiah","Ari", "Conner", "Jay", "Kade", "Andy", "Johnny", "Jayceon",
             "Marco", "Seth", "Ibrahim", "Raiden", "Collin", "Edgar", "Erik", "Troy", "Clark", "Jaxton", "Johnathan", "Gregory",
             "Stevenson","Kirb","Kirk","Burns","Ron","Davidson","Fernandez","Jackson","Keny"};
+    private static final Logger logger = LogManager.getLogger(GenerateDraftPlayers.class);
     int totalNewPlayers;
     List<IPlayer> draftPlayers;
     PlayerPosition[] playerPosition;
@@ -55,6 +60,7 @@ public class GenerateDraftPlayers implements IGenerateDraftPlayers {
     LeagueModelAbstractFactory factory;
 
     public GenerateDraftPlayers(){
+        logger.info("Generate Draft Player Constructor Initialized");
         this.totalNewPlayers = NOOFTEAMS*NOOFDIVISIONS*DRAFTROUNDS;
         random = new Random();
         factory = LeagueModelAbstractFactory.instance();
@@ -67,6 +73,7 @@ public class GenerateDraftPlayers implements IGenerateDraftPlayers {
     }
 
     public List<IPlayer> generateDraftPlayers(){
+        logger.info("Generate Draft Player for forward,goalie,defense");
         generatePlayers(PlayerPosition.FORWARD.toString(),PERCENTAGEOFFORWARDS);
         generatePlayers(PlayerPosition.DEFENSE.toString(),PERCENTAGEOFDEFENSE);
         generatePlayers(PlayerPosition.GOALIE.toString(),PERCENTAGEOFGOALIES);
@@ -75,10 +82,12 @@ public class GenerateDraftPlayers implements IGenerateDraftPlayers {
     }
 
     public String randomName(){
+        logger.debug("Generating names of players");
         return FIRSTNAMES[random.nextInt(FIRSTNAMES.length)] + " " + LASTNAMES[random.nextInt(LASTNAMES.length)];
     }
 
     public List<IPlayer> generatePlayers(String position, int totalPlayerInPosition){
+        logger.debug("Generate players for each position");
         double result = (totalNewPlayers * totalPlayerInPosition)/100.00;
         int noOfPlayers = (int) Math.round(result);
         for(int i=0;i<noOfPlayers;i++){
@@ -90,7 +99,8 @@ public class GenerateDraftPlayers implements IGenerateDraftPlayers {
     }
 
     public IPlayerStatistics generateStatForPlayer(String position){
-        int[][] defaultPlayerStatForPosition = new int[4][2];
+        logger.debug("Generate player statistics for position"+position);
+        int[][] defaultPlayerStatForPosition = new int[ROWSIZE][COLUMNSIZE];
         if (position.equals(PlayerPosition.FORWARD.toString())) {
             defaultPlayerStatForPosition = FORWARDSTATRANGE;
         } else if (position.equals(PlayerPosition.DEFENSE.toString())) {
@@ -107,12 +117,15 @@ public class GenerateDraftPlayers implements IGenerateDraftPlayers {
     }
 
     public int getSkewedStatMinValue(int minStat , int maxStat){
+        logger.debug("Get skewed stat min value");
         int rangeDifference =  maxStat - minStat;
         int skewRange = (SKEWSTAT * rangeDifference)/100;
+        logger.debug(skewRange);
         return minStat+skewRange;
     }
 
     public IPlayerStatistics getPlayerStatistics(int[][] stat){
+        logger.info("Generating Player statistics");
         int skewedSkatingMinValue= getSkewedStatMinValue(stat[SKATINGINDEX][MINRANGEINDEX],stat[SKATINGINDEX][MAXRANGEINDEX]);
         int skewedShootingMinValue= getSkewedStatMinValue(stat[SHOOTINGINDEX][MINRANGEINDEX],stat[SHOOTINGINDEX][MAXRANGEINDEX]);
         int skewedCheckingMinValue= getSkewedStatMinValue(stat[CHECKINGINDEX][MINRANGEINDEX],stat[CHECKINGINDEX][MAXRANGEINDEX]);
@@ -126,6 +139,7 @@ public class GenerateDraftPlayers implements IGenerateDraftPlayers {
     }
 
     public void sortBestPlayerOrder(List<IPlayer> players){
+        logger.info("Sorting generated players in order of best player to worst player");
         ITeam team = factory.createTeamDefault();
         team.sortPlayersInTeamByStrength(players);
     }
