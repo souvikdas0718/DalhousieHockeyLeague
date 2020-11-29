@@ -80,6 +80,22 @@ public class Team implements ITeam {
         this.teamPoint = teamPoint;
     }
 
+    public static int getTOTALTEAMSIZE() {
+        return TOTALTEAMSIZE;
+    }
+
+    public static int getTOTALGOALIES() {
+        return TOTALGOALIES;
+    }
+
+    public static int getTOTALFORWARDS() {
+        return TOTALFORWARDS;
+    }
+
+    public static int getTOTALDEFENSE() {
+        return TOTALDEFENSE;
+    }
+
     public List<IPlayer> getInactiveRoster() {
         return players.stream().filter(player -> player.isActive() == false).collect(Collectors.toList());
     }
