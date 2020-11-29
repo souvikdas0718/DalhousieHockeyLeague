@@ -31,6 +31,11 @@ public interface IScheduler {
 
     public void setFinalDay(LocalDate finalDay);
 
+
+    public LocalDate getFinalMatchDate();
+
+    public void setFinalMatchDate(LocalDate finalMatchDate);
+
     public List<ITeam> getTeamList();
 
 //    public void setTeamList(List<ITeam> teamList);
