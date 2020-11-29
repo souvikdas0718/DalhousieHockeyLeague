@@ -1,10 +1,10 @@
-package dhl.businessLogic.simulationStateMachine;
+package dhl.businessLogic.teamRosterUpdater;
 
 import dhl.businessLogic.leagueModel.PlayerPosition;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.simulationStateMachine.interfaces.ITeamRosterUpdater;
+import dhl.businessLogic.teamRosterUpdater.interfaces.ITeamRosterUpdater;
 import java.util.ArrayList;
 import java.util.List;
 
