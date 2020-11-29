@@ -8,7 +8,6 @@ import dhl.inputOutput.importJson.ImportJsonAbstractFactory;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 
 public class SimulateState implements IGameState {
-    private static final String AGINGCONFIGPATH = "src/test/java/dhl/Mocks/MockData2.json";
     final int maxSeasons = 10;
     final int minSeasons = 1;
     GameContext ourGame;
