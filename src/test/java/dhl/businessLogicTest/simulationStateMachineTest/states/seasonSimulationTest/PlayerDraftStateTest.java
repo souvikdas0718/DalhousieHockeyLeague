@@ -54,7 +54,8 @@ public class PlayerDraftStateTest {
         simulationContext.setStandings(standings);
         playerDraftState =  (PlayerDraftState) simulationFactory.getPlayerDraftState(simulationContext) ;
         LeagueModelAbstractFactory leagueFactory = LeagueModelAbstractFactory.instance();
-        leagueFactory.createPlayerDraft().setDraftPickSequence(playerDraftState.getDraftPickSequence());
+        IPlayerDraft playerDraft = leagueFactory.createPlayerDraft();
+        playerDraft.setDraftPickSequence(playerDraftState.getDraftPickSequence());
     }
 
     @Test

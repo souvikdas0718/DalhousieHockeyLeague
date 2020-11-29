@@ -12,11 +12,6 @@ public class PlayerDraft extends IPlayerDraft {
     public PlayerDraft(){
     }
 
-    public PlayerDraft(ITeam[][] draftPickSequence){
-        this.numberOfTeams = 0;
-        this.draftPickSequence = draftPickSequence;
-    }
-
     public void swapDraftPick(int round, ITeam teamGettingDraft, ITeam teamGivingDraft){
         for (int i = 0; i < draftPickSequence.length; i++){
             if (draftPickSequence[i][round] == teamGivingDraft){

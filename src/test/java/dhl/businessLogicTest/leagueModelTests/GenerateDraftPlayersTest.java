@@ -48,7 +48,7 @@ public class GenerateDraftPlayersTest {
     @Test
     public void generateStatForGoaliePlayerTest(){
         IPlayerStatistics playerStatistics = generateDraftPlayers.generateStatForPlayer("goalie");
-        playerStatistics.calculateCurrentAge(LocalDate.of(2020,12,1));
+        playerStatistics.calculateCurrentAge(LocalDate.of(2020,12,31));
         int age = playerStatistics.getAge();
         Assertions.assertTrue(age >=18 && age<=21);
     }
@@ -56,7 +56,7 @@ public class GenerateDraftPlayersTest {
     @Test
     public void generateStatForDefensePlayerTest(){
         IPlayerStatistics playerStatistics = generateDraftPlayers.generateStatForPlayer("defense");
-        playerStatistics.calculateCurrentAge(LocalDate.of(2020,12,1));
+        playerStatistics.calculateCurrentAge(LocalDate.of(2020,12,31));
         int age = playerStatistics.getAge();
         Assertions.assertTrue(age >=18 && age<=21);
     }
