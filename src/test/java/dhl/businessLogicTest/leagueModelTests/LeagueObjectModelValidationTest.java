@@ -7,6 +7,7 @@ import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.Mocks.MockSerializeLeagueObjectModel;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
+import dhl.businessLogicTest.leagueModelTests.mocks.ConferenceMock;
 import dhl.businessLogicTest.leagueModelTests.mocks.LeagueMock;
 import dhl.businessLogicTest.leagueModelTests.mocks.TeamMock;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
@@ -52,74 +53,65 @@ public class LeagueObjectModelValidationTest {
     void checkIfLeagueHasEvenConferencesTest() {
 
         leagueModelParameterized= leagueMock.getLeagueObjectModelOddConf();
-        Exception error = Assertions.assertThrows(Exception.class, () -> {
-            leagueValidation.checkIfLeagueObjectModelValid(validate, leagueModelParameterized);
-        });
-        Assertions.assertTrue(error.getMessage().contains("A League must contain even number of conferences"));
+        Assertions.assertFalse(leagueValidation.checkIfLeagueObjectModelValid(validate, leagueModelParameterized));
     }
 
     @Test
     public void checkIfConferenceNamesUniqueInLeagueTest() {
         leagueModelParameterized = leagueMock.getLeagueObjectModelDuplicateConference();
-        Exception error = Assertions.assertThrows(Exception.class, () -> {
-            leagueValidation.checkIfLeagueObjectModelValid(validate, leagueModelParameterized);
-        });
-        Assertions.assertTrue(error.getMessage().contains("The names of conferences inside a league must be unique"));
+        Assertions.assertFalse(leagueValidation.checkIfLeagueObjectModelValid(validate, leagueModelParameterized));
     }
 
     @Test
     void checkUserInputIncorrectLeagueTest()  {
-        Exception error = Assertions.assertThrows(Exception.class, () -> {
-            TeamMock teamMock =leagueMockFactory.createTeamMock();
-            ITeam newlyCreatedTeam = teamMock.getTeamByName("Halifax");
+        TeamMock teamMock =leagueMockFactory.createTeamMock();
+        ITeam newlyCreatedTeam = teamMock.getTeamByName("Halifax");
 
-            ILeagueObjectModelInput leagueObjectModelInput = leagueFactory.createLeagueObjectModelInput("Nhl", "Western", "Atlantic", newlyCreatedTeam, serializeLeagueObjectModel);
-            leagueValidation.checkUserInputForLeague(leagueModelParameterized, leagueObjectModelInput);
-        });
-        Assertions.assertTrue(error.getMessage().contains("League name is not present in file imported."));
+        ILeagueObjectModelInput leagueObjectModelInput = leagueFactory.createLeagueObjectModelInput("Nhl", "Western", "Atlantic", newlyCreatedTeam, serializeLeagueObjectModel);
+        Assertions.assertFalse(leagueValidation.checkUserInputForLeague(leagueModelParameterized, leagueObjectModelInput));
     }
 
     @Test
     void checkUserInputIncorrectConferenceTest()  {
-        Exception error = Assertions.assertThrows(Exception.class, () -> {
-            TeamMock teamMock =leagueMockFactory.createTeamMock();
-            ITeam newlyCreatedTeam = teamMock.getTeamByName("Halifax");
+        TeamMock teamMock =leagueMockFactory.createTeamMock();
+        ITeam newlyCreatedTeam = teamMock.getTeamByName("Halifax");
 
-            ILeagueObjectModelInput leagueObjectModelInput = leagueFactory.createLeagueObjectModelInput("Dhl", "Premier", "Atlantic", newlyCreatedTeam, serializeLeagueObjectModel);
-            leagueValidation.checkUserInputForLeague(leagueModelParameterized, leagueObjectModelInput);
-        });
-        Assertions.assertTrue(error.getMessage().contains("Conference name is not present in file imported"));
+        ILeagueObjectModelInput leagueObjectModelInput = leagueFactory.createLeagueObjectModelInput("Dhl", "Premier", "Atlantic", newlyCreatedTeam, serializeLeagueObjectModel);
+        Assertions.assertFalse(leagueValidation.checkUserInputForLeague(leagueModelParameterized, leagueObjectModelInput));
     }
 
     @Test
     void checkUserInputIncorrectDivisionTest()  {
-        Exception error = Assertions.assertThrows(Exception.class, () -> {
-            TeamMock teamMock =leagueMockFactory.createTeamMock();
-            ITeam newlyCreatedTeam = teamMock.getTeamByName("Halifax");
-            ILeagueObjectModelInput leagueObjectModelInput = leagueFactory.createLeagueObjectModelInput("Dhl", "Western", "Metropolitan", newlyCreatedTeam, serializeLeagueObjectModel);
-            leagueValidation.checkUserInputForLeague(leagueModelParameterized, leagueObjectModelInput);
-        });
-        Assertions.assertTrue(error.getMessage().contains("Division name is not present in file imported"));
+        TeamMock teamMock =leagueMockFactory.createTeamMock();
+        ITeam newlyCreatedTeam = teamMock.getTeamByName("Halifax");
+        ILeagueObjectModelInput leagueObjectModelInput = leagueFactory.createLeagueObjectModelInput("Dhl", "Western", "Metropolitan", newlyCreatedTeam, serializeLeagueObjectModel);
+        Assertions.assertFalse(leagueValidation.checkUserInputForLeague(leagueModelParameterized, leagueObjectModelInput));
     }
 
     @Test
-    void checkUserInputTeamAlreadyPresentTest() throws Exception {
-        Exception error = Assertions.assertThrows(Exception.class, () -> {
-            TeamMock teamMock =leagueMockFactory.createTeamMock();
-            ITeam newlyCreatedTeam = teamMock.getTeam();
-            ILeagueObjectModelInput leagueObjectModelInput = leagueFactory.createLeagueObjectModelInput("Dhl", "Western", "Atlantic", newlyCreatedTeam, serializeLeagueObjectModel);
-            leagueValidation.checkUserInputForLeague(leagueModelParameterized, leagueObjectModelInput);
-        });
-        Assertions.assertTrue(error.getMessage().contains("Team name entered is already present in file imported"));
+    void checkUserInputTeamAlreadyPresentTest()  {
+        TeamMock teamMock =leagueMockFactory.createTeamMock();
+        ITeam newlyCreatedTeam = teamMock.getTeam();
+        ILeagueObjectModelInput leagueObjectModelInput = leagueFactory.createLeagueObjectModelInput("Dhl", "Western", "Atlantic", newlyCreatedTeam, serializeLeagueObjectModel);
+
+        Assertions.assertFalse(leagueValidation.checkUserInputForLeague(leagueModelParameterized, leagueObjectModelInput));
     }
 
     @Test
-    void checkUserInputForLeagueTest() throws Exception {
+    void checkUserInputForLeagueTest() {
         TeamMock teamMock =leagueMockFactory.createTeamMock();
         ITeam newlyCreatedTeam = teamMock.getTeamByName("Halifax");
 
         ILeagueObjectModelInput leagueObjectModelInput = leagueFactory.createLeagueObjectModelInput("Dhl", "Western", "Atlantic",newlyCreatedTeam, serializeLeagueObjectModel);
         Assertions.assertTrue(leagueValidation.checkUserInputForLeague(leagueModelParameterized, leagueObjectModelInput));
+    }
+
+    @Test
+    void checkIfLeagueDetailsValidTest() {
+        LeagueMock leagueMock =leagueMockFactory.createLeagueMock();
+        List<IConference> conferences = leagueMock.getConferences();
+
+        Assertions.assertTrue(leagueValidation.checkIfLeagueDetailsValid(conferences));
     }
 
     @AfterEach

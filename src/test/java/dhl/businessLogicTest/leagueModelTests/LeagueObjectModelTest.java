@@ -85,13 +85,13 @@ public class LeagueObjectModelTest {
     }
 
     @Test
-    public void checkIfLeagueModelValidTest() throws Exception {
+    public void checkIfLeagueModelValidTest() {
         leagueModelParameterized.checkIfLeagueModelValid(validate,leagueValidation);
         Assertions.assertEquals("Dhl", leagueModelParameterized.getLeagueName());
     }
 
     @Test
-    public void saveLeagueObjectModelTest() throws Exception {
+    public void saveLeagueObjectModelTest() {
         ISerializeLeagueObjectModel mockSerialize = mockFactory.getMockSerialize();
         TeamMock teamMock =leagueMockFactory.createTeamMock();
         ITeam newlyCreatedTeam = teamMock.getTeamByName("Halifax");
@@ -102,13 +102,13 @@ public class LeagueObjectModelTest {
     }
 
     @Test
-    public void loadLeagueObjectModelTest() throws Exception {
+    public void loadLeagueObjectModelTest() {
         IDeserializeLeagueObjectModel mockDeserialize = mockFactory.getMockDeserialize();
         Assertions.assertEquals("Dhl", leagueModelParameterized.loadLeagueObjectModel(mockDeserialize, "Dhl", "Nova Scotia").getLeagueName());
     }
 
     @Test
-    public void updateLeagueObjectModel() throws Exception {
+    public void updateLeagueObjectModel()  {
         ISerializeLeagueObjectModel serializeMock = new MockSerializeLeagueObjectModel();
         Assertions.assertEquals("Dhl", leagueModelParameterized.updateLeagueObjectModel(serializeMock).getLeagueName());
     }

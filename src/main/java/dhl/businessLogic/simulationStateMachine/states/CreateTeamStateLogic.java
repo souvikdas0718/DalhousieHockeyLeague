@@ -19,7 +19,7 @@ public class CreateTeamStateLogic implements ICreateTeamStateLogic {
         ILeagueObjectModel leagueObjectModel = new LeagueObjectModel();
 
         try {
-            leagueObjectModel = inMemoryLeague.saveLeagueObjectModel(leagueObjectModelInput.getserializeLeagueObjectModel(), leagueObjectModelInput);
+            leagueObjectModel = inMemoryLeague.saveLeagueObjectModel(leagueObjectModelInput.getSerializeLeagueObjectModel(), leagueObjectModelInput);
             ITeam team = leagueObjectModelInput.getNewlyCreatedTeam();
             ourGame.setSelectedTeam(findTeam(inMemoryLeague, team.getTeamName()));
         } catch (Exception  e) {

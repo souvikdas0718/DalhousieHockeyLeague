@@ -30,8 +30,6 @@ public class AgingState implements ISimulationSeasonState {
 
         LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
         LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());
-        System.out.println("Current Date " + currentDate);
-        System.out.println("Get no of days " + simulationContext.getNumberOfDays());
         leagueSchedule.initiateAging(simulationContext.getNumberOfDays(), currentDate);
 
     }

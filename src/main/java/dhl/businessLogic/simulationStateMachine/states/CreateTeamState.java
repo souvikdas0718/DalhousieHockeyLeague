@@ -241,11 +241,16 @@ public class CreateTeamState implements IGameState {
             ISerializeLeagueObjectModel serializeLeagueObjectModel = new SerializeLeagueObjectModel(jsonFilePath);
 
             ILeagueObjectModelInput leagueObjectModelInput = new LeagueObjectModelInput(inMemoryLeague.getLeagueName(), selectedConference.getConferenceName(), selectedDivision.getDivisionName(), newlyCreatedTeam, leagueObjectModelValidation, serializeLeagueObjectModel);
-            createTeamStateLogic.saveleagueObject(ourGame, inMemoryLeague, leagueObjectModelInput);
+            if(leagueObjectModelValidation.checkUserInputForLeague(inMemoryLeague, leagueObjectModelInput)){
+                createTeamStateLogic.saveleagueObject(ourGame, inMemoryLeague, leagueObjectModelInput);
+            }
+            else {
+                userInputPutput.printMessage("League inputs entered are invalid");
+                ourGame.setGameInProgress(false);
+            }
 
         } catch (Exception e) {
-            userInputPutput.printMessage(e.getMessage())
-            ;
+            userInputPutput.printMessage(e.getMessage());
             ourGame.setGameInProgress(false);
         }
     }

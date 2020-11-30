@@ -185,7 +185,7 @@ public class CreateLeagueObjectModelValidationTest {
     public void checkLeagueObjectModelSameDivisionTest(){
         LeagueMock leagueMock = mockFactory.createLeagueMock();
         ILeagueObjectModel leagueObjectModel= leagueMock.getLeagueObjectModelSameDivision();
-        Assertions.assertTrue( createdLeagueValidation.checkCreatedLeagueObjectModel(leagueObjectModel));
+        Assertions.assertFalse( createdLeagueValidation.checkCreatedLeagueObjectModel(leagueObjectModel));
     }
 
 

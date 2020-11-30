@@ -14,6 +14,6 @@ public interface ILeagueObjectModelInput {
 
     public ILeagueObjectModelValidation getLeagueObjectModelValidation();
 
-    public ISerializeLeagueObjectModel getserializeLeagueObjectModel();
+    public ISerializeLeagueObjectModel getSerializeLeagueObjectModel();
 
 }

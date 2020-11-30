@@ -12,7 +12,6 @@ public class JsonFilePath implements IJsonFilePath {
     @Override
     public String getFilePath() {
         String path = null;
-
         while (path == null) {
             System.out.println("Enter JSON File Path or Enter Exit if u want to exit: ");
             Scanner sc = new Scanner(System.in);

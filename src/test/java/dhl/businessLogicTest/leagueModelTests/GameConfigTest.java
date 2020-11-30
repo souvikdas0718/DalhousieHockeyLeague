@@ -109,4 +109,13 @@ public class GameConfigTest {
         Double randomTradeOfferChance = Double.parseDouble(testClassObject.getValueFromOurObject("trading", "randomTradeOfferChance"));
         Assertions.assertTrue(randomTradeOfferChance > 0 );
     }
+    @Test
+    public void getGameResolverTest() {
+        Assertions.assertEquals("gameResolver", testClassObject.getGameResolver());
+    }
+    @Test
+    public void getRandomWinChanceTest() {
+        Assertions.assertEquals("randomWinChance", testClassObject.getRandomWinChance());
+    }
+
 }

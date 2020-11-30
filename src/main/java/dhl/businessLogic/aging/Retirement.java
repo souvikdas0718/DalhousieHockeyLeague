@@ -14,14 +14,14 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Retirement implements IRetirement {
+    private static final int BESTPLAYERINDEX = 0;
     private ILeagueObjectModel leagueObjectModel;
     private ISerializeLeagueObjectModel serializeModel;
     private static final Logger logger = LogManager.getLogger(Retirement.class);
 
-    public Retirement(ISerializeLeagueObjectModel serializeModel, ILeagueObjectModel leagueObjectModel) {
+    public Retirement(ISerializeLeagueObjectModel serializeModel) {
         logger.info("Retirement Constructor Object created");
         logger.debug("Creating a Retirement Constructor");
-        this.leagueObjectModel = leagueObjectModel;
         this.serializeModel = serializeModel;
     }
 
@@ -33,15 +33,17 @@ public class Retirement implements IRetirement {
         this.leagueObjectModel = leagueObjectModel;
     }
 
-    public void initiateRetirement(Map<String, List<IPlayer>> playersToRetire, List<IPlayer> freeAgentsToRetire) {
+    public void initiateRetirement(Map<String, List<IPlayer>> playersToRetire, List<IPlayer> freeAgentsToRetire,ILeagueObjectModel leagueObjectModel) {
         logger.debug("Executing retirement algorithm for players");
+        this.leagueObjectModel=leagueObjectModel;
         retireFreeAgents(freeAgentsToRetire, leagueObjectModel.getFreeAgents());
         for (IConference conference : leagueObjectModel.getConferences()) {
             for (IDivision division : conference.getDivisions()) {
                 for (ITeam team : division.getTeams()) {
-                    System.out.println("team name "+playersToRetire.get(team.getTeamName()));
-                    if (playersToRetire.get(team.getTeamName()).size() > 0) {
-                        retirePLayers(playersToRetire.get(team.getTeamName()), team, leagueObjectModel.getFreeAgents());
+                    if(playersToRetire.containsKey(team.getTeamName())){
+                        if (playersToRetire.get(team.getTeamName()).size() > 0) {
+                            retirePLayers(playersToRetire.get(team.getTeamName()), team, this.leagueObjectModel.getFreeAgents());
+                        }
                     }
                 }
             }
@@ -95,7 +97,7 @@ public class Retirement implements IRetirement {
         String playerPosition = player.getPosition();
         List<IPlayer> freeAgentsOfSamePosition = freeAgents.stream().filter((IPlayer agent) -> { return agent.getPosition() == playerPosition; }).collect(Collectors.toList());
         sortFreeAgentsByStrength(freeAgentsOfSamePosition);
-        int indexOfBestPlayer = 0;
+        int indexOfBestPlayer = BESTPLAYERINDEX;
         selectedAgent = freeAgentsOfSamePosition.get(indexOfBestPlayer);
 
         removeSelectedAgentFromFreeAgents(freeAgents, selectedAgent);
