@@ -19,6 +19,5 @@ public class StandingsFactory extends StandingsAbstractFactory {
             standingSystem = new StandingSystem();
         }
         return standingSystem;
-//        return new StandingSystem();
     }
 }

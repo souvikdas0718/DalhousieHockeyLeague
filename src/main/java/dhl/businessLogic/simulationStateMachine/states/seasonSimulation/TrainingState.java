@@ -1,13 +1,14 @@
 package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 
 
-import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
 import dhl.businessLogic.traning.ITraining;
 import dhl.businessLogic.traning.TrainingAbstractFactory;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -22,6 +23,7 @@ public class TrainingState implements ISimulationSeasonState {
     private static final int RESETTRAININGDATE = 0;
     private static final int TRADEDEADLINEMONTH = 2;
     private static final int TRADEDEADLINEDAY = 1;
+    public static Logger logger = LogManager.getLogger(TrainingState.class);
     SimulationContext simulationContext;
     IScheduler scheduler;
     TrainingAbstractFactory trainingAbstractFactory;
@@ -61,9 +63,8 @@ public class TrainingState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateProcess() {
-        userInputOutput.printMessage("Into the state process of Training State season");
+        logger.info("Into the state process of Training State season");
         simulationContext.setDaysSinceLastTraining(simulationContext.getDaysSinceLastTraining() + DAY);
-        IGameConfig gameConfig = simulationContext.getGameConfig();
         try {
             if (DAYSUNTILSTATINCREASECHECK == simulationContext.getDaysSinceLastTraining()) {
                 ITraining training = trainingAbstractFactory.createTraining(simulationContext.getInjurySystem(), simulationContext.getGameConfig());
@@ -71,13 +72,13 @@ public class TrainingState implements ISimulationSeasonState {
                 simulationContext.setDaysSinceLastTraining(RESETTRAININGDATE);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            userInputOutput.printMessage(e.getMessage());
         }
     }
 
     @Override
     public void seasonStateExitProcess() {
-        userInputOutput.printMessage("Into the exit process of Training State season");
+        logger.info("Into the exit process of Training State season");
         LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
         LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());
         scheduler = simulationContext.getRegularScheduler();

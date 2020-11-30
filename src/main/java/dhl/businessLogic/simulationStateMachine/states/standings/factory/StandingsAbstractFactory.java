@@ -18,9 +18,9 @@ public abstract class StandingsAbstractFactory {
         return uniqueInstance;
     }
 
-    public static void setFactory(StandingsAbstractFactory factory) {
-        uniqueInstance = factory;
-    }
+//    public static void setFactory(StandingsAbstractFactory factory) {
+//        uniqueInstance = factory;
+//    }
 
     public abstract IStandings getStandings();
 

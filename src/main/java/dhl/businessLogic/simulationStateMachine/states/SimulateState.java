@@ -39,7 +39,7 @@ public class SimulateState implements IGameState {
 
         while (SEASONNUMBER < MINSEASONS || SEASONNUMBER > MAXSEASONS) {
             SEASONNUMBER = Integer.parseInt(userInputOutput.getUserInput());
-            if (SEASONNUMBER <= MINSEASONS || SEASONNUMBER >= MAXSEASONS) {
+            if (SEASONNUMBER < MINSEASONS || SEASONNUMBER > MAXSEASONS) {
                 userInputOutput.printMessage("You can't simulate less than 1 season or more than 10 seasons");
                 userInputOutput.printMessage("How many seasons you wana simulate or Enter Exit to quit ");
             }
