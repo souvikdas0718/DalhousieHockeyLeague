@@ -33,6 +33,7 @@ public class InitializeSeasonState implements ISimulationSeasonState {
     IStandingSystem standingSystem;
 
     public InitializeSeasonState(SimulationContext simulationContext) {
+        logger.info("Into the Initialize season constructor");
         this.simulationContext = simulationContext;
         schedulerAbstractFactory = SchedulerAbstractFactory.instance();
         scheduler = schedulerAbstractFactory.getScheduler();

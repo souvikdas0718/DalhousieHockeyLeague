@@ -34,6 +34,7 @@ public class TrainingState implements ISimulationSeasonState {
     IUserInputOutput userInputOutput;
 
     public TrainingState(SimulationContext simulationContext) {
+        logger.info("Into the training state constructor");
         this.simulationContext = simulationContext;
         scheduler = simulationContext.getRegularScheduler();
         trainingAbstractFactory = TrainingAbstractFactory.instance();
@@ -42,7 +43,9 @@ public class TrainingState implements ISimulationSeasonState {
     }
 
     static void unPlayedGameAndTradingDeadline(LocalDate currentDate, IScheduler scheduler, SimulationContext simulationContext) {
+        logger.info("conducting the unplayed games as per the current date present in game schedule.");
         if (currentDate.isAfter(simulationContext.getSeasonStartDate().minusDays(1)) && currentDate.isBefore(simulationContext.getSeasonEndDate().plusDays(1))) {
+            logger.debug("creating a matchList for a single day and then storing it for simulating games for general season games");
             for (ISeasonSchedule schedule : scheduler.getFullSeasonSchedule()) {
                 if (currentDate.equals(schedule.getGameDate()) && !schedule.isMatchToBePlayed()) {
                     schedule.setMatchToBePlayed(true);
@@ -54,6 +57,7 @@ public class TrainingState implements ISimulationSeasonState {
 
         } else if (currentDate.isAfter(simulationContext.getPlayOffStartDate().minusDays(1)) && currentDate.isBefore(simulationContext.getFinalDay().plusDays(1))) {
             for (ISeasonSchedule schedule : scheduler.getPlayOffScheduleRound1()) {
+                logger.debug("creating a matchList for a single day and then storing it for simulating games for playoffs season games");
                 if (currentDate.equals(schedule.getGameDate()) && !schedule.isMatchToBePlayed()) {
                     schedule.setMatchToBePlayed(true);
                     matchList.add(schedule);
@@ -64,6 +68,7 @@ public class TrainingState implements ISimulationSeasonState {
         }
 
         for (ISeasonSchedule match : matchList) {
+            logger.debug("Based on the match list simulating the game an calling Simulate game state");
             if (!match.isMatchPlayed()) {
                 match.setMatchPlayed(true);
                 simulationContext.setMatchToSimulate(match);
@@ -77,8 +82,10 @@ public class TrainingState implements ISimulationSeasonState {
         LocalDate tradeDeadline = localDate.with(lastDayOfMonth())
                 .with(previousOrSame(DayOfWeek.MONDAY));
         if (currentDate.isBefore(tradeDeadline.plusDays(DAY)) && currentDate.isAfter(simulationContext.getStartOfSimulation())) {
+            logger.debug("trade deadline not passed so moving to execute trades state");
             simulationContext.setCurrentSimulation(simulationContext.getExecuteTrades());
         } else {
+            logger.debug("trade deadline has passed so moving to aging state");
             simulationContext.setCurrentSimulation(simulationContext.getAging());
         }
     }

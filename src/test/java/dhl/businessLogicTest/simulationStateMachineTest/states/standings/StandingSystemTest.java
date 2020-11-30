@@ -202,5 +202,11 @@ public class StandingSystemTest {
         Assert.assertEquals(divisionTeamList.get(4).getPoints(), 70);
 
     }
+
+    @Test
+    public void createStandingsTest() {
+        standingSystem.createStandings(model20TeamMocks.getLeagueData());
+        Assertions.assertNotNull(standingSystem.getStandingsList());
+    }
 }
 

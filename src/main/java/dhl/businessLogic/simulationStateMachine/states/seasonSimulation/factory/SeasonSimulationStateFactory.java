@@ -52,11 +52,11 @@ public class SeasonSimulationStateFactory extends SimulationStateAbstractFactory
         return new TrainingState(simulationContext);
     }
 
-    public IGenerateDraftPlayers getGeneratePlayers(){
+    public IGenerateDraftPlayers getGeneratePlayers() {
         return new GenerateDraftPlayers();
     }
 
-    public ISimulationSeasonState getPlayerDraftState(SimulationContext simulationContext){
+    public ISimulationSeasonState getPlayerDraftState(SimulationContext simulationContext) {
         return new PlayerDraftState(simulationContext);
     }
 }

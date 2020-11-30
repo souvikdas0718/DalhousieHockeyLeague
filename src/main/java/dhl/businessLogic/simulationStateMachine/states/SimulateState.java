@@ -23,6 +23,7 @@ public class SimulateState implements IGameState {
     ContextAbstractFactory contextAbstractFactory;
 
     public SimulateState(GameContext newGame) {
+        logger.info("Into Simulate game constructor, Initialising the GameContext values to the state variables");
         ourGame = newGame;
         userInputOutput = IUserInputOutput.getInstance();
         leagueFactory = LeagueModelAbstractFactory.instance();
