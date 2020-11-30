@@ -42,36 +42,11 @@ public class TrainingState implements ISimulationSeasonState {
     }
 
     static void unPlayedGameAndTradingDeadline(LocalDate currentDate, IScheduler scheduler, SimulationContext simulationContext) {
-//        if (currentDate.isAfter(simulationContext.getSeasonStartDate().minusDays(DAY)) && currentDate.isBefore(simulationContext.getSeasonEndDate().plusDays(DAY))) {
-//            simulationContext.setCurrentSimulation(simulationContext.getSimulateGame());
-//        } else if (currentDate.isAfter(simulationContext.getPlayOffStartDate().minusDays(DAY)) && currentDate.isBefore(simulationContext.getFinalDay().plusDays(DAY))) {
-//            simulationContext.setCurrentSimulation(simulationContext.getSimulateGame());
-//        } else {
-//            LocalDate localDate = LocalDate.of(simulationContext.getYear() + YEAR, TRADEDEADLINEMONTH, TRADEDEADLINEDAY);
-//            LocalDate tradeDeadline = localDate.with(lastDayOfMonth())
-//                    .with(previousOrSame(DayOfWeek.MONDAY));
-//            if (currentDate.isBefore(tradeDeadline.plusDays(DAY)) && currentDate.isAfter(simulationContext.getStartOfSimulation())) {
-//                simulationContext.setCurrentSimulation(simulationContext.getExecuteTrades());
-//            } else {
-//                simulationContext.setCurrentSimulation(simulationContext.getAging());
-//            }
-//        }
-
-//        if (currentDate.isAfter(scheduler.getSeasonStartDate().minusDays(DAY)) && currentDate.isBefore(scheduler.getSeasonEndDate().plusDays(DAY))) {
-//            logger.debug("Checking for games lying in general playOffs ");
-//            for (ISeasonSchedule schedule : scheduler.getFullSeasonSchedule()) {
-//                if (schedule.getGameDate().equals(currentDate)) {
-//
-//                }
-//            }
-//        }
         if (currentDate.isAfter(simulationContext.getSeasonStartDate().minusDays(1)) && currentDate.isBefore(simulationContext.getSeasonEndDate().plusDays(1))) {
             for (ISeasonSchedule schedule : scheduler.getFullSeasonSchedule()) {
                 if (currentDate.equals(schedule.getGameDate()) && !schedule.isMatchToBePlayed()) {
                     schedule.setMatchToBePlayed(true);
                     matchList.add(schedule);
-//                    simulationContext.setMatchToSimulate(schedule);
-//                    simulationContext.setCurrentSimulation(simulationContext.getSimulateGame());
                 } else if (schedule.getGameDate().isAfter(currentDate)) {
                     break;
                 }
@@ -82,8 +57,6 @@ public class TrainingState implements ISimulationSeasonState {
                 if (currentDate.equals(schedule.getGameDate()) && !schedule.isMatchToBePlayed()) {
                     schedule.setMatchToBePlayed(true);
                     matchList.add(schedule);
-//                    simulationContext.setMatchToSimulate(schedule);
-//                    simulationContext.setCurrentSimulation(simulationContext.getSimulateGame());
                 } else if (schedule.getGameDate().isAfter(currentDate)) {
                     break;
                 }

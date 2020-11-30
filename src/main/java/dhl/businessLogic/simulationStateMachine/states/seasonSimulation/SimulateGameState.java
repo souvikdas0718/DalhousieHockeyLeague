@@ -50,32 +50,6 @@ public class SimulateGameState implements ISimulationSeasonState {
         ITeam losingTeam;
         if (currentDate.isAfter(scheduler.getSeasonStartDate().minusDays(DAY)) && currentDate.isBefore(scheduler.getSeasonEndDate().plusDays(DAY))) {
             logger.debug("Checking for games lying in general playOffs ");
-//            for (ISeasonSchedule schedule : scheduler.getFullSeasonSchedule()) {
-//                if (schedule.getGameDate().equals(currentDate)) {
-//                    logger.debug("Once schedule match date is same as current date, add teams for injury check and based on requirement deciding the winner");
-//                    Double randomNumber = Math.random() * 100;
-//                    injuryCheckTeams.add(schedule.getTeamOne());
-//                    injuryCheckTeams.add(schedule.getTeamTwo());
-//                    if (schedule.getTeamOne().calculateTeamStrength() > schedule.getTeamTwo().calculateTeamStrength()) {
-//                        winningTeam = schedule.getTeamOne();
-//                        losingTeam = schedule.getTeamTwo();
-//                        if (randomNumber < RANDOMWINCHANCE) {
-//                            winningTeam = schedule.getTeamTwo();
-//                            losingTeam = schedule.getTeamOne();
-//                        }
-//                    } else {
-//                        winningTeam = schedule.getTeamTwo();
-//                        losingTeam = schedule.getTeamOne();
-//                        if (randomNumber < RANDOMWINCHANCE) {
-//                            winningTeam = schedule.getTeamOne();
-//                            losingTeam = schedule.getTeamTwo();
-//                        }
-//                    }
-//                    logger.debug("updating the winning and losing teams standings in Standing System class.");
-//                    standingSystem.updateWinningStandings(winningTeam);
-//                    standingSystem.updateLosingStandings(losingTeam);
-//                }
-//            }
             ISeasonSchedule match = simulationContext.getMatchToSimulate();
             Double randomNumber = Math.random() * 100;
             injuryCheckTeams.add(match.getTeamOne());
@@ -101,30 +75,6 @@ public class SimulateGameState implements ISimulationSeasonState {
 
         } else if (currentDate.isAfter(scheduler.getPlayOffStartDate().minusDays(DAY)) && currentDate.isBefore(scheduler.getFinalDay().plusDays(DAY))) {
             logger.debug("checking for playoffs games");
-//            ArrayList<ISeasonSchedule> schedules = new ArrayList<>(scheduler.getPlayOffScheduleRound1());
-//            for (ISeasonSchedule playOffSchedule : schedules) {
-//                if (playOffSchedule.getGameDate().equals(currentDate)) {
-//                    logger.debug("Once schedule match date is same as current date, add teams for injury check and based on requirement deciding the winner");
-//                    Double randomNumber = Math.random() * 100;
-//                    injuryCheckTeams.add(playOffSchedule.getTeamOne());
-//                    injuryCheckTeams.add(playOffSchedule.getTeamTwo());
-//                    if (playOffSchedule.getTeamOne().calculateTeamStrength() > playOffSchedule.getTeamTwo().calculateTeamStrength()) {
-//                        winningTeam = playOffSchedule.getTeamOne();
-//                        if (randomNumber < RANDOMWINCHANCE) {
-//                            winningTeam = playOffSchedule.getTeamTwo();
-//                        }
-//                    } else {
-//                        winningTeam = playOffSchedule.getTeamTwo();
-//                        if (randomNumber < RANDOMWINCHANCE) {
-//                            winningTeam = playOffSchedule.getTeamOne();
-//                        }
-//                    }
-//                    logger.debug("calling the gameWim=nner method of scheduler class to set the next playOff lists");
-//                    scheduler.gameWinner(winningTeam);
-//                    logger.debug("setting the final schedule in the simulation context");
-//                    simulationContext.setFinalSchedule(scheduler);
-//                }
-//            }
             ISeasonSchedule playOffMatch = simulationContext.getMatchToSimulate();
             Double randomNumber = Math.random() * 100;
             injuryCheckTeams.add(playOffMatch.getTeamOne());
