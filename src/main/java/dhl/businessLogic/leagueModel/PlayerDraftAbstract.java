@@ -1,21 +1,20 @@
-package dhl.businessLogic.leagueModel.interfaceModel;
+package dhl.businessLogic.leagueModel;
 
 
-import dhl.businessLogic.leagueModel.PlayerDraft;
+import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 
-public abstract class IPlayerDraft {
+public abstract class PlayerDraftAbstract {
 
-    // TODO: 30-11-2020 naming convention
-    private static IPlayerDraft uniqueInstance;
+    private static PlayerDraftAbstract uniqueInstance;
 
-    public static IPlayerDraft instance() {
+    public static PlayerDraftAbstract instance() {
         if (uniqueInstance == null) {
             uniqueInstance = new PlayerDraft();
         }
         return uniqueInstance;
     }
 
-    public static void setFactory(IPlayerDraft instance) {
+    public static void setFactory(PlayerDraftAbstract instance) {
         uniqueInstance = instance;
     }
 

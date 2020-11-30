@@ -3,7 +3,7 @@ package dhl.businessLogicTest.tradeTest;
 import dhl.businessLogic.leagueModel.Team;
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
-import dhl.businessLogic.leagueModel.interfaceModel.IPlayerDraft;
+import dhl.businessLogic.leagueModel.PlayerDraftAbstract;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.trade.DraftPickTradeOffer;
 import dhl.businessLogic.trade.factory.TradeAbstractFactory;
@@ -50,7 +50,7 @@ public class DraftPickTradeOfferTest {
         draftPickSequenceMock[1][0] = offeringTeam;
         draftPickSequenceMock[1][1] = receivingTeam;
 
-        IPlayerDraft playerDraft = IPlayerDraft.instance();
+        PlayerDraftAbstract playerDraft = PlayerDraftAbstract.instance();
         playerDraft.setDraftPickSequence(draftPickSequenceMock);
         testClassObject = tradeFactory.createDraftPickTradeOffer(offeringTeam,receivingTeam, playersWanted,playerDraft);
     }

@@ -1,5 +1,6 @@
 package dhl.businessLogicTest.simulationStateMachineTest.states.seasonSimulationTest;
 
+import dhl.businessLogic.leagueModel.PlayerDraftAbstract;
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogic.simulationStateMachine.GameContext;
@@ -54,7 +55,7 @@ public class PlayerDraftStateTest {
         simulationContext.setStandings(standings);
         playerDraftState =  (PlayerDraftState) simulationFactory.getPlayerDraftState(simulationContext) ;
         LeagueModelAbstractFactory leagueFactory = LeagueModelAbstractFactory.instance();
-        IPlayerDraft playerDraft = leagueFactory.createPlayerDraft();
+        PlayerDraftAbstract playerDraft = leagueFactory.createPlayerDraft();
         playerDraft.setDraftPickSequence(playerDraftState.getDraftPickSequence());
     }
 

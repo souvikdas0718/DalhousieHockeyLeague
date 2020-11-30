@@ -1,7 +1,7 @@
 package dhl.businessLogic.trade;
 
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
-import dhl.businessLogic.leagueModel.interfaceModel.IPlayerDraft;
+import dhl.businessLogic.leagueModel.PlayerDraftAbstract;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,12 +11,12 @@ import java.util.ArrayList;
 public class DraftPickTradeOffer extends TradeOfferAbstract {
 
     int roundToGive;
-    IPlayerDraft playerDraft;
+    PlayerDraftAbstract playerDraft;
     ITeam[][] playerDraftSequence = null;
     boolean tradePossible;
     private static final Logger logger = LogManager.getLogger(DraftPickTradeOffer.class);
 
-    public DraftPickTradeOffer(ITeam offeringTeam, ITeam receivingTeam, ArrayList<IPlayer> playersWantedInExchange, IPlayerDraft playerDraft) {
+    public DraftPickTradeOffer(ITeam offeringTeam, ITeam receivingTeam, ArrayList<IPlayer> playersWantedInExchange, PlayerDraftAbstract playerDraft) {
         super(offeringTeam, receivingTeam, playersWantedInExchange);
         this.playerDraft = playerDraft;
         this.playerDraftSequence = playerDraft.getDraftPickSequence();

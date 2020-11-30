@@ -1,5 +1,6 @@
 package dhl.businessLogic.leagueModel.factory;
 
+import dhl.businessLogic.leagueModel.PlayerDraftAbstract;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import org.apache.logging.log4j.LogManager;
@@ -68,7 +69,7 @@ public abstract class LeagueModelAbstractFactory {
 
     public abstract IPlayer createFreeAgentDefault();
 
-    public abstract IPlayerDraft createPlayerDraft();
+    public abstract PlayerDraftAbstract createPlayerDraft();
 
     public abstract IGeneralManager createGeneralManagerDefault();
 }

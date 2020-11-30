@@ -1,5 +1,6 @@
 package dhl.businessLogicTest.leagueModelTests;
 
+import dhl.businessLogic.leagueModel.PlayerDraftAbstract;
 import dhl.businessLogic.leagueModel.Team;
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
@@ -10,7 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class PlayerDraftTest {
-    IPlayerDraft playerDraft;
+    PlayerDraftAbstract playerDraft;
     LeagueModelAbstractFactory leagueFactory;
     LeagueModelMockAbstractFactory leagueMockFactory;
     ITeam[][] draftPickSequenceMock;

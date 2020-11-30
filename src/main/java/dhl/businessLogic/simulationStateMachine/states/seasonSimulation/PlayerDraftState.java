@@ -1,5 +1,6 @@
 package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 
+import dhl.businessLogic.leagueModel.PlayerDraftAbstract;
 import dhl.businessLogic.leagueModel.Team;
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
@@ -32,7 +33,7 @@ public class PlayerDraftState implements ISimulationSeasonState {
     ITeam userTeam;
     ITeam [][] draftPickSequence = new Team[NOOFTEAMS][DRAFTROUNDS];
     ILeagueObjectModel leagueObjectModel;
-    IPlayerDraft playerDraft;
+    PlayerDraftAbstract playerDraft;
 
     public PlayerDraftState(SimulationContext simulationContext){
         logger.info("Player draft Constructor initialized");

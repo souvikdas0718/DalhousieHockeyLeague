@@ -65,6 +65,7 @@ public class TradingEngine extends TradeEngineAbstract {
             logger.info("Trade found for team: "+ tradingTeam.getTeamName());
             tradingTeam.setLossPoint(0);
             if(currentTrade.checkIfTradeAccepted()){
+                ioObject.printMessage("Trade Done Between Team :"+ currentTrade.offeringTeam.getTeamName() + " and "+ currentTrade.receivingTeam.getTeamName());
                 currentTrade.implementTrade();
             }
         }

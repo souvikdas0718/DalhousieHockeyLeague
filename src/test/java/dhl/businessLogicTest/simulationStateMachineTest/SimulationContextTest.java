@@ -7,6 +7,7 @@ import dhl.Mocks.RegularSeasonStandingListMocks;
 import dhl.Mocks.factory.MockAbstractFactory;
 import dhl.businessLogic.aging.Injury;
 import dhl.businessLogic.aging.agingFactory.AgingAbstractFactory;
+import dhl.businessLogic.leagueModel.PlayerDraftAbstract;
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
@@ -78,7 +79,7 @@ public class SimulationContextTest {
         scheduler = model20TeamMocks.leagueModel20TeamPlayoffsSchedules();
         playerDraftState = (PlayerDraftState) simulationFactory.getPlayerDraftState(simulationContext);
         LeagueModelAbstractFactory leagueFactory = LeagueModelAbstractFactory.instance();
-        IPlayerDraft playerDraft = leagueFactory.createPlayerDraft();
+        PlayerDraftAbstract playerDraft = leagueFactory.createPlayerDraft();
         playerDraft.setDraftPickSequence(playerDraftState.getDraftPickSequence());
         agingFactory = AgingAbstractFactory.instance();
         injury = (Injury) agingFactory.createInjury();

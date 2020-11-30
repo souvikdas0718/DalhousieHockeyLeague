@@ -29,7 +29,7 @@ public class PlayerListFormat implements IListFormat {
 
     public void showList(List playerArrayList) {
         logger.debug("Showing player list to user");
-        String freeAgentListHeader = String.format("%10s %20s %20s %10s %10s %10s %10s %10s %10s", "ID", "Name", "Position", "Age", "Checking", "Saving", "Shooting", "Skating", "Strength");
+        String freeAgentListHeader = String.format("%10s %20s %20s %10s %10s %10s %10s %10s", "ID", "Name", "Position", "Checking", "Saving", "Shooting", "Skating", "Strength");
         ioObject.printMessage(freeAgentListHeader);
         int i = 0;
         for (Object p : playerArrayList) {

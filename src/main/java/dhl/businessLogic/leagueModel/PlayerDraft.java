@@ -1,11 +1,10 @@
 package dhl.businessLogic.leagueModel;
 
-import dhl.businessLogic.leagueModel.interfaceModel.IPlayerDraft;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class PlayerDraft extends IPlayerDraft {
+public class PlayerDraft extends PlayerDraftAbstract {
 
     ITeam[][] draftPickSequence ;
     private static final Logger logger = LogManager.getLogger(PlayerDraft.class);

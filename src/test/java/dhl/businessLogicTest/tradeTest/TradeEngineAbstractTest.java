@@ -1,4 +1,4 @@
-package dhl.businessLogicTest.tradeTest.interfacesTest;
+package dhl.businessLogicTest.tradeTest;
 
 import dhl.Mocks.GameConfigMock;
 import dhl.Mocks.LeagueObjectModelMocks;
