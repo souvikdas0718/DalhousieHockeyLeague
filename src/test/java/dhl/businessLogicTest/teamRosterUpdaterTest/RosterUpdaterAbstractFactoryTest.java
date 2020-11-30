@@ -15,11 +15,6 @@ import org.junit.jupiter.api.Test;
 public class RosterUpdaterAbstractFactoryTest {
 
     RosterUpdaterAbstractFactory testClassObject;
-    RosterUpdaterAbstractFactory rosterUpdaterFactory;
-    LeagueModelAbstractFactory leagueFactory;
-
-    TradeMockAbstractFactory tradeMockFactory;
-    LeagueModelMockAbstractFactory leagueMockFactory;
 
     @BeforeEach
     public void initObject(){

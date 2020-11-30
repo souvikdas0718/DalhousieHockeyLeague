@@ -3,6 +3,7 @@ package dhl.businessLogic.simulationStateMachine;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
+import dhl.businessLogic.simulationStateMachine.factory.GameStateAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.interfaces.IGameContext;
 import dhl.businessLogic.simulationStateMachine.interfaces.IGameState;
 import dhl.businessLogic.simulationStateMachine.states.CreateTeamState;
@@ -27,10 +28,11 @@ public class GameContext implements IGameContext {
     int year;
 
     public GameContext() {
-        importState = new ImportState(this);
-        loadTeamState = new LoadTeamState(this);
-        simulateState = new SimulateState(this);
-        createTeamState = new CreateTeamState(this);
+        GameStateAbstractFactory gameStateFactory = GameStateAbstractFactory.instance();
+        importState = gameStateFactory.createImportState(this);
+        loadTeamState = gameStateFactory.createLoadTeamState(this);
+        simulateState = gameStateFactory.createSimulateState(this);
+        createTeamState = gameStateFactory.createCreateTeamState(this);
         currentState = importState;
         gameInProgress = true;
         userInputOutput = IUserInputOutput.getInstance();
@@ -109,5 +111,9 @@ public class GameContext implements IGameContext {
 
     public void setGameConfig(IGameConfig gameConfig) {
         this.gameConfig = gameConfig;
+    }
+
+    public IGameState getCurrentState() {
+        return currentState;
     }
 }
