@@ -11,7 +11,6 @@ import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class InjuryCheckState implements ISimulationSeasonState {
@@ -23,6 +22,7 @@ public class InjuryCheckState implements ISimulationSeasonState {
     AgingAbstractFactory agingFactory;
 
     public InjuryCheckState(SimulationContext simulationContext) {
+        logger.info("Into Injury Check constructor");
         this.simulationContext = simulationContext;
         schedulerAbstractFactory = SchedulerAbstractFactory.instance();
         scheduler = schedulerAbstractFactory.getScheduler();

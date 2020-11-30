@@ -29,6 +29,7 @@ public class SimulateGameState implements ISimulationSeasonState {
     IUserInputOutput userInputOutput;
 
     public SimulateGameState(SimulationContext simulationContext) {
+        logger.info("Into the Simulation game state constructor");
         this.simulationContext = simulationContext;
         injuryCheckTeams = new ArrayList<>();
         standingsAbstractFactory = StandingsAbstractFactory.instance();

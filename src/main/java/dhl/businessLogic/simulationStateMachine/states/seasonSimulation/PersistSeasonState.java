@@ -18,6 +18,7 @@ public class PersistSeasonState implements ISimulationSeasonState {
     IUserInputOutput userInputOutput;
 
     public PersistSeasonState(SimulationContext simulationContext) {
+        logger.info("Into Persist same season state constructor");
         this.simulationContext = simulationContext;
         userInputOutput = IUserInputOutput.getInstance();
     }

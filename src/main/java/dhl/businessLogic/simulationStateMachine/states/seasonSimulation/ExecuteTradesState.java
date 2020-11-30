@@ -21,7 +21,7 @@ public class ExecuteTradesState implements ISimulationSeasonState {
     IUserInputOutput userInputOutput;
 
     public ExecuteTradesState(SimulationContext simulationContext) {
-
+        logger.info("Into the execute trade constructor");
         this.simulationContext = simulationContext;
         leagueObjectModel = simulationContext.getInMemoryLeague();
         gameConfig = simulationContext.getGameConfig();
