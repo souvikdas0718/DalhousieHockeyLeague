@@ -16,11 +16,9 @@ import java.util.List;
 
 public class UpdateUserTeamRoster implements ITeamRosterUpdater {
 
-    // TODO: 30-11-2020 get this from team
-    private static final int TOTAL_GOALIES = 4;
-    private static final int TOTAL_FORWARDS = 16;
-    private static final int TOTAL_DEFENSE = 10;
-
+    private int expectedTotalGoalies;
+    private int expectedTotalDefence;
+    private int expectedTotalForward;
     IUserInputOutput ioObject;
     IListFormat listDisplay;
     
@@ -32,6 +30,9 @@ public class UpdateUserTeamRoster implements ITeamRosterUpdater {
     }
 
     public void validateTeamRoster(ITeam team, ILeagueObjectModel leagueObjectModel) {
+        expectedTotalDefence = team.getTotalDefense();
+        expectedTotalForward = team.getTotalForwards();
+        expectedTotalGoalies = team.getTotalGoalies();
         logger.info("Validating team: "+ team.getTeamName());
         int totalForwards = 0;
         int totalDefense = 0;
@@ -50,14 +51,14 @@ public class UpdateUserTeamRoster implements ITeamRosterUpdater {
                 totalGoalies = totalGoalies + 1;
             }
         }
-        if(totalDefense > TOTAL_DEFENSE || totalDefense < TOTAL_DEFENSE){
-            updatePlayers(totalDefense, PlayerPosition.DEFENSE.toString(), TOTAL_DEFENSE, team, leagueObjectModel);
+        if(totalDefense > expectedTotalDefence || totalDefense < expectedTotalDefence){
+            updatePlayers(totalDefense, PlayerPosition.DEFENSE.toString(), expectedTotalDefence, team, leagueObjectModel);
         }
-        if(totalForwards > TOTAL_FORWARDS || totalForwards < TOTAL_FORWARDS){
-            updatePlayers(totalForwards, PlayerPosition.FORWARD.toString(), TOTAL_FORWARDS, team, leagueObjectModel);
+        if(totalForwards > expectedTotalForward || totalForwards < expectedTotalForward){
+            updatePlayers(totalForwards, PlayerPosition.FORWARD.toString(), expectedTotalForward, team, leagueObjectModel);
         }
-        if(totalGoalies > TOTAL_GOALIES || totalGoalies < TOTAL_GOALIES){
-            updatePlayers(totalGoalies, PlayerPosition.GOALIE.toString(), TOTAL_GOALIES, team, leagueObjectModel);
+        if(totalGoalies > expectedTotalGoalies || totalGoalies < expectedTotalGoalies){
+            updatePlayers(totalGoalies, PlayerPosition.GOALIE.toString(), expectedTotalGoalies, team, leagueObjectModel);
         }
         team.setRoster();
     }

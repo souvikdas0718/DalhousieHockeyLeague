@@ -13,9 +13,9 @@ import java.util.ArrayList;
 
 public class Scout implements IScout {
 
-    private int TOTAL_GOALIES = 4;
-    private int TOTAL_FORWARDS = 16;
-    private int TOTAL_DEFENSE = 10;
+    private int expectedTotalGoalies;
+    private int expectedTotalDefence;
+    private int expectedTotalForward;
     private double PLAYER_WANTED_STRENGTH_MULTIPLIER = 1.25;
 
     ITeam userTeam;
@@ -34,8 +34,9 @@ public class Scout implements IScout {
         this.gameConfig = gameConfig;
         factory = new TradeConcreteFactory();
         this.ioObject = IUserInputOutput.getInstance();
-
-        // TODO: 30-11-2020 get getTOTALGOALIES value from team
+        expectedTotalDefence = myTeam.getTotalDefense();
+        expectedTotalForward = myTeam.getTotalForwards();
+        expectedTotalGoalies = myTeam.getTotalGoalies();
         logger.info("Scout made for Team: "+ myTeam.getTeamName());
     }
 
@@ -228,9 +229,9 @@ public class Scout implements IScout {
                 goalieAvg = goalieAvg + player.getPlayerStrength();
             }
         }
-        defenceAvg = defenceAvg / TOTAL_DEFENSE;
-        forwardAvg = forwardAvg / TOTAL_FORWARDS;
-        goalieAvg = goalieAvg / TOTAL_GOALIES;
+        defenceAvg = defenceAvg / expectedTotalDefence;
+        forwardAvg = forwardAvg / expectedTotalForward;
+        goalieAvg = goalieAvg / expectedTotalGoalies;
         double weakestArea = Math.min(Math.min(defenceAvg, forwardAvg), goalieAvg);
         if (weakestArea == forwardAvg){
             return PlayerPosition.FORWARD.toString();
