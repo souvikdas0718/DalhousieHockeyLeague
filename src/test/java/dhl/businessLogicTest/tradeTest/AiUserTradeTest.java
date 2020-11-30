@@ -16,7 +16,6 @@ import dhl.businessLogic.trade.AiUserTrade;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 
 public class AiUserTradeTest {
@@ -92,5 +91,7 @@ public class AiUserTradeTest {
         ((MockUserInputOutput) ioObjectMock).setMockOutput("2");
         Assertions.assertFalse(testClassObject.isTradeAccepted(offeringPlayers, playersWanted,recevingTeam));
 
+        ((MockUserInputOutput) ioObjectMock).setMockOutput("3");
+        Assertions.assertFalse(testClassObject.isTradeAccepted(offeringPlayers, playersWanted,recevingTeam));
     }
 }

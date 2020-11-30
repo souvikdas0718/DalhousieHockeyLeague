@@ -18,7 +18,6 @@ public class GeneralManagerPersonalityList extends IGeneralManagerPersonalityLis
     IUserInputOutput ioObject;
 
     public GeneralManagerPersonalityList(IGameConfig gameConfig){
-        // TODO: 21-11-2020 creational pattern for ioObject
         ioObject = IUserInputOutput.getInstance();
         generalManagerPersonalityDictionary = new Hashtable();
         this.ourGameConfig = gameConfig;

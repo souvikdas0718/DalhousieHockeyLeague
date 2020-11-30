@@ -1,17 +1,14 @@
 package dhl.businessLogic.trade;
 
-import dhl.businessLogic.simulationStateMachine.RosterUpdaterAbstractFactory;
-import dhl.businessLogic.simulationStateMachine.UpdateUserTeamRoster;
+import dhl.businessLogic.teamRosterUpdater.RosterUpdaterAbstractFactory;
 import dhl.businessLogic.trade.factory.TradeAbstractFactory;
 import dhl.businessLogic.trade.factory.TradeConcreteFactory;
 import dhl.businessLogic.trade.interfaces.IScout;
-import dhl.businessLogic.trade.interfaces.ITradeType;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
-import dhl.businessLogic.simulationStateMachine.interfaces.ITeamRosterUpdater;
+import dhl.businessLogic.teamRosterUpdater.interfaces.ITeamRosterUpdater;
 import dhl.businessLogic.trade.interfaces.ITradeOffer;
 import dhl.businessLogic.trade.interfaces.ITradingEngine;
-import dhl.inputOutput.ui.UserInputOutput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
