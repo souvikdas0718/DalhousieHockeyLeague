@@ -93,13 +93,15 @@ public class AiTeamRosterUpdater implements ITeamRosterUpdater {
         logger.debug("Finding weakest player");
         IPlayer weakPlayer = null;
         double skaterStrength = 10000.0;
-        for (Object ob : playerList) {
-            IPlayer player = (IPlayer) ob;
-            String position = player.getPosition();
-            if (position.equals(neededPosition)) {
-                if (player.getPlayerStrength() < skaterStrength) {
-                    weakPlayer = player;
-                    skaterStrength = player.getPlayerStrength();
+        for (Object playerObject : playerList) {
+            IPlayer player = (IPlayer) playerObject;
+            if (playerFound(player)){
+                String position = player.getPosition();
+                if (position.equals(neededPosition)) {
+                    if (player.getPlayerStrength() < skaterStrength) {
+                        weakPlayer = player;
+                        skaterStrength = player.getPlayerStrength();
+                    }
                 }
             }
         }
@@ -110,16 +112,27 @@ public class AiTeamRosterUpdater implements ITeamRosterUpdater {
         logger.debug("Finding Strongest player");
         IPlayer bestPlayer = null;
         double bestPlayerStrength = 0.0;
-        for (Object ob : playerList) {
-            IPlayer player = (IPlayer) ob;
-            String position = player.getPosition();
-            if ( position.equals(playerPosition) ) {
-                if (player.getPlayerStrength() > bestPlayerStrength) {
-                    bestPlayer = player;
-                    bestPlayerStrength = player.getPlayerStrength();
+        for (Object playerObject : playerList) {
+            IPlayer player = (IPlayer) playerObject;
+            if (playerFound(player)){
+                String position = player.getPosition();
+                if ( position.equals(playerPosition) ) {
+                    if (player.getPlayerStrength() > bestPlayerStrength) {
+                        bestPlayer = player;
+                        bestPlayerStrength = player.getPlayerStrength();
+                    }
                 }
             }
         }
         return bestPlayer;
+    }
+
+    public boolean playerFound(IPlayer player){
+        if (player == null){
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 }

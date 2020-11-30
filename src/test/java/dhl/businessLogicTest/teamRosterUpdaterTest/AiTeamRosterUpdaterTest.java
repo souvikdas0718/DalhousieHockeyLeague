@@ -140,4 +140,12 @@ public class AiTeamRosterUpdaterTest {
         IPlayer playerToTest = ((AiTeamRosterUpdater) testClassObject).findWeakestPlayerInList(PlayerPosition.FORWARD.toString(), weakPlayerTeam.getPlayers());
         Assertions.assertEquals(playerToTest, strongPlayer);
     }
+
+    @Test
+    public void playerFoundTest(){
+        IPlayer player = null;
+        Assertions.assertFalse(((AiTeamRosterUpdater)testClassObject).playerFound(player));
+        player = leagueMockFactory.createPlayerMock().getPlayer();
+        Assertions.assertTrue(((AiTeamRosterUpdater)testClassObject).playerFound(player));
+    }
 }

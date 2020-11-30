@@ -1,5 +1,6 @@
 package dhl.businessLogic.trade.factory;
 
+import dhl.businessLogic.leagueModel.PlayerDraftAbstract;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogic.trade.*;
 import dhl.businessLogic.trade.interfaces.IScout;
@@ -28,7 +29,7 @@ public class TradeConcreteFactory extends TradeAbstractFactory{
         return scout;
     }
 
-    public TradeOfferAbstract createDraftPickTradeOffer(ITeam offeringTeam, ITeam receivingTeam, ArrayList<IPlayer> playersWantedInExchange, IPlayerDraft playerDraft) {
+    public TradeOfferAbstract createDraftPickTradeOffer(ITeam offeringTeam, ITeam receivingTeam, ArrayList<IPlayer> playersWantedInExchange, PlayerDraftAbstract playerDraft) {
         return new DraftPickTradeOffer(offeringTeam, receivingTeam, playersWantedInExchange,playerDraft);
     }
 

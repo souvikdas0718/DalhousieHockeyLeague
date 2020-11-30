@@ -1,5 +1,6 @@
 package dhl.businessLogic.trade;
 
+import dhl.businessLogic.leagueModel.PlayerDraftAbstract;
 import dhl.businessLogic.leagueModel.PlayerPosition;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogic.trade.factory.TradeAbstractFactory;
@@ -167,7 +168,7 @@ public class Scout implements IScout {
                 }
                 else {
                     logger.debug("Scout found that this trade will not be accepted so offering Draft trade instead");
-                    IPlayerDraft playerDraft = IPlayerDraft.instance();
+                    PlayerDraftAbstract playerDraft = PlayerDraftAbstract.instance();
                     ArrayList<IPlayer> playerWantedInDraft = new ArrayList<>();
                     playerWantedInDraft.add(listOfPlayerWeWillGet.get(0));
                     newOffer = factory.createDraftPickTradeOffer(myTeam, teamToTrade, playerWantedInDraft, playerDraft);
@@ -176,7 +177,7 @@ public class Scout implements IScout {
             }
             else{
                 logger.debug("Make Draft Trade offer for team: "+ myTeam.getTeamName()+ " and "+ teamToTrade.getTeamName());
-                IPlayerDraft playerDraft = IPlayerDraft.instance();
+                PlayerDraftAbstract playerDraft = PlayerDraftAbstract.instance();
                 TradeOfferAbstract newOffer = factory.createDraftPickTradeOffer(myTeam, teamToTrade, listOfPlayerWeWillGet, playerDraft);
                 return newOffer;
             }

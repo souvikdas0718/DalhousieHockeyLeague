@@ -86,7 +86,7 @@ public class LeagueModelFactory extends LeagueModelAbstractFactory {
         return new FreeAgent();
     }
 
-    public IPlayerDraft createPlayerDraft() {
+    public PlayerDraftAbstract createPlayerDraft() {
         return new PlayerDraft();
     }
 
