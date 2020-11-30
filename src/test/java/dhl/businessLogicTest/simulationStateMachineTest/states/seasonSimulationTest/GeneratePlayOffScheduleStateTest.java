@@ -10,6 +10,9 @@ import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.factory.S
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.GeneratePlayOffScheduleState;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.factory.SeasonSimulationStateFactory;
+import dhl.businessLogic.simulationStateMachine.states.standings.Standings;
+import dhl.businessLogic.simulationStateMachine.states.standings.factory.StandingsAbstractFactory;
+import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandingSystem;
 import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandings;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,6 +31,7 @@ public class GeneratePlayOffScheduleStateTest {
     SchedulerAbstractFactory schedulerAbstractFactory;
     ContextAbstractFactory contextAbstractFactory;
     SeasonSimulationStateFactory seasonSimulationStateFactory;
+    StandingsAbstractFactory standingsAbstractFactory;
 
 
     @BeforeEach
@@ -42,6 +46,7 @@ public class GeneratePlayOffScheduleStateTest {
         simulationContext = contextAbstractFactory.createSimulationContext();
         seasonSimulationStateFactory = (SeasonSimulationStateFactory) SeasonSimulationStateFactory.instance();
         generatePlayOffScheduleState = (GeneratePlayOffScheduleState) seasonSimulationStateFactory.getGeneratePlayoffScheduleState(simulationContext);
+        standingsAbstractFactory = StandingsAbstractFactory.instance();
     }
 
     @Test
@@ -69,10 +74,11 @@ public class GeneratePlayOffScheduleStateTest {
         simulationContext.setRegularScheduler(scheduler);
         simulationContext.setInMemoryLeague(league);
         simulationContext.setStandings(standings);
+        IStandingSystem standingSystem = standingsAbstractFactory.getStandingSystem();
+        standingSystem.setStandingsList(standings);
         generatePlayOffScheduleState.setSimulationContext(simulationContext);
-//        generatePlayOffScheduleState.seasonStateProcess();
-        //commented
-        Assertions.assertNotNull(scheduler.getPlayOffScheduleRound1());
+        generatePlayOffScheduleState.seasonStateProcess();
+        Assertions.assertTrue(generatePlayOffScheduleState.getSimulationContext().getRegularScheduler().getPlayOffScheduleRound1().size() > 0);
     }
 
     @Test
