@@ -145,7 +145,7 @@ public class RetirementTest {
         retirement.retirePLayers(playersToRetire, team,freeAgents);
         ILeagueObjectModel leagueObjectModel = retirement.getLeagueObjectModel();
         List<IPlayer> freeAgentsList = leagueObjectModel.getFreeAgents();
-        System.out.println(freeAgentsList.size());
+    
         Assertions.assertTrue(freeAgentsList.size() == 0);
     }
 
