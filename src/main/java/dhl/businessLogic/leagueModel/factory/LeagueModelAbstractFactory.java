@@ -2,6 +2,8 @@ package dhl.businessLogic.leagueModel.factory;
 
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 
 import java.util.List;
@@ -9,19 +11,22 @@ import java.util.List;
 public abstract class LeagueModelAbstractFactory {
 
     private static LeagueModelAbstractFactory uniqueInstance = null;
-
+    private static final Logger logger = LogManager.getLogger(LeagueModelAbstractFactory.class);
     protected LeagueModelAbstractFactory() {
 
     }
 
     public static LeagueModelAbstractFactory instance() {
         if (null == uniqueInstance) {
+            logger.debug("Instance of LeagueModelAbstractFactory created");
             uniqueInstance = new LeagueModelFactory();
         }
+        logger.debug("Instance of LeagueModelAbstractFactory accessed");
         return uniqueInstance;
     }
 
     public static void setFactory(LeagueModelAbstractFactory factory) {
+        logger.debug("LeagueModelAbstractFactory's instance updated");
         uniqueInstance = factory;
     }
 
@@ -64,4 +69,6 @@ public abstract class LeagueModelAbstractFactory {
     public abstract IPlayer createFreeAgentDefault();
 
     public abstract IPlayerDraft createPlayerDraft();
+
+    public abstract IGeneralManager createGeneralManagerDefault();
 }

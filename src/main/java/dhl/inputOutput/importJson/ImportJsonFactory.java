@@ -9,9 +9,7 @@ import dhl.inputOutput.ui.UserInputOutput;
 import org.json.simple.JSONObject;
 
 public class ImportJsonFactory extends ImportJsonAbstractFactory {
-    public ICheckInputFileFormat createCheckInputFileFormat() {
-        return new CheckInputFileFormat();
-    }
+
 
     public ICreateLeagueObjectModel createCreateLeagueObjectModel(JSONObject jsonLeagueObject) {
         return new CreateLeagueObjectModel(jsonLeagueObject);
@@ -19,7 +17,6 @@ public class ImportJsonFactory extends ImportJsonAbstractFactory {
 
     public IImportJsonFile createImportJsonFile(String filePath) {
         return new ImportJsonFile(filePath);
-
     }
 
     public IJsonFilePath createJsonFilePath() {

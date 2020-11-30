@@ -14,10 +14,9 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 public class PersistSeasonState implements ISimulationSeasonState {
+    public static Logger logger = LogManager.getLogger(PersistSeasonState.class);
     SimulationContext simulationContext;
     IUserInputOutput userInputOutput;
-    private static final Logger logger = LogManager.getLogger(PersistSeasonState.class);
-
 
     public PersistSeasonState(SimulationContext simulationContext) {
         this.simulationContext = simulationContext;
@@ -34,27 +33,28 @@ public class PersistSeasonState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateProcess() {
-        userInputOutput.printMessage("Into the state process of Persist season");
+        logger.info("Into the state process of Persist season");
         SerializeDeserializeAbstractFactory factorySerialize = SerializeDeserializeAbstractFactory.instance();
         ISerializeLeagueObjectModel serializeLeagueObjectModel = factorySerialize.createSerializeLeagueObjectModel("src/SerializedJsonFiles/");
         ILeagueObjectModel leagueObjectModel = simulationContext.getInMemoryLeague();
+        logger.debug("Calling the update League Model method to store the current game state in JSON file");
         try {
             leagueObjectModel.updateLeagueObjectModel(serializeLeagueObjectModel);
         } catch (IOException e) {
-            e.printStackTrace();
-            logger.error("Error occurred during Persist season state: " + e.getMessage());
+            logger.error(e.getMessage());
             simulationContext.seasonStateExitProcess();
         }
     }
 
     @Override
     public void seasonStateExitProcess() {
-        userInputOutput.printMessage("Into the exit process of Persist same season");
+        logger.info("Into the exit process of Persist same season");
         LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
         LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());
         if (currentDate.isBefore(LocalDate.of(simulationContext.getYear() + 1, 9, 29))) {
             simulationContext.setCurrentSimulation(simulationContext.getAdvanceTime());
         } else {
+            logger.debug("End of a season");
             simulationContext.setSeasonInProgress(false);
         }
     }

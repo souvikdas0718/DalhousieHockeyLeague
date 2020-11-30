@@ -1,4 +1,3 @@
-
 ### idea ###
 .idea
 .gradle
@@ -9,3 +8,5 @@ native/
 out/
 wrapper/
 /DhlDhl--RetiredPlayersInLeague.json
+.json
+.log

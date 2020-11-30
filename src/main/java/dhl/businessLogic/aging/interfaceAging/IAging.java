@@ -10,7 +10,7 @@ import java.util.Map;
 public interface IAging {
     void agePlayers(List<IPlayer> players, LocalDate currentDate);
 
-    Map<String, List<IPlayer>> selectPlayersToRetire(ITeam team);
+    Map<String, List<IPlayer>> selectPlayersToRetire(ITeam team,Map<String, List<IPlayer>> retiringPlayers);
 
     List<IPlayer> selectFreeAgentsToRetire(List<IPlayer> freeAgents);
 

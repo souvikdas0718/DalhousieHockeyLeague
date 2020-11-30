@@ -3,9 +3,9 @@ package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 import dhl.businessLogic.leagueModel.Team;
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
-import dhl.businessLogic.simulationStateMachine.RosterUpdaterAbstractFactory;
+import dhl.businessLogic.teamRosterUpdater.RosterUpdaterAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
-import dhl.businessLogic.simulationStateMachine.interfaces.ITeamRosterUpdater;
+import dhl.businessLogic.teamRosterUpdater.interfaces.ITeamRosterUpdater;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.factory.SimulationStateAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.IGenerateDraftPlayers;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
@@ -22,6 +22,7 @@ import java.util.Map.Entry;
 public class PlayerDraftState implements ISimulationSeasonState {
     private static final int DRAFTROUNDS = 7;
     private static final int NOOFTEAMS = 32;
+    private static final int COUNTERSTARTVALUE=0;
     private static final Logger logger = LogManager.getLogger(PlayerDraftState.class);
     IGenerateDraftPlayers generateDraftPlayers;
     SimulationContext simulationContext;
@@ -173,7 +174,7 @@ public class PlayerDraftState implements ISimulationSeasonState {
 
     public void addDraftPlayersToTeam(){
         List<IPlayer> draftPlayers = generateDraftPlayers.generateDraftPlayers();
-        int counter =0;
+        int counter =COUNTERSTARTVALUE;
         for(int i=0; i<DRAFTROUNDS; i++){
             for(int j=0; j<NOOFTEAMS; j++){
                ITeam team = draftPickSequence[j][i];

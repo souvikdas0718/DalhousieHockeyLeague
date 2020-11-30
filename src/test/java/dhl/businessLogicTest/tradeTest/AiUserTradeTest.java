@@ -7,8 +7,8 @@ import dhl.businessLogic.trade.factory.TradeAbstractFactory;
 import dhl.businessLogic.trade.factory.TradeConcreteFactory;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
 import dhl.businessLogicTest.tradeTest.mocks.factory.TradeMockAbstractFactory;
+import dhl.importJsonTest.mocks.MockUserInputOutput;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
-import dhl.Mocks.MockUserInputOutput;
 import dhl.businessLogic.leagueModel.LeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
@@ -16,7 +16,6 @@ import dhl.businessLogic.trade.AiUserTrade;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 
 public class AiUserTradeTest {
@@ -37,8 +36,8 @@ public class AiUserTradeTest {
 
     @BeforeEach
     public void initObject() {
-        // TODO: 28-11-2020 creational pattern for this
-        ioObjectMock = new MockUserInputOutput();
+        IUserInputOutput.setFactory(MockUserInputOutput.instance());
+        ioObjectMock = IUserInputOutput.getInstance();
 
         tradeFactory = new TradeConcreteFactory();
         leagueFactory = LeagueModelAbstractFactory.instance();
@@ -92,5 +91,7 @@ public class AiUserTradeTest {
         ((MockUserInputOutput) ioObjectMock).setMockOutput("2");
         Assertions.assertFalse(testClassObject.isTradeAccepted(offeringPlayers, playersWanted,recevingTeam));
 
+        ((MockUserInputOutput) ioObjectMock).setMockOutput("3");
+        Assertions.assertFalse(testClassObject.isTradeAccepted(offeringPlayers, playersWanted,recevingTeam));
     }
 }

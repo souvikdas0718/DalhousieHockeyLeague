@@ -18,10 +18,6 @@ public abstract class SchedulerAbstractFactory {
         return uniqueInstance;
     }
 
-    public static void setFactory(SchedulerAbstractFactory factory) {
-        uniqueInstance = factory;
-    }
-
     public abstract IScheduler getScheduler();
 
     public abstract ISeasonSchedule getSeasonSchedule();

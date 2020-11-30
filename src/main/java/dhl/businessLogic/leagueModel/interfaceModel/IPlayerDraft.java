@@ -5,6 +5,7 @@ import dhl.businessLogic.leagueModel.PlayerDraft;
 
 public abstract class IPlayerDraft {
 
+    // TODO: 30-11-2020 naming convention
     private static IPlayerDraft uniqueInstance;
 
     public static IPlayerDraft instance() {

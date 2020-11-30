@@ -18,6 +18,8 @@ public class SeasonSchedule implements ISeasonSchedule {
     private ITeam teamOne;
     private ITeam teamTwo;
     private LocalDate gameDate;
+    private boolean isMatchPlayed;
+    private boolean isMatchToBePlayed;
 
     public SeasonSchedule() {
         factory = LeagueModelAbstractFactory.instance();
@@ -27,6 +29,7 @@ public class SeasonSchedule implements ISeasonSchedule {
         teamTwoDivision = factory.createDivisionDefault();
         teamOne = factory.createTeamDefault();
         teamTwo = factory.createTeamDefault();
+        isMatchPlayed = false;
     }
 
     public IConference getTeamOneConference() {
@@ -85,4 +88,19 @@ public class SeasonSchedule implements ISeasonSchedule {
         this.gameDate = gameDate;
     }
 
+    public boolean isMatchPlayed() {
+        return isMatchPlayed;
+    }
+
+    public void setMatchPlayed(boolean matchPlayed) {
+        isMatchPlayed = matchPlayed;
+    }
+
+    public boolean isMatchToBePlayed() {
+        return isMatchToBePlayed;
+    }
+
+    public void setMatchToBePlayed(boolean matchToBePlayed) {
+        isMatchToBePlayed = matchToBePlayed;
+    }
 }

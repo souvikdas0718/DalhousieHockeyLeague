@@ -1,6 +1,5 @@
 package dhl.inputOutput.importJson;
 
-import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.IValidation;
 import dhl.inputOutput.importJson.interfaces.*;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
@@ -20,7 +19,6 @@ public abstract class ImportJsonAbstractFactory {
         return uniqueInstance;
     }
 
-    public abstract ICheckInputFileFormat createCheckInputFileFormat();
     public abstract ICreateLeagueObjectModel createCreateLeagueObjectModel(JSONObject sonLeagueObject);
     public abstract IImportJsonFile createImportJsonFile(String filePath);
     public abstract IJsonFilePath createJsonFilePath();

@@ -3,8 +3,8 @@ package dhl.businessLogic.trade;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.simulationStateMachine.RosterUpdaterAbstractFactory;
-import dhl.businessLogic.simulationStateMachine.interfaces.ITeamRosterUpdater;
+import dhl.businessLogic.teamRosterUpdater.RosterUpdaterAbstractFactory;
+import dhl.businessLogic.teamRosterUpdater.interfaces.ITeamRosterUpdater;
 import dhl.businessLogic.trade.interfaces.ITradeType;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import org.apache.logging.log4j.LogManager;
@@ -28,6 +28,7 @@ public class AiUserTrade implements ITradeType {
     }
 
     public boolean isTradeAccepted(ArrayList<IPlayer> playersOffered, ArrayList<IPlayer> playerswanted, ITeam receivingTeam){
+        logger.debug("Showing Trade to user");
         DisplayTradeOfferToUser(playersOffered);
         int inputFromUser = Integer.parseInt(ioObject.getUserInput());
         if (inputFromUser == 1) {

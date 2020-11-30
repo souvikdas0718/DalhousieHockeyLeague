@@ -1,24 +1,24 @@
 package dhl.businessLogicTest.leagueModelTests;
 
+import dhl.Mocks.MockSerializeLeagueObjectModel;
 import dhl.Mocks.factory.MockAbstractFactory;
-import dhl.businessLogic.leagueModel.*;
+import dhl.businessLogic.leagueModel.LeagueObjectModel;
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.factory.LeagueObjectModelBuilder;
 import dhl.businessLogic.leagueModel.factory.interfaceFactory.ILeagueObjectModelBuilder;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
 import dhl.businessLogicTest.leagueModelTests.mocks.LeagueMock;
-import dhl.Mocks.MockDeserializeLeagueObjectModel;
-import dhl.Mocks.MockSerializeLeagueObjectModel;
 import dhl.businessLogicTest.leagueModelTests.mocks.TeamMock;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.IDeserializeLeagueObjectModel;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
+import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 
 public class LeagueObjectModelTest {
@@ -85,13 +85,13 @@ public class LeagueObjectModelTest {
     }
 
     @Test
-    public void checkIfLeagueModelValidTest() throws Exception {
+    public void checkIfLeagueModelValidTest() {
         leagueModelParameterized.checkIfLeagueModelValid(validate,leagueValidation);
         Assertions.assertEquals("Dhl", leagueModelParameterized.getLeagueName());
     }
 
     @Test
-    public void saveLeagueObjectModelTest() throws Exception {
+    public void saveLeagueObjectModelTest() throws IOException {
         ISerializeLeagueObjectModel mockSerialize = mockFactory.getMockSerialize();
         TeamMock teamMock =leagueMockFactory.createTeamMock();
         ITeam newlyCreatedTeam = teamMock.getTeamByName("Halifax");
@@ -102,13 +102,13 @@ public class LeagueObjectModelTest {
     }
 
     @Test
-    public void loadLeagueObjectModelTest() throws Exception {
+    public void loadLeagueObjectModelTest() throws IOException, ParseException {
         IDeserializeLeagueObjectModel mockDeserialize = mockFactory.getMockDeserialize();
         Assertions.assertEquals("Dhl", leagueModelParameterized.loadLeagueObjectModel(mockDeserialize, "Dhl", "Nova Scotia").getLeagueName());
     }
 
     @Test
-    public void updateLeagueObjectModel() throws Exception {
+    public void updateLeagueObjectModel() throws IOException {
         ISerializeLeagueObjectModel serializeMock = new MockSerializeLeagueObjectModel();
         Assertions.assertEquals("Dhl", leagueModelParameterized.updateLeagueObjectModel(serializeMock).getLeagueName());
     }

@@ -43,7 +43,7 @@ public class LeagueScheduleTest {
         leagueObjectModel = leagueMock.getLeagueObjectModel();
 
         ISerializeLeagueObjectModel serializeModel = mockFactory.getMockSerialize();
-        retirementSystem = agingFactory.createRetirement(serializeModel, leagueObjectModel);
+        retirementSystem = agingFactory.createRetirement(serializeModel);
         injurySystem = agingFactory.createInjury();
         leagueSchedule = (LeagueSchedule) agingFactory.createLeagueSchedule(leagueMock.getLeagueObjectModel());
 

@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -98,9 +99,9 @@ public class AgingTest {
 
     @Test
     public void selectPlayersToRetireMaxAgeTest() {
-        Map<String, List<IPlayer>> playersSelectedToRetire;
+        Map<String, List<IPlayer>> playersSelectedToRetire = new HashMap<>();
         ITeam team = agingMock.teamWithPlayersAtMaxAge();
-        playersSelectedToRetire = aging.selectPlayersToRetire(team);
+         aging.selectPlayersToRetire(team,playersSelectedToRetire);
 
         Assertions.assertTrue(playersSelectedToRetire.containsKey("Mock Team"));
         Assertions.assertEquals(1, playersSelectedToRetire.get("Mock Team").size());
@@ -110,10 +111,10 @@ public class AgingTest {
     public void selectPlayersToRetireGreaterThanAvgTest() {
         Random random = aging.getRandomGenerator();
         random.setSeed(1);
-        Map<String, List<IPlayer>> playersSelectedToRetire ;
+        Map<String, List<IPlayer>> playersSelectedToRetire = new HashMap<>() ;
         ITeam team = agingMock.teamWithPlayersMoreThanAvg();
 
-        playersSelectedToRetire = aging.selectPlayersToRetire(team);
+        aging.selectPlayersToRetire(team,playersSelectedToRetire);
 
         Assertions.assertTrue(playersSelectedToRetire.containsKey("Mock Team"));
         Assertions.assertEquals(1, playersSelectedToRetire.get("Mock Team").size());
@@ -123,9 +124,9 @@ public class AgingTest {
     public void selectPlayersToRetireLessThanAvgTest() {
         Random random = aging.getRandomGenerator();
         random.setSeed(5000);
-        Map<String, List<IPlayer>> playersSelectedToRetire;
+        Map<String, List<IPlayer>> playersSelectedToRetire = new HashMap<>();
         ITeam team = agingMock.teamWithPlayersLessThanAvg();
-        playersSelectedToRetire = aging.selectPlayersToRetire(team);
+        playersSelectedToRetire = aging.selectPlayersToRetire(team,playersSelectedToRetire);
 
         Assertions.assertTrue(playersSelectedToRetire.containsKey("Mock Team"));
         Assertions.assertEquals(1, playersSelectedToRetire.get("Mock Team").size());

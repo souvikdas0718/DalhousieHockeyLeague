@@ -3,7 +3,6 @@ package dhl.businessLogic.leagueModel.interfaceModel;
 import java.util.List;
 
 public interface ITeam {
-
     String getTeamName();
 
     IGeneralManager getGeneralManager();
@@ -38,7 +37,13 @@ public interface ITeam {
 
     boolean checkIfSizeOfTeamValid(List<IPlayer> playerList);
 
+    int getTotalTeamSize();
 
+    int getTotalGoalies();
+
+    int getTotalForwards();
+
+    int getTotalDefense();
 }
 
 

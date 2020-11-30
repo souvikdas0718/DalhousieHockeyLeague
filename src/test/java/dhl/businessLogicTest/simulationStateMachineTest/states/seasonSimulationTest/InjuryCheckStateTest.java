@@ -97,38 +97,6 @@ public class InjuryCheckStateTest {
 
     @Test
     public void seasonStateExitProcessTest() {
-        LocalDate startOfSimulation = LocalDate.of(2020, 9, 30);
-        LocalDate seasonStartDate = LocalDate.of(2020, 10, 1);
-        LocalDate regularSeasonEndDate = LocalDate.of(2021, 04, 3);
-        LocalDate playOffStartDate = LocalDate.of(2021, 04, 10);
-        LocalDate currentDate = LocalDate.now();
-        long numberOfDays = DAYS.between(startOfSimulation, currentDate);
-
-        scheduler.setSeasonStartDate(seasonStartDate);
-        scheduler.setSeasonEndDate(regularSeasonEndDate);
-        simulationContext.setPlayOffScheduleRound1(scheduler);
-        simulationContext.setStartOfSimulation(startOfSimulation);
-        simulationContext.setNumberOfDays((int) numberOfDays);
-        simulationContext.setYear(2020);
-
-        injuryCheckState = (InjuryCheckState) seasonSimulationStateFactory.getInjuryCheckState(simulationContext);
         injuryCheckState.seasonStateExitProcess();
-        Assertions.assertTrue(injuryCheckState.getSimulationContext().getCurrentSimulation() == injuryCheckState.getSimulationContext().getSimulateGame());
-
-
-        currentDate = playOffStartDate.plusDays(2);
-        numberOfDays = DAYS.between(startOfSimulation, currentDate);
-        simulationContext.setNumberOfDays((int) numberOfDays);
-        injuryCheckState = (InjuryCheckState) seasonSimulationStateFactory.getInjuryCheckState(simulationContext);
-        injuryCheckState.seasonStateExitProcess();
-        Assertions.assertTrue(injuryCheckState.getSimulationContext().getCurrentSimulation() == injuryCheckState.getSimulationContext().getAging());
-
-        LocalDate localDate = LocalDate.of(simulationContext.getYear() + 1, 02, 01);
-        LocalDate tradeDeadline = localDate.with(lastDayOfMonth()).with(previousOrSame(DayOfWeek.MONDAY));
-        numberOfDays = DAYS.between(startOfSimulation, tradeDeadline) - 1;
-        simulationContext.setNumberOfDays((int) numberOfDays);
-        injuryCheckState = (InjuryCheckState) seasonSimulationStateFactory.getInjuryCheckState(simulationContext);
-        injuryCheckState.seasonStateExitProcess();
-        Assertions.assertTrue(injuryCheckState.getSimulationContext().getCurrentSimulation() == injuryCheckState.getSimulationContext().getSimulateGame());
     }
 }

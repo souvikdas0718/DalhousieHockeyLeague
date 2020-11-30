@@ -5,10 +5,13 @@ import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
+import dhl.businessLogic.trade.AiAiTrade;
+import dhl.businessLogic.trade.AiUserTrade;
 import dhl.businessLogic.trade.Scout;
 import dhl.businessLogic.trade.factory.TradeAbstractFactory;
 import dhl.businessLogic.trade.factory.TradeConcreteFactory;
-import dhl.businessLogic.trade.interfaces.ITradeOffer;
+import dhl.businessLogic.trade.TradeOfferAbstract;
+import dhl.businessLogic.trade.interfaces.ITradeType;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
 import dhl.businessLogicTest.tradeTest.mocks.GameConfigMockForTrading;
 import dhl.businessLogicTest.tradeTest.mocks.factory.TradeMockAbstractFactory;
@@ -43,9 +46,9 @@ public class ScoutTest {
         ITeam userTeam = leagueFactory.createTeamMock().getTeam();
         testClassObject = (Scout) tradeFactory.createScout(weakGoalieTeam, league,ourGameConfig,userTeam);
 
-        ITradeOffer tradeOffer = null;
-        //tradeOffer = testClassObject.findTrade(1);
-        //Assertions.assertEquals(tradeOffer , null);
+        TradeOfferAbstract tradeOffer = null;
+        tradeOffer = testClassObject.findTrade(1);
+        Assertions.assertEquals(tradeOffer.getPlayersWantedInReturn().size(), 1);
 
         tradeOffer = testClassObject.findTrade(2);
         int playerInTrade = tradeOffer.getPlayersWantedInReturn().size();
@@ -58,6 +61,20 @@ public class ScoutTest {
         tradeOffer = testClassObject.findTrade(4);
         playerInTrade = tradeOffer.getPlayersWantedInReturn().size();
         Assertions.assertEquals(playerInTrade , 2);
+    }
+
+    @Test
+    public void getTradeTypeObjectTest(){
+        ITeam weakGoalieTeam = tradeMockFactory.createTeamMockForTrade().getTeamWithBadPosition(PlayerPosition.GOALIE.toString());
+        ILeagueObjectModel league = leagueFactory.createLeagueMock().getLeagueObjectModel();
+        ITeam userTeam = leagueFactory.createTeamMock().getTeam();
+        testClassObject = (Scout) tradeFactory.createScout(weakGoalieTeam, league,ourGameConfig,userTeam);
+
+        ITradeType tradeType = testClassObject.getTradeTypeObject(userTeam);
+        Assertions.assertTrue(tradeType instanceof AiUserTrade);
+
+        tradeType = testClassObject.getTradeTypeObject(weakGoalieTeam);
+        Assertions.assertTrue(tradeType instanceof AiAiTrade);
     }
 
     @Test

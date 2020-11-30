@@ -20,7 +20,7 @@ public class CreateTeamStateLogic implements ICreateTeamStateLogic {
     public ILeagueObjectModel saveleagueObject(GameContext ourGame, ILeagueObjectModel inMemoryLeague, ILeagueObjectModelInput leagueObjectModelInput) throws Exception {
         ILeagueObjectModel leagueObjectModel = new LeagueObjectModel();
 
-        leagueObjectModel = inMemoryLeague.saveLeagueObjectModel(leagueObjectModelInput.getserializeLeagueObjectModel(), leagueObjectModelInput);
+        leagueObjectModel = inMemoryLeague.saveLeagueObjectModel(leagueObjectModelInput.getSerializeLeagueObjectModel(), leagueObjectModelInput);
         myLogger.debug("Saved league object model in json file");
         ITeam team = leagueObjectModelInput.getNewlyCreatedTeam();
         ourGame.setSelectedTeam(findTeam(inMemoryLeague, team.getTeamName()));

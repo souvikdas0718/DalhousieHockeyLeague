@@ -6,7 +6,9 @@ import java.io.IOException;
 
 
 public interface IImportJsonFile {
-    public JSONObject getJsonObject() throws Exception;
+
+    public JSONObject getJsonObject();
 
     public String getJsonIntoString(String filePath) throws IOException;
+
 }

@@ -4,13 +4,9 @@ package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 import dhl.businessLogic.aging.LeagueSchedule;
 import dhl.businessLogic.aging.agingFactory.AgingAbstractFactory;
 import dhl.businessLogic.aging.interfaceAging.ILeagueSchedule;
-import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
-import dhl.inputOutput.importJson.serializeDeserialize.SerializeDeserializeAbstractFactory;
-import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
-import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.parser.ParseException;
@@ -19,33 +15,27 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 public class AgingState implements ISimulationSeasonState {
-    public static Logger log = LogManager.getLogger(AgingState.class);
+    public static Logger logger = LogManager.getLogger(AgingState.class);
     static AgingAbstractFactory agingFactory;
-    static SerializeDeserializeAbstractFactory serializeDeserializeAbstractFactory;
     SimulationContext simulationContext;
-    IUserInputOutput userInputOutput;
-    private static final Logger logger = LogManager.getLogger(AgingState.class);
 
     public AgingState(SimulationContext simulationContext) {
         this.simulationContext = simulationContext;
-        userInputOutput = IUserInputOutput.getInstance();
         agingFactory = AgingAbstractFactory.instance();
     }
 
-    static void agingCalculation(SimulationContext simulationContext) throws IOException, ParseException {
-        serializeDeserializeAbstractFactory = SerializeDeserializeAbstractFactory.instance();
-//        IAging aging = agingFactory.createAging(simulationContext.getGameConfig());
-        ILeagueObjectModel leagueObjectModel = simulationContext.getInMemoryLeague();
-        ISerializeLeagueObjectModel serializeModel = serializeDeserializeAbstractFactory.createSerializeLeagueObjectModel(leagueObjectModel.getLeagueName());
+    static void agingCalculation(SimulationContext simulationContext) {
         ILeagueSchedule leagueSchedule = (LeagueSchedule) agingFactory.createLeagueSchedule(simulationContext.getInMemoryLeague());
+        try {
+            LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
+            LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());
 
-        LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
-        LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());
-        System.out.println("Current Date "+currentDate);
-        System.out.println("Get no of days "+simulationContext.getNumberOfDays());
-
-        leagueSchedule.initiateAging(simulationContext.getNumberOfDays(), currentDate);
-
+            leagueSchedule.initiateAging(simulationContext.getNumberOfDays(), currentDate);
+        } catch (IOException e) {
+            logger.error(e.getMessage());
+        } catch (ParseException e) {
+            logger.error(e.getMessage());
+        }
     }
 
     public SimulationContext getSimulationContext() {
@@ -58,35 +48,25 @@ public class AgingState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateProcess() {
-        userInputOutput.printMessage("Into the state process of Aging State season");
-        try {
-            agingCalculation(simulationContext);
-        } catch (IOException e) {
-            simulationContext.seasonStateExitProcess();
-            logger.error("Error occurred during aging state: " + e.getMessage());
-        } catch (ParseException e) {
-            simulationContext.seasonStateExitProcess();
-            logger.error("Error occurred during aging state: " + e.getMessage());
-        }
+        logger.info("Into the state process of Aging State season");
+        agingCalculation(simulationContext);
     }
 
     @Override
     public void seasonStateExitProcess() {
-        userInputOutput.printMessage("Into the exit process of Aging State season");
-//        changed recently
-//        IScheduler scheduler = simulationContext.getPlayOffScheduleRound1();
+        logger.info("Into the exit process of Aging State season");
         IScheduler scheduler = simulationContext.getRegularScheduler();
-//        ISeasonSchedule playoffSchedule = (SeasonSchedule) simulationContext.getRegularScheduler().getPlayOffScheduleRound1();
         LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
         LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());
-        if(null == scheduler) {
-            userInputOutput.printMessage("No current Schedule");
+        if (null == scheduler) {
+            logger.debug("No current Schedule. So, moving to Persist Same Season");
             simulationContext.setCurrentSimulation(simulationContext.getPersistsSameSeason());
-        }
-        else {
+        } else {
             if (scheduler.stanleyCupWinner(currentDate)) {
+                logger.debug("Stanley Cup winner determined. So, advancing to next Season");
                 simulationContext.setCurrentSimulation(simulationContext.getAdvanceToNextSeason());
             } else {
+                logger.debug("Stanley Cup winner not determined. So, moving to Persist Same Season");
                 simulationContext.setCurrentSimulation(simulationContext.getPersistsSameSeason());
             }
         }

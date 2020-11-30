@@ -3,6 +3,8 @@ package dhl.businessLogic.leagueModel;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.IDeserializeLeagueObjectModel;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
@@ -10,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LeagueObjectModel implements ILeagueObjectModel {
+    private static final Logger logger = LogManager.getLogger(LeagueObjectModel.class);
     public String leagueName;
     public List<IConference> conferences;
     public List<IPlayer> freeAgents;
@@ -22,12 +25,14 @@ public class LeagueObjectModel implements ILeagueObjectModel {
     }
 
     private void setDefault(){
+        logger.info("Setting default values for Constructor");
         leagueName = "";
         conferences = new ArrayList<>();
         freeAgents = new ArrayList<>();
     }
 
     public LeagueObjectModel(String leagueName, List<IConference> conferences, List<IPlayer> freeAgents, List<ICoach> coaches, List<IGeneralManager> managers, IGameConfig gameConfig) {
+        logger.info("Initializing League Model through Parameterized Constructor");
         setDefault();
         setLeagueName(leagueName);
         setConferences(conferences);
@@ -85,19 +90,13 @@ public class LeagueObjectModel implements ILeagueObjectModel {
         this.gameplayConfig = gameConfig;
     }
 
-    public boolean checkIfLeagueModelValid(IValidation validation, ILeagueObjectModelValidation leagueObjectModelValidation) throws Exception {
+    public boolean checkIfLeagueModelValid(IValidation validation, ILeagueObjectModelValidation leagueObjectModelValidation) {
+        logger.info("Validating league object model initialized");
         return leagueObjectModelValidation.checkIfLeagueObjectModelValid(validation, this);
     }
 
     public ILeagueObjectModel saveLeagueObjectModel(ISerializeLeagueObjectModel serializeLeagueObjectModel, ILeagueObjectModelInput saveLeagueInput) throws IOException {
-        ILeagueObjectModelValidation leagueObjectModelValidation = saveLeagueInput.getLeagueObjectModelValidation();
-        try{
-            leagueObjectModelValidation.checkUserInputForLeague(this, saveLeagueInput);
-        }
-        catch (Exception e){
-            // TODO: 23-11-2020 update!
-        }
-       
+        logger.debug("Saving league object model initialized");
         List<IConference> conferenceArrayList = this.getConferences();
         boolean newTeamAddedToLeague = false;
         for (int i = 0; i < conferenceArrayList.size(); i++) {
@@ -109,6 +108,7 @@ public class LeagueObjectModel implements ILeagueObjectModel {
                     if (division.getDivisionName() == saveLeagueInput.getDivisionName()) {
                         List<ITeam> teamArrayList = division.getTeams();
                         teamArrayList.add(saveLeagueInput.getNewlyCreatedTeam());
+                        logger.debug("Newly created team added at index"+j);
                         newTeamAddedToLeague = true;
                         break;
                     }
@@ -126,6 +126,7 @@ public class LeagueObjectModel implements ILeagueObjectModel {
     }
 
     public ILeagueObjectModel loadLeagueObjectModel( IDeserializeLeagueObjectModel deserializeLeagueObjectModel, String leagueName, String teamName) throws IOException, ParseException {
+        logger.debug("Loading league object model:"+leagueName);
         ILeagueObjectModel leagueObjectModel;
         leagueObjectModel =deserializeLeagueObjectModel.deserializeLeagueObjectJson(leagueName);
 
@@ -133,6 +134,7 @@ public class LeagueObjectModel implements ILeagueObjectModel {
     }
 
     public ILeagueObjectModel updateLeagueObjectModel(ISerializeLeagueObjectModel serializeLeagueObjectModel) throws IOException {
+        logger.debug("Updating league object model:"+leagueName);
         serializeLeagueObjectModel.updateSerializedLeagueObjectToJsonFile(this);
         return this;
     }

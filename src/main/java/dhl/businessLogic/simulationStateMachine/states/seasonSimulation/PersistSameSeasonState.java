@@ -12,10 +12,9 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 
 public class PersistSameSeasonState implements ISimulationSeasonState {
+    public static Logger logger = LogManager.getLogger(PersistSameSeasonState.class);
     SimulationContext simulationContext;
     IUserInputOutput userInputOutput;
-    private static final Logger logger = LogManager.getLogger(PersistSameSeasonState.class);
-
 
     public PersistSameSeasonState(SimulationContext simulationContext) {
         this.simulationContext = simulationContext;
@@ -32,22 +31,22 @@ public class PersistSameSeasonState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateProcess() {
-        userInputOutput.printMessage("Into the state process of Persist same season");
-        try {
+        logger.info("Into the state process of Persist same season");
         SerializeDeserializeAbstractFactory factorySerialize = SerializeDeserializeAbstractFactory.instance();
         ISerializeLeagueObjectModel serializeLeagueObjectModel = factorySerialize.createSerializeLeagueObjectModel("src/SerializedJsonFiles/");
         ILeagueObjectModel leagueObjectModel = simulationContext.getInMemoryLeague();
-
+        logger.debug("Calling the update League Model method to store the current game state in JSON file");
+        try {
             leagueObjectModel.updateLeagueObjectModel(serializeLeagueObjectModel);
         } catch (IOException e) {
-            logger.error("Error occurred during persist same season state: " + e.getMessage());
             simulationContext.seasonStateExitProcess();
+            logger.error("Error occurred in PersistSameSeason state" + e.getMessage());
         }
     }
 
     @Override
     public void seasonStateExitProcess() {
-        userInputOutput.printMessage("Into the exit process of Persist same season");
+        logger.info("Into the exit process of Persist same season");
         simulationContext.setCurrentSimulation(simulationContext.getAdvanceTime());
     }
 }
