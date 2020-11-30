@@ -13,7 +13,7 @@ import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.factory.
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
 import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandings;
 import dhl.businessLogic.teamRosterUpdater.UpdateUserTeamRoster;
-import dhl.businessLogic.trade.interfaces.ITradingEngine;
+import dhl.businessLogic.trade.TradeEngineAbstract;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 
 import java.time.DayOfWeek;
@@ -64,7 +64,7 @@ public class SimulationContext implements ISimulationSeasonState {
     int daysSinceLastTraining;
     List<ITeam> teamsPlayingInGame;
     IInjury injury;
-    ITradingEngine tradeEngine;
+    TradeEngineAbstract tradeEngine;
 
     public SimulationContext(GameContext gameState) {
         SimulationStateAbstractFactory factory = SimulationStateAbstractFactory.instance();
@@ -231,11 +231,11 @@ public class SimulationContext implements ISimulationSeasonState {
         this.injury = injury;
     }
 
-    public ITradingEngine getTradeEngine() {
+    public TradeEngineAbstract getTradeEngine() {
         return tradeEngine;
     }
 
-    public void setTradeEngine(ITradingEngine tradeEngine) {
+    public void setTradeEngine(TradeEngineAbstract tradeEngine) {
         this.tradeEngine = tradeEngine;
     }
 

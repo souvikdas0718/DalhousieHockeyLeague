@@ -10,8 +10,8 @@ import dhl.businessLogic.simulationStateMachine.factory.ContextAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.ExecuteTradesState;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.factory.SeasonSimulationStateFactory;
 import dhl.businessLogic.trade.TradingEngine;
-import dhl.businessLogic.trade.interfaces.ITradingEngine;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
+import dhl.businessLogic.trade.TradeEngineAbstract;
 import dhl.businessLogicTest.tradeTest.mocks.GameConfigMockForTrading;
 import dhl.businessLogicTest.tradeTest.mocks.factory.TradeMockAbstractFactory;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
@@ -64,7 +64,7 @@ public class ExecuteTradesStateTest {
         List<IPlayer> playersList = leagueMock.getFreeAgents();
         userTeam = leagueFactory.createTeam("ABC" , manager, coach, playersList );
         ioObject = IUserInputOutput.getInstance();;
-        tradeEngine = (TradingEngine) ITradingEngine.instance(iGameConfig, leagueMock, userTeam);
+        tradeEngine = (TradingEngine) TradeEngineAbstract.instance(iGameConfig, leagueMock, userTeam);
         tradeEngine.setIoObject(ioObject);
         seasonSimulationStateFactory = (SeasonSimulationStateFactory) SeasonSimulationStateFactory.instance();
         executeTradesState = (ExecuteTradesState) seasonSimulationStateFactory.getExecuteTradesState(simulationContext);

@@ -1,6 +1,5 @@
 package dhl.inputOutput.importJson;
 
-import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.IValidation;
 import dhl.inputOutput.importJson.interfaces.*;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;

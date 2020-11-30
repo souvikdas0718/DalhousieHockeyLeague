@@ -73,14 +73,14 @@ public class ExchangingPlayerTradeOfferTest {
     @Test
     public void getOfferingPlayersTest() {
         ArrayList<IPlayer> offeredPlayers = testClassObject.getOfferingPlayers();
-        String OfferedPlayerName = offeredPlayers.get(0).getPlayerName();
-        Assertions.assertTrue(OfferedPlayerName.equals("WeakPlayer1"));
+        String offeredPlayerName = offeredPlayers.get(0).getPlayerName();
+        Assertions.assertTrue(offeredPlayerName.equals("WeakPlayer1"));
     }
 
     @Test
     public void getPlayersWantedInReturn() {
         ArrayList<IPlayer> playersWanted = testClassObject.getPlayersWantedInReturn();
-        String WantedPlayerName = playersWanted.get(0).getPlayerName();
-        Assertions.assertTrue(WantedPlayerName.equals("Player1"));
+        String wantedPlayerName = playersWanted.get(0).getPlayerName();
+        Assertions.assertTrue(wantedPlayerName.equals("Player1"));
     }
 }

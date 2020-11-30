@@ -28,6 +28,7 @@ public class AiUserTrade implements ITradeType {
     }
 
     public boolean isTradeAccepted(ArrayList<IPlayer> playersOffered, ArrayList<IPlayer> playerswanted, ITeam receivingTeam){
+        logger.debug("Showing Trade to user");
         DisplayTradeOfferToUser(playersOffered);
         int inputFromUser = Integer.parseInt(ioObject.getUserInput());
         if (inputFromUser == 1) {

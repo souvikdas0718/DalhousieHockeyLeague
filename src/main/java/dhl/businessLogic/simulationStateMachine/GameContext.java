@@ -6,12 +6,9 @@ import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.simulationStateMachine.factory.GameStateAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.interfaces.IGameContext;
 import dhl.businessLogic.simulationStateMachine.interfaces.IGameState;
-import dhl.businessLogic.simulationStateMachine.states.CreateTeamState;
-import dhl.businessLogic.simulationStateMachine.states.ImportState;
-import dhl.businessLogic.simulationStateMachine.states.LoadTeamState;
-import dhl.businessLogic.simulationStateMachine.states.SimulateState;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.time.LocalDate;
 
 public class GameContext implements IGameContext {
@@ -26,6 +23,7 @@ public class GameContext implements IGameContext {
     IGameConfig gameConfig;
     IUserInputOutput userInputOutput;
     int year;
+    private static final Logger logger = LogManager.getLogger(GameContext.class);
 
     public GameContext() {
         GameStateAbstractFactory gameStateFactory = GameStateAbstractFactory.instance();
@@ -37,6 +35,7 @@ public class GameContext implements IGameContext {
         gameInProgress = true;
         userInputOutput = IUserInputOutput.getInstance();
         year = LocalDate.now().getYear();
+        logger.debug("Made Game context Object");
     }
 
     public void setGameState(IGameState newState) {
@@ -44,16 +43,17 @@ public class GameContext implements IGameContext {
     }
 
     public void stateEntryProcess() {
+        logger.debug("running Entry Process for class: "+ currentState.getClass().getName());
         currentState.stateEntryProcess();
     }
 
     public void stateProcess() throws Exception {
-        userInputOutput.printMessage("Into the state process of game context");
+        logger.debug("running State Process for class: "+ currentState.getClass().getName());
         currentState.stateProcess();
     }
 
     public void stateExitProcess() {
-        userInputOutput.printMessage("Into the state process exit of game context");
+        logger.debug("running Exit Process for class: "+ currentState.getClass().getName());
         currentState.stateExitProcess();
     }
 
