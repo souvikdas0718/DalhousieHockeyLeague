@@ -9,8 +9,6 @@ import dhl.inputOutput.importJson.ImportJsonAbstractFactory;
 import dhl.inputOutput.importJson.interfaces.IImportJsonFile;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 
-import java.time.LocalDate;
-
 public class SimulateState implements IGameState {
     private static final String AGINGCONFIGPATH ="src/test/java/dhl/Mocks/MockData2.json";
     final int maxSeasons = 10;
@@ -72,7 +70,9 @@ public class SimulateState implements IGameState {
 
             while (simulationContextObject.isSeasonInProgress()) {
                 userInputOutput.printMessage("Season " + i + ": is in progress");
-                simulationContextObject.seasonStateProcess();
+
+                    simulationContextObject.seasonStateProcess();
+
                 userInputOutput.printMessage("Season " + i + ": state process done");
                 simulationContextObject.seasonStateExitProcess();
                 userInputOutput.printMessage("Season " + i + ": exit process done");

@@ -9,11 +9,13 @@ import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
 import dhl.businessLogicTest.leagueModelTests.mocks.LeagueMock;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
+import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -48,7 +50,7 @@ public class LeagueScheduleTest {
     }
 
     @Test
-    public void ageAllPlayerTest() {
+    public void ageAllPlayerTest() throws IOException, ParseException {
         leagueObjectModel = leagueSchedule.initiateAging(365, LocalDate.of(2020, 11, 14));
         for (IConference conference : leagueObjectModel.getConferences()) {
             for (IDivision division : conference.getDivisions()) {

@@ -5,6 +5,7 @@ import dhl.inputOutput.importJson.serializeDeserialize.interfaces.IDeserializeLe
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import org.json.simple.parser.ParseException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,7 +89,7 @@ public class LeagueObjectModel implements ILeagueObjectModel {
         return leagueObjectModelValidation.checkIfLeagueObjectModelValid(validation, this);
     }
 
-    public ILeagueObjectModel saveLeagueObjectModel(ISerializeLeagueObjectModel serializeLeagueObjectModel, ILeagueObjectModelInput saveLeagueInput) {
+    public ILeagueObjectModel saveLeagueObjectModel(ISerializeLeagueObjectModel serializeLeagueObjectModel, ILeagueObjectModelInput saveLeagueInput) throws IOException {
         ILeagueObjectModelValidation leagueObjectModelValidation = saveLeagueInput.getLeagueObjectModelValidation();
         try{
             leagueObjectModelValidation.checkUserInputForLeague(this, saveLeagueInput);
@@ -124,14 +125,14 @@ public class LeagueObjectModel implements ILeagueObjectModel {
         return this;
     }
 
-    public ILeagueObjectModel loadLeagueObjectModel( IDeserializeLeagueObjectModel deserializeLeagueObjectModel, String leagueName, String teamName)  {
+    public ILeagueObjectModel loadLeagueObjectModel( IDeserializeLeagueObjectModel deserializeLeagueObjectModel, String leagueName, String teamName) throws IOException, ParseException {
         ILeagueObjectModel leagueObjectModel;
         leagueObjectModel =deserializeLeagueObjectModel.deserializeLeagueObjectJson(leagueName);
 
         return leagueObjectModel;
     }
 
-    public ILeagueObjectModel updateLeagueObjectModel(ISerializeLeagueObjectModel serializeLeagueObjectModel)  {
+    public ILeagueObjectModel updateLeagueObjectModel(ISerializeLeagueObjectModel serializeLeagueObjectModel) throws IOException {
         serializeLeagueObjectModel.updateSerializedLeagueObjectToJsonFile(this);
         return this;
     }

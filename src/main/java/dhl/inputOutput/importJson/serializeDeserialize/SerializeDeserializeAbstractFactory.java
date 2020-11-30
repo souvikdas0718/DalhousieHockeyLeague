@@ -17,10 +17,6 @@ public abstract class SerializeDeserializeAbstractFactory {
         return uniqueInstance;
     }
 
-    public static void setFactory(SerializeDeserializeAbstractFactory f) {
-        uniqueInstance = f;
-    }
-
     public abstract ISerializeLeagueObjectModel createSerializeLeagueObjectModel(String leagueName);
 
     public abstract IDeserializeLeagueObjectModel createDeserializeLeagueObjectModel(String leagueName);

@@ -6,6 +6,8 @@ import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.states.LoadTeamStateLogic;
+import dhl.businessLogic.simulationStateMachine.states.StatesAbstractFactory;
+import dhl.businessLogic.simulationStateMachine.states.interfaces.ILoadTeamStateLogic;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.IDeserializeLeagueObjectModel;
 import org.junit.jupiter.api.Assertions;
@@ -14,13 +16,15 @@ import org.junit.jupiter.api.Test;
 
 public class LoadTeamStateLogicTest {
 
-    LoadTeamStateLogic objLoadTeamStateLogic;
+    StatesAbstractFactory statesAbstractFactory;
+    ILoadTeamStateLogic objLoadTeamStateLogic;
     LeagueModelMockAbstractFactory factory;
     ILeagueObjectModel newInMemoryLeague;
 
     @BeforeEach
     public void initObject() {
-        objLoadTeamStateLogic = new LoadTeamStateLogic();
+        statesAbstractFactory = StatesAbstractFactory.instance();
+        objLoadTeamStateLogic = statesAbstractFactory.createLoadTeamStateLogic();
         factory = LeagueModelMockAbstractFactory.instance();
         newInMemoryLeague = factory.createLeagueMock().getLeagueObjectModel();
     }
@@ -48,7 +52,8 @@ public class LoadTeamStateLogicTest {
     @Test
     public void findTeamTest() {
         LeagueObjectModelMocks mocks = new LeagueObjectModelMocks();
-        ITeam objTeam = objLoadTeamStateLogic.findTeam(newInMemoryLeague, "Ontario");
+        LoadTeamStateLogic loadTeamStateLogic = new LoadTeamStateLogic();
+        ITeam objTeam = loadTeamStateLogic.findTeam(newInMemoryLeague, "Ontario");
         Assertions.assertEquals("Ontario", objTeam.getTeamName());
     }
 }

@@ -6,7 +6,9 @@ import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.json.simple.parser.ParseException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -33,7 +35,7 @@ public class Retirement implements IRetirement {
         this.leagueObjectModel = leagueObjectModel;
     }
 
-    public void initiateRetirement(Map<String, List<IPlayer>> playersToRetire, List<IPlayer> freeAgentsToRetire) {
+    public void initiateRetirement(Map<String, List<IPlayer>> playersToRetire, List<IPlayer> freeAgentsToRetire) throws IOException, ParseException {
         logger.debug("Executing retirement algorithm for players");
         retireFreeAgents(freeAgentsToRetire, leagueObjectModel.getFreeAgents());
         for (IConference conference : leagueObjectModel.getConferences()) {
@@ -121,7 +123,7 @@ public class Retirement implements IRetirement {
 
     }
 
-    public void insertVeterans(Map<String, List<IPlayer>> playersToRetire, List<IPlayer> freeAgentsToRetire) {
+    public void insertVeterans(Map<String, List<IPlayer>> playersToRetire, List<IPlayer> freeAgentsToRetire) throws IOException, ParseException {
         logger.debug("Inserting retired players");
         List<IPlayer> retiredPlayers= new ArrayList<>();
         retiredPlayers.addAll(freeAgentsToRetire);

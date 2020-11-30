@@ -1,4 +1,4 @@
-package dhl.Mocks;
+package dhl.importJsonTest.mocks;
 
 public class SerializedJsonMock {
     public String serializedJson() {

@@ -4,7 +4,8 @@ import dhl.Mocks.JsonFilePathMock;
 import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.simulationStateMachine.GameContext;
-import dhl.businessLogic.simulationStateMachine.states.ImportStateLogic;
+import dhl.businessLogic.simulationStateMachine.states.StatesAbstractFactory;
+import dhl.businessLogic.simulationStateMachine.states.interfaces.IImportStateLogic;
 import dhl.inputOutput.importJson.ImportJsonFile;
 import dhl.inputOutput.importJson.interfaces.IJsonFilePath;
 import org.junit.jupiter.api.Assertions;
@@ -16,7 +17,9 @@ import java.io.IOException;
 public class ImportStateLogicTest {
     private static final String SCHEMAFILEPATH = "src/main/java/dhl/inputOutput/importJson/jsonSchema/schema.json";
     private static final String SCHEMAFILEPATHINCORRECT = "src/test/java/dhl/Mocks/schemaIncorrect.json";
-    ImportStateLogic testClassObject;
+
+    StatesAbstractFactory statesAbstractFactory;
+    IImportStateLogic testClassObject;
     GameContext ourGame;
     LeagueObjectModelMocks leagueObjectModelMock;
     JsonFilePathMock filePathMock;
@@ -24,10 +27,11 @@ public class ImportStateLogicTest {
 
     @BeforeEach
     public void initObject() {
+        statesAbstractFactory = StatesAbstractFactory.instance();
         filePathMock = new JsonFilePathMock();
         importJsonFile = new ImportJsonFile(filePathMock.getFilePath());
         ourGame = new GameContext();
-        testClassObject = new ImportStateLogic();
+        testClassObject = statesAbstractFactory.createImportStateLogic();
         leagueObjectModelMock = new LeagueObjectModelMocks();
     }
 

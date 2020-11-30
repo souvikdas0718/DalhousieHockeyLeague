@@ -5,12 +5,14 @@ import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.interfaces.IGameState;
 import dhl.businessLogic.simulationStateMachine.states.interfaces.IImportStateLogic;
+import dhl.businessLogic.traning.Training;
 import dhl.inputOutput.importJson.JsonFilePath;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
-import dhl.inputOutput.ui.UserInputOutput;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class ImportState implements IGameState {
-
+    private static final Logger logger = LogManager.getLogger(Training.class);
     String validFilePath;
     ILeagueObjectModel newInMemoryLeague;
     int option = -1;
@@ -23,7 +25,6 @@ public class ImportState implements IGameState {
         newInMemoryLeague = new LeagueObjectModel();
     }
 
-    @Override
     public void stateEntryProcess() {
         while (option == -1 || option > 3) {
             userInputPutput.printMessage("Please Enter one option");
@@ -51,22 +52,20 @@ public class ImportState implements IGameState {
         }
     }
 
-    @Override
     public void stateProcess() {
         if (validFilePath != null) {
             try {
                 IImportStateLogic objImportStateLogic = new ImportStateLogic();
                 newInMemoryLeague = objImportStateLogic.importAndGetLeagueObject(validFilePath);
-
                 userInputPutput.printMessage(newInMemoryLeague.getLeagueName() + "  Imported from the Json");
             } catch (Exception e) {
+                logger.error("Error importing league: " + e.getMessage());
                 userInputPutput.printMessage(e.getMessage());
                 ourGame.setGameInProgress(false);
             }
         }
     }
 
-    @Override
     public void stateExitProcess() {
         if (ourGame.isGameInProgress()) {
             ourGame.setInMemoryLeague(newInMemoryLeague);

@@ -7,12 +7,17 @@ import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfac
 import dhl.inputOutput.importJson.serializeDeserialize.SerializeDeserializeAbstractFactory;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class PersistSeasonState implements ISimulationSeasonState {
     SimulationContext simulationContext;
     IUserInputOutput userInputOutput;
+    private static final Logger logger = LogManager.getLogger(PersistSeasonState.class);
+
 
     public PersistSeasonState(SimulationContext simulationContext) {
         this.simulationContext = simulationContext;
@@ -33,7 +38,13 @@ public class PersistSeasonState implements ISimulationSeasonState {
         SerializeDeserializeAbstractFactory factorySerialize = SerializeDeserializeAbstractFactory.instance();
         ISerializeLeagueObjectModel serializeLeagueObjectModel = factorySerialize.createSerializeLeagueObjectModel("src/SerializedJsonFiles/");
         ILeagueObjectModel leagueObjectModel = simulationContext.getInMemoryLeague();
-        leagueObjectModel.updateLeagueObjectModel(serializeLeagueObjectModel);
+        try {
+            leagueObjectModel.updateLeagueObjectModel(serializeLeagueObjectModel);
+        } catch (IOException e) {
+            e.printStackTrace();
+            logger.error("Error occurred during Persist season state: " + e.getMessage());
+            simulationContext.seasonStateExitProcess();
+        }
     }
 
     @Override

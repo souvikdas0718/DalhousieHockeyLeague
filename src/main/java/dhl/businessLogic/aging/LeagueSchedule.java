@@ -4,11 +4,12 @@ import dhl.businessLogic.aging.interfaceAging.IAging;
 import dhl.businessLogic.aging.interfaceAging.IInjury;
 import dhl.businessLogic.aging.interfaceAging.ILeagueSchedule;
 import dhl.businessLogic.aging.interfaceAging.IRetirement;
-import dhl.businessLogic.leagueModel.Player;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.json.simple.parser.ParseException;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +37,7 @@ public class LeagueSchedule implements ILeagueSchedule {
         retiringFreeAgents = new ArrayList<>();
     }
 
-    public ILeagueObjectModel initiateAging(int noOfDays, LocalDate currentDate)  {
+    public ILeagueObjectModel initiateAging(int noOfDays, LocalDate currentDate) throws IOException, ParseException {
         logger.info("Age player by 1 day");
         logger.debug("Initiate Aging players by 1 day");
         for (IConference conference : leagueObjectModel.getConferences()) {
@@ -65,7 +66,7 @@ public class LeagueSchedule implements ILeagueSchedule {
         return leagueObjectModel;
     }
 
-    public void initiateRetirementForAgedPlayers() {
+    public void initiateRetirementForAgedPlayers() throws IOException, ParseException {
         logger.info("Retire players in team at the end of simulation");
         logger.debug("Initiate Retirement");
         System.out.println("retiring players "+retiringPlayers);
