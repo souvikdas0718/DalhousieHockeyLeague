@@ -7,8 +7,8 @@ import dhl.businessLogic.trade.factory.TradeAbstractFactory;
 import dhl.businessLogic.trade.factory.TradeConcreteFactory;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
 import dhl.businessLogicTest.tradeTest.mocks.factory.TradeMockAbstractFactory;
+import dhl.importJsonTest.mocks.MockUserInputOutput;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
-import dhl.Mocks.MockUserInputOutput;
 import dhl.businessLogic.leagueModel.LeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
@@ -36,8 +36,8 @@ public class AiUserTradeTest {
 
     @BeforeEach
     public void initObject() {
-        // TODO: 28-11-2020 creational pattern for this
-        ioObjectMock = new MockUserInputOutput();
+        IUserInputOutput.setFactory(MockUserInputOutput.instance());
+        ioObjectMock = IUserInputOutput.getInstance();
 
         tradeFactory = new TradeConcreteFactory();
         leagueFactory = LeagueModelAbstractFactory.instance();

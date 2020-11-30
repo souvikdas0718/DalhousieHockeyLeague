@@ -10,7 +10,7 @@ import dhl.businessLogic.trade.AiUserTrade;
 import dhl.businessLogic.trade.Scout;
 import dhl.businessLogic.trade.factory.TradeAbstractFactory;
 import dhl.businessLogic.trade.factory.TradeConcreteFactory;
-import dhl.businessLogic.trade.interfaces.ITradeOffer;
+import dhl.businessLogic.trade.TradeOfferAbstract;
 import dhl.businessLogic.trade.interfaces.ITradeType;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
 import dhl.businessLogicTest.tradeTest.mocks.GameConfigMockForTrading;
@@ -46,7 +46,7 @@ public class ScoutTest {
         ITeam userTeam = leagueFactory.createTeamMock().getTeam();
         testClassObject = (Scout) tradeFactory.createScout(weakGoalieTeam, league,ourGameConfig,userTeam);
 
-        ITradeOffer tradeOffer = null;
+        TradeOfferAbstract tradeOffer = null;
         tradeOffer = testClassObject.findTrade(1);
         Assertions.assertEquals(tradeOffer.getPlayersWantedInReturn().size(), 1);
 

@@ -5,16 +5,22 @@ import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.teamRosterUpdater.interfaces.ITeamRosterUpdater;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AiTeamRosterUpdater implements ITeamRosterUpdater {
 
+    // TODO: 30-11-2020 get this from team
     private static final int TOTAL_GOALIES = 4;
     private static final int TOTAL_FORWARDS = 16;
     private static final int TOTAL_DEFENSE = 10;
 
+    private static final Logger logger = LogManager.getLogger(AiTeamRosterUpdater.class);
+
     public void validateTeamRoster(ITeam team, ILeagueObjectModel leagueObjectModel) {
+        logger.info("Validating team: "+ team.getTeamName());
         int totalForwards = 0;
         int totalDefense = 0;
         int totalGoalies = 0;
@@ -44,14 +50,17 @@ public class AiTeamRosterUpdater implements ITeamRosterUpdater {
     }
 
     public void updatePlayers(int currentCount, String playerPosition, int validCount, ITeam team, ILeagueObjectModel leagueObjectModel) {
+        logger.info("Updating team: "+ team.getTeamName());
         if (currentCount < validCount){
             while (currentCount < validCount){
+                logger.info("Adding Players from team: "+ team.getTeamName());
                 addPlayer(playerPosition, team, leagueObjectModel);
                 currentCount = currentCount + 1;
             }
         }
         else if (currentCount > validCount) {
             while (currentCount > validCount) {
+                logger.info("Droping Players from team: "+ team.getTeamName());
                 dropPlayer(playerPosition, team, leagueObjectModel);
                 currentCount = currentCount - 1;
             }
@@ -60,18 +69,20 @@ public class AiTeamRosterUpdater implements ITeamRosterUpdater {
 
     public void dropPlayer(String playerPosition, ITeam team, ILeagueObjectModel league) {
         IPlayer player = findWeakestPlayerInList(playerPosition, team.getPlayers());
+        logger.info("Player "+ player.getPlayerName()+ " Dropped from team: "+ team.getTeamName());
         team.getPlayers().remove(player);
         league.getFreeAgents().add(player);
     }
 
     public void addPlayer(String playerPosition, ITeam team, ILeagueObjectModel league) {
-
         IPlayer player = findBestPlayerInList(playerPosition, league.getFreeAgents());
+        logger.info("Player added to team ");
         team.getPlayers().add(player);
         league.getFreeAgents().remove(player);
     }
 
     public IPlayer findWeakestPlayerInList(String neededPosition, List playerList){
+        logger.debug("Finding weakest player");
         IPlayer weakPlayer = null;
         double skaterStrength = 10000.0;
         for (Object ob : playerList) {
@@ -88,6 +99,7 @@ public class AiTeamRosterUpdater implements ITeamRosterUpdater {
     }
 
     public IPlayer findBestPlayerInList(String playerPosition, List playerList) {
+        logger.debug("Finding Strongest player");
         IPlayer bestPlayer = null;
         double bestPlayerStrength = 0.0;
         for (Object ob : playerList) {

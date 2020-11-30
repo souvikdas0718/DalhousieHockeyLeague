@@ -3,7 +3,7 @@ package dhl.businessLogic.trade.factory;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogic.trade.*;
 import dhl.businessLogic.trade.interfaces.IScout;
-import dhl.businessLogic.trade.interfaces.ITradeOffer;
+import dhl.businessLogic.trade.TradeOfferAbstract;
 import dhl.businessLogic.trade.interfaces.ITradeType;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 
@@ -19,7 +19,7 @@ public class TradeConcreteFactory extends TradeAbstractFactory{
         return new AiUserTrade(ioObject, league);
     }
 
-    public ITradeOffer createExchangingPlayerTradeOffer(ITeam offeringTeam, ITeam receivingTeam, ArrayList<IPlayer> playersOffered, ArrayList<IPlayer> playersWantedInExchange, ITradeType tradeType) {
+    public TradeOfferAbstract createExchangingPlayerTradeOffer(ITeam offeringTeam, ITeam receivingTeam, ArrayList<IPlayer> playersOffered, ArrayList<IPlayer> playersWantedInExchange, ITradeType tradeType) {
         return new ExchangingPlayerTradeOffer(offeringTeam, receivingTeam, playersOffered, playersWantedInExchange, tradeType);
     }
 
@@ -28,7 +28,7 @@ public class TradeConcreteFactory extends TradeAbstractFactory{
         return scout;
     }
 
-    public ITradeOffer createDraftPickTradeOffer(ITeam offeringTeam, ITeam receivingTeam, ArrayList<IPlayer> playersWantedInExchange, IPlayerDraft playerDraft) {
+    public TradeOfferAbstract createDraftPickTradeOffer(ITeam offeringTeam, ITeam receivingTeam, ArrayList<IPlayer> playersWantedInExchange, IPlayerDraft playerDraft) {
         return new DraftPickTradeOffer(offeringTeam, receivingTeam, playersWantedInExchange,playerDraft);
     }
 

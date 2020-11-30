@@ -11,7 +11,7 @@ import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.factory.ContextAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.ExecuteTradesState;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.factory.SeasonSimulationStateFactory;
-import dhl.businessLogic.trade.interfaces.ITradingEngine;
+import dhl.businessLogic.trade.TradeEngineAbstract;
 import dhl.businessLogicTest.tradeTest.mocks.GameConfigMockForTrading;
 import dhl.businessLogicTest.tradeTest.mocks.factory.TradeMockAbstractFactory;
 import org.junit.jupiter.api.Assertions;
@@ -32,7 +32,7 @@ public class ExecuteTradesStateTest {
     ITeam badTeamMock;
     ITeam userTeam;
     TradeMockAbstractFactory tradeMockAbstractFactory;
-    ITradingEngine tradeEngine;
+    TradeEngineAbstract tradeEngine;
     ContextAbstractFactory contextAbstractFactory;
     SeasonSimulationStateFactory seasonSimulationStateFactory;
     MockAbstractFactory mockAbstractFactory;
@@ -56,7 +56,7 @@ public class ExecuteTradesStateTest {
         leagueMock.getConferences().get(0).getDivisions().get(0).getTeams().add(goodTeamMock);
         leagueMock.getConferences().get(0).getDivisions().get(0).getTeams().add(badTeamMock);
         leagueMock.setGameConfig(iGameConfig);
-        tradeEngine = ITradingEngine.instance(iGameConfig, leagueMock, userTeam);
+        tradeEngine = TradeEngineAbstract.instance(iGameConfig, leagueMock, userTeam);
         seasonSimulationStateFactory = (SeasonSimulationStateFactory) SeasonSimulationStateFactory.instance();
         executeTradesState = (ExecuteTradesState) seasonSimulationStateFactory.getExecuteTradesState(simulationContext);
     }

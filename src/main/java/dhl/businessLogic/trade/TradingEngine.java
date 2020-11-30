@@ -7,14 +7,12 @@ import dhl.businessLogic.trade.interfaces.IScout;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogic.teamRosterUpdater.interfaces.ITeamRosterUpdater;
-import dhl.businessLogic.trade.interfaces.ITradeOffer;
-import dhl.businessLogic.trade.interfaces.ITradingEngine;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class TradingEngine extends ITradingEngine {
+public class TradingEngine extends TradeEngineAbstract {
 
-    private ITradeOffer currentTrade;
+    private TradeOfferAbstract currentTrade;
     private IGameConfig gameConfig;
     private ILeagueObjectModel leagueObjectModel;
     IUserInputOutput ioObject;
@@ -27,9 +25,7 @@ public class TradingEngine extends ITradingEngine {
     public TradingEngine(IGameConfig gameConfig, ILeagueObjectModel leagueObjectModel, ITeam userTeam) {
         factory = new TradeConcreteFactory();
 
-        // TODO: 20-11-2020 remove these new when team make factory
         this.ioObject = IUserInputOutput.getInstance();
-
         this.updateUserTeamRoster = RosterUpdaterAbstractFactory.instance().createUpdateUserTeamRoster(ioObject);
         this.gameConfig = gameConfig;
         this.leagueObjectModel = leagueObjectModel;
@@ -37,14 +33,18 @@ public class TradingEngine extends ITradingEngine {
     }
 
     public void startEngine() {
+        logger.info("Starting trade Engine");
         long configLossPoint = Long.parseLong(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getLossPoint()));
         double configRandomTradeChance = Double.parseDouble(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getRandomTradeOfferChance()));
         for (IConference conference : leagueObjectModel.getConferences()) {
             for (IDivision division : conference.getDivisions()) {
                 for (ITeam team : division.getTeams()) {
                     if (findLossPointOfTheTeam(team) > configLossPoint) {
+                        logger.info(team.getTeamName()+" is eligible to Trade");
                         double randomNumber = Math.random();
+                        logger.debug("random chance to trade is"+randomNumber );
                         if (randomNumber > configRandomTradeChance) {
+                            logger.info("Starting trade search for team: " + team.getTeamName());
                             performTrade(team);
                         }
                     }
@@ -56,13 +56,17 @@ public class TradingEngine extends ITradingEngine {
     public void performTrade(ITeam tradingTeam){
         IScout teamScout = factory.createScout(tradingTeam, leagueObjectModel, gameConfig, userTeam);
         int congifMaxPlayerPerTrade = Integer.parseInt(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getMaxPlayersPerTrade()));
+        logger.info("Finding trade offer for team: "+ tradingTeam.getTeamName() );
         currentTrade = teamScout.findTrade(congifMaxPlayerPerTrade);
         if (currentTrade == null){
-            logger.warn("Trade not possible for Team:"+ tradingTeam.getTeamName());
+            logger.info("Trade not possible for Team:"+ tradingTeam.getTeamName());
         }
         else{
+            logger.info("Trade found for team: "+ tradingTeam.getTeamName());
             tradingTeam.setLossPoint(0);
-            currentTrade.implementTrade();
+            if(currentTrade.checkIfTradeAccepted()){
+                currentTrade.implementTrade();
+            }
         }
     }
 
@@ -75,7 +79,7 @@ public class TradingEngine extends ITradingEngine {
         this.ioObject = ioObject;
     }
 
-    public ITradeOffer getCurrentTrade() {
+    public TradeOfferAbstract getCurrentTrade() {
         return currentTrade;
     }
 

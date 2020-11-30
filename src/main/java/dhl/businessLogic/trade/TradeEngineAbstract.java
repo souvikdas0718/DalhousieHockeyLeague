@@ -1,22 +1,21 @@
-package dhl.businessLogic.trade.interfaces;
+package dhl.businessLogic.trade;
 
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.trade.TradingEngine;
 
 
-public abstract class ITradingEngine {
-    private static ITradingEngine uniqueInstance;
+public abstract class TradeEngineAbstract {
+    private static TradeEngineAbstract uniqueInstance;
 
-    public static ITradingEngine instance(IGameConfig gameConfig, ILeagueObjectModel leagueObjectModel, ITeam userTeam) {
+    public static TradeEngineAbstract instance(IGameConfig gameConfig, ILeagueObjectModel leagueObjectModel, ITeam userTeam) {
         if (uniqueInstance == null) {
             uniqueInstance = new TradingEngine(gameConfig, leagueObjectModel, userTeam);
         }
         return uniqueInstance;
     }
 
-    public static void setFactory(ITradingEngine engine) {
+    public static void setFactory(TradeEngineAbstract engine) {
         uniqueInstance = engine;
     }
 
