@@ -67,6 +67,9 @@ public class Player implements IPlayer {
     }
 
     public boolean getCaptain() {
+        if(captain == null){
+            return false;
+        }
         return captain;
     }
 
