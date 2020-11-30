@@ -57,7 +57,7 @@ public class AiAiTradeTest {
         boolean unfairTradeThatWillBeAccepted = testClassObject.isTradeAccepted(playersOffered, playersWanted, strongTeam);
         Assertions.assertTrue(unfairTradeThatWillBeAccepted);
 
-        boolean fairTradeThatWillBeAccepted = testClassObject.isTradeAccepted(playersOffered, playersWanted, strongTeam);
+        boolean fairTradeThatWillBeAccepted = testClassObject.isTradeAccepted(playersWanted, playersOffered, weakTeam);
         Assertions.assertTrue(fairTradeThatWillBeAccepted);
 
         gameConfigMock.setRandomAcceptanceChance(1.0);

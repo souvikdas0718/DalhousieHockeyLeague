@@ -19,16 +19,18 @@ public class DraftPickTradeOffer extends ITradeOffer {
         this.playerDraft = playerDraft;
         this.playerDraftSequence = playerDraft.getDraftPickSequence();
         this.tradePossible = false;
-        this.roundToGive = setRoundFromDraft(offeringTeam);
     }
 
-    public void implementTrade() {
+    public void implementTrade(){
+        this.roundToGive = setRoundFromDraft(offeringTeam);
         if (isTradePossible()){
             playerDraft.swapDraftPick(roundToGive, receivingTeam, offeringTeam);
             for (IPlayer player : playersWantedInExchange) {
                 receivingTeam.getPlayers().remove(player);
                 offeringTeam.getPlayers().add(player);
             }
+        }else{
+            // TODO: 30-11-2020 log trade not possible
         }
     }
 
@@ -45,11 +47,7 @@ public class DraftPickTradeOffer extends ITradeOffer {
         return round;
     }
 
-    public int getRoundToGive() {
-        return roundToGive;
-    }
-
-    public boolean isTradePossible() {
+    public boolean isTradePossible(){
         return tradePossible;
     }
 }

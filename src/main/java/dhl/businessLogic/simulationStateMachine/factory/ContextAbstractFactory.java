@@ -20,4 +20,7 @@ public abstract class ContextAbstractFactory {
     public abstract GameContext createGameContext();
 
     public abstract SimulationContext createSimulationContext();
+
+    public abstract SimulationContext createSimulationContextWithGameContext(GameContext gameContext);
+
 }

@@ -5,16 +5,16 @@ import dhl.businessLogic.aging.interfaceAging.IInjury;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.simulationStateMachine.interfaces.ITeamRosterUpdater;
+import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.ISeasonSchedule;
+import dhl.businessLogic.teamRosterUpdater.interfaces.ITeamRosterUpdater;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.Scheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.factory.SimulationStateAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
-import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandingSystem;
 import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandings;
+import dhl.businessLogic.teamRosterUpdater.UpdateUserTeamRoster;
 import dhl.businessLogic.trade.interfaces.ITradingEngine;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
-import dhl.inputOutput.ui.UserInputOutput;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -38,17 +38,13 @@ public class SimulationContext implements ISimulationSeasonState {
     ISimulationSeasonState simulateGame;
     ISimulationSeasonState training;
     ISimulationSeasonState playerDraft;
-
     IScheduler scheduler;
     IScheduler regularScheduler;
     IScheduler playOffScheduleRound1;
     IScheduler finalSchedule;
-
     ITeamRosterUpdater updateUserTeamRoster;
-
     List<IStandings> standings;
-
-//    IStandingSystem standingSystem;
+    ISeasonSchedule matchToSimulate;
 
     boolean seasonInProgress;
     IGameConfig gameConfig;
@@ -90,7 +86,6 @@ public class SimulationContext implements ISimulationSeasonState {
         seasonInProgress = true;
         ioObject = IUserInputOutput.getInstance();
         updateUserTeamRoster = new UpdateUserTeamRoster(ioObject);
-//        tradeEngine = ITradingEngine.instance(gameConfig, inMemoryLeague, userTeam);
         daysSinceLastTraining = 0;
         teamsPlayingInGame = new ArrayList<>();
         injury = new Injury();
@@ -108,9 +103,16 @@ public class SimulationContext implements ISimulationSeasonState {
         scheduler.setSeasonEndDate(seasonEndDate);
         scheduler.setSeasonStartDate(seasonStartDate);
         scheduler.setPlayOffStartDate(playOffStartDate);
-//        year = LocalDate.now().getYear();
         startOfSimulation = LocalDate.of(year, 9, 30);
 
+    }
+
+    public ISeasonSchedule getMatchToSimulate() {
+        return matchToSimulate;
+    }
+
+    public void setMatchToSimulate(ISeasonSchedule matchToSimulate) {
+        this.matchToSimulate = matchToSimulate;
     }
 
     public LocalDate getSeasonStartDate() {
@@ -152,15 +154,6 @@ public class SimulationContext implements ISimulationSeasonState {
     public void setYear(int year) {
         this.year = year;
     }
-
-//    public IStandingSystem getStandingSystem() {
-//        return standingSystem;
-//    }
-//
-//    public void setStandingSystem(IStandingSystem standingSystem) {
-//        this.standingSystem = standingSystem;
-//    }
-
 
     public IScheduler getFinalSchedule() {
         return finalSchedule;

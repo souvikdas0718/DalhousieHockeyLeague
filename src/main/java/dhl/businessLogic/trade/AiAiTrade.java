@@ -1,8 +1,8 @@
 package dhl.businessLogic.trade;
 
 import dhl.businessLogic.leagueModel.interfaceModel.*;
-import dhl.businessLogic.simulationStateMachine.RosterUpdaterAbstractFactory;
-import dhl.businessLogic.simulationStateMachine.interfaces.ITeamRosterUpdater;
+import dhl.businessLogic.teamRosterUpdater.RosterUpdaterAbstractFactory;
+import dhl.businessLogic.teamRosterUpdater.interfaces.ITeamRosterUpdater;
 import dhl.businessLogic.trade.interfaces.ITradeType;
 import dhl.inputOutput.importJson.interfaces.IGeneralManagerPersonalityList;
 import org.apache.logging.log4j.LogManager;
@@ -16,7 +16,6 @@ public class AiAiTrade implements ITradeType {
     IGameConfig gameConfig;
     Dictionary managerPersonalityList;
     ITeamRosterUpdater rosterUpdater;
-
     private static final Logger logger = LogManager.getLogger(AiAiTrade.class);
 
     public AiAiTrade(ILeagueObjectModel league, IGameConfig gameConfig) {
@@ -32,7 +31,6 @@ public class AiAiTrade implements ITradeType {
     public boolean isTradeAccepted(ArrayList<IPlayer> playersOffered, ArrayList<IPlayer> playerswanted, ITeam receivingTeam) {
         double configRandomAcceptanceChance = Double.parseDouble(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getRandomAcceptanceChance()));
         double randomValue = Math.random();
-
         if (isTradeGoodForReceivingTeam(playersOffered, playerswanted)) {
             return true;
         } else{
