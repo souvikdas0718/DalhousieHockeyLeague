@@ -23,6 +23,5 @@ public interface ICreateTeamStateLogic {
 
     String findCoach(List<ICoach> coachArray, String coachName);
 
-    ArrayList<IPlayer> validateInputFreeAgents(String inputfreeAgents,
-                                                      List<IPlayer> freeAgentsArray) throws Exception;
+    ArrayList<IPlayer> validateInputFreeAgents(String inputfreeAgents, List<IPlayer> freeAgentsArray) throws Exception;
 }

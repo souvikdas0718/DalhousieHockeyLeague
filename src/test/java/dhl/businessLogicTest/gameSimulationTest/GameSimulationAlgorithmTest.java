@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 
 public class GameSimulationAlgorithmTest {
 
@@ -75,8 +74,9 @@ public class GameSimulationAlgorithmTest {
 
     @Test
     public void getMaxStatTest(){
-        Optional<IPlayer> player = gameSimulationAlgorithm.getMaxStat(teamOne.getPlayers(),"shooting");
-        Assertions.assertNotNull(player);
+        Integer maxStat = gameSimulationAlgorithm.getMaxStat(teamOne.getPlayers(),"shooting");
+        Integer minStat = 0;
+        Assertions.assertTrue(maxStat>minStat);
     }
 
     @Test
@@ -109,5 +109,23 @@ public class GameSimulationAlgorithmTest {
         Integer winner = gameSimulationAlgorithm.checkWinner(1,2);
         Integer winningTeam = 2;
         Assertions.assertEquals(winningTeam, winner);
+    }
+
+    @Test
+    public void getPlayerCountTest(){
+        Integer playercount = 0;
+        Integer expected = 0;
+
+        playercount = gameSimulationAlgorithm.getPlayerCount("forward", 1);
+        expected = 3;
+        Assertions.assertEquals(expected, playercount);
+
+        playercount = gameSimulationAlgorithm.getPlayerCount("defense", 1);
+        expected = 1;
+        Assertions.assertEquals(expected, playercount);
+
+        playercount = gameSimulationAlgorithm.getPlayerCount("defense", 2);
+        expected = 2;
+        Assertions.assertEquals(expected, playercount);
     }
 }

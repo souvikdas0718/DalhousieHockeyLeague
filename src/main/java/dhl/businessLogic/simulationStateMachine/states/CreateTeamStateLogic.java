@@ -6,6 +6,7 @@ import dhl.businessLogic.leagueModel.Team;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.states.interfaces.ICreateTeamStateLogic;
+import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,24 +15,20 @@ import java.util.List;
 
 public class CreateTeamStateLogic implements ICreateTeamStateLogic {
     Logger myLogger = LogManager.getLogger(CreateTeamStateLogic.class);
+    IUserInputOutput userInputPutput = IUserInputOutput.getInstance();
 
     public ILeagueObjectModel saveleagueObject(GameContext ourGame, ILeagueObjectModel inMemoryLeague, ILeagueObjectModelInput leagueObjectModelInput) throws Exception {
         ILeagueObjectModel leagueObjectModel = new LeagueObjectModel();
 
-        try {
-            leagueObjectModel = inMemoryLeague.saveLeagueObjectModel(leagueObjectModelInput.getSerializeLeagueObjectModel(), leagueObjectModelInput);
-            ITeam team = leagueObjectModelInput.getNewlyCreatedTeam();
-            ourGame.setSelectedTeam(findTeam(inMemoryLeague, team.getTeamName()));
-        } catch (Exception  e) {
-            myLogger.log(myLogger.getLevel(),e.getMessage());
-            System.out.println(e.getMessage());
-            ourGame.setGameInProgress(false);
-        }
+        leagueObjectModel = inMemoryLeague.saveLeagueObjectModel(leagueObjectModelInput.getSerializeLeagueObjectModel(), leagueObjectModelInput);
+        myLogger.debug("Saved league object model in json file");
+        ITeam team = leagueObjectModelInput.getNewlyCreatedTeam();
+        ourGame.setSelectedTeam(findTeam(inMemoryLeague, team.getTeamName()));
 
         return leagueObjectModel;
     }
 
-    public ITeam createNewTeamObject(List<IPlayer> freeAgents, ITeam team, String captain) throws Exception {
+    public ITeam createNewTeamObject(List<IPlayer> freeAgents, ITeam team, String captain) {
         List<IPlayer> players = new ArrayList<>();
 
         freeAgents.forEach((freeAgent) -> {
@@ -113,7 +110,7 @@ public class CreateTeamStateLogic implements ICreateTeamStateLogic {
         return null;
     }
 
-    public ArrayList<IPlayer> validateInputFreeAgents(String inputfreeAgents, List<IPlayer> freeAgentsArray) throws Exception {
+    public ArrayList<IPlayer> validateInputFreeAgents(String inputfreeAgents, List<IPlayer> freeAgentsArray) {
         String[] arrFreeAgents = inputfreeAgents.split(",");
         ArrayList<IPlayer> selectedFreeAgents = new ArrayList<>();
 
@@ -125,15 +122,15 @@ public class CreateTeamStateLogic implements ICreateTeamStateLogic {
 
                 if (foundFreeAgent == null) {
                     selectedFreeAgents = null;
-                    myLogger.log(myLogger.getLevel(),"Free agent " + freeAgentName + " Doesn't Exist");
-                    break;
+                    userInputPutput.printMessage("Free agent " + freeAgentName + " Doesn't Exist");
+
+                    return null;
                 } else {
                     selectedFreeAgents.add(foundFreeAgent);
                 }
             }
         } else {
-            myLogger.log(myLogger.getLevel(),"Enter 30 Free Agents or enter Exit to Quit game");
-
+            userInputPutput.printMessage("Enter 30 Free Agents or enter Exit to Quit game");
         }
         return selectedFreeAgents;
     }

@@ -6,5 +6,4 @@ import dhl.inputOutput.importJson.serializeDeserialize.interfaces.IDeserializeLe
 
 public interface ILoadTeamStateLogic {
     Boolean findTeamOfLeagueInDatabase(ILeagueObjectModel newInMemoryLeague, GameContext ourGame, IDeserializeLeagueObjectModel deserializeLeagueObjectModel) throws Exception;
-
 }

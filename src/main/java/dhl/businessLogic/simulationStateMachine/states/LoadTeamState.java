@@ -5,11 +5,15 @@ import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.interfaces.IGameState;
 import dhl.businessLogic.simulationStateMachine.states.interfaces.ILoadTeamStateLogic;
+import dhl.businessLogic.traning.Training;
+import dhl.inputOutput.importJson.serializeDeserialize.SerializeDeserializeAbstractFactory;
+import dhl.inputOutput.importJson.serializeDeserialize.interfaces.IDeserializeLeagueObjectModel;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
-import dhl.inputOutput.ui.UserInputOutput;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class LoadTeamState implements IGameState {
-
+    private static final Logger logger = LogManager.getLogger(Training.class);
     GameContext ourGame;
     ILeagueObjectModel newInMemoryLeague;
     IUserInputOutput userInputPutput;
@@ -40,11 +44,13 @@ public class LoadTeamState implements IGameState {
 
         try {
             ILoadTeamStateLogic objLoadTeamStateLogic = new LoadTeamStateLogic(leagueName, team);
-//            IDeserializeLeagueObjectModel deserializeLeagueObjectModel = new DeserializeLeagueObjectModel(leagueName);
+            SerializeDeserializeAbstractFactory factory = SerializeDeserializeAbstractFactory.instance();
+            IDeserializeLeagueObjectModel deserializeLeagueObjectModel = factory.createDeserializeLeagueObjectModel(leagueName);
 
-//            objLoadTeamStateLogic.findTeamOfLeagueInDatabase(newInMemoryLeague, ourGame, deserializeLeagueObjectModel);
+            objLoadTeamStateLogic.findTeamOfLeagueInDatabase(newInMemoryLeague, ourGame, deserializeLeagueObjectModel);
+            logger.debug("Team loaded successfully");
         } catch (Exception e) {
-            userInputPutput.printMessage(e.getMessage());
+            logger.error("Error while loading team: " + e.getMessage());
             ourGame.setGameInProgress(false);
         }
         ;

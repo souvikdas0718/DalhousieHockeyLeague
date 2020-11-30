@@ -2,11 +2,13 @@ package dhl.businessLogic.traning;
 
 import dhl.businessLogic.aging.interfaceAging.IInjury;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
 public class Training implements ITraining {
-
+    private static final Logger logger = LogManager.getLogger(Training.class);
     private IInjury injurySystem;
     public IGameConfig gameConfig;
 
@@ -24,6 +26,7 @@ public class Training implements ITraining {
                     playerStatLessThanHeadCoachStat(team.getPlayers(), team, randomValues);
 
                     playerStatMoreThanHeadCoachStat(team.getPlayers(), team, randomValues);
+                    logger.debug("Training: Updated player Stats");
                 }
             }
         }
