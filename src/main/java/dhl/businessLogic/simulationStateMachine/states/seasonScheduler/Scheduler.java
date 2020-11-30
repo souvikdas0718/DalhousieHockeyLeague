@@ -157,6 +157,8 @@ public class Scheduler implements IScheduler {
                 match.setTeamTwoDivision(divisions.get(j));
                 match.setTeamOne(teamList.get(i));
                 match.setTeamTwo(teamList.get(j));
+                match.setMatchPlayed(false);
+                match.setMatchToBePlayed(false);
                 fullSeasonSchedule.add(match);
             }
         }
@@ -240,6 +242,8 @@ public class Scheduler implements IScheduler {
         ISeasonSchedule match1 = setMatchConferenceAndDivision(conference1, conference1StandingList.get(0).getTeamDivision(), conferenceWildCardListMap.get(1).get(1).getTeamDivision());
         setTeams(match1, conference1StandingList.get(0).getTeam(), conferenceWildCardListMap.get(1).get(1).getTeam());
         match1.setGameDate(currentDate);
+        match1.setMatchPlayed(false);
+        match1.setMatchToBePlayed(false);
         playOffScheduleRound1.add(match1);
         logger.debug("playoff match 1 added");
 
@@ -253,6 +257,8 @@ public class Scheduler implements IScheduler {
         setTeams(match2, divisionStandingMap.get(1).get(1).getTeam(), divisionStandingMap.get(1).get(2).getTeam());
         currentDate = currentDate.plusDays(DAY);
         match2.setGameDate(currentDate);
+        match2.setMatchPlayed(false);
+        match2.setMatchToBePlayed(false);
         playOffScheduleRound1.add(match2);
         logger.debug("playoff match 2 added");
 
@@ -264,6 +270,8 @@ public class Scheduler implements IScheduler {
         }
         currentDate = currentDate.plusDays(DAY);
         match3.setGameDate(currentDate);
+        match3.setMatchPlayed(false);
+        match3.setMatchToBePlayed(false);
         playOffScheduleRound1.add(match3);
         logger.debug("playoff match 3 added");
 
@@ -271,6 +279,8 @@ public class Scheduler implements IScheduler {
         setTeams(match4, divisionStandingMap.get(2).get(1).getTeam(), divisionStandingMap.get(2).get(2).getTeam());
         currentDate = currentDate.plusDays(DAY);
         match4.setGameDate(currentDate);
+        match4.setMatchPlayed(false);
+        match4.setMatchToBePlayed(false);
         playOffScheduleRound1.add(match4);
         logger.debug("playoff match 4 added");
 
@@ -278,6 +288,8 @@ public class Scheduler implements IScheduler {
         setTeams(match5, conference2StandingList.get(0).getTeam(), conferenceWildCardListMap.get(2).get(1).getTeam());
         currentDate = currentDate.plusDays(DAY);
         match5.setGameDate(currentDate);
+        match5.setMatchPlayed(false);
+        match5.setMatchToBePlayed(false);
         playOffScheduleRound1.add(match5);
         logger.debug("playoff match 5 added");
 
@@ -290,6 +302,8 @@ public class Scheduler implements IScheduler {
         ISeasonSchedule match6 = setMatchConferenceAndDivision(conference2, divisionList.get(2), divisionList.get(2));
         setTeams(match6, divisionStandingMap.get(3).get(1).getTeam(), divisionStandingMap.get(3).get(2).getTeam());
         currentDate = currentDate.plusDays(DAY);
+        match6.setMatchPlayed(false);
+        match6.setMatchToBePlayed(false);
         match6.setGameDate(currentDate);
         playOffScheduleRound1.add(match6);
         logger.debug("playoff match 6 added");
@@ -302,12 +316,16 @@ public class Scheduler implements IScheduler {
         }
         currentDate = currentDate.plusDays(DAY);
         match7.setGameDate(currentDate);
+        match7.setMatchPlayed(false);
+        match7.setMatchToBePlayed(false);
         playOffScheduleRound1.add(match7);
         logger.debug("playoff match 7 added");
 
         ISeasonSchedule match8 = setMatchConferenceAndDivision(conference2, divisionList.get(3), divisionList.get(3));
         setTeams(match8, divisionStandingMap.get(4).get(1).getTeam(), divisionStandingMap.get(4).get(2).getTeam());
         currentDate = currentDate.plusDays(DAY);
+        match8.setMatchPlayed(false);
+        match8.setMatchToBePlayed(false);
         match8.setGameDate(currentDate);
         playOffScheduleRound1.add(match8);
         logger.debug("playoff match 8 added");
@@ -401,6 +419,8 @@ public class Scheduler implements IScheduler {
                 match.setTeamOne(team);
                 currentDate = currentDate.plusDays(DAY);
                 match.setGameDate(currentDate);
+                match.setMatchPlayed(false);
+                match.setMatchToBePlayed(false);
                 playOffScheduleRound1.add(match);
                 if (playOffScheduleRound1.size() == 15) {
                     setFinalMatchDate(playOffScheduleRound1.get(FINALMATCHNUMBER).getGameDate());

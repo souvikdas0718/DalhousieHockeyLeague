@@ -35,4 +35,12 @@ public interface ISeasonSchedule {
 
     public void setGameDate(LocalDate gameDate);
 
+    public boolean isMatchPlayed();
+
+    public void setMatchPlayed(boolean matchPlayed);
+
+    public boolean isMatchToBePlayed();
+
+    public void setMatchToBePlayed(boolean matchToBePlayed);
+
 }

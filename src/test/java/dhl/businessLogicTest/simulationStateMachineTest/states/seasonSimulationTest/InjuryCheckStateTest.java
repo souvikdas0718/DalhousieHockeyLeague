@@ -113,7 +113,7 @@ public class InjuryCheckStateTest {
 
         injuryCheckState = (InjuryCheckState) seasonSimulationStateFactory.getInjuryCheckState(simulationContext);
         injuryCheckState.seasonStateExitProcess();
-        Assertions.assertTrue(injuryCheckState.getSimulationContext().getCurrentSimulation() == injuryCheckState.getSimulationContext().getSimulateGame());
+        Assertions.assertTrue(injuryCheckState.getSimulationContext().getCurrentSimulation() == injuryCheckState.getSimulationContext().getInitializeSeason());
 
 
         currentDate = playOffStartDate.plusDays(2);
@@ -121,7 +121,7 @@ public class InjuryCheckStateTest {
         simulationContext.setNumberOfDays((int) numberOfDays);
         injuryCheckState = (InjuryCheckState) seasonSimulationStateFactory.getInjuryCheckState(simulationContext);
         injuryCheckState.seasonStateExitProcess();
-        Assertions.assertTrue(injuryCheckState.getSimulationContext().getCurrentSimulation() == injuryCheckState.getSimulationContext().getAging());
+        Assertions.assertTrue(injuryCheckState.getSimulationContext().getCurrentSimulation() == injuryCheckState.getSimulationContext().getInitializeSeason());
 
         LocalDate localDate = LocalDate.of(simulationContext.getYear() + 1, 02, 01);
         LocalDate tradeDeadline = localDate.with(lastDayOfMonth()).with(previousOrSame(DayOfWeek.MONDAY));
@@ -129,6 +129,6 @@ public class InjuryCheckStateTest {
         simulationContext.setNumberOfDays((int) numberOfDays);
         injuryCheckState = (InjuryCheckState) seasonSimulationStateFactory.getInjuryCheckState(simulationContext);
         injuryCheckState.seasonStateExitProcess();
-        Assertions.assertTrue(injuryCheckState.getSimulationContext().getCurrentSimulation() == injuryCheckState.getSimulationContext().getSimulateGame());
+        Assertions.assertTrue(injuryCheckState.getSimulationContext().getCurrentSimulation() == injuryCheckState.getSimulationContext().getInitializeSeason());
     }
 }

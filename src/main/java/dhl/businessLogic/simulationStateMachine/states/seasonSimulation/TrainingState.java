@@ -3,6 +3,7 @@ package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
+import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.ISeasonSchedule;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
 import dhl.businessLogic.traning.ITraining;
 import dhl.businessLogic.traning.TrainingAbstractFactory;
@@ -12,6 +13,8 @@ import org.apache.logging.log4j.Logger;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
 import static java.time.temporal.TemporalAdjusters.previousOrSame;
@@ -24,6 +27,7 @@ public class TrainingState implements ISimulationSeasonState {
     private static final int TRADEDEADLINEMONTH = 2;
     private static final int TRADEDEADLINEDAY = 1;
     public static Logger logger = LogManager.getLogger(TrainingState.class);
+    private static List<ISeasonSchedule> matchList;
     SimulationContext simulationContext;
     IScheduler scheduler;
     TrainingAbstractFactory trainingAbstractFactory;
@@ -34,22 +38,75 @@ public class TrainingState implements ISimulationSeasonState {
         scheduler = simulationContext.getRegularScheduler();
         trainingAbstractFactory = TrainingAbstractFactory.instance();
         userInputOutput = IUserInputOutput.getInstance();
+        matchList = new ArrayList<>();
     }
 
     static void unPlayedGameAndTradingDeadline(LocalDate currentDate, IScheduler scheduler, SimulationContext simulationContext) {
-        if (currentDate.isAfter(simulationContext.getSeasonStartDate().minusDays(DAY)) && currentDate.isBefore(simulationContext.getSeasonEndDate().plusDays(DAY))) {
-            simulationContext.setCurrentSimulation(simulationContext.getSimulateGame());
-        } else if (currentDate.isAfter(simulationContext.getPlayOffStartDate().minusDays(DAY)) && currentDate.isBefore(simulationContext.getFinalDay().plusDays(DAY))) {
-            simulationContext.setCurrentSimulation(simulationContext.getSimulateGame());
-        } else {
-            LocalDate localDate = LocalDate.of(simulationContext.getYear() + YEAR, TRADEDEADLINEMONTH, TRADEDEADLINEDAY);
-            LocalDate tradeDeadline = localDate.with(lastDayOfMonth())
-                    .with(previousOrSame(DayOfWeek.MONDAY));
-            if (currentDate.isBefore(tradeDeadline.plusDays(DAY)) && currentDate.isAfter(simulationContext.getStartOfSimulation())) {
-                simulationContext.setCurrentSimulation(simulationContext.getExecuteTrades());
-            } else {
-                simulationContext.setCurrentSimulation(simulationContext.getAging());
+//        if (currentDate.isAfter(simulationContext.getSeasonStartDate().minusDays(DAY)) && currentDate.isBefore(simulationContext.getSeasonEndDate().plusDays(DAY))) {
+//            simulationContext.setCurrentSimulation(simulationContext.getSimulateGame());
+//        } else if (currentDate.isAfter(simulationContext.getPlayOffStartDate().minusDays(DAY)) && currentDate.isBefore(simulationContext.getFinalDay().plusDays(DAY))) {
+//            simulationContext.setCurrentSimulation(simulationContext.getSimulateGame());
+//        } else {
+//            LocalDate localDate = LocalDate.of(simulationContext.getYear() + YEAR, TRADEDEADLINEMONTH, TRADEDEADLINEDAY);
+//            LocalDate tradeDeadline = localDate.with(lastDayOfMonth())
+//                    .with(previousOrSame(DayOfWeek.MONDAY));
+//            if (currentDate.isBefore(tradeDeadline.plusDays(DAY)) && currentDate.isAfter(simulationContext.getStartOfSimulation())) {
+//                simulationContext.setCurrentSimulation(simulationContext.getExecuteTrades());
+//            } else {
+//                simulationContext.setCurrentSimulation(simulationContext.getAging());
+//            }
+//        }
+
+//        if (currentDate.isAfter(scheduler.getSeasonStartDate().minusDays(DAY)) && currentDate.isBefore(scheduler.getSeasonEndDate().plusDays(DAY))) {
+//            logger.debug("Checking for games lying in general playOffs ");
+//            for (ISeasonSchedule schedule : scheduler.getFullSeasonSchedule()) {
+//                if (schedule.getGameDate().equals(currentDate)) {
+//
+//                }
+//            }
+//        }
+        if (currentDate.isAfter(simulationContext.getSeasonStartDate().minusDays(1)) && currentDate.isBefore(simulationContext.getSeasonEndDate().plusDays(1))) {
+            for (ISeasonSchedule schedule : scheduler.getFullSeasonSchedule()) {
+                if (currentDate.equals(schedule.getGameDate()) && !schedule.isMatchToBePlayed()) {
+                    schedule.setMatchToBePlayed(true);
+                    matchList.add(schedule);
+//                    simulationContext.setMatchToSimulate(schedule);
+//                    simulationContext.setCurrentSimulation(simulationContext.getSimulateGame());
+                } else if (schedule.getGameDate().isAfter(currentDate)) {
+                    break;
+                }
             }
+
+        } else if (currentDate.isAfter(simulationContext.getPlayOffStartDate().minusDays(1)) && currentDate.isBefore(simulationContext.getFinalDay().plusDays(1))) {
+            for (ISeasonSchedule schedule : scheduler.getPlayOffScheduleRound1()) {
+                if (currentDate.equals(schedule.getGameDate()) && !schedule.isMatchToBePlayed()) {
+                    schedule.setMatchToBePlayed(true);
+                    matchList.add(schedule);
+//                    simulationContext.setMatchToSimulate(schedule);
+//                    simulationContext.setCurrentSimulation(simulationContext.getSimulateGame());
+                } else if (schedule.getGameDate().isAfter(currentDate)) {
+                    break;
+                }
+            }
+        }
+
+        for (ISeasonSchedule match : matchList) {
+            if (!match.isMatchPlayed()) {
+                match.setMatchPlayed(true);
+                simulationContext.setMatchToSimulate(match);
+                simulationContext.setCurrentSimulation(simulationContext.getSimulateGame());
+                simulationContext.seasonStateProcess();
+                simulationContext.seasonStateExitProcess();
+            }
+        }
+
+        LocalDate localDate = LocalDate.of(simulationContext.getYear() + YEAR, TRADEDEADLINEMONTH, TRADEDEADLINEDAY);
+        LocalDate tradeDeadline = localDate.with(lastDayOfMonth())
+                .with(previousOrSame(DayOfWeek.MONDAY));
+        if (currentDate.isBefore(tradeDeadline.plusDays(DAY)) && currentDate.isAfter(simulationContext.getStartOfSimulation())) {
+            simulationContext.setCurrentSimulation(simulationContext.getExecuteTrades());
+        } else {
+            simulationContext.setCurrentSimulation(simulationContext.getAging());
         }
     }
 

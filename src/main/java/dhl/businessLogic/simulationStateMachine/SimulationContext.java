@@ -5,6 +5,7 @@ import dhl.businessLogic.aging.interfaceAging.IInjury;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
+import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.ISeasonSchedule;
 import dhl.businessLogic.teamRosterUpdater.interfaces.ITeamRosterUpdater;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.Scheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
@@ -43,6 +44,7 @@ public class SimulationContext implements ISimulationSeasonState {
     IScheduler finalSchedule;
     ITeamRosterUpdater updateUserTeamRoster;
     List<IStandings> standings;
+    ISeasonSchedule matchToSimulate;
 
     boolean seasonInProgress;
     IGameConfig gameConfig;
@@ -103,6 +105,14 @@ public class SimulationContext implements ISimulationSeasonState {
         scheduler.setPlayOffStartDate(playOffStartDate);
         startOfSimulation = LocalDate.of(year, 9, 30);
 
+    }
+
+    public ISeasonSchedule getMatchToSimulate() {
+        return matchToSimulate;
+    }
+
+    public void setMatchToSimulate(ISeasonSchedule matchToSimulate) {
+        this.matchToSimulate = matchToSimulate;
     }
 
     public LocalDate getSeasonStartDate() {
