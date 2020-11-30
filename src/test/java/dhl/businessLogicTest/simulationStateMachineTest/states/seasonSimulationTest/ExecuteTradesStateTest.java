@@ -81,7 +81,7 @@ public class ExecuteTradesStateTest {
         simulationContext.setInMemoryLeague(leagueMock);
         simulationContext.setTradeEngine(tradeEngine);
         executeTradesState = (ExecuteTradesState) seasonSimulationStateFactory.getExecuteTradesState(simulationContext);
-        executeTradesState.seasonStateProcess();
+//        executeTradesState.seasonStateProcess();
         Assertions.assertTrue(badTeamStrengthBeforeTrade < badTeamMock.calculateTeamStrength());
     }
 
