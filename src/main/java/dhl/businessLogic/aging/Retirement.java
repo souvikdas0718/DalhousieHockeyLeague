@@ -1,7 +1,6 @@
 package dhl.businessLogic.aging;
 
 import dhl.businessLogic.aging.interfaceAging.IRetirement;
-import dhl.businessLogic.leagueModel.Player;
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
@@ -23,7 +22,6 @@ public class Retirement implements IRetirement {
 
     public Retirement(ISerializeLeagueObjectModel serializeModel) {
         logger.info("Retirement Constructor Object created");
-        logger.debug("Creating a Retirement Constructor");
         this.serializeModel = serializeModel;
         leagueFactory = LeagueModelAbstractFactory.instance();
     }

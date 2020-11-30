@@ -50,5 +50,4 @@ public class Division implements IDivision {
         }
         return true;
     }
-
 }

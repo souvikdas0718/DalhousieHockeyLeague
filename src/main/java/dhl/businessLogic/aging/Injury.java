@@ -11,6 +11,9 @@ import java.util.List;
 
 public class Injury implements IInjury {
     private static final Logger logger = LogManager.getLogger(Injury.class);
+    private static final int DEFAULTINJURYDAYS = -1;
+    private static final int BESTPLAYERINDEX = 0;
+    private static final int PLAYERHEALED = 0;
 
     public void checkTeamInjury(IGameConfig gameConfig, ITeam team) {
         logger.debug("Check Injury for team"+team.getTeamName());
@@ -40,7 +43,7 @@ public class Injury implements IInjury {
         logger.debug("Healing injured players in team"+team.getTeamName());
         int injuryDays=player.getPlayerInjuredDays();
         healInjuredPlayers(player);
-        if(injuryDays==0){
+        if(injuryDays == PLAYERHEALED){
             swapRecoveredPlayer(player,team);
         }
     }
@@ -49,7 +52,7 @@ public class Injury implements IInjury {
         if (player.getPlayerInjuredDays() >= 1) {
             player.setPlayerInjuredDays(player.getPlayerInjuredDays() - 1);
         } else {
-            player.setPlayerInjuredDays(-1);
+            player.setPlayerInjuredDays(DEFAULTINJURYDAYS);
         }
     }
 
@@ -60,7 +63,7 @@ public class Injury implements IInjury {
         if(reservePlayersInSamePosition.size()>0){
             player.setActive(false);
             team.sortPlayersInTeamByStrength(reservePlayersInSamePosition);
-            IPlayer replacementPlayer = reservePlayersInSamePosition.get(0);
+            IPlayer replacementPlayer = reservePlayersInSamePosition.get(BESTPLAYERINDEX);
             replacementPlayer.setActive(true);
         }
     }

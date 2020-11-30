@@ -79,5 +79,10 @@ public class LeagueModelFactoryTest {
         Assertions.assertEquals("LeagueName",leagueObjectModelInput.getLeagueName());
     }
 
+    @Test
+    public void createLeagueObjectModelDefault() {
+        Assertions.assertNotNull(leagueFactory.createDefaultLeagueObjectModel());
+    }
+
 
 }

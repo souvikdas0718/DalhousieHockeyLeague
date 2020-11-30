@@ -3,7 +3,6 @@ package dhl.businessLogic.leagueModel.interfaceModel;
 import java.util.List;
 
 public interface ITeam {
-
     String getTeamName();
 
     IGeneralManager getGeneralManager();
@@ -45,8 +44,6 @@ public interface ITeam {
     int getTotalForwards();
 
     int getTotalDefense();
-
-
 }
 
 

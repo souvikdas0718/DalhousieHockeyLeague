@@ -27,7 +27,6 @@ public class LeagueObjectModelDirector implements ILeagueObjectModelDirector {
         builder.addManagers(managers);
         builder.addGameConfig(gameConfig);
         return builder.getResult();
-
     }
 
     public ILeagueObjectModel constructFromJson(JSONObject jsonLeague) {

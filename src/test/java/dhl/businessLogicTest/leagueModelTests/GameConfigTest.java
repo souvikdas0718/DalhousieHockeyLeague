@@ -11,111 +11,131 @@ import java.util.HashMap;
 
 public class GameConfigTest {
 
-    IGameConfig testClassObject;
+    IGameConfig gameConfig;
     LeagueModelMockAbstractFactory mockFactory;
 
     @BeforeEach
-    public void initObject() throws Exception {
+    public void initObject()  {
         mockFactory = LeagueModelMockAbstractFactory.instance();
         GameplayConfigMock gameConfigMock = mockFactory.createGameplayConfig();
-        testClassObject = gameConfigMock.getGameplayConfig();
+        gameConfig = gameConfigMock.getGameplayConfig();
     }
 
     @Test
     public void getLossPoint() {
-        Assertions.assertEquals("lossPoint", testClassObject.getLossPoint());
+        Assertions.assertEquals("lossPoint", gameConfig.getLossPoint());
     }
 
     @Test
     public void getRandomTradeOfferChance() {
-        Assertions.assertEquals("randomTradeOfferChance", testClassObject.getRandomTradeOfferChance());
+        Assertions.assertEquals("randomTradeOfferChance", gameConfig.getRandomTradeOfferChance());
     }
 
     @Test
     public void getMaxPlayersPerTrade() {
-        Assertions.assertEquals("maxPlayersPerTrade", testClassObject.getMaxPlayersPerTrade());
+        Assertions.assertEquals("maxPlayersPerTrade", gameConfig.getMaxPlayersPerTrade());
     }
 
     @Test
     public void getRandomAcceptanceChance() {
-        Assertions.assertEquals("randomAcceptanceChance", testClassObject.getRandomAcceptanceChance());
+        Assertions.assertEquals("randomAcceptanceChance", gameConfig.getRandomAcceptanceChance());
     }
 
     @Test
     public void getTrading() {
-        Assertions.assertEquals("trading", testClassObject.getTrading());
+        Assertions.assertEquals("trading", gameConfig.getTrading());
     }
 
     @Test
     public void getAging() {
-        Assertions.assertEquals("aging", testClassObject.getAging());
+        Assertions.assertEquals("aging", gameConfig.getAging());
     }
 
     @Test
     public void getAverageRetirementAge() {
-        Assertions.assertEquals("averageRetirementAge", testClassObject.getAverageRetirementAge());
+        Assertions.assertEquals("averageRetirementAge", gameConfig.getAverageRetirementAge());
     }
 
     @Test
     public void getMaximumAge() {
-        Assertions.assertEquals("maximumAge", testClassObject.getMaximumAge());
+        Assertions.assertEquals("maximumAge", gameConfig.getMaximumAge());
     }
 
     @Test
     public void getInjuries() {
-        Assertions.assertEquals("injuries", testClassObject.getInjuries());
+        Assertions.assertEquals("injuries", gameConfig.getInjuries());
     }
 
     @Test
     public void getRandomInjuryChance() {
-        Assertions.assertEquals("randomInjuryChance", testClassObject.getRandomInjuryChance());
+        Assertions.assertEquals("randomInjuryChance", gameConfig.getRandomInjuryChance());
     }
 
     @Test
     public void getInjuryDaysLow() {
-        Assertions.assertEquals("injuryDaysLow", testClassObject.getInjuryDaysLow());
+        Assertions.assertEquals("injuryDaysLow", gameConfig.getInjuryDaysLow());
     }
 
     @Test
     public void getInjuryDaysHigh() {
-        Assertions.assertEquals("injuryDaysHigh", testClassObject.getInjuryDaysHigh());
+        Assertions.assertEquals("injuryDaysHigh", gameConfig.getInjuryDaysHigh());
     }
 
     @Test
     public void getTraining() {
-        Assertions.assertEquals("training", testClassObject.getTraining());
+        Assertions.assertEquals("training", gameConfig.getTraining());
     }
 
     @Test
     public void getDaysUntilStatIncreaseCheckTest() {
-        Assertions.assertEquals("daysUntilStatIncreaseCheck", testClassObject.getDaysUntilStatIncreaseCheck());
+        Assertions.assertEquals("daysUntilStatIncreaseCheck", gameConfig.getDaysUntilStatIncreaseCheck());
+    }
+
+    @Test
+    public void getSimulation() {
+        Assertions.assertEquals("simulation", gameConfig.getSimulation());
+    }
+
+    @Test
+    public void getPenaltyChance() {
+        Assertions.assertEquals("penaltyChance", gameConfig.getPenaltyChance());
+    }
+
+    @Test
+    public void getGoalChance() {
+        Assertions.assertEquals("goalChance", gameConfig.getGoalChance());
+    }
+
+    @Test
+    public void getStatDecayChance() {
+        Assertions.assertEquals("statDecayChance", gameConfig.getStatDecayChance());
     }
 
     @Test
     public void getHashMapTest() {
-        HashMap<String, Object> tradingObject = testClassObject.getHashMap("trading");
-        HashMap<String, Object> agingObject = testClassObject.getHashMap("aging");
+        HashMap<String, Object> tradingObject = gameConfig.getHashMap("trading");
+        HashMap<String, Object> agingObject = gameConfig.getHashMap("aging");
         Assertions.assertFalse(tradingObject.isEmpty());
-        Assertions.assertTrue(tradingObject.size() == 5);
-        Assertions.assertTrue(agingObject.size() == 3);
-        Assertions.assertTrue(testClassObject.getHashMap("WrongKey").isEmpty());
+        Assertions.assertEquals(5,tradingObject.size());
+        Assertions.assertEquals(3,agingObject.size());
+        Assertions.assertTrue(gameConfig.getHashMap("WrongKey").isEmpty());
     }
 
     @Test
     public void getValueFromOurObjectTest() {
-        String lossPointValue = testClassObject.getValueFromOurObject("trading", "lossPoint");
-        int losspoint = Integer.parseInt(lossPointValue);
-        Assertions.assertTrue(losspoint > 0);
-        Double randomTradeOfferChance = Double.parseDouble(testClassObject.getValueFromOurObject("trading", "randomTradeOfferChance"));
+        String lossPointValue = gameConfig.getValueFromOurObject("trading", "lossPoint");
+        int lossPoint = Integer.parseInt(lossPointValue);
+        Assertions.assertTrue(lossPoint > 0);
+        double randomTradeOfferChance = Double.parseDouble(gameConfig.getValueFromOurObject("trading", "randomTradeOfferChance"));
         Assertions.assertTrue(randomTradeOfferChance > 0 );
     }
     @Test
     public void getGameResolverTest() {
-        Assertions.assertEquals("gameResolver", testClassObject.getGameResolver());
+        Assertions.assertEquals("gameResolver", gameConfig.getGameResolver());
     }
     @Test
     public void getRandomWinChanceTest() {
-        Assertions.assertEquals("randomWinChance", testClassObject.getRandomWinChance());
+        Assertions.assertEquals("randomWinChance", gameConfig.getRandomWinChance());
     }
 
 }

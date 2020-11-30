@@ -4,6 +4,7 @@ import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import org.json.simple.JSONObject;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class GameConfig implements IGameConfig {
     private static final String trading = "trading";
@@ -27,11 +28,11 @@ public class GameConfig implements IGameConfig {
     private static final String simulation = "simulation";
     private static final String penaltyChance = "penaltyChance";
     private static final String goalChance = "goalChance";
-    JSONObject ourJsonObject;
+    JSONObject gameConfigJson;
 
     public GameConfig(JSONObject jsonObject) {
-        ourJsonObject = jsonObject;
-        ourJsonObject = (JSONObject) ourJsonObject.get("gameplayConfig");
+        gameConfigJson = jsonObject;
+        gameConfigJson = (JSONObject) gameConfigJson.get("gameplayConfig");
     }
 
     public String getLossPoint() {
@@ -102,28 +103,25 @@ public class GameConfig implements IGameConfig {
         return randomWinChance;
     }
 
-    public String getsimulation() {
+    public String getSimulation() {
         return simulation;
     }
 
-    public String getpenaltyChance() {
+    public String getPenaltyChance() {
         return penaltyChance;
     }
 
-    public String getgoalChance() {
+    public String getGoalChance() {
         return goalChance;
     }
 
-    @Override
     public HashMap<String, Object> getHashMap(String key) {
-        HashMap<String, Object> mapToReturn = new HashMap();
-        JSONObject subObject = (JSONObject) ourJsonObject.get(key);
-        if (subObject != null) {
-            for (Object subObjectkey : subObject.keySet()) {
-                if (subObjectkey != null) {
-                    if (subObject.get(subObjectkey.toString()) != null) {
-                        mapToReturn.put(subObjectkey.toString(), subObject.get(subObjectkey.toString()));
-                    }
+        HashMap<String, Object> mapToReturn = new HashMap<>();
+        JSONObject subObject = (JSONObject) gameConfigJson.get(key);
+        if (isJsonValuePresent(subObject)) {
+            for (Object subObjectKey : subObject.keySet()) {
+                if (isJsonValuePresent(subObjectKey)) {
+                    mapToReturn.put(subObjectKey.toString(), subObject.get(subObjectKey.toString()));
                 }
             }
         }
@@ -131,9 +129,14 @@ public class GameConfig implements IGameConfig {
     }
 
     public String getValueFromOurObject(String configChildKey, String ourObjectKey) {
-        HashMap<String, Object> gameConfigChildObject = getHashMap(configChildKey);
-        String valueToReturn = String.valueOf(gameConfigChildObject.get(ourObjectKey));
-        return valueToReturn;
+        Map<String, Object> gameConfigChildObject = getHashMap(configChildKey);
+        return String.valueOf(gameConfigChildObject.get(ourObjectKey));
+    }
 
+    public boolean isJsonValuePresent(Object jsonValue){
+        if(jsonValue == null || jsonValue.toString().isEmpty() ){
+            return false;
+        }
+        return true;
     }
 }
