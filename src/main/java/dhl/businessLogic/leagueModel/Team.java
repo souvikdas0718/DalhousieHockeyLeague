@@ -80,19 +80,19 @@ public class Team implements ITeam {
         this.teamPoint = teamPoint;
     }
 
-    public static int getTOTALTEAMSIZE() {
+    public int getTotalTeamSize() {
         return TOTALTEAMSIZE;
     }
 
-    public static int getTOTALGOALIES() {
+    public int getTotalGoalies() {
         return TOTALGOALIES;
     }
 
-    public static int getTOTALFORWARDS() {
+    public int getTotalForwards() {
         return TOTALFORWARDS;
     }
 
-    public static int getTOTALDEFENSE() {
+    public int getTotalDefense() {
         return TOTALDEFENSE;
     }
 

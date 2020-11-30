@@ -38,6 +38,14 @@ public interface ITeam {
 
     boolean checkIfSizeOfTeamValid(List<IPlayer> playerList);
 
+    int getTotalTeamSize();
+
+    int getTotalGoalies();
+
+    int getTotalForwards();
+
+    int getTotalDefense();
+
 
 }
 
