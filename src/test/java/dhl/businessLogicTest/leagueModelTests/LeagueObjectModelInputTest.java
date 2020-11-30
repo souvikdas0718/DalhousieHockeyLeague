@@ -44,7 +44,7 @@ public class LeagueObjectModelInputTest {
         ITeam team = leagueObjectModelInput.getNewlyCreatedTeam();
         Assertions.assertEquals(team.getTeamName(), "Halifax");
         Assertions.assertNotNull(leagueObjectModelInput.getLeagueObjectModelValidation());
-        Assertions.assertNotNull(leagueObjectModelInput.getserializeLeagueObjectModel());
+        Assertions.assertNotNull(leagueObjectModelInput.getSerializeLeagueObjectModel());
     }
 
     @AfterEach

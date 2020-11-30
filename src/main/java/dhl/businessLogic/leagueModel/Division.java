@@ -12,9 +12,9 @@ import java.util.List;
 import java.util.Set;
 
 public class Division implements IDivision {
+    private static final Logger logger = LogManager.getLogger(Division.class);
     private String divisionName;
     private List<ITeam> teams;
-    private static final Logger logger = LogManager.getLogger(Division.class);
 
     public Division() {
         setDefault();
@@ -45,7 +45,7 @@ public class Division implements IDivision {
         teams.stream().map(team -> team.getTeamName()).forEach(name -> teamNames.add(name));
         Set<String> teamsSet = new HashSet<>(teamNames);
         if (teamsSet.size() < teamNames.size()) {
-            logger.error("Invalid division with duplicate division names: "+ divisionName);
+            logger.error("Invalid team with duplicate team names: "+ divisionName);
             return false;
         }
         return true;

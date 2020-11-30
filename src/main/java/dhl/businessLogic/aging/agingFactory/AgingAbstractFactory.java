@@ -36,7 +36,7 @@ public abstract class AgingAbstractFactory{
 
     public abstract IInjury createInjury();
 
-    public abstract IRetirement createRetirement(ISerializeLeagueObjectModel serializeModel, ILeagueObjectModel leagueObjectModel);
+    public abstract IRetirement createRetirement(ISerializeLeagueObjectModel serializeModel);
 
     public abstract IAging createAging(IGameConfig gameConfig);
 

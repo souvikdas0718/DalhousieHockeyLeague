@@ -38,7 +38,8 @@ public class AgingState implements ISimulationSeasonState {
 //        IAging aging = agingFactory.createAging(simulationContext.getGameConfig());
         ILeagueObjectModel leagueObjectModel = simulationContext.getInMemoryLeague();
         ISerializeLeagueObjectModel serializeModel = serializeDeserializeAbstractFactory.createSerializeLeagueObjectModel(leagueObjectModel.getLeagueName());
-        ILeagueSchedule leagueSchedule = (LeagueSchedule) agingFactory.createLeagueSchedule(simulationContext.getInMemoryLeague());
+//        IRetirement retirement = agingFactory.createRetirement(serializeModel, simulationContext.getInMemoryLeague());
+        ILeagueSchedule leagueSchedule = agingFactory.createLeagueSchedule(simulationContext.getInMemoryLeague());
 
         LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
         LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());
