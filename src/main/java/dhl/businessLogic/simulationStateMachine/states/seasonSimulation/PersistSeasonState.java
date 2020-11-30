@@ -33,6 +33,7 @@ public class PersistSeasonState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateProcess() {
+        userInputOutput.printMessage("Into the state process of Persist season");
         logger.info("Into the state process of Persist season");
         SerializeDeserializeAbstractFactory factorySerialize = SerializeDeserializeAbstractFactory.instance();
         ISerializeLeagueObjectModel serializeLeagueObjectModel = factorySerialize.createSerializeLeagueObjectModel("src/SerializedJsonFiles/");
@@ -48,6 +49,7 @@ public class PersistSeasonState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateExitProcess() {
+        userInputOutput.printMessage("Into the exit process of Persist same season");
         logger.info("Into the exit process of Persist same season");
         logger.debug("End of a season");
         simulationContext.setSeasonInProgress(false);

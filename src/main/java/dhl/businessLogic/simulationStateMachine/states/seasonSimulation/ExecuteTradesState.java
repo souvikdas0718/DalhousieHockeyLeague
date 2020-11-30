@@ -21,6 +21,7 @@ public class ExecuteTradesState implements ISimulationSeasonState {
     IUserInputOutput userInputOutput;
 
     public ExecuteTradesState(SimulationContext simulationContext) {
+        System.out.println("Into the execute trade constructor");
         logger.info("Into the execute trade constructor");
         this.simulationContext = simulationContext;
         leagueObjectModel = simulationContext.getInMemoryLeague();
@@ -40,13 +41,15 @@ public class ExecuteTradesState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateProcess() {
+        userInputOutput.printMessage("Into the state process of Execute Trade season");
         logger.info("Into the state process of Execute Trade season");
         tradeEngine = (TradingEngine) TradeEngineAbstract.instance(simulationContext.getGameConfig(), simulationContext.getInMemoryLeague(), simulationContext.getUserTeam());
-        tradeEngine.startEngine();
+//        tradeEngine.startEngine();
     }
 
     @Override
     public void seasonStateExitProcess() {
+        userInputOutput.printMessage("Into the exit process of Execute Trade Season");
         logger.info("Into the exit process of Execute Trade season");
         simulationContext.setCurrentSimulation(simulationContext.getAging());
     }
