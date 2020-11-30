@@ -62,6 +62,9 @@ public class TradingEngineTest {
 
     @Test
     public void startEngineTest() {
+        ourGameConfig = gameConfigMock.getGameConfigMock();
+        TradeEngineAbstract.setFactory(new TradingEngine(ourGameConfig, leagueMock, userTeam));
+        testClassObject = (TradingEngine) TradeEngineAbstract.instance(ourGameConfig, leagueMock, userTeam);
         double badTeamStrengthBeforeTrade = badTeamMock.calculateTeamStrength();
         testClassObject.startEngine();
         badTeamMock.setRoster();
