@@ -5,11 +5,11 @@ import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.factory.SchedulerAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
-import dhl.businessLogic.simulationStateMachine.states.standings.Standings;
 import dhl.businessLogic.simulationStateMachine.states.standings.factory.StandingsAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandingSystem;
-import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandings;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -18,13 +18,18 @@ import static java.time.temporal.TemporalAdjusters.firstDayOfNextMonth;
 import static java.time.temporal.TemporalAdjusters.nextOrSame;
 
 public class InitializeSeasonState implements ISimulationSeasonState {
-
+    private static final int SIMULATESTARTMONTH = 9;
+    private static final int SIMULATESTARTDAY = 30;
+    private static final int REGULARSEASONENDMONTH = 3;
+    private static final int REGULARSEASONENDDAY = 1;
+    private static final int DAY = 1;
+    private static final int YEAR = 1;
+    public static Logger logger = LogManager.getLogger(InitializeSeasonState.class);
     SimulationContext simulationContext;
     IScheduler scheduler;
     SchedulerAbstractFactory schedulerAbstractFactory;
     StandingsAbstractFactory standingsAbstractFactory;
     IUserInputOutput userInputOutput;
-    IStandings standings;
     IStandingSystem standingSystem;
 
     public InitializeSeasonState(SimulationContext simulationContext) {
@@ -46,23 +51,22 @@ public class InitializeSeasonState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateProcess() {
-        userInputOutput.printMessage("Into the state process of Initialize season");
-        LocalDate simulationStartDate = LocalDate.of(simulationContext.getYear(), 9, 30);
+        logger.info("Into the state process of Initialize season");
+        LocalDate simulationStartDate = LocalDate.of(simulationContext.getYear(), SIMULATESTARTMONTH, SIMULATESTARTDAY);
         simulationContext.setStartOfSimulation(simulationStartDate);
         scheduler.generateTeamList(simulationContext.getInMemoryLeague());
         scheduler.generateTeamSchedule(simulationContext.getInMemoryLeague());
-        LocalDate localDate = LocalDate.of(simulationContext.getYear() + 1, 03, 01);
+        LocalDate localDate = LocalDate.of(simulationContext.getYear() + YEAR, REGULARSEASONENDMONTH, REGULARSEASONENDDAY);
         LocalDate regularSeasonEndDate = localDate.with(firstDayOfNextMonth())
                 .with(nextOrSame(DayOfWeek.SATURDAY));
-        scheduler.gameScheduleDates(simulationContext.getStartOfSimulation().plusDays(1), regularSeasonEndDate);
+        scheduler.gameScheduleDates(simulationContext.getStartOfSimulation().plusDays(DAY), regularSeasonEndDate);
         simulationContext.setRegularScheduler(scheduler);
         standingSystem.createStandings(simulationContext.getInMemoryLeague());
-
     }
 
     @Override
     public void seasonStateExitProcess() {
-        userInputOutput.printMessage("Into the exit process of Initialize season");
+        logger.info("Into the exit process of Initialize season");
         simulationContext.setCurrentSimulation(simulationContext.getAdvanceTime());
     }
 }

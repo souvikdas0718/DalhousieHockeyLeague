@@ -1,6 +1,5 @@
 package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 
-import dhl.businessLogic.aging.Injury;
 import dhl.businessLogic.aging.agingFactory.AgingAbstractFactory;
 import dhl.businessLogic.aging.interfaceAging.IInjury;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
@@ -9,11 +8,14 @@ import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.factory.S
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class InjuryCheckState implements ISimulationSeasonState {
+    public static Logger logger = LogManager.getLogger(InjuryCheckState.class);
     SimulationContext simulationContext;
     IScheduler scheduler;
     SchedulerAbstractFactory schedulerAbstractFactory;
@@ -38,25 +40,24 @@ public class InjuryCheckState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateProcess() {
-        userInputOutput.printMessage("Into the state process of Injury check season");
+        logger.info("Into the state process of Injury check season");
         for (ITeam team : simulationContext.getTeamsPlayingInGame()) {
-//            IInjury injury = simulationContext.getInjurySystem();
             IInjury injury = agingFactory.createInjury();
+            logger.debug("Checking the injury of each team");
             injury.checkTeamInjury(simulationContext.getGameConfig(), team);
+            logger.debug("Resetting the Teams Playing in game for each entry");
             simulationContext.setTeamsPlayingInGame(new ArrayList<>());
         }
     }
 
     @Override
     public void seasonStateExitProcess() {
-        userInputOutput.printMessage("Into the exit process of Injury check season");
-//        scheduler = simulationContext.getRegularScheduler();
+        logger.info("Into the exit process of Injury check season");
         scheduler = simulationContext.getPlayOffScheduleRound1();
         LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
-        simulationContext.setNumberOfDays(simulationContext.getNumberOfDays()+1);
+        simulationContext.setNumberOfDays(simulationContext.getNumberOfDays() + 1);
         LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());
-
-        // Check for unPlayed games by checking the schedules on that particular day and then either proceed for trading or aging or continue to simulate game
+        logger.debug("Calling the training state method to check for the unplayed games schedules");
         TrainingState.unPlayedGameAndTradingDeadline(currentDate, scheduler, simulationContext);
     }
 }

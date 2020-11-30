@@ -8,25 +8,24 @@ import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfac
 import dhl.businessLogic.trade.TradingEngine;
 import dhl.businessLogic.trade.interfaces.ITradingEngine;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class ExecuteTradesState implements ISimulationSeasonState {
-
+    public static Logger logger = LogManager.getLogger(ExecuteTradesState.class);
     SimulationContext simulationContext;
     IGameConfig gameConfig;
     ILeagueObjectModel leagueObjectModel;
     IUserInputOutput ioObject;
     ITradingEngine tradeEngine;
     IUserInputOutput userInputOutput;
-//    private ITeam userTeam;
 
     public ExecuteTradesState(SimulationContext simulationContext) {
 
         this.simulationContext = simulationContext;
         leagueObjectModel = simulationContext.getInMemoryLeague();
         gameConfig = simulationContext.getGameConfig();
-//        userTeam = simulationContext.getUserTeam();
         ioObject = simulationContext.getIoObject();
-//        tradeEngine = simulationContext.getTradeEngine();
 
         userInputOutput = IUserInputOutput.getInstance();
     }
@@ -41,14 +40,14 @@ public class ExecuteTradesState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateProcess() {
-        tradeEngine =(TradingEngine) ITradingEngine.instance(simulationContext.getGameConfig(), simulationContext.getInMemoryLeague(), simulationContext.getUserTeam());
-        userInputOutput.printMessage("Into the state process of Execute Trade season");
-//        tradeEngine.startEngine();
+        logger.info("Into the state process of Execute Trade season");
+        tradeEngine = (TradingEngine) ITradingEngine.instance(simulationContext.getGameConfig(), simulationContext.getInMemoryLeague(), simulationContext.getUserTeam());
+        tradeEngine.startEngine();
     }
 
     @Override
     public void seasonStateExitProcess() {
-        userInputOutput.printMessage("Into the exit process of Execute Trade season");
+        logger.info("Into the exit process of Execute Trade season");
         simulationContext.setCurrentSimulation(simulationContext.getAging());
     }
 

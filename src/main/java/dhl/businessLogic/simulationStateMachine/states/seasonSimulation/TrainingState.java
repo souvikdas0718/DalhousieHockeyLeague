@@ -3,7 +3,6 @@ package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
-import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.factory.SchedulerAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
 import dhl.businessLogic.traning.ITraining;
@@ -18,33 +17,33 @@ import static java.time.temporal.TemporalAdjusters.previousOrSame;
 
 public class TrainingState implements ISimulationSeasonState {
     private static final double DAYSUNTILSTATINCREASECHECK = 193;
+    private static final int YEAR = 1;
+    private static final int DAY = 1;
+    private static final int RESETTRAININGDATE = 0;
+    private static final int TRADEDEADLINEMONTH = 2;
+    private static final int TRADEDEADLINEDAY = 1;
     SimulationContext simulationContext;
     IScheduler scheduler;
-    SchedulerAbstractFactory schedulerAbstractFactory;
     TrainingAbstractFactory trainingAbstractFactory;
     IUserInputOutput userInputOutput;
 
     public TrainingState(SimulationContext simulationContext) {
         this.simulationContext = simulationContext;
-//        schedulerAbstractFactory = SchedulerAbstractFactory.instance();
-//        scheduler = schedulerAbstractFactory.getScheduler();
         scheduler = simulationContext.getRegularScheduler();
         trainingAbstractFactory = TrainingAbstractFactory.instance();
         userInputOutput = IUserInputOutput.getInstance();
     }
 
     static void unPlayedGameAndTradingDeadline(LocalDate currentDate, IScheduler scheduler, SimulationContext simulationContext) {
-        if (currentDate.isAfter(simulationContext.getSeasonStartDate().minusDays(1)) && currentDate.isBefore(simulationContext.getSeasonEndDate().plusDays(1))) {
-//        if (currentDate.isAfter(scheduler.getSeasonStartDate().minusDays(1)) && currentDate.isBefore(scheduler.getSeasonEndDate().plusDays(1))) {
+        if (currentDate.isAfter(simulationContext.getSeasonStartDate().minusDays(DAY)) && currentDate.isBefore(simulationContext.getSeasonEndDate().plusDays(DAY))) {
             simulationContext.setCurrentSimulation(simulationContext.getSimulateGame());
-        } else if (currentDate.isAfter(simulationContext.getPlayOffStartDate().minusDays(1)) && currentDate.isBefore(simulationContext.getFinalDay().plusDays(1))) {
+        } else if (currentDate.isAfter(simulationContext.getPlayOffStartDate().minusDays(DAY)) && currentDate.isBefore(simulationContext.getFinalDay().plusDays(DAY))) {
             simulationContext.setCurrentSimulation(simulationContext.getSimulateGame());
         } else {
-            LocalDate localDate = LocalDate.of(simulationContext.getYear() + 1, 02, 01);
+            LocalDate localDate = LocalDate.of(simulationContext.getYear() + YEAR, TRADEDEADLINEMONTH, TRADEDEADLINEDAY);
             LocalDate tradeDeadline = localDate.with(lastDayOfMonth())
                     .with(previousOrSame(DayOfWeek.MONDAY));
-            if (currentDate.isBefore(tradeDeadline.plusDays(1)) && currentDate.isAfter(simulationContext.getStartOfSimulation())) {
-//            if (currentDate.isBefore(tradeDeadline) || currentDate.isEqual(tradeDeadline)) {
+            if (currentDate.isBefore(tradeDeadline.plusDays(DAY)) && currentDate.isAfter(simulationContext.getStartOfSimulation())) {
                 simulationContext.setCurrentSimulation(simulationContext.getExecuteTrades());
             } else {
                 simulationContext.setCurrentSimulation(simulationContext.getAging());
@@ -63,16 +62,13 @@ public class TrainingState implements ISimulationSeasonState {
     @Override
     public void seasonStateProcess() {
         userInputOutput.printMessage("Into the state process of Training State season");
-        simulationContext.setDaysSinceLastTraining(simulationContext.getDaysSinceLastTraining() + 1);
+        simulationContext.setDaysSinceLastTraining(simulationContext.getDaysSinceLastTraining() + DAY);
         IGameConfig gameConfig = simulationContext.getGameConfig();
-        //commenting as it is not available in m3
-//        int daysUntilStatIncreaseCheck = Integer.parseInt(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getDaysUntilStatIncreaseCheck()));
         try {
             if (DAYSUNTILSTATINCREASECHECK == simulationContext.getDaysSinceLastTraining()) {
                 ITraining training = trainingAbstractFactory.createTraining(simulationContext.getInjurySystem(), simulationContext.getGameConfig());
-//                ITraining training = new Training(simulationContext.getInjurySystem(), simulationContext.getGameConfig());
                 training.updatePlayerStats(simulationContext.getInMemoryLeague());
-                simulationContext.setDaysSinceLastTraining(0);
+                simulationContext.setDaysSinceLastTraining(RESETTRAININGDATE);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -84,8 +80,6 @@ public class TrainingState implements ISimulationSeasonState {
         userInputOutput.printMessage("Into the exit process of Training State season");
         LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
         LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());
-//        scheduler = simulationContext.getPlayOffScheduleRound1();
-        //made this current change
         scheduler = simulationContext.getRegularScheduler();
         scheduler.setSeasonEndDate(simulationContext.getSeasonEndDate());
         scheduler.setSeasonStartDate(simulationContext.getSeasonStartDate());

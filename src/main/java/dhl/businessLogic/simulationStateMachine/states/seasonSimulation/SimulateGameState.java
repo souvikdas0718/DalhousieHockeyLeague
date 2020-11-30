@@ -9,6 +9,8 @@ import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfac
 import dhl.businessLogic.simulationStateMachine.states.standings.factory.StandingsAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandingSystem;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -17,6 +19,8 @@ import java.util.List;
 
 public class SimulateGameState implements ISimulationSeasonState {
     private static final double RANDOMWINCHANCE = 0.9;
+    private static final int DAY = 1;
+    public static Logger logger = LogManager.getLogger(SimulateGameState.class);
     SimulationContext simulationContext;
     List<ITeam> injuryCheckTeams;
     IScheduler scheduler;
@@ -26,7 +30,6 @@ public class SimulateGameState implements ISimulationSeasonState {
 
     public SimulateGameState(SimulationContext simulationContext) {
         this.simulationContext = simulationContext;
-//        scheduler = this.simulationContext.getRegularScheduler();
         injuryCheckTeams = new ArrayList<>();
         standingsAbstractFactory = StandingsAbstractFactory.instance();
         standingSystem = standingsAbstractFactory.getStandingSystem();
@@ -42,11 +45,14 @@ public class SimulateGameState implements ISimulationSeasonState {
     }
 
     private void winDecider(LocalDate currentDate, IScheduler scheduler) {
+        logger.info("Into winDecider method, current Date: "+ currentDate);
         ITeam winningTeam;
         ITeam losingTeam;
-        if (currentDate.isAfter(scheduler.getSeasonStartDate().minusDays(1)) && currentDate.isBefore(scheduler.getSeasonEndDate().plusDays(1))) {
+        if (currentDate.isAfter(scheduler.getSeasonStartDate().minusDays(DAY)) && currentDate.isBefore(scheduler.getSeasonEndDate().plusDays(DAY))) {
+            logger.debug("Checking for games lying in general playOffs ");
             for (ISeasonSchedule schedule : scheduler.getFullSeasonSchedule()) {
                 if (schedule.getGameDate().equals(currentDate)) {
+                    logger.debug("Once schedule match date is same as current date, add teams for injury check and based on requirement deciding the winner");
                     Double randomNumber = Math.random() * 100;
                     injuryCheckTeams.add(schedule.getTeamOne());
                     injuryCheckTeams.add(schedule.getTeamTwo());
@@ -65,19 +71,17 @@ public class SimulateGameState implements ISimulationSeasonState {
                             losingTeam = schedule.getTeamTwo();
                         }
                     }
-
-
+                    logger.debug("updating the winning and losing teams standings in Standing System class.");
                     standingSystem.updateWinningStandings(winningTeam);
                     standingSystem.updateLosingStandings(losingTeam);
-//                    standingSystem.setStandingsList(scheduler.getGameStandings());
-//                    simulationContext.setStandings(standingSystem.getStandingsList());
                 }
             }
-        } else if (currentDate.isAfter(scheduler.getPlayOffStartDate().minusDays(1)) && currentDate.isBefore(scheduler.getFinalDay().plusDays(1))) {
+        } else if (currentDate.isAfter(scheduler.getPlayOffStartDate().minusDays(DAY)) && currentDate.isBefore(scheduler.getFinalDay().plusDays(DAY))) {
+            logger.debug("checking for playoffs games");
             ArrayList<ISeasonSchedule> schedules = new ArrayList<>(scheduler.getPlayOffScheduleRound1());
             for (ISeasonSchedule playOffSchedule : schedules) {
                 if (playOffSchedule.getGameDate().equals(currentDate)) {
-
+                    logger.debug("Once schedule match date is same as current date, add teams for injury check and based on requirement deciding the winner");
                     Double randomNumber = Math.random() * 100;
                     injuryCheckTeams.add(playOffSchedule.getTeamOne());
                     injuryCheckTeams.add(playOffSchedule.getTeamTwo());
@@ -92,12 +96,13 @@ public class SimulateGameState implements ISimulationSeasonState {
                             winningTeam = playOffSchedule.getTeamOne();
                         }
                     }
+                    logger.debug("calling the gameWim=nner method of scheduler class to set the next playOff lists");
                     scheduler.gameWinner(winningTeam);
+                    logger.debug("setting the final schedule in the simulation context");
                     simulationContext.setFinalSchedule(scheduler);
                 }
             }
         }
-
     }
 
     @Override
@@ -116,8 +121,6 @@ public class SimulateGameState implements ISimulationSeasonState {
     @Override
     public void seasonStateExitProcess() {
         userInputOutput.printMessage("Into the state process of simulate game season");
-        //Figure out how to set add teams for Playing in game.
-        //Use getter and setter for injury check Teams
         this.simulationContext.setTeamsPlayingInGame(injuryCheckTeams);
         simulationContext.setCurrentSimulation(simulationContext.getInjuryCheck());
     }

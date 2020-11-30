@@ -6,8 +6,11 @@ import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfac
 import dhl.inputOutput.importJson.serializeDeserialize.SerializeDeserializeAbstractFactory;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class PersistSameSeasonState implements ISimulationSeasonState {
+    public static Logger logger = LogManager.getLogger(PersistSameSeasonState.class);
     SimulationContext simulationContext;
     IUserInputOutput userInputOutput;
 
@@ -26,16 +29,17 @@ public class PersistSameSeasonState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateProcess() {
-        userInputOutput.printMessage("Into the state process of Persist same season");
+        logger.info("Into the state process of Persist same season");
         SerializeDeserializeAbstractFactory factorySerialize = SerializeDeserializeAbstractFactory.instance();
         ISerializeLeagueObjectModel serializeLeagueObjectModel = factorySerialize.createSerializeLeagueObjectModel("src/SerializedJsonFiles/");
         ILeagueObjectModel leagueObjectModel = simulationContext.getInMemoryLeague();
+        logger.debug("Calling the update League Model method to store the current game state in JSON file");
         leagueObjectModel.updateLeagueObjectModel(serializeLeagueObjectModel);
     }
 
     @Override
     public void seasonStateExitProcess() {
-        userInputOutput.printMessage("Into the exit process of Persist same season");
+        logger.info("Into the exit process of Persist same season");
         simulationContext.setCurrentSimulation(simulationContext.getAdvanceTime());
     }
 }
