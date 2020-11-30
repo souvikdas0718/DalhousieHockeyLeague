@@ -20,6 +20,7 @@ import java.util.List;
 public class SimulateGameState implements ISimulationSeasonState {
     private static final double RANDOMWINCHANCE = 0.9;
     private static final int DAY = 1;
+    private static final int POINTS = 1;
     public static Logger logger = LogManager.getLogger(SimulateGameState.class);
     SimulationContext simulationContext;
     List<ITeam> injuryCheckTeams;
@@ -73,6 +74,7 @@ public class SimulateGameState implements ISimulationSeasonState {
             logger.debug("updating the winning and losing teams standings in Standing System class.");
             standingSystem.updateWinningStandings(winningTeam);
             standingSystem.updateLosingStandings(losingTeam);
+            losingTeam.setLossPoint(losingTeam.getLossPoint() + POINTS);
 
         } else if (currentDate.isAfter(scheduler.getPlayOffStartDate().minusDays(DAY)) && currentDate.isBefore(scheduler.getFinalDay().plusDays(DAY))) {
             logger.debug("checking for playoffs games");

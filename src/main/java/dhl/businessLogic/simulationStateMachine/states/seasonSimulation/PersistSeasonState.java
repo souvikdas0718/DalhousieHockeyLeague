@@ -11,7 +11,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.time.LocalDate;
 
 public class PersistSeasonState implements ISimulationSeasonState {
     public static Logger logger = LogManager.getLogger(PersistSeasonState.class);
@@ -50,14 +49,8 @@ public class PersistSeasonState implements ISimulationSeasonState {
     @Override
     public void seasonStateExitProcess() {
         logger.info("Into the exit process of Persist same season");
-        LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
-        LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());
-        if (currentDate.isBefore(LocalDate.of(simulationContext.getYear() + 1, 9, 29))) {
-            simulationContext.setCurrentSimulation(simulationContext.getAdvanceTime());
-        } else {
-            logger.debug("End of a season");
-            simulationContext.setSeasonInProgress(false);
-        }
+        logger.debug("End of a season");
+        simulationContext.setSeasonInProgress(false);
     }
 }
 
