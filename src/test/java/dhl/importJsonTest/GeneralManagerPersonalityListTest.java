@@ -2,26 +2,24 @@ package dhl.importJsonTest;
 
 import dhl.Mocks.GameConfigMock;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
-import dhl.inputOutput.importJson.GeneralManagerPersonalityList;
 
-import dhl.inputOutput.importJson.interfaces.IGeneralManagerPersonalityList;
+import dhl.inputOutput.importJson.GeneralManagerPersonalityListAbstract;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Dictionary;
-import java.util.List;
 
 public class GeneralManagerPersonalityListTest {
 
     GameConfigMock gameConfigMock;
-    IGeneralManagerPersonalityList testClassObject;
+    GeneralManagerPersonalityListAbstract testClassObject;
 
     @BeforeEach
     public void initObject() {
         gameConfigMock = new GameConfigMock();
         IGameConfig ourGameConfig = gameConfigMock.getGameConfigMock();
-        testClassObject = IGeneralManagerPersonalityList.instance(ourGameConfig);
+        testClassObject = GeneralManagerPersonalityListAbstract.instance(ourGameConfig);
     }
 
     @Test

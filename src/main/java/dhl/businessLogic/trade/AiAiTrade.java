@@ -4,7 +4,7 @@ import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogic.teamRosterUpdater.RosterUpdaterAbstractFactory;
 import dhl.businessLogic.teamRosterUpdater.interfaces.ITeamRosterUpdater;
 import dhl.businessLogic.trade.interfaces.ITradeType;
-import dhl.inputOutput.importJson.interfaces.IGeneralManagerPersonalityList;
+import dhl.inputOutput.importJson.GeneralManagerPersonalityListAbstract;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class AiAiTrade implements ITradeType {
         this.gameConfig = gameConfig;
 
         rosterUpdater = RosterUpdaterAbstractFactory.instance().createAiTeamRosterUpdater();
-        IGeneralManagerPersonalityList managerPersonalityObject = IGeneralManagerPersonalityList.instance(gameConfig);
+        GeneralManagerPersonalityListAbstract managerPersonalityObject = GeneralManagerPersonalityListAbstract.instance(gameConfig);
         managerPersonalityList = managerPersonalityObject.getGeneralManagerPersonalityList();
 
     }

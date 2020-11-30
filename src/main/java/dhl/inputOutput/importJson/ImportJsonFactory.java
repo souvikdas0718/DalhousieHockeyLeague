@@ -10,9 +10,6 @@ import org.json.simple.JSONObject;
 
 public class ImportJsonFactory extends ImportJsonAbstractFactory {
 
-    public ICheckInputFileFormat createCheckInputFileFormat() {
-        return new CheckInputFileFormat();
-    }
 
     public ICreateLeagueObjectModel createCreateLeagueObjectModel(JSONObject jsonLeagueObject) {
         return new CreateLeagueObjectModel(jsonLeagueObject);

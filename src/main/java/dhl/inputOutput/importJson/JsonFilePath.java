@@ -1,6 +1,7 @@
 package dhl.inputOutput.importJson;
 
 import dhl.inputOutput.importJson.interfaces.IJsonFilePath;
+import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -9,21 +10,27 @@ import java.util.Scanner;
 
 public class JsonFilePath implements IJsonFilePath {
 
-    @Override
+    IUserInputOutput ioObject;
+
+    public JsonFilePath(){
+        ioObject = IUserInputOutput.getInstance();
+    }
+
     public String getFilePath() {
         String path = null;
         while (path == null) {
-            System.out.println("Enter JSON File Path or Enter Exit if u want to exit: ");
-            Scanner sc = new Scanner(System.in);
-            String inputPath = sc.nextLine();
+            ioObject.printMessage("Enter JSON File Path or Enter Exit if u want to exit: ");
+            String inputPath = ioObject.getUserInput();
 
-            if (inputPath.equals("Exit")) System.exit(0);
+            if (inputPath.equals("Exit")){
+                System.exit(0);
+            }
             else {
                 if (validatePath(inputPath)) {
-                    System.out.println("File Path is valid");
+                    ioObject.printMessage("File Path is valid");
                     path = inputPath;
                 } else {
-                    System.out.println("Invalid Json Path");
+                    ioObject.printMessage("Invalid Json Path");
                 }
             }
         }
