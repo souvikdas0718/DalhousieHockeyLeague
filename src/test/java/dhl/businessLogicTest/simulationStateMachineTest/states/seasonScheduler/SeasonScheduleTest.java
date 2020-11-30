@@ -125,4 +125,16 @@ public class SeasonScheduleTest {
         Assertions.assertTrue(scheduler.getFullSeasonSchedule().get(0).getGameDate().equals(date));
     }
 
+    @Test
+    public void isMatchPlayedTest() {
+        seasonSchedule.setMatchPlayed(true);
+        Assertions.assertTrue(seasonSchedule.isMatchPlayed());
+    }
+
+    @Test
+    public void isMatchToBePlayedTest() {
+        seasonSchedule.setMatchToBePlayed(true);
+        Assertions.assertTrue(seasonSchedule.isMatchToBePlayed());
+    }
+
 }
