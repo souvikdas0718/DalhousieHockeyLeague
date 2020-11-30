@@ -5,11 +5,13 @@ import dhl.businessLogic.leagueModel.interfaceModel.IConference;
 import dhl.businessLogic.leagueModel.interfaceModel.IDivision;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.ISeasonSchedule;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 
 public class SeasonSchedule implements ISeasonSchedule {
-
+    private static final Logger logger = LogManager.getLogger(Scheduler.class);
     LeagueModelAbstractFactory factory;
     private IConference teamOneConference;
     private IConference teamTwoConference;
@@ -22,6 +24,7 @@ public class SeasonSchedule implements ISeasonSchedule {
     private boolean isMatchToBePlayed;
 
     public SeasonSchedule() {
+        logger.info("Setting default values for Constructor");
         factory = LeagueModelAbstractFactory.instance();
         teamOneConference = factory.createConferenceDefault();
         teamTwoConference = factory.createConferenceDefault();
