@@ -1,35 +1,41 @@
 package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 
 
-import dhl.businessLogic.aging.LeagueSchedule;
 import dhl.businessLogic.aging.agingFactory.AgingAbstractFactory;
 import dhl.businessLogic.aging.interfaceAging.ILeagueSchedule;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
+import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.Month;
 
 public class AgingState implements ISimulationSeasonState {
+    private static final Month PLAYERDRAFTMONTH = Month.JULY;
+    private static final int PLAYERDRAFTDATE = 15;
     public static Logger logger = LogManager.getLogger(AgingState.class);
     static AgingAbstractFactory agingFactory;
     SimulationContext simulationContext;
+    IUserInputOutput userInputOutput;
 
     public AgingState(SimulationContext simulationContext) {
         this.simulationContext = simulationContext;
         agingFactory = AgingAbstractFactory.instance();
+        userInputOutput = IUserInputOutput.getInstance();
     }
 
     static void agingCalculation(SimulationContext simulationContext) {
-        ILeagueSchedule leagueSchedule = (LeagueSchedule) agingFactory.createLeagueSchedule(simulationContext.getInMemoryLeague());
+        ILeagueSchedule leagueSchedule = agingFactory.createLeagueSchedule(simulationContext.getInMemoryLeague());
         try {
             LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
             LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());
-
+            System.out.println("Current date: " + currentDate);
+            System.out.println("No of days: " + simulationContext.getNumberOfDays());
             leagueSchedule.initiateAging(simulationContext.getNumberOfDays(), currentDate);
         } catch (IOException e) {
             logger.error(e.getMessage());
@@ -48,12 +54,14 @@ public class AgingState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateProcess() {
+        userInputOutput.printMessage("Into the state process of Aging State season");
         logger.info("Into the state process of Aging State season");
         agingCalculation(simulationContext);
     }
 
     @Override
     public void seasonStateExitProcess() {
+        userInputOutput.printMessage("Into the exit process of Aging State season");
         logger.info("Into the exit process of Aging State season");
         IScheduler scheduler = simulationContext.getRegularScheduler();
         LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
@@ -63,8 +71,11 @@ public class AgingState implements ISimulationSeasonState {
             simulationContext.setCurrentSimulation(simulationContext.getPersistsSameSeason());
         } else {
             if (scheduler.stanleyCupWinner(currentDate)) {
-                logger.debug("Stanley Cup winner determined. So, advancing to next Season");
-                simulationContext.setCurrentSimulation(simulationContext.getAdvanceToNextSeason());
+                currentDate = LocalDate.of(currentDate.getYear(), PLAYERDRAFTMONTH, PLAYERDRAFTDATE);
+                if (currentDate.getMonth() == PLAYERDRAFTMONTH && currentDate.getDayOfMonth() == PLAYERDRAFTDATE) {
+                    logger.debug("Simulating to PlayerDraft state");
+                    simulationContext.setCurrentSimulation(simulationContext.getPlayerDraft());
+                }
             } else {
                 logger.debug("Stanley Cup winner not determined. So, moving to Persist Same Season");
                 simulationContext.setCurrentSimulation(simulationContext.getPersistsSameSeason());

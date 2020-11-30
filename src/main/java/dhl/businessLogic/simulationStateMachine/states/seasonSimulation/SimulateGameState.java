@@ -102,6 +102,7 @@ public class SimulateGameState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateProcess() {
+        userInputOutput.printMessage("Into the state process of simulate game season");
         logger.info("Into the state process of simulate game season");
         LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
         LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());
@@ -116,6 +117,7 @@ public class SimulateGameState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateExitProcess() {
+        userInputOutput.printMessage("Into the state process of simulate game season");
         logger.info("Into the state process of simulate game season");
         this.simulationContext.setTeamsPlayingInGame(injuryCheckTeams);
         simulationContext.setCurrentSimulation(simulationContext.getInjuryCheck());

@@ -10,6 +10,8 @@ import dhl.businessLogic.teamRosterUpdater.interfaces.ITeamRosterUpdater;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.factory.SimulationStateAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.IGenerateDraftPlayers;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
+import dhl.businessLogic.simulationStateMachine.states.standings.factory.StandingsAbstractFactory;
+import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandingSystem;
 import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandings;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,7 +25,7 @@ import java.util.Map.Entry;
 public class PlayerDraftState implements ISimulationSeasonState {
     private static final int DRAFTROUNDS = 7;
     private static final int NOOFTEAMS = 32;
-    private static final int COUNTERSTARTVALUE=0;
+    private static final int COUNTERSTARTVALUE = 0;
     private static final Logger logger = LogManager.getLogger(PlayerDraftState.class);
     IGenerateDraftPlayers generateDraftPlayers;
     SimulationContext simulationContext;
@@ -31,27 +33,31 @@ public class PlayerDraftState implements ISimulationSeasonState {
     LeagueModelAbstractFactory leagueFactory;
     List<ITeam> teamsInLeague;
     ITeam userTeam;
-    ITeam [][] draftPickSequence = new Team[NOOFTEAMS][DRAFTROUNDS];
+    ITeam[][] draftPickSequence = new Team[NOOFTEAMS][DRAFTROUNDS];
     ILeagueObjectModel leagueObjectModel;
     PlayerDraftAbstract playerDraft;
+    IStandingSystem standingSystem;
+    StandingsAbstractFactory standingsAbstractFactory;
 
-    public PlayerDraftState(SimulationContext simulationContext){
+    public PlayerDraftState(SimulationContext simulationContext) {
         logger.info("Player draft Constructor initialized");
-        this.simulationContext=simulationContext;
+        this.simulationContext = simulationContext;
         simulationFactory = SimulationStateAbstractFactory.instance();
-        generateDraftPlayers = simulationFactory.getGeneratePlayers() ;
+        generateDraftPlayers = simulationFactory.getGeneratePlayers();
         teamsInLeague = new ArrayList<>();
         userTeam = this.simulationContext.getUserTeam();
         initializePlayerDraftPick();
         leagueFactory = LeagueModelAbstractFactory.instance();
         playerDraft = leagueFactory.createPlayerDraft();
         playerDraft.setDraftPickSequence(draftPickSequence);
+        standingsAbstractFactory = StandingsAbstractFactory.instance();
+        standingSystem = standingsAbstractFactory.getStandingSystem();
     }
 
     public void seasonStateProcess() {
         logger.info("Player Draft season state process");
         draftPickSequence = playerDraft.getDraftPickSequence();
-        List<IStandings> standings= simulationContext.getStandings();
+        List<IStandings> standings = standingSystem.getStandingsList();
         List<ITeam> reversedStandings = reverseStandingOrder(standings);
         int lastUpdatedIndex = 0;
         for(int draftRound =0; draftRound < DRAFTROUNDS; draftRound++){
@@ -86,6 +92,8 @@ public class PlayerDraftState implements ISimulationSeasonState {
                 }
             }
         }
+        logger.debug("Draft state completed. So, advancing to next Season");
+        simulationContext.setCurrentSimulation(simulationContext.getAdvanceToNextSeason());
     }
 
 
