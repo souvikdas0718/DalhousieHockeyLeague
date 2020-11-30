@@ -90,4 +90,8 @@ public class LeagueModelFactory extends LeagueModelAbstractFactory {
         return new PlayerDraft();
     }
 
+    public IGeneralManager createGeneralManagerDefault() {
+        return new GeneralManager();
+    }
+
 }

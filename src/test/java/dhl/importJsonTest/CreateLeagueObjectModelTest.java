@@ -1,8 +1,10 @@
 package dhl.importJsonTest;
 
 import dhl.Mocks.JsonFilePathMock;
+import dhl.Mocks.factory.MockAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.inputOutput.importJson.CreateLeagueObjectModel;
+import dhl.inputOutput.importJson.ImportJsonAbstractFactory;
 import dhl.inputOutput.importJson.ImportJsonFile;
 
 import dhl.inputOutput.importJson.interfaces.IImportJsonFile;
@@ -15,16 +17,20 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CreateLeagueObjectModelTest {
+    MockAbstractFactory mockFactory;
     JSONObject leagueObject;
     ICreateLeagueObjectModel createLeagueObjectModel;
     JsonFilePathMock filePathMock;
+    ImportJsonAbstractFactory importFactory;
 
     @BeforeEach
-    public void initObject() throws Exception {
-        this.filePathMock = new JsonFilePathMock();
-        IImportJsonFile importJsonFile = new ImportJsonFile(filePathMock.getFilePath());
+    public void initObject()  {
+        mockFactory = MockAbstractFactory.instance();
+        this.filePathMock = mockFactory.getJsonFilePath();
+        importFactory = ImportJsonAbstractFactory.instance();
+        IImportJsonFile importJsonFile = importFactory.createImportJsonFile(filePathMock.getFilePath());
         this.leagueObject = importJsonFile.getJsonObject();
-        this.createLeagueObjectModel = new CreateLeagueObjectModel(leagueObject);
+        this.createLeagueObjectModel = importFactory.createCreateLeagueObjectModel(leagueObject);
     }
 
     @Test
@@ -34,10 +40,10 @@ public class CreateLeagueObjectModelTest {
     }
 
     @Test
-    public void getLeagueObjectModelInvalidTest() throws Exception {
-        IImportJsonFile importJsonFile = new ImportJsonFile(filePathMock.getIncorrectJsonfilepath());
+    public void getLeagueObjectModelInvalidTest()  {
+        IImportJsonFile importJsonFile = importFactory.createImportJsonFile(filePathMock.getIncorrectJsonfilepath());
         this.leagueObject = importJsonFile.getJsonObject();
-        createLeagueObjectModel =new CreateLeagueObjectModel(leagueObject);
+        createLeagueObjectModel = importFactory.createCreateLeagueObjectModel(leagueObject);
         ILeagueObjectModel leagueObjectModel = createLeagueObjectModel.getLeagueObjectModel();
 
         Assertions.assertEquals(null,leagueObjectModel);

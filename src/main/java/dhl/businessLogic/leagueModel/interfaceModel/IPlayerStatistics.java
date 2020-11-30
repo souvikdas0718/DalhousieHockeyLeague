@@ -3,6 +3,7 @@ package dhl.businessLogic.leagueModel.interfaceModel;
 import java.time.LocalDate;
 
 public interface IPlayerStatistics {
+
     int getAge();
 
     void setAge(int age);

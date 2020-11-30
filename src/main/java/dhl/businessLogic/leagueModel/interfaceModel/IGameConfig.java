@@ -34,10 +34,15 @@ public interface IGameConfig {
 
     String getDaysUntilStatIncreaseCheck();
 
-    public String getGameResolver();
+    String getGameResolver();
 
-    public String getRandomWinChance();
+    String getRandomWinChance();
 
+    String getSimulation();
+
+    String getPenaltyChance();
+
+    String getGoalChance();
 
     HashMap<String, Object> getHashMap(String key);
 

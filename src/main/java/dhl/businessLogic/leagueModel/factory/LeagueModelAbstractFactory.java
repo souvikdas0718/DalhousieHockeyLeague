@@ -64,4 +64,6 @@ public abstract class LeagueModelAbstractFactory {
     public abstract IPlayer createFreeAgentDefault();
 
     public abstract IPlayerDraft createPlayerDraft();
+
+    public abstract IGeneralManager createGeneralManagerDefault();
 }

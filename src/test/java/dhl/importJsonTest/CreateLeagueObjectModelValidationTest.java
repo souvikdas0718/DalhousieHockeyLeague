@@ -188,6 +188,16 @@ public class CreateLeagueObjectModelValidationTest {
         Assertions.assertFalse( createdLeagueValidation.checkCreatedLeagueObjectModel(leagueObjectModel));
     }
 
+    @Test
+    public void invalidateFreeAgentsTest()  {
+        FreeAgentMock freeAgentMock = mockFactory.createFreeAgentMock();
+        IPlayer freeAgent = freeAgentMock.getPlayerWithoutName();
+        List<IPlayer> agents = new ArrayList<>();
+        agents.add(freeAgent);
+        leagueModelParameterized.setFreeAgents(agents);
+        Assertions.assertFalse(createdLeagueValidation.checkCreatedLeagueObjectModel(leagueModelParameterized));
+    }
+
 
     @AfterEach
     public void destroyObject() {

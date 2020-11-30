@@ -1,5 +1,6 @@
 package dhl.businessLogic.leagueModel;
 
+import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,9 +31,10 @@ public class Team implements ITeam {
     }
 
     public void setDefault() {
+        LeagueModelAbstractFactory factory = LeagueModelAbstractFactory.instance();
         teamName = "";
-        generalManager = new GeneralManager();
-        headCoach = new Coach();
+        generalManager = factory.createGeneralManagerDefault();
+        headCoach = factory.createCoachDefault();
         players = new ArrayList<>();
     }
 

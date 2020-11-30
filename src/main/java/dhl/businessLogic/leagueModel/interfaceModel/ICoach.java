@@ -1,6 +1,7 @@
 package dhl.businessLogic.leagueModel.interfaceModel;
 
 public interface ICoach {
+
     String getCoachName();
 
     double getSkating();

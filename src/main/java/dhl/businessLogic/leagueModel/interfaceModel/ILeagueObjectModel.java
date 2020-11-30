@@ -38,6 +38,4 @@ public interface ILeagueObjectModel {
     ILeagueObjectModel loadLeagueObjectModel(IDeserializeLeagueObjectModel deserializeLeagueObjectModel, String leagueName, String teamName) ;
 
     ILeagueObjectModel updateLeagueObjectModel(ISerializeLeagueObjectModel serializeLeagueObjectModel) ;
-
-
 }
