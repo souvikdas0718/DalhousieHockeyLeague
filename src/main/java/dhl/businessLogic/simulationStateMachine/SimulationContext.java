@@ -37,17 +37,12 @@ public class SimulationContext implements ISimulationSeasonState {
     ISimulationSeasonState simulateGame;
     ISimulationSeasonState training;
     ISimulationSeasonState playerDraft;
-
     IScheduler scheduler;
     IScheduler regularScheduler;
     IScheduler playOffScheduleRound1;
     IScheduler finalSchedule;
-
     ITeamRosterUpdater updateUserTeamRoster;
-
     List<IStandings> standings;
-
-//    IStandingSystem standingSystem;
 
     boolean seasonInProgress;
     IGameConfig gameConfig;
@@ -89,7 +84,6 @@ public class SimulationContext implements ISimulationSeasonState {
         seasonInProgress = true;
         ioObject = IUserInputOutput.getInstance();
         updateUserTeamRoster = new UpdateUserTeamRoster(ioObject);
-//        tradeEngine = ITradingEngine.instance(gameConfig, inMemoryLeague, userTeam);
         daysSinceLastTraining = 0;
         teamsPlayingInGame = new ArrayList<>();
         injury = new Injury();
@@ -107,7 +101,6 @@ public class SimulationContext implements ISimulationSeasonState {
         scheduler.setSeasonEndDate(seasonEndDate);
         scheduler.setSeasonStartDate(seasonStartDate);
         scheduler.setPlayOffStartDate(playOffStartDate);
-//        year = LocalDate.now().getYear();
         startOfSimulation = LocalDate.of(year, 9, 30);
 
     }
@@ -151,15 +144,6 @@ public class SimulationContext implements ISimulationSeasonState {
     public void setYear(int year) {
         this.year = year;
     }
-
-//    public IStandingSystem getStandingSystem() {
-//        return standingSystem;
-//    }
-//
-//    public void setStandingSystem(IStandingSystem standingSystem) {
-//        this.standingSystem = standingSystem;
-//    }
-
 
     public IScheduler getFinalSchedule() {
         return finalSchedule;

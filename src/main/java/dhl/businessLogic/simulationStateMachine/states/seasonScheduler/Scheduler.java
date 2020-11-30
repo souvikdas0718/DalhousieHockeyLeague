@@ -8,7 +8,6 @@ import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.factory.SchedulerAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.ISeasonSchedule;
-import dhl.businessLogic.simulationStateMachine.states.standings.StandingSystem;
 import dhl.businessLogic.simulationStateMachine.states.standings.factory.StandingsAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandingSystem;
 import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandings;
@@ -151,7 +150,7 @@ public class Scheduler implements IScheduler {
 
         for (int i = 0; i < teamList.size(); i++) {
             for (int j = i + 1; j < teamList.size(); j++) {
-                ISeasonSchedule match = new SeasonSchedule();
+                ISeasonSchedule match = schedulerAbstractFactory.getSeasonSchedule();
                 match.setTeamOneConference(conferences.get(i));
                 match.setTeamTwoConference(conferences.get(j));
                 match.setTeamOneDivision(divisions.get(i));
@@ -190,7 +189,7 @@ public class Scheduler implements IScheduler {
     public void playOffs(List<IStandings> regularGamesStandings, ILeagueObjectModel leagueObjectModel) {
         logger.debug("Into the playOffs method");
         gameStandings = regularGamesStandings;
-        IStandingSystem standingSystem = new StandingSystem();
+        IStandingSystem standingSystem = standingsAbstractFactory.getStandingSystem();
 
         IConference conference1 = leagueObjectModel.getConferences().get(0);
         IConference conference2 = leagueObjectModel.getConferences().get(1);
@@ -316,7 +315,7 @@ public class Scheduler implements IScheduler {
 
     private ISeasonSchedule setMatchConferenceAndDivision(IConference conference, IDivision division1, IDivision division2) {
         logger.debug("setting match conference and division");
-        ISeasonSchedule match = new SeasonSchedule();
+        ISeasonSchedule match = schedulerAbstractFactory.getSeasonSchedule();
         match.setTeamOneConference(conference);
         match.setTeamTwoConference(conference);
         match.setTeamOneDivision(division1);
@@ -396,7 +395,7 @@ public class Scheduler implements IScheduler {
                     return;
                 }
                 logger.debug("setting the fist team in playOffScheduleRound1 list next match");
-                ISeasonSchedule match = new SeasonSchedule();
+                ISeasonSchedule match = schedulerAbstractFactory.getSeasonSchedule();
                 match.setTeamOneConference(standing.getTeamConference());
                 match.setTeamOneDivision(standing.getTeamDivision());
                 match.setTeamOne(team);

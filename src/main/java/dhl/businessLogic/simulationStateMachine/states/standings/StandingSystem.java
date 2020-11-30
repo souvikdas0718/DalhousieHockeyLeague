@@ -5,6 +5,7 @@ import dhl.businessLogic.leagueModel.interfaceModel.IConference;
 import dhl.businessLogic.leagueModel.interfaceModel.IDivision;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
+import dhl.businessLogic.simulationStateMachine.states.standings.factory.StandingsAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandingSystem;
 import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandings;
 
@@ -14,9 +15,11 @@ import java.util.List;
 
 public class StandingSystem implements IStandingSystem {
     public List<IStandings> standingsList;
+    StandingsAbstractFactory standingsAbstractFactory;
 
     public StandingSystem() {
         this.standingsList = new ArrayList<>();
+        standingsAbstractFactory = StandingsAbstractFactory.instance();
     }
 
     public List<IStandings> getStandingsList() {
@@ -95,7 +98,7 @@ public class StandingSystem implements IStandingSystem {
         for (IConference conference : leagueObjectModel.getConferences()) {
             for (IDivision division : conference.getDivisions()) {
                 for (ITeam team : division.getTeams()) {
-                    IStandings standings = new Standings();
+                    IStandings standings = standingsAbstractFactory.getStandings();
                     standings.setTeamConference(conference);
                     standings.setTeamDivision(division);
                     standings.setTeam(team);

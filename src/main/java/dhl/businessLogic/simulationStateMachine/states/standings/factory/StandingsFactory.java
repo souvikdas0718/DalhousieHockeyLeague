@@ -9,7 +9,6 @@ public class StandingsFactory extends StandingsAbstractFactory {
 
     private IStandingSystem standingSystem;
 
-
     public IStandings getStandings() {
         return new Standings();
     }

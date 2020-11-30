@@ -18,10 +18,6 @@ public abstract class StandingsAbstractFactory {
         return uniqueInstance;
     }
 
-//    public static void setFactory(StandingsAbstractFactory factory) {
-//        uniqueInstance = factory;
-//    }
-
     public abstract IStandings getStandings();
 
     public abstract IStandingSystem getStandingSystem();
