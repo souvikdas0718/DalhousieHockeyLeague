@@ -21,22 +21,23 @@ public class CreatedLeagueValidation implements ICreatedLeagueValidation {
     }
 
     public boolean checkCreatedLeagueObjectModel(ILeagueObjectModel leagueObjectModel) {
-        boolean invalidLeagueModel = false;
+        boolean validLeagueModel = true;
         outerloop:
         for(IConference conference:leagueObjectModel.getConferences()){
             for(IDivision division:conference.getDivisions()){
                 for(ITeam team:division.getTeams()){
                     if (checkIfConferenceValid(conference) == false || checkIfDivisionValid(division) == false || checkIfTeamValid(team) == false || validatePlayers(team.getPlayers())==false){
-                        invalidLeagueModel = true;
+                        validLeagueModel = false;
                         break outerloop;
                     }
                 }
             }
         }
-        if(validateFreeAgents(leagueObjectModel.getFreeAgents())){
-            invalidLeagueModel = true;
+        if(validateFreeAgents(leagueObjectModel.getFreeAgents())==false){
+            inputOutput.printMessage("Free Agents list is invalid");
+            validLeagueModel = false;
         }
-        return invalidLeagueModel;
+        return validLeagueModel;
     }
 
     public boolean checkIfConferenceValid(IConference conference)  {

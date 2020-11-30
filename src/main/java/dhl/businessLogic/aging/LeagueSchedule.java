@@ -47,7 +47,7 @@ public class LeagueSchedule implements ILeagueSchedule {
                     logger.info("Checking if End of season to initiate retirement for players");
                     if ((noOfDays % NOOFDAYSINAYEAR) == 0) {
                         logger.debug("Selecting players to retire in team"+team);
-                        retiringPlayers = aging.selectPlayersToRetire(team);
+                        retiringPlayers = aging.selectPlayersToRetire(team,retiringPlayers);
                     }
                 }
             }
@@ -57,7 +57,6 @@ public class LeagueSchedule implements ILeagueSchedule {
         if ((noOfDays % NOOFDAYSINAYEAR) == 0) {
             logger.info("Selecting free agents to retire");
             retiringFreeAgents = aging.selectFreeAgentsToRetire(leagueObjectModel.getFreeAgents());
-            System.out.println("list of free agents "+leagueObjectModel.getFreeAgents());
             initiateRetirementForAgedPlayers();
         }
 
@@ -68,9 +67,7 @@ public class LeagueSchedule implements ILeagueSchedule {
     public void initiateRetirementForAgedPlayers() {
         logger.info("Retire players in team at the end of simulation");
         logger.debug("Initiate Retirement");
-        System.out.println("retiring players "+retiringPlayers);
-        System.out.println("retiring freeagents "+retiringFreeAgents);
-        retirement.initiateRetirement(retiringPlayers, retiringFreeAgents);
+        retirement.initiateRetirement(retiringPlayers, retiringFreeAgents,leagueObjectModel);
     }
 
     public void checkPlayerInjuryRecovery() {

@@ -20,8 +20,8 @@ public class AgingFactory extends AgingAbstractFactory {
         return new Injury();
     }
 
-    public IRetirement createRetirement(ISerializeLeagueObjectModel serializeModel, ILeagueObjectModel leagueObjectModel){
-        return new Retirement(serializeModel,leagueObjectModel);
+    public IRetirement createRetirement(ISerializeLeagueObjectModel serializeModel){
+        return new Retirement(serializeModel);
     }
 
     public IAging createAging(IGameConfig gameConfig){
@@ -33,7 +33,7 @@ public class AgingFactory extends AgingAbstractFactory {
         SerializeDeserializeAbstractFactory serialize = SerializeDeserializeAbstractFactory.instance();
         ISerializeLeagueObjectModel serializeModel = serialize.createSerializeLeagueObjectModel(leagueObjectModel.getLeagueName()) ;
         IAging aging = createAging(leagueObjectModel.getGameConfig());
-        IRetirement retirement = createRetirement(serializeModel,leagueObjectModel);
+        IRetirement retirement = createRetirement(serializeModel);
 
         return new LeagueSchedule(aging,retirement,injury,leagueObjectModel);
     }

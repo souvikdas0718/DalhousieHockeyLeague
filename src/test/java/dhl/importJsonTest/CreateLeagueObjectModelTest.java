@@ -28,7 +28,7 @@ public class CreateLeagueObjectModelTest {
     }
 
     @Test
-    public void getLeagueObjectModelTest() throws Exception {
+    public void getLeagueObjectModelTest()  {
         ILeagueObjectModel leagueObjectModel = createLeagueObjectModel.getLeagueObjectModel();
         assertEquals(leagueObject.get("leagueName"),leagueObjectModel.getLeagueName());
     }
@@ -40,7 +40,7 @@ public class CreateLeagueObjectModelTest {
         createLeagueObjectModel =new CreateLeagueObjectModel(leagueObject);
         ILeagueObjectModel leagueObjectModel = createLeagueObjectModel.getLeagueObjectModel();
 
-        Assertions.assertEquals("",leagueObjectModel.getLeagueName());
+        Assertions.assertEquals(null,leagueObjectModel);
     }
 
 

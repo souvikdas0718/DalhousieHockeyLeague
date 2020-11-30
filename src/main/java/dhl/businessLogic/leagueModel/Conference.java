@@ -12,10 +12,9 @@ import java.util.List;
 import java.util.Set;
 
 public class Conference implements IConference {
-
+    private static final Logger logger = LogManager.getLogger(Conference.class);
     private String conferenceName;
     private List<IDivision> divisions;
-    private static final Logger logger = LogManager.getLogger(Conference.class);
 
     public Conference() {
         setDefaults();
