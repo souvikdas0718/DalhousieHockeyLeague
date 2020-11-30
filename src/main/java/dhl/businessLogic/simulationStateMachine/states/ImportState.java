@@ -57,8 +57,13 @@ public class ImportState implements IGameState {
             try {
                 IImportStateLogic objImportStateLogic = new ImportStateLogic();
                 newInMemoryLeague = objImportStateLogic.importAndGetLeagueObject(validFilePath);
-
-                userInputPutput.printMessage(newInMemoryLeague.getLeagueName() + "  Imported from the Json");
+                if(newInMemoryLeague ==null){
+                    userInputPutput.printMessage("Imported JSON values are incorrect. Please correct and retry");
+                    ourGame.setGameInProgress(false);
+                }
+                else {
+                    userInputPutput.printMessage(newInMemoryLeague.getLeagueName() + "  Imported from the Json");
+                }
             } catch (Exception e) {
                 userInputPutput.printMessage(e.getMessage());
                 ourGame.setGameInProgress(false);

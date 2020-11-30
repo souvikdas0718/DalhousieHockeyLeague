@@ -52,13 +52,7 @@ public class InjuryCheckState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateExitProcess() {
-        logger.info("Into the exit process of Injury check season");
-//        scheduler = simulationContext.getPlayOffScheduleRound1();
-//        LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
-//        simulationContext.setNumberOfDays(simulationContext.getNumberOfDays() + 1);
-//        LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());
-//        logger.debug("Calling the training state method to check for the unplayed games schedules");
-//        TrainingState.unPlayedGameAndTradingDeadline(currentDate, scheduler, simulationContext);
+        logger.info("returning the control to Training state inner loop");
     }
 }
 

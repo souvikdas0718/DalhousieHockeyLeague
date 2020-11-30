@@ -3,9 +3,9 @@ package dhl.businessLogic.leagueModel.interfaceModel;
 import java.util.List;
 
 public interface ILeagueObjectModelValidation {
-    public boolean checkIfLeagueObjectModelValid(IValidation validation, ILeagueObjectModel leagueObjectModel) throws Exception;
+   boolean checkIfLeagueObjectModelValid(IValidation validation, ILeagueObjectModel leagueObjectModel) ;
 
-    public void checkIfLeagueDetailsValid(List<IConference> conferences) throws Exception;
+    boolean checkIfLeagueDetailsValid(List<IConference> conferences) ;
 
-    public boolean checkUserInputForLeague(ILeagueObjectModel leagueObjectModel, ILeagueObjectModelInput leagueObjectModelInput) throws Exception;
+    boolean checkUserInputForLeague(ILeagueObjectModel leagueObjectModel, ILeagueObjectModelInput leagueObjectModelInput);
 }

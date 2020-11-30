@@ -40,7 +40,8 @@ public class RetirementTest {
         ISerializeLeagueObjectModel serializeModel = mockFactory.getMockSerialize();
         agingFactory = AgingAbstractFactory.instance();
         leagueObjectModel = agingMock.retirementLeagueMock();
-        retirement = (Retirement) agingFactory.createRetirement(serializeModel, leagueObjectModel);
+        retirement = (Retirement) agingFactory.createRetirement(serializeModel);
+        retirement.setLeagueObjectModel(leagueObjectModel);
     }
 
     @Test
@@ -60,14 +61,14 @@ public class RetirementTest {
         playersSelectedToRetire.put("Ontario", players);
         List<IPlayer> freeAgentsToRetire = new ArrayList<>();
 
-        retirement.initiateRetirement(playersSelectedToRetire, freeAgentsToRetire);
+        retirement.initiateRetirement(playersSelectedToRetire, freeAgentsToRetire,leagueObjectModel);
         ILeagueObjectModel leagueObjectModel = retirement.getLeagueObjectModel();
         List<IPlayer> freeAgents = leagueObjectModel.getFreeAgents();
         Assertions.assertTrue(freeAgents.size() == 1);
     }
 
     @Test
-    public void initiateFreeAgentRetirementTest() throws Exception {
+    public void initiateFreeAgentRetirementTest()  {
         Map<String, List<IPlayer>> playersSelectedToRetire = new HashMap<>();
         List<IPlayer> players = new ArrayList<>();
         playersSelectedToRetire.put("Ontario", players);
@@ -77,7 +78,7 @@ public class RetirementTest {
         playerStatistics1.setAge(50);
         freeAgents.add(leagueFactory.createFreeAgent("Jack", "forward", playerStatistics1));
 
-        retirement.initiateRetirement(playersSelectedToRetire, freeAgents);
+        retirement.initiateRetirement(playersSelectedToRetire, freeAgents,leagueObjectModel);
         ILeagueObjectModel leagueObjectModel = retirement.getLeagueObjectModel();
         List<IPlayer> freeAgentsList = leagueObjectModel.getFreeAgents();
         Assertions.assertTrue(freeAgentsList.size() == 1);

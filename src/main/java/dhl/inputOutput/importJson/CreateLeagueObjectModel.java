@@ -38,12 +38,14 @@ public class CreateLeagueObjectModel implements ICreateLeagueObjectModel {
         ILeagueObjectModelDirector leagueDirector = new LeagueObjectModelDirector(leagueBuilder);
         this.leagueObjectModel=leagueDirector.constructFromJson(jsonLeague);
 
-        try {
-            createdLeagueValidation.checkCreatedLeagueObjectModel(leagueObjectModel);
-            leagueObjectModel.checkIfLeagueModelValid(validation, leagueObjectModelValidation);
-        } catch (Exception e) {
-            userInputOutput.printMessage(e.getMessage());
+        boolean validateConstructedLeagueObjects = createdLeagueValidation.checkCreatedLeagueObjectModel(leagueObjectModel);
+
+        boolean validateLeagueObjectModel = leagueObjectModel.checkIfLeagueModelValid(validation, leagueObjectModelValidation);
+
+        if(validateLeagueObjectModel && validateConstructedLeagueObjects){
+            return leagueObjectModel;
         }
-        return leagueObjectModel;
+        else return null;
+
     }
 }

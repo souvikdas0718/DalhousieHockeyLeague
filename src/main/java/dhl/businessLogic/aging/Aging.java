@@ -55,9 +55,8 @@ public class Aging implements IAging {
         }
     }
 
-    public Map<String, List<IPlayer>> selectPlayersToRetire(ITeam team) {
+    public Map<String, List<IPlayer>> selectPlayersToRetire(ITeam team,Map<String, List<IPlayer>> playersSelectedToRetire) {
         logger.debug("Initiate selection of players to retire");
-        Map<String, List<IPlayer>> playersSelectedToRetire = new HashMap<>();
         playersSelectedToRetire.put(team.getTeamName(), retirementAlgorithmBasedOnAge(team.getPlayers()));
         return playersSelectedToRetire;
     }

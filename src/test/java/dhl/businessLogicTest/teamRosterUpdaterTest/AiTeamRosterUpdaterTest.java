@@ -1,4 +1,4 @@
-package dhl.businessLogicTest.simulationStateMachineTest;
+package dhl.businessLogicTest.teamRosterUpdaterTest;
 
 import dhl.businessLogic.leagueModel.LeagueObjectModel;
 import dhl.businessLogic.leagueModel.PlayerPosition;

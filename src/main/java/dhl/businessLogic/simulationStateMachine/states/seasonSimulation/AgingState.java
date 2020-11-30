@@ -7,7 +7,6 @@ import dhl.businessLogic.aging.interfaceAging.ILeagueSchedule;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
-import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,11 +16,9 @@ public class AgingState implements ISimulationSeasonState {
     public static Logger logger = LogManager.getLogger(AgingState.class);
     static AgingAbstractFactory agingFactory;
     SimulationContext simulationContext;
-    IUserInputOutput userInputOutput;
 
     public AgingState(SimulationContext simulationContext) {
         this.simulationContext = simulationContext;
-        userInputOutput = IUserInputOutput.getInstance();
         agingFactory = AgingAbstractFactory.instance();
     }
 
@@ -30,8 +27,6 @@ public class AgingState implements ISimulationSeasonState {
 
         LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
         LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());
-        System.out.println("Current Date " + currentDate);
-        System.out.println("Get no of days " + simulationContext.getNumberOfDays());
         leagueSchedule.initiateAging(simulationContext.getNumberOfDays(), currentDate);
 
     }

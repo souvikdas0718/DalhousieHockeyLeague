@@ -14,6 +14,8 @@ import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.factory.S
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.SimulateGameState;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.factory.SeasonSimulationStateFactory;
+import dhl.businessLogic.simulationStateMachine.states.standings.factory.StandingsAbstractFactory;
+import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandingSystem;
 import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandings;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,6 +41,8 @@ public class SimulateGameStateTest {
     SchedulerAbstractFactory schedulerAbstractFactory;
     LeagueObjectModel20TeamMocks model20TeamMocks;
     IScheduler scheduler;
+    StandingsAbstractFactory standingsAbstractFactory;
+    IStandingSystem standingSystem;
 
     @BeforeEach
     public void initObject() {
@@ -50,13 +54,14 @@ public class SimulateGameStateTest {
         gameConfigMock = new GameConfigMock();
         ourGameConfig = gameConfigMock.getGameConfigMock();
         injuryCheckTeams = modelMocks.getTeamArrayMock();
-
         schedulerAbstractFactory = SchedulerAbstractFactory.instance();
         model20TeamMocks = mockAbstractFactory.getLeagueObjectModel20TeamMock();
         model20TeamMocks.leagueModel20TeamGeneralStandings();
         scheduler = schedulerAbstractFactory.getScheduler();
         seasonSimulationStateFactory = (SeasonSimulationStateFactory) SeasonSimulationStateFactory.instance();
         simulateGameState = (SimulateGameState) seasonSimulationStateFactory.getSimulateGameState(simulationContext);
+        standingsAbstractFactory = StandingsAbstractFactory.instance();
+        standingSystem = standingsAbstractFactory.getStandingSystem();
     }
 
     @Test
@@ -80,7 +85,7 @@ public class SimulateGameStateTest {
     public void seasonStateProcessTest() {
         LocalDate startOfSimulation = LocalDate.of(2020, 10, 1);
         simulationContext.setStartOfSimulation(startOfSimulation);
-        simulationContext.setNumberOfDays(10);
+        simulationContext.setNumberOfDays(195);
         ILeagueObjectModel league = model20TeamMocks.getLeagueData();
         IScheduler scheduler = schedulerAbstractFactory.getScheduler();
         ArrayList<IStandings> standings = model20TeamMocks.getGeneralStandings();
@@ -98,27 +103,13 @@ public class SimulateGameStateTest {
                 TemporalAdjusters.next(DayOfWeek.WEDNESDAY));
         scheduler.setPlayOffStartDate(playOffStarts);
         scheduler.playOffs(standings, league);
+        standingSystem.setStandingsList(scheduler.getGameStandings());
         simulationContext.setRegularScheduler(scheduler);
         simulationContext.setGameConfig(ourGameConfig);
+        simulationContext.setMatchToSimulate(simulationContext.getRegularScheduler().getPlayOffScheduleRound1().get(0));
         simulateGameState = (SimulateGameState) seasonSimulationStateFactory.getSimulateGameState(simulationContext);
-//        simulateGameState.seasonStateProcess();
-        Assertions.assertTrue(scheduler.getGameStandings().get(0).getTeam().getTeamName().equals("Bruins"));
-        Assertions.assertFalse(scheduler.getGameStandings().get(0).getLoss() == 4);
-        Assertions.assertTrue(scheduler.getGameStandings().get(16).getTeam().getTeamName().equals("Oilers"));
-        Assertions.assertFalse(scheduler.getGameStandings().get(16).getWins() == 44);
-        Assertions.assertFalse(scheduler.getGameStandings().get(16).getPoints() == 88);
-
-        simulationContext.setNumberOfDays(195);
-        simulateGameState = (SimulateGameState) seasonSimulationStateFactory.getSimulateGameState(simulationContext);
-//        simulateGameState.seasonStateProcess();
-
-        simulationContext.setNumberOfDays(196);
-        simulateGameState = (SimulateGameState) seasonSimulationStateFactory.getSimulateGameState(simulationContext);
-//        simulateGameState.seasonStateProcess();
-        int lengthOfPlayOffList = scheduler.getPlayOffScheduleRound1().size();
-
-        Assertions.assertFalse(scheduler.getPlayOffScheduleRound1().get(lengthOfPlayOffList - 1).getTeamOne().getTeamName().equals("BlueJackets"));
-        Assertions.assertFalse(scheduler.getPlayOffScheduleRound1().get(lengthOfPlayOffList - 1).getTeamTwo().getTeamName().equals("Maple"));
+        simulateGameState.seasonStateProcess();
+        Assertions.assertNotNull(simulateGameState.getSimulationContext().getFinalSchedule());
     }
 
     @Test

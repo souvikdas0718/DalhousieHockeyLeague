@@ -60,6 +60,8 @@ public interface IScheduler {
 //
 //    public void setFinals(List<ISeasonSchedule> finals);
 
+    public void setFullSeasonSchedule(List<ISeasonSchedule> fullSeasonSchedule);
+
     public LocalDate getCurrentDate();
 
     public void setCurrentDate(LocalDate currentDate);

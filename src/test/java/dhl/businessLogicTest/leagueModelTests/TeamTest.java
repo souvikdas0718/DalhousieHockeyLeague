@@ -86,6 +86,26 @@ public class TeamTest {
         Assertions.assertEquals(15, team.getTeamPoint());
     }
 
+
+    @Test
+    public void getTOTALTEAMSIZETest() {
+        Assertions.assertEquals(30,team.getTOTALTEAMSIZE());
+    }
+
+    @Test
+    public void getTOTALGOALIESTest() {
+        Assertions.assertEquals(4,team.getTOTALGOALIES());
+    }
+
+    @Test
+    public void getTOTALFORWARDSTest() {
+        Assertions.assertEquals(16,team.getTOTALFORWARDS());
+    }
+    @Test
+    public void getTOTALDEFENSETest() {
+        Assertions.assertEquals(10,team.getTOTALDEFENSE());
+    }
+
     @Test
     public void setActiveRosterTest(){
         Assertions.assertEquals(20, team.getActiveRoster().size());
@@ -161,7 +181,6 @@ public class TeamTest {
         team = (Team) teamMock.getInvalidSizeTeam();
         Assertions.assertFalse(team.checkTeamPlayersCount());
     }
-
 
     @AfterEach()
     public void destroyObject() {
