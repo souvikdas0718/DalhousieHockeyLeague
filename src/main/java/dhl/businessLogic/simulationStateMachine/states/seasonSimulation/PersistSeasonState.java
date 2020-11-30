@@ -10,6 +10,7 @@ import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class PersistSeasonState implements ISimulationSeasonState {
@@ -37,7 +38,12 @@ public class PersistSeasonState implements ISimulationSeasonState {
         ISerializeLeagueObjectModel serializeLeagueObjectModel = factorySerialize.createSerializeLeagueObjectModel("src/SerializedJsonFiles/");
         ILeagueObjectModel leagueObjectModel = simulationContext.getInMemoryLeague();
         logger.debug("Calling the update League Model method to store the current game state in JSON file");
-        leagueObjectModel.updateLeagueObjectModel(serializeLeagueObjectModel);
+        try {
+            leagueObjectModel.updateLeagueObjectModel(serializeLeagueObjectModel);
+        } catch (IOException e) {
+            logger.error(e.getMessage());
+            simulationContext.seasonStateExitProcess();
+        }
     }
 
     @Override

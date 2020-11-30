@@ -32,6 +32,7 @@ public class SaveObserver extends IGameObserver {
         averageSaves = Double.valueOf(countSaves/saves.size());
         IUserInputOutput userInputOutput = UserInputOutput.getInstance();
         userInputOutput.printMessage("Saves" + averageSaves);
+
         return  averageSaves;
     }
 }

@@ -2,6 +2,7 @@ package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
+import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,9 +15,12 @@ public class AdvanceToNextSeasonState implements ISimulationSeasonState {
     private static final int YEAR = 1;
     private static final Logger logger = LogManager.getLogger(AdvanceToNextSeasonState.class);
     SimulationContext simulationContext;
+    IUserInputOutput userInputOutput;
+
 
     public AdvanceToNextSeasonState(SimulationContext simulationContext) {
         this.simulationContext = simulationContext;
+        userInputOutput = IUserInputOutput.getInstance();
     }
 
     public SimulationContext getSimulationContext() {
@@ -30,6 +34,7 @@ public class AdvanceToNextSeasonState implements ISimulationSeasonState {
     @Override
     public void seasonStateProcess() {
         logger.info("Into the state process of Advance to next season");
+
         simulationContext.setYear(simulationContext.getYear() + YEAR);
         LocalDate endOfSeason = LocalDate.of(simulationContext.getYear(), ENDOFSEASONMONTH, ENDOFSEASONDAY);
         simulationContext.setEndOfSimulation(endOfSeason);

@@ -10,16 +10,17 @@ import dhl.businessLogicTest.agingTest.mocks.AgingMock;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
 import dhl.businessLogicTest.leagueModelTests.mocks.TeamMock;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
+import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class RetirementTest {
     Retirement retirement;
@@ -66,7 +67,7 @@ public class RetirementTest {
     }
 
     @Test
-    public void initiateFreeAgentRetirementTest()  {
+    public void initiateFreeAgentRetirementTest() throws IOException, ParseException {
         Map<String, List<IPlayer>> playersSelectedToRetire = new HashMap<>();
         List<IPlayer> players = new ArrayList<>();
         playersSelectedToRetire.put("Ontario", players);

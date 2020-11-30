@@ -15,5 +15,6 @@ public abstract class GameSimulationAbstractFactory {
     }
 
     public abstract IGameSimulation createGameSimulation();
+
     public abstract IGameSimulationAlgorithm createGameSimulationAlgorithm();
 }

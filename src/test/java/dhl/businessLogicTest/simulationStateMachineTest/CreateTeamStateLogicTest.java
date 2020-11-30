@@ -7,7 +7,8 @@ import dhl.businessLogic.leagueModel.LeagueObjectModelValidation;
 import dhl.businessLogic.leagueModel.Team;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogic.simulationStateMachine.GameContext;
-import dhl.businessLogic.simulationStateMachine.states.CreateTeamStateLogic;
+import dhl.businessLogic.simulationStateMachine.states.StatesAbstractFactory;
+import dhl.businessLogic.simulationStateMachine.states.interfaces.ICreateTeamStateLogic;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
 import dhl.inputOutput.importJson.serializeDeserialize.SerializeDeserializeAbstractFactory;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
@@ -22,7 +23,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class CreateTeamStateLogicTest {
 
     GameContext ourGame;
-    CreateTeamStateLogic testClassObject;
+    StatesAbstractFactory statesAbstractFactory;
+    ICreateTeamStateLogic testClassObject;
     LeagueObjectModelMocks leagueObjectModelMocks;
     private ILeagueObjectModel inMemoryLeague;
     LeagueModelMockAbstractFactory factory;
@@ -31,7 +33,8 @@ public class CreateTeamStateLogicTest {
     @BeforeEach
     public void initObject() {
         ourGame = new GameContext();
-        testClassObject = new CreateTeamStateLogic();
+        statesAbstractFactory = StatesAbstractFactory.instance();
+        testClassObject = statesAbstractFactory.createCreateTeamStateLogic();
         leagueObjectModelMocks = new LeagueObjectModelMocks();
         inMemoryLeague = leagueObjectModelMocks.getLeagueObjectMock();
         factory = LeagueModelMockAbstractFactory.instance();
@@ -50,11 +53,6 @@ public class CreateTeamStateLogicTest {
         objLeagueObjectModel = testClassObject.saveleagueObject(ourGame, inMemoryLeague, leagueObjectModelInput);
 
         Assertions.assertEquals("Dhl", objLeagueObjectModel.getLeagueName());
-
-        inMemoryLeague = null;
-        objLeagueObjectModel = testClassObject.saveleagueObject(ourGame, inMemoryLeague, leagueObjectModelInput);
-
-        Assertions.assertEquals(false, ourGame.isGameInProgress());
     }
 
     @Test

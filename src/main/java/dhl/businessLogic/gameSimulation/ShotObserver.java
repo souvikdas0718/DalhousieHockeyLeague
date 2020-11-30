@@ -32,6 +32,7 @@ public class ShotObserver extends IGameObserver {
         averageShots = Double.valueOf(countShots/shots.size());
         IUserInputOutput userInputOutput = UserInputOutput.getInstance();
         userInputOutput.printMessage("Shots" + averageShots);
+
         return averageShots;
     }
 }
