@@ -25,6 +25,8 @@ public class Scheduler implements IScheduler {
     private static final int DAY = 1;
     private static final int FINALMATCHNUMBER = 14;
     private static final Logger logger = LogManager.getLogger(Scheduler.class);
+    SchedulerAbstractFactory schedulerAbstractFactory;
+    StandingsAbstractFactory standingsAbstractFactory;
     private List<ISeasonSchedule> fullSeasonSchedule;
     private List<ISeasonSchedule> playOffScheduleRound1;
     private LocalDate seasonStartDate;
@@ -37,8 +39,6 @@ public class Scheduler implements IScheduler {
     private List<IConference> conferences;
     private List<IDivision> divisions;
     private List<IStandings> gameStandings;
-    SchedulerAbstractFactory schedulerAbstractFactory;
-    StandingsAbstractFactory standingsAbstractFactory;
 
     public Scheduler() {
         fullSeasonSchedule = new ArrayList<>();
@@ -53,6 +53,10 @@ public class Scheduler implements IScheduler {
 
     public LocalDate getFinalMatchDate() {
         return finalMatchDate;
+    }
+
+    public void setFullSeasonSchedule(List<ISeasonSchedule> fullSeasonSchedule) {
+        this.fullSeasonSchedule = fullSeasonSchedule;
     }
 
     public void setFinalMatchDate(LocalDate finalMatchDate) {
@@ -216,7 +220,7 @@ public class Scheduler implements IScheduler {
         logger.debug("calling the addStandingToConference method");
         addStandingsToConferences(regularGamesStandings, conference1, conference2, divisionList, conference1StandingList, conference2StandingList, divisionStandingMap);
 
-        logger.debug("calling the generateRanks method for generating the ranings");
+        logger.debug("calling the generateRanks method for generating the rankings");
         generateRanks(standingSystem, conference1StandingList, conference2StandingList, divisionStandingMap);
 
         Map<Integer, List<IStandings>> conferenceWildCardListMap = new HashMap<>();

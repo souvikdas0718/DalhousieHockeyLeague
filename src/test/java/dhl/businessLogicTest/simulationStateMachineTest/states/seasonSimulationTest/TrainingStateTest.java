@@ -84,23 +84,18 @@ public class TrainingStateTest {
 
     @Test
     public void TrainingStateTest() {
-//        trainingState = new TrainingState(simulationContext);
         Assertions.assertNotNull(trainingState.getSimulationContext());
     }
 
     @Test
     public void getSimulationContextTest() {
-//        trainingState = new TrainingState(simulationContext);
         Assertions.assertNotNull(trainingState.getSimulationContext());
     }
 
     @Test
     public void setSimulationContextTest() {
-//        trainingState = new TrainingState(simulationContext);
-//        simulationContext = new SimulationContext(gameState);
         simulationContext.setYear(2022);
         trainingState.setSimulationContext(simulationContext);
-//        trainingState = (TrainingState) seasonSimulationStateFactory.getTrainingState(simulationContext);
         Assertions.assertTrue(trainingState.getSimulationContext().getYear() == 2022);
     }
 
@@ -110,7 +105,6 @@ public class TrainingStateTest {
         simulationContext.setGameConfig(gameConfig);
         simulationContext.setInjurySystem(injury);
         simulationContext.setInMemoryLeague(leagueObjectModel);
-//        trainingState = new TrainingState(simulationContext);
         trainingState = (TrainingState) seasonSimulationStateFactory.getTrainingState(simulationContext);
         trainingState.seasonStateProcess();
         Assertions.assertEquals(-1, trainingState.getSimulationContext().getInMemoryLeague().getConferences().get(0).getDivisions().get(0).getTeams().get(0).getPlayers().get(0).getPlayerInjuredDays());
@@ -121,37 +115,20 @@ public class TrainingStateTest {
         LocalDate startOfSimulation = LocalDate.of(2020, 9, 30);
         LocalDate seasonStartDate = LocalDate.of(2020, 10, 1);
         LocalDate regularSeasonEndDate = LocalDate.of(2021, 04, 3);
-        LocalDate playOffStartDate = LocalDate.of(2021, 04, 10);
-        LocalDate currentDate = LocalDate.now();
-        long numberOfDays = DAYS.between(startOfSimulation, currentDate);
 
-        scheduler.setSeasonStartDate(seasonStartDate);
+        simulationContext.setGameConfig(gameConfig);
+        simulationContext.setInjurySystem(injury);
+        simulationContext.setInMemoryLeague(leagueObjectModel);
+        simulationContext.setSeasonEndDate(regularSeasonEndDate);
+        simulationContext.setSeasonStartDate(startOfSimulation);
         scheduler.setSeasonEndDate(regularSeasonEndDate);
-        simulationContext.setPlayOffScheduleRound1(scheduler);
+        scheduler.setFullSeasonSchedule(scheduler.getPlayOffScheduleRound1());
+        simulationContext.setRegularScheduler(scheduler);
         simulationContext.setStartOfSimulation(startOfSimulation);
-        simulationContext.setNumberOfDays((int) numberOfDays);
+        simulationContext.setNumberOfDays(196);
         simulationContext.setYear(2020);
-
         trainingState = (TrainingState) seasonSimulationStateFactory.getTrainingState(simulationContext);
-//        trainingState = new TrainingState(simulationContext);
-//        trainingState.seasonStateExitProcess();
-//        Assertions.assertTrue(trainingState.getSimulationContext().getCurrentSimulation() == trainingState.getSimulationContext().getSimulateGame());
-
-        currentDate = playOffStartDate.plusDays(2);
-        numberOfDays = DAYS.between(startOfSimulation, currentDate);
-        simulationContext.setNumberOfDays((int) numberOfDays);
-        trainingState = (TrainingState) seasonSimulationStateFactory.getTrainingState(simulationContext);
-//        trainingState = new TrainingState(simulationContext);
-//        trainingState.seasonStateExitProcess();
-//        Assertions.assertTrue(trainingState.getSimulationContext().getCurrentSimulation() == trainingState.getSimulationContext().getAging());
-
-        LocalDate localDate = LocalDate.of(simulationContext.getYear() + 1, 02, 01);
-        LocalDate tradeDeadline = localDate.with(lastDayOfMonth()).with(previousOrSame(DayOfWeek.MONDAY));
-        numberOfDays = DAYS.between(startOfSimulation, tradeDeadline) - 1;
-        simulationContext.setNumberOfDays((int) numberOfDays);
-        trainingState = (TrainingState) seasonSimulationStateFactory.getTrainingState(simulationContext);
-//        trainingState = new TrainingState(simulationContext);
-//        trainingState.seasonStateExitProcess();
-//        Assertions.assertTrue(trainingState.getSimulationContext().getCurrentSimulation() == trainingState.getSimulationContext().getSimulateGame());
+        trainingState.seasonStateExitProcess();
+        Assertions.assertNotNull(trainingState.getSimulationContext().getFinalSchedule());
     }
 }

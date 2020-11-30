@@ -18,6 +18,8 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 public class AgingStateTest {
 
     LeagueObjectModel20TeamMocks model20TeamMocks;
@@ -26,7 +28,7 @@ public class AgingStateTest {
     IScheduler scheduler;
     SimulationContext simulationContext;
     AgingState agingState;
-    GameContext gameState;
+//    GameContext gameState;
     ILeagueObjectModel leagueObjectModel;
     IGameConfig gameConfig;
     MockAbstractFactory mockAbstractFactory;
@@ -44,7 +46,7 @@ public class AgingStateTest {
         leagueObjectModel = leagueMock.getLeagueObjectModel();
         gameConfig = leagueMock.getGameplayConfig();
         contextAbstractFactory = ContextAbstractFactory.instance();
-        gameState = contextAbstractFactory.createGameContext();
+//        gameState = contextAbstractFactory.createGameContext();
         simulationContext = contextAbstractFactory.createSimulationContext();
         seasonSimulationStateFactory = (SeasonSimulationStateFactory) SeasonSimulationStateFactory.instance();
         agingState = (AgingState) seasonSimulationStateFactory.getAgingState(simulationContext);
@@ -73,7 +75,7 @@ public class AgingStateTest {
         simulationContext.setGameConfig(gameConfig);
         simulationContext.setInMemoryLeague(leagueObjectModel);
         simulationContext.setNumberOfDays(365);
-        simulationContext.setStartOfSimulation(LocalDate.of(2020,10,01));
+        simulationContext.setStartOfSimulation(LocalDate.of(2020, 10, 01));
         agingState = (AgingState) seasonSimulationStateFactory.getAgingState(simulationContext);
         agingState.seasonStateProcess();
         Assertions.assertTrue(agingState.getSimulationContext().getInMemoryLeague().getFreeAgents().get(0).getPlayerName().equals("Player0"));
@@ -90,12 +92,11 @@ public class AgingStateTest {
     public void seasonStateExitProcessTest() {
         LocalDate startOfSimulation = LocalDate.of(2020, 10, 1);
 
-        simulationContext.setPlayOffScheduleRound1(scheduler);
+        simulationContext.setGameConfig(gameConfig);
+        simulationContext.setInMemoryLeague(leagueObjectModel);
         simulationContext.setStartOfSimulation(startOfSimulation);
         agingState = (AgingState) seasonSimulationStateFactory.getAgingState(simulationContext);
         agingState.seasonStateExitProcess();
-
-        Assertions.assertFalse(agingState.getSimulationContext().getCurrentSimulation() == agingState.getSimulationContext().getPersistsSeason());
-
+        Assertions.assertTrue(agingState.getSimulationContext().getCurrentSimulation() == agingState.getSimulationContext().getPersistsSameSeason());
     }
 }
