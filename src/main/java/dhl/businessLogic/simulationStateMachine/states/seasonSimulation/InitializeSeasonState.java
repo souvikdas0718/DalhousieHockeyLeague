@@ -52,7 +52,6 @@ public class InitializeSeasonState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateProcess() {
-        userInputOutput.printMessage("Into the state process of Initialize season");
         logger.info("Into the state process of Initialize season");
         LocalDate simulationStartDate = LocalDate.of(simulationContext.getYear(), SIMULATESTARTMONTH, SIMULATESTARTDAY);
         simulationContext.setStartOfSimulation(simulationStartDate);
@@ -68,7 +67,6 @@ public class InitializeSeasonState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateExitProcess() {
-        userInputOutput.printMessage("Into the exit process of Initialize season");
         logger.info("Into the exit process of Initialize season");
         simulationContext.setCurrentSimulation(simulationContext.getAdvanceTime());
     }

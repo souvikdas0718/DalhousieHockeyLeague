@@ -33,14 +33,12 @@ public class AdvanceTimeState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateProcess() {
-        userInputOutput.printMessage("Into the state process of Advance Time State season");
         logger.info("Into the state process of Advance Time State season");
         simulationContext.setNumberOfDays(simulationContext.getNumberOfDays() + 1);
     }
 
     @Override
     public void seasonStateExitProcess() {
-        userInputOutput.printMessage("Into the exit process of Advance Time State season");
         logger.info("Into the exit process of Advance Time State season");
         LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
         LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());

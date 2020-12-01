@@ -8,12 +8,16 @@ import dhl.businessLogic.aging.agingFactory.AgingAbstractFactory;
 import dhl.businessLogic.aging.interfaceAging.IInjury;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
+import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.factory.ContextAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.InjuryCheckState;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.factory.SeasonSimulationStateFactory;
+import dhl.businessLogic.simulationStateMachine.states.standings.factory.StandingsAbstractFactory;
+import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandingSystem;
+import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandings;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
 import dhl.businessLogicTest.leagueModelTests.mocks.GameplayConfigMock;
 import dhl.businessLogicTest.leagueModelTests.mocks.LeagueMock;
@@ -23,6 +27,8 @@ import org.junit.jupiter.api.Test;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
@@ -44,6 +50,8 @@ public class InjuryCheckStateTest {
     ILeagueObjectModel leagueObjectModel;
     AgingAbstractFactory agingFactory;
     IInjury injury;
+    IStandingSystem standingSystem;
+    StandingsAbstractFactory standingsAbstractFactory;
 
     @BeforeEach
     public void initObject() throws Exception {
@@ -64,6 +72,8 @@ public class InjuryCheckStateTest {
         leagueObjectModel = leagueMock.getLeagueObjectModel();
         GameplayConfigMock gameplayConfigMock = leagueMockFactory.createGameplayConfig();
         gameConfig = gameplayConfigMock.getAgingGameConfig();
+        standingsAbstractFactory = StandingsAbstractFactory.instance();
+        standingSystem = standingsAbstractFactory.getStandingSystem();
     }
 
     @Test
@@ -89,9 +99,14 @@ public class InjuryCheckStateTest {
         simulationContext.setGameConfig(gameConfig);
         simulationContext.setInjurySystem(injury);
         simulationContext.setInMemoryLeague(leagueObjectModel);
+        standingSystem.createStandings(leagueObjectModel);
+        List<ITeam> teamList = new ArrayList<>();
+        teamList.add(standingSystem.getStandingsList().get(0).getTeam());
+        teamList.add(standingSystem.getStandingsList().get(1).getTeam());
+        simulationContext.setTeamsPlayingInGame(teamList);
         injuryCheckState = (InjuryCheckState) seasonSimulationStateFactory.getInjuryCheckState(simulationContext);
         injuryCheckState.seasonStateProcess();
-        Assertions.assertEquals(-1, injuryCheckState.getSimulationContext().getInMemoryLeague().getConferences().get(0).getDivisions().get(0).getTeams().get(0).getPlayers().get(0).getPlayerInjuredDays());
+        Assertions.assertEquals(injuryCheckState.getSimulationContext().getTeamsPlayingInGame().size(), 0);
 
     }
 

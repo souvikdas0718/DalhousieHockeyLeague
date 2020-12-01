@@ -43,7 +43,6 @@ public class GeneratePlayOffScheduleState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateProcess() {
-        userInputOutput.printMessage("Into the state process of General Playoffs season");
         logger.info("Into the state process of General Playoffs season");
         scheduler = simulationContext.getRegularScheduler();
         LocalDate playOffStartDate = LocalDate.of(simulationContext.getYear() + YEAR, PLAYOFFSTARTMONTH, PLAYOFFSTARTDAY);
@@ -55,7 +54,6 @@ public class GeneratePlayOffScheduleState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateExitProcess() {
-        userInputOutput.printMessage("Into the exit process of General Playoffs season");
         logger.info("Into the exit process of General Playoffs season");
         simulationContext.setCurrentSimulation(simulationContext.getTraining());
     }

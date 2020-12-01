@@ -27,6 +27,7 @@ public class SchedulerTest {
     LeagueObjectModelMocks mockLeagueObjectModel;
     LeagueObjectModel20TeamMocks model20TeamMocks;
     IScheduler scheduler;
+    IScheduler scheduler2;
     List<IPlayer> statistics;
     MockAbstractFactory mockAbstractFactory;
     SchedulerAbstractFactory schedulerAbstractFactory;
@@ -40,8 +41,10 @@ public class SchedulerTest {
         model20TeamMocks = mockAbstractFactory.getLeagueObjectModel20TeamMock();
         model20TeamMocks.leagueModel20TeamGeneralStandings();
         scheduler = schedulerAbstractFactory.getScheduler();
+        scheduler2 = schedulerAbstractFactory.getScheduler();
         statistics = mockLeagueObjectModel.getPlayerArrayMock();
         leagueModelAbstractFactory = LeagueModelAbstractFactory.instance();
+        scheduler2 = model20TeamMocks.leagueModel20TeamPlayoffsSchedules();
     }
 
     @Test
@@ -102,6 +105,12 @@ public class SchedulerTest {
         LocalDate endOfRegularSeasonDate = endDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.SATURDAY));
         scheduler.setSeasonEndDate(endOfRegularSeasonDate);
         Assertions.assertTrue(scheduler.getSeasonEndDate().equals(endOfRegularSeasonDate));
+    }
+
+    @Test
+    public void setFullSeasonScheduleTest() {
+        scheduler2.setFullSeasonSchedule(scheduler2.getPlayOffScheduleRound1());
+        Assertions.assertNotNull(scheduler2.getFullSeasonSchedule());
     }
 
     @Test
