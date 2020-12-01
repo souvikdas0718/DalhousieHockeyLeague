@@ -5,6 +5,7 @@ import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.trade.interfaces.ITradeType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import java.util.ArrayList;
 
 public class ExchangingPlayerTradeOffer extends TradeOfferAbstract {
@@ -18,20 +19,20 @@ public class ExchangingPlayerTradeOffer extends TradeOfferAbstract {
         super(offeringTeam, receivingTeam, playersWantedInExchange);
         this.currentTradeType = tradeType;
         this.playersOffered = playersOffered;
-        logger.info("Player Swap Trade offer made between "+offeringTeam.getTeamName()+" and "+ receivingTeam.getTeamName());
+        logger.info("Player Swap Trade offer made between " + offeringTeam.getTeamName() + " and " + receivingTeam.getTeamName());
     }
 
     public void implementTrade() {
-        if (checkIfTradeAccepted()){
-            logger.info("Implementing trade between "+offeringTeam.getTeamName()+" and "+ receivingTeam.getTeamName());
+        if (checkIfTradeAccepted()) {
+            logger.info("Implementing trade between " + offeringTeam.getTeamName() + " and " + receivingTeam.getTeamName());
             for (IPlayer player : playersOffered) {
-                if (playerFound(player)){
+                if (playerFound(player)) {
                     receivingTeam.getPlayers().add(player);
                     offeringTeam.getPlayers().remove(player);
                 }
             }
             for (IPlayer player : playersWantedInExchange) {
-                if (playerFound(player)){
+                if (playerFound(player)) {
                     receivingTeam.getPlayers().remove(player);
                     offeringTeam.getPlayers().add(player);
                 }
@@ -40,19 +41,19 @@ public class ExchangingPlayerTradeOffer extends TradeOfferAbstract {
             currentTradeType.validateTeamRosterAfterTrade(receivingTeam);
         }
     }
+
     public ArrayList<IPlayer> getOfferingPlayers() {
         return playersOffered;
     }
 
-    public boolean checkIfTradeAccepted(){
+    public boolean checkIfTradeAccepted() {
         return currentTradeType.isTradeAccepted(playersOffered, playersWantedInExchange, receivingTeam);
     }
 
-    public boolean playerFound(IPlayer player){
-        if (player == null){
+    public boolean playerFound(IPlayer player) {
+        if (player == null) {
             return false;
-        }
-        else {
+        } else {
             return true;
         }
     }

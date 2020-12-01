@@ -1,8 +1,8 @@
 package dhl.businessLogicTest.simulationStateMachineTest.states.seasonSimulationTest;
 
-import dhl.Mocks.GameConfigMock;
-import dhl.Mocks.LeagueObjectModel20TeamMocks;
-import dhl.Mocks.factory.MockAbstractFactory;
+import dhl.mocks.GameConfigMock;
+import dhl.mocks.LeagueObjectModel20TeamMocks;
+import dhl.mocks.factory.MockAbstractFactory;
 import dhl.businessLogic.aging.Injury;
 import dhl.businessLogic.aging.agingFactory.AgingAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
@@ -20,12 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-
-import static java.time.temporal.ChronoUnit.DAYS;
-import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
-import static java.time.temporal.TemporalAdjusters.previousOrSame;
 
 public class TrainingStateTest {
 

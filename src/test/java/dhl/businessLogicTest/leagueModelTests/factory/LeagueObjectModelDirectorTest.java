@@ -1,8 +1,8 @@
 package dhl.businessLogicTest.leagueModelTests.factory;
 
-import dhl.Mocks.JsonFilePathMock;
-import dhl.Mocks.LeagueObjectModelMocks;
-import dhl.Mocks.factory.MockAbstractFactory;
+import dhl.mocks.JsonFilePathMock;
+import dhl.mocks.LeagueObjectModelMocks;
+import dhl.mocks.factory.MockAbstractFactory;
 import dhl.businessLogic.leagueModel.factory.LeagueObjectModelBuilder;
 import dhl.businessLogic.leagueModel.factory.LeagueObjectModelDirector;
 import dhl.businessLogic.leagueModel.factory.interfaceFactory.ILeagueObjectModelBuilder;

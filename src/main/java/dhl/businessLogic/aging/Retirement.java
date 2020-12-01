@@ -36,14 +36,14 @@ public class Retirement implements IRetirement {
         this.leagueObjectModel = leagueObjectModel;
     }
 
-    public void initiateRetirement(Map<String, List<IPlayer>> playersToRetire, List<IPlayer> freeAgentsToRetire,ILeagueObjectModel leagueObjectModel) throws IOException, ParseException {
+    public void initiateRetirement(Map<String, List<IPlayer>> playersToRetire, List<IPlayer> freeAgentsToRetire, ILeagueObjectModel leagueObjectModel) throws IOException, ParseException {
         logger.debug("Executing retirement algorithm for players");
-        this.leagueObjectModel=leagueObjectModel;
+        this.leagueObjectModel = leagueObjectModel;
         retireFreeAgents(freeAgentsToRetire, leagueObjectModel.getFreeAgents());
         for (IConference conference : this.leagueObjectModel.getConferences()) {
             for (IDivision division : conference.getDivisions()) {
                 for (ITeam team : division.getTeams()) {
-                    if(playersToRetire.containsKey(team.getTeamName())){
+                    if (playersToRetire.containsKey(team.getTeamName())) {
                         if (playersToRetire.get(team.getTeamName()).size() > 0) {
                             retirePLayers(playersToRetire.get(team.getTeamName()), team, this.leagueObjectModel.getFreeAgents());
                         }
@@ -83,14 +83,13 @@ public class Retirement implements IRetirement {
         }
         for (IPlayer player : team.getPlayers()) {
             if (retiringPlayerNames.indexOf(player.getPlayerName()) >= 0) {
-                List<IPlayer> freeAgentsOfSamePosition = freeAgents.stream().filter((IPlayer agent) ->  agent.getPosition() == player.getPosition()).collect(Collectors.toList());
-                if(freeAgentsOfSamePosition.size()>0){
+                List<IPlayer> freeAgentsOfSamePosition = freeAgents.stream().filter((IPlayer agent) -> agent.getPosition() == player.getPosition()).collect(Collectors.toList());
+                if (freeAgentsOfSamePosition.size() > 0) {
                     sortFreeAgentsByStrength(freeAgentsOfSamePosition);
-                    newlyAddedPlayers.add(selectPlayerFromFreeAgent(player,freeAgentsOfSamePosition, freeAgents));
-                }
-                else if(freeAgents.size()>0){
+                    newlyAddedPlayers.add(selectPlayerFromFreeAgent(player, freeAgentsOfSamePosition, freeAgents));
+                } else if (freeAgents.size() > 0) {
                     sortFreeAgentsByStrength(freeAgents);
-                    newlyAddedPlayers.add(selectPlayerFromFreeAgent(player,freeAgents, freeAgents));
+                    newlyAddedPlayers.add(selectPlayerFromFreeAgent(player, freeAgents, freeAgents));
                 }
             }
         }
@@ -102,7 +101,7 @@ public class Retirement implements IRetirement {
         }
     }
 
-    public IPlayer selectPlayerFromFreeAgent(IPlayer player,List<IPlayer> freeAgentsAvailable, List<IPlayer> allFreeAgents) {
+    public IPlayer selectPlayerFromFreeAgent(IPlayer player, List<IPlayer> freeAgentsAvailable, List<IPlayer> allFreeAgents) {
         logger.debug("Select players to replace from free agent");
         IPlayer selectedAgent;
 
@@ -120,7 +119,7 @@ public class Retirement implements IRetirement {
     }
 
     public void removeSelectedAgentFromFreeAgents(List<IPlayer> freeAgents, IPlayer selectedAgent) {
-        logger.debug("Remove selected free agent"+selectedAgent.getPlayerName());
+        logger.debug("Remove selected free agent" + selectedAgent.getPlayerName());
         freeAgents.removeIf((IPlayer agent) -> (agent.getPlayerName() == selectedAgent.getPlayerName()));
 
     }
@@ -134,11 +133,11 @@ public class Retirement implements IRetirement {
 
     public void insertVeterans(Map<String, List<IPlayer>> playersToRetire, List<IPlayer> freeAgentsToRetire) throws IOException, ParseException {
         logger.debug("Inserting retired players");
-        List<IPlayer> retiredPlayers= new ArrayList<>();
+        List<IPlayer> retiredPlayers = new ArrayList<>();
         retiredPlayers.addAll(freeAgentsToRetire);
         for (String teamName : playersToRetire.keySet()) {
             retiredPlayers.addAll(playersToRetire.get(teamName));
         }
-        serializeModel.updateSerializedPlayerListToJsonFile(retiredPlayers,leagueObjectModel.getLeagueName());
+        serializeModel.updateSerializedPlayerListToJsonFile(retiredPlayers, leagueObjectModel.getLeagueName());
     }
 }

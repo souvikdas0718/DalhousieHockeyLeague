@@ -1,10 +1,10 @@
 package dhl.businessLogicTest.simulationStateMachineTest.states.standings;
 
 
-import dhl.Mocks.LeagueObjectModel20TeamMocks;
-import dhl.Mocks.LeagueObjectModelMocks;
-import dhl.Mocks.RegularSeasonStandingListMocks;
-import dhl.Mocks.factory.MockAbstractFactory;
+import dhl.mocks.LeagueObjectModel20TeamMocks;
+import dhl.mocks.LeagueObjectModelMocks;
+import dhl.mocks.RegularSeasonStandingListMocks;
+import dhl.mocks.factory.MockAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.ICoach;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.simulationStateMachine.states.standings.factory.StandingsAbstractFactory;

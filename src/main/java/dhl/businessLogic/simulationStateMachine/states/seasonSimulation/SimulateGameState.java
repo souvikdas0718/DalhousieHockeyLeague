@@ -52,7 +52,7 @@ public class SimulateGameState implements ISimulationSeasonState {
     }
 
     private void winDecider(LocalDate currentDate, IScheduler scheduler) {
-        logger.info("Into winDecider method, current Date: "+ currentDate);
+        logger.info("Into winDecider method, current Date: " + currentDate);
         ITeam winningTeam;
         ITeam losingTeam;
         if (currentDate.isAfter(scheduler.getSeasonStartDate().minusDays(DAY)) && currentDate.isBefore(scheduler.getSeasonEndDate().plusDays(DAY))) {
@@ -67,17 +67,16 @@ public class SimulateGameState implements ISimulationSeasonState {
             HashMap<String, Integer> mapResult = gameSimulationAlgorithm.getResultOfGame(match.getTeamOne(), match.getTeamTwo());
             subject.setState(mapResult);
 
-            if(mapResult.get("Winner").toString().equals("1")){
+            if (mapResult.get("Winner").toString().equals("1")) {
                 winningTeam = match.getTeamOne();
                 losingTeam = match.getTeamTwo();
-            }
-            else {
+            } else {
                 winningTeam = match.getTeamTwo();
                 losingTeam = match.getTeamOne();
             }
 
-            userInputOutput.printMessage("regular season winning team: "+ winningTeam.getTeamName());
-            userInputOutput.printMessage("regular season losing team: "+ losingTeam.getTeamName());
+            userInputOutput.printMessage("regular season winning team: " + winningTeam.getTeamName());
+            userInputOutput.printMessage("regular season losing team: " + losingTeam.getTeamName());
             logger.debug("updating the winning and losing teams standings in Standing System class.");
             standingSystem.updateWinningStandings(winningTeam);
             standingSystem.updateLosingStandings(losingTeam);
@@ -93,13 +92,13 @@ public class SimulateGameState implements ISimulationSeasonState {
                 winningTeam = playOffMatch.getTeamOne();
                 if (randomNumber < RANDOMWINCHANCE) {
                     winningTeam = playOffMatch.getTeamTwo();
-                    userInputOutput.printMessage("Playoff winning team: "+ winningTeam.getTeamName());
+                    userInputOutput.printMessage("Playoff winning team: " + winningTeam.getTeamName());
                 }
             } else {
                 winningTeam = playOffMatch.getTeamTwo();
                 if (randomNumber < RANDOMWINCHANCE) {
                     winningTeam = playOffMatch.getTeamOne();
-                    userInputOutput.printMessage("Playoff winning team: "+ winningTeam.getTeamName());
+                    userInputOutput.printMessage("Playoff winning team: " + winningTeam.getTeamName());
                 }
             }
             logger.debug("calling the gameWinner method of scheduler class to set the next playOff lists");

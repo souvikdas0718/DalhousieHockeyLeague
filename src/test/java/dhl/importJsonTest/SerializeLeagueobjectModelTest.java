@@ -1,6 +1,6 @@
 package dhl.importJsonTest;
 
-import dhl.Mocks.LeagueObjectModelMocks;
+import dhl.mocks.LeagueObjectModelMocks;
 import dhl.importJsonTest.mocks.SerializedJsonMock;
 import dhl.businessLogic.leagueModel.LeagueObjectModel;
 import dhl.businessLogic.leagueModel.Player;
@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 class SerializeLeagueobjectModelTest {
-    private static final String filepath = "src/test/java/dhl/Mocks/";
+    private static final String filepath = "src/test/java/dhl/mocks/";
     private static final String extension = ".json";
     private final String playerFileName = "--RetiredPlayersInLeague.json";
 

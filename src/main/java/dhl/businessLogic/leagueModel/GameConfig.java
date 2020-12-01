@@ -133,8 +133,8 @@ public class GameConfig implements IGameConfig {
         return String.valueOf(gameConfigChildObject.get(ourObjectKey));
     }
 
-    public boolean isJsonValuePresent(Object jsonValue){
-        if(jsonValue == null || jsonValue.toString().isEmpty() ){
+    public boolean isJsonValuePresent(Object jsonValue) {
+        if (jsonValue == null || jsonValue.toString().isEmpty()) {
             return false;
         }
         return true;

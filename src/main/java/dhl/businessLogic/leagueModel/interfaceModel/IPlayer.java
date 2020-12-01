@@ -14,7 +14,7 @@ public interface IPlayer {
 
     void setPlayerInjuredDays(int playerInjuredDays);
 
-    boolean isActive() ;
+    boolean isActive();
 
     void setActive(boolean active);
 

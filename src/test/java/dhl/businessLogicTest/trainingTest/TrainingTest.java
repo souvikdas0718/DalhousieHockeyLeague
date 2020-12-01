@@ -1,7 +1,7 @@
 package dhl.businessLogicTest.trainingTest;
 
-import dhl.Mocks.JsonFilePathMock;
-import dhl.Mocks.LeagueObjectModelMocks;
+import dhl.mocks.JsonFilePathMock;
+import dhl.mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.aging.Injury;
 import dhl.businessLogic.aging.interfaceAging.IInjury;
 import dhl.businessLogic.leagueModel.GameConfig;

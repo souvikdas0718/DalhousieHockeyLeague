@@ -1,7 +1,7 @@
 package dhl.businessLogicTest.simulationStateMachineTest;
 
-import dhl.Mocks.LeagueObjectModelMocks;
-import dhl.Mocks.MockDeserializeLeagueObjectModel;
+import dhl.mocks.LeagueObjectModelMocks;
+import dhl.mocks.MockDeserializeLeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.simulationStateMachine.GameContext;

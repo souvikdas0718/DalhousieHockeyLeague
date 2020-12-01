@@ -12,6 +12,6 @@ import java.util.Map;
 public interface IRetirement {
     ILeagueObjectModel getLeagueObjectModel();
 
-    void initiateRetirement(Map<String, List<IPlayer>> playersToRetire, List<IPlayer> freeAgentsToRetire,ILeagueObjectModel leagueObjectModel) throws IOException, ParseException;
+    void initiateRetirement(Map<String, List<IPlayer>> playersToRetire, List<IPlayer> freeAgentsToRetire, ILeagueObjectModel leagueObjectModel) throws IOException, ParseException;
 
 }

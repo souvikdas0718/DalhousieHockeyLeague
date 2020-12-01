@@ -11,11 +11,12 @@ public abstract class TradeOfferAbstract {
     public ITeam receivingTeam;
     public ArrayList<IPlayer> playersWantedInExchange;
 
-    public TradeOfferAbstract(ITeam offeringTeam, ITeam receivingTeam, ArrayList<IPlayer> playersWantedInExchange){
+    public TradeOfferAbstract(ITeam offeringTeam, ITeam receivingTeam, ArrayList<IPlayer> playersWantedInExchange) {
         this.offeringTeam = offeringTeam;
         this.receivingTeam = receivingTeam;
         this.playersWantedInExchange = playersWantedInExchange;
     }
+
     public ITeam getOfferingTeam() {
         return offeringTeam;
     }

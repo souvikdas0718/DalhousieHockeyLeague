@@ -26,7 +26,7 @@ public interface IPlayerStatistics {
 
     boolean isStatValueInvalid(double statValue);
 
-    void setDateOfBirth(int birthDay,int birthMonth,int birthYear);
+    void setDateOfBirth(int birthDay, int birthMonth, int birthYear);
 
     LocalDate getDateOfBirth();
 

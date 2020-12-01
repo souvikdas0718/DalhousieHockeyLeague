@@ -1,6 +1,6 @@
 package dhl.businessLogicTest.simulationStateMachineTest;
 
-import dhl.Mocks.LeagueObjectModelMocks;
+import dhl.mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.leagueModel.LeagueObjectModel;
 import dhl.businessLogic.leagueModel.LeagueObjectModelInput;
 import dhl.businessLogic.leagueModel.LeagueObjectModelValidation;
@@ -46,7 +46,7 @@ public class CreateTeamStateLogicTest {
         ILeagueObjectModelValidation validation = new LeagueObjectModelValidation();
         ITeam team = new Team("Ontario1", generalManager, leagueObjectModelMocks.getSingleCoach(), new ArrayList<>());
         SerializeDeserializeAbstractFactory serializeDeserializeAbstractFactory = SerializeDeserializeAbstractFactory.instance();
-        ISerializeLeagueObjectModel serializeLeagueObjectModel = serializeDeserializeAbstractFactory.createSerializeLeagueObjectModel("src/test/java/dhl/Mocks");
+        ISerializeLeagueObjectModel serializeLeagueObjectModel = serializeDeserializeAbstractFactory.createSerializeLeagueObjectModel("src/test/java/dhl/mocks");
         LeagueObjectModelInput leagueObjectModelInput = new LeagueObjectModelInput(inMemoryLeague.getLeagueName(), "Western", "Atlantic", team, validation, serializeLeagueObjectModel);
 
         ILeagueObjectModel objLeagueObjectModel = new LeagueObjectModel();

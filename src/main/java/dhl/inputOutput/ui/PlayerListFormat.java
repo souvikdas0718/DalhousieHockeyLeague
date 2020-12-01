@@ -14,12 +14,12 @@ public class PlayerListFormat implements IListFormat {
     IUserInputOutput ioObject;
     private static IListFormat singletonObject = null;
 
-    private PlayerListFormat(){
+    private PlayerListFormat() {
         ioObject = IUserInputOutput.getInstance();
     }
 
-    public static IListFormat getInstance(){
-        if (singletonObject == null){
+    public static IListFormat getInstance() {
+        if (singletonObject == null) {
             logger.debug("PlayerListFormat's instance created");
             singletonObject = new PlayerListFormat();
         }

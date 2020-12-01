@@ -1,7 +1,7 @@
 package dhl.businessLogicTest.tradeTest;
 
-import dhl.Mocks.GameConfigMock;
-import dhl.Mocks.LeagueObjectModelMocks;
+import dhl.mocks.GameConfigMock;
+import dhl.mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;

@@ -2,5 +2,6 @@ package dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfa
 
 public interface ISimulationSeasonState {
     void seasonStateProcess();
+
     void seasonStateExitProcess();
 }

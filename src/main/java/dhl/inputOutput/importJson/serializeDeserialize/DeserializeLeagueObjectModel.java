@@ -31,7 +31,7 @@ public class DeserializeLeagueObjectModel implements IDeserializeLeagueObjectMod
     String jsonFilePath;
     IUserInputOutput userInputOutput;
 
-    public DeserializeLeagueObjectModel(String inputJsonFilePath){
+    public DeserializeLeagueObjectModel(String inputJsonFilePath) {
         jsonFilePath = inputJsonFilePath;
         ImportJsonAbstractFactory importFactory = ImportJsonAbstractFactory.instance();
         userInputOutput = importFactory.createUserInputOutput();
@@ -43,7 +43,7 @@ public class DeserializeLeagueObjectModel implements IDeserializeLeagueObjectMod
         ICreateLeagueObjectModel createLeagueObjectModel = null;
         FileReader reader = null;
 
-        try{
+        try {
             reader = new FileReader(leagueObjectModelJsonPath);
 
             JSONParser jsonParser = new JSONParser();
@@ -52,7 +52,7 @@ public class DeserializeLeagueObjectModel implements IDeserializeLeagueObjectMod
             IGameConfig gameConfig = null;
             JSONObject jsonLeagueObjectModel = updateLeagueObjectModelJson(jsonLeagueObject);
             createLeagueObjectModel = new CreateLeagueObjectModel(jsonLeagueObjectModel);
-        }  finally {
+        } finally {
             reader.close();
         }
         return createLeagueObjectModel.getLeagueObjectModel();
@@ -63,7 +63,7 @@ public class DeserializeLeagueObjectModel implements IDeserializeLeagueObjectMod
         String playersJsonPath = jsonFilePath + leagueName + playerFileName;
         List<IPlayer> playerList = new ArrayList<>();
         FileReader reader = null;
-        try{
+        try {
             reader = new FileReader(playersJsonPath);
             JSONParser jsonParser = new JSONParser();
             JSONArray arrPlayers = null;
@@ -74,7 +74,7 @@ public class DeserializeLeagueObjectModel implements IDeserializeLeagueObjectMod
                 JSONObject existingPlayersJsonObject = (JSONObject) arrPlayersIterator.next();
                 JSONObject playerStatsJsonobject = (JSONObject) existingPlayersJsonObject.get("playerStats");
                 IPlayerStatistics playerStatistics = new PlayerStatistics
-                        ((int) (long) playerStatsJsonobject.get("skating") ,
+                        ((int) (long) playerStatsJsonobject.get("skating"),
                                 (int) (long) playerStatsJsonobject.get("shooting"),
                                 (int) (long) playerStatsJsonobject.get("checking"),
                                 (int) (long) playerStatsJsonobject.get("saving"));
@@ -85,8 +85,7 @@ public class DeserializeLeagueObjectModel implements IDeserializeLeagueObjectMod
                         playerStatistics
                 ));
             }
-        }
-        finally {
+        } finally {
             reader.close();
         }
         return playerList;

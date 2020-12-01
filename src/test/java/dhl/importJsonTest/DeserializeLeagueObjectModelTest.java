@@ -1,6 +1,6 @@
 package dhl.importJsonTest;
 
-import dhl.Mocks.LeagueObjectModelMocks;
+import dhl.mocks.LeagueObjectModelMocks;
 import dhl.importJsonTest.mocks.SerializedJsonMock;
 import dhl.businessLogic.leagueModel.LeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;

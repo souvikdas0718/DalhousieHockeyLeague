@@ -1,6 +1,5 @@
 package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 
-
 import dhl.businessLogic.aging.agingFactory.AgingAbstractFactory;
 import dhl.businessLogic.aging.interfaceAging.ILeagueSchedule;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;

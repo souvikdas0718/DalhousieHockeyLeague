@@ -8,26 +8,21 @@ import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 
-
-public abstract class AgingAbstractFactory{
+public abstract class AgingAbstractFactory {
 
     private static AgingAbstractFactory uniqueInstance = null;
 
-    protected AgingAbstractFactory()
-    {
+    protected AgingAbstractFactory() {
     }
 
-    public static AgingAbstractFactory instance()
-    {
-        if (null == uniqueInstance)
-        {
+    public static AgingAbstractFactory instance() {
+        if (null == uniqueInstance) {
             uniqueInstance = new AgingFactory();
         }
         return uniqueInstance;
     }
 
-    public static void setFactory(AgingAbstractFactory f)
-    {
+    public static void setFactory(AgingAbstractFactory f) {
         uniqueInstance = f;
     }
 

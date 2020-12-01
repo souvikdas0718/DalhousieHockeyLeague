@@ -21,11 +21,11 @@ public class StatesFactory extends StatesAbstractFactory {
         return new LoadTeamStateLogic();
     }
 
-    public IGameContext createGameContext(){
+    public IGameContext createGameContext() {
         return new GameContext();
     }
 
-    public SimulationContext createSimulationContext(GameContext newGame){
+    public SimulationContext createSimulationContext(GameContext newGame) {
         return new SimulationContext(newGame);
     }
 }

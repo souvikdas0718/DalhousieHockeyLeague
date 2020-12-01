@@ -11,12 +11,12 @@ public class HeadCoachListFormat implements IHeadCoachListFormat {
     IUserInputOutput ioObject;
     private static IHeadCoachListFormat singletonObject = null;
 
-    private HeadCoachListFormat(){
+    private HeadCoachListFormat() {
         ioObject = IUserInputOutput.getInstance();
     }
 
-    public static IHeadCoachListFormat getInstance(){
-        if (singletonObject == null){
+    public static IHeadCoachListFormat getInstance() {
+        if (singletonObject == null) {
             singletonObject = new HeadCoachListFormat();
         }
         return singletonObject;

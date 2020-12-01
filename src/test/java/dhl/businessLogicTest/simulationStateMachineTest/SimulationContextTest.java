@@ -1,10 +1,10 @@
 package dhl.businessLogicTest.simulationStateMachineTest;
 
 
-import dhl.Mocks.LeagueObjectModel20TeamMocks;
-import dhl.Mocks.LeagueObjectModelMocks;
-import dhl.Mocks.RegularSeasonStandingListMocks;
-import dhl.Mocks.factory.MockAbstractFactory;
+import dhl.mocks.LeagueObjectModel20TeamMocks;
+import dhl.mocks.LeagueObjectModelMocks;
+import dhl.mocks.RegularSeasonStandingListMocks;
+import dhl.mocks.factory.MockAbstractFactory;
 import dhl.businessLogic.aging.Injury;
 import dhl.businessLogic.aging.agingFactory.AgingAbstractFactory;
 import dhl.businessLogic.leagueModel.PlayerDraftAbstract;

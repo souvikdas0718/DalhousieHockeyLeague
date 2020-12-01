@@ -24,7 +24,7 @@ public class LeagueObjectModel implements ILeagueObjectModel {
         setDefault();
     }
 
-    private void setDefault(){
+    private void setDefault() {
         logger.info("Setting default values for Constructor");
         leagueName = "";
         conferences = new ArrayList<>();
@@ -108,7 +108,7 @@ public class LeagueObjectModel implements ILeagueObjectModel {
                     if (division.getDivisionName() == saveLeagueInput.getDivisionName()) {
                         List<ITeam> teamArrayList = division.getTeams();
                         teamArrayList.add(saveLeagueInput.getNewlyCreatedTeam());
-                        logger.debug("Newly created team added at index"+j);
+                        logger.debug("Newly created team added at index" + j);
                         newTeamAddedToLeague = true;
                         break;
                     }
@@ -125,16 +125,16 @@ public class LeagueObjectModel implements ILeagueObjectModel {
         return this;
     }
 
-    public ILeagueObjectModel loadLeagueObjectModel( IDeserializeLeagueObjectModel deserializeLeagueObjectModel, String leagueName, String teamName) throws IOException, ParseException {
-        logger.debug("Loading league object model:"+leagueName);
+    public ILeagueObjectModel loadLeagueObjectModel(IDeserializeLeagueObjectModel deserializeLeagueObjectModel, String leagueName, String teamName) throws IOException, ParseException {
+        logger.debug("Loading league object model:" + leagueName);
         ILeagueObjectModel leagueObjectModel;
-        leagueObjectModel =deserializeLeagueObjectModel.deserializeLeagueObjectJson(leagueName);
+        leagueObjectModel = deserializeLeagueObjectModel.deserializeLeagueObjectJson(leagueName);
 
         return leagueObjectModel;
     }
 
     public ILeagueObjectModel updateLeagueObjectModel(ISerializeLeagueObjectModel serializeLeagueObjectModel) throws IOException {
-        logger.debug("Updating league object model:"+leagueName);
+        logger.debug("Updating league object model:" + leagueName);
         serializeLeagueObjectModel.updateSerializedLeagueObjectToJsonFile(this);
         return this;
     }

@@ -20,14 +20,14 @@ public class GeneralManager implements IGeneralManager {
     public GeneralManager(String generalManagerName) {
         this.generalManagerName = generalManagerName;
         this.generalManagerPersonality = "";
-        logger.debug("Creating manager "+ generalManagerName);
+        logger.debug("Creating manager " + generalManagerName);
 
     }
 
     public GeneralManager(String generalManagerName, String personality) {
         this.generalManagerName = generalManagerName;
         this.generalManagerPersonality = personality;
-        logger.debug("Creating manager "+ generalManagerName+ " Personality: "+ personality );
+        logger.debug("Creating manager " + generalManagerName + " Personality: " + personality);
     }
 
     public String getGeneralManagerName() {

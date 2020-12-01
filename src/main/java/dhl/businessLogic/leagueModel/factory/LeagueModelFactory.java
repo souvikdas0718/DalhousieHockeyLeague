@@ -49,7 +49,7 @@ public class LeagueModelFactory extends LeagueModelAbstractFactory {
         return new FreeAgent(playerName, position, playerStatistics);
     }
 
-    public IGameConfig createGameConfig(JSONObject leagueJson ){
+    public IGameConfig createGameConfig(JSONObject leagueJson) {
         return new GameConfig(leagueJson);
     }
 

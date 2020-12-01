@@ -4,7 +4,6 @@ import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 
-
 public abstract class TradeEngineAbstract {
     private static TradeEngineAbstract uniqueInstance;
 
@@ -20,5 +19,6 @@ public abstract class TradeEngineAbstract {
     }
 
     public abstract void startEngine();
+
     public abstract void performTrade(ITeam tradingTeam);
 }

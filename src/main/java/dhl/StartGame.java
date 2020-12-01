@@ -19,7 +19,7 @@ public class StartGame {
         logger.info("Starting Game");
 
         while (ourGame.isGameInProgress()) {
-            if (ourGame.isGameInProgress()){
+            if (ourGame.isGameInProgress()) {
                 ourGame.stateEntryProcess();
             }
             if (ourGame.isGameInProgress()) {

@@ -13,6 +13,7 @@ public abstract class LeagueModelAbstractFactory {
 
     private static LeagueModelAbstractFactory uniqueInstance = null;
     private static final Logger logger = LogManager.getLogger(LeagueModelAbstractFactory.class);
+
     protected LeagueModelAbstractFactory() {
 
     }
@@ -47,7 +48,7 @@ public abstract class LeagueModelAbstractFactory {
 
     public abstract IPlayer createPlayer(String playerName, String position, Boolean captain, IPlayerStatistics playerStats);
 
-    public abstract IPlayerStatistics createPlayerStatistics( int skating, int shooting, int checking, int saving);
+    public abstract IPlayerStatistics createPlayerStatistics(int skating, int shooting, int checking, int saving);
 
     public abstract IGameConfig createGameConfig(JSONObject leagueJson);
 

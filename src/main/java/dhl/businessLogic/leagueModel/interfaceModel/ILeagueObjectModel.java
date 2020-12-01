@@ -33,7 +33,7 @@ public interface ILeagueObjectModel {
 
     void setGameConfig(IGameConfig gameConfig);
 
-    boolean checkIfLeagueModelValid(IValidation validation, ILeagueObjectModelValidation leagueObjectModelValidation) ;
+    boolean checkIfLeagueModelValid(IValidation validation, ILeagueObjectModelValidation leagueObjectModelValidation);
 
     ILeagueObjectModel saveLeagueObjectModel(ISerializeLeagueObjectModel serializeLeagueObjectModel, ILeagueObjectModelInput saveLeagueInput) throws IOException;
 

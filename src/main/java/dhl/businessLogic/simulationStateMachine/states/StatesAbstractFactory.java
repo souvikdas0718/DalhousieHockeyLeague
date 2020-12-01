@@ -10,21 +10,25 @@ import dhl.businessLogic.simulationStateMachine.states.interfaces.ILoadTeamState
 public abstract class StatesAbstractFactory {
     private static StatesAbstractFactory uniqueInstance = null;
 
-    protected StatesAbstractFactory(){
+    protected StatesAbstractFactory() {
 
     }
 
-    public static StatesAbstractFactory instance(){
-        if (null == uniqueInstance){
+    public static StatesAbstractFactory instance() {
+        if (null == uniqueInstance) {
             uniqueInstance = new StatesFactory();
         }
         return uniqueInstance;
     }
 
     public abstract ICreateTeamStateLogic createCreateTeamStateLogic();
+
     public abstract IImportStateLogic createImportStateLogic();
+
     public abstract ILoadTeamStateLogic createLoadTeamStateLogic();
+
     public abstract IGameContext createGameContext();
+
     public abstract SimulationContext createSimulationContext(GameContext newGame);
 }
 

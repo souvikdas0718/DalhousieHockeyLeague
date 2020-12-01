@@ -31,7 +31,7 @@ public class SerializeLeagueObjectModel implements ISerializeLeagueObjectModel {
         jsonFilePath = inputJsonFilePath;
     }
 
-    public String serializeData(Object objLeagueObjectModel)  {
+    public String serializeData(Object objLeagueObjectModel) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String jsonString = gson.toJson(objLeagueObjectModel);
         return jsonString;
@@ -116,7 +116,7 @@ public class SerializeLeagueObjectModel implements ISerializeLeagueObjectModel {
             }
 
             writeJsonToFile(playersJsonPath, String.valueOf(arrCombined));
-        } finally  {
+        } finally {
             existingPlayers.close();
         }
     }

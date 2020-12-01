@@ -18,7 +18,7 @@ public class Coach implements ICoach {
 
     public Coach(String coachName, double skating, double shooting, double checking, double saving) {
         this();
-        logger.info("Creating coach object"+coachName);
+        logger.info("Creating coach object" + coachName);
         this.name = coachName;
         this.skating = skating;
         this.shooting = shooting;
@@ -48,7 +48,7 @@ public class Coach implements ICoach {
 
     public boolean isCoachStatInvalid(double statValue) {
         if (statValue < 0 || statValue > 1) {
-            logger.debug( "Coach: " + name + " have invalid statistics" );
+            logger.debug("Coach: " + name + " have invalid statistics");
             return true;
         }
         return false;

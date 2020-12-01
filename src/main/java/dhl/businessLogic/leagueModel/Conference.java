@@ -25,7 +25,7 @@ public class Conference implements IConference {
     }
 
     public Conference(String conferenceName, List<IDivision> divisions) {
-        logger.info( "Creating conference object");
+        logger.info("Creating conference object");
         this.conferenceName = conferenceName;
         this.divisions = divisions;
     }
@@ -38,24 +38,24 @@ public class Conference implements IConference {
         return divisions;
     }
 
-    public boolean checkIfConferenceHasEvenDivisions(){
-        if(divisions.size() % 2 == 0){
-            logger.debug( "Conference: " + conferenceName + " has even divisions names" );
+    public boolean checkIfConferenceHasEvenDivisions() {
+        if (divisions.size() % 2 == 0) {
+            logger.debug("Conference: " + conferenceName + " has even divisions names");
             return true;
         }
-        logger.debug( "Conference: " + conferenceName + " has odd divisions names" );
+        logger.debug("Conference: " + conferenceName + " has odd divisions names");
         return false;
     }
 
-    public boolean checkIfConferenceHasUniqueDivisions()  {
+    public boolean checkIfConferenceHasUniqueDivisions() {
         List<String> divisionNames = new ArrayList<>();
         divisions.stream().map(division -> division.getDivisionName()).forEach(divName -> divisionNames.add(divName));
         Set<String> divisionsSet = new HashSet<>(divisionNames);
         if (divisionsSet.size() < divisions.size()) {
-            logger.debug( "Conference: " + conferenceName + " has duplicate names" );
+            logger.debug("Conference: " + conferenceName + " has duplicate names");
             return false;
         }
-        logger.debug( "Conference: " + conferenceName + " has unique names" );
+        logger.debug("Conference: " + conferenceName + " has unique names");
         return true;
     }
 

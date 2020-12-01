@@ -20,7 +20,7 @@ import org.json.simple.JSONObject;
 import java.io.IOException;
 
 public class ImportStateLogic implements IImportStateLogic {
-    private static final String SCHEMAFILEPATH ="src/main/java/dhl/inputOutput/importJson/jsonSchema/schema.json";
+    private static final String SCHEMAFILEPATH = "src/main/java/dhl/inputOutput/importJson/jsonSchema/schema.json";
     private static final Logger logger = LogManager.getLogger(Training.class);
     IUserInputOutput userInputPutput = IUserInputOutput.getInstance();
 
@@ -32,7 +32,7 @@ public class ImportStateLogic implements IImportStateLogic {
         String schemaJson = importJsonFile.getJsonIntoString(SCHEMAFILEPATH);
         String leagueJson = importJsonFile.getJsonIntoString(validFilePath);
 
-        jsonSchemaValidation(leagueJson,schemaJson);
+        jsonSchemaValidation(leagueJson, schemaJson);
 
         CreateLeagueObjectModel createLeagueObjectModel = new CreateLeagueObjectModel(leagueJsonObject);
         ILeagueObjectModel leagueObjectModel = createLeagueObjectModel.getLeagueObjectModel();
@@ -55,7 +55,7 @@ public class ImportStateLogic implements IImportStateLogic {
         return teamObject;
     }
 
-    public boolean jsonSchemaValidation(String leagueModel,String schemaJson) {
+    public boolean jsonSchemaValidation(String leagueModel, String schemaJson) {
         boolean status = false;
 
         try {
@@ -63,8 +63,7 @@ public class ImportStateLogic implements IImportStateLogic {
             Schema schema = SchemaLoader.load(jsonObject);
             schema.validate(new org.json.JSONObject(leagueModel));
             status = true;
-        }
-        catch (ValidationException e) {
+        } catch (ValidationException e) {
             userInputPutput.printMessage("Values are incorrect. Please fix the errors:");
             for (String schemaViolation : e.getAllMessages()) {
                 userInputPutput.printMessage(schemaViolation);

@@ -1,6 +1,5 @@
 package dhl.businessLogicTest.leagueModelTests;
 
-import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.leagueModel.*;
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.*;

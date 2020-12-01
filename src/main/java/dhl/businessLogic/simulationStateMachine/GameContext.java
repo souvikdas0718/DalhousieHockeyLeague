@@ -9,6 +9,7 @@ import dhl.businessLogic.simulationStateMachine.interfaces.IGameState;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import java.time.LocalDate;
 
 public class GameContext implements IGameContext {
@@ -43,17 +44,17 @@ public class GameContext implements IGameContext {
     }
 
     public void stateEntryProcess() {
-        logger.debug("running Entry Process for class: "+ currentState.getClass().getName());
+        logger.debug("running Entry Process for class: " + currentState.getClass().getName());
         currentState.stateEntryProcess();
     }
 
     public void stateProcess() throws Exception {
-        logger.debug("running State Process for class: "+ currentState.getClass().getName());
+        logger.debug("running State Process for class: " + currentState.getClass().getName());
         currentState.stateProcess();
     }
 
     public void stateExitProcess() {
-        logger.debug("running Exit Process for class: "+ currentState.getClass().getName());
+        logger.debug("running Exit Process for class: " + currentState.getClass().getName());
         currentState.stateExitProcess();
     }
 

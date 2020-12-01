@@ -11,6 +11,6 @@ public interface IInjury {
 
     void healInjuredPlayers(IPlayer player);
 
-    void healInjuredPlayersInTeam(IPlayer player,ITeam team);
+    void healInjuredPlayersInTeam(IPlayer player, ITeam team);
 
 }

@@ -1,4 +1,4 @@
-package dhl.Mocks;
+package dhl.mocks;
 
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;

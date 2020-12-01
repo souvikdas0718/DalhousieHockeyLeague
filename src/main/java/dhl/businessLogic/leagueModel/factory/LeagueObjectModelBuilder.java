@@ -9,35 +9,35 @@ import java.util.List;
 public class LeagueObjectModelBuilder implements ILeagueObjectModelBuilder {
     private ILeagueObjectModel leagueObjectModel;
 
-    public LeagueObjectModelBuilder(){
+    public LeagueObjectModelBuilder() {
         leagueObjectModel = new LeagueObjectModel();
     }
 
-    public ILeagueObjectModel getResult(){
+    public ILeagueObjectModel getResult() {
         return leagueObjectModel;
     }
 
-    public void addLeagueName(String leagueName){
+    public void addLeagueName(String leagueName) {
         this.leagueObjectModel.setLeagueName(leagueName);
     }
 
-    public void addConferences(List<IConference> conferences){
+    public void addConferences(List<IConference> conferences) {
         this.leagueObjectModel.setConferences(conferences);
     }
 
-    public void addFreeAgents(List<IPlayer> freeAgents){
+    public void addFreeAgents(List<IPlayer> freeAgents) {
         this.leagueObjectModel.setFreeAgents(freeAgents);
     }
 
-    public void addCoaches(List<ICoach> coaches){
+    public void addCoaches(List<ICoach> coaches) {
         this.leagueObjectModel.setCoaches(coaches);
     }
 
-    public void addManagers(List<IGeneralManager> managers){
+    public void addManagers(List<IGeneralManager> managers) {
         this.leagueObjectModel.setManagers(managers);
     }
 
-    public void addGameConfig(IGameConfig gameConfig){
+    public void addGameConfig(IGameConfig gameConfig) {
         this.leagueObjectModel.setGameConfig(gameConfig);
     }
 

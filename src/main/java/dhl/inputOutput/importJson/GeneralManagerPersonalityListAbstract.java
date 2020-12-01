@@ -1,6 +1,5 @@
 package dhl.inputOutput.importJson;
 
-
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

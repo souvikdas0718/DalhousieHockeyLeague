@@ -4,7 +4,10 @@ package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 import dhl.businessLogic.leagueModel.PlayerDraftAbstract;
 import dhl.businessLogic.leagueModel.Team;
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
-import dhl.businessLogic.leagueModel.interfaceModel.*;
+import dhl.businessLogic.leagueModel.interfaceModel.IConference;
+import dhl.businessLogic.leagueModel.interfaceModel.IDivision;
+import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
+import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.factory.SchedulerAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
@@ -89,29 +92,29 @@ public class InitializeSeasonState implements ISimulationSeasonState {
         simulationContext.setCurrentSimulation(simulationContext.getAdvanceTime());
     }
 
-    public void initializePlayerDraftPick(){
+    public void initializePlayerDraftPick() {
         logger.info("Initialize player draft pick");
         List<ITeam> teamsInLeague = getTeams();
-        if(teamsInLeague.size()>0){
+        if (teamsInLeague.size() > 0) {
             for (int i = 0; i < NOOFTEAMS; i++) {
                 for (int j = 0; j < DRAFTROUNDS; j++) {
                     logger.debug("Initialize player draft pick for team");
-                    draftPickSequence[i][j]=teamsInLeague.get(i);
+                    draftPickSequence[i][j] = teamsInLeague.get(i);
                 }
             }
         }
 
     }
 
-    public List<ITeam>  getTeams(){
-        List<ITeam> teamsInLeague  = new ArrayList<>();
+    public List<ITeam> getTeams() {
+        List<ITeam> teamsInLeague = new ArrayList<>();
         logger.info("Fetching all teams in league");
         logger.debug("Fetching teams in league to initialize player draft pick 2D array");
         leagueObjectModel = simulationContext.getInMemoryLeague();
-        for(IConference conference:leagueObjectModel.getConferences()){
-            for(IDivision division:conference.getDivisions()){
-                for(ITeam team:division.getTeams()){
-                    if(checkIfUserTeam(team.getTeamName())){
+        for (IConference conference : leagueObjectModel.getConferences()) {
+            for (IDivision division : conference.getDivisions()) {
+                for (ITeam team : division.getTeams()) {
+                    if (checkIfUserTeam(team.getTeamName())) {
                         teamsInLeague.add(team);
                     }
                 }
@@ -120,7 +123,7 @@ public class InitializeSeasonState implements ISimulationSeasonState {
         return teamsInLeague;
     }
 
-    public boolean checkIfUserTeam(String teamName){
+    public boolean checkIfUserTeam(String teamName) {
         ITeam userTeam = this.simulationContext.getUserTeam();
         return !teamName.equals(userTeam.getTeamName());
     }

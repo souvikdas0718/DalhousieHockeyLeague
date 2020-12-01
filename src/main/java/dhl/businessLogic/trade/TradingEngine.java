@@ -1,12 +1,12 @@
 package dhl.businessLogic.trade;
 
+import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogic.teamRosterUpdater.RosterUpdaterAbstractFactory;
+import dhl.businessLogic.teamRosterUpdater.interfaces.ITeamRosterUpdater;
 import dhl.businessLogic.trade.factory.TradeAbstractFactory;
 import dhl.businessLogic.trade.factory.TradeConcreteFactory;
 import dhl.businessLogic.trade.interfaces.IScout;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
-import dhl.businessLogic.leagueModel.interfaceModel.*;
-import dhl.businessLogic.teamRosterUpdater.interfaces.ITeamRosterUpdater;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -40,9 +40,9 @@ public class TradingEngine extends TradeEngineAbstract {
             for (IDivision division : conference.getDivisions()) {
                 for (ITeam team : division.getTeams()) {
                     if (findLossPointOfTheTeam(team) > configLossPoint) {
-                        logger.info(team.getTeamName()+" is eligible to Trade");
+                        logger.info(team.getTeamName() + " is eligible to Trade");
                         double randomNumber = Math.random();
-                        logger.debug("random chance to trade is"+randomNumber );
+                        logger.debug("random chance to trade is" + randomNumber);
                         if (randomNumber > configRandomTradeChance) {
                             logger.info("Starting trade search for team: " + team.getTeamName());
                             performTrade(team);
@@ -53,19 +53,18 @@ public class TradingEngine extends TradeEngineAbstract {
         }
     }
 
-    public void performTrade(ITeam tradingTeam){
+    public void performTrade(ITeam tradingTeam) {
         IScout teamScout = factory.createScout(tradingTeam, leagueObjectModel, gameConfig, userTeam);
         int congifMaxPlayerPerTrade = Integer.parseInt(gameConfig.getValueFromOurObject(gameConfig.getTrading(), gameConfig.getMaxPlayersPerTrade()));
-        logger.info("Finding trade offer for team: "+ tradingTeam.getTeamName() );
+        logger.info("Finding trade offer for team: " + tradingTeam.getTeamName());
         currentTrade = teamScout.findTrade(congifMaxPlayerPerTrade);
-        if (currentTrade == null){
-            logger.info("Trade not possible for Team:"+ tradingTeam.getTeamName());
-        }
-        else{
-            logger.info("Trade found for team: "+ tradingTeam.getTeamName());
+        if (currentTrade == null) {
+            logger.info("Trade not possible for Team:" + tradingTeam.getTeamName());
+        } else {
+            logger.info("Trade found for team: " + tradingTeam.getTeamName());
             tradingTeam.setLossPoint(0);
-            if(currentTrade.checkIfTradeAccepted()){
-                ioObject.printMessage("Trade Done Between Team :"+ currentTrade.offeringTeam.getTeamName() + " and "+ currentTrade.receivingTeam.getTeamName());
+            if (currentTrade.checkIfTradeAccepted()) {
+                ioObject.printMessage("Trade Done Between Team :" + currentTrade.offeringTeam.getTeamName() + " and " + currentTrade.receivingTeam.getTeamName());
                 currentTrade.implementTrade();
             }
         }

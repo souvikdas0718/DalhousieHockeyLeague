@@ -17,8 +17,8 @@ public class JsonFilePathMock implements IJsonFilePath {
         return uniqueInstance;
     }
 
-    private static final String FILEPATH = "src/test/java/dhl/Mocks/MockData2.json";
-    public static final String INCORRECTJSONFILEPATH = "src/test/java/dhl/Mocks/IncorrectMockData.json";
+    private static final String FILEPATH = "src/test/java/dhl/mocks/MockData2.json";
+    public static final String INCORRECTJSONFILEPATH = "src/test/java/dhl/mocks/IncorrectMockData.json";
 
     public String getFilePath() {
         return FILEPATH;

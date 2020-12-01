@@ -1,9 +1,12 @@
 package dhl.businessLogic.trade.factory;
 
 import dhl.businessLogic.leagueModel.PlayerDraftAbstract;
-import dhl.businessLogic.leagueModel.interfaceModel.*;
-import dhl.businessLogic.trade.interfaces.IScout;
+import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
+import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
+import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
+import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.trade.TradeOfferAbstract;
+import dhl.businessLogic.trade.interfaces.IScout;
 import dhl.businessLogic.trade.interfaces.ITradeType;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import org.apache.logging.log4j.LogManager;
@@ -16,7 +19,7 @@ public abstract class TradeAbstractFactory {
     private static TradeAbstractFactory uniqueInstance;
     private static final Logger logger = LogManager.getLogger(TradeAbstractFactory.class);
 
-    protected TradeAbstractFactory(){
+    protected TradeAbstractFactory() {
 
     }
 

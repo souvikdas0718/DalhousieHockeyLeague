@@ -9,7 +9,7 @@ import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFac
 import dhl.businessLogicTest.tradeTest.mocks.GameConfigMockForTrading;
 import dhl.businessLogicTest.tradeTest.mocks.factory.TradeMockAbstractFactory;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
-import dhl.Mocks.MockUserInputOutput;
+import dhl.mocks.MockUserInputOutput;
 import dhl.businessLogic.trade.TradeOfferAbstract;
 import dhl.businessLogic.trade.TradingEngine;
 import org.junit.jupiter.api.Assertions;

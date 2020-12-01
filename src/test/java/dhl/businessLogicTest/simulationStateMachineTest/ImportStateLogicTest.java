@@ -1,7 +1,7 @@
 package dhl.businessLogicTest.simulationStateMachineTest;
 
-import dhl.Mocks.JsonFilePathMock;
-import dhl.Mocks.LeagueObjectModelMocks;
+import dhl.mocks.JsonFilePathMock;
+import dhl.mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.states.StatesAbstractFactory;
@@ -16,7 +16,7 @@ import java.io.IOException;
 
 public class ImportStateLogicTest {
     private static final String SCHEMAFILEPATH = "src/main/java/dhl/inputOutput/importJson/jsonSchema/schema.json";
-    private static final String SCHEMAFILEPATHINCORRECT = "src/test/java/dhl/Mocks/schemaIncorrect.json";
+    private static final String SCHEMAFILEPATHINCORRECT = "src/test/java/dhl/mocks/schemaIncorrect.json";
 
     StatesAbstractFactory statesAbstractFactory;
     IImportStateLogic testClassObject;

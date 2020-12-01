@@ -14,7 +14,6 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class CreateTeamState implements IGameState {
     private final String jsonFilePath = "src/serializedJsonFiles/";
@@ -22,7 +21,6 @@ public class CreateTeamState implements IGameState {
 
     StatesAbstractFactory factory;
     ICreateTeamStateLogic createTeamStateLogic;
-    Scanner sc = new Scanner(System.in);
     IUserInputOutput userInputPutput = IUserInputOutput.getInstance();
     private GameContext ourGame;
     private ILeagueObjectModel inMemoryLeague;
@@ -219,8 +217,7 @@ public class CreateTeamState implements IGameState {
                 selectedFreeAgents = null;
                 userInputPutput.printMessage("A team must have 16 forwards, 10 defense and 4 Goalies");
                 inputfreeAgents = userInputPutput.getUserInput();
-            }
-            else{
+            } else {
                 userInputPutput.printMessage("Choose a captain for this team from the selected players");
                 selectedCaptain = userInputPutput.getUserInput();
             }

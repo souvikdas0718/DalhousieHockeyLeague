@@ -9,6 +9,7 @@ public abstract class GameStateAbstractFactory {
 
     private static GameStateAbstractFactory uniqueInstance = null;
     private static final Logger logger = LogManager.getLogger(GameStateAbstractFactory.class);
+
     protected GameStateAbstractFactory() {
 
     }
@@ -23,8 +24,11 @@ public abstract class GameStateAbstractFactory {
     }
 
     public abstract IGameState createImportState(GameContext newGame);
+
     public abstract IGameState createLoadTeamState(GameContext newGame);
+
     public abstract IGameState createSimulateState(GameContext newGame);
+
     public abstract IGameState createCreateTeamState(GameContext newGame);
 
 }

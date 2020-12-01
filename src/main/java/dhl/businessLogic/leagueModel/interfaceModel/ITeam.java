@@ -31,7 +31,7 @@ public interface ITeam {
 
     void sortPlayersInTeamByStrength(List<IPlayer> playersList);
 
-    List<IPlayer> filterPlayersInTeam(String position,List<IPlayer> teamPlayers);
+    List<IPlayer> filterPlayersInTeam(String position, List<IPlayer> teamPlayers);
 
     boolean checkIfOneCaptainPerTeam(List<IPlayer> playerList);
 

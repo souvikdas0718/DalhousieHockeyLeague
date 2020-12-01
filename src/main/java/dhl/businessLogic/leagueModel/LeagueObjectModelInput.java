@@ -38,7 +38,9 @@ public class LeagueObjectModelInput implements ILeagueObjectModelInput {
         return divisionName;
     }
 
-    public ITeam getNewlyCreatedTeam() { return newlyCreatedTeam; }
+    public ITeam getNewlyCreatedTeam() {
+        return newlyCreatedTeam;
+    }
 
     public ILeagueObjectModelValidation getLeagueObjectModelValidation() {
         return leagueObjectModelValidation;

@@ -1,6 +1,6 @@
 package dhl.importJsonTest;
 
-import dhl.Mocks.GameConfigMock;
+import dhl.mocks.GameConfigMock;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 
 import dhl.inputOutput.importJson.GeneralManagerPersonalityListAbstract;

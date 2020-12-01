@@ -1,7 +1,10 @@
 package dhl.businessLogic.leagueModel;
 
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
-import dhl.businessLogic.leagueModel.interfaceModel.*;
+import dhl.businessLogic.leagueModel.interfaceModel.ICoach;
+import dhl.businessLogic.leagueModel.interfaceModel.IGeneralManager;
+import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
+import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -39,13 +42,13 @@ public class Team implements ITeam {
     }
 
     public Team(String teamName, IGeneralManager generalManager, ICoach headCoach, List<IPlayer> playersList) {
-        logger.info("Creating team with name "+teamName);
+        logger.info("Creating team with name " + teamName);
         setDefault();
         this.teamName = teamName;
         this.generalManager = generalManager;
         this.headCoach = headCoach;
         this.players = playersList;
-        if(this.players.size()== TOTALTEAMSIZE){
+        if (this.players.size() == TOTALTEAMSIZE) {
             this.setRoster();
         }
     }
@@ -107,41 +110,40 @@ public class Team implements ITeam {
     }
 
     public void setRoster() {
-        logger.debug("Setting Team Roster"+teamName);
+        logger.debug("Setting Team Roster" + teamName);
         sortPlayersInTeamByStrength(this.players);
-        addPlayersToTeamRoster(PlayerPosition.FORWARD.toString(),NOOFFORWARDS);
-        addPlayersToTeamRoster(PlayerPosition.DEFENSE.toString(),NOOFDEFENCE);
-        addPlayersToTeamRoster(PlayerPosition.GOALIE.toString(),NOOFGOALIES);
+        addPlayersToTeamRoster(PlayerPosition.FORWARD.toString(), NOOFFORWARDS);
+        addPlayersToTeamRoster(PlayerPosition.DEFENSE.toString(), NOOFDEFENCE);
+        addPlayersToTeamRoster(PlayerPosition.GOALIE.toString(), NOOFGOALIES);
     }
 
-    public void addPlayersToTeamRoster( String position,int playerCount){
-        logger.debug("Adding Players to active roster"+teamName);
+    public void addPlayersToTeamRoster(String position, int playerCount) {
+        logger.debug("Adding Players to active roster" + teamName);
         int counter = 0;
-        for(IPlayer player:players){
-            if(player.getPosition().equals(position)){
-                if(counter < playerCount){
+        for (IPlayer player : players) {
+            if (player.getPosition().equals(position)) {
+                if (counter < playerCount) {
                     player.setActive(true);
-                    counter=counter+1;
-                }
-                else {
+                    counter = counter + 1;
+                } else {
                     player.setActive(false);
                 }
             }
         }
     }
 
-    public boolean checkIfOneCaptainPerTeam(List<IPlayer> playerList)  {
+    public boolean checkIfOneCaptainPerTeam(List<IPlayer> playerList) {
         Predicate<IPlayer> playerPredicate = player -> player.getCaptain();
         List<IPlayer> captainList = playerList.stream().filter(playerPredicate).collect(Collectors.toList());
-        if ( (playerList.size() > 0 && captainList.size() == 0) || (captainList.size() > 1)) {
-            logger.debug("More than 1 captain for team:"+teamName);
+        if ((playerList.size() > 0 && captainList.size() == 0) || (captainList.size() > 1)) {
+            logger.debug("More than 1 captain for team:" + teamName);
             return false;
         }
         return true;
     }
 
     public boolean checkIfSizeOfTeamValid(List<IPlayer> playerList) {
-        logger.info("Checking total size of team"+teamName);
+        logger.info("Checking total size of team" + teamName);
         return playerList.size() == TOTALTEAMSIZE;
     }
 
@@ -155,12 +157,12 @@ public class Team implements ITeam {
         List<IPlayer> forwardsInTeam = filterPlayersInTeam(PlayerPosition.FORWARD.toString(), players);
         List<IPlayer> defenseInTeam = filterPlayersInTeam(PlayerPosition.DEFENSE.toString(), players);
 
-        if(goaliesInTeam.size() == TOTALGOALIES && forwardsInTeam.size() == TOTALFORWARDS && defenseInTeam.size() == TOTALDEFENSE
-         && goaliesInActiveRoster.size()==NOOFGOALIES && (forwardsInActiveRoster.size()+defenseInActiveRoster.size()==NOOFFORWARDS + NOOFDEFENCE)){
-            logger.info("Size of team:"+teamName+"is valid");
+        if (goaliesInTeam.size() == TOTALGOALIES && forwardsInTeam.size() == TOTALFORWARDS && defenseInTeam.size() == TOTALDEFENSE
+                && goaliesInActiveRoster.size() == NOOFGOALIES && (forwardsInActiveRoster.size() + defenseInActiveRoster.size() == NOOFFORWARDS + NOOFDEFENCE)) {
+            logger.info("Size of team:" + teamName + "is valid");
             return true;
         }
-        logger.debug("Size of the team is incorrect"+teamName);
+        logger.debug("Size of the team is incorrect" + teamName);
         return false;
     }
 
@@ -170,17 +172,17 @@ public class Team implements ITeam {
         for (IPlayer player : getActiveRoster()) {
             teamStrength = teamStrength + player.getPlayerStrength();
         }
-        logger.debug("Team strength calculated for team"+teamName+"is:"+teamStrength);
+        logger.debug("Team strength calculated for team" + teamName + "is:" + teamStrength);
         return teamStrength;
     }
 
     public void sortPlayersInTeamByStrength(List<IPlayer> playersList) {
-        logger.info("Sorting players by strength:"+teamName);
+        logger.info("Sorting players by strength:" + teamName);
         playersList.sort((player1, player2) -> Double.compare(player2.getPlayerStrength(), player1.getPlayerStrength()));
     }
 
-    public List<IPlayer> filterPlayersInTeam(String position,List<IPlayer> teamPlayers){
-        logger.info("Filtering team for players with position:" +position);
+    public List<IPlayer> filterPlayersInTeam(String position, List<IPlayer> teamPlayers) {
+        logger.info("Filtering team for players with position:" + position);
         return teamPlayers.stream().filter((IPlayer player) -> player.getPosition().equals(position)).collect(Collectors.toList());
     }
 }

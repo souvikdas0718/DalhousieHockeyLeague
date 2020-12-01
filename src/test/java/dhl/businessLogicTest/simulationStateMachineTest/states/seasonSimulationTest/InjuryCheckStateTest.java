@@ -1,8 +1,8 @@
 package dhl.businessLogicTest.simulationStateMachineTest.states.seasonSimulationTest;
 
-import dhl.Mocks.LeagueObjectModel20TeamMocks;
-import dhl.Mocks.LeagueObjectModelMocks;
-import dhl.Mocks.factory.MockAbstractFactory;
+import dhl.mocks.LeagueObjectModel20TeamMocks;
+import dhl.mocks.LeagueObjectModelMocks;
+import dhl.mocks.factory.MockAbstractFactory;
 import dhl.businessLogic.aging.Injury;
 import dhl.businessLogic.aging.agingFactory.AgingAbstractFactory;
 import dhl.businessLogic.aging.interfaceAging.IInjury;
@@ -17,7 +17,6 @@ import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.InjuryCh
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.factory.SeasonSimulationStateFactory;
 import dhl.businessLogic.simulationStateMachine.states.standings.factory.StandingsAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandingSystem;
-import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandings;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
 import dhl.businessLogicTest.leagueModelTests.mocks.GameplayConfigMock;
 import dhl.businessLogicTest.leagueModelTests.mocks.LeagueMock;
@@ -25,14 +24,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.time.temporal.ChronoUnit.DAYS;
-import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
-import static java.time.temporal.TemporalAdjusters.previousOrSame;
 
 public class InjuryCheckStateTest {
     SimulationContext simulationContext;

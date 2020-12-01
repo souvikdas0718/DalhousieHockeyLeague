@@ -16,14 +16,14 @@ public class Injury implements IInjury {
     private static final int PLAYERHEALED = 0;
 
     public void checkTeamInjury(IGameConfig gameConfig, ITeam team) {
-        logger.debug("Check Injury for team"+team.getTeamName());
+        logger.debug("Check Injury for team" + team.getTeamName());
         for (IPlayer player : team.getPlayers()) {
-            checkIfPlayerInjured(gameConfig, player,team);
+            checkIfPlayerInjured(gameConfig, player, team);
         }
     }
 
-    public boolean checkIfPlayerInjured(IGameConfig gameConfig, IPlayer player,ITeam team) {
-        logger.debug("Check Player if injured"+player.getPlayerName());
+    public boolean checkIfPlayerInjured(IGameConfig gameConfig, IPlayer player, ITeam team) {
+        logger.debug("Check Player if injured" + player.getPlayerName());
         double randomInjuryChance = Double.parseDouble(gameConfig.getValueFromOurObject(gameConfig.getInjuries(), gameConfig.getRandomInjuryChance())) * 100;
         int injuryDaysLow = Integer.parseInt(gameConfig.getValueFromOurObject(gameConfig.getInjuries(), gameConfig.getInjuryDaysLow()));
         int injuryDaysHigh = Integer.parseInt(gameConfig.getValueFromOurObject(gameConfig.getInjuries(), gameConfig.getInjuryDaysHigh()));
@@ -33,22 +33,23 @@ public class Injury implements IInjury {
         if (ramdomNumber <= randomInjuryChance && player.getPlayerInjuredDays() > 0) {
             int numberOfDaysInjured = (int) (Math.random() * (injuryDaysHigh - injuryDaysLow + 1) + injuryDaysLow);
             player.setPlayerInjuredDays(numberOfDaysInjured);
-            swapInjuredPlayer(player,team);
+            swapInjuredPlayer(player, team);
             return true;
         }
         return false;
     }
 
-    public void healInjuredPlayersInTeam(IPlayer player,ITeam team) {
-        logger.debug("Healing injured players in team"+team.getTeamName());
-        int injuryDays=player.getPlayerInjuredDays();
+    public void healInjuredPlayersInTeam(IPlayer player, ITeam team) {
+        logger.debug("Healing injured players in team" + team.getTeamName());
+        int injuryDays = player.getPlayerInjuredDays();
         healInjuredPlayers(player);
-        if(injuryDays == PLAYERHEALED){
-            swapRecoveredPlayer(player,team);
+        if (injuryDays == PLAYERHEALED) {
+            swapRecoveredPlayer(player, team);
         }
     }
+
     public void healInjuredPlayers(IPlayer player) {
-        logger.debug("Healing injured if injured"+player.getPlayerName());
+        logger.debug("Healing injured if injured" + player.getPlayerName());
         if (player.getPlayerInjuredDays() >= 1) {
             player.setPlayerInjuredDays(player.getPlayerInjuredDays() - 1);
         } else {
@@ -56,11 +57,11 @@ public class Injury implements IInjury {
         }
     }
 
-    public void swapInjuredPlayer(IPlayer player,ITeam team){
-        logger.debug("Swap injured player"+player.getPlayerName());
+    public void swapInjuredPlayer(IPlayer player, ITeam team) {
+        logger.debug("Swap injured player" + player.getPlayerName());
         List<IPlayer> reservePlayers = team.getInactiveRoster();
-        List<IPlayer> reservePlayersInSamePosition=team.filterPlayersInTeam(player.getPosition(),reservePlayers);
-        if(reservePlayersInSamePosition.size()>0){
+        List<IPlayer> reservePlayersInSamePosition = team.filterPlayersInTeam(player.getPosition(), reservePlayers);
+        if (reservePlayersInSamePosition.size() > 0) {
             player.setActive(false);
             team.sortPlayersInTeamByStrength(reservePlayersInSamePosition);
             IPlayer replacementPlayer = reservePlayersInSamePosition.get(BESTPLAYERINDEX);
@@ -68,13 +69,13 @@ public class Injury implements IInjury {
         }
     }
 
-    public void swapRecoveredPlayer(IPlayer player,ITeam team){
-        logger.debug("Swap recovered player"+player.getPlayerName());
+    public void swapRecoveredPlayer(IPlayer player, ITeam team) {
+        logger.debug("Swap recovered player" + player.getPlayerName());
         List<IPlayer> activePlayers = team.getActiveRoster();
-        List<IPlayer> activePlayersInSamePosition=team.filterPlayersInTeam(player.getPosition(),activePlayers);
-        if(activePlayersInSamePosition.size()>0){
-            for(IPlayer activePlayer:activePlayersInSamePosition){
-                if(player.getPlayerStrength()>activePlayer.getPlayerStrength()){
+        List<IPlayer> activePlayersInSamePosition = team.filterPlayersInTeam(player.getPosition(), activePlayers);
+        if (activePlayersInSamePosition.size() > 0) {
+            for (IPlayer activePlayer : activePlayersInSamePosition) {
+                if (player.getPlayerStrength() > activePlayer.getPlayerStrength()) {
                     player.setActive(true);
                     activePlayer.setActive(false);
                 }

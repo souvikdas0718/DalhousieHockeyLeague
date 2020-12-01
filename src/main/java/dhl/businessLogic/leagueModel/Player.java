@@ -6,7 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Player implements IPlayer {
-    private static final int INJUREDDAYSDEFAULTVALUE=-1;
+    private static final int INJUREDDAYSDEFAULTVALUE = -1;
     private static final Logger logger = LogManager.getLogger(Player.class);
     private String playerName;
     private PlayerPosition position;
@@ -22,13 +22,13 @@ public class Player implements IPlayer {
         this.active = false;
     }
 
-    public Player(){
+    public Player() {
         setDefaults();
     }
 
     public Player(String playerName, String position, IPlayerStatistics playerStats) {
         this();
-        logger.info("Creating player with name "+playerName);
+        logger.info("Creating player with name " + playerName);
         this.playerName = playerName;
         this.setPosition(position);
         this.playerStats = playerStats;
@@ -44,10 +44,10 @@ public class Player implements IPlayer {
     }
 
     public void setPosition(String playerPosition) {
-        logger.info("Setting player position"+playerName);
-        for(PlayerPosition position:  PlayerPosition.values()){
-            if(playerPosition.equals(position.toString())){
-                logger.debug("Player Position set as"+position);
+        logger.info("Setting player position" + playerName);
+        for (PlayerPosition position : PlayerPosition.values()) {
+            if (playerPosition.equals(position.toString())) {
+                logger.debug("Player Position set as" + position);
                 this.position = position;
                 break;
             }
@@ -67,7 +67,7 @@ public class Player implements IPlayer {
     }
 
     public boolean getCaptain() {
-        if(captain == null){
+        if (captain == null) {
             return false;
         }
         return captain;
@@ -98,17 +98,17 @@ public class Player implements IPlayer {
     }
 
     public boolean isPlayerPositionInvalid() {
-        logger.debug("Player position incorrect for player" +playerName);
+        logger.debug("Player position incorrect for player" + playerName);
         return this.position == null;
     }
 
     public boolean isCaptainValueBoolean() {
-        logger.debug("Captain value incorrect for player" +playerName);
+        logger.debug("Captain value incorrect for player" + playerName);
         return this.captain == null;
     }
 
     public double getPlayerStrength() {
-        logger.info("Calculating strength of player"+playerName);
+        logger.info("Calculating strength of player" + playerName);
         double playerStrength = 0;
         if (position == PlayerPosition.FORWARD) {
             playerStrength = playerStats.getSkating() + playerStats.getShooting() + (playerStats.getChecking() / 2.0);
@@ -120,7 +120,7 @@ public class Player implements IPlayer {
         if (playerInjuredDays > 0) {
             playerStrength = playerStrength / 2.0;
         }
-        logger.debug("Strength of player"+playerName+"is"+playerStrength);
+        logger.debug("Strength of player" + playerName + "is" + playerStrength);
         return playerStrength;
     }
 }

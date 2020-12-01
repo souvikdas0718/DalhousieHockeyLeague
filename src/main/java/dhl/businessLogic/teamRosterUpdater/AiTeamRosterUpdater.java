@@ -7,6 +7,7 @@ import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.teamRosterUpdater.interfaces.ITeamRosterUpdater;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class AiTeamRosterUpdater implements ITeamRosterUpdater {
         expectedTotalForward = team.getTotalForwards();
         expectedTotalDefence = team.getTotalDefense();
         expectedTotalGoalies = team.getTotalGoalies();
-        logger.info("Validating team: "+ team.getTeamName());
+        logger.info("Validating team: " + team.getTeamName());
         int totalForwards = 0;
         int totalDefense = 0;
         int totalGoalies = 0;
@@ -30,13 +31,11 @@ public class AiTeamRosterUpdater implements ITeamRosterUpdater {
 
         for (IPlayer player : players) {
             String position = player.getPosition();
-            if (position.equals(PlayerPosition.FORWARD.toString())){
+            if (position.equals(PlayerPosition.FORWARD.toString())) {
                 totalForwards = totalForwards + 1;
-            }
-            else if (position.equals(PlayerPosition.DEFENSE.toString())){
+            } else if (position.equals(PlayerPosition.DEFENSE.toString())) {
                 totalDefense = totalDefense + 1;
-            }
-            else if (position.equals(PlayerPosition.GOALIE.toString())) {
+            } else if (position.equals(PlayerPosition.GOALIE.toString())) {
                 totalGoalies = totalGoalies + 1;
             }
         }
@@ -52,17 +51,16 @@ public class AiTeamRosterUpdater implements ITeamRosterUpdater {
     }
 
     public void updatePlayers(int currentCount, String playerPosition, int validCount, ITeam team, ILeagueObjectModel leagueObjectModel) {
-        logger.info("Updating team: "+ team.getTeamName());
-        if (currentCount < validCount){
-            while (currentCount < validCount){
-                logger.info("Adding Players from team: "+ team.getTeamName());
+        logger.info("Updating team: " + team.getTeamName());
+        if (currentCount < validCount) {
+            while (currentCount < validCount) {
+                logger.info("Adding Players from team: " + team.getTeamName());
                 addPlayer(playerPosition, team, leagueObjectModel);
                 currentCount = currentCount + 1;
             }
-        }
-        else if (currentCount > validCount) {
+        } else if (currentCount > validCount) {
             while (currentCount > validCount) {
-                logger.info("Droping Players from team: "+ team.getTeamName());
+                logger.info("Droping Players from team: " + team.getTeamName());
                 dropPlayer(playerPosition, team, leagueObjectModel);
                 currentCount = currentCount - 1;
             }
@@ -74,7 +72,7 @@ public class AiTeamRosterUpdater implements ITeamRosterUpdater {
         expectedTotalDefence = team.getTotalDefense();
         expectedTotalGoalies = team.getTotalGoalies();
         IPlayer player = findWeakestPlayerInList(playerPosition, team.getPlayers());
-        logger.info("Player "+ player.getPlayerName()+ " Dropped from team: "+ team.getTeamName());
+        logger.info("Player " + player.getPlayerName() + " Dropped from team: " + team.getTeamName());
         team.getPlayers().remove(player);
         league.getFreeAgents().add(player);
     }
@@ -89,13 +87,13 @@ public class AiTeamRosterUpdater implements ITeamRosterUpdater {
         league.getFreeAgents().remove(player);
     }
 
-    public IPlayer findWeakestPlayerInList(String neededPosition, List playerList){
+    public IPlayer findWeakestPlayerInList(String neededPosition, List playerList) {
         logger.debug("Finding weakest player");
         IPlayer weakPlayer = null;
         double skaterStrength = 10000.0;
         for (Object playerObject : playerList) {
             IPlayer player = (IPlayer) playerObject;
-            if (playerFound(player)){
+            if (playerFound(player)) {
                 String position = player.getPosition();
                 if (position.equals(neededPosition)) {
                     if (player.getPlayerStrength() < skaterStrength) {
@@ -114,9 +112,9 @@ public class AiTeamRosterUpdater implements ITeamRosterUpdater {
         double bestPlayerStrength = 0.0;
         for (Object playerObject : playerList) {
             IPlayer player = (IPlayer) playerObject;
-            if (playerFound(player)){
+            if (playerFound(player)) {
                 String position = player.getPosition();
-                if ( position.equals(playerPosition) ) {
+                if (position.equals(playerPosition)) {
                     if (player.getPlayerStrength() > bestPlayerStrength) {
                         bestPlayer = player;
                         bestPlayerStrength = player.getPlayerStrength();
@@ -127,11 +125,10 @@ public class AiTeamRosterUpdater implements ITeamRosterUpdater {
         return bestPlayer;
     }
 
-    public boolean playerFound(IPlayer player){
-        if (player == null){
+    public boolean playerFound(IPlayer player) {
+        if (player == null) {
             return false;
-        }
-        else {
+        } else {
             return true;
         }
     }

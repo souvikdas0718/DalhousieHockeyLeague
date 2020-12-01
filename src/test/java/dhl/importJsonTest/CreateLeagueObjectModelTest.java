@@ -1,11 +1,9 @@
 package dhl.importJsonTest;
 
-import dhl.Mocks.JsonFilePathMock;
-import dhl.Mocks.factory.MockAbstractFactory;
+import dhl.mocks.JsonFilePathMock;
+import dhl.mocks.factory.MockAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
-import dhl.inputOutput.importJson.CreateLeagueObjectModel;
 import dhl.inputOutput.importJson.ImportJsonAbstractFactory;
-import dhl.inputOutput.importJson.ImportJsonFile;
 
 import dhl.inputOutput.importJson.interfaces.IImportJsonFile;
 import dhl.inputOutput.importJson.interfaces.ICreateLeagueObjectModel;

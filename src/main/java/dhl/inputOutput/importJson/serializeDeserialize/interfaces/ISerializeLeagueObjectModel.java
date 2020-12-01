@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface ISerializeLeagueObjectModel {
     public Boolean writeSerializedLeagueObjectToJsonFile(ILeagueObjectModel objLeagueObjectModel) throws IOException;
+
     public Boolean updateSerializedLeagueObjectToJsonFile(ILeagueObjectModel objLeagueObjectModel) throws IOException;
+
     public Boolean updateSerializedPlayerListToJsonFile(List<IPlayer> playersToRetire, String leagueName) throws IOException, ParseException;
 }

@@ -1,6 +1,6 @@
 package dhl.businessLogicTest.agingTest;
 
-import dhl.Mocks.factory.MockAbstractFactory;
+import dhl.mocks.factory.MockAbstractFactory;
 import dhl.businessLogic.aging.Aging;
 import dhl.businessLogic.aging.agingFactory.AgingAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
@@ -9,7 +9,6 @@ import dhl.businessLogicTest.agingTest.mocks.AgingMock;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
 import dhl.businessLogicTest.leagueModelTests.mocks.LeagueMock;
 import dhl.businessLogicTest.leagueModelTests.mocks.PlayerMock;
-import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

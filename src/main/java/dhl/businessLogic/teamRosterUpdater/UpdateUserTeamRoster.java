@@ -5,9 +5,9 @@ import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.teamRosterUpdater.interfaces.ITeamRosterUpdater;
+import dhl.inputOutput.ui.PlayerListFormat;
 import dhl.inputOutput.ui.interfaces.IListFormat;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
-import dhl.inputOutput.ui.PlayerListFormat;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,7 +21,7 @@ public class UpdateUserTeamRoster implements ITeamRosterUpdater {
     private int expectedTotalForward;
     IUserInputOutput ioObject;
     IListFormat listDisplay;
-    
+
     private static final Logger logger = LogManager.getLogger(UpdateUserTeamRoster.class);
 
     public UpdateUserTeamRoster(IUserInputOutput ioObject) {
@@ -33,7 +33,7 @@ public class UpdateUserTeamRoster implements ITeamRosterUpdater {
         expectedTotalDefence = team.getTotalDefense();
         expectedTotalForward = team.getTotalForwards();
         expectedTotalGoalies = team.getTotalGoalies();
-        logger.info("Validating team: "+ team.getTeamName());
+        logger.info("Validating team: " + team.getTeamName());
         int totalForwards = 0;
         int totalDefense = 0;
         int totalGoalies = 0;
@@ -41,40 +41,37 @@ public class UpdateUserTeamRoster implements ITeamRosterUpdater {
 
         for (IPlayer player : players) {
             String position = player.getPosition();
-            if (position.equals(PlayerPosition.FORWARD.toString())){
+            if (position.equals(PlayerPosition.FORWARD.toString())) {
                 totalForwards = totalForwards + 1;
-            }
-            else if (position.equals(PlayerPosition.DEFENSE.toString())){
+            } else if (position.equals(PlayerPosition.DEFENSE.toString())) {
                 totalDefense = totalDefense + 1;
-            }
-            else if (position.equals(PlayerPosition.GOALIE.toString())) {
+            } else if (position.equals(PlayerPosition.GOALIE.toString())) {
                 totalGoalies = totalGoalies + 1;
             }
         }
-        if(totalDefense > expectedTotalDefence || totalDefense < expectedTotalDefence){
+        if (totalDefense > expectedTotalDefence || totalDefense < expectedTotalDefence) {
             updatePlayers(totalDefense, PlayerPosition.DEFENSE.toString(), expectedTotalDefence, team, leagueObjectModel);
         }
-        if(totalForwards > expectedTotalForward || totalForwards < expectedTotalForward){
+        if (totalForwards > expectedTotalForward || totalForwards < expectedTotalForward) {
             updatePlayers(totalForwards, PlayerPosition.FORWARD.toString(), expectedTotalForward, team, leagueObjectModel);
         }
-        if(totalGoalies > expectedTotalGoalies || totalGoalies < expectedTotalGoalies){
+        if (totalGoalies > expectedTotalGoalies || totalGoalies < expectedTotalGoalies) {
             updatePlayers(totalGoalies, PlayerPosition.GOALIE.toString(), expectedTotalGoalies, team, leagueObjectModel);
         }
         team.setRoster();
     }
 
     public void updatePlayers(int currentCount, String playerPosition, int validCount, ITeam team, ILeagueObjectModel leagueObjectModel) {
-        logger.info("Updating team: "+ team.getTeamName());
-        if (currentCount < validCount){
-            while (currentCount < validCount){
-                logger.info("Adding Players from team: "+ team.getTeamName());
+        logger.info("Updating team: " + team.getTeamName());
+        if (currentCount < validCount) {
+            while (currentCount < validCount) {
+                logger.info("Adding Players from team: " + team.getTeamName());
                 addPlayer(playerPosition, team, leagueObjectModel);
                 currentCount = currentCount + 1;
             }
-        }
-        else if (currentCount > validCount) {
+        } else if (currentCount > validCount) {
             while (currentCount > validCount) {
-                logger.info("Droping Players from team: "+ team.getTeamName());
+                logger.info("Droping Players from team: " + team.getTeamName());
                 dropPlayer(playerPosition, team, leagueObjectModel);
                 currentCount = currentCount - 1;
             }
@@ -95,7 +92,7 @@ public class UpdateUserTeamRoster implements ITeamRosterUpdater {
 
         int playerId = Integer.parseInt(ioObject.getUserInput());
         IPlayer newPlayerForTeam = players.get(playerId);
-        logger.info("Player "+ newPlayerForTeam.getPlayerName()+ " added to team: "+ team.getTeamName());
+        logger.info("Player " + newPlayerForTeam.getPlayerName() + " added to team: " + team.getTeamName());
         List<IPlayer> teamPlayers = team.getPlayers();
         teamPlayers.add(newPlayerForTeam);
         List<IPlayer> freeAgents = league.getFreeAgents();
@@ -116,7 +113,7 @@ public class UpdateUserTeamRoster implements ITeamRosterUpdater {
 
         int playerId = Integer.parseInt(ioObject.getUserInput());
         IPlayer playerToDropFromTeam = playerList.get(playerId);
-        logger.info("Player "+ playerToDropFromTeam.getPlayerName()+ " Dropped from team: "+ team.getTeamName());
+        logger.info("Player " + playerToDropFromTeam.getPlayerName() + " Dropped from team: " + team.getTeamName());
         List<IPlayer> players = team.getPlayers();
         players.remove(playerToDropFromTeam);
         List<IPlayer> freeAgents = league.getFreeAgents();

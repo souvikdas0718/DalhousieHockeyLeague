@@ -1,6 +1,6 @@
-package dhl.Mocks.factory;
+package dhl.mocks.factory;
 
-import dhl.Mocks.*;
+import dhl.mocks.*;
 import dhl.businessLogicTest.simulationStateMachineTest.states.seasonSimulationTest.PlayerDraftMock;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.IDeserializeLeagueObjectModel;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;

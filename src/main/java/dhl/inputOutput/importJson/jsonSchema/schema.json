@@ -95,7 +95,7 @@
         }
       }
     },
-  "conferences": {
+    "conferences": {
       "id": "#/properties/conferences",
       "type": "array",
       "title": "Conferences",

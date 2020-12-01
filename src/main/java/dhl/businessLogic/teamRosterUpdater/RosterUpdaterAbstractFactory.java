@@ -29,5 +29,6 @@ public abstract class RosterUpdaterAbstractFactory {
     }
 
     public abstract ITeamRosterUpdater createAiTeamRosterUpdater();
+
     public abstract ITeamRosterUpdater createUpdateUserTeamRoster(IUserInputOutput ioObject);
 }

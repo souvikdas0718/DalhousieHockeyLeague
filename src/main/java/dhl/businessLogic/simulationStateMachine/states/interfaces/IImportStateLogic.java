@@ -7,6 +7,8 @@ import java.io.IOException;
 
 public interface IImportStateLogic {
     ILeagueObjectModel importAndGetLeagueObject(String validFilePath) throws IOException;
+
     ITeam findTeam(ILeagueObjectModel inMemoryLeague, String teamName);
-    boolean jsonSchemaValidation(String leagueModel,String schemaJson);
+
+    boolean jsonSchemaValidation(String leagueModel, String schemaJson);
 }
