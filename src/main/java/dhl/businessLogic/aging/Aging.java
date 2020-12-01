@@ -45,14 +45,23 @@ public class Aging implements IAging {
     public void agePlayers(List<IPlayer> players,LocalDate currentDate) {
         logger.debug("Age players on birthday");
         for (IPlayer player : players) {
-            IPlayerStatistics playerStatistics = player.getPlayerStats();
-            playerStatistics.calculateCurrentAge(currentDate);
-            LocalDate dateOfBirth = playerStatistics.getDateOfBirth();
-            if(dateOfBirth.getMonth()==currentDate.getMonth() && dateOfBirth.getDayOfMonth() ==currentDate.getDayOfMonth()){
-                logger.debug("Checking player decay stats");
-                playerStatistics.checkStatDecayChance(gameConfig);
+            if(playerNotNull(player)){
+                IPlayerStatistics playerStatistics = player.getPlayerStats();
+                playerStatistics.calculateCurrentAge(currentDate);
+                LocalDate dateOfBirth = playerStatistics.getDateOfBirth();
+                if(dateOfBirth.getMonth()==currentDate.getMonth() && dateOfBirth.getDayOfMonth() ==currentDate.getDayOfMonth()){
+                    logger.debug("Checking player decay stats");
+                    playerStatistics.checkStatDecayChance(gameConfig);
+                }
             }
         }
+    }
+
+    public boolean playerNotNull(IPlayer player){
+        if (player == null){
+            return false;
+        }
+        return true;
     }
 
     public Map<String, List<IPlayer>> selectPlayersToRetire(ITeam team,Map<String, List<IPlayer>> playersSelectedToRetire) {

@@ -8,7 +8,7 @@ import dhl.businessLogic.teamRosterUpdater.RosterUpdaterAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.teamRosterUpdater.interfaces.ITeamRosterUpdater;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.factory.SimulationStateAbstractFactory;
-import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.IGenerateDraftPlayers;
+import dhl.businessLogic.leagueModel.interfaceModel.IGenerateDraftPlayers;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
 import dhl.businessLogic.simulationStateMachine.states.standings.factory.StandingsAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandingSystem;
@@ -31,8 +31,6 @@ public class PlayerDraftState implements ISimulationSeasonState {
     SimulationContext simulationContext;
     SimulationStateAbstractFactory simulationFactory;
     LeagueModelAbstractFactory leagueFactory;
-    List<ITeam> teamsInLeague;
-    ITeam userTeam;
     ITeam[][] draftPickSequence = new Team[NOOFTEAMS][DRAFTROUNDS];
     ILeagueObjectModel leagueObjectModel;
     PlayerDraftAbstract playerDraft;
@@ -44,9 +42,6 @@ public class PlayerDraftState implements ISimulationSeasonState {
         this.simulationContext = simulationContext;
         simulationFactory = SimulationStateAbstractFactory.instance();
         generateDraftPlayers = simulationFactory.getGeneratePlayers();
-        teamsInLeague = new ArrayList<>();
-        userTeam = this.simulationContext.getUserTeam();
-        initializePlayerDraftPick();
         leagueFactory = LeagueModelAbstractFactory.instance();
         playerDraft = leagueFactory.createPlayerDraft();
         playerDraft.setDraftPickSequence(draftPickSequence);
@@ -57,6 +52,7 @@ public class PlayerDraftState implements ISimulationSeasonState {
     public void seasonStateProcess() {
         logger.info("Player Draft season state process");
         draftPickSequence = playerDraft.getDraftPickSequence();
+        leagueObjectModel = simulationContext.getInMemoryLeague();
         List<IStandings> standings = standingSystem.getStandingsList();
         List<ITeam> reversedStandings = reverseStandingOrder(standings);
         int lastUpdatedIndex = 0;
@@ -96,35 +92,20 @@ public class PlayerDraftState implements ISimulationSeasonState {
         simulationContext.setCurrentSimulation(simulationContext.getAdvanceToNextSeason());
     }
 
-
-    public void initializePlayerDraftPick(){
-        logger.info("Initialize player draft pick");
-        getTeams();
-        if(teamsInLeague.size()>0){
-            for (int i = 0; i < NOOFTEAMS; i++) {
-                for (int j = 0; j < DRAFTROUNDS; j++) {
-                    logger.debug("Initialize player draft pick for team");
-                    draftPickSequence[i][j]=teamsInLeague.get(i);
-                }
-            }
-        }
-
-    }
-
     public ITeam[][] getDraftPickSequence() {
         return draftPickSequence;
     }
 
-    public List<ITeam> getTeamsInLeague() {
-        return teamsInLeague;
+    public void setDraftPickSequence(ITeam[][] draftPickSequence) {
+        this.draftPickSequence= draftPickSequence;
     }
 
     public Map<Integer,ITeam> fetchTeamsInDraftRound(int draftRoundNo){
         logger.info("Creating hash map to track sequence of picks in current draft round");
         Map<Integer,ITeam> currentDraftPickSequence = new HashMap<>();
         for(int i=0; i <NOOFTEAMS; i++){
-            ITeam teamName= draftPickSequence[i][draftRoundNo];
-            currentDraftPickSequence.put(i+1,teamName);
+            ITeam team= draftPickSequence[i][draftRoundNo];
+            currentDraftPickSequence.put(i+1,team);
         }
         return currentDraftPickSequence;
     }
@@ -134,11 +115,21 @@ public class PlayerDraftState implements ISimulationSeasonState {
         List<Integer> currentTeamsPosition = new ArrayList<>();
         for (Entry<Integer, ITeam> entry : teamsInCurrentRound.entrySet()) {
             ITeam team = entry.getValue();
-            if (team.getTeamName().equals(currentTeam.getTeamName())) {
-                currentTeamsPosition.add(entry.getKey());
+            if(isValuePresent(team)){
+                if (team.getTeamName().equals(currentTeam.getTeamName())) {
+                    currentTeamsPosition.add(entry.getKey());
+                }
             }
+
         }
         return currentTeamsPosition;
+    }
+
+    public boolean isValuePresent(ITeam team){
+        if(team == null ){
+            return false;
+        }
+        return true;
     }
 
     public List<ITeam> reverseStandingOrder(List<IStandings> standings){
@@ -151,34 +142,6 @@ public class PlayerDraftState implements ISimulationSeasonState {
         }
         return reversedStandings;
 
-    }
-
-    public void getTeams(){
-        logger.info("Fetching all teams in league");
-        logger.debug("Fetching teams in league to initialize player draft pick 2D array");
-        leagueObjectModel = simulationContext.getInMemoryLeague();
-        if(isLeagueNotNull()){
-            for(IConference conference:leagueObjectModel.getConferences()){
-                for(IDivision division:conference.getDivisions()){
-                    for(ITeam team:division.getTeams()){
-                        if(checkIfUserTeam(team.getTeamName())){
-                            teamsInLeague.add(team);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    public boolean isLeagueNotNull(){
-        if(leagueObjectModel == null){
-            return false;
-        }
-        return true;
-    }
-
-    public boolean checkIfUserTeam(String teamName){
-        return !teamName.equals(userTeam.getTeamName());
     }
 
     public void addDraftPlayersToTeam(){

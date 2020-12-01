@@ -1,4 +1,4 @@
-package dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces;
+package dhl.businessLogic.leagueModel.interfaceModel;
 
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 

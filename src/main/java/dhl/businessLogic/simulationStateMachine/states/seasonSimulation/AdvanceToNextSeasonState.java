@@ -33,7 +33,6 @@ public class AdvanceToNextSeasonState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateProcess() {
-        userInputOutput.printMessage("Into the state process of Advance to next season");
         logger.info("Into the state process of Advance to next season");
 
         simulationContext.setYear(simulationContext.getYear() + YEAR);
@@ -45,7 +44,6 @@ public class AdvanceToNextSeasonState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateExitProcess() {
-        System.out.println("Into the exit process of Adv to next season");
         logger.info("Into the exit process of Adv to next season");
         simulationContext.setCurrentSimulation(simulationContext.getPersistsSeason());
     }

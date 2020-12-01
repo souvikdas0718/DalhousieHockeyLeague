@@ -54,17 +54,16 @@ public class AgingState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateProcess() {
-        userInputOutput.printMessage("Into the state process of Aging State season");
         logger.info("Into the state process of Aging State season");
         agingCalculation(simulationContext);
     }
 
     @Override
     public void seasonStateExitProcess() {
-        userInputOutput.printMessage("Into the exit process of Aging State season");
         logger.info("Into the exit process of Aging State season");
         IScheduler scheduler = simulationContext.getRegularScheduler();
         LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
+        System.out.println(simulationContext.getNumberOfDays());
         LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());
         if (null == scheduler) {
             logger.debug("No current Schedule. So, moving to Persist Same Season");

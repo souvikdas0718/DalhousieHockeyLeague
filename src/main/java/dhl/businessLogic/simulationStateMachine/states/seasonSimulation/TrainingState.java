@@ -100,7 +100,6 @@ public class TrainingState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateProcess() {
-        userInputOutput.printMessage("Into the state process of Training State season");
         logger.info("Into the state process of Training State season");
         simulationContext.setDaysSinceLastTraining(simulationContext.getDaysSinceLastTraining() + DAY);
         try {
@@ -116,7 +115,6 @@ public class TrainingState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateExitProcess() {
-        userInputOutput.printMessage("Into the exit process of Training State season");
         logger.info("Into the exit process of Training State season");
         LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
         LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());

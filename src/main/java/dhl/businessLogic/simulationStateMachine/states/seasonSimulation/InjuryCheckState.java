@@ -40,7 +40,6 @@ public class InjuryCheckState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateProcess() {
-        userInputOutput.printMessage("Into the state process of Injury check season");
         logger.info("Into the state process of Injury check season");
         for (ITeam team : simulationContext.getTeamsPlayingInGame()) {
             IInjury injury = agingFactory.createInjury();
@@ -53,7 +52,6 @@ public class InjuryCheckState implements ISimulationSeasonState {
 
     @Override
     public void seasonStateExitProcess() {
-        userInputOutput.printMessage("returning the control to Training state inner loop");
         logger.info("returning the control to Training state inner loop");
     }
 }

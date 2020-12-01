@@ -45,13 +45,6 @@ public class TrainingStateTest {
     SeasonSimulationStateFactory seasonSimulationStateFactory;
     MockAbstractFactory mockAbstractFactory;
 
-//    LeagueObjectModelMocks mockLeagueObjectModel;
-//    GameConfigMock gameConfigMock;
-//    GameConfig gameConfig;
-//    Training trainingParameterized;
-//    JsonFilePathMock filePathMock;
-//    ImportJsonFile importJsonFile;
-
     @BeforeEach
     public void initObject() throws Exception {
         contextAbstractFactory = ContextAbstractFactory.instance();
@@ -59,13 +52,10 @@ public class TrainingStateTest {
         simulationContext = contextAbstractFactory.createSimulationContext();
         seasonSimulationStateFactory = (SeasonSimulationStateFactory) SeasonSimulationStateFactory.instance();
         trainingState = (TrainingState) seasonSimulationStateFactory.getTrainingState(simulationContext);
-//        trainingState = new TrainingState(simulationContext);
         mockAbstractFactory = MockAbstractFactory.instance();
         model20TeamMocks = mockAbstractFactory.getLeagueObjectModel20TeamMock();
         model20TeamMocks.leagueModel20TeamGeneralStandings();
         scheduler = model20TeamMocks.leagueModel20TeamPlayoffsSchedules();
-//        gameConfigMock = new GameConfigMock();
-//        gameConfig = gameConfigMock.getGameConfigMock();
         agingFactory = AgingAbstractFactory.instance();
         injury = (Injury) agingFactory.createInjury();
         leagueMockFactory = LeagueModelMockAbstractFactory.instance();
@@ -73,13 +63,6 @@ public class TrainingStateTest {
         leagueObjectModel = leagueMock.getLeagueObjectModel();
         GameplayConfigMock gameplayConfigMock = leagueMockFactory.createGameplayConfig();
         gameConfig = gameplayConfigMock.getAgingGameConfig();
-//        mockLeagueObjectModel = new LeagueObjectModelMocks();
-//        gameConfigMock = new GameConfigMock();
-//        IInjury injurySystem = new Injury();
-//        filePathMock = new JsonFilePathMock();
-//        importJsonFile = new ImportJsonFile(filePathMock.getFilePath());
-//        gameConfig = new GameConfig(importJsonFile.getJsonObject());
-//        trainingParameterized = new Training(injurySystem, gameConfig);
     }
 
     @Test
