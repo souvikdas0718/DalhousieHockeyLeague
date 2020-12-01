@@ -2,6 +2,7 @@ package dhl.businessLogic.simulationStateMachine;
 
 import dhl.businessLogic.aging.agingFactory.AgingAbstractFactory;
 import dhl.businessLogic.aging.interfaceAging.IInjury;
+import dhl.businessLogic.gameSimulation.Subject;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
@@ -18,7 +19,6 @@ import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
@@ -55,6 +55,7 @@ public class SimulationContext implements ISimulationSeasonState {
     ITeamRosterUpdater updateUserTeamRoster;
     List<IStandings> standings;
     ISeasonSchedule matchToSimulate;
+    Subject subjectGameSimulation;
 
     boolean seasonInProgress;
     IGameConfig gameConfig;
@@ -97,6 +98,7 @@ public class SimulationContext implements ISimulationSeasonState {
         rosterUpdaterAbstractFactory = RosterUpdaterAbstractFactory.instance();
         agingAbstractFactory = AgingAbstractFactory.instance();
         schedulerAbstractFactory = SchedulerAbstractFactory.instance();
+        subjectGameSimulation = new Subject();
 
         userTeam = gameState.getSelectedTeam();
         currentSimulation = initializeSeason;
@@ -404,7 +406,17 @@ public class SimulationContext implements ISimulationSeasonState {
         return endOfSimulation;
     }
 
+    public Subject getSubjectGameSimulation() {
+        return subjectGameSimulation;
+    }
+
+    public void setSubjectGameSimulation(Subject subjectGameSimulation) {
+        this.subjectGameSimulation = subjectGameSimulation;
+    }
+
     public void setEndOfSimulation(LocalDate endOfSimulation) {
         this.endOfSimulation = endOfSimulation;
     }
+
+
 }

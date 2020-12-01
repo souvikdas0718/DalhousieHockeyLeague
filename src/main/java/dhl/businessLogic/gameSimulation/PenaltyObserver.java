@@ -31,7 +31,7 @@ public class PenaltyObserver extends IGameObserver {
         }
         averagePenalties = Double.valueOf(countPenalties/penalties.size());
         IUserInputOutput userInputOutput = UserInputOutput.getInstance();
-        userInputOutput.printMessage("Penalties" + averagePenalties);
+        userInputOutput.printMessage("Penalties: " + averagePenalties);
 
         return averagePenalties;
     }

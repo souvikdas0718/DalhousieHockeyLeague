@@ -31,7 +31,7 @@ public class GoalObserver extends IGameObserver {
         }
         averageGoals = Double.valueOf(countGoals/goals.size());
         IUserInputOutput userInputOutput = UserInputOutput.getInstance();
-        userInputOutput.printMessage("Goals" + averageGoals);
+        userInputOutput.printMessage("Goals: " + averageGoals);
         return averageGoals;
     }
 }
