@@ -11,6 +11,7 @@ import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -211,11 +212,7 @@ public class CreateTeamState implements IGameState {
         String inputfreeAgents = userInputPutput.getUserInput();
 
         while (selectedFreeAgents == null) {
-            try {
-                selectedFreeAgents = createTeamStateLogic.validateInputFreeAgents(inputfreeAgents, freeAgentsArray);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            selectedFreeAgents = createTeamStateLogic.validateInputFreeAgents(inputfreeAgents, freeAgentsArray);
 
             ITeam team = new Team(selectedTeamName, selectedGeneralManager, selectedCoach, selectedFreeAgents);
             if (team.checkTeamPlayersCount() == false) {
@@ -246,11 +243,8 @@ public class CreateTeamState implements IGameState {
 
             ILeagueObjectModelInput leagueObjectModelInput = new LeagueObjectModelInput(inMemoryLeague.getLeagueName(), selectedConference.getConferenceName(), selectedDivision.getDivisionName(), newlyCreatedTeam, leagueObjectModelValidation, serializeLeagueObjectModel);
             createTeamStateLogic.saveleagueObject(ourGame, inMemoryLeague, leagueObjectModelInput);
-
-        } catch (Exception e) {
-            myLogger.error(e.getMessage());
-            userInputPutput.printMessage(e.getMessage());
-            ourGame.setGameInProgress(false);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

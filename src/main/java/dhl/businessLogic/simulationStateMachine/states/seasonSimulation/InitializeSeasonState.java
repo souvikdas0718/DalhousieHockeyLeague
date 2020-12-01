@@ -65,12 +65,14 @@ public class InitializeSeasonState implements ISimulationSeasonState {
     @Override
     public void seasonStateProcess() {
         logger.info("Into the state process of Initialize season");
+        simulationContext.setRegularScheduler(null);
         initializePlayerDraftPick();
         leagueFactory = LeagueModelAbstractFactory.instance();
         playerDraft = leagueFactory.createPlayerDraft();
         playerDraft.setDraftPickSequence(draftPickSequence);
         LocalDate simulationStartDate = LocalDate.of(simulationContext.getYear(), SIMULATESTARTMONTH, SIMULATESTARTDAY);
         simulationContext.setStartOfSimulation(simulationStartDate);
+        simulationContext.setSeasonStartDate(simulationStartDate);
         scheduler.generateTeamList(simulationContext.getInMemoryLeague());
         scheduler.generateTeamSchedule(simulationContext.getInMemoryLeague());
         LocalDate localDate = LocalDate.of(simulationContext.getYear() + YEAR, REGULARSEASONENDMONTH, REGULARSEASONENDDAY);

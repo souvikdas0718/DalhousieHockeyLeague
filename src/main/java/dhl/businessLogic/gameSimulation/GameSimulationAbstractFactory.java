@@ -15,6 +15,10 @@ public abstract class GameSimulationAbstractFactory {
     }
 
     public abstract IGameSimulation createGameSimulation();
-
     public abstract IGameSimulationAlgorithm createGameSimulationAlgorithm();
+    public abstract IGameObserver createGoalObserver(ISubject subject);
+    public abstract IGameObserver createPenaltyObserver(ISubject subject);
+    public abstract IGameObserver createSaveObserver(ISubject subject);
+    public abstract IGameObserver createShotObserver(ISubject subject);
+    public abstract ISubject createSubject();
 }

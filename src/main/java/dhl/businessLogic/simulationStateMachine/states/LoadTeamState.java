@@ -24,7 +24,6 @@ public class LoadTeamState implements IGameState {
         ourGame = newGame;
     }
 
-    @Override
     public void stateEntryProcess() {
         userInputPutput.printMessage("Enter LeagueName to load from DB: ");
         String leagueName = userInputPutput.getUserInput();
@@ -53,17 +52,14 @@ public class LoadTeamState implements IGameState {
             logger.error("Error while loading team: " + e.getMessage());
             ourGame.setGameInProgress(false);
         }
-        ;
     }
 
-    @Override
     public void stateProcess() {
         if (ourGame.isGameInProgress()) {
             userInputPutput.printMessage(ourGame.getSelectedTeam().getTeamName() + "  Team Selected");
         }
     }
 
-    @Override
     public void stateExitProcess() {
         if (ourGame.isGameInProgress()) {
             ourGame.setGameState(ourGame.getSimulateState());

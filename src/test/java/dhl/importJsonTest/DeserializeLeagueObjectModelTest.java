@@ -22,6 +22,7 @@ public class DeserializeLeagueObjectModelTest {
     final String playerFileName = "--RetiredPlayersInLeague.json";
     final String jsonExtension = ".json";
 
+    ImportJsonTestAbstractFactory importJsonTestAbstractFactory;
     SerializeDeserializeAbstractFactory factory;
     IDeserializeLeagueObjectModel deserializeleagueObjectModel;
     SerializedJsonMock jsonMock;
@@ -32,10 +33,11 @@ public class DeserializeLeagueObjectModelTest {
 
     @BeforeEach
     public void initObject() {
+        importJsonTestAbstractFactory = ImportJsonTestAbstractFactory.instance();
         factory = SerializeDeserializeAbstractFactory.instance();
         serializeLeagueobjectModel = factory.createSerializeLeagueObjectModel(filepath);
         deserializeleagueObjectModel = factory.createDeserializeLeagueObjectModel(filepath);
-        jsonMock = new SerializedJsonMock();
+        jsonMock = importJsonTestAbstractFactory.createSerializedJsonMock();
         leagueObjectModel = new LeagueObjectModel();
         jsonParser = new JSONParser();
         leagueObjectModelMocks = new LeagueObjectModelMocks();
