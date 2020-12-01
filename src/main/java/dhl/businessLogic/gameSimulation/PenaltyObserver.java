@@ -9,7 +9,7 @@ import java.util.List;
 public class PenaltyObserver extends IGameObserver {
 
     List<Integer> penalties = new ArrayList<>();
-    public PenaltyObserver(Subject subject){
+    public PenaltyObserver(ISubject subject){
         this.subject = subject;
         this.subject.attach(this);
     }

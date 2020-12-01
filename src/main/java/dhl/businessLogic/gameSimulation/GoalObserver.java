@@ -9,7 +9,7 @@ import java.util.List;
 public class GoalObserver extends IGameObserver {
 
     List<Integer> goals = new ArrayList<>();
-    public GoalObserver(Subject subject){
+    public GoalObserver(ISubject subject){
         this.subject = subject;
         this.subject.attach(this);
     }

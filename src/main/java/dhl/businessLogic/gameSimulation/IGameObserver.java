@@ -1,6 +1,7 @@
 package dhl.businessLogic.gameSimulation;
 
 public abstract class IGameObserver {
-    protected Subject subject;
+    protected ISubject subject;
     public abstract void update();
+    public abstract double print();
 }

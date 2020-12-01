@@ -9,7 +9,7 @@ import java.util.List;
 public class ShotObserver extends IGameObserver {
 
     List<Integer> shots = new ArrayList<>();
-    public ShotObserver(Subject subject){
+    public ShotObserver(ISubject subject){
         this.subject = subject;
         this.subject.attach(this);
     }
