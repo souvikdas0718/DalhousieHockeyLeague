@@ -2,6 +2,7 @@ package dhl.businessLogic.simulationStateMachine;
 
 import dhl.businessLogic.aging.agingFactory.AgingAbstractFactory;
 import dhl.businessLogic.aging.interfaceAging.IInjury;
+import dhl.businessLogic.gameSimulation.ISubject;
 import dhl.businessLogic.gameSimulation.Subject;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
@@ -55,7 +56,7 @@ public class SimulationContext implements ISimulationSeasonState {
     ITeamRosterUpdater updateUserTeamRoster;
     List<IStandings> standings;
     ISeasonSchedule matchToSimulate;
-    Subject subjectGameSimulation;
+    ISubject subjectGameSimulation;
 
     boolean seasonInProgress;
     IGameConfig gameConfig;
@@ -406,11 +407,11 @@ public class SimulationContext implements ISimulationSeasonState {
         return endOfSimulation;
     }
 
-    public Subject getSubjectGameSimulation() {
+    public ISubject getSubjectGameSimulation() {
         return subjectGameSimulation;
     }
 
-    public void setSubjectGameSimulation(Subject subjectGameSimulation) {
+    public void setSubjectGameSimulation(ISubject subjectGameSimulation) {
         this.subjectGameSimulation = subjectGameSimulation;
     }
 

@@ -3,7 +3,7 @@ package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 
 import dhl.businessLogic.gameSimulation.GameSimulationAbstractFactory;
 import dhl.businessLogic.gameSimulation.IGameSimulationAlgorithm;
-import dhl.businessLogic.gameSimulation.Subject;
+import dhl.businessLogic.gameSimulation.ISubject;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
@@ -32,7 +32,7 @@ public class SimulateGameState implements ISimulationSeasonState {
     IStandingSystem standingSystem;
     StandingsAbstractFactory standingsAbstractFactory;
     IUserInputOutput userInputOutput;
-    Subject subject;
+    ISubject subject;
 
     public SimulateGameState(SimulationContext simulationContext) {
         logger.info("Into the Simulation game state constructor");

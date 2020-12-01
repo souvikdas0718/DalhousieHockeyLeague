@@ -9,7 +9,7 @@ import java.util.List;
 public class SaveObserver extends IGameObserver {
 
     List<Integer> saves = new ArrayList<>();
-    public SaveObserver(Subject subject){
+    public SaveObserver(ISubject subject){
         this.subject = subject;
         this.subject.attach(this);
     }

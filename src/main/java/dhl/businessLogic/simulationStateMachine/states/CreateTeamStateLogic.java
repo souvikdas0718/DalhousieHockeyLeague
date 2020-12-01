@@ -1,6 +1,5 @@
 package dhl.businessLogic.simulationStateMachine.states;
 
-import dhl.businessLogic.leagueModel.LeagueObjectModel;
 import dhl.businessLogic.leagueModel.Player;
 import dhl.businessLogic.leagueModel.Team;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
@@ -10,6 +9,7 @@ import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,10 +17,8 @@ public class CreateTeamStateLogic implements ICreateTeamStateLogic {
     Logger myLogger = LogManager.getLogger(CreateTeamStateLogic.class);
     IUserInputOutput userInputPutput = IUserInputOutput.getInstance();
 
-    public ILeagueObjectModel saveleagueObject(GameContext ourGame, ILeagueObjectModel inMemoryLeague, ILeagueObjectModelInput leagueObjectModelInput) throws Exception {
-        ILeagueObjectModel leagueObjectModel = new LeagueObjectModel();
-
-        leagueObjectModel = inMemoryLeague.saveLeagueObjectModel(leagueObjectModelInput.getSerializeLeagueObjectModel(), leagueObjectModelInput);
+    public ILeagueObjectModel saveleagueObject(GameContext ourGame, ILeagueObjectModel inMemoryLeague, ILeagueObjectModelInput leagueObjectModelInput) throws IOException {
+        ILeagueObjectModel leagueObjectModel = inMemoryLeague.saveLeagueObjectModel(leagueObjectModelInput.getSerializeLeagueObjectModel(), leagueObjectModelInput);
         myLogger.debug("Saved league object model in json file");
         ITeam team = leagueObjectModelInput.getNewlyCreatedTeam();
         ourGame.setSelectedTeam(findTeam(inMemoryLeague, team.getTeamName()));

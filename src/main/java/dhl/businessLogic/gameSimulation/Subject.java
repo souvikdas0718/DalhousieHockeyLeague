@@ -2,7 +2,7 @@ package dhl.businessLogic.gameSimulation;
 
 import java.util.*;
 
-public class Subject {
+public class Subject implements ISubject{
 
     private List<IGameObserver> observers = new ArrayList<IGameObserver>();
     private Integer goals;

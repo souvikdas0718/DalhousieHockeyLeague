@@ -17,13 +17,15 @@ import org.everit.json.schema.loader.SchemaLoader;
 import org.json.JSONException;
 import org.json.simple.JSONObject;
 
+import java.io.IOException;
+
 
 public class ImportStateLogic implements IImportStateLogic {
     private static final String SCHEMAFILEPATH ="src/main/java/dhl/inputOutput/importJson/jsonSchema/schema.json";
     private static final Logger logger = LogManager.getLogger(Training.class);
     IUserInputOutput userInputPutput = IUserInputOutput.getInstance();
 
-    public ILeagueObjectModel importAndGetLeagueObject(String validFilePath) throws Exception {
+    public ILeagueObjectModel importAndGetLeagueObject(String validFilePath) throws IOException {
         logger.debug("Importing League");
         JSONObject leagueJsonObject = new ImportJsonFile(validFilePath).getJsonObject();
 
