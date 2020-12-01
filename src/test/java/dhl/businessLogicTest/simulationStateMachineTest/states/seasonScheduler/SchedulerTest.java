@@ -226,10 +226,6 @@ public class SchedulerTest {
         scheduler.generateTeamSchedule(league);
 
         LocalDate regularSeasonStartDate = LocalDate.of(2020, 10, 01);
-        //Trade Deadline
-//        LocalDate localDate = LocalDate.of(2021, 02, 01);
-//        LocalDate regularSeasonEndDate = localDate.with(lastDayOfMonth())
-//                .with(previousOrSame(DayOfWeek.MONDAY));
         LocalDate localDate = LocalDate.of(2021, 04, 01);
         LocalDate regularSeasonEndDate = localDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.SATURDAY));
         scheduler.gameScheduleDates(regularSeasonStartDate, regularSeasonEndDate);

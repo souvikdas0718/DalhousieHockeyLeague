@@ -44,7 +44,6 @@ public class TradeConcreteFactoryTest {
 
     @Test
     public void createExchangingPlayerTradeOfferTest(){
-        // ITradeType tradeType
         ITeam offeringTeam = tradeMockFactory.createTeamMockForTrade().getTeamWithBadPlayer();
         ITeam receivingTeam = tradeMockFactory.createTeamMockForTrade().getTeamWithGoodPlayer();
 

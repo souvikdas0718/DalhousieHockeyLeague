@@ -76,6 +76,8 @@ public class SimulateGameState implements ISimulationSeasonState {
                 losingTeam = match.getTeamOne();
             }
 
+            userInputOutput.printMessage("regular season winning team: "+ winningTeam.getTeamName());
+            userInputOutput.printMessage("regular season losing team: "+ losingTeam.getTeamName());
             logger.debug("updating the winning and losing teams standings in Standing System class.");
             standingSystem.updateWinningStandings(winningTeam);
             standingSystem.updateLosingStandings(losingTeam);
@@ -91,14 +93,16 @@ public class SimulateGameState implements ISimulationSeasonState {
                 winningTeam = playOffMatch.getTeamOne();
                 if (randomNumber < RANDOMWINCHANCE) {
                     winningTeam = playOffMatch.getTeamTwo();
+                    userInputOutput.printMessage("Playoff winning team: "+ winningTeam.getTeamName());
                 }
             } else {
                 winningTeam = playOffMatch.getTeamTwo();
                 if (randomNumber < RANDOMWINCHANCE) {
                     winningTeam = playOffMatch.getTeamOne();
+                    userInputOutput.printMessage("Playoff winning team: "+ winningTeam.getTeamName());
                 }
             }
-            logger.debug("calling the gameWim=nner method of scheduler class to set the next playOff lists");
+            logger.debug("calling the gameWinner method of scheduler class to set the next playOff lists");
             scheduler.gameWinner(winningTeam);
             logger.debug("setting the final schedule in the simulation context");
             simulationContext.setFinalSchedule(scheduler);
