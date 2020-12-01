@@ -13,6 +13,8 @@ import java.util.List;
 public interface IScheduler {
     public List<ISeasonSchedule> getFullSeasonSchedule();
 
+    public void setFullSeasonSchedule(List<ISeasonSchedule> fullSeasonSchedule);
+
     public List<ISeasonSchedule> getPlayOffScheduleRound1();
 
     public LocalDate getSeasonStartDate();
@@ -31,22 +33,15 @@ public interface IScheduler {
 
     public void setFinalDay(LocalDate finalDay);
 
-
     public LocalDate getFinalMatchDate();
 
     public void setFinalMatchDate(LocalDate finalMatchDate);
 
     public List<ITeam> getTeamList();
 
-//    public void setTeamList(List<ITeam> teamList);
-
     public List<IConference> getConferences();
 
-//    public void setConferences(List<IConference> conferences);
-
     public List<IDivision> getDivisions();
-
-//    public void setDivisions(List<IDivision> divisions);
 
     public void gameWinner(ITeam team);
 
@@ -55,12 +50,6 @@ public interface IScheduler {
     public void generateTeamSchedule(ILeagueObjectModel inMemoryLeague);
 
     public void gameScheduleDates(LocalDate seasonStartDate, LocalDate seasonEndDate);
-
-//    public List<ISeasonSchedule> getFinals();
-//
-//    public void setFinals(List<ISeasonSchedule> finals);
-
-    public void setFullSeasonSchedule(List<ISeasonSchedule> fullSeasonSchedule);
 
     public LocalDate getCurrentDate();
 
