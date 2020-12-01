@@ -19,7 +19,6 @@ import org.json.simple.JSONObject;
 
 import java.io.IOException;
 
-
 public class ImportStateLogic implements IImportStateLogic {
     private static final String SCHEMAFILEPATH ="src/main/java/dhl/inputOutput/importJson/jsonSchema/schema.json";
     private static final Logger logger = LogManager.getLogger(Training.class);
