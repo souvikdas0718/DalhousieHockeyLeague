@@ -102,11 +102,6 @@ public class LeagueModelFactoryTest {
     }
 
     @Test
-    public void createGameConfig(JSONObject leagueJson ){
-        Assertions.assertNotNull(leagueFactory.createGameConfig(new JSONObject()));
-    }
-
-    @Test
     public void createPlayerDefault() {
         Assertions.assertNotNull(leagueFactory.createPlayerDefault());
     }
