@@ -1,65 +1,58 @@
 package dhl.businessLogicTest.leagueModelTests;
 
 import dhl.businessLogic.leagueModel.FreeAgent;
+import dhl.businessLogic.leagueModel.Player;
 import dhl.businessLogic.leagueModel.PlayerStatistics;
+import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
+import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
+import dhl.businessLogicTest.leagueModelTests.mocks.FreeAgentMock;
+import dhl.businessLogicTest.leagueModelTests.mocks.PlayerMock;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class FreeAgentTest {
     IPlayer freeAgent;
-    IPlayerStatistics playerStatistics;
+    LeagueModelMockAbstractFactory mockFactory;
+    FreeAgentMock freeAgentMock;
 
     @BeforeEach()
     public void initObject() {
-        freeAgent = new FreeAgent();
-        playerStatistics = new PlayerStatistics(20, 10, 10, 10, 10);
+        mockFactory = LeagueModelMockAbstractFactory.instance();
+        freeAgentMock = mockFactory.createFreeAgentMock();
+        freeAgent = freeAgentMock.getPlayer();
     }
 
     @Test
-    public void FreeAgentDefaultConstructorTest() {
-        String name = freeAgent.getPlayerName();
-        Assertions.assertTrue(name.length() == 0);
-        Assertions.assertEquals("", freeAgent.getPosition());
+    public void FreeAgentDefaultTest() {
+        LeagueModelAbstractFactory leagueFactory = LeagueModelAbstractFactory.instance();
+        freeAgent = leagueFactory.createFreeAgentDefault();
+        Assertions.assertEquals("", freeAgent.getPlayerName());
     }
-
 
     @Test
     public void FreeAgentTest() {
-        IPlayer freeAgent = new FreeAgent("Harry", "forward", playerStatistics);
         Assertions.assertEquals("forward", freeAgent.getPosition());
-        Assertions.assertEquals("Harry", freeAgent.getPlayerName());
+        Assertions.assertEquals("Noah", freeAgent.getPlayerName());
     }
 
     @Test
     public void checkPlayerNameValidTest() {
-        Exception error = Assertions.assertThrows(Exception.class, () -> {
-            freeAgent.checkPlayerValid();
-        });
-        Assertions.assertTrue(error.getMessage().contains("Player name cannot be empty"));
+        freeAgent = freeAgentMock.getPlayerWithoutName();
+        Assertions.assertTrue(freeAgent.isPlayerNameEmpty());
     }
 
     @Test
     public void checkPlayerPositionValidTest() {
-        IPlayer freeAgent = new FreeAgent("Noah", "leg side", playerStatistics);
-        Exception errorMsg = Assertions.assertThrows(Exception.class, () -> {
-            freeAgent.checkPlayerValid();
-        });
-        Assertions.assertTrue(errorMsg.getMessage().contains("Player position must be goalie or forward or defense"));
+        IPlayer freeAgent = freeAgentMock.getPlayerInvalidPosition();
+        Assertions.assertTrue( freeAgent.isCaptainValueBoolean());
     }
-
 
     @Test
     public void checkPlayerValidTest() throws Exception {
-        IPlayer freeAgent = new FreeAgent("Noah", "forward", playerStatistics);
-        Assertions.assertTrue(freeAgent.checkPlayerValid());
-    }
-
-    @Test
-    public void getPositionEmptyTest() {
-        Assertions.assertEquals("", freeAgent.getPosition());
+        Assertions.assertFalse(freeAgent.isPlayerNameEmpty());
     }
 
 }

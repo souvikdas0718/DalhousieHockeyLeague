@@ -1,0 +1,2482 @@
+{
+  "leagueName": "DhlMockLeagueObjectModel",
+  "conferences": [
+    {
+      "conferenceName": "Western1",
+      "divisions": [
+        {
+          "divisionName": "Atlantic1",
+          "teams": [
+            {
+              "teamName": "Ontario",
+              "generalManager": {
+                "generalManagerName": "Mathew",
+                "generalManagerPersonality": "normal"
+              },
+              "headCoach": {
+                "name": "Todd McLellan",
+                "skating": 0.1,
+                "shooting": 0.5,
+                "checking": 1.0,
+                "saving": 0.2
+              },
+              "lossPoint": 0,
+              "teamPoint": 0,
+              "players": [
+                {
+                  "playerName": "Henry",
+                  "position": "FORWARD",
+                  "captain": true,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max1",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max2",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max3",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max4",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max5",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max6",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max7",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max8",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max9",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max10",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max11",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max12",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max13",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max14",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max15",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max16",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max17",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max18",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max19",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max20",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max21",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max22",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max23",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max24",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max25",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max26",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max27",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "MaxG1",
+                  "position": "GOALIE",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "MaxG2",
+                  "position": "GOALIE",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "divisionName": "Atlantic2",
+          "teams": [
+            {
+              "teamName": "Ontario",
+              "generalManager": {
+                "generalManagerName": "Mathew",
+                "generalManagerPersonality": "normal"
+              },
+              "headCoach": {
+                "name": "Todd McLellan",
+                "skating": 0.1,
+                "shooting": 0.5,
+                "checking": 1.0,
+                "saving": 0.2
+              },
+              "lossPoint": 0,
+              "teamPoint": 0,
+              "players": [
+                {
+                  "playerName": "Henry",
+                  "position": "FORWARD",
+                  "captain": true,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max1",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max2",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max3",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max4",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max5",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max6",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max7",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max8",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max9",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max10",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max11",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max12",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max13",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max14",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max15",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max16",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max17",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max18",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max19",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max20",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max21",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max22",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max23",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max24",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max25",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max26",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max27",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "MaxG1",
+                  "position": "GOALIE",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "MaxG2",
+                  "position": "GOALIE",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "conferenceName": "Western2",
+      "divisions": [
+        {
+          "divisionName": "Atlantic1",
+          "teams": [
+            {
+              "teamName": "Ontario",
+              "generalManager": {
+                "generalManagerName": "Mathew",
+                "generalManagerPersonality": "normal"
+              },
+              "headCoach": {
+                "name": "Todd McLellan",
+                "skating": 0.1,
+                "shooting": 0.5,
+                "checking": 1.0,
+                "saving": 0.2
+              },
+              "lossPoint": 0,
+              "teamPoint": 0,
+              "players": [
+                {
+                  "playerName": "Henry",
+                  "position": "FORWARD",
+                  "captain": true,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max1",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max2",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max3",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max4",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max5",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max6",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max7",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max8",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max9",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max10",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max11",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max12",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max13",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max14",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max15",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max16",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max17",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max18",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max19",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max20",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max21",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max22",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max23",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max24",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max25",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max26",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max27",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "MaxG1",
+                  "position": "GOALIE",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "MaxG2",
+                  "position": "GOALIE",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "divisionName": "Atlantic2",
+          "teams": [
+            {
+              "teamName": "Ontario",
+              "generalManager": {
+                "generalManagerName": "Mathew",
+                "generalManagerPersonality": "normal"
+              },
+              "headCoach": {
+                "name": "Todd McLellan",
+                "skating": 0.1,
+                "shooting": 0.5,
+                "checking": 1.0,
+                "saving": 0.2
+              },
+              "lossPoint": 0,
+              "teamPoint": 0,
+              "players": [
+                {
+                  "playerName": "Henry",
+                  "position": "FORWARD",
+                  "captain": true,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max1",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max2",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max3",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max4",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max5",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max6",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max7",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max8",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max9",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max10",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max11",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "Max12",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max13",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max14",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max15",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max16",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max17",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max18",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max19",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max20",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max21",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max22",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max23",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max24",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max25",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max26",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "Max27",
+                  "position": "FORWARD",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": false
+                },
+                {
+                  "playerName": "MaxG1",
+                  "position": "GOALIE",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                },
+                {
+                  "playerName": "MaxG2",
+                  "position": "GOALIE",
+                  "captain": false,
+                  "playerStats": {
+                    "age": 16,
+                    "skating": 5,
+                    "shooting": 5,
+                    "checking": 5,
+                    "saving": 5,
+                    "dateOfBirth": {
+                      "year": 1988,
+                      "month": 1,
+                      "day": 1
+                    }
+                  },
+                  "playerInjuredDays": -1,
+                  "active": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "freeAgents": [
+    {
+      "playerName": "Henry",
+      "position": "FORWARD",
+      "playerStats": {
+        "age": 20,
+        "skating": 10,
+        "shooting": 10,
+        "checking": 10,
+        "saving": 5,
+        "dateOfBirth": {
+          "year": 1988,
+          "month": 1,
+          "day": 1
+        }
+      },
+      "playerInjuredDays": -1,
+      "active": false
+    },
+    {
+      "playerName": "Max",
+      "position": "GOALIE",
+      "playerStats": {
+        "age": 20,
+        "skating": 10,
+        "shooting": 10,
+        "checking": 10,
+        "saving": 5,
+        "dateOfBirth": {
+          "year": 1988,
+          "month": 1,
+          "day": 1
+        }
+      },
+      "playerInjuredDays": -1,
+      "active": false
+    }
+  ],
+  "coaches": [
+    {
+      "name": "Todd McLellan",
+      "skating": 0.1,
+      "shooting": 0.5,
+      "checking": 1.0,
+      "saving": 0.2
+    },
+    {
+      "name": "Todd McLellan1",
+      "skating": 0.1,
+      "shooting": 0.5,
+      "checking": 1.0,
+      "saving": 0.2
+    }
+  ],
+  "generalManagers": [
+    {
+      "generalManagerName": "Todd McLellan",
+      "generalManagerPersonality": ""
+    },
+    {
+      "generalManagerName": "Todd McLellan1",
+      "generalManagerPersonality": ""
+    }
+  ],
+  "gameplayConfig": {
+    "ourJsonObject": {
+      "gameResolver": {
+        "randomWinChance": 0.1
+      },
+      "trading": {
+        "maxPlayersPerTrade": 2,
+        "gmTable": {
+          "normal": 0.0,
+          "shrewd": -0.1,
+          "gambler": 0.1
+        },
+        "lossPoint": 8,
+        "randomTradeOfferChance": 0.05,
+        "randomAcceptanceChance": 0.05
+      },
+      "injuries": {
+        "injuryDaysHigh": 1,
+        "randomInjuryChance": 1.0,
+        "injuryDaysLow": 1
+      },
+      "training": {
+        "daysUntilStatIncreaseCheck": 100
+      },
+      "aging": {
+        "averageRetirementAge": 35,
+        "maximumAge": 50,
+        "statDecayChance": 1.0
+      }
+    }
+  }
+}

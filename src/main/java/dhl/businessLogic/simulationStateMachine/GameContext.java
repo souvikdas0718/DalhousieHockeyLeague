@@ -1,15 +1,18 @@
 package dhl.businessLogic.simulationStateMachine;
 
-import dhl.InputOutput.importJson.Interface.IGameConfig;
+import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.simulationStateMachine.Interface.IGameState;
-import dhl.businessLogic.simulationStateMachine.States.CreateTeamStateUI;
-import dhl.businessLogic.simulationStateMachine.States.ImportStateUI;
-import dhl.businessLogic.simulationStateMachine.States.LoadTeamStateUI;
-import dhl.businessLogic.simulationStateMachine.States.SimulateState;
+import dhl.businessLogic.simulationStateMachine.factory.GameStateAbstractFactory;
+import dhl.businessLogic.simulationStateMachine.interfaces.IGameContext;
+import dhl.businessLogic.simulationStateMachine.interfaces.IGameState;
+import dhl.inputOutput.ui.interfaces.IUserInputOutput;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-public class GameContext {
+import java.time.LocalDate;
+
+public class GameContext implements IGameContext {
     IGameState importState;
     IGameState loadTeamState;
     IGameState simulateState;
@@ -19,14 +22,21 @@ public class GameContext {
     ILeagueObjectModel inMemoryLeague;
     ITeam selectedTeam;
     IGameConfig gameConfig;
+    IUserInputOutput userInputOutput;
+    int year;
+    private static final Logger logger = LogManager.getLogger(GameContext.class);
 
     public GameContext() {
-        importState = new ImportStateUI(this);
-        loadTeamState = new LoadTeamStateUI(this);
-        simulateState = new SimulateState(this);
-        createTeamState = new CreateTeamStateUI(this);
+        GameStateAbstractFactory gameStateFactory = GameStateAbstractFactory.instance();
+        importState = gameStateFactory.createImportState(this);
+        loadTeamState = gameStateFactory.createLoadTeamState(this);
+        simulateState = gameStateFactory.createSimulateState(this);
+        createTeamState = gameStateFactory.createCreateTeamState(this);
         currentState = importState;
         gameInProgress = true;
+        userInputOutput = IUserInputOutput.getInstance();
+        year = LocalDate.now().getYear();
+        logger.debug("Made Game context Object");
     }
 
     public void setGameState(IGameState newState) {
@@ -34,15 +44,26 @@ public class GameContext {
     }
 
     public void stateEntryProcess() {
+        logger.debug("running Entry Process for class: " + currentState.getClass().getName());
         currentState.stateEntryProcess();
     }
 
     public void stateProcess() throws Exception {
+        logger.debug("running State Process for class: " + currentState.getClass().getName());
         currentState.stateProcess();
     }
 
     public void stateExitProcess() {
+        logger.debug("running Exit Process for class: " + currentState.getClass().getName());
         currentState.stateExitProcess();
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public int getYear() {
+        return year;
     }
 
     public ILeagueObjectModel getInMemoryLeague() {
@@ -91,5 +112,9 @@ public class GameContext {
 
     public void setGameConfig(IGameConfig gameConfig) {
         this.gameConfig = gameConfig;
+    }
+
+    public IGameState getCurrentState() {
+        return currentState;
     }
 }

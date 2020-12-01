@@ -1,21 +1,38 @@
 package dhl;
 
-import dhl.businessLogic.simulationStateMachine.GameContext;
+import dhl.businessLogic.simulationStateMachine.interfaces.IGameContext;
+import dhl.businessLogic.simulationStateMachine.states.StatesAbstractFactory;
+import dhl.inputOutput.ui.interfaces.IUserInputOutput;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class StartGame {
 
+    private static final Logger logger = LogManager.getLogger(StartGame.class);
+
     public static void main(String[] args) throws Exception {
-        System.out.println(" Welcome to Dynasty Mode ");
-        GameContext ourGame = new GameContext();
+        IUserInputOutput ioObject = IUserInputOutput.getInstance();
+        ioObject.printMessage("-------------------------Welcome to Dynasty Mode-------------------------");
+        StatesAbstractFactory statesFactory = StatesAbstractFactory.instance();
+        IGameContext ourGame = statesFactory.createGameContext();
+
+        logger.info("Starting Game");
 
         while (ourGame.isGameInProgress()) {
-            ourGame.stateEntryProcess();
-            ourGame.stateProcess();
-            ourGame.stateExitProcess();
+            if (ourGame.isGameInProgress()) {
+                ourGame.stateEntryProcess();
+            }
+            if (ourGame.isGameInProgress()) {
+                ourGame.stateProcess();
+            }
+            if (ourGame.isGameInProgress()) {
+                ourGame.stateExitProcess();
+            }
         }
 
-        System.out.println("==============================GAME FINISHED==============================");
-        System.out.println("Thanks for Playing");
+        logger.info("Game finished");
+        ioObject.printMessage("==============================GAME FINISHED==============================");
     }
+
 
 }

@@ -1,42 +1,45 @@
 package dhl.businessLogic.leagueModel;
 
-import dhl.InputOutput.importJson.Interface.IGameConfig;
-import dhl.database.interfaceDB.ILeagueObjectModelDB;
-import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
-import dhl.businessLogic.leagueModel.interfaceModel.IConference;
-import dhl.businessLogic.leagueModel.interfaceModel.IDivision;
-import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
-import dhl.businessLogic.leagueModel.interfaceModel.ICoach;
-import dhl.businessLogic.leagueModel.interfaceModel.IGeneralManager;
-import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModelValidation;
-import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModelInput;
-import dhl.businessLogic.leagueModel.interfaceModel.IValidation;
+import dhl.businessLogic.leagueModel.interfaceModel.*;
+import dhl.inputOutput.importJson.serializeDeserialize.interfaces.IDeserializeLeagueObjectModel;
+import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.json.simple.parser.ParseException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LeagueObjectModel implements ILeagueObjectModel {
+    private static final Logger logger = LogManager.getLogger(LeagueObjectModel.class);
     public String leagueName;
     public List<IConference> conferences;
     public List<IPlayer> freeAgents;
     public List<ICoach> coaches;
     public List<IGeneralManager> generalManagers;
-    public IGameConfig gameConfig;
+    public IGameConfig gameplayConfig;
 
     public LeagueObjectModel() {
+        setDefault();
+    }
+
+    private void setDefault() {
+        logger.info("Setting default values for Constructor");
         leagueName = "";
         conferences = new ArrayList<>();
         freeAgents = new ArrayList<>();
     }
 
     public LeagueObjectModel(String leagueName, List<IConference> conferences, List<IPlayer> freeAgents, List<ICoach> coaches, List<IGeneralManager> managers, IGameConfig gameConfig) {
-        this.leagueName = leagueName;
-        this.conferences = conferences;
-        this.freeAgents = freeAgents;
-        this.coaches = coaches;
-        this.generalManagers = managers;
-        this.gameConfig = gameConfig;
+        logger.info("Initializing League Model through Parameterized Constructor");
+        setDefault();
+        setLeagueName(leagueName);
+        setConferences(conferences);
+        setFreeAgents(freeAgents);
+        setCoaches(coaches);
+        setManagers(managers);
+        setGameConfig(gameConfig);
     }
 
     public String getLeagueName() {
@@ -55,25 +58,45 @@ public class LeagueObjectModel implements ILeagueObjectModel {
         return coaches;
     }
 
-    public void setCoaches(List<ICoach> coaches) {
-        this.coaches = coaches;
-    }
-
     public IGameConfig getGameConfig() {
-        return gameConfig;
+        return gameplayConfig;
     }
 
     public List<IGeneralManager> getGeneralManagers() {
         return generalManagers;
     }
 
-    public boolean checkIfLeagueModelValid(IValidation validation, ILeagueObjectModelValidation leagueObjectModelValidation) throws Exception {
+    public void setLeagueName(String leagueName) {
+        this.leagueName = leagueName;
+    }
+
+    public void setConferences(List<IConference> conferences) {
+        this.conferences = conferences;
+    }
+
+    public void setFreeAgents(List<IPlayer> freeAgents) {
+        this.freeAgents = freeAgents;
+    }
+
+    public void setManagers(List managers) {
+        this.generalManagers = managers;
+    }
+
+    public void setCoaches(List<ICoach> coaches) {
+        this.coaches = coaches;
+    }
+
+    public void setGameConfig(IGameConfig gameConfig) {
+        this.gameplayConfig = gameConfig;
+    }
+
+    public boolean checkIfLeagueModelValid(IValidation validation, ILeagueObjectModelValidation leagueObjectModelValidation) {
+        logger.info("Validating league object model initialized");
         return leagueObjectModelValidation.checkIfLeagueObjectModelValid(validation, this);
     }
 
-    public ILeagueObjectModel saveLeagueObjectModel(ILeagueObjectModelDB leagueDatabase, ILeagueObjectModelInput saveLeagueInput) throws Exception {
-        ILeagueObjectModelValidation leagueObjectModelValidation = saveLeagueInput.getLeagueObjectModelValidation();
-        leagueObjectModelValidation.checkUserInputForLeague(this, saveLeagueInput);
+    public ILeagueObjectModel saveLeagueObjectModel(ISerializeLeagueObjectModel serializeLeagueObjectModel, ILeagueObjectModelInput saveLeagueInput) throws IOException {
+        logger.debug("Saving league object model initialized");
         List<IConference> conferenceArrayList = this.getConferences();
         boolean newTeamAddedToLeague = false;
         for (int i = 0; i < conferenceArrayList.size(); i++) {
@@ -85,6 +108,7 @@ public class LeagueObjectModel implements ILeagueObjectModel {
                     if (division.getDivisionName() == saveLeagueInput.getDivisionName()) {
                         List<ITeam> teamArrayList = division.getTeams();
                         teamArrayList.add(saveLeagueInput.getNewlyCreatedTeam());
+                        logger.debug("Newly created team added at index" + j);
                         newTeamAddedToLeague = true;
                         break;
                     }
@@ -95,16 +119,23 @@ public class LeagueObjectModel implements ILeagueObjectModel {
             }
         }
         this.conferences = conferenceArrayList;
-        leagueDatabase.insertLeagueModel(this);
+
+        serializeLeagueObjectModel.writeSerializedLeagueObjectToJsonFile(this);
+
         return this;
     }
 
-    public ILeagueObjectModel loadLeagueObjectModel(ILeagueObjectModelDB leagueDatabase, String leagueName, String teamName) throws Exception {
-        return leagueDatabase.loadLeagueModel(leagueName, teamName);
+    public ILeagueObjectModel loadLeagueObjectModel(IDeserializeLeagueObjectModel deserializeLeagueObjectModel, String leagueName, String teamName) throws IOException, ParseException {
+        logger.debug("Loading league object model:" + leagueName);
+        ILeagueObjectModel leagueObjectModel;
+        leagueObjectModel = deserializeLeagueObjectModel.deserializeLeagueObjectJson(leagueName);
+
+        return leagueObjectModel;
     }
 
-    public ILeagueObjectModel updateLeagueObjectModel(ILeagueObjectModelDB leagueDatabase) throws Exception {
-        leagueDatabase.updateLeagueModel(this);
+    public ILeagueObjectModel updateLeagueObjectModel(ISerializeLeagueObjectModel serializeLeagueObjectModel) throws IOException {
+        logger.debug("Updating league object model:" + leagueName);
+        serializeLeagueObjectModel.updateSerializedLeagueObjectToJsonFile(this);
         return this;
     }
 }

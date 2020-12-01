@@ -1,24 +1,18 @@
 package dhl.businessLogic.traning;
 
-import dhl.InputOutput.importJson.Interface.IGameConfig;
-import dhl.businessLogic.traning.Interfaces.ITraining;
-import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
-import dhl.businessLogic.aging.Interface.IInjurySystem;
-import dhl.businessLogic.leagueModel.interfaceModel.IConference;
-import dhl.businessLogic.leagueModel.interfaceModel.IDivision;
-import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
-import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
-import dhl.businessLogic.leagueModel.interfaceModel.ICoach;
+import dhl.businessLogic.aging.interfaceAging.IInjury;
+import dhl.businessLogic.leagueModel.interfaceModel.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
 public class Training implements ITraining {
-
-    private IInjurySystem injurySystem;
+    private static final Logger logger = LogManager.getLogger(Training.class);
+    private IInjury injurySystem;
     public IGameConfig gameConfig;
 
-    public Training(IInjurySystem injurySystem, IGameConfig gameConfig) {
+    public Training(IInjury injurySystem, IGameConfig gameConfig) {
         this.injurySystem = injurySystem;
         this.gameConfig = gameConfig;
     }
@@ -29,16 +23,18 @@ public class Training implements ITraining {
                 for (ITeam team : division.getTeams()) {
 
                     Double[] randomValues = {getRandomValue(), getRandomValue(), getRandomValue(), getRandomValue()};
-                    playerStatLessThanHeadCoachStat(team.getPlayers(), team.getHeadCoach(), randomValues);
+                    playerStatLessThanHeadCoachStat(team.getPlayers(), team, randomValues);
 
-                    playerStatMoreThanHeadCoachStat(team.getPlayers(), team.getHeadCoach(), randomValues);
+                    playerStatMoreThanHeadCoachStat(team.getPlayers(), team, randomValues);
+                    logger.debug("Training: Updated player Stats");
                 }
             }
         }
         return leagueObjectModel;
     }
 
-    public List<IPlayer> playerStatLessThanHeadCoachStat(List<IPlayer> arrPlayer, ICoach objCoach, Double[] randomValues) throws Exception {
+    public List<IPlayer> playerStatLessThanHeadCoachStat(List<IPlayer> arrPlayer, ITeam team, Double[] randomValues) throws Exception {
+        ICoach objCoach = team.getHeadCoach();
         for (IPlayer player : arrPlayer) {
             IPlayerStatistics playerStat = player.getPlayerStats();
             if (randomValues[0] < objCoach.getSkating()) {
@@ -57,13 +53,14 @@ public class Training implements ITraining {
         return arrPlayer;
     }
 
-    public void playerStatMoreThanHeadCoachStat(List<IPlayer> arrPlayer, ICoach objCoach, Double[] randomValues) {
+    public void playerStatMoreThanHeadCoachStat(List<IPlayer> arrPlayer, ITeam team, Double[] randomValues) {
+        ICoach objCoach = team.getHeadCoach();
         for (IPlayer player : arrPlayer) {
             if ((randomValues[0] > objCoach.getSkating()) ||
                     (randomValues[1] > objCoach.getShooting()) ||
                     (randomValues[2] > objCoach.getChecking()) ||
                     (randomValues[3] > objCoach.getSaving())) {
-                injurySystem.checkIfPlayerInjured(gameConfig, player);
+                injurySystem.checkIfPlayerInjured(gameConfig, player, team);
             }
         }
     }

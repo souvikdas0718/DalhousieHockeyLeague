@@ -1,80 +1,51 @@
 package dhl.businessLogic.trade;
 
-import dhl.InputOutput.UI.IUserInputOutput;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.simulationStateMachine.Interface.IUpdateUserTeamRoster;
-import dhl.businessLogic.trade.Interface.ITradeOffer;
-import dhl.businessLogic.trade.Interface.ITradeType;
+import dhl.businessLogic.teamRosterUpdater.RosterUpdaterAbstractFactory;
+import dhl.businessLogic.teamRosterUpdater.interfaces.ITeamRosterUpdater;
+import dhl.businessLogic.trade.interfaces.ITradeType;
+import dhl.inputOutput.ui.interfaces.IUserInputOutput;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AiUserTrade implements ITradeType {
 
+    ITeamRosterUpdater updateUserTeamRoster;
+    RosterUpdaterAbstractFactory rosterUpdater;
     IUserInputOutput ioObject;
-    ITradeOffer tradeOffer;
-    IUpdateUserTeamRoster updateUserTeamRoster;
+    ILeagueObjectModel league;
+    private static final Logger logger = LogManager.getLogger(AiUserTrade.class);
 
-    public AiUserTrade(ITradeOffer tradeOffer, IUserInputOutput ioObject, IUpdateUserTeamRoster updateUserTeamRoster) {
-        this.tradeOffer = tradeOffer;
+    public AiUserTrade(IUserInputOutput ioObject, ILeagueObjectModel league) {
+        this.rosterUpdater = RosterUpdaterAbstractFactory.instance();
         this.ioObject = ioObject;
-        this.updateUserTeamRoster = updateUserTeamRoster;
+        this.updateUserTeamRoster = rosterUpdater.createUpdateUserTeamRoster(ioObject);
+        this.league = league;
     }
 
-    @Override
-    public boolean isTradeAccepted() throws Exception {
-        DisplayTradeOfferToUser(tradeOffer.getOfferingPlayers());
-        int inputfromUser = Integer.parseInt(ioObject.getUserInput());
-
-        if (inputfromUser == 1) {
+    public boolean isTradeAccepted(ArrayList<IPlayer> playersOffered, ArrayList<IPlayer> playerswanted, ITeam receivingTeam) {
+        logger.debug("Showing Trade to user");
+        DisplayTradeOfferToUser(playersOffered);
+        int inputFromUser = Integer.parseInt(ioObject.getUserInput());
+        if (inputFromUser == 1) {
+            logger.info("Trade Accepted by " + receivingTeam.getTeamName());
+            ioObject.printMessage("Trade Accepted, Thankyou");
             return true;
-        } else if (inputfromUser == 2) {
+        } else if (inputFromUser == 2) {
+            logger.info("Trade Rejected by " + receivingTeam.getTeamName());
+            ioObject.printMessage("Trade Rejected, Thankyou");
             return false;
-        } else {
-            throw new Exception("Wrong Input please give valid input");
         }
+        return false;
     }
 
-    @Override
-    public void validateTeamRosterAfterTrade(ITeam team, ILeagueObjectModel leagueObjectModel) throws Exception {
-        int totalSkaters = 0;
-        int totalGoalies = 0;
-        ArrayList<IPlayer> players = (ArrayList<IPlayer>) team.getPlayers();
-
-        for (IPlayer player : players) {
-            String position = player.getPosition();
-            if (position.equals("forward") || position.equals("defense")) {
-                totalSkaters = totalSkaters + 1;
-            }
-            if (position.equals("goalie")) {
-                totalGoalies = totalGoalies + 1;
-            }
-        }
-        if (totalSkaters > 18) {
-            while (totalSkaters > 18) {
-                updateUserTeamRoster.dropSkater(team, leagueObjectModel);
-                totalSkaters = totalSkaters - 1;
-            }
-        } else if (totalSkaters < 18) {
-            while (totalSkaters < 18) {
-                updateUserTeamRoster.addSkater(team, leagueObjectModel);
-                totalSkaters = totalSkaters + 1;
-            }
-        }
-        if (totalGoalies > 2) {
-            while (totalGoalies > 2) {
-                updateUserTeamRoster.dropGoalie(team, leagueObjectModel);
-                totalGoalies = totalGoalies - 1;
-            }
-
-        } else if (totalGoalies < 2) {
-            while (totalGoalies < 2) {
-                updateUserTeamRoster.addGoalie(team, leagueObjectModel);
-                totalGoalies = totalGoalies + 1;
-            }
-        }
+    public void validateTeamRosterAfterTrade(ITeam team) {
+        updateUserTeamRoster.validateTeamRoster(team, league);
     }
 
     public void DisplayTradeOfferToUser(List<IPlayer> playerList) {
@@ -90,5 +61,4 @@ public class AiUserTrade implements ITradeType {
         }
         ioObject.printMessage("Enter 1 to Accept Trade, 2 to Reject");
     }
-
 }

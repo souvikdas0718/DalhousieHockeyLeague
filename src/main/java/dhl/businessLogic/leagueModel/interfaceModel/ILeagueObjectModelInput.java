@@ -1,19 +1,19 @@
 package dhl.businessLogic.leagueModel.interfaceModel;
 
-import dhl.database.interfaceDB.ILeagueObjectModelDB;
+import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 
 public interface ILeagueObjectModelInput {
 
-    public String getLeagueName();
+    String getLeagueName();
 
-    public String getConferenceName();
+    String getConferenceName();
 
-    public String getDivisionName();
+    String getDivisionName();
 
-    public ITeam getNewlyCreatedTeam();
+    ITeam getNewlyCreatedTeam();
 
-    public ILeagueObjectModelValidation getLeagueObjectModelValidation();
+    ILeagueObjectModelValidation getLeagueObjectModelValidation();
 
-    public ILeagueObjectModelDB getLeagueObjectModelDB();
+    ISerializeLeagueObjectModel getSerializeLeagueObjectModel();
 
 }

@@ -1,25 +1,29 @@
 package dhl.businessLogic.leagueModel;
 
-import dhl.database.interfaceDB.ILeagueObjectModelDB;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModelInput;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModelValidation;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
+import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class LeagueObjectModelInput implements ILeagueObjectModelInput {
+    private static final Logger logger = LogManager.getLogger(LeagueObjectModelInput.class);
     private String leagueName;
     private String conferenceName;
     String divisionName;
     ITeam newlyCreatedTeam;
     ILeagueObjectModelValidation leagueObjectModelValidation;
-    ILeagueObjectModelDB leagueObjectModelDB;
+    ISerializeLeagueObjectModel serializeLeagueObjectModel;
 
-    public LeagueObjectModelInput(String leagueName, String conferenceName, String divisionName, ITeam newlyCreatedTeam, ILeagueObjectModelValidation leagueObjectModelValidation, ILeagueObjectModelDB leagueObjectModelDB) {
+    public LeagueObjectModelInput(String leagueName, String conferenceName, String divisionName, ITeam newlyCreatedTeam, ILeagueObjectModelValidation leagueObjectModelValidation, ISerializeLeagueObjectModel serializeLeagueObjectModel) {
+        logger.info("Constructor of Create League Object Model Input");
         this.leagueName = leagueName;
         this.conferenceName = conferenceName;
         this.divisionName = divisionName;
         this.newlyCreatedTeam = newlyCreatedTeam;
         this.leagueObjectModelValidation = leagueObjectModelValidation;
-        this.leagueObjectModelDB = leagueObjectModelDB;
+        this.serializeLeagueObjectModel = serializeLeagueObjectModel;
     }
 
     public String getLeagueName() {
@@ -42,7 +46,7 @@ public class LeagueObjectModelInput implements ILeagueObjectModelInput {
         return leagueObjectModelValidation;
     }
 
-    public ILeagueObjectModelDB getLeagueObjectModelDB() {
-        return leagueObjectModelDB;
+    public ISerializeLeagueObjectModel getSerializeLeagueObjectModel() {
+        return serializeLeagueObjectModel;
     }
 }

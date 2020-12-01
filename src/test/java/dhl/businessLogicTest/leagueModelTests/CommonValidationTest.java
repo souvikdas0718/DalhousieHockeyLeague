@@ -3,9 +3,13 @@ package dhl.businessLogicTest.leagueModelTests;
 import dhl.businessLogic.leagueModel.CommonValidation;
 import dhl.businessLogic.leagueModel.Player;
 import dhl.businessLogic.leagueModel.PlayerStatistics;
+import dhl.businessLogic.leagueModel.Team;
+import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
 import dhl.businessLogic.leagueModel.interfaceModel.IValidation;
+import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
+import dhl.businessLogicTest.leagueModelTests.mocks.TeamMock;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,39 +20,34 @@ import java.util.List;
 
 public class CommonValidationTest {
     IValidation commonValidation;
+    TeamMock teamMock;
+    LeagueModelMockAbstractFactory mockFactory;
 
     @BeforeEach()
     public void initObject() {
-        commonValidation = new CommonValidation();
+        LeagueModelAbstractFactory leagueFactory= LeagueModelAbstractFactory.instance();
+        commonValidation = leagueFactory.createCommonValidation();
+        mockFactory = LeagueModelMockAbstractFactory.instance();
+        teamMock = mockFactory.createTeamMock();
     }
 
     @Test
     public void isStringEmptyTest() {
-        Exception error = Assertions.assertThrows(Exception.class, () -> {
-            commonValidation.isStringEmpty("", "Team");
-        });
-        Assertions.assertTrue(error.getMessage().contains("Team name cannot be empty"));
+        Assertions.assertTrue(commonValidation.isStringEmpty("", "Team"));
     }
 
     @Test
     public void isListEmptyTest() {
-        Exception error = Assertions.assertThrows(Exception.class, () -> {
-            List<IPlayer> players = new ArrayList<>();
-            commonValidation.isListEmpty(players, "players");
-        });
-        Assertions.assertTrue(error.getMessage().contains("Please add players"));
+
+        List<IPlayer> players = new ArrayList<>();
+        Assertions.assertTrue(commonValidation.isListEmpty(players, "players"));
     }
 
     @Test
-    public void isListNotEmptyTest() throws Exception {
-        List<IPlayer> players = new ArrayList<>();
-        IPlayerStatistics playerStatistics = new PlayerStatistics(20, 10, 10, 10, 10);
-        IPlayer player1 = new Player("Rhea", "forward", false, playerStatistics);
-        players.add(player1);
-        IPlayer player2 = new Player("Noah", "defense", true, playerStatistics);
-        players.add(player2);
-        commonValidation.isListEmpty(players, "players");
-        Assertions.assertTrue(players.size() != 0);
+    public void isListNotEmptyTest()  {
+
+        commonValidation.isListEmpty(teamMock.getTeamPlayers(), "players");
+        Assertions.assertTrue(teamMock.getTeamPlayers().size() > 0);
     }
 
     @AfterEach()

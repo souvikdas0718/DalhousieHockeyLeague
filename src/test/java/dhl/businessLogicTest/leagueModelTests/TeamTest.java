@@ -1,12 +1,11 @@
 package dhl.businessLogicTest.leagueModelTests;
 
-import dhl.Mocks.LeagueObjectModelMocks;
-import dhl.businessLogic.factory.InitializeObjectFactory;
 import dhl.businessLogic.leagueModel.*;
-import dhl.businessLogic.leagueModel.interfaceModel.ICoach;
-import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
-import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
-import dhl.businessLogic.leagueModel.interfaceModel.IValidation;
+import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
+import dhl.businessLogic.leagueModel.interfaceModel.*;
+import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
+import dhl.businessLogicTest.leagueModelTests.mocks.PlayerMock;
+import dhl.businessLogicTest.leagueModelTests.mocks.TeamMock;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,36 +15,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TeamTest {
-    InitializeObjectFactory initObj;
+    LeagueModelMockAbstractFactory mockFactory;
+    LeagueModelAbstractFactory factory;
     IValidation validate;
     Team team;
-    List<IPlayer> playerArrayList;
-    IPlayerStatistics playerStatistics;
-    ICoach headCoach;
-    LeagueObjectModelMocks leagueMock;
+    TeamMock teamMock;
 
     @BeforeEach()
     public void initObject() {
-        initObj = new InitializeObjectFactory();
-        validate = new CommonValidation();
-        playerArrayList = new ArrayList<>();
-        playerStatistics = new PlayerStatistics(20, 10, 10, 10, 10);
-        playerArrayList.add(new Player("Harry", "forward", false, playerStatistics));
-        headCoach = new Coach("Todd McLellan", 0.1, 0.5, 1.0, 0.2);
-        team = new Team("Ontario", "Mathew", headCoach, playerArrayList);
-        leagueMock = new LeagueObjectModelMocks();
+        mockFactory = LeagueModelMockAbstractFactory.instance();
+        factory = LeagueModelAbstractFactory.instance();
+        validate = factory.createCommonValidation();
+        teamMock = mockFactory.createTeamMock();
+        team = (Team) teamMock.getTeam();
     }
 
     @Test
     public void TeamDefaultConstructorTest() {
-        team = new Team();
+        team = (Team) factory.createTeamDefault();
         String teamName = team.getTeamName();
-        Assertions.assertTrue(teamName.length() == 0);
+        Assertions.assertEquals(0,teamName.length() );
         ICoach coach = team.getHeadCoach();
         String coachName = coach.getCoachName();
-        Assertions.assertTrue(coachName.length() == 0);
-        String generalManagerName = team.getGeneralManager();
-        Assertions.assertTrue(generalManagerName.length() == 0);
+        Assertions.assertEquals(0,coachName.length() );
+        IGeneralManager manager = team.getGeneralManager();
+        Assertions.assertEquals(0,manager.getGeneralManagerName().length() );
         Assertions.assertEquals(0, team.getPlayers().size());
     }
 
@@ -62,7 +56,7 @@ public class TeamTest {
 
     @Test
     public void getGeneralManagerTest() {
-        Assertions.assertEquals("Mathew", team.getGeneralManager());
+        Assertions.assertEquals("Mathew", team.getGeneralManager().getGeneralManagerName());
     }
 
 
@@ -92,90 +86,102 @@ public class TeamTest {
     }
 
     @Test
+    public void getTOTALTEAMSIZETest() {
+        Assertions.assertEquals(30,team.getTotalTeamSize());
+    }
+
+    @Test
+    public void getTOTALGOALIESTest() {
+        Assertions.assertEquals(4,team.getTotalGoalies());
+    }
+
+    @Test
+    public void getTOTALFORWARDSTest() {
+        Assertions.assertEquals(16,team.getTotalForwards());
+    }
+    @Test
+    public void getTOTALDEFENSETest() {
+        Assertions.assertEquals(10,team.getTotalDefense());
+    }
+
+    @Test
+    public void setActiveRosterTest(){
+        Assertions.assertEquals(20, team.getActiveRoster().size());
+    }
+
+    @Test
+    public void setInactiveRosterTest(){
+        Assertions.assertEquals(10, team.getInactiveRoster().size());
+    }
+
+    @Test
+    public void sortPlayersInTeamByStrengthTest(){
+        List<IPlayer> players = teamMock.getTeamPlayers();
+        team.sortPlayersInTeamByStrength(players);
+        IPlayer firstPlayer=players.get(0);
+        IPlayer lastPlayer=players.get(players.size()-1);
+       Assertions.assertTrue(firstPlayer.getPlayerStrength()>lastPlayer.getPlayerStrength());
+    }
+
+    @Test
     public void checkIfOneCaptainPerTeamErrorTest() {
-        List<IPlayer> playersList = new ArrayList<>();
-        playersList.add(new Player("Henry", "forward", false, playerStatistics));
-        playersList.add(new Player("Max", "goalie", false, playerStatistics));
-        team = new Team("Ontario", "Mathew", headCoach, playersList);
-        Exception errorMsg = Assertions.assertThrows(Exception.class, () -> {
-            team.checkIfOneCaptainPerTeam(playersList);
-        });
-        Assertions.assertTrue(errorMsg.getMessage().contains("Please select captain for the team"));
+        List<IPlayer> playersList = teamMock.getTeamPlayers();
+        playersList.remove(0);
+        Assertions.assertFalse( team.checkIfOneCaptainPerTeam(playersList));
+    }
+
+    @Test
+    public void checkIfOneCaptainPerTeamValidTest() {
+        List<IPlayer> playersList = teamMock.getTeamPlayers();
+        Assertions.assertTrue( team.checkIfOneCaptainPerTeam(playersList));
     }
 
     @Test
     public void checkIfOneCaptainPerTeamTest() {
         List<IPlayer> playersList = new ArrayList<>();
-        playersList.add(new Player("Henry", "forward", true, playerStatistics));
-        playersList.add(new Player("Max", "goalie", true, playerStatistics));
-        team = new Team("Ontario", "Mathew", headCoach, playersList);
-        Exception errorMsg = Assertions.assertThrows(Exception.class, () -> {
-            team.checkIfOneCaptainPerTeam(playersList);
-        });
-        Assertions.assertTrue(errorMsg.getMessage().contains("There can be only one captain per team"));
+        PlayerMock playerMock = mockFactory.createPlayerMock();
+        for(int i=0;i<2;i++){
+            playersList.add(playerMock.getPlayerCaptain());
+        }
+
+        Assertions.assertFalse(team.checkIfOneCaptainPerTeam(playersList));
     }
 
     @Test
     public void checkNumberOfPlayersInTeamTest() {
-        List<IPlayer> playersList = new ArrayList<>();
-        playersList.add(new Player("Henry", "forward", true, playerStatistics));
-        for (int i = 1; i < 20; i++) {
-            playersList.add(new Player("Player" + i, "forward", false, playerStatistics));
-        }
-        team = new Team("Ontario", "Mathew", headCoach, playersList);
-        Assertions.assertTrue(team.checkIfSizeOfTeamValid(playersList));
+        Assertions.assertTrue(team.checkIfSizeOfTeamValid(teamMock.getTeamPlayers()));
     }
 
     @Test
-    public void checkIfTeamValidTest() throws Exception {
-        List<IPlayer> playersList = new ArrayList<>();
-        playersList.add(new Player("Max", "goalie", true, playerStatistics));
-        for (int i = 1; i < 20; i++) {
-            playersList.add(new Player("Player" + i, "forward", false, playerStatistics));
-        }
-        team = new Team("Ontario", "Mathew", headCoach, playersList);
-        Assertions.assertTrue(team.checkIfTeamValid(validate));
+    public void checkIfTeamValidTest() {
+        Assertions.assertTrue(team.checkIfSizeOfTeamValid(team.getPlayers()));
     }
 
     @Test
-    public void checkIfTeamPlayerMoreThan20Test() throws Exception {
-        List<IPlayer> playersList = new ArrayList<>();
-        playersList.add(new Player("Max", "goalie", true, playerStatistics));
-        for (int i = 0; i < 20; i++) {
-            playersList.add(new Player("Player" + i, "forward", false, playerStatistics));
-        }
-        team = new Team("Ontario", "Mathew", headCoach, playersList);
-        Exception error = Assertions.assertThrows(Exception.class, () -> {
-            team.checkIfTeamValid(validate);
-        });
-        Assertions.assertTrue(error.getMessage().contains("Each team must have 20 players"));
-    }
-
-    @Test
-    public void checkIfSkatersGoaliesValid() {
-        team = new Team("Ontario", "Mathew", headCoach, leagueMock.get20FreeAgentArrayMock());
-        Boolean isValid = team.checkIfSkatersGoaliesValid();
-        Assertions.assertEquals(true, isValid);
-    }
-
-    @Test
-    public void checkIfSkatersGoaliesInValid() {
-        List<IPlayer> selectedPlayers = leagueMock.get20FreeAgentArrayMock();
-        selectedPlayers.remove(19);
-        team = new Team("Ontario", "Mathew", headCoach, selectedPlayers);
-        Assertions.assertFalse(team.checkIfSkatersGoaliesValid());
+    public void checkIfTeamPlayerMoreThan30Test() {
+       team = (Team) teamMock.getInvalidSizeTeam();
+        Assertions.assertFalse(team.checkIfSizeOfTeamValid(team.getPlayers()));
     }
 
     @Test
     public void calculateTeamStrength() {
-        playerArrayList.add(new Player("Jared", "defense", false, playerStatistics));
-        team = new Team("Ontario", "Mathew", headCoach, playerArrayList);
-        Assertions.assertEquals(50, team.calculateTeamStrength());
+        Assertions.assertTrue( team.calculateTeamStrength()>0);
+    }
+
+    @Test
+    public void checkTeamPlayersCountValid() {
+        boolean isValid = team.checkTeamPlayersCount();
+        Assertions.assertEquals(true, isValid);
+    }
+
+    @Test
+    public void checkTeamPlayersCountInValid() {
+        team = (Team) teamMock.getInvalidSizeTeam();
+        Assertions.assertFalse(team.checkTeamPlayersCount());
     }
 
     @AfterEach()
     public void destroyObject() {
-        initObj = null;
         team = null;
     }
 

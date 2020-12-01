@@ -8,6 +8,6 @@ public interface IDivision {
 
     List<ITeam> getTeams();
 
-    boolean checkIfDivisionValid(IValidation validation) throws Exception;
+    boolean checkIfDivisionValid();
 
 }

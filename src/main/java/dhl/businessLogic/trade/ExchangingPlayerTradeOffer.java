@@ -2,50 +2,59 @@ package dhl.businessLogic.trade;
 
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.trade.Interface.ITradeOffer;
+import dhl.businessLogic.trade.interfaces.ITradeType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 
-public class ExchangingPlayerTradeOffer implements ITradeOffer {
+public class ExchangingPlayerTradeOffer extends TradeOfferAbstract {
 
-    ITeam offeringTeam;
-    ITeam receivingTeam;
-    public ArrayList<IPlayer> playersOffered, playersWantedInExchange;
+    public ArrayList<IPlayer> playersOffered;
+    protected ITradeType currentTradeType;
 
-    public ExchangingPlayerTradeOffer(ITeam offeringTeam, ITeam receivingTeam, ArrayList<IPlayer> playersOffered, ArrayList<IPlayer> playersWantedInExchange) {
-        this.offeringTeam = offeringTeam;
-        this.receivingTeam = receivingTeam;
+    private static final Logger logger = LogManager.getLogger(ExchangingPlayerTradeOffer.class);
+
+    public ExchangingPlayerTradeOffer(ITeam offeringTeam, ITeam receivingTeam, ArrayList<IPlayer> playersOffered, ArrayList<IPlayer> playersWantedInExchange, ITradeType tradeType) {
+        super(offeringTeam, receivingTeam, playersWantedInExchange);
+        this.currentTradeType = tradeType;
         this.playersOffered = playersOffered;
-        this.playersWantedInExchange = playersWantedInExchange;
+        logger.info("Player Swap Trade offer made between " + offeringTeam.getTeamName() + " and " + receivingTeam.getTeamName());
     }
 
-    @Override
     public void implementTrade() {
-        for (IPlayer player : playersOffered) {
-            receivingTeam.getPlayers().add(player);
-            offeringTeam.getPlayers().remove(player);
+        if (checkIfTradeAccepted()) {
+            logger.info("Implementing trade between " + offeringTeam.getTeamName() + " and " + receivingTeam.getTeamName());
+            for (IPlayer player : playersOffered) {
+                if (playerFound(player)) {
+                    receivingTeam.getPlayers().add(player);
+                    offeringTeam.getPlayers().remove(player);
+                }
+            }
+            for (IPlayer player : playersWantedInExchange) {
+                if (playerFound(player)) {
+                    receivingTeam.getPlayers().remove(player);
+                    offeringTeam.getPlayers().add(player);
+                }
+            }
+            currentTradeType.validateTeamRosterAfterTrade(offeringTeam);
+            currentTradeType.validateTeamRosterAfterTrade(receivingTeam);
         }
-        for (IPlayer player : playersWantedInExchange) {
-            receivingTeam.getPlayers().remove(player);
-            offeringTeam.getPlayers().add(player);
-        }
-    }
-
-    @Override
-    public ITeam getOfferingTeam() {
-        return offeringTeam;
-    }
-
-    @Override
-    public ITeam getReceivingTeam() {
-        return receivingTeam;
     }
 
     public ArrayList<IPlayer> getOfferingPlayers() {
         return playersOffered;
     }
 
-    public ArrayList<IPlayer> getPlayersWantedInReturn() {
-        return playersWantedInExchange;
+    public boolean checkIfTradeAccepted() {
+        return currentTradeType.isTradeAccepted(playersOffered, playersWantedInExchange, receivingTeam);
+    }
+
+    public boolean playerFound(IPlayer player) {
+        if (player == null) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

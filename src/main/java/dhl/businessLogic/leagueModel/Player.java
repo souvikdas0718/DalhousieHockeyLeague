@@ -2,29 +2,36 @@ package dhl.businessLogic.leagueModel;
 
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayerStatistics;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Player implements IPlayer {
+    private static final int INJUREDDAYSDEFAULTVALUE = -1;
+    private static final Logger logger = LogManager.getLogger(Player.class);
     private String playerName;
     private PlayerPosition position;
     private Boolean captain;
     private IPlayerStatistics playerStats;
     private int playerInjuredDays;
+    private boolean active;
+
+    public void setDefaults() {
+        playerName = "";
+        position = null;
+        this.playerInjuredDays = INJUREDDAYSDEFAULTVALUE;
+        this.active = false;
+    }
 
     public Player() {
         setDefaults();
     }
 
-    public void setDefaults() {
-        playerName = "";
-        position = null;
-        this.playerInjuredDays = -1;
-    }
-
     public Player(String playerName, String position, IPlayerStatistics playerStats) {
+        this();
+        logger.info("Creating player with name " + playerName);
         this.playerName = playerName;
         this.setPosition(position);
         this.playerStats = playerStats;
-        this.playerInjuredDays = -1;
     }
 
     public Player(String playerName, String position, Boolean captain, IPlayerStatistics playerStats) {
@@ -37,27 +44,22 @@ public class Player implements IPlayer {
     }
 
     public void setPosition(String playerPosition) {
-        switch (playerPosition) {
-            case "goalie": {
-                this.position = PlayerPosition.GOALIE;
-                break;
-            }
-            case "forward": {
-                this.position = PlayerPosition.FORWARD;
-                break;
-            }
-            case "defense": {
-                this.position = PlayerPosition.DEFENSE;
+        logger.info("Setting player position" + playerName);
+        for (PlayerPosition position : PlayerPosition.values()) {
+            if (playerPosition.equals(position.toString())) {
+                logger.debug("Player Position set as" + position);
+                this.position = position;
                 break;
             }
         }
-
     }
 
     public String getPosition() {
         if (position == null) {
             return "";
-        } else return position.toString();
+        } else {
+            return position.toString();
+        }
     }
 
     public void setCaptain(Boolean isCaptain) {
@@ -65,6 +67,9 @@ public class Player implements IPlayer {
     }
 
     public boolean getCaptain() {
+        if (captain == null) {
+            return false;
+        }
         return captain;
     }
 
@@ -80,33 +85,30 @@ public class Player implements IPlayer {
         this.playerInjuredDays = playerInjuredDays;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     public boolean isPlayerNameEmpty() {
         return playerName.length() == 0;
     }
 
     public boolean isPlayerPositionInvalid() {
+        logger.debug("Player position incorrect for player" + playerName);
         return this.position == null;
     }
 
     public boolean isCaptainValueBoolean() {
+        logger.debug("Captain value incorrect for player" + playerName);
         return this.captain == null;
     }
 
-    public boolean checkPlayerValid() throws Exception {
-        if (this.isPlayerNameEmpty()) {
-            throw new Exception("Player name cannot be empty");
-        }
-        if (this.isPlayerPositionInvalid()) {
-            throw new Exception("Player position must be goalie or forward or defense");
-        }
-        if (this.isCaptainValueBoolean()) {
-            throw new Exception("Captain value must be true or false");
-        }
-        playerStats.checkPlayerStatistics();
-        return true;
-    }
-
     public double getPlayerStrength() {
+        logger.info("Calculating strength of player" + playerName);
         double playerStrength = 0;
         if (position == PlayerPosition.FORWARD) {
             playerStrength = playerStats.getSkating() + playerStats.getShooting() + (playerStats.getChecking() / 2.0);
@@ -118,8 +120,8 @@ public class Player implements IPlayer {
         if (playerInjuredDays > 0) {
             playerStrength = playerStrength / 2.0;
         }
+        logger.debug("Strength of player" + playerName + "is" + playerStrength);
         return playerStrength;
     }
-
 }
 

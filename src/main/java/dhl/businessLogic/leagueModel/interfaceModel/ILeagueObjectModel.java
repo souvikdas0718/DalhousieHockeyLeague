@@ -1,8 +1,10 @@
 package dhl.businessLogic.leagueModel.interfaceModel;
 
-import dhl.InputOutput.importJson.Interface.IGameConfig;
-import dhl.database.interfaceDB.ILeagueObjectModelDB;
+import dhl.inputOutput.importJson.serializeDeserialize.interfaces.IDeserializeLeagueObjectModel;
+import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
+import org.json.simple.parser.ParseException;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface ILeagueObjectModel {
@@ -19,13 +21,23 @@ public interface ILeagueObjectModel {
 
     IGameConfig getGameConfig();
 
-    boolean checkIfLeagueModelValid(IValidation validation, ILeagueObjectModelValidation leagueObjectModelValidation) throws Exception;
+    void setLeagueName(String leagueName);
 
-    ILeagueObjectModel saveLeagueObjectModel(ILeagueObjectModelDB leagueDatabase, ILeagueObjectModelInput saveLeagueInput) throws Exception;
+    void setConferences(List<IConference> conferences);
 
-    ILeagueObjectModel loadLeagueObjectModel(ILeagueObjectModelDB leagueDatabase, String leagueName, String teamName) throws Exception;
+    void setFreeAgents(List<IPlayer> freeAgents);
 
-    ILeagueObjectModel updateLeagueObjectModel(ILeagueObjectModelDB leagueDatabase) throws Exception;
+    void setManagers(List managers);
 
+    void setCoaches(List<ICoach> coaches);
 
+    void setGameConfig(IGameConfig gameConfig);
+
+    boolean checkIfLeagueModelValid(IValidation validation, ILeagueObjectModelValidation leagueObjectModelValidation);
+
+    ILeagueObjectModel saveLeagueObjectModel(ISerializeLeagueObjectModel serializeLeagueObjectModel, ILeagueObjectModelInput saveLeagueInput) throws IOException;
+
+    ILeagueObjectModel loadLeagueObjectModel(IDeserializeLeagueObjectModel deserializeLeagueObjectModel, String leagueName, String teamName) throws IOException, ParseException;
+
+    ILeagueObjectModel updateLeagueObjectModel(ISerializeLeagueObjectModel serializeLeagueObjectModel) throws IOException;
 }

@@ -1,46 +1,51 @@
 package dhl.importJsonTest;
 
-import dhl.InputOutput.importJson.CreateLeagueObjectModel;
-import dhl.InputOutput.importJson.GameConfig;
-import dhl.InputOutput.importJson.ImportJsonFile;
-import dhl.InputOutput.importJson.Interface.IGameConfig;
-import dhl.Mocks.JsonFilePathMock;
+import dhl.mocks.JsonFilePathMock;
+import dhl.mocks.factory.MockAbstractFactory;
+import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
+import dhl.inputOutput.importJson.ImportJsonAbstractFactory;
+
+import dhl.inputOutput.importJson.interfaces.IImportJsonFile;
+import dhl.inputOutput.importJson.interfaces.ICreateLeagueObjectModel;
 import org.json.simple.JSONObject;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CreateLeagueObjectModelTest {
+    MockAbstractFactory mockFactory;
     JSONObject leagueObject;
-    CreateLeagueObjectModel testClassObject;
+    ICreateLeagueObjectModel createLeagueObjectModel;
     JsonFilePathMock filePathMock;
+    ImportJsonAbstractFactory importFactory;
 
     @BeforeEach
-    public void initObject() throws Exception {
-        this.filePathMock = new JsonFilePathMock();
-        ImportJsonFile importJsonFile = new ImportJsonFile(filePathMock.getFilePath());
+    public void initObject()  {
+        mockFactory = MockAbstractFactory.instance();
+        this.filePathMock = mockFactory.getJsonFilePath();
+        importFactory = ImportJsonAbstractFactory.instance();
+        IImportJsonFile importJsonFile = importFactory.createImportJsonFile(filePathMock.getFilePath());
         this.leagueObject = importJsonFile.getJsonObject();
-        this.testClassObject = new CreateLeagueObjectModel();
+        this.createLeagueObjectModel = importFactory.createCreateLeagueObjectModel(leagueObject);
     }
 
     @Test
-    public void checkJsonArrayTest() {
-        String conferenceArrayKey = filePathMock.getConferenceArrayKey();
-        assertTrue(testClassObject.checkJsonArray(leagueObject, conferenceArrayKey));
-
-        String freeAgentArrayKey = filePathMock.getFreeAgentArrayKey();
-        assertTrue(testClassObject.checkJsonArray(leagueObject, freeAgentArrayKey));
-
-        assertFalse(testClassObject.checkJsonArray(leagueObject, "invalidArrayKey"));
+    public void getLeagueObjectModelTest()  {
+        ILeagueObjectModel leagueObjectModel = createLeagueObjectModel.getLeagueObjectModel();
+        assertEquals(leagueObject.get("leagueName"),leagueObjectModel.getLeagueName());
     }
 
     @Test
-    public void getLeagueObjectModel() throws Exception {
-        IGameConfig gameConfig = new GameConfig(new JSONObject());
-        CreateLeagueObjectModel testObject = new CreateLeagueObjectModel(leagueObject, gameConfig);
-        assertTrue(testObject.getLeagueObjectModel() != null);
+    public void getLeagueObjectModelInvalidTest()  {
+        IImportJsonFile importJsonFile = importFactory.createImportJsonFile(filePathMock.getIncorrectJsonfilepath());
+        this.leagueObject = importJsonFile.getJsonObject();
+        createLeagueObjectModel = importFactory.createCreateLeagueObjectModel(leagueObject);
+        ILeagueObjectModel leagueObjectModel = createLeagueObjectModel.getLeagueObjectModel();
+
+        Assertions.assertEquals(null,leagueObjectModel);
     }
+
 
 }

@@ -1,27 +1,30 @@
 package dhl.importJsonTest;
 
-import dhl.InputOutput.importJson.JsonFilePath;
-import dhl.Mocks.JsonFilePathMock;
+import dhl.importJsonTest.mocks.JsonFilePathMock;
+import dhl.inputOutput.importJson.ImportJsonAbstractFactory;
+import dhl.inputOutput.importJson.JsonFilePath;
+import dhl.inputOutput.importJson.interfaces.IJsonFilePath;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class JsonFilePathTest {
-    JsonFilePath testClassObject;
-    JsonFilePathMock jsonDataMock;
+
+    ImportJsonAbstractFactory jsonFactory;
+    IJsonFilePath testClassObject;
+    IJsonFilePath jsonDataMock;
 
     @BeforeEach
     public void initObject() {
-        testClassObject = new JsonFilePath();
-        jsonDataMock = new JsonFilePathMock();
+        jsonFactory = ImportJsonAbstractFactory.instance();
+        testClassObject = jsonFactory.createJsonFilePath();
+        jsonDataMock = JsonFilePathMock.instance();
     }
 
     @Test
     public void validatePathTest() {
-        assertFalse(testClassObject.validatePath("Wrong Json File Path"));
-        System.out.println();
-        assertTrue(testClassObject.validatePath(jsonDataMock.getFilePath()));
+        assertFalse( ((JsonFilePath)testClassObject).validatePath("Wrong Json File Path"));
+        assertTrue(((JsonFilePath)testClassObject).validatePath(jsonDataMock.getFilePath()));
     }
 }

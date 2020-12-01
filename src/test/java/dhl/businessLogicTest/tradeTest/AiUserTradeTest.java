@@ -1,95 +1,97 @@
 package dhl.businessLogicTest.tradeTest;
 
-import dhl.InputOutput.UI.IUserInputOutput;
-import dhl.Mocks.LeagueObjectModelMocks;
-import dhl.Mocks.MockUserInputOutput;
+import dhl.businessLogic.leagueModel.PlayerPosition;
+import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
+import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
+import dhl.businessLogic.trade.factory.TradeAbstractFactory;
+import dhl.businessLogic.trade.factory.TradeConcreteFactory;
+import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
+import dhl.businessLogicTest.tradeTest.mocks.factory.TradeMockAbstractFactory;
+import dhl.importJsonTest.mocks.MockUserInputOutput;
+import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import dhl.businessLogic.leagueModel.LeagueObjectModel;
-import dhl.businessLogic.leagueModel.Player;
-import dhl.businessLogic.leagueModel.PlayerStatistics;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.simulationStateMachine.Interface.IUpdateUserTeamRoster;
-import dhl.businessLogic.simulationStateMachine.UpdateUserTeamRoster;
 import dhl.businessLogic.trade.AiUserTrade;
-import dhl.businessLogic.trade.ExchangingPlayerTradeOffer;
-import dhl.businessLogic.trade.Interface.ITradeOffer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 
 public class AiUserTradeTest {
 
     AiUserTrade testClassObject;
-    TradeMock tradeMock;
     IUserInputOutput ioObjectMock;
-    LeagueObjectModelMocks leagueObjectModelMocks;
+    LeagueModelMockAbstractFactory leagueMockFactory;
     LeagueObjectModel leagueObjectModel;
+    IGameConfig ourGameConfig;
+
+    ArrayList<IPlayer> offeringPlayers = new ArrayList<>();
+    ArrayList<IPlayer> playersWanted = new ArrayList<>();
+    ITeam offeringTeam,recevingTeam;
+
+    TradeAbstractFactory tradeFactory;
+    LeagueModelAbstractFactory leagueFactory;
+    TradeMockAbstractFactory tradeMockFactory;
 
     @BeforeEach
     public void initObject() {
-        tradeMock = new TradeMock();
-        ITeam offeringTeam = tradeMock.getTeamWithBadPlayer();
-        ITeam recevingTeam = tradeMock.getTeamWithGoodPlayer();
+        IUserInputOutput.setFactory(MockUserInputOutput.instance());
+        ioObjectMock = IUserInputOutput.getInstance();
 
-        ArrayList<IPlayer> offeringPlayers = new ArrayList<>();
+        tradeFactory = new TradeConcreteFactory();
+        leagueFactory = LeagueModelAbstractFactory.instance();
+        tradeMockFactory = TradeMockAbstractFactory.instance();
+
+        leagueMockFactory = LeagueModelMockAbstractFactory.instance();
+
+        offeringTeam = tradeMockFactory.createTeamMockForTrade().getTeamWithBadPlayer();
+        recevingTeam = tradeMockFactory.createTeamMockForTrade().getTeamWithGoodPlayer();
+
         offeringPlayers.add(offeringTeam.getPlayers().get(0));
-
-        ArrayList<IPlayer> playersWanted = new ArrayList<>();
         playersWanted.add(recevingTeam.getPlayers().get(0));
 
-        ITradeOffer tradeOffer = new ExchangingPlayerTradeOffer(offeringTeam, recevingTeam, offeringPlayers, playersWanted);
-        ioObjectMock = new MockUserInputOutput();
-        IUpdateUserTeamRoster updateUserTeamRoster = new UpdateUserTeamRoster(ioObjectMock);
-        testClassObject = new AiUserTrade(tradeOffer, ioObjectMock, updateUserTeamRoster);
-        leagueObjectModelMocks = new LeagueObjectModelMocks();
-        leagueObjectModel = (LeagueObjectModel) leagueObjectModelMocks.getLeagueObjectMock();
+        ourGameConfig = tradeMockFactory.createGameConfigMockForTrading().getGameConfigMock();
+        leagueObjectModel = (LeagueObjectModel) leagueMockFactory.createLeagueMock().getLeagueObjectModel();
+        testClassObject = (AiUserTrade) tradeFactory.createAiUserTrade(ioObjectMock, leagueObjectModel);
     }
 
     @Test
-    public void validateTeamRosterAfterTrade() throws Exception {
-        leagueObjectModel.freeAgents = tradeMock.get50FreeAgents();
-        ITeam team = tradeMock.getTeamWithGoodPlayer();
+    public void validateTeamRosterAfterTrade(){
+
+        leagueObjectModel.freeAgents = tradeMockFactory.createFreeAgentMockForTrade().getListOfFreeAgents();
+        ITeam team = tradeMockFactory.createTeamMockForTrade().getTeamWithGoodPlayer();
 
         ((MockUserInputOutput) ioObjectMock).setMockOutput("1");
-        testClassObject.validateTeamRosterAfterTrade(team, leagueObjectModel);
-        Assertions.assertTrue(team.checkIfSkatersGoaliesValid());
 
-        team.getPlayers().add(tradeMock.getWeakPlayer("randomPlayer1"));
-        team.getPlayers().add(tradeMock.getWeakPlayer("randomPlayer2"));
-        IPlayer player = new Player("player1", "goalie", false,
-                new PlayerStatistics(25, 10, 10, 10, 10));
+        testClassObject.validateTeamRosterAfterTrade(team);
+        Assertions.assertTrue(team.checkTeamPlayersCount());
+
+        team.getPlayers().add(tradeMockFactory.createPlayerMockForTrade().getWeakPlayer("randomPlayer1", PlayerPosition.DEFENSE.toString()));
+        team.getPlayers().add(tradeMockFactory.createPlayerMockForTrade().getWeakPlayer("randomPlayer2", PlayerPosition.DEFENSE.toString()));
+
+        IPlayer player = leagueFactory.createPlayer("player1", "goalie", false,
+                leagueFactory.createPlayerStatistics(10, 10, 10, 10));
         team.getPlayers().add(player);
-        player = new Player("player2", "goalie", false,
-                new PlayerStatistics(25, 3, 1, 4, 5));
+        player = leagueFactory.createPlayer("player2", "goalie", false,
+                leagueFactory.createPlayerStatistics( 3, 1, 4, 5));
         team.getPlayers().add(player);
         ((MockUserInputOutput) ioObjectMock).setMockOutput("0");
-        testClassObject.validateTeamRosterAfterTrade(team, leagueObjectModel);
-        Assertions.assertTrue(team.checkIfSkatersGoaliesValid());
+        testClassObject.validateTeamRosterAfterTrade(team);
+        team.setRoster();
+        Assertions.assertTrue(team.checkTeamPlayersCount());
     }
 
     @Test
-    public void isTradeAcceptedTest() throws Exception {
+    public void isTradeAcceptedTest() {
 
         ((MockUserInputOutput) ioObjectMock).setMockOutput("1");
-        Assertions.assertTrue(testClassObject.isTradeAccepted());
+        Assertions.assertTrue(testClassObject.isTradeAccepted(offeringPlayers, playersWanted,recevingTeam ));
 
         ((MockUserInputOutput) ioObjectMock).setMockOutput("2");
-        Assertions.assertFalse(testClassObject.isTradeAccepted());
+        Assertions.assertFalse(testClassObject.isTradeAccepted(offeringPlayers, playersWanted,recevingTeam));
 
         ((MockUserInputOutput) ioObjectMock).setMockOutput("3");
-        Exception error = Assertions.assertThrows(Exception.class, () -> {
-            Assertions.assertFalse(testClassObject.isTradeAccepted());
-        });
-        Assertions.assertTrue(error.getMessage().contains("Wrong Input please give valid input"));
-
-        ((MockUserInputOutput) ioObjectMock).setMockOutput("sdasd");
-        Exception error2 = Assertions.assertThrows(Exception.class, () -> {
-            Assertions.assertFalse(testClassObject.isTradeAccepted());
-        });
-        Assertions.assertTrue(error.getMessage().contains("Wrong Input please give valid input"));
-
+        Assertions.assertFalse(testClassObject.isTradeAccepted(offeringPlayers, playersWanted,recevingTeam));
     }
-
 }
