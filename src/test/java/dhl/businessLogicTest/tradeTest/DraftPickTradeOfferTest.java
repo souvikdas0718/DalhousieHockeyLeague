@@ -76,4 +76,21 @@ public class DraftPickTradeOfferTest {
         testResult = ((DraftPickTradeOffer) testClassObject).isTradePossible();
         Assertions.assertTrue(testResult);
     }
+
+    @Test
+    public void playerFoundTest(){
+        IPlayer player = null;
+        Assertions.assertFalse(((DraftPickTradeOffer)testClassObject).playerFound(player));
+        player = leagueMock.createPlayerMock().getPlayer();
+        Assertions.assertTrue(((DraftPickTradeOffer)testClassObject).playerFound(player));
+    }
+
+    @Test
+    public void isSequenceSetTest(){
+        ITeam[][] playerDraftSequence = null;
+        Assertions.assertFalse(((DraftPickTradeOffer)testClassObject).isSequenceSet(playerDraftSequence));
+
+        playerDraftSequence = draftPickSequenceMock;
+        Assertions.assertTrue(((DraftPickTradeOffer)testClassObject).isSequenceSet(playerDraftSequence));
+    }
 }

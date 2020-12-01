@@ -35,8 +35,6 @@ public class DraftPickTradeOffer extends TradeOfferAbstract {
                     offeringTeam.getPlayers().add(player);
                 }
             }
-        }else{
-            logger.warn("Draft Trade not possible between team: "+offeringTeam.getTeamName()+" and "+ receivingTeam.getTeamName());
         }
     }
 
@@ -73,6 +71,15 @@ public class DraftPickTradeOffer extends TradeOfferAbstract {
             return false;
         }
         else {
+            return true;
+        }
+    }
+
+    public boolean isSequenceSet(ITeam[][] playerDraftSequence){
+        if (playerDraftSequence == null){
+            return false;
+        }
+        else{
             return true;
         }
     }

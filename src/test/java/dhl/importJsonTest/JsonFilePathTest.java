@@ -1,6 +1,5 @@
 package dhl.importJsonTest;
 
-import dhl.importJsonTest.mocks.JsonFilePathMock;
 import dhl.inputOutput.importJson.ImportJsonAbstractFactory;
 import dhl.inputOutput.importJson.JsonFilePath;
 import dhl.inputOutput.importJson.interfaces.IJsonFilePath;
@@ -19,7 +18,7 @@ public class JsonFilePathTest {
     public void initObject() {
         jsonFactory = ImportJsonAbstractFactory.instance();
         testClassObject = jsonFactory.createJsonFilePath();
-        jsonDataMock = JsonFilePathMock.instance();
+        jsonDataMock = jsonFactory.createJsonFilePath();
     }
 
     @Test

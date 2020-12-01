@@ -5,6 +5,7 @@ import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
+import dhl.businessLogic.trade.DraftPickTradeOffer;
 import dhl.businessLogic.trade.ExchangingPlayerTradeOffer;
 import dhl.businessLogic.trade.factory.TradeAbstractFactory;
 import dhl.businessLogic.trade.factory.TradeConcreteFactory;
@@ -82,5 +83,13 @@ public class ExchangingPlayerTradeOfferTest {
         ArrayList<IPlayer> playersWanted = testClassObject.getPlayersWantedInReturn();
         String wantedPlayerName = playersWanted.get(0).getPlayerName();
         Assertions.assertTrue(wantedPlayerName.equals("Player1"));
+    }
+
+    @Test
+    public void playerFoundTest(){
+        IPlayer player = null;
+        Assertions.assertFalse(((ExchangingPlayerTradeOffer)testClassObject).playerFound(player));
+        player = leagueMock.createPlayerMock().getPlayer();
+        Assertions.assertTrue(((ExchangingPlayerTradeOffer)testClassObject).playerFound(player));
     }
 }
