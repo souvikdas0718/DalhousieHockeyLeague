@@ -67,19 +67,20 @@ public class SimulateState implements IGameState {
         for (int i = 1; i <= SIMULATIONSEASONCOUNT; i++) {
             simulationContextObject.setSubjectGameSimulation(subject);
             simulationContextObject.setSeasonInProgress(true);
+            simulationContextObject.setCurrentSimulation(simulationContextObject.getInitializeSeason());
+
             logger.info("Season " + i + ": is in progress");
             while (simulationContextObject.isSeasonInProgress()) {
                 simulationContextObject.seasonStateProcess();
                 simulationContextObject.seasonStateExitProcess();
             }
-
             goals.print();
             saves.print();
             penalities.print();
             shots.print();
-
             ourGame.setYear(ourGame.getYear() + 1);
-            simulationContextObject.setYear(ourGame.getYear() + 1);
+            simulationContextObject.setYear(ourGame.getYear());
+            simulationContextObject.setNumberOfDays(0);
         }
 
 

@@ -42,7 +42,6 @@ public class Scout implements IScout {
     }
 
     public TradeOfferAbstract findTrade(int congifMaxPlayerPerTrade) {
-
         int maxPlayersInTrade = 0;
         ArrayList<IPlayer> listOfPlayersToGive = new ArrayList<>();
         ArrayList<IPlayer> listOfPlayerWeWillGet = new ArrayList<>();

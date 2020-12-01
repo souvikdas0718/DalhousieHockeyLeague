@@ -29,13 +29,13 @@ public class AgingState implements ISimulationSeasonState {
         userInputOutput = IUserInputOutput.getInstance();
     }
 
-    static void agingCalculation(SimulationContext simulationContext) {
+    void agingCalculation(SimulationContext simulationContext) {
         ILeagueSchedule leagueSchedule = agingFactory.createLeagueSchedule(simulationContext.getInMemoryLeague());
         try {
             LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
             LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());
-            System.out.println("Current date: " + currentDate);
-            System.out.println("No of days: " + simulationContext.getNumberOfDays());
+            userInputOutput.printMessage("Current date: " + currentDate);
+            userInputOutput.printMessage("No of days: " + simulationContext.getNumberOfDays());
             leagueSchedule.initiateAging(simulationContext.getNumberOfDays(), currentDate);
         } catch (IOException e) {
             logger.error(e.getMessage());
@@ -63,7 +63,6 @@ public class AgingState implements ISimulationSeasonState {
         logger.info("Into the exit process of Aging State season");
         IScheduler scheduler = simulationContext.getRegularScheduler();
         LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
-        System.out.println(simulationContext.getNumberOfDays());
         LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());
         if (null == scheduler) {
             logger.debug("No current Schedule. So, moving to Persist Same Season");

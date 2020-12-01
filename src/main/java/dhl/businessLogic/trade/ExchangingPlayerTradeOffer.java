@@ -25,12 +25,16 @@ public class ExchangingPlayerTradeOffer extends TradeOfferAbstract {
         if (checkIfTradeAccepted()){
             logger.info("Implementing trade between "+offeringTeam.getTeamName()+" and "+ receivingTeam.getTeamName());
             for (IPlayer player : playersOffered) {
-                receivingTeam.getPlayers().add(player);
-                offeringTeam.getPlayers().remove(player);
+                if (playerFound(player)){
+                    receivingTeam.getPlayers().add(player);
+                    offeringTeam.getPlayers().remove(player);
+                }
             }
             for (IPlayer player : playersWantedInExchange) {
-                receivingTeam.getPlayers().remove(player);
-                offeringTeam.getPlayers().add(player);
+                if (playerFound(player)){
+                    receivingTeam.getPlayers().remove(player);
+                    offeringTeam.getPlayers().add(player);
+                }
             }
             currentTradeType.validateTeamRosterAfterTrade(offeringTeam);
             currentTradeType.validateTeamRosterAfterTrade(receivingTeam);
@@ -42,5 +46,14 @@ public class ExchangingPlayerTradeOffer extends TradeOfferAbstract {
 
     public boolean checkIfTradeAccepted(){
         return currentTradeType.isTradeAccepted(playersOffered, playersWantedInExchange, receivingTeam);
+    }
+
+    public boolean playerFound(IPlayer player){
+        if (player == null){
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 }

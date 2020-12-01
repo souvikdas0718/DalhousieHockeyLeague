@@ -30,8 +30,10 @@ public class DraftPickTradeOffer extends TradeOfferAbstract {
             logger.info("Implementing DraftTrade between team: "+offeringTeam.getTeamName()+" and "+ receivingTeam.getTeamName());
             playerDraft.swapDraftPick(roundToGive, receivingTeam, offeringTeam);
             for (IPlayer player : playersWantedInExchange) {
-                receivingTeam.getPlayers().remove(player);
-                offeringTeam.getPlayers().add(player);
+                if (playerFound(player)) {
+                    receivingTeam.getPlayers().remove(player);
+                    offeringTeam.getPlayers().add(player);
+                }
             }
         }else{
             logger.warn("Draft Trade not possible between team: "+offeringTeam.getTeamName()+" and "+ receivingTeam.getTeamName());
@@ -64,5 +66,14 @@ public class DraftPickTradeOffer extends TradeOfferAbstract {
     public boolean checkIfTradeAccepted(){
         setRoundFromDraft(offeringTeam);
         return tradePossible;
+    }
+
+    public boolean playerFound(IPlayer player){
+        if (player == null){
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 }
