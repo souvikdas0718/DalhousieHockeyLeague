@@ -87,7 +87,7 @@ public class LeagueModelFactory extends LeagueModelAbstractFactory {
     }
 
     public PlayerDraftAbstract createPlayerDraft() {
-        return new PlayerDraft();
+        return PlayerDraftAbstract.instance();
     }
 
     public IGeneralManager createGeneralManagerDefault() {

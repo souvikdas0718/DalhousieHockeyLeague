@@ -8,6 +8,8 @@ import dhl.businessLogicTest.agingTest.factory.AgingTestAbstractFactory;
 import dhl.businessLogicTest.agingTest.mocks.AgingMock;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
 import dhl.businessLogicTest.leagueModelTests.mocks.LeagueMock;
+import dhl.businessLogicTest.leagueModelTests.mocks.PlayerMock;
+import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -139,6 +141,18 @@ public class AgingTest {
         agentsSelectedToRetire = aging.selectFreeAgentsToRetire(leagueObjectModel.getFreeAgents());
 
         Assertions.assertEquals(1, agentsSelectedToRetire.size());
+    }
+
+    @Test
+    public void playerNotNullTest(){
+        PlayerMock playerMock = leagueMockFactory.createPlayerMock();
+        IPlayer player = playerMock.getPlayer();
+        Assertions.assertTrue(aging.playerNotNull(player));
+    }
+
+    @Test
+    public void playerNullTest(){
+        Assertions.assertFalse(aging.playerNotNull(null));
     }
 
     @AfterEach()
