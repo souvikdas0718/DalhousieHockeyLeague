@@ -76,6 +76,10 @@ public class PlayerDraftState implements ISimulationSeasonState {
         }
     }
 
+    public void setLeagueObjectModel(ILeagueObjectModel leagueObjectModel) {
+        this.leagueObjectModel = leagueObjectModel;
+    }
+
     public void seasonStateExitProcess() {
         logger.info("Player Draft Season State Exit process");
         addDraftPlayersToTeam();
