@@ -1,5 +1,7 @@
 image: gradle:alpine
 
+# Kick CI to try again
+
 variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
   GET_STRATEGY: clone
