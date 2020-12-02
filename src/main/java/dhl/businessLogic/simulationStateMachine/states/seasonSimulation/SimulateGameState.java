@@ -26,6 +26,7 @@ public class SimulateGameState implements ISimulationSeasonState {
     private static final int DAY = 1;
     private static final int POINTS = 1;
     public static Logger logger = LogManager.getLogger(SimulateGameState.class);
+    private static int finalWinnerDecider;
     SimulationContext simulationContext;
     List<ITeam> injuryCheckTeams;
     IScheduler scheduler;
@@ -41,6 +42,7 @@ public class SimulateGameState implements ISimulationSeasonState {
         standingsAbstractFactory = StandingsAbstractFactory.instance();
         standingSystem = standingsAbstractFactory.getStandingSystem();
         userInputOutput = IUserInputOutput.getInstance();
+        finalWinnerDecider = 0;
     }
 
     public SimulationContext getSimulationContext() {
@@ -92,19 +94,25 @@ public class SimulateGameState implements ISimulationSeasonState {
                 winningTeam = playOffMatch.getTeamOne();
                 if (randomNumber < RANDOMWINCHANCE) {
                     winningTeam = playOffMatch.getTeamTwo();
-                    userInputOutput.printMessage("Playoff winning team: " + winningTeam.getTeamName());
                 }
             } else {
                 winningTeam = playOffMatch.getTeamTwo();
                 if (randomNumber < RANDOMWINCHANCE) {
                     winningTeam = playOffMatch.getTeamOne();
-                    userInputOutput.printMessage("Playoff winning team: " + winningTeam.getTeamName());
                 }
             }
+
+            userInputOutput.printMessage("Playoff winning team: " + winningTeam.getTeamName());
             logger.debug("calling the gameWinner method of scheduler class to set the next playOff lists");
             scheduler.gameWinner(winningTeam);
             logger.debug("setting the final schedule in the simulation context");
             simulationContext.setFinalSchedule(scheduler);
+
+            finalWinnerDecider = finalWinnerDecider + 1;
+            if (finalWinnerDecider == 15) {
+                userInputOutput.printMessage("#################### Hurray Stanley Cup Winner Decided and the winning team is " + winningTeam.getTeamName() + " ###################");
+            }
+
         }
     }
 
