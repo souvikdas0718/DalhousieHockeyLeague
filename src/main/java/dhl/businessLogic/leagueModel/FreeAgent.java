@@ -17,6 +17,5 @@ public class FreeAgent extends Player {
         logger.info("Creating Free agent object parameterized");
 
     }
-
 }
 

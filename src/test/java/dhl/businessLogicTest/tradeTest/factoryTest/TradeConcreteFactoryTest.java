@@ -1,5 +1,6 @@
 package dhl.businessLogicTest.tradeTest.factoryTest;
 
+import dhl.businessLogic.leagueModel.PlayerDraftAbstract;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogic.trade.factory.TradeAbstractFactory;
 import dhl.businessLogic.trade.interfaces.ITradeType;
@@ -43,7 +44,6 @@ public class TradeConcreteFactoryTest {
 
     @Test
     public void createExchangingPlayerTradeOfferTest(){
-        // ITradeType tradeType
         ITeam offeringTeam = tradeMockFactory.createTeamMockForTrade().getTeamWithBadPlayer();
         ITeam receivingTeam = tradeMockFactory.createTeamMockForTrade().getTeamWithGoodPlayer();
 
@@ -77,7 +77,7 @@ public class TradeConcreteFactoryTest {
         ArrayList<IPlayer> playersWantedInExchange = new ArrayList<>();
         playersWantedInExchange.add(receivingTeam.getPlayers().get(0));
 
-        IPlayerDraft playerDraft = IPlayerDraft.instance();
+        PlayerDraftAbstract playerDraft = PlayerDraftAbstract.instance();
         Assertions.assertFalse(testClassObject.createDraftPickTradeOffer(offeringTeam, receivingTeam, playersWantedInExchange,playerDraft) == null);
     }
 }

@@ -13,29 +13,28 @@ import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.inputOutput.importJson.serializeDeserialize.SerializeDeserializeAbstractFactory;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
 
-
 public class AgingFactory extends AgingAbstractFactory {
 
-    public IInjury createInjury(){
+    public IInjury createInjury() {
         return new Injury();
     }
 
-    public IRetirement createRetirement(ISerializeLeagueObjectModel serializeModel){
+    public IRetirement createRetirement(ISerializeLeagueObjectModel serializeModel) {
         return new Retirement(serializeModel);
     }
 
-    public IAging createAging(IGameConfig gameConfig){
+    public IAging createAging(IGameConfig gameConfig) {
         return new Aging(gameConfig);
     }
 
-    public ILeagueSchedule createLeagueSchedule( ILeagueObjectModel leagueObjectModel){
+    public ILeagueSchedule createLeagueSchedule(ILeagueObjectModel leagueObjectModel) {
         IInjury injury = createInjury();
         SerializeDeserializeAbstractFactory serialize = SerializeDeserializeAbstractFactory.instance();
-        ISerializeLeagueObjectModel serializeModel = serialize.createSerializeLeagueObjectModel(leagueObjectModel.getLeagueName()) ;
+        ISerializeLeagueObjectModel serializeModel = serialize.createSerializeLeagueObjectModel(leagueObjectModel.getLeagueName());
         IAging aging = createAging(leagueObjectModel.getGameConfig());
         IRetirement retirement = createRetirement(serializeModel);
 
-        return new LeagueSchedule(aging,retirement,injury,leagueObjectModel);
+        return new LeagueSchedule(aging, retirement, injury, leagueObjectModel);
     }
 
 }

@@ -8,11 +8,14 @@ import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.states.interfaces.ILoadTeamStateLogic;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.IDeserializeLeagueObjectModel;
+import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 
 public class LoadTeamStateLogic implements ILoadTeamStateLogic {
     private String leagueName;
     private String team;
     private ILeagueObjectModel leagueObjectModel;
+
+    IUserInputOutput userInputOutput = IUserInputOutput.getInstance();
 
     public LoadTeamStateLogic() {
 
@@ -46,12 +49,11 @@ public class LoadTeamStateLogic implements ILoadTeamStateLogic {
                 for (ITeam team : division.getTeams()) {
                     if (team.getTeamName().equals(teamName)) {
                         teamObject = team;
-                        System.out.println("Team Found");
+                        userInputOutput.printMessage("Team Found");
                     }
                 }
             }
         }
-
         return teamObject;
     }
 }

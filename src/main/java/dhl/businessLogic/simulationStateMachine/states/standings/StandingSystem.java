@@ -34,7 +34,7 @@ public class StandingSystem implements IStandingSystem {
     }
 
     public void updateWinningStandings(ITeam team) {
-        logger.debug("Into update winning standings method for team: "+ team.getTeamName());
+        logger.debug("Into update winning standings method for team: " + team.getTeamName());
         for (IStandings standings : standingsList) {
             if (standings.getTeam().getTeamName().equals(team.getTeamName())) {
                 standings.setPoints(standings.getPoints() + 2);
@@ -45,7 +45,7 @@ public class StandingSystem implements IStandingSystem {
     }
 
     public void updateLosingStandings(ITeam team) {
-        logger.debug("Into update losing standings method for team: "+ team.getTeamName());
+        logger.debug("Into update losing standings method for team: " + team.getTeamName());
         for (IStandings standings : standingsList) {
             if (standings.getTeam().getTeamName().equals(team.getTeamName())) {
                 standings.setLoss(standings.getLoss() + 1);

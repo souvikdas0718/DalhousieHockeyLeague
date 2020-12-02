@@ -1,8 +1,8 @@
 package dhl.businessLogicTest.simulationStateMachineTest.states.seasonScheduler;
 
-import dhl.Mocks.LeagueObjectModel20TeamMocks;
-import dhl.Mocks.LeagueObjectModelMocks;
-import dhl.Mocks.factory.MockAbstractFactory;
+import dhl.mocks.LeagueObjectModel20TeamMocks;
+import dhl.mocks.LeagueObjectModelMocks;
+import dhl.mocks.factory.MockAbstractFactory;
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.IGeneralManager;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
@@ -27,6 +27,7 @@ public class SchedulerTest {
     LeagueObjectModelMocks mockLeagueObjectModel;
     LeagueObjectModel20TeamMocks model20TeamMocks;
     IScheduler scheduler;
+    IScheduler scheduler2;
     List<IPlayer> statistics;
     MockAbstractFactory mockAbstractFactory;
     SchedulerAbstractFactory schedulerAbstractFactory;
@@ -40,8 +41,10 @@ public class SchedulerTest {
         model20TeamMocks = mockAbstractFactory.getLeagueObjectModel20TeamMock();
         model20TeamMocks.leagueModel20TeamGeneralStandings();
         scheduler = schedulerAbstractFactory.getScheduler();
+        scheduler2 = schedulerAbstractFactory.getScheduler();
         statistics = mockLeagueObjectModel.getPlayerArrayMock();
         leagueModelAbstractFactory = LeagueModelAbstractFactory.instance();
+        scheduler2 = model20TeamMocks.leagueModel20TeamPlayoffsSchedules();
     }
 
     @Test
@@ -102,6 +105,12 @@ public class SchedulerTest {
         LocalDate endOfRegularSeasonDate = endDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.SATURDAY));
         scheduler.setSeasonEndDate(endOfRegularSeasonDate);
         Assertions.assertTrue(scheduler.getSeasonEndDate().equals(endOfRegularSeasonDate));
+    }
+
+    @Test
+    public void setFullSeasonScheduleTest() {
+        scheduler2.setFullSeasonSchedule(scheduler2.getPlayOffScheduleRound1());
+        Assertions.assertNotNull(scheduler2.getFullSeasonSchedule());
     }
 
     @Test
@@ -217,10 +226,6 @@ public class SchedulerTest {
         scheduler.generateTeamSchedule(league);
 
         LocalDate regularSeasonStartDate = LocalDate.of(2020, 10, 01);
-        //Trade Deadline
-//        LocalDate localDate = LocalDate.of(2021, 02, 01);
-//        LocalDate regularSeasonEndDate = localDate.with(lastDayOfMonth())
-//                .with(previousOrSame(DayOfWeek.MONDAY));
         LocalDate localDate = LocalDate.of(2021, 04, 01);
         LocalDate regularSeasonEndDate = localDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.SATURDAY));
         scheduler.gameScheduleDates(regularSeasonStartDate, regularSeasonEndDate);

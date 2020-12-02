@@ -7,7 +7,7 @@ import dhl.businessLogic.simulationStateMachine.states.ImportState;
 import dhl.businessLogic.simulationStateMachine.states.LoadTeamState;
 import dhl.businessLogic.simulationStateMachine.states.SimulateState;
 
-public class GameStateConcreteFactory extends GameStateAbstractFactory{
+public class GameStateConcreteFactory extends GameStateAbstractFactory {
 
     public IGameState createImportState(GameContext newGame) {
         return new ImportState(newGame);

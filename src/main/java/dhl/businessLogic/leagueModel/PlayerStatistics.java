@@ -17,7 +17,7 @@ public class PlayerStatistics implements IPlayerStatistics {
     private int saving;
     private LocalDate dateOfBirth;
 
-    public PlayerStatistics( int skating, int shooting, int checking, int saving) {
+    public PlayerStatistics(int skating, int shooting, int checking, int saving) {
         logger.info("Creating player statistics object");
         this.age = age;
         this.skating = skating;
@@ -30,11 +30,11 @@ public class PlayerStatistics implements IPlayerStatistics {
         return age;
     }
 
-    public void setDateOfBirth(int birthDay,int birthMonth,int birthYear){
+    public void setDateOfBirth(int birthDay, int birthMonth, int birthYear) {
         dateOfBirth = LocalDate.of(birthYear, birthMonth, birthDay);
     }
 
-    public LocalDate getDateOfBirth(){
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
@@ -43,8 +43,8 @@ public class PlayerStatistics implements IPlayerStatistics {
     }
 
     public void calculateCurrentAge(LocalDate currentDate) {
-        logger.debug("Calculating player age based on birthday. Current date is"+currentDate);
-        this.age = Period.between(dateOfBirth,currentDate).getYears();
+        logger.debug("Calculating player age based on birthday. Current date is" + currentDate);
+        this.age = Period.between(dateOfBirth, currentDate).getYears();
     }
 
     public int getSkating() {
@@ -81,19 +81,19 @@ public class PlayerStatistics implements IPlayerStatistics {
 
     public boolean isStatValueInvalid(double statValue) {
         if (statValue < 1 || statValue > 20) {
-            logger.debug("Stat value is invalid"+statValue);
+            logger.debug("Stat value is invalid" + statValue);
             return true;
         }
         logger.debug("Stat value is valid");
         return false;
     }
 
-    public void checkStatDecayChance(IGameConfig gameConfig){
+    public void checkStatDecayChance(IGameConfig gameConfig) {
         logger.info("Checking if age affects player stat value");
         double statDecayChance = Double.parseDouble(gameConfig.getValueFromOurObject(gameConfig.getAging(), gameConfig.getStatDecayChance())) * 100;
         double ramdomNumber = Math.random();
         ramdomNumber = ramdomNumber * 100;
-        if (ramdomNumber <= statDecayChance ) {
+        if (ramdomNumber <= statDecayChance) {
             logger.debug("Stat decreased");
             saving = decreaseStat(saving);
             shooting = decreaseStat(shooting);
@@ -102,8 +102,8 @@ public class PlayerStatistics implements IPlayerStatistics {
         }
     }
 
-    public int decreaseStat(int statValue){
-        if(statValue>1){
+    public int decreaseStat(int statValue) {
+        if (statValue > 1) {
             statValue = statValue - 1;
         }
         return statValue;

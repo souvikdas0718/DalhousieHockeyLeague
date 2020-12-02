@@ -1,13 +1,16 @@
 package dhl.businessLogicTest.simulationStateMachineTest.states.seasonSimulationTest;
 
-import dhl.Mocks.LeagueObjectModel20TeamMocks;
-import dhl.Mocks.factory.MockAbstractFactory;
+import dhl.mocks.LeagueObjectModel20TeamMocks;
+import dhl.mocks.factory.MockAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.factory.ContextAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.InitializeSeasonState;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.factory.SeasonSimulationStateFactory;
+import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
+import dhl.businessLogicTest.leagueModelTests.mocks.LeagueMock;
+import dhl.businessLogicTest.leagueModelTests.mocks.TeamMock;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,6 +34,9 @@ public class InitializeSeasonStateTest {
         simulationContext = contextAbstractFactory.createSimulationContext();
         seasonSimulationStateFactory = (SeasonSimulationStateFactory) SeasonSimulationStateFactory.instance();
         initializeSeasonState = (InitializeSeasonState) seasonSimulationStateFactory.getInitializeSeasonState(simulationContext);
+        LeagueModelMockAbstractFactory leagueMockFactory= LeagueModelMockAbstractFactory.instance();
+        TeamMock teamMock = leagueMockFactory.createTeamMock();
+        simulationContext.setUserTeam(teamMock.getTeamByName("Test Team"));
     }
 
     @Test
@@ -52,8 +58,10 @@ public class InitializeSeasonStateTest {
     }
 
     @Test
-    public void seasonStateProcessTest() {
-        ILeagueObjectModel league = model20TeamMocks.getLeagueData();
+    public void seasonStateProcessTest() throws Exception {
+        LeagueModelMockAbstractFactory leagueMockFactory= LeagueModelMockAbstractFactory.instance();
+        LeagueMock factoryLeague =  leagueMockFactory.createLeagueMock();
+        ILeagueObjectModel league = factoryLeague.getLeagueObjectModelFromJson();
         simulationContext.setYear(2021);
         simulationContext.setInMemoryLeague(league);
         initializeSeasonState = (InitializeSeasonState) seasonSimulationStateFactory.getInitializeSeasonState(simulationContext);

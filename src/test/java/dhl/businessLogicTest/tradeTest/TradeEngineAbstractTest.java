@@ -1,21 +1,19 @@
-package dhl.businessLogicTest.tradeTest.interfacesTest;
+package dhl.businessLogicTest.tradeTest;
 
-import dhl.Mocks.GameConfigMock;
-import dhl.Mocks.LeagueObjectModelMocks;
+import dhl.mocks.GameConfigMock;
+import dhl.mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.trade.TradingEngine;
-import dhl.businessLogic.trade.interfaces.ITradingEngine;
-import dhl.inputOutput.ui.interfaces.IUserInputOutput;
-import dhl.inputOutput.ui.UserInputOutput;
+import dhl.businessLogic.trade.TradeEngineAbstract;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class ITradingEngineTest {
+public class TradeEngineAbstractTest {
 
-    ITradingEngine testClassObject;
+    TradeEngineAbstract testClassObject;
 
     ITeam userTeam;
     ILeagueObjectModel leagueMock;
@@ -29,18 +27,18 @@ public class ITradingEngineTest {
         leagueMock = leagueObjectModelMocks.getLeagueObjectMock();
         gameConfigMock = new GameConfigMock();
         ourGameConfig = gameConfigMock.getGameConfigMock();
-        testClassObject = ITradingEngine.instance(ourGameConfig, leagueMock, userTeam);
+        testClassObject = TradeEngineAbstract.instance(ourGameConfig, leagueMock, userTeam);
     }
 
     @Test
     public void instanceTest(){
-        ITradingEngine tradingEngine = ITradingEngine.instance(ourGameConfig, leagueMock, userTeam);
+        TradeEngineAbstract tradingEngine = TradeEngineAbstract.instance(ourGameConfig, leagueMock, userTeam);
         Assertions.assertTrue(tradingEngine == testClassObject);
     }
 
     @Test
     public void setFactoryTest(){
-        ITradingEngine tradingEngine = new TradingEngine(ourGameConfig, leagueMock, userTeam);
+        TradeEngineAbstract tradingEngine = new TradingEngine(ourGameConfig, leagueMock, userTeam);
         testClassObject.setFactory(tradingEngine);
 
         Assertions.assertFalse(testClassObject == tradingEngine);

@@ -3,6 +3,7 @@ package dhl.businessLogic.leagueModel.interfaceModel;
 import java.time.LocalDate;
 
 public interface IPlayerStatistics {
+
     int getAge();
 
     void setAge(int age);
@@ -25,7 +26,7 @@ public interface IPlayerStatistics {
 
     boolean isStatValueInvalid(double statValue);
 
-    void setDateOfBirth(int birthDay,int birthMonth,int birthYear);
+    void setDateOfBirth(int birthDay, int birthMonth, int birthYear);
 
     LocalDate getDateOfBirth();
 

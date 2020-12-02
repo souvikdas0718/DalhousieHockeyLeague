@@ -2,11 +2,13 @@ package dhl.businessLogic.traning;
 
 import dhl.businessLogic.aging.interfaceAging.IInjury;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
 public class Training implements ITraining {
-
+    private static final Logger logger = LogManager.getLogger(Training.class);
     private IInjury injurySystem;
     public IGameConfig gameConfig;
 
@@ -24,6 +26,7 @@ public class Training implements ITraining {
                     playerStatLessThanHeadCoachStat(team.getPlayers(), team, randomValues);
 
                     playerStatMoreThanHeadCoachStat(team.getPlayers(), team, randomValues);
+                    logger.debug("Training: Updated player Stats");
                 }
             }
         }
@@ -51,13 +54,13 @@ public class Training implements ITraining {
     }
 
     public void playerStatMoreThanHeadCoachStat(List<IPlayer> arrPlayer, ITeam team, Double[] randomValues) {
-        ICoach objCoach= team.getHeadCoach();
+        ICoach objCoach = team.getHeadCoach();
         for (IPlayer player : arrPlayer) {
             if ((randomValues[0] > objCoach.getSkating()) ||
                     (randomValues[1] > objCoach.getShooting()) ||
                     (randomValues[2] > objCoach.getChecking()) ||
                     (randomValues[3] > objCoach.getSaving())) {
-                injurySystem.checkIfPlayerInjured(gameConfig, player,team);
+                injurySystem.checkIfPlayerInjured(gameConfig, player, team);
             }
         }
     }

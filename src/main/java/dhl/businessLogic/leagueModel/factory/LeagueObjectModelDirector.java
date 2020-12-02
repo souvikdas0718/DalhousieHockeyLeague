@@ -19,7 +19,7 @@ public class LeagueObjectModelDirector implements ILeagueObjectModelDirector {
         factory = LeagueModelAbstractFactory.instance();
     }
 
-    public ILeagueObjectModel construct(String leagueName,List<IConference> conferences,List<IPlayer> freeAgents, List<ICoach> coaches, List<IGeneralManager> managers, IGameConfig gameConfig) {
+    public ILeagueObjectModel construct(String leagueName, List<IConference> conferences, List<IPlayer> freeAgents, List<ICoach> coaches, List<IGeneralManager> managers, IGameConfig gameConfig) {
         builder.addLeagueName(leagueName);
         builder.addConferences(conferences);
         builder.addFreeAgents(freeAgents);
@@ -27,7 +27,6 @@ public class LeagueObjectModelDirector implements ILeagueObjectModelDirector {
         builder.addManagers(managers);
         builder.addGameConfig(gameConfig);
         return builder.getResult();
-
     }
 
     public ILeagueObjectModel constructFromJson(JSONObject jsonLeague) {
@@ -45,22 +44,22 @@ public class LeagueObjectModelDirector implements ILeagueObjectModelDirector {
         JSONArray coachesJson = (JSONArray) jsonLeague.get("coaches");
         List<ICoach> coaches = getCoaches(coachesJson);
 
-        return construct(leagueName,conferences,freeAgents,coaches,managers,getGameConfig(jsonLeague));
+        return construct(leagueName, conferences, freeAgents, coaches, managers, getGameConfig(jsonLeague));
     }
 
-    public IGameConfig getGameConfig(JSONObject jsonLeague){
+    public IGameConfig getGameConfig(JSONObject jsonLeague) {
         return factory.createGameConfig(jsonLeague);
     }
 
-    public List<IConference> getConferences(JSONArray conferenceJsonArray)  {
-        Iterator<?> conferenceIterator =conferenceJsonArray.iterator();
+    public List<IConference> getConferences(JSONArray conferenceJsonArray) {
+        Iterator<?> conferenceIterator = conferenceJsonArray.iterator();
         List<IConference> conferences = new ArrayList<>();
 
         while (conferenceIterator.hasNext()) {
-            JSONObject conferenceJson = (JSONObject)conferenceIterator.next();
+            JSONObject conferenceJson = (JSONObject) conferenceIterator.next();
             JSONArray divisionsJsonArray = (JSONArray) conferenceJson.get("divisions");
             List<IDivision> divisions = getDivisions(divisionsJsonArray);
-            IConference conference = factory.createConference((String) conferenceJson.get("conferenceName"),divisions);
+            IConference conference = factory.createConference((String) conferenceJson.get("conferenceName"), divisions);
             conferences.add(conference);
         }
         return conferences;
@@ -71,10 +70,10 @@ public class LeagueObjectModelDirector implements ILeagueObjectModelDirector {
         List<IDivision> divisons = new ArrayList<>();
 
         while (divisionIterator.hasNext()) {
-            JSONObject divisionJson = (JSONObject)divisionIterator.next();
+            JSONObject divisionJson = (JSONObject) divisionIterator.next();
             JSONArray teamJsonArray = (JSONArray) divisionJson.get("teams");
             List<ITeam> teams = getTeams(teamJsonArray);
-            IDivision division = factory.createDivision((String) divisionJson.get("divisionName"),teams);
+            IDivision division = factory.createDivision((String) divisionJson.get("divisionName"), teams);
             divisons.add(division);
 
         }
@@ -94,19 +93,19 @@ public class LeagueObjectModelDirector implements ILeagueObjectModelDirector {
             ICoach coach = getCoach(coachJson);
             IGeneralManager manager = getManager(managerJson);
             List<IPlayer> players = getPlayers(playerJsonArray);
-            ITeam team = factory.createTeam((String) teamJson.get("teamName"), manager,coach,players);
+            ITeam team = factory.createTeam((String) teamJson.get("teamName"), manager, coach, players);
             teams.add(team);
         }
         return teams;
     }
 
     public IGeneralManager getManager(JSONObject managerJson) {
-        IGeneralManager manager = factory.createGeneralManager((String) managerJson.get("name"), (String) managerJson.get("personality") );
+        IGeneralManager manager = factory.createGeneralManager((String) managerJson.get("name"), (String) managerJson.get("personality"));
         return manager;
     }
 
     public ICoach getCoach(JSONObject coachJson) {
-        return factory.createCoach( (String) coachJson.get("name"), (double) coachJson.get("skating"), (double) coachJson.get("shooting"), (double) coachJson.get("checking"), (double) coachJson.get("saving"));
+        return factory.createCoach((String) coachJson.get("name"), (double) coachJson.get("skating"), (double) coachJson.get("shooting"), (double) coachJson.get("checking"), (double) coachJson.get("saving"));
     }
 
     public List<IPlayer> getPlayers(JSONArray playerJsonArray) {
@@ -125,7 +124,7 @@ public class LeagueObjectModelDirector implements ILeagueObjectModelDirector {
 
     public IPlayerStatistics getPlayerStatistics(JSONObject playerJson) {
         IPlayerStatistics playerStatistics = factory.createPlayerStatistics((int) (long) playerJson.get("skating"), (int) (long) playerJson.get("shooting"), (int) (long) playerJson.get("checking"), (int) (long) playerJson.get("saving"));
-        playerStatistics.setDateOfBirth((int) (long) playerJson.get("birthDay"),(int) (long) playerJson.get("birthMonth"),(int) (long) playerJson.get("birthYear"));
+        playerStatistics.setDateOfBirth((int) (long) playerJson.get("birthDay"), (int) (long) playerJson.get("birthMonth"), (int) (long) playerJson.get("birthYear"));
         return playerStatistics;
     }
 
@@ -143,7 +142,7 @@ public class LeagueObjectModelDirector implements ILeagueObjectModelDirector {
         return freeAgents;
     }
 
-    public List<ICoach> getCoaches(JSONArray coachesJsonArray){
+    public List<ICoach> getCoaches(JSONArray coachesJsonArray) {
         Iterator<?> coachListIterator = coachesJsonArray.iterator();
         List<ICoach> coaches = new ArrayList<>();
 

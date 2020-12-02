@@ -1,8 +1,8 @@
 package dhl.businessLogicTest.simulationStateMachineTest.states.seasonSimulationTest;
 
-import dhl.Mocks.GameConfigMock;
-import dhl.Mocks.LeagueObjectModel20TeamMocks;
-import dhl.Mocks.factory.MockAbstractFactory;
+import dhl.mocks.GameConfigMock;
+import dhl.mocks.LeagueObjectModel20TeamMocks;
+import dhl.mocks.factory.MockAbstractFactory;
 import dhl.businessLogic.aging.Injury;
 import dhl.businessLogic.aging.agingFactory.AgingAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
@@ -20,12 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-
-import static java.time.temporal.ChronoUnit.DAYS;
-import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
-import static java.time.temporal.TemporalAdjusters.previousOrSame;
 
 public class TrainingStateTest {
 
@@ -45,13 +40,6 @@ public class TrainingStateTest {
     SeasonSimulationStateFactory seasonSimulationStateFactory;
     MockAbstractFactory mockAbstractFactory;
 
-//    LeagueObjectModelMocks mockLeagueObjectModel;
-//    GameConfigMock gameConfigMock;
-//    GameConfig gameConfig;
-//    Training trainingParameterized;
-//    JsonFilePathMock filePathMock;
-//    ImportJsonFile importJsonFile;
-
     @BeforeEach
     public void initObject() throws Exception {
         contextAbstractFactory = ContextAbstractFactory.instance();
@@ -59,13 +47,10 @@ public class TrainingStateTest {
         simulationContext = contextAbstractFactory.createSimulationContext();
         seasonSimulationStateFactory = (SeasonSimulationStateFactory) SeasonSimulationStateFactory.instance();
         trainingState = (TrainingState) seasonSimulationStateFactory.getTrainingState(simulationContext);
-//        trainingState = new TrainingState(simulationContext);
         mockAbstractFactory = MockAbstractFactory.instance();
         model20TeamMocks = mockAbstractFactory.getLeagueObjectModel20TeamMock();
         model20TeamMocks.leagueModel20TeamGeneralStandings();
         scheduler = model20TeamMocks.leagueModel20TeamPlayoffsSchedules();
-//        gameConfigMock = new GameConfigMock();
-//        gameConfig = gameConfigMock.getGameConfigMock();
         agingFactory = AgingAbstractFactory.instance();
         injury = (Injury) agingFactory.createInjury();
         leagueMockFactory = LeagueModelMockAbstractFactory.instance();
@@ -73,13 +58,6 @@ public class TrainingStateTest {
         leagueObjectModel = leagueMock.getLeagueObjectModel();
         GameplayConfigMock gameplayConfigMock = leagueMockFactory.createGameplayConfig();
         gameConfig = gameplayConfigMock.getAgingGameConfig();
-//        mockLeagueObjectModel = new LeagueObjectModelMocks();
-//        gameConfigMock = new GameConfigMock();
-//        IInjury injurySystem = new Injury();
-//        filePathMock = new JsonFilePathMock();
-//        importJsonFile = new ImportJsonFile(filePathMock.getFilePath());
-//        gameConfig = new GameConfig(importJsonFile.getJsonObject());
-//        trainingParameterized = new Training(injurySystem, gameConfig);
     }
 
     @Test

@@ -1,6 +1,8 @@
 package dhl.businessLogic.trade.interfaces;
 
+import dhl.businessLogic.trade.TradeOfferAbstract;
+
 public interface IScout {
 
-    public ITradeOffer findTrade(int congifMaxPlayerPerTrade);
+    public TradeOfferAbstract findTrade(int congifMaxPlayerPerTrade);
 }

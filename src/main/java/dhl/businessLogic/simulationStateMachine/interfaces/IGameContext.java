@@ -12,7 +12,7 @@ public interface IGameContext {
 
     void stateProcess() throws Exception;
 
-    void stateExitProcess() ;
+    void stateExitProcess();
 
     ILeagueObjectModel getInMemoryLeague();
 

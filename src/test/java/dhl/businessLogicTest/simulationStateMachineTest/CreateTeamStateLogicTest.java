@@ -1,13 +1,14 @@
 package dhl.businessLogicTest.simulationStateMachineTest;
 
-import dhl.Mocks.LeagueObjectModelMocks;
+import dhl.mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.leagueModel.LeagueObjectModel;
 import dhl.businessLogic.leagueModel.LeagueObjectModelInput;
 import dhl.businessLogic.leagueModel.LeagueObjectModelValidation;
 import dhl.businessLogic.leagueModel.Team;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogic.simulationStateMachine.GameContext;
-import dhl.businessLogic.simulationStateMachine.states.CreateTeamStateLogic;
+import dhl.businessLogic.simulationStateMachine.states.StatesAbstractFactory;
+import dhl.businessLogic.simulationStateMachine.states.interfaces.ICreateTeamStateLogic;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
 import dhl.inputOutput.importJson.serializeDeserialize.SerializeDeserializeAbstractFactory;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
@@ -22,7 +23,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class CreateTeamStateLogicTest {
 
     GameContext ourGame;
-    CreateTeamStateLogic testClassObject;
+    StatesAbstractFactory statesAbstractFactory;
+    ICreateTeamStateLogic testClassObject;
     LeagueObjectModelMocks leagueObjectModelMocks;
     private ILeagueObjectModel inMemoryLeague;
     LeagueModelMockAbstractFactory factory;
@@ -31,7 +33,8 @@ public class CreateTeamStateLogicTest {
     @BeforeEach
     public void initObject() {
         ourGame = new GameContext();
-        testClassObject = new CreateTeamStateLogic();
+        statesAbstractFactory = StatesAbstractFactory.instance();
+        testClassObject = statesAbstractFactory.createCreateTeamStateLogic();
         leagueObjectModelMocks = new LeagueObjectModelMocks();
         inMemoryLeague = leagueObjectModelMocks.getLeagueObjectMock();
         factory = LeagueModelMockAbstractFactory.instance();
@@ -43,18 +46,13 @@ public class CreateTeamStateLogicTest {
         ILeagueObjectModelValidation validation = new LeagueObjectModelValidation();
         ITeam team = new Team("Ontario1", generalManager, leagueObjectModelMocks.getSingleCoach(), new ArrayList<>());
         SerializeDeserializeAbstractFactory serializeDeserializeAbstractFactory = SerializeDeserializeAbstractFactory.instance();
-        ISerializeLeagueObjectModel serializeLeagueObjectModel = serializeDeserializeAbstractFactory.createSerializeLeagueObjectModel("src/test/java/dhl/Mocks");
+        ISerializeLeagueObjectModel serializeLeagueObjectModel = serializeDeserializeAbstractFactory.createSerializeLeagueObjectModel("src/test/java/dhl/mocks");
         LeagueObjectModelInput leagueObjectModelInput = new LeagueObjectModelInput(inMemoryLeague.getLeagueName(), "Western", "Atlantic", team, validation, serializeLeagueObjectModel);
 
         ILeagueObjectModel objLeagueObjectModel = new LeagueObjectModel();
         objLeagueObjectModel = testClassObject.saveleagueObject(ourGame, inMemoryLeague, leagueObjectModelInput);
 
         Assertions.assertEquals("Dhl", objLeagueObjectModel.getLeagueName());
-
-        inMemoryLeague = null;
-        objLeagueObjectModel = testClassObject.saveleagueObject(ourGame, inMemoryLeague, leagueObjectModelInput);
-
-        Assertions.assertEquals(false, ourGame.isGameInProgress());
     }
 
     @Test

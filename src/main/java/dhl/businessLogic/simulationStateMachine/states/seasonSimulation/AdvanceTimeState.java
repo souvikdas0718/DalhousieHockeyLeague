@@ -2,6 +2,7 @@ package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
+import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,16 +12,15 @@ import java.time.Month;
 import java.time.temporal.TemporalAdjusters;
 
 public class AdvanceTimeState implements ISimulationSeasonState {
-    private static final Month PLAYERDRAFTMONTH = Month.JULY;
-    private static final int PLAYERDRAFTDATE = 15;
     private static final int DAY = 1;
     private static final Month APRILMONTH = Month.APRIL;
     private static final Logger logger = LogManager.getLogger(AdvanceTimeState.class);
-
+    IUserInputOutput userInputOutput;
     SimulationContext simulationContext;
 
     public AdvanceTimeState(SimulationContext simulationContext) {
         this.simulationContext = simulationContext;
+        userInputOutput = IUserInputOutput.getInstance();
     }
 
     public SimulationContext getSimulationContext() {
@@ -51,9 +51,6 @@ public class AdvanceTimeState implements ISimulationSeasonState {
                 logger.debug("Simulating to Training state");
                 simulationContext.setCurrentSimulation(simulationContext.getTraining());
             }
-        } else if (currentDate.getMonth() == PLAYERDRAFTMONTH && currentDate.getDayOfMonth() == PLAYERDRAFTDATE) {
-            logger.debug("Simulating to PlayerDraft state");
-            simulationContext.setCurrentSimulation(simulationContext.getPlayerDraft());
         } else {
             logger.debug("Simulating to Training state");
             simulationContext.setCurrentSimulation(simulationContext.getTraining());

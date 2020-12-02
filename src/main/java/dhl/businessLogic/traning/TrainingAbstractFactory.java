@@ -4,14 +4,15 @@ import dhl.businessLogic.aging.interfaceAging.IInjury;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 
 public abstract class TrainingAbstractFactory {
+
     private static TrainingAbstractFactory uniqueInstance = null;
 
-    protected TrainingAbstractFactory(){
+    protected TrainingAbstractFactory() {
 
     }
 
-    public static TrainingAbstractFactory instance(){
-        if (null == uniqueInstance){
+    public static TrainingAbstractFactory instance() {
+        if (null == uniqueInstance) {
             uniqueInstance = new TrainingFactory();
         }
         return uniqueInstance;

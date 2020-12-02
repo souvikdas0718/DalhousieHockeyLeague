@@ -403,10 +403,14 @@ public class Scheduler implements IScheduler {
         ISeasonSchedule lastSchedule = playOffScheduleRound1.get(playOffScheduleRound1.size() - 1);
         IStandings standing = getTeamIndexFromStanding(team);
 
-        if (null != standing) {
+        if (null == standing) {
+            logger.debug(" General season standings cannot be null ");
+        } else {
             if (lastSchedule.getTeamTwo().getTeamName().isEmpty()) {
                 logger.debug("setting the second team in playOffScheduleRound1 list next match");
-                if (null != standing) {
+                if (null == standing) {
+                    logger.debug("General season standings cannot be null");
+                } else {
                     lastSchedule.setTeamTwoConference(standing.getTeamConference());
                     lastSchedule.setTeamTwoDivision(standing.getTeamDivision());
                     lastSchedule.setTeamTwo(team);

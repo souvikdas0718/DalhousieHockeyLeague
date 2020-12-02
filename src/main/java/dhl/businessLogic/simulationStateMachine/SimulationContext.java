@@ -2,6 +2,8 @@ package dhl.businessLogic.simulationStateMachine;
 
 import dhl.businessLogic.aging.agingFactory.AgingAbstractFactory;
 import dhl.businessLogic.aging.interfaceAging.IInjury;
+import dhl.businessLogic.gameSimulation.ISubject;
+import dhl.businessLogic.gameSimulation.Subject;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
@@ -13,7 +15,7 @@ import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfac
 import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandings;
 import dhl.businessLogic.teamRosterUpdater.RosterUpdaterAbstractFactory;
 import dhl.businessLogic.teamRosterUpdater.interfaces.ITeamRosterUpdater;
-import dhl.businessLogic.trade.interfaces.ITradingEngine;
+import dhl.businessLogic.trade.TradeEngineAbstract;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -54,6 +56,7 @@ public class SimulationContext implements ISimulationSeasonState {
     ITeamRosterUpdater updateUserTeamRoster;
     List<IStandings> standings;
     ISeasonSchedule matchToSimulate;
+    ISubject subjectGameSimulation;
 
     boolean seasonInProgress;
     IGameConfig gameConfig;
@@ -72,7 +75,7 @@ public class SimulationContext implements ISimulationSeasonState {
     int daysSinceLastTraining;
     List<ITeam> teamsPlayingInGame;
     IInjury injury;
-    ITradingEngine tradeEngine;
+    TradeEngineAbstract tradeEngine;
     RosterUpdaterAbstractFactory rosterUpdaterAbstractFactory;
     AgingAbstractFactory agingAbstractFactory;
     SchedulerAbstractFactory schedulerAbstractFactory;
@@ -96,6 +99,7 @@ public class SimulationContext implements ISimulationSeasonState {
         rosterUpdaterAbstractFactory = RosterUpdaterAbstractFactory.instance();
         agingAbstractFactory = AgingAbstractFactory.instance();
         schedulerAbstractFactory = SchedulerAbstractFactory.instance();
+        subjectGameSimulation = new Subject();
 
         userTeam = gameState.getSelectedTeam();
         currentSimulation = initializeSeason;
@@ -251,11 +255,11 @@ public class SimulationContext implements ISimulationSeasonState {
         this.injury = injury;
     }
 
-    public ITradingEngine getTradeEngine() {
+    public TradeEngineAbstract getTradeEngine() {
         return tradeEngine;
     }
 
-    public void setTradeEngine(ITradingEngine tradeEngine) {
+    public void setTradeEngine(TradeEngineAbstract tradeEngine) {
         this.tradeEngine = tradeEngine;
     }
 
@@ -403,7 +407,17 @@ public class SimulationContext implements ISimulationSeasonState {
         return endOfSimulation;
     }
 
+    public ISubject getSubjectGameSimulation() {
+        return subjectGameSimulation;
+    }
+
+    public void setSubjectGameSimulation(ISubject subjectGameSimulation) {
+        this.subjectGameSimulation = subjectGameSimulation;
+    }
+
     public void setEndOfSimulation(LocalDate endOfSimulation) {
         this.endOfSimulation = endOfSimulation;
     }
+
+
 }

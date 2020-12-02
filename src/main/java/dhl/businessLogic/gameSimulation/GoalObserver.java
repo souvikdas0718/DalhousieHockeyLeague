@@ -9,12 +9,13 @@ import java.util.List;
 public class GoalObserver extends IGameObserver {
 
     List<Integer> goals = new ArrayList<>();
-    public GoalObserver(Subject subject){
+
+    public GoalObserver(ISubject subject) {
         this.subject = subject;
         this.subject.attach(this);
     }
 
-    public List<Integer> getObserverGoals(){
+    public List<Integer> getObserverGoals() {
         return goals;
     }
 
@@ -22,16 +23,16 @@ public class GoalObserver extends IGameObserver {
         goals.add(subject.getGoals());
     }
 
-    public double print(){
+    public double print() {
         Integer countGoals = 0;
         Double averageGoals = 0.0;
 
-        for(int i=0; i< goals.size(); i++){
+        for (int i = 0; i < goals.size(); i++) {
             countGoals = countGoals + goals.get(i);
         }
-        averageGoals = Double.valueOf(countGoals/goals.size());
+        averageGoals = Double.valueOf(countGoals / goals.size());
         IUserInputOutput userInputOutput = UserInputOutput.getInstance();
-        userInputOutput.printMessage("Goals" + averageGoals);
+        userInputOutput.printMessage("Goals: " + averageGoals);
         return averageGoals;
     }
 }

@@ -9,28 +9,31 @@ import java.util.List;
 public class PenaltyObserver extends IGameObserver {
 
     List<Integer> penalties = new ArrayList<>();
-    public PenaltyObserver(Subject subject){
+
+    public PenaltyObserver(ISubject subject) {
         this.subject = subject;
         this.subject.attach(this);
     }
 
-    public List<Integer> getObserverPenalties(){
+    public List<Integer> getObserverPenalties() {
         return penalties;
     }
 
     public void update() {
         penalties.add(subject.getPenalties());
     }
-    public double print(){
+
+    public double print() {
         Integer countPenalties = 0;
         Double averagePenalties = 0.0;
 
-        for(int i=0; i< penalties.size(); i++){
+        for (int i = 0; i < penalties.size(); i++) {
             countPenalties = countPenalties + penalties.get(i);
         }
-        averagePenalties = Double.valueOf(countPenalties/penalties.size());
+        averagePenalties = Double.valueOf(countPenalties / penalties.size());
         IUserInputOutput userInputOutput = UserInputOutput.getInstance();
-        userInputOutput.printMessage("Penalties" + averagePenalties);
+        userInputOutput.printMessage("Penalties: " + averagePenalties);
+
         return averagePenalties;
     }
 }

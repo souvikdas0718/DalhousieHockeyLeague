@@ -74,7 +74,7 @@ public class PersistSeasonStateTest {
         simulationContext.setYear(2020);
         persistSeasonState = (PersistSeasonState) seasonSimulationStateFactory.getPersistSeasonState(simulationContext);
         persistSeasonState.seasonStateExitProcess();
-        Assertions.assertTrue(persistSeasonState.getSimulationContext().getCurrentSimulation() == persistSeasonState.getSimulationContext().getAdvanceTime());
+        Assertions.assertTrue(persistSeasonState.getSimulationContext().getCurrentSimulation() == persistSeasonState.getSimulationContext().getInitializeSeason());
 
         currentDate = startOfSimulation.plusYears(1);
         currentDate = currentDate.minusDays(1);

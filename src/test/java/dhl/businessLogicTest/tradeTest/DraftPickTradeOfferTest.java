@@ -2,15 +2,13 @@ package dhl.businessLogicTest.tradeTest;
 
 import dhl.businessLogic.leagueModel.Team;
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
-import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
-import dhl.businessLogic.leagueModel.interfaceModel.IPlayerDraft;
+import dhl.businessLogic.leagueModel.PlayerDraftAbstract;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.trade.DraftPickTradeOffer;
 import dhl.businessLogic.trade.factory.TradeAbstractFactory;
 import dhl.businessLogic.trade.factory.TradeConcreteFactory;
-import dhl.businessLogic.trade.interfaces.ITradeOffer;
-import dhl.businessLogic.trade.interfaces.ITradeType;
+import dhl.businessLogic.trade.TradeOfferAbstract;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
 import dhl.businessLogicTest.leagueModelTests.mocks.TeamMock;
 import dhl.businessLogicTest.tradeTest.mocks.factory.TradeMockAbstractFactory;
@@ -22,7 +20,7 @@ import java.util.ArrayList;
 
 public class DraftPickTradeOfferTest {
 
-    ITradeOffer testClassObject;
+    TradeOfferAbstract testClassObject;
     ITeam offeringTeam, receivingTeam;
     ITeam[][] draftPickSequenceMock;
 
@@ -52,7 +50,7 @@ public class DraftPickTradeOfferTest {
         draftPickSequenceMock[1][0] = offeringTeam;
         draftPickSequenceMock[1][1] = receivingTeam;
 
-        IPlayerDraft playerDraft = IPlayerDraft.instance();
+        PlayerDraftAbstract playerDraft = PlayerDraftAbstract.instance();
         playerDraft.setDraftPickSequence(draftPickSequenceMock);
         testClassObject = tradeFactory.createDraftPickTradeOffer(offeringTeam,receivingTeam, playersWanted,playerDraft);
     }

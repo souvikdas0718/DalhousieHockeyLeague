@@ -1,5 +1,8 @@
 package dhl.businessLogic.simulationStateMachine.states;
 
+import dhl.businessLogic.gameSimulation.GameSimulationAbstractFactory;
+import dhl.businessLogic.gameSimulation.IGameObserver;
+import dhl.businessLogic.gameSimulation.ISubject;
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
@@ -56,15 +59,34 @@ public class SimulateState implements IGameState {
         simulationContextObject.setGameConfig(ourGame.getInMemoryLeague().getGameConfig());
         simulationContextObject.setInMemoryLeague(ourGame.getInMemoryLeague());
         userInputOutput.printMessage("Total simulation season count: " + SIMULATIONSEASONCOUNT);
+
+        GameSimulationAbstractFactory factory = GameSimulationAbstractFactory.instance();
+        ISubject subject = factory.createSubject();
+        IGameObserver goals = factory.createGoalObserver(subject);
+        IGameObserver saves = factory.createSaveObserver(subject);
+        IGameObserver penalities = factory.createPenaltyObserver(subject);
+        IGameObserver shots = factory.createShotObserver(subject);
+
         for (int i = 1; i <= SIMULATIONSEASONCOUNT; i++) {
+            simulationContextObject.setSubjectGameSimulation(subject);
+            simulationContextObject.setSeasonInProgress(true);
+            simulationContextObject.setCurrentSimulation(simulationContextObject.getInitializeSeason());
+
             logger.info("Season " + i + ": is in progress");
             while (simulationContextObject.isSeasonInProgress()) {
                 simulationContextObject.seasonStateProcess();
                 simulationContextObject.seasonStateExitProcess();
             }
+            goals.print();
+            saves.print();
+            penalities.print();
+            shots.print();
             ourGame.setYear(ourGame.getYear() + 1);
-            simulationContextObject.setYear(ourGame.getYear() + 1);
+            simulationContextObject.setYear(ourGame.getYear());
+            simulationContextObject.setNumberOfDays(0);
         }
+
+
     }
 
     @Override

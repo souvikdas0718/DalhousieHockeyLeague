@@ -9,6 +9,7 @@ import dhl.businessLogic.trade.interfaces.ITradeType;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,15 +28,16 @@ public class AiUserTrade implements ITradeType {
         this.league = league;
     }
 
-    public boolean isTradeAccepted(ArrayList<IPlayer> playersOffered, ArrayList<IPlayer> playerswanted, ITeam receivingTeam){
+    public boolean isTradeAccepted(ArrayList<IPlayer> playersOffered, ArrayList<IPlayer> playerswanted, ITeam receivingTeam) {
+        logger.debug("Showing Trade to user");
         DisplayTradeOfferToUser(playersOffered);
         int inputFromUser = Integer.parseInt(ioObject.getUserInput());
         if (inputFromUser == 1) {
-            logger.info("Trade Accepted by "+ receivingTeam.getTeamName());
+            logger.info("Trade Accepted by " + receivingTeam.getTeamName());
             ioObject.printMessage("Trade Accepted, Thankyou");
             return true;
         } else if (inputFromUser == 2) {
-            logger.info("Trade Rejected by "+ receivingTeam.getTeamName());
+            logger.info("Trade Rejected by " + receivingTeam.getTeamName());
             ioObject.printMessage("Trade Rejected, Thankyou");
             return false;
         }

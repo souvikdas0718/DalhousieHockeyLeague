@@ -8,7 +8,7 @@ public class GameSimulation implements IGameSimulation {
 
     public String winner;
 
-    public String getWinner(){
+    public String getWinner() {
         return this.winner;
     }
 

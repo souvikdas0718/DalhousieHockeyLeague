@@ -1,23 +1,17 @@
 package dhl.businessLogicTest.leagueModelTests;
 
-import dhl.Mocks.LeagueObjectModelMocks;
-import dhl.Mocks.factory.MockAbstractFactory;
-import dhl.businessLogic.leagueModel.*;
+import dhl.mocks.factory.MockAbstractFactory;
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
-import dhl.Mocks.MockSerializeLeagueObjectModel;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
-import dhl.businessLogicTest.leagueModelTests.mocks.ConferenceMock;
 import dhl.businessLogicTest.leagueModelTests.mocks.LeagueMock;
 import dhl.businessLogicTest.leagueModelTests.mocks.TeamMock;
 import dhl.inputOutput.importJson.serializeDeserialize.interfaces.ISerializeLeagueObjectModel;
-import org.json.simple.JSONObject;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class LeagueObjectModelValidationTest {

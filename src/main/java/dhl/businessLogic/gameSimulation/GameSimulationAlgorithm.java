@@ -2,6 +2,8 @@ package dhl.businessLogic.gameSimulation;
 
 import dhl.businessLogic.leagueModel.interfaceModel.IPlayer;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -10,16 +12,27 @@ public class GameSimulationAlgorithm implements IGameSimulationAlgorithm {
     final String typeGoalie = "goalie";
     final String typeForward = "forward";
     final String typeDefense = "defense";
-
     final String statShooting = "shooting";
     final String statChecking = "checking";
-    final String statSaving = "saving";
     final String statSkating = "skating";
-
     final String teamOneSelected = "One";
     final String teamTwoSelected = "Two";
-
+    final Integer oneShotInAShift = 1;
+    final Integer twoShotsInAShift = 2;
     final Integer totalShifts = 40;
+    final Integer winningTeamOne = 1;
+    final Integer winningTeamTwo = 2;
+    final Integer forwardTeamOneOldPlayer = 1;
+    final Integer defenseTeamOneOldPlayer = 2;
+    final Integer forwardTeamTwoOldPlayer = 3;
+    final Integer defenseTeamTwoOldPlayer = 4;
+    final Integer forwardPlayerCount = 3;
+    final Integer defensePlayerCount = 2;
+    final Integer comparePenalty = 1;
+    final Integer penaltyForShifts = 1;
+    final Integer totalForwardPlayers = 12;
+    final Integer totalDefensePlayers = 6;
+    final Integer defaultExcludeNumber = 1;
 
     Integer shotsA = 0;
     Integer shotsB = 0;
@@ -45,39 +58,50 @@ public class GameSimulationAlgorithm implements IGameSimulationAlgorithm {
     List<Integer> allDefensePlayersTeamTwoMap = new ArrayList<>();
     String teamSelected = "One";
 
-    public Integer getGoalsA(){
-         return goalsA;
-     }
-    public Integer getSavesB(){
+    private static final Logger logger = LogManager.getLogger(GameSimulationAlgorithm.class);
+
+    public Integer getGoalsA() {
+        return goalsA;
+    }
+
+    public Integer getSavesB() {
         return savesB;
     }
-    public Integer getGoalsB(){
+
+    public Integer getGoalsB() {
         return goalsB;
     }
-    public Integer getSavesA(){
+
+    public Integer getSavesA() {
         return savesA;
     }
-    public Integer getShotsA(){
+
+    public Integer getShotsA() {
         return shotsA;
     }
-    public Integer getShotsB(){
+
+    public Integer getShotsB() {
         return shotsB;
     }
 
-    public Integer getgRandomNumber(){
+    public Integer getgRandomNumber() {
         return gRandomNumber;
     }
 
     public HashMap<String, Integer> getResultOfGame(ITeam teamOne, ITeam teamTwo) {
+        logger.debug("Game Simulation Starting for" + teamOne.getTeamName() + " and " + teamTwo.getTeamName());
+
         List<IPlayer> listPlayerTeamOne = teamOne.getActiveRoster();
         List<IPlayer> listPlayerTeamTwo = teamTwo.getActiveRoster();
 
-        for (int i=0; i<totalShifts; i++){
-            int shotsInAShift =1;
-            if(i%2==0){
-                shotsInAShift =2;
+        for (int i = 0; i < totalShifts; i++) {
+            int shotsInAShift = oneShotInAShift;
+
+            if (i % 2 == 0) {
+                shotsInAShift = twoShotsInAShift;
             }
-            for (int j=0; j<shotsInAShift;j++){
+
+            for (int j = 0; j < shotsInAShift; j++) {
                 createTeam(listPlayerTeamOne, listPlayerTeamTwo);
             }
         }
@@ -85,142 +109,109 @@ public class GameSimulationAlgorithm implements IGameSimulationAlgorithm {
         Integer winner = checkWinner(goalsA, goalsB);
 
         HashMap<String, Integer> mapResult = new HashMap<>();
-        mapResult.put("Shots" , shotsA + shotsB);
-        mapResult.put("Goals" , goalsA + goalsB);
+        mapResult.put("Shots", shotsA + shotsB);
+        mapResult.put("Goals", goalsA + goalsB);
         mapResult.put("Penalties", penaltyA + penaltyB);
         mapResult.put("Saves", savesA + savesB);
         mapResult.put("Winner", winner);
 
+        logger.info("Game simulated successfully");
         return mapResult;
     }
 
-    public Integer checkWinner(Integer goalsA, Integer goalsB){
-        Integer winner = 1;
-        if (goalsB>goalsA){
-            winner = 2;
+    public Integer checkWinner(Integer goalsA, Integer goalsB) {
+        Integer winner = winningTeamOne;
+        if (goalsB > goalsA) {
+            winner = winningTeamTwo;
         }
-        return  winner;
+        return winner;
     }
 
-    public void createTeam(List<IPlayer> listPlayerTeamOne, List<IPlayer> listPlayerTeamTwo){
+    public void createTeam(List<IPlayer> listPlayerTeamOne, List<IPlayer> listPlayerTeamTwo) {
         teamSelected = teamOneSelected;
         List<IPlayer> listForwardPlayerA = getPlayers(typeForward, listPlayerTeamOne, forwardTeamOne);
         List<IPlayer> listDefensePlayerA = getPlayers(typeDefense, listPlayerTeamOne, defenceTeamOne);
-        Optional<IPlayer> listgoaliePlayerA = listPlayerTeamOne.stream().filter(c->c.getPosition()==typeGoalie).findAny();
+        Optional<IPlayer> listgoaliePlayerA = listPlayerTeamOne.stream().filter(c -> c.getPosition() == typeGoalie).findAny();
 
         teamSelected = teamTwoSelected;
         List<IPlayer> listForwardPlayerB = getPlayers(typeForward, listPlayerTeamTwo, forwardTeamTwo);
         List<IPlayer> listDefensePlayerB = getPlayers(typeDefense, listPlayerTeamTwo, defenceTeamTwo);
-        Optional<IPlayer> listgoaliePlayerB = listPlayerTeamTwo.stream().filter(c->c.getPosition()==typeGoalie).findAny();
+        Optional<IPlayer> listgoaliePlayerB = listPlayerTeamTwo.stream().filter(c -> c.getPosition() == typeGoalie).findAny();
 
-        Optional<IPlayer> maxSkatingFwdPlayerTeamOne = getMaxStat(listForwardPlayerA, "skating");
-        Optional<IPlayer> maxSkatingFwdPlayerTeamTwo = getMaxStat(listForwardPlayerB, "skating");
-        Optional<IPlayer> maxCheckingDefPlayerTeamOne = getMaxStat(listDefensePlayerA, "checking");
-        Optional<IPlayer> maxCheckingDefPlayerTeamTwo = getMaxStat(listDefensePlayerB, "checking");
+        Integer maxSkatingFwdPlayerTeamOne = getMaxStat(listForwardPlayerA, "skating");
+        Integer maxSkatingFwdPlayerTeamTwo = getMaxStat(listForwardPlayerB, "skating");
+        Integer maxCheckingDefPlayerTeamOne = getMaxStat(listDefensePlayerA, "checking");
+        Integer maxCheckingDefPlayerTeamTwo = getMaxStat(listDefensePlayerB, "checking");
 
         HashMap<String, Integer> mapStats = new HashMap<>();
-        mapStats.put("TeamOneFSkating",maxSkatingFwdPlayerTeamOne.get().getPlayerStats().getSkating());
-        mapStats.put("TeamTwoFSkating",maxSkatingFwdPlayerTeamTwo.get().getPlayerStats().getSkating());
-        mapStats.put("TeamOneFChecking",maxSkatingFwdPlayerTeamOne.get().getPlayerStats().getChecking());
-        mapStats.put("TeamTwoDChecking",maxCheckingDefPlayerTeamTwo.get().getPlayerStats().getChecking());
-        mapStats.put("TeamOneFSaving",maxSkatingFwdPlayerTeamOne.get().getPlayerStats().getSaving());
-        mapStats.put("TeamTwoGSaving",listgoaliePlayerB.get().getPlayerStats().getSaving());
+        mapStats.put("TeamOneFSkating", maxSkatingFwdPlayerTeamOne);
+        mapStats.put("TeamTwoFSkating", maxSkatingFwdPlayerTeamTwo);
+        mapStats.put("TeamOneFChecking", maxSkatingFwdPlayerTeamOne);
+        mapStats.put("TeamTwoDChecking", maxCheckingDefPlayerTeamTwo);
+        mapStats.put("TeamOneFSaving", listForwardPlayerA.get(1).getPlayerStats().getSaving());
+        mapStats.put("TeamTwoGSaving", listgoaliePlayerB.get().getPlayerStats().getSaving());
 
-        mapStats.put("TeamTwoFChecking",maxSkatingFwdPlayerTeamTwo.get().getPlayerStats().getChecking());
-        mapStats.put("TeamOneDChecking",maxCheckingDefPlayerTeamOne.get().getPlayerStats().getChecking());
-        mapStats.put("TeamTwoFSaving",maxSkatingFwdPlayerTeamTwo.get().getPlayerStats().getSaving());
-        mapStats.put("TeamOneGSaving",listgoaliePlayerA.get().getPlayerStats().getSaving());
+        mapStats.put("TeamTwoFChecking", maxSkatingFwdPlayerTeamTwo);
+        mapStats.put("TeamOneDChecking", maxCheckingDefPlayerTeamOne);
+        mapStats.put("TeamTwoFSaving", listForwardPlayerB.get(2).getPlayerStats().getSaving());
+        mapStats.put("TeamOneGSaving", listgoaliePlayerA.get().getPlayerStats().getSaving());
 
         incrementShotsGoalsSavesPenalties(mapStats);
     }
 
-    public void incrementShotsGoalsSavesPenalties(HashMap<String, Integer> mapStats){
-
-        if(mapStats.get("TeamOneFSkating") > mapStats.get("TeamTwoFSkating")){
+    public void incrementShotsGoalsSavesPenalties(HashMap<String, Integer> mapStats) {
+        if (mapStats.get("TeamOneFSkating") > mapStats.get("TeamTwoFSkating")) {
             shotsA = shotsA + 1;
-            if(mapStats.get("TeamOneFChecking") > mapStats.get("TeamTwoDChecking")){
-                if(mapStats.get("TeamOneFSaving") > mapStats.get("TeamTwoGSaving")){
+            if (mapStats.get("TeamOneFChecking") > mapStats.get("TeamTwoDChecking")) {
+                if (mapStats.get("TeamOneFSaving") > mapStats.get("TeamTwoGSaving")) {
                     goalsA = goalsA + 1;
-                }
-                else {
+                } else {
                     savesB = savesB + 1;
                 }
-            }
-            else {
+            } else {
                 savesB = savesB + 1;
                 penaltyA = penaltyA + 1;
             }
-        }
-        else {
+        } else {
             shotsB = shotsB + 1;
-            if(mapStats.get("TeamTwoFChecking") > mapStats.get("TeamOneDChecking")){
+            if (mapStats.get("TeamTwoFChecking") > mapStats.get("TeamOneDChecking")) {
 
-                if(mapStats.get("TeamTwoFSaving") > mapStats.get("TeamOneGSaving")){
+                if (mapStats.get("TeamTwoFSaving") > mapStats.get("TeamOneGSaving")) {
                     goalsB = goalsB + 1;
-                }
-                else {
+                } else {
                     savesA = savesA + 1;
                 }
-            }
-            else {
+            } else {
                 savesA = savesA + 1;
                 penaltyB = penaltyB + 1;
             }
         }
     }
 
-    public  Optional<IPlayer> getMaxStat(List<IPlayer> statsList, String stat){
-        List<Integer> statsListTeamOne = new ArrayList<>();
-        for(int i=0;i<statsList.size();i++){
-            if(stat == statShooting) {
-                statsListTeamOne.add(statsList.get(i).getPlayerStats().getShooting());
-            }
-            else if (stat == statChecking) {
-                statsListTeamOne.add(statsList.get(i).getPlayerStats().getChecking());
-            }
-            else if (stat == statSkating) {
-                statsListTeamOne.add(statsList.get(i).getPlayerStats().getSkating());
-            }
-        }
+    public Integer getMaxStat(List<IPlayer> statsList, String stat) {
+        Integer max = 0;
 
-        Collections.sort(statsListTeamOne, Collections.reverseOrder());
-        Integer maxValue = statsListTeamOne.get(0);
-        Optional<IPlayer> player = Optional.empty();
-
-        if(stat == statShooting) {
-            player = statsList.stream().filter(c->c.getPlayerStats().getShooting() == maxValue).findFirst();
+        for (int i = 0; i < statsList.size(); i++) {
+            if (stat == statShooting) {
+                max = max + statsList.get(i).getPlayerStats().getShooting();
+            } else if (stat == statChecking) {
+                max = max + statsList.get(i).getPlayerStats().getChecking();
+            } else if (stat == statSkating) {
+                max = max + statsList.get(i).getPlayerStats().getSkating();
+            }
         }
-        else if (stat == statChecking) {
-            player = statsList.stream().filter(c->c.getPlayerStats().getChecking() == maxValue).findFirst();
-        }
-        else if (stat == statSkating) {
-            player = statsList.stream().filter(c->c.getPlayerStats().getSkating() == maxValue).findFirst();
-        }
-
-        return player;
+        return max;
     }
 
-    public  List<IPlayer> getPlayers(String type, List<IPlayer> listPlayer, List<Integer> oldPlayer){
-        List<IPlayer> listForwardPlayer = listPlayer.stream().filter(c->c.getPosition()==type).collect(Collectors.toList());
+    public List<IPlayer> getPlayers(String type, List<IPlayer> listPlayer, List<Integer> oldPlayer) {
+        List<IPlayer> listForwardPlayer = listPlayer.stream().filter(c -> c.getPosition() == type).collect(Collectors.toList());
 
         HashMap<Integer, IPlayer> mapPlayer = new HashMap<>();
-        for(int i=0; i< listForwardPlayer.size();i++) {
-            mapPlayer.put(i+1,listForwardPlayer.get(i));
+        for (int i = 0; i < listForwardPlayer.size(); i++) {
+            mapPlayer.put(i + 1, listForwardPlayer.get(i));
         }
 
-        Integer playerCount = 0;
-        if(type == typeForward) {
-            playerCount = 3;
-        }
-        else if(type ==typeDefense){
-            if (penalty == 1){
-                playerCount = 1;
-                penalty = 0;
-            }
-            else {
-                playerCount = 2;
-            }
-        }
+        Integer playerCount = getPlayerCount(type, penalty);
 
         List<Integer> listOldPlayers = new ArrayList<>();
         listOldPlayers.addAll(oldPlayer);
@@ -228,57 +219,67 @@ public class GameSimulationAlgorithm implements IGameSimulationAlgorithm {
 
         List<IPlayer> listFilteredPlayer = new ArrayList<>();
 
-        for(int i=0; i<arrNewRandomNumbers.size();i++) {
+        for (int i = 0; i < arrNewRandomNumbers.size(); i++) {
             listFilteredPlayer.add(mapPlayer.get(arrNewRandomNumbers.get(i)));
         }
 
         countToCheckOldPlayers = countToCheckOldPlayers + 1;
-        if (countToCheckOldPlayers == 1){
+        if (countToCheckOldPlayers == forwardTeamOneOldPlayer) {
             forwardTeamOne = arrNewRandomNumbers;
-        }
-        else if (countToCheckOldPlayers == 2){
+        } else if (countToCheckOldPlayers == defenseTeamOneOldPlayer) {
             defenceTeamOne = arrNewRandomNumbers;
-        }
-        else if (countToCheckOldPlayers == 3){
+        } else if (countToCheckOldPlayers == forwardTeamTwoOldPlayer) {
             forwardTeamTwo = arrNewRandomNumbers;
-        }
-        else if (countToCheckOldPlayers == 4){
+        } else if (countToCheckOldPlayers == defenseTeamTwoOldPlayer) {
             defenceTeamTwo = arrNewRandomNumbers;
         }
 
         return listFilteredPlayer;
     }
 
-    public  List<Integer> getRandomNumbers(List<Integer> arrOldRandomNumbers, int playerCount, String type){
-        List<Integer> arrNewRandomNumbers = new ArrayList<Integer>();
+    public Integer getPlayerCount(String type, Integer penalty) {
+        Integer playerCount = 0;
+        if (type == typeForward) {
+            playerCount = forwardPlayerCount;
+        } else if (type == typeDefense) {
+            if (penalty == comparePenalty) {
+                playerCount = penaltyForShifts;
+                penalty = 0;
+            } else {
+                playerCount = defensePlayerCount;
+            }
+        }
+        return playerCount;
+    }
 
+    public List<Integer> getRandomNumbers(List<Integer> arrOldRandomNumbers, int playerCount, String type) {
+        List<Integer> arrNewRandomNumbers = new ArrayList<Integer>();
         int randomNumber = 0;
-        for(int i =0;i<playerCount;i++) {
+
+        for (int i = 0; i < playerCount; i++) {
             Integer endNumber = 0;
-            if(playerCount == 3){
-                endNumber = 12;
-            }else{
-                endNumber = 6;
+
+            if (playerCount == forwardPlayerCount) {
+                endNumber = totalForwardPlayers;
+            } else {
+                endNumber = totalDefensePlayers;
             }
 
-            generateRandomNumber(endNumber,arrOldRandomNumbers);
+            generateRandomNumber(endNumber, arrOldRandomNumbers);
             randomNumber = gRandomNumber;
             arrNewRandomNumbers.add(randomNumber);
             arrOldRandomNumbers.add(randomNumber);
 
-            if (teamSelected == "A"){
-                if (type.toLowerCase() == typeForward){
+            if (teamSelected == teamOneSelected) {
+                if (type.toLowerCase() == typeForward) {
                     allForwardPlayersTeamOneMap.add(randomNumber);
-                }
-                else{
+                } else {
                     allDefensePlayersTeamOneMap.add(randomNumber);
                 }
-            }
-            else{
-                if (type.toLowerCase() == typeForward){
+            } else {
+                if (type.toLowerCase() == typeForward) {
                     allForwardPlayersTeamTwoMap.add(randomNumber);
-                }
-                else{
+                } else {
                     allDefensePlayersTeamTwoMap.add(randomNumber);
                 }
             }
@@ -286,12 +287,14 @@ public class GameSimulationAlgorithm implements IGameSimulationAlgorithm {
         return arrNewRandomNumbers;
     }
 
-    public  void generateRandomNumber(Integer end,List<Integer> exclude) {
-        if(exclude.size() == 0){
-            exclude.add(1);
+    public void generateRandomNumber(Integer end, List<Integer> exclude) {
+        if (exclude.size() == 0) {
+            exclude.add(defaultExcludeNumber);
         }
+
         Random rnd = new Random();
         gRandomNumber = rnd.nextInt(end);
+
         for (int ex : exclude) {
             if (gRandomNumber == ex || gRandomNumber == 0) {
                 generateRandomNumber(end, exclude);

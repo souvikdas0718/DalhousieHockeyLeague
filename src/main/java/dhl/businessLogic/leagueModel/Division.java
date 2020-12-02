@@ -2,7 +2,6 @@ package dhl.businessLogic.leagueModel;
 
 import dhl.businessLogic.leagueModel.interfaceModel.IDivision;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
-import dhl.businessLogic.leagueModel.interfaceModel.IValidation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -27,7 +26,7 @@ public class Division implements IDivision {
 
     public Division(String divisionName, List<ITeam> teamsList) {
         setDefault();
-        logger.info("Creating division with name"+divisionName);
+        logger.info("Creating division with name" + divisionName);
         this.divisionName = divisionName;
         this.teams = teamsList;
     }
@@ -45,10 +44,9 @@ public class Division implements IDivision {
         teams.stream().map(team -> team.getTeamName()).forEach(name -> teamNames.add(name));
         Set<String> teamsSet = new HashSet<>(teamNames);
         if (teamsSet.size() < teamNames.size()) {
-            logger.error("Invalid team with duplicate team names: "+ divisionName);
+            logger.error("Invalid team with duplicate team names: " + divisionName);
             return false;
         }
         return true;
     }
-
 }

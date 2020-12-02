@@ -1,4 +1,4 @@
-package dhl.Mocks;
+package dhl.mocks;
 
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 

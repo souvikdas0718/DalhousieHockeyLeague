@@ -10,7 +10,7 @@ import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.time.LocalDate;
+import java.io.IOException;
 
 public class PersistSeasonState implements ISimulationSeasonState {
     public static Logger logger = LogManager.getLogger(PersistSeasonState.class);
@@ -38,20 +38,19 @@ public class PersistSeasonState implements ISimulationSeasonState {
         ISerializeLeagueObjectModel serializeLeagueObjectModel = factorySerialize.createSerializeLeagueObjectModel("src/SerializedJsonFiles/");
         ILeagueObjectModel leagueObjectModel = simulationContext.getInMemoryLeague();
         logger.debug("Calling the update League Model method to store the current game state in JSON file");
-        leagueObjectModel.updateLeagueObjectModel(serializeLeagueObjectModel);
+        try {
+            leagueObjectModel.updateLeagueObjectModel(serializeLeagueObjectModel);
+        } catch (IOException e) {
+            logger.error(e.getMessage());
+            simulationContext.seasonStateExitProcess();
+        }
     }
 
     @Override
     public void seasonStateExitProcess() {
         logger.info("Into the exit process of Persist same season");
-        LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
-        LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());
-        if (currentDate.isBefore(LocalDate.of(simulationContext.getYear() + 1, 9, 29))) {
-            simulationContext.setCurrentSimulation(simulationContext.getAdvanceTime());
-        } else {
-            logger.debug("End of a season");
-            simulationContext.setSeasonInProgress(false);
-        }
+        logger.debug("End of a season");
+        simulationContext.setSeasonInProgress(false);
     }
 }
 

@@ -1,13 +1,14 @@
 package dhl.businessLogicTest.leagueModelTests.factory;
 
-import dhl.Mocks.JsonFilePathMock;
-import dhl.Mocks.LeagueObjectModelMocks;
+import dhl.mocks.JsonFilePathMock;
+import dhl.mocks.LeagueObjectModelMocks;
+import dhl.mocks.factory.MockAbstractFactory;
 import dhl.businessLogic.leagueModel.factory.LeagueObjectModelBuilder;
 import dhl.businessLogic.leagueModel.factory.LeagueObjectModelDirector;
 import dhl.businessLogic.leagueModel.factory.interfaceFactory.ILeagueObjectModelBuilder;
 import dhl.businessLogic.leagueModel.factory.interfaceFactory.ILeagueObjectModelDirector;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
-import dhl.inputOutput.importJson.ImportJsonFile;
+import dhl.inputOutput.importJson.ImportJsonAbstractFactory;
 import dhl.inputOutput.importJson.interfaces.IImportJsonFile;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.Assertions;
@@ -40,13 +41,14 @@ public class LeagueObjectModelDirectorTest {
     }
 
     @Test
-    public void constructFromJsonTest() throws Exception {
-        JsonFilePathMock filePathMock = new JsonFilePathMock();
-        IImportJsonFile importJsonFile = new ImportJsonFile(filePathMock.getFilePath());
+    public void constructFromJsonTest() {
+        ImportJsonAbstractFactory importFactory = ImportJsonAbstractFactory.instance();
+        MockAbstractFactory mockFactory = MockAbstractFactory.instance();
+
+        JsonFilePathMock filePathMock = mockFactory.getJsonFilePath();
+        IImportJsonFile importJsonFile = importFactory.createImportJsonFile(filePathMock.getFilePath());
         JSONObject leagueObject = importJsonFile.getJsonObject();
         ILeagueObjectModel leagueObjectModel =  leagueDirector.constructFromJson(leagueObject);
         Assertions.assertEquals("Dalhousie Hockey League",leagueObjectModel.getLeagueName());
-
-
     }
 }

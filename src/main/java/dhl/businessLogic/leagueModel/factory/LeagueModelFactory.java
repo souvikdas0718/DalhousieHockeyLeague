@@ -49,7 +49,7 @@ public class LeagueModelFactory extends LeagueModelAbstractFactory {
         return new FreeAgent(playerName, position, playerStatistics);
     }
 
-    public IGameConfig createGameConfig(JSONObject leagueJson ){
+    public IGameConfig createGameConfig(JSONObject leagueJson) {
         return new GameConfig(leagueJson);
     }
 
@@ -86,8 +86,12 @@ public class LeagueModelFactory extends LeagueModelAbstractFactory {
         return new FreeAgent();
     }
 
-    public IPlayerDraft createPlayerDraft() {
-        return new PlayerDraft();
+    public PlayerDraftAbstract createPlayerDraft() {
+        return PlayerDraftAbstract.instance();
+    }
+
+    public IGeneralManager createGeneralManagerDefault() {
+        return new GeneralManager();
     }
 
 }

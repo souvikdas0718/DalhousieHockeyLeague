@@ -1,5 +1,5 @@
 {
-  "leagueName": "Dalhousie Hockey League",
+  "leagueName": "",
   "gameplayConfig": {
     "aging": {
       "averageRetirementAge": 35,
@@ -11334,7 +11334,7 @@
               ]
             },
             {
-              "teamName": "Florida High Rollers",
+              "teamName": "Moscow High Rollers",
               "generalManager": {
                 "name": "Sammy Rogers",
                 "personality": "shrewd"

@@ -1,14 +1,11 @@
 package dhl.businessLogicTest.leagueModelTests.mocks;
 
-import dhl.Mocks.JsonFilePathMock;
-import dhl.Mocks.factory.MockAbstractFactory;
+import dhl.mocks.JsonFilePathMock;
+import dhl.mocks.factory.MockAbstractFactory;
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.inputOutput.importJson.ImportJsonAbstractFactory;
-import dhl.inputOutput.importJson.ImportJsonFile;
 import dhl.inputOutput.importJson.interfaces.IImportJsonFile;
-
-import java.io.IOException;
 
 public class GameplayConfigMock {
     private static final String AGINGCONFIGPATH ="src/test/java/dhl/importJsonTest/GameConfigMockFile.json";

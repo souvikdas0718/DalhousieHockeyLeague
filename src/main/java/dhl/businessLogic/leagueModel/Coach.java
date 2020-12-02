@@ -1,17 +1,16 @@
 package dhl.businessLogic.leagueModel;
 
 import dhl.businessLogic.leagueModel.interfaceModel.ICoach;
-import dhl.businessLogic.leagueModel.interfaceModel.IValidation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Coach implements ICoach {
+    private static final Logger logger = LogManager.getLogger(Coach.class);
     private String name;
     private double skating;
     private double shooting;
     private double checking;
     private double saving;
-    private static final Logger logger = LogManager.getLogger(Coach.class);
 
     public Coach() {
         name = "";
@@ -19,7 +18,7 @@ public class Coach implements ICoach {
 
     public Coach(String coachName, double skating, double shooting, double checking, double saving) {
         this();
-        logger.info("Creating coach object"+coachName);
+        logger.info("Creating coach object" + coachName);
         this.name = coachName;
         this.skating = skating;
         this.shooting = shooting;
@@ -49,7 +48,7 @@ public class Coach implements ICoach {
 
     public boolean isCoachStatInvalid(double statValue) {
         if (statValue < 0 || statValue > 1) {
-            logger.debug( "Coach: " + name + " have invalid statistics" );
+            logger.debug("Coach: " + name + " have invalid statistics");
             return true;
         }
         return false;

@@ -3,13 +3,14 @@ package dhl.businessLogic.simulationStateMachine.states.interfaces;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public interface ICreateTeamStateLogic {
-    ILeagueObjectModel saveleagueObject(GameContext ourGame, ILeagueObjectModel inMemoryLeague, ILeagueObjectModelInput leagueObjectModelInput) throws Exception;
+    ILeagueObjectModel saveleagueObject(GameContext ourGame, ILeagueObjectModel inMemoryLeague, ILeagueObjectModelInput leagueObjectModelInput) throws IOException;
 
-    ITeam createNewTeamObject(List<IPlayer> freeAgents, ITeam team, String captain) throws Exception;
+    ITeam createNewTeamObject(List<IPlayer> freeAgents, ITeam team, String captain);
 
     IConference findConference(List<IConference> confrenceArray, String conferenceName);
 
@@ -23,6 +24,5 @@ public interface ICreateTeamStateLogic {
 
     String findCoach(List<ICoach> coachArray, String coachName);
 
-    ArrayList<IPlayer> validateInputFreeAgents(String inputfreeAgents,
-                                                      List<IPlayer> freeAgentsArray) throws Exception;
+    ArrayList<IPlayer> validateInputFreeAgents(String inputfreeAgents, List<IPlayer> freeAgentsArray);
 }

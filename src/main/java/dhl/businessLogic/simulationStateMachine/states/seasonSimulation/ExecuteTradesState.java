@@ -5,8 +5,8 @@ import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.interfaces.ISimulationSeasonState;
+import dhl.businessLogic.trade.TradeEngineAbstract;
 import dhl.businessLogic.trade.TradingEngine;
-import dhl.businessLogic.trade.interfaces.ITradingEngine;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,7 +17,7 @@ public class ExecuteTradesState implements ISimulationSeasonState {
     IGameConfig gameConfig;
     ILeagueObjectModel leagueObjectModel;
     IUserInputOutput ioObject;
-    ITradingEngine tradeEngine;
+    TradeEngineAbstract tradeEngine;
     IUserInputOutput userInputOutput;
 
     public ExecuteTradesState(SimulationContext simulationContext) {
@@ -41,7 +41,7 @@ public class ExecuteTradesState implements ISimulationSeasonState {
     @Override
     public void seasonStateProcess() {
         logger.info("Into the state process of Execute Trade season");
-        tradeEngine = (TradingEngine) ITradingEngine.instance(simulationContext.getGameConfig(), simulationContext.getInMemoryLeague(), simulationContext.getUserTeam());
+        tradeEngine = (TradingEngine) TradeEngineAbstract.instance(simulationContext.getGameConfig(), simulationContext.getInMemoryLeague(), simulationContext.getUserTeam());
         tradeEngine.startEngine();
     }
 

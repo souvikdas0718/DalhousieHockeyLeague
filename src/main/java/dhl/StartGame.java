@@ -12,18 +12,14 @@ public class StartGame {
 
     public static void main(String[] args) throws Exception {
         IUserInputOutput ioObject = IUserInputOutput.getInstance();
-        ioObject.printMessage("#########################################################################");
-        ioObject.printMessage("#########################################################################");
         ioObject.printMessage("-------------------------Welcome to Dynasty Mode-------------------------");
-        ioObject.printMessage("#########################################################################");
-        ioObject.printMessage("#########################################################################");
         StatesAbstractFactory statesFactory = StatesAbstractFactory.instance();
         IGameContext ourGame = statesFactory.createGameContext();
 
         logger.info("Starting Game");
 
         while (ourGame.isGameInProgress()) {
-            if (ourGame.isGameInProgress()){
+            if (ourGame.isGameInProgress()) {
                 ourGame.stateEntryProcess();
             }
             if (ourGame.isGameInProgress()) {
@@ -35,12 +31,7 @@ public class StartGame {
         }
 
         logger.info("Game finished");
-        ioObject.printMessage("#########################################################################");
-        ioObject.printMessage("#########################################################################");
         ioObject.printMessage("==============================GAME FINISHED==============================");
-        ioObject.printMessage("#########################################################################");
-        ioObject.printMessage("#########################################################################");
-
     }
 
 

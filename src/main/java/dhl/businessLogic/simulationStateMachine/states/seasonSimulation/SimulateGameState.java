@@ -1,6 +1,9 @@
 package dhl.businessLogic.simulationStateMachine.states.seasonSimulation;
 
 
+import dhl.businessLogic.gameSimulation.GameSimulationAbstractFactory;
+import dhl.businessLogic.gameSimulation.IGameSimulationAlgorithm;
+import dhl.businessLogic.gameSimulation.ISubject;
 import dhl.businessLogic.leagueModel.interfaceModel.ITeam;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
@@ -14,12 +17,14 @@ import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
 public class SimulateGameState implements ISimulationSeasonState {
     private static final double RANDOMWINCHANCE = 0.9;
     private static final int DAY = 1;
+    private static final int POINTS = 1;
     public static Logger logger = LogManager.getLogger(SimulateGameState.class);
     SimulationContext simulationContext;
     List<ITeam> injuryCheckTeams;
@@ -27,6 +32,7 @@ public class SimulateGameState implements ISimulationSeasonState {
     IStandingSystem standingSystem;
     StandingsAbstractFactory standingsAbstractFactory;
     IUserInputOutput userInputOutput;
+    ISubject subject;
 
     public SimulateGameState(SimulationContext simulationContext) {
         logger.info("Into the Simulation game state constructor");
@@ -46,7 +52,7 @@ public class SimulateGameState implements ISimulationSeasonState {
     }
 
     private void winDecider(LocalDate currentDate, IScheduler scheduler) {
-        logger.info("Into winDecider method, current Date: "+ currentDate);
+        logger.info("Into winDecider method, current Date: " + currentDate);
         ITeam winningTeam;
         ITeam losingTeam;
         if (currentDate.isAfter(scheduler.getSeasonStartDate().minusDays(DAY)) && currentDate.isBefore(scheduler.getSeasonEndDate().plusDays(DAY))) {
@@ -55,24 +61,26 @@ public class SimulateGameState implements ISimulationSeasonState {
             Double randomNumber = Math.random() * 100;
             injuryCheckTeams.add(match.getTeamOne());
             injuryCheckTeams.add(match.getTeamTwo());
-            if (match.getTeamOne().calculateTeamStrength() > match.getTeamTwo().calculateTeamStrength()) {
+
+            GameSimulationAbstractFactory factory = GameSimulationAbstractFactory.instance();
+            IGameSimulationAlgorithm gameSimulationAlgorithm = factory.createGameSimulationAlgorithm();
+            HashMap<String, Integer> mapResult = gameSimulationAlgorithm.getResultOfGame(match.getTeamOne(), match.getTeamTwo());
+            subject.setState(mapResult);
+
+            if (mapResult.get("Winner").toString().equals("1")) {
                 winningTeam = match.getTeamOne();
                 losingTeam = match.getTeamTwo();
-                if (randomNumber < RANDOMWINCHANCE) {
-                    winningTeam = match.getTeamTwo();
-                    losingTeam = match.getTeamOne();
-                }
             } else {
                 winningTeam = match.getTeamTwo();
                 losingTeam = match.getTeamOne();
-                if (randomNumber < RANDOMWINCHANCE) {
-                    winningTeam = match.getTeamOne();
-                    losingTeam = match.getTeamTwo();
-                }
             }
+
+            userInputOutput.printMessage("regular season winning team: " + winningTeam.getTeamName());
+            userInputOutput.printMessage("regular season losing team: " + losingTeam.getTeamName());
             logger.debug("updating the winning and losing teams standings in Standing System class.");
             standingSystem.updateWinningStandings(winningTeam);
             standingSystem.updateLosingStandings(losingTeam);
+            losingTeam.setLossPoint(losingTeam.getLossPoint() + POINTS);
 
         } else if (currentDate.isAfter(scheduler.getPlayOffStartDate().minusDays(DAY)) && currentDate.isBefore(scheduler.getFinalDay().plusDays(DAY))) {
             logger.debug("checking for playoffs games");
@@ -84,14 +92,16 @@ public class SimulateGameState implements ISimulationSeasonState {
                 winningTeam = playOffMatch.getTeamOne();
                 if (randomNumber < RANDOMWINCHANCE) {
                     winningTeam = playOffMatch.getTeamTwo();
+                    userInputOutput.printMessage("Playoff winning team: " + winningTeam.getTeamName());
                 }
             } else {
                 winningTeam = playOffMatch.getTeamTwo();
                 if (randomNumber < RANDOMWINCHANCE) {
                     winningTeam = playOffMatch.getTeamOne();
+                    userInputOutput.printMessage("Playoff winning team: " + winningTeam.getTeamName());
                 }
             }
-            logger.debug("calling the gameWim=nner method of scheduler class to set the next playOff lists");
+            logger.debug("calling the gameWinner method of scheduler class to set the next playOff lists");
             scheduler.gameWinner(winningTeam);
             logger.debug("setting the final schedule in the simulation context");
             simulationContext.setFinalSchedule(scheduler);
@@ -108,6 +118,7 @@ public class SimulateGameState implements ISimulationSeasonState {
         scheduler.setFinalDay(simulationContext.getFinalDay());
         scheduler.setSeasonStartDate(simulationContext.getSeasonStartDate());
         scheduler.setSeasonEndDate(simulationContext.getSeasonEndDate());
+        subject = simulationContext.getSubjectGameSimulation();
         logger.debug("Calling the winDecider method to simulate a game a decide the winner");
         winDecider(currentDate, scheduler);
     }

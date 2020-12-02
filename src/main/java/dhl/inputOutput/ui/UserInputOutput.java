@@ -1,7 +1,8 @@
 package dhl.inputOutput.ui;
 
-import java.util.Scanner;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
+
+import java.util.Scanner;
 
 public class UserInputOutput extends IUserInputOutput {
     Scanner sc = new Scanner(System.in);

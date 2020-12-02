@@ -9,12 +9,13 @@ import java.util.List;
 public class SaveObserver extends IGameObserver {
 
     List<Integer> saves = new ArrayList<>();
-    public SaveObserver(Subject subject){
+
+    public SaveObserver(ISubject subject) {
         this.subject = subject;
         this.subject.attach(this);
     }
 
-    public List<Integer> getObserverSaves(){
+    public List<Integer> getObserverSaves() {
         return saves;
     }
 
@@ -22,16 +23,17 @@ public class SaveObserver extends IGameObserver {
         saves.add(subject.getSaves());
     }
 
-    public double print(){
+    public double print() {
         Integer countSaves = 0;
         Double averageSaves = 0.0;
 
-        for(int i=0; i< saves.size(); i++){
+        for (int i = 0; i < saves.size(); i++) {
             countSaves = countSaves + saves.get(i);
         }
-        averageSaves = Double.valueOf(countSaves/saves.size());
+        averageSaves = Double.valueOf(countSaves / saves.size());
         IUserInputOutput userInputOutput = UserInputOutput.getInstance();
-        userInputOutput.printMessage("Saves" + averageSaves);
-        return  averageSaves;
+        userInputOutput.printMessage("Saves: " + averageSaves);
+
+        return averageSaves;
     }
 }

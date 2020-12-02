@@ -1,7 +1,9 @@
 package dhl.businessLogicTest.leagueModelTests.factory;
 
+import dhl.businessLogic.leagueModel.*;
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
+import org.json.simple.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -79,5 +81,44 @@ public class LeagueModelFactoryTest {
         Assertions.assertEquals("LeagueName",leagueObjectModelInput.getLeagueName());
     }
 
+    @Test
+    public void createLeagueObjectModelDefault() {
+        Assertions.assertNotNull(leagueFactory.createDefaultLeagueObjectModel());
+    }
+
+    @Test
+    public void createConferenceDefault() {
+        Assertions.assertNotNull(leagueFactory.createConferenceDefault());
+    }
+
+    @Test
+    public void createDivisionDefault() {
+        Assertions.assertNotNull(leagueFactory.createDivisionDefault());
+    }
+
+    @Test
+    public void createTeamDefault() {
+        Assertions.assertNotNull(leagueFactory.createTeamDefault());
+    }
+
+    @Test
+    public void createPlayerDefault() {
+        Assertions.assertNotNull(leagueFactory.createPlayerDefault());
+    }
+
+    @Test
+    public void createFreeAgentDefault() {
+        Assertions.assertNotNull(leagueFactory.createFreeAgentDefault());
+    }
+
+    @Test
+    public void createPlayerDraft() {
+        Assertions.assertNotNull(leagueFactory.createPlayerDefault());
+    }
+
+    @Test
+    public void createCommonValidation() {
+        Assertions.assertNotNull(leagueFactory.createCommonValidation());
+    }
 
 }

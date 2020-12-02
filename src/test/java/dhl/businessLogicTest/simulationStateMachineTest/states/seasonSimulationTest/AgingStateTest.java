@@ -1,10 +1,9 @@
 package dhl.businessLogicTest.simulationStateMachineTest.states.seasonSimulationTest;
 
-import dhl.Mocks.LeagueObjectModel20TeamMocks;
-import dhl.Mocks.factory.MockAbstractFactory;
+import dhl.mocks.LeagueObjectModel20TeamMocks;
+import dhl.mocks.factory.MockAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
-import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.SimulationContext;
 import dhl.businessLogic.simulationStateMachine.factory.ContextAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.seasonScheduler.interfaces.IScheduler;
@@ -18,8 +17,6 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
-import static java.time.temporal.ChronoUnit.DAYS;
-
 public class AgingStateTest {
 
     LeagueObjectModel20TeamMocks model20TeamMocks;
@@ -28,7 +25,6 @@ public class AgingStateTest {
     IScheduler scheduler;
     SimulationContext simulationContext;
     AgingState agingState;
-//    GameContext gameState;
     ILeagueObjectModel leagueObjectModel;
     IGameConfig gameConfig;
     MockAbstractFactory mockAbstractFactory;
@@ -46,7 +42,6 @@ public class AgingStateTest {
         leagueObjectModel = leagueMock.getLeagueObjectModel();
         gameConfig = leagueMock.getGameplayConfig();
         contextAbstractFactory = ContextAbstractFactory.instance();
-//        gameState = contextAbstractFactory.createGameContext();
         simulationContext = contextAbstractFactory.createSimulationContext();
         seasonSimulationStateFactory = (SeasonSimulationStateFactory) SeasonSimulationStateFactory.instance();
         agingState = (AgingState) seasonSimulationStateFactory.getAgingState(simulationContext);
@@ -91,7 +86,6 @@ public class AgingStateTest {
     @Test
     public void seasonStateExitProcessTest() {
         LocalDate startOfSimulation = LocalDate.of(2020, 10, 1);
-
         simulationContext.setGameConfig(gameConfig);
         simulationContext.setInMemoryLeague(leagueObjectModel);
         simulationContext.setStartOfSimulation(startOfSimulation);

@@ -1,6 +1,6 @@
-package dhl.Mocks;
+package dhl.mocks;
 
-import dhl.Mocks.factory.MockAbstractFactory;
+import dhl.mocks.factory.MockAbstractFactory;
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.factory.LeagueObjectModelBuilder;
 import dhl.businessLogic.leagueModel.factory.LeagueObjectModelDirector;

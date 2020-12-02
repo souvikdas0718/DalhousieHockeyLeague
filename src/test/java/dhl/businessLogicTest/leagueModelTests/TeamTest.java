@@ -1,6 +1,5 @@
 package dhl.businessLogicTest.leagueModelTests;
 
-import dhl.Mocks.LeagueObjectModelMocks;
 import dhl.businessLogic.leagueModel.*;
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
@@ -86,24 +85,23 @@ public class TeamTest {
         Assertions.assertEquals(15, team.getTeamPoint());
     }
 
-
     @Test
     public void getTOTALTEAMSIZETest() {
-        Assertions.assertEquals(30,team.getTOTALTEAMSIZE());
+        Assertions.assertEquals(30,team.getTotalTeamSize());
     }
 
     @Test
     public void getTOTALGOALIESTest() {
-        Assertions.assertEquals(4,team.getTOTALGOALIES());
+        Assertions.assertEquals(4,team.getTotalGoalies());
     }
 
     @Test
     public void getTOTALFORWARDSTest() {
-        Assertions.assertEquals(16,team.getTOTALFORWARDS());
+        Assertions.assertEquals(16,team.getTotalForwards());
     }
     @Test
     public void getTOTALDEFENSETest() {
-        Assertions.assertEquals(10,team.getTOTALDEFENSE());
+        Assertions.assertEquals(10,team.getTotalDefense());
     }
 
     @Test

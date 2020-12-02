@@ -1,5 +1,7 @@
 package dhl.businessLogicTest.simulationStateMachineTest.states.seasonSimulationTest;
 
+import dhl.mocks.factory.MockAbstractFactory;
+import dhl.businessLogic.leagueModel.PlayerDraftAbstract;
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogic.simulationStateMachine.GameContext;
@@ -9,6 +11,7 @@ import dhl.businessLogic.simulationStateMachine.states.StatesAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.PlayerDraftState;
 import dhl.businessLogic.simulationStateMachine.states.seasonSimulation.factory.SimulationStateAbstractFactory;
 import dhl.businessLogic.simulationStateMachine.states.standings.factory.StandingsAbstractFactory;
+import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandingSystem;
 import dhl.businessLogic.simulationStateMachine.states.standings.interfaces.IStandings;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
 import dhl.businessLogicTest.leagueModelTests.mocks.LeagueMock;
@@ -29,6 +32,10 @@ public class PlayerDraftStateTest {
     SimulationContext simulationContext;
     PlayerDraftState playerDraftState;
     TeamMock teamMock;
+    PlayerDraftAbstract playerDraft;
+    StandingsAbstractFactory standingsAbstractFactory;
+    LeagueMock leagueMock;
+    LeagueModelMockAbstractFactory leagueMockFactory;
 
     @BeforeEach()
     public void initObject() throws Exception {
@@ -38,8 +45,8 @@ public class PlayerDraftStateTest {
 
         gameContext = statesFactory.createGameContext();
         simulationContext = statesFactory.createSimulationContext((GameContext)gameContext);
-        LeagueModelMockAbstractFactory leagueMockFactory= LeagueModelMockAbstractFactory.instance();
-        LeagueMock leagueMock =  leagueMockFactory.createLeagueMock();
+        leagueMockFactory= LeagueModelMockAbstractFactory.instance();
+        leagueMock =  leagueMockFactory.createLeagueMock();
         teamMock = leagueMockFactory.createTeamMock();
 
         simulationContext.setInMemoryLeague(leagueMock.getLeagueObjectModelFromJson());
@@ -52,47 +59,37 @@ public class PlayerDraftStateTest {
         standings.add(standing1);
         standings.add(standing2);
         simulationContext.setStandings(standings);
+        standingsAbstractFactory = StandingsAbstractFactory.instance();
+        IStandingSystem standingSystem = standingsAbstractFactory.getStandingSystem();
+        standingSystem.setStandingsList(standings);
         playerDraftState =  (PlayerDraftState) simulationFactory.getPlayerDraftState(simulationContext) ;
-        LeagueModelAbstractFactory leagueFactory = LeagueModelAbstractFactory.instance();
-        IPlayerDraft playerDraft = leagueFactory.createPlayerDraft();
-        playerDraft.setDraftPickSequence(playerDraftState.getDraftPickSequence());
+        LeagueModelAbstractFactory leagueModelAbstractFactory = LeagueModelAbstractFactory.instance();
+        playerDraft = leagueModelAbstractFactory.createPlayerDraft();
+
+        MockAbstractFactory mockFactory = MockAbstractFactory.instance();
+        PlayerDraftMock playerDraftMock = mockFactory.getPlayerDraftMock();
+        playerDraft.setDraftPickSequence(playerDraftMock.initializePlayerDraftPick());
     }
 
     @Test
     public void setDraftPickSequenceTest() {
+        ITeam [][] draftPickSequence={{teamMock.getTeam()}};
+        playerDraftState.setDraftPickSequence(draftPickSequence);
         Assertions.assertTrue(playerDraftState.getDraftPickSequence().length>0);
     }
 
     @Test
     public void seasonStateProcessTest(){
-       playerDraftState.seasonStateProcess();
-       ITeam[][] playerDraftPick = playerDraftState.getDraftPickSequence();
-       Assertions.assertEquals("Halifax Astros",playerDraftPick[0][0].getTeamName());
+        playerDraftState.seasonStateProcess();
+        ITeam[][] playerDraftPick = playerDraft.getDraftPickSequence();
+        Assertions.assertEquals("Seattle Farmers",playerDraftPick[0][0].getTeamName());
     }
 
     @Test
-    public void getTeamTest(){
-        playerDraftState.getTeams();
-        Assertions.assertTrue(playerDraftState.getTeamsInLeague().size()>0);
-    }
-
-    @Test
-    public void addDraftPlayersToTeamTest(){
-        List<IPlayer> players = new ArrayList<>();
-        ILeagueObjectModel leagueObjectModel = simulationContext.getInMemoryLeague();
-        playerDraftState.addDraftPlayersToTeam();
-        for(IConference conference:leagueObjectModel.getConferences()){
-            for(IDivision division:conference.getDivisions()){
-                for(ITeam team : division.getTeams()){
-                    players = team.getPlayers();
-                }
-            }
-        }
-        Assertions.assertTrue(players.size()>30);
-    }
-
-    @Test
-    public void seasonStateExitProcessTest(){
+    public void seasonStateExitProcessTest() throws Exception {
+        PlayerDraftMock playerDraftMock = new PlayerDraftMock();
+        playerDraftState.setDraftPickSequence(playerDraftMock.initializePlayerDraftPick());
+        playerDraftState.setLeagueObjectModel(leagueMock.getLeagueObjectModelFromJson());
         List<IPlayer> players = new ArrayList<>();
         ILeagueObjectModel leagueObjectModel = simulationContext.getInMemoryLeague();
         playerDraftState.seasonStateExitProcess();
@@ -105,4 +102,13 @@ public class PlayerDraftStateTest {
         }
         Assertions.assertTrue(players.size()==30);
     }
+
+    @Test
+    public void isValuePresentTest(){
+       Assertions.assertFalse(playerDraftState.isValuePresent(null));
+    }
+
+
+
+
 }

@@ -21,5 +21,6 @@ public abstract class IUserInputOutput {
     }
 
     public abstract void printMessage(String message);
+
     public abstract String getUserInput();
 }

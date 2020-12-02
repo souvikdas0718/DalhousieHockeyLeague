@@ -4,13 +4,13 @@ import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
 import dhl.businessLogic.leagueModel.interfaceModel.*;
 import dhl.businessLogic.trade.factory.TradeAbstractFactory;
 import dhl.businessLogic.trade.factory.TradeConcreteFactory;
-import dhl.businessLogic.trade.interfaces.ITradingEngine;
+import dhl.businessLogic.trade.TradeEngineAbstract;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
 import dhl.businessLogicTest.tradeTest.mocks.GameConfigMockForTrading;
 import dhl.businessLogicTest.tradeTest.mocks.factory.TradeMockAbstractFactory;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
-import dhl.Mocks.MockUserInputOutput;
-import dhl.businessLogic.trade.interfaces.ITradeOffer;
+import dhl.mocks.MockUserInputOutput;
+import dhl.businessLogic.trade.TradeOfferAbstract;
 import dhl.businessLogic.trade.TradingEngine;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -56,12 +56,28 @@ public class TradingEngineTest {
         List<IPlayer> playersList = leagueMock.getFreeAgents();
         userTeam = leagueFactory.createTeam("ABC" , manager, coach, playersList );
         leagueMock.setFreeAgents(tradeMockFactory.createFreeAgentMockForTrade().getListOfFreeAgents());
-        testClassObject = (TradingEngine) ITradingEngine.instance(ourGameConfig, leagueMock, userTeam);
+        testClassObject = (TradingEngine) TradeEngineAbstract.instance(ourGameConfig, leagueMock, userTeam);
         testClassObject.setIoObject(ioObject);
     }
 
     @Test
-    public void startEngine() {
+    public void startEngineTest() {
+        ourGameConfig = gameConfigMock.getGameConfigMock();
+        TradeEngineAbstract.setFactory(new TradingEngine(ourGameConfig, leagueMock, userTeam));
+        testClassObject = (TradingEngine) TradeEngineAbstract.instance(ourGameConfig, leagueMock, userTeam);
+        double badTeamStrengthBeforeTrade = badTeamMock.calculateTeamStrength();
+        testClassObject.startEngine();
+        badTeamMock.setRoster();
+        Assertions.assertTrue(badTeamStrengthBeforeTrade < badTeamMock.calculateTeamStrength());
+    }
+
+    @Test
+    public void startEngineTestWithRejectionRate(){
+        gameConfigMock.setRandomAcceptanceChance(1.0);
+        ourGameConfig = gameConfigMock.getGameConfigMock();
+        badTeamMock.setLossPoint(10);
+        TradeEngineAbstract.setFactory(new TradingEngine(ourGameConfig, leagueMock, userTeam));
+        testClassObject = (TradingEngine) TradeEngineAbstract.instance(ourGameConfig, leagueMock, userTeam);
         double badTeamStrengthBeforeTrade = badTeamMock.calculateTeamStrength();
         testClassObject.startEngine();
         badTeamMock.setRoster();
@@ -76,11 +92,11 @@ public class TradingEngineTest {
 
     @Test
     public void getCurrentTradeTest(){
-        ITradingEngine.setFactory(new TradingEngine(ourGameConfig, leagueMock, userTeam));
-        testClassObject = (TradingEngine) ITradingEngine.instance(ourGameConfig, leagueMock, userTeam);
+        TradeEngineAbstract.setFactory(new TradingEngine(ourGameConfig, leagueMock, userTeam));
+        testClassObject = (TradingEngine) TradeEngineAbstract.instance(ourGameConfig, leagueMock, userTeam);
         badTeamMock = tradeMockFactory.createTeamMockForTrade().getTeamWithBadPlayer();
         testClassObject.performTrade(badTeamMock);
-        ITradeOffer tradeOffer = testClassObject.getCurrentTrade();
+        TradeOfferAbstract tradeOffer = testClassObject.getCurrentTrade();
         Assertions.assertTrue(tradeOffer.getOfferingTeam() == badTeamMock);
     }
 

@@ -1,6 +1,5 @@
 package dhl.businessLogicTest.teamRosterUpdaterTest;
 
-import dhl.Mocks.MockUserInputOutput;
 import dhl.businessLogic.leagueModel.LeagueObjectModel;
 import dhl.businessLogic.leagueModel.PlayerPosition;
 import dhl.businessLogic.leagueModel.factory.LeagueModelAbstractFactory;
@@ -13,6 +12,7 @@ import dhl.businessLogic.teamRosterUpdater.UpdateUserTeamRoster;
 import dhl.businessLogic.teamRosterUpdater.interfaces.ITeamRosterUpdater;
 import dhl.businessLogicTest.leagueModelTests.factory.LeagueModelMockAbstractFactory;
 import dhl.businessLogicTest.tradeTest.mocks.factory.TradeMockAbstractFactory;
+import dhl.importJsonTest.mocks.MockUserInputOutput;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,8 +33,9 @@ public class UpdateUserTeamRosterTest {
 
     @BeforeEach
     public void initObject(){
-        // TODO: 28-11-2020 creational Patter for this
-        ioObjectMock = new MockUserInputOutput();
+
+        IUserInputOutput.setFactory(MockUserInputOutput.instance());
+        ioObjectMock =IUserInputOutput.getInstance();
 
         rosterUpdaterFactory = RosterUpdaterAbstractFactory.instance();
         testClassObject = rosterUpdaterFactory.createUpdateUserTeamRoster(ioObjectMock);

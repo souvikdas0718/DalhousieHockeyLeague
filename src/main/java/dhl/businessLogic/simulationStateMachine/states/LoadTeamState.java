@@ -5,11 +5,15 @@ import dhl.businessLogic.leagueModel.interfaceModel.ILeagueObjectModel;
 import dhl.businessLogic.simulationStateMachine.GameContext;
 import dhl.businessLogic.simulationStateMachine.interfaces.IGameState;
 import dhl.businessLogic.simulationStateMachine.states.interfaces.ILoadTeamStateLogic;
+import dhl.businessLogic.traning.Training;
+import dhl.inputOutput.importJson.serializeDeserialize.SerializeDeserializeAbstractFactory;
+import dhl.inputOutput.importJson.serializeDeserialize.interfaces.IDeserializeLeagueObjectModel;
 import dhl.inputOutput.ui.interfaces.IUserInputOutput;
-import dhl.inputOutput.ui.UserInputOutput;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class LoadTeamState implements IGameState {
-
+    private static final Logger logger = LogManager.getLogger(Training.class);
     GameContext ourGame;
     ILeagueObjectModel newInMemoryLeague;
     IUserInputOutput userInputPutput;
@@ -20,7 +24,6 @@ public class LoadTeamState implements IGameState {
         ourGame = newGame;
     }
 
-    @Override
     public void stateEntryProcess() {
         userInputPutput.printMessage("Enter LeagueName to load from DB: ");
         String leagueName = userInputPutput.getUserInput();
@@ -40,24 +43,23 @@ public class LoadTeamState implements IGameState {
 
         try {
             ILoadTeamStateLogic objLoadTeamStateLogic = new LoadTeamStateLogic(leagueName, team);
-//            IDeserializeLeagueObjectModel deserializeLeagueObjectModel = new DeserializeLeagueObjectModel(leagueName);
+            SerializeDeserializeAbstractFactory factory = SerializeDeserializeAbstractFactory.instance();
+            IDeserializeLeagueObjectModel deserializeLeagueObjectModel = factory.createDeserializeLeagueObjectModel(leagueName);
 
-//            objLoadTeamStateLogic.findTeamOfLeagueInDatabase(newInMemoryLeague, ourGame, deserializeLeagueObjectModel);
+            objLoadTeamStateLogic.findTeamOfLeagueInDatabase(newInMemoryLeague, ourGame, deserializeLeagueObjectModel);
+            logger.debug("Team loaded successfully");
         } catch (Exception e) {
-            userInputPutput.printMessage(e.getMessage());
+            logger.error("Error while loading team: " + e.getMessage());
             ourGame.setGameInProgress(false);
         }
-        ;
     }
 
-    @Override
     public void stateProcess() {
         if (ourGame.isGameInProgress()) {
             userInputPutput.printMessage(ourGame.getSelectedTeam().getTeamName() + "  Team Selected");
         }
     }
 
-    @Override
     public void stateExitProcess() {
         if (ourGame.isGameInProgress()) {
             ourGame.setGameState(ourGame.getSimulateState());

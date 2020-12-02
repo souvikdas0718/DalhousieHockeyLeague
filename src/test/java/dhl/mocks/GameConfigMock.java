@@ -1,4 +1,4 @@
-package dhl.Mocks;
+package dhl.mocks;
 
 import dhl.businessLogic.leagueModel.GameConfig;
 import dhl.businessLogic.leagueModel.interfaceModel.IGameConfig;
