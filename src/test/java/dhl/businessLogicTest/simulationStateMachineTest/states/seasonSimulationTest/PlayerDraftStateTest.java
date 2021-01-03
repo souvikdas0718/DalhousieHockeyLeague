@@ -82,7 +82,7 @@ public class PlayerDraftStateTest {
     public void seasonStateProcessTest(){
         playerDraftState.seasonStateProcess();
         ITeam[][] playerDraftPick = playerDraft.getDraftPickSequence();
-        Assertions.assertEquals("Halifax Astros",playerDraftPick[0][0].getTeamName());
+        Assertions.assertEquals("Seattle Farmers",playerDraftPick[0][0].getTeamName());
     }
 
     @Test

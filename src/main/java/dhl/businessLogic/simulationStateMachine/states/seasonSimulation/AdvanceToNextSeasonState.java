@@ -58,8 +58,8 @@ public class AdvanceToNextSeasonState implements ISimulationSeasonState {
         ILeagueSchedule leagueSchedule = agingFactory.createLeagueSchedule(simulationContext.getInMemoryLeague());
         try {
             LocalDate startOfSimulation = simulationContext.getStartOfSimulation();
-            LocalDate currentDate = startOfSimulation.plusDays(simulationContext.getNumberOfDays());
-            leagueSchedule.initiateAging(simulationContext.getNumberOfDays(), currentDate);
+            LocalDate currentDate = startOfSimulation.plusDays(TOTALDAYSINAYEAR);
+            leagueSchedule.initiateAging(TOTALDAYSINAYEAR, currentDate);
         } catch (IOException e) {
             logger.error(e.getMessage());
         } catch (ParseException e) {

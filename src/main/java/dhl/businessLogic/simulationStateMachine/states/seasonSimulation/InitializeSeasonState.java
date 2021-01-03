@@ -68,7 +68,6 @@ public class InitializeSeasonState implements ISimulationSeasonState {
     @Override
     public void seasonStateProcess() {
         logger.info("Into the state process of Initialize season");
-        simulationContext.setRegularScheduler(null);
         initializePlayerDraftPick();
         leagueFactory = LeagueModelAbstractFactory.instance();
         playerDraft = leagueFactory.createPlayerDraft();

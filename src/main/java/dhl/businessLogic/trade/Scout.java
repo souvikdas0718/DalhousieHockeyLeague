@@ -117,13 +117,13 @@ public class Scout implements IScout {
 
                     double playerStrengthNeeded = tempPlayerToGive.getPlayerStrength() * PLAYER_WANTED_STRENGTH_MULTIPLIER;
                     IPlayer tempPlayerWeWillGet = getPlayerToTradeFromTeam(teamToTrade, positionWanted, playerStrengthNeeded);
-                    logger.info(myTeam.getTeamName() + "'s Scout found Player to Trade:" + tempPlayerWeWillGet.getPlayerName());
 
                     myTeam.getPlayers().add(listOfPlayersToGive.get(playerToGiveIndex));
                     myTeam.getPlayers().remove(listOfPlayerWeWillGet.get(playerWeWillGetIndex));
                     teamToTrade.getPlayers().add(listOfPlayerWeWillGet.get(playerWeWillGetIndex));
 
                     if (playerFound(tempPlayerWeWillGet)) {
+                        logger.info(myTeam.getTeamName() + "'s Scout found Player to Trade:" + tempPlayerWeWillGet.getPlayerName());
                         listOfPlayersToGive.add(tempPlayerToGive);
                         listOfPlayerWeWillGet.add(tempPlayerWeWillGet);
                         playerToGiveIndex = playerToGiveIndex + 1;
@@ -192,7 +192,7 @@ public class Scout implements IScout {
     public IPlayer getPlayerToTradeFromTeam(ITeam teamToTrade, String positionWanted, Double playerStrengthNeeded) {
         IPlayer playerToSend = null;
         double playerToSendStrength = 1000;
-        logger.debug(" finding player to trade frrom team: " + teamToTrade.getTeamName());
+        logger.debug(" finding player to trade from team: " + teamToTrade.getTeamName());
         for (IPlayer player : teamToTrade.getPlayers()) {
             if (player.getPosition().equals(positionWanted)) {
                 if (playerToSendStrength > player.getPlayerStrength() && playerStrengthNeeded <= player.getPlayerStrength()) {
